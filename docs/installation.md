@@ -153,7 +153,7 @@ The Dockerfile is for the command line. The studio's loopback binding is inside 
 
 Plan initially for 1 CPU core, 2 GiB RAM and 1 GiB free scratch disk for a small example, **plus** original recordings and installed tools. These are proposed starting targets; use 2–4 cores and 4–8 GiB RAM for headroom. Budget roughly two extra source copies for a checked-then-trained workflow plus intermediates and exports. Sources may reach 500 MiB, so the extra copies alone can approach 1 GiB and exceed the starter allowance once intermediates are included. Dataset size, codec, resolution and parallel numerical libraries change the actual cost. See [hardware details](hardware.md).
 
-The development host is an Apple M5 macOS machine with 24 GiB RAM, not a minimum-hardware test. The CI workflow defines six visual platform/Python combinations and a separate Linux arm job. Consult actual workflow results before claiming a platform passed. Docker build and disconnected installation similarly require their own execution evidence.
+The development host is an Apple M5 macOS machine with 24 GiB RAM, not a minimum-hardware test. [CI passed all eight jobs on runtime commit `d1f0cbc`](https://github.com/Dvidia-Inference/dvidia-training/actions/runs/37740260434): six visual platform/Python combinations, the optional Linux arm pilot and Docker training with networking disabled. Disconnected installation on a new host remains a deployment procedure to verify locally.
 
 Verify your local installation:
 
