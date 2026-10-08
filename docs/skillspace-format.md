@@ -4,6 +4,8 @@ The current pipeline accepts a local directory of videos, a data-only ZIP, a sup
 
 This page documents the **implemented footage format**. It is not a claim that all existing DVIDIA Skillspaces already export it, or that a folder supplies robot competence.
 
+Commands below run from the checkout and use the virtual environment directly. In Windows PowerShell, replace `.venv/bin/COMMAND` with `.\.venv\Scripts\COMMAND.exe` and put continued commands on one line. See [installation](installation.md) for complete platform setup.
+
 ## A local source
 
 ```text
@@ -93,7 +95,7 @@ Public URL intake is off by default. Start the studio with `--allow-online` and 
 
 The visual learner samples small RGB frames, fits a PCA basis from training data, and learns a ridge next-frame predictor. Development groups choose regularization; test groups measure prediction error against last-frame and training-mean baselines. Reported group counts reflect declared lineage and hashes, not independently verified novelty.
 
-The output is visual learning. Pixel/latent prediction error does not establish object understanding, calibrated shoe geometry, a grasp policy or successful organization. Original footage remains in the local dataset. The downloadable ZIP includes learned parameters, held-out reports and a trimmed receipt without the videos; `dvidia-train inspect` verifies its integrity manifest and ZIP contents.
+The output is visual learning. Pixel/latent prediction error does not establish object understanding, calibrated shoe geometry, a grasp policy or successful organization. Original footage remains in the local dataset. The downloadable ZIP includes learned parameters, held-out reports and a trimmed receipt without the videos; `.venv/bin/dvidia-train inspect` verifies its integrity manifest and ZIP contents.
 
 ## Movement supervision
 
@@ -106,18 +108,18 @@ Movement training requires sufficient validated data across the frozen splits, i
 With the `arm` extra installed, generate the exact implemented sidecar format through native telemetry and synchronized schematic videos:
 
 ```sh
-dvidia-train example --native-arm --clips 10 --output examples/native-demo
-dvidia-train run examples/native-demo --output runs/native-demo
+.venv/bin/dvidia-train example --native-arm --clips 10 --output examples/native-demo
+.venv/bin/dvidia-train run examples/native-demo --output runs/native-demo
 ```
 
 These are simulator recordings, not human demonstrations. To export an installable simulation candidate, also provide an explicit compatible task source:
 
 ```sh
-dvidia-train run examples/native-demo --output runs/native-candidate \
+.venv/bin/dvidia-train run examples/native-demo --output runs/native-candidate \
   --task-source examples/native-demo/task.skill.json
-dvidia-skill-capsule install runs/native-candidate/candidate.skill-capsule.json
+.venv/bin/dvidia-skill-capsule install runs/native-candidate/candidate.skill-capsule.json
 ```
 
-Use the returned installation ID with `dvidia-skill-capsule qualify ID --output runs/qualification`. Inspect the independent native success predicate and open-jaw control before running the candidate. This placement adapter supports a bounded rigid-box scene with privileged simulator observations. It does not support arbitrary shoes, cup handles, physical arms or raw-video motor learning.
+Use the returned installation ID with `.venv/bin/dvidia-skill-capsule qualify ID --output runs/qualification`. Inspect the independent native success predicate and open-jaw control before running the candidate. This placement adapter supports a bounded rigid-box scene with privileged simulator observations. It does not support arbitrary shoes, cup handles, physical arms or raw-video motor learning.
 
 Physical deployment still needs compatible sensing and actuation, measured calibration/contact behavior and independent hardware qualification. No output of this footage pipeline alone declares a physical robot ready.

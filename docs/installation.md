@@ -84,13 +84,13 @@ Visit `http://127.0.0.1:8270` locally. Paths entered in the studio refer to the 
 
 Obtain Python, FFmpeg and a compatible wheelhouse on a connected machine **matching the target OS, CPU architecture and Python version**. The commands below build the package wheel and download its Python dependencies; they do not package Python itself or FFmpeg.
 
-From a clone of this repository on that connected machine:
+From a clone of this repository on that connected machine, create the virtual environment using the platform instructions above, then build the wheelhouse:
 
 ```sh
-python -m pip wheel --wheel-dir wheelhouse .
+.venv/bin/python -m pip wheel --wheel-dir wheelhouse .
 ```
 
-For the optional arm dependencies, use `python -m pip wheel --wheel-dir wheelhouse ".[arm]"` instead. Also obtain offline Python/FFmpeg installers or binaries for the target. Transfer the wheelhouse, source or release wheel, tools and your data to the disconnected server.
+On Windows, use `.\.venv\Scripts\python.exe`. For the optional arm dependencies, use `.venv/bin/python -m pip wheel --wheel-dir wheelhouse ".[arm]"` instead. Also obtain offline Python/FFmpeg installers or binaries for the target. Transfer the wheelhouse, source or release wheel, tools and your data to the disconnected server.
 
 Create a virtual environment on the target, then install entirely from the local wheelhouse:
 
@@ -110,7 +110,7 @@ py -3.12 -m venv .venv
 
 For an arm wheelhouse, replace `dvidia-training` with `"dvidia-training[arm]"`. Keep a record of the exact wheel versions and hashes you transfer. `--no-index` prevents consulting package indexes; the local wheelhouse must contain every dependency. See [pip's local-package instructions](https://pip.pypa.io/en/stable/user_guide/#installing-from-local-packages).
 
-After Python, FFmpeg, dependencies and data are present, run `dvidia-train run` or the studio without `--allow-online`. No login or hosted inference is needed. Offline installation on a new air-gapped machine is a deployment procedure, separate from any measured offline training receipt.
+After Python, FFmpeg, dependencies and data are present, run `.venv/bin/dvidia-train run` or the studio without `--allow-online`; use `.\.venv\Scripts\dvidia-train.exe` on Windows. No login or hosted inference is needed. Offline installation on a new air-gapped machine is a deployment procedure, separate from any measured offline training receipt.
 
 ## Optional arm features
 
@@ -158,11 +158,11 @@ The development host is an Apple M5 macOS machine with 24 GiB RAM, not a minimum
 Verify your local installation:
 
 ```sh
-python -m dvidia_training.footage_pipeline --help
-python -m pip check
-dvidia-training-doctor --json --directory runs
+.venv/bin/python -m dvidia_training.footage_pipeline --help
+.venv/bin/python -m pip check
+.venv/bin/dvidia-training-doctor --json --directory runs
 ffmpeg -version
 ffprobe -version
 ```
 
-Use the virtual environment's Python executable in these commands. `dvidia-train inspect runs/your-run` verifies the export after training. A visual error score is not a robotics success score.
+On Windows, replace `.venv/bin/python` with `.\.venv\Scripts\python.exe` and `.venv/bin/dvidia-training-doctor` with `.\.venv\Scripts\dvidia-training-doctor.exe`. `.venv/bin/dvidia-train inspect runs/your-run` verifies the export after training; use `.\.venv\Scripts\dvidia-train.exe` on Windows. A visual error score is not a robotics success score.

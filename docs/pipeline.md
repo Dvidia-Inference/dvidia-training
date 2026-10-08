@@ -4,6 +4,8 @@ This guide describes the footage pipeline in the standalone dvidia-training pack
 local footage local, checks independent source groups, learns model weights,
 measures held-out prediction error and exports a data-only result.
 
+Commands below run from the checkout and use the virtual environment directly. In Windows PowerShell, replace `.venv/bin/COMMAND` with `.\.venv\Scripts\COMMAND.exe` and put continued commands on one line. See [installation](installation.md) for complete platform setup.
+
 The product path is:
 
 ```mermaid
@@ -53,16 +55,16 @@ actual video paths cannot supply footage.
 .venv/bin/python -m dvidia_training.footage_pipeline inspect runs/my-first-training
 ```
 
-After installing this package, the equivalent command is `dvidia-train run`.
+After installing this package, the equivalent command is `.venv/bin/dvidia-train run`.
 Use a fresh output directory for each run; completed results are never silently
-overwritten. To check footage without fitting weights, use `dvidia-train prepare`.
+overwritten. To check footage without fitting weights, use `.venv/bin/dvidia-train prepare`.
 A prepared `dataset.json` can be supplied to `run` to reuse the exact split.
 
 Try an explicitly synthetic example before collecting footage:
 
 ```sh
-dvidia-train example --output examples/visual-skillspace --clips 10
-dvidia-train run examples/visual-skillspace --output runs/visual-example
+.venv/bin/dvidia-train example --output examples/visual-skillspace --clips 10
+.venv/bin/dvidia-train run examples/visual-skillspace --output runs/visual-example
 ```
 
 These ten encoded six-second videos are schematic moving-disc recordings. They
@@ -146,15 +148,15 @@ videos:
 
 ```sh
 .venv/bin/python -m pip install ".[arm]"
-dvidia-train example --native-arm --clips 10 --output examples/native-skillspace
-dvidia-train run examples/native-skillspace --output runs/native-training \
+.venv/bin/dvidia-train example --native-arm --clips 10 --output examples/native-skillspace
+.venv/bin/dvidia-train run examples/native-skillspace --output runs/native-training \
   --task-source examples/native-skillspace/task.skill.json
-dvidia-skill-capsule install runs/native-training/candidate.skill-capsule.json
+.venv/bin/dvidia-skill-capsule install runs/native-training/candidate.skill-capsule.json
 ```
 
 The explicit task source must be compatible with the existing placement adapter.
 Installing a candidate does not qualify it. Use the returned installation ID with
-`dvidia-skill-capsule qualify ID --output runs/local-qualification`; then inspect
+`.venv/bin/dvidia-skill-capsule qualify ID --output runs/local-qualification`; then inspect
 the exact-scene native success and open-jaw control before running it. The capsule
 retains authored phases, contact checks, gripper logic and recovery, and relies on
 privileged simulator observations. It is not a learned shoe policy or a physical

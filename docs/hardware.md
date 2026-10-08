@@ -36,10 +36,12 @@ The doctor reports total physical RAM, logical CPU count and free space at the r
 
 ## Check before training
 
+Run these commands from the checkout using its virtual environment. In Windows PowerShell, replace `.venv/bin/COMMAND` with `.\.venv\Scripts\COMMAND.exe`. See [installation](installation.md) for platform setup.
+
 ```sh
-dvidia-training-doctor
-dvidia-training-doctor --json --directory ./runs
-dvidia-training-doctor --arm
+.venv/bin/dvidia-training-doctor
+.venv/bin/dvidia-training-doctor --json --directory ./runs
+.venv/bin/dvidia-training-doctor --arm
 ```
 
 The command reads package metadata and system listings. It does not train, create output directories, access the network or inspect your footage. Missing required dependencies return a nonzero exit code. Missing optional simulation support only fails the check when `--arm` is requested; a missing fixture encoder does not block training from existing clips.
@@ -50,7 +52,7 @@ Development and local integration checks have used a macOS Apple M5 system with 
 
 Three repeated standalone runs on ten synthetic moving-disc clips, totaling 60 seconds of footage, used seven training, two development and one test episode at default visual settings. Complete pipeline times were 0.5315, 0.5106 and 0.5102 seconds, with a median of **0.5106 seconds**. The Python process lifetime peak RSS was **50,462,720 bytes (48.13 MiB)**. This memory figure excludes FFmpeg/ffprobe child processes; installation, imports and fixture creation are excluded from pipeline time. These results describe this small synthetic visual task, rather than a minimum machine or an arm-training benchmark. [Benchmark receipt](../benchmarks/macos-m5.json).
 
-Reproduce the benchmark after installation with `python benchmarks/run.py --output runs/benchmark --repeats 3`. Original source clips and every run's learned weights and metrics remain local; the benchmark reports the stated task and measurement scope.
+Reproduce the benchmark after installation with `.venv/bin/python benchmarks/run.py --output runs/benchmark --repeats 3`. Original source clips and every run's learned weights and metrics remain local; the benchmark reports the stated task and measurement scope.
 
 [All eight CI jobs passed on runtime commit `d1f0cbc`](https://github.com/Dvidia-Inference/dvidia-training/actions/runs/37740260434). Visual footage fitting, export checks, the loopback studio tests and installed entry points passed on Linux, macOS and Windows with Python 3.12 and 3.13. The Linux arm job also collected ten synthetic native recordings, fitted a candidate, installed it and qualified one exact scene. A separate Linux Docker job built the image and ran synthetic example creation, training and inspection with `--network none`.
 
