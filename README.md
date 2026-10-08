@@ -1,3 +1,5 @@
+![DVIDIA Training — toward installable robot skills. Open source, offline, CPU.](assets/branding/github-header.png)
+
 # DVIDIA Training
 
 Train a small visual model from Skillspace footage on your own computer or server. The pipeline checks actual videos and source groups, fixes training/development/test splits, fits weights on a CPU, and exports a result with held-out measurements and integrity hashes.
