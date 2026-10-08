@@ -1,0 +1,345 @@
+{
+  "schema_version": 1,
+  "scope": "simulation-only",
+  "protocol_sha256": "b537ea78e004a0258ffca891dfd10cff8a283249f712f1503d7afd7caa591f05",
+  "criteria": {
+    "unchanged": true,
+    "sha256": "da3768113aa3aa7dde139bb963880c36958f8075d4369967e090cd8edc2965ff",
+    "text": "Environment gate unchanged: loaded bilateral/table-free >=55mm lift retained100ms; released jaws; TCP>=100mm above object; table support, target tolerance, linear/angular settling and250ms default dwell."
+  },
+  "source_hashes": {
+    "v0": {
+      "arm_env.py": "395d9b7ab2fc09458081d8fae162ec701adcd8b944e65a171c7184deb45e5fb3",
+      "arm_policy.py": "6cb7d9644b6eda2f79e4253a37fe33b5942f736ca341756fb8b968dfb0a255b2",
+      "env.py": "929c1d8c3c4cafe0054c633ee5f3e51c551dd6b26ae014ab1ea9219b58eca8e4"
+    },
+    "round1": {
+      "arm_env.py": "7903f74e163827a03509fb2eb2429aa1b1b2feb8233cf11c6af8b03649780e7f",
+      "arm_policy.py": "bf6c74491e29d83db8c93c06a5995f31c3425c6c14174b038ebc5294f603485c",
+      "env.py": "929c1d8c3c4cafe0054c633ee5f3e51c551dd6b26ae014ab1ea9219b58eca8e4"
+    },
+    "round2": {
+      "arm_env.py": "e4af9b75364a568284b1e6d96469deacf498dd87a60b067fa5e310fe15c54c00",
+      "arm_policy.py": "d6d53d87703fb8608390092309285afb6a2c8fd3103a7abd77668be85469eab3",
+      "env.py": "929c1d8c3c4cafe0054c633ee5f3e51c551dd6b26ae014ab1ea9219b58eca8e4"
+    },
+    "final": {
+      "arm_env.py": "e4af9b75364a568284b1e6d96469deacf498dd87a60b067fa5e310fe15c54c00",
+      "arm_policy.py": "d6d53d87703fb8608390092309285afb6a2c8fd3103a7abd77668be85469eab3",
+      "env.py": "929c1d8c3c4cafe0054c633ee5f3e51c551dd6b26ae014ab1ea9219b58eca8e4"
+    }
+  },
+  "dev_rounds": [
+    {
+      "label": "v0",
+      "successes": 14,
+      "cases": 20,
+      "rate": 0.7,
+      "wilson95": [
+        0.4810271816464765,
+        0.8545227551323956
+      ],
+      "groups": {
+        "actuator_stress": {
+          "successes": 2,
+          "cases": 6,
+          "rate": 0.3333333333333333,
+          "wilson95": [
+            0.09677141110578041,
+            0.700006684861608
+          ]
+        },
+        "nominal": {
+          "successes": 12,
+          "cases": 14,
+          "rate": 0.8571428571428571,
+          "wilson95": [
+            0.6005862050302965,
+            0.9599060787285351
+          ]
+        }
+      }
+    },
+    {
+      "label": "round1",
+      "successes": 16,
+      "cases": 20,
+      "rate": 0.8,
+      "wilson95": [
+        0.5839825677481064,
+        0.919342337420202
+      ],
+      "groups": {
+        "actuator_stress": {
+          "successes": 2,
+          "cases": 6,
+          "rate": 0.3333333333333333,
+          "wilson95": [
+            0.09677141110578041,
+            0.700006684861608
+          ]
+        },
+        "nominal": {
+          "successes": 14,
+          "cases": 14,
+          "rate": 1.0,
+          "wilson95": [
+            0.7846891972623643,
+            1.0
+          ]
+        }
+      }
+    },
+    {
+      "label": "round2",
+      "successes": 17,
+      "cases": 20,
+      "rate": 0.85,
+      "wilson95": [
+        0.6395811352592431,
+        0.9476312541037835
+      ],
+      "groups": {
+        "actuator_stress": {
+          "successes": 3,
+          "cases": 6,
+          "rate": 0.5,
+          "wilson95": [
+            0.1876163064826506,
+            0.8123836935173494
+          ]
+        },
+        "nominal": {
+          "successes": 14,
+          "cases": 14,
+          "rate": 1.0,
+          "wilson95": [
+            0.7846891972623643,
+            1.0
+          ]
+        }
+      }
+    }
+  ],
+  "heldout": {
+    "baseline": {
+      "successes": 30,
+      "cases": 32,
+      "rate": 0.9375,
+      "wilson95": [
+        0.7985287685584542,
+        0.982689432968359
+      ],
+      "groups": {
+        "actuator_stress": {
+          "successes": 6,
+          "cases": 8,
+          "rate": 0.75,
+          "wilson95": [
+            0.40927543031016883,
+            0.9285207872478909
+          ]
+        },
+        "nominal": {
+          "successes": 24,
+          "cases": 24,
+          "rate": 1.0,
+          "wilson95": [
+            0.8620237953250198,
+            1.0
+          ]
+        }
+      }
+    },
+    "final": {
+      "successes": 29,
+      "cases": 32,
+      "rate": 0.90625,
+      "wilson95": [
+        0.7578184527161212,
+        0.9675984487016337
+      ],
+      "groups": {
+        "actuator_stress": {
+          "successes": 5,
+          "cases": 8,
+          "rate": 0.625,
+          "wilson95": [
+            0.30574239460262737,
+            0.8631557141764026
+          ]
+        },
+        "nominal": {
+          "successes": 24,
+          "cases": 24,
+          "rate": 1.0,
+          "wilson95": [
+            0.8620237953250198,
+            1.0
+          ]
+        }
+      }
+    },
+    "paired": {
+      "improved": 0,
+      "regressed": 1,
+      "both_success": 29,
+      "both_failure": 2,
+      "cases": 32,
+      "groups": {
+        "nominal": {
+          "improved": 0,
+          "regressed": 0,
+          "both_success": 24,
+          "both_failure": 0,
+          "cases": 24
+        },
+        "actuator_stress": {
+          "improved": 0,
+          "regressed": 1,
+          "both_success": 5,
+          "both_failure": 2,
+          "cases": 8
+        }
+      }
+    }
+  },
+  "controls": {
+    "baseline": {
+      "episodes": 6,
+      "unexpected_successes": 0,
+      "engine_warning_episodes": 0,
+      "checks": [
+        {
+          "case_id": "held-00",
+          "control": "idle",
+          "success": false,
+          "reason": "horizon",
+          "max_object_displacement_m": 5.577190480699203e-12
+        },
+        {
+          "case_id": "held-00",
+          "control": "replay_open_jaw",
+          "success": false,
+          "reason": "horizon",
+          "max_object_displacement_m": 5.495047921083432e-12
+        },
+        {
+          "case_id": "held-07",
+          "control": "idle",
+          "success": false,
+          "reason": "horizon",
+          "max_object_displacement_m": 6.113300024655953e-12
+        },
+        {
+          "case_id": "held-07",
+          "control": "replay_open_jaw",
+          "success": false,
+          "reason": "horizon",
+          "max_object_displacement_m": 6.094524282218994e-12
+        },
+        {
+          "case_id": "held-25",
+          "control": "idle",
+          "success": false,
+          "reason": "horizon",
+          "max_object_displacement_m": 6.087876412745751e-12
+        },
+        {
+          "case_id": "held-25",
+          "control": "replay_open_jaw",
+          "success": false,
+          "reason": "horizon",
+          "max_object_displacement_m": 6.003297679664053e-12
+        }
+      ]
+    },
+    "final": {
+      "episodes": 6,
+      "unexpected_successes": 0,
+      "engine_warning_episodes": 0,
+      "checks": [
+        {
+          "case_id": "held-00",
+          "control": "idle",
+          "success": false,
+          "reason": "horizon",
+          "max_object_displacement_m": 5.577190480699203e-12
+        },
+        {
+          "case_id": "held-00",
+          "control": "replay_open_jaw",
+          "success": false,
+          "reason": "horizon",
+          "max_object_displacement_m": 5.562184002001338e-12
+        },
+        {
+          "case_id": "held-07",
+          "control": "idle",
+          "success": false,
+          "reason": "horizon",
+          "max_object_displacement_m": 6.113300024655953e-12
+        },
+        {
+          "case_id": "held-07",
+          "control": "replay_open_jaw",
+          "success": false,
+          "reason": "horizon",
+          "max_object_displacement_m": 6.111972308771611e-12
+        },
+        {
+          "case_id": "held-25",
+          "control": "idle",
+          "success": false,
+          "reason": "horizon",
+          "max_object_displacement_m": 6.087876412745751e-12
+        },
+        {
+          "case_id": "held-25",
+          "control": "replay_open_jaw",
+          "success": false,
+          "reason": "horizon",
+          "max_object_displacement_m": 6.097608884588379e-12
+        }
+      ]
+    }
+  },
+  "timing": {
+    "baseline": {
+      "episode_wall_seconds": 33.95611328771338,
+      "simulated_seconds": 417.09399999995134,
+      "simulated_seconds_per_wall_second": 12.283325728886407,
+      "episode_real_time_factor_p50": 12.961395038453109,
+      "control_latency_p50_seconds_median": 0.0014042920083738863,
+      "control_latency_p95_seconds_median": 0.0019670663983561098
+    },
+    "final": {
+      "episode_wall_seconds": 38.0122980006272,
+      "simulated_seconds": 432.8739999999481,
+      "simulated_seconds_per_wall_second": 11.38773562158241,
+      "episode_real_time_factor_p50": 11.664052028339421,
+      "control_latency_p50_seconds_median": 0.0015883437590673566,
+      "control_latency_p95_seconds_median": 0.0019235491578001528
+    }
+  },
+  "timing_scope": "Single-world instrumented CPU episode: compilation, reset/settling, controller/IK, native stepping, observations and control-cadence diagnostics; excludes interpreter startup, imports, source copying, JSON I/O, installation, rendering and web UI. No GPU measurement or real-robot transfer claim.",
+  "metric_sampling": "Native joint/force/contact diagnostic maxima sampled after each20ms control step; env max pad force tracks1ms substeps. Sampled maxima are not continuous physical force peaks.",
+  "uncertainty_note": "Wilson 95% binomial reference intervals for a small fixed heterogeneous engineering suite; this is not an iid population sample or a real-world reliability interval.",
+  "rejection_probe_count": 7,
+  "limits": [
+    "Rigid axis-aligned boxes at reset, upright tool goal; no obstacle/selfcollision, cup handle, perception, deformable, orientation-generalization or physical-transfer qualification.",
+    "Equal-priority geom max mixing: jaw mu=max(1,object_friction), table mu=max(.8,object_friction). Raw friction below floors is not low-friction grasp coverage.",
+    "One execution per controller per frozen heldout case; no repeated controlled timing experiment or GPU measurement."
+  ],
+  "measurement_harness_hashes": {
+    "baseline": "b45bce3072d6a3c0c5b67307b31c184907cd0c8f08f910c004fea79a4cb44412",
+    "final": "b45bce3072d6a3c0c5b67307b31c184907cd0c8f08f910c004fea79a4cb44412"
+  },
+  "controller_extensions": {
+    "joint_target_rate_limit_rad_s": 3.0,
+    "jaw_width_rate_limit_m_s": 0.16,
+    "scope": "Round2 target trajectory ramps before gravity feedforward; actual joint/jaw velocities are measured, not clamped."
+  },
+  "status": "complete",
+  "description": "Frozen held-out test: normal actuator strength 24/24 for both controllers. Actuator stress: baseline 6/8; updated controller 5/8. The updated controller adds rate limits, grip feedback and bounded recovery, but did not improve held-out completion. Instrumented single-world CPU throughput: baseline 12.3\u00d7; updated 11.4\u00d7. This is a small simulated test with privileged state, not physical accuracy or robot qualification."
+}

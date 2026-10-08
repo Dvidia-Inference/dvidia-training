@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dvidia-training"
+version = "0.1.0"
+description = "Local CPU training from Skillspace footage, with optional simulation movement candidates"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
+dependencies = ["numpy==2.5.3"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+  "Operating System :: OS Independent",
+]
+
+[project.optional-dependencies]
+arm = ["mujoco==3.15.0"]
+
+[project.urls]
+Homepage = "https://research.dvidia.org/papers/skillspace-footage-training/"
+Repository = "https://github.com/Dvidia-Inference/dvidia-training"
+Issues = "https://github.com/Dvidia-Inference/dvidia-training/issues"
+
+[project.scripts]
+dvidia-train = "dvidia_training.footage_pipeline:main"
+dvidia-training-studio = "dvidia_training.training_studio:main"
+dvidia-training-doctor = "dvidia_training.doctor:main"
+dvidia-skill-capsule = "dvidia_training.arm_entrypoints:capsule_main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+dvidia_training = ["*.html", "*.json", "LICENSE", "requirements.lock.txt"]

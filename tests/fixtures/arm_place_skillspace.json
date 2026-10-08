@@ -1,0 +1,65 @@
+{
+  "format": "dvidia-contribution-brief",
+  "schemaVersion": 1,
+  "state": "local-proposal",
+  "skillspaceTitle": "Tabletop placement simulation",
+  "brief": {
+    "id": "brief-00000000-0000-4000-8000-000000000001",
+    "skillspaceId": "space-00000000-0000-4000-8000-000000000001",
+    "version": 1,
+    "taskId": "task-00000000-0000-4000-8000-000000000001",
+    "taskTitle": "Place an object",
+    "goal": "In an authored simulation, pick up a free box with contacting parallel jaws, transfer it to the mark, release it onto the table, and verify that it remains there. This is a box placement fixture, not a cup model or a video-derived robot policy.",
+    "captureChecklist": [
+      "The scene coordinates and authored controller are declared in simulation_grounding.",
+      "No human recording, permission grant, trained policy, or physical robot evaluation accompanies this fixture."
+    ],
+    "creatorHandle": "",
+    "createdAt": "2026-10-07T00:00:00.000Z"
+  },
+  "creatorIdentity": "self-declared-local",
+  "permissions": {
+    "publicReuseGranted": false,
+    "contributorPermissionRequired": true
+  },
+  "commercialProposal": {
+    "status": "draft",
+    "premium": "paid",
+    "price": null,
+    "necklace": "planned-included",
+    "hardware": "TBA",
+    "proposedFounderShareBps": 8000,
+    "revenueDenominator": null,
+    "remainingShareRecipients": null,
+    "contributorPermissionRequired": true,
+    "sourceAccess": "open"
+  },
+  "simulation_grounding": {
+    "schema_version": 1,
+    "task_type": "place_object",
+    "provenance": "authored_simulation_adapter",
+    "adapter_id": "contact-pick-place-box-v0",
+    "arm_profile": "dvidia-authored-6dof-parallel-jaw-v0",
+    "frame": "world",
+    "units": "m",
+    "language_aliases": ["place an object", "place the object on the mark"],
+    "workspace": {
+      "min": [0.25, -0.20, 0.29],
+      "max": [0.60, 0.20, 0.55]
+    },
+    "table_height": 0.29,
+    "object": {
+      "kind": "box",
+      "position": [0.42, -0.04, 0.31],
+      "size": [0.04, 0.04, 0.04],
+      "mass": 0.04,
+      "friction": 0.8
+    },
+    "target": {
+      "position": [0.54, 0.10, 0.31],
+      "position_tolerance": 0.025,
+      "dwell_seconds": 0.25
+    },
+    "procedure": ["approach", "descend", "close", "lift", "transfer", "place", "release", "retreat", "verify"]
+  }
+}
