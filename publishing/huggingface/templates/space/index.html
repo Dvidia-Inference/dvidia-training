@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fdfdfb">
+  <meta name="description" content="DVIDIA Training research alpha: a local CPU training pipeline, synthetic visual baseline measurements, and one recorded native simulation qualification. Training runs locally; this Space presents published evidence.">
+  <title>DVIDIA Training · Published pilot</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #fdfdfb;
+      --ink: #262623;
+      --muted: #696963;
+      --rule: #dcdcd5;
+      --rule-dark: #b7b7ae;
+      --blue: #3c6cff;
+      --serif: Georgia, "Times New Roman", Times, serif;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+      --sidebar: 220px;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--serif);
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-padding-top: 28px; }
+    body { margin: 0; font-size: 17px; line-height: 1.72; }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: .045;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.7' filter='url(%23grain)'/%3E%3C/svg%3E");
+    }
+    a { color: inherit; text-underline-offset: .2em; text-decoration-thickness: 1px; text-decoration-color: #92928a; }
+    a:hover { text-decoration-color: currentColor; }
+    :where(a, summary, iframe):focus-visible { outline: 2px solid var(--blue); outline-offset: 5px; }
+    ::selection { background: #e6e9f6; }
+    img { display: block; max-width: 100%; height: auto; }
+    h1, h2, h3 { color: #22221f; text-wrap: balance; }
+    p, li { text-wrap: pretty; }
+    p { margin: 0 0 1em; }
+    .skip-link { position: fixed; top: 12px; left: 12px; z-index: 10; transform: translateY(-180%); padding: 9px 15px; border: 1px solid var(--ink); background: var(--paper); font: 12px/1.6 var(--mono); }
+    .skip-link:focus { transform: translateY(0); }
+    .sidebar { position: fixed; inset: 0 auto 0 0; width: var(--sidebar); padding: 32px 23px 24px; border-right: 1px solid var(--rule); overflow-y: auto; font: 11px/1.7 var(--mono); }
+    .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 36px; text-decoration: none; }
+    .brand svg { flex: 0 0 auto; width: 29px; height: 29px; }
+    .brand-word { display: block; font: 600 20px/1.2 var(--sans); letter-spacing: -.055em; }
+    .brand-tag { display: block; margin-top: 4px; font-size: 9px; color: var(--muted); }
+    .nav-label { margin: 0 0 8px; color: var(--muted); font: 9px/1.6 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+    .sidebar nav + nav { margin-top: 29px; }
+    .sidebar ul { list-style: none; margin: 0; padding: 0; }
+    .sidebar li { margin: 0; }
+    .sidebar nav a { display: block; padding: 7px 0; text-decoration: none; color: #51514b; }
+    .sidebar nav a:hover { color: var(--ink); text-decoration: underline; }
+    .sidebar-note { margin-top: 32px; padding-top: 17px; border-top: 1px solid var(--rule); color: var(--muted); font-size: 10px; }
+    .sidebar-note p { margin-bottom: 7px; }
+    .page { margin-left: var(--sidebar); padding: 44px 54px 30px; }
+    .paper { max-width: 1000px; margin: 0 auto; }
+    .banner { margin: 0 0 33px; border: 1px solid #e8e8e1; }
+    .banner img { width: 100%; }
+    .eyebrow { margin: 0 0 13px; color: var(--muted); font: 10px/1.7 var(--mono); letter-spacing: .075em; text-transform: uppercase; }
+    .paper-header { max-width: 760px; margin-bottom: 35px; }
+    h1 { margin: 0 0 20px; font-size: clamp(34px, 4vw, 49px); line-height: 1.16; font-weight: 400; letter-spacing: -.035em; }
+    .intro { max-width: 64ch; font-size: 19px; line-height: 1.65; }
+    .meta { color: var(--muted); font: 10px/1.8 var(--mono); }
+    .header-links { display: flex; flex-wrap: wrap; gap: 9px 22px; margin-top: 22px; font: 11px/1.8 var(--mono); }
+    .scope { margin: 0 0 42px; padding: 20px 0; border-block: 1px solid var(--rule-dark); font-size: 16px; }
+    .scope p { max-width: 78ch; margin: 0; }
+    .scope strong { font-weight: 700; }
+    .section { padding-top: 10px; margin-bottom: 49px; scroll-margin-top: 25px; }
+    .section-heading { display: flex; align-items: baseline; gap: 15px; margin-bottom: 17px; }
+    .section-number { color: var(--muted); font: 10px/1.5 var(--mono); }
+    h2 { margin: 0; font-size: 28px; line-height: 1.3; font-weight: 400; letter-spacing: -.02em; }
+    h3 { margin: 25px 0 10px; font-size: 19px; line-height: 1.4; font-weight: 400; }
+    .section > p, .section > ul, .section > ol { max-width: 78ch; }
+    .section ul, .section ol { padding-left: 1.4em; }
+    .section li { margin-bottom: .5em; }
+    .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin: 25px 0 19px; padding: 18px 0 19px; border-block: 1px solid var(--rule); }
+    .metrics div { min-width: 0; }
+    .metrics dt { color: var(--muted); font: 9px/1.6 var(--mono); }
+    .metrics dd { margin: 7px 0 0; font-size: 27px; line-height: 1.15; letter-spacing: -.03em; }
+    .metrics dd small { font-size: 14px; letter-spacing: 0; }
+    .table-wrap { overflow-x: auto; margin: 23px 0 14px; }
+    table { width: 100%; border-collapse: collapse; border-block: 1px solid var(--rule-dark); font-size: 15px; line-height: 1.55; }
+    caption { padding: 0 0 12px; text-align: left; color: var(--muted); font: 10px/1.6 var(--mono); }
+    th, td { padding: 12px 20px 12px 0; text-align: left; vertical-align: top; }
+    th:last-child, td:last-child { padding-right: 0; }
+    thead { border-bottom: 1px solid var(--rule-dark); }
+    th { font-weight: 700; }
+    tbody tr + tr { border-top: 1px solid var(--rule); }
+    .numeric { white-space: nowrap; font: 12px/1.8 var(--mono); }
+    .note { color: var(--muted); font: 11px/1.85 var(--mono); }
+    .note a { color: inherit; }
+    .evidence-links { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 20px; font: 11px/1.8 var(--mono); }
+    .replay { margin: 24px 0 0; }
+    .replay iframe { display: block; width: 100%; height: 850px; border: 1px solid var(--rule); background: #f7f7f2; }
+    .replay figcaption { margin-top: 11px; color: var(--muted); font: 11px/1.8 var(--mono); }
+    pre { padding: 19px 21px; margin: 18px 0 15px; overflow-x: auto; border: 1px solid var(--rule); background: #f7f7f3; line-height: 1.65; tab-size: 2; }
+    code { font: 12px/1.65 var(--mono); }
+    :not(pre) > code { padding: .1em .25em; background: #eeeeea; font-size: .78em; overflow-wrap: anywhere; }
+    .download-list { margin: 21px 0 0; padding: 0; border-top: 1px solid var(--rule-dark); }
+    .download-list div { display: grid; grid-template-columns: 190px 1fr; gap: 22px; padding: 17px 0; border-bottom: 1px solid var(--rule); }
+    .download-list dt { font: 12px/1.7 var(--mono); }
+    .download-list dd { margin: 0; color: #5a5a53; font-size: 15px; }
+    .limit-list { margin: 19px 0 0; }
+    .footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px 24px; margin-top: 57px; padding-top: 18px; border-top: 1px solid var(--rule); color: var(--muted); font: 10px/1.8 var(--mono); }
+    .footer p { margin: 0; }
+    @media (min-width: 1500px) { .page { padding-top: 60px; } }
+    @media (max-width: 1100px) {
+      :root { --sidebar: 200px; }
+      .page { padding: 34px 32px 27px; }
+      .sidebar { padding-inline: 20px; }
+      .metrics { grid-template-columns: repeat(2, 1fr); gap: 21px; }
+    }
+    @media (max-width: 760px) {
+      .sidebar { position: static; width: auto; border-right: 0; border-bottom: 1px solid var(--rule); padding: 20px 23px 16px; overflow: visible; }
+      .brand { margin-bottom: 18px; }
+      .sidebar nav + nav, .sidebar-note, .nav-label { display: none; }
+      .sidebar nav ul { display: flex; flex-wrap: wrap; gap: 2px 19px; }
+      .sidebar nav a { padding: 7px 0; }
+      .page { margin: 0; padding: 25px 23px 25px; }
+      .banner { margin-bottom: 24px; }
+      .paper-header { margin-bottom: 27px; }
+      h1 { font-size: 36px; }
+      .intro { font-size: 18px; }
+      .scope { margin-bottom: 31px; }
+      .section { margin-bottom: 39px; }
+      h2 { font-size: 25px; }
+      .section-heading { gap: 11px; }
+      .download-list div { grid-template-columns: 1fr; gap: 4px; }
+      .replay iframe { height: 980px; }
+      pre { padding: 16px 17px; }
+      .footer { margin-top: 42px; }
+    }
+    @media (max-width: 380px) {
+      .page, .sidebar { padding-inline: 18px; }
+      h1 { font-size: 31px; }
+      .metrics dd { font-size: 25px; }
+    }
+    @media print {
+      :root { --paper: #fff; --ink: #000; --muted: #333; }
+      body { font-size: 11pt; }
+      body::before, .sidebar, .skip-link, .banner, .replay iframe { display: none; }
+      .page { margin: 0; padding: 0; }
+      .paper { max-width: none; }
+      .section { break-inside: avoid; }
+      h1 { font-size: 27pt; }
+      h2 { font-size: 18pt; }
+      pre { white-space: pre-wrap; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="sidebar" aria-label="Pilot navigation">
+    <a class="brand" href="#main" aria-label="DVIDIA Training, published pilot">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="16" fill="#3c6cff"/>
+        <g fill="#f7f6f2">
+          <rect x="8" y="20" width="4.6" height="24" rx="1.2" opacity=".28"/>
+          <rect x="14.1" y="20" width="4.6" height="24" rx="1.2" opacity=".38"/>
+          <rect x="20.2" y="20" width="4.6" height="24" rx="1.2" opacity=".48"/>
+          <rect x="26.3" y="20" width="4.6" height="24" rx="1.2" opacity=".58"/>
+          <rect x="32.4" y="20" width="4.6" height="24" rx="1.2" opacity=".68"/>
+          <rect x="38.5" y="20" width="4.6" height="24" rx="1.2" opacity=".78"/>
+          <rect x="44.6" y="20" width="4.6" height="24" rx="1.2" opacity=".9"/>
+          <rect x="50.7" y="20" width="4.6" height="24" rx="1.2" fill="#fff"/>
+        </g>
+      </svg>
+      <span><span class="brand-word">DVIDIA</span><span class="brand-tag">Open physical skills</span></span>
+    </a>
+    <nav aria-label="On this page">
+      <p class="nav-label">Training pilot</p>
+      <ul>
+        <li><a href="#pipeline">Local pipeline</a></li>
+        <li><a href="#visual">Visual baseline</a></li>
+        <li><a href="#movement">Movement candidate</a></li>
+        <li><a href="#replay">Recorded qualification</a></li>
+        <li><a href="#install">Run locally</a></li>
+        <li><a href="#artifacts">Published artifacts</a></li>
+        <li><a href="#limits">Research limits</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Project links">
+      <p class="nav-label">Follow the work</p>
+      <ul>
+        <li><a href="https://github.com/Dvidia-Inference/dvidia-training">GitHub source ↗</a></li>
+        <li><a href="https://research.dvidia.org/papers/skillspace-footage-training/">Research paper ↗</a></li>
+        <li><a href="https://dvidia.org">DVIDIA ↗</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-note">
+      <p>Research alpha</p>
+      <p>Simulation-only evidence<br>MIT licensed</p>
+      <p>Published pilot · 8 Oct 2026</p>
+    </div>
+  </aside>
+
+  <main class="page" id="main">
+    <article class="paper" aria-labelledby="page-title">
+      <figure class="banner">
+        <img src="assets/branding/github-header.png" alt="DVIDIA Training — toward installable robot skills. Open source, offline, CPU." width="2172" height="724" fetchpriority="high">
+      </figure>
+      <header class="paper-header">
+        <p class="eyebrow">DVIDIA Training · Research alpha · Simulation only</p>
+        <h1 id="page-title">Local training.<br>Published evidence.</h1>
+        <p class="intro">A small CPU pipeline for training visual predictors from Skillspace footage, with an optional movement branch for aligned action labels.</p>
+        <p class="meta">Published pilot · <time datetime="2026-10-08">8 October 2026</time> · Toward installable robot skills</p>
+        <div class="header-links">
+          <a href="#install">Install the local tool</a>
+          <a href="#replay">Inspect the recorded replay</a>
+          <a href="https://github.com/Dvidia-Inference/dvidia-training">View the source ↗</a>
+        </div>
+      </header>
+
+      <aside class="scope" aria-label="What this Space provides">
+        <p><strong>Train on your own computer or server.</strong> This Space shows fixed, published measurements and a recorded simulation replay. It offers no hosted training or uploads. The current pilot establishes neither a hardware skill nor a bridge from raw human video to robot actions.</p>
+      </aside>
+
+      <section class="section" id="pipeline" aria-labelledby="pipeline-title">
+        <div class="section-heading"><span class="section-number">01</span><h2 id="pipeline-title">A local, inspectable pipeline</h2></div>
+        <p>The tool checks actual videos and connected source groups, freezes training/development/test splits, fits a small model on a CPU, and exports learned weights with held-out measurements and integrity hashes.</p>
+        <p>The base learner needs Python 3.12+, NumPy, and FFmpeg with <code>ffprobe</code>. It requires no GPU, CUDA, account, or API key. Training runs offline by default; installing software and downloading public data are separate steps.</p>
+        <p>Visual fitting and movement fitting have different inputs. Footage trains the visual predictor. The optional movement branch requires compatible, validated numerical action supervision and a task adapter.</p>
+        <div class="evidence-links">
+          <a href="https://github.com/Dvidia-Inference/dvidia-training/blob/main/docs/pipeline.md">Pipeline documentation ↗</a>
+          <a href="https://github.com/Dvidia-Inference/dvidia-training/blob/main/docs/skillspace-format.md">Dataset and action contracts ↗</a>
+        </div>
+      </section>
+
+      <section class="section" id="visual" aria-labelledby="visual-title">
+        <div class="section-heading"><span class="section-number">02</span><h2 id="visual-title">Synthetic visual baseline</h2></div>
+        <p>Ten explicitly synthetic moving-disc videos exercise intake, fitting, evaluation, and export. PCA is fitted on training footage only; a ridge next-frame predictor uses development groups to select regularization, then scores held-out footage.</p>
+        <dl class="metrics">
+          <div><dt>Synthetic clips</dt><dd>10</dd></div>
+          <div><dt>Source duration</dt><dd>60 <small>seconds</small></dd></div>
+          <div><dt>Median pipeline time</dt><dd>0.5106 <small>seconds</small></dd></div>
+          <div><dt>Train / dev / test groups</dt><dd>7 / 2 / 1</dd></div>
+        </dl>
+        <div class="table-wrap">
+          <table>
+            <caption>Held-out visual error · lower is better</caption>
+            <thead><tr><th scope="col">Predictor</th><th scope="col">RGB mean squared error</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Learned next-frame predictor</th><td class="numeric">0.0003038793</td></tr>
+              <tr><th scope="row">Last-frame baseline</th><td class="numeric">0.0017714138</td></tr>
+              <tr><th scope="row">Training-mean frame baseline</th><td class="numeric">0.0013307309</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">Three pipeline repeats on one Apple M5 macOS host with 24 GiB RAM; the same held-out recording, containing 11 correlated transitions, was re-scored. Timing covers intake, fitting, and export. Software installation, imports, synthetic source creation, and the separate integrity inspection are excluded. This is a small software-throughput measurement, not a robotics success rate or a minimum hardware requirement.</p>
+        <div class="evidence-links">
+          <a href="https://github.com/Dvidia-Inference/dvidia-training/blob/main/benchmarks/macos-m5.json">Benchmark receipt ↗</a>
+          <a href="https://github.com/Dvidia-Inference/dvidia-training/blob/main/docs/hardware.md">Hardware scope and checks ↗</a>
+        </div>
+      </section>
+
+      <section class="section" id="movement" aria-labelledby="movement-title">
+        <div class="section-heading"><span class="section-number">03</span><h2 id="movement-title">A learned movement candidate</h2></div>
+        <p>A separate native simulation pilot fits a six-joint delta head from aligned simulator state and authored joint targets. The training set contains 4,029 numerical labels across seven recordings; development uses two recordings, and one recording is held out.</p>
+        <div class="table-wrap">
+          <table>
+            <caption>Held-out joint-delta error · 621 samples from one recording</caption>
+            <thead><tr><th scope="col">Movement predictor</th><th scope="col">Mean squared error</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Learned joint-delta head</th><td class="numeric">5.7679 × 10<sup>−7</sup></td></tr>
+              <tr><th scope="row">Training-mean delta baseline</th><td class="numeric">7.8429 × 10<sup>−5</sup></td></tr>
+              <tr><th scope="row">Zero-delta baseline</th><td class="numeric">8.1727 × 10<sup>−5</sup></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>The candidate retains authored task phases, gripper/contact logic, and recovery. Control uses privileged simulator observations; camera perception is not used to drive the arm. The labels were not inferred from human video.</p>
+        <div class="evidence-links">
+          <a href="https://huggingface.co/{{HF_ORG}}/dvidia-training-pilot">Inspect the pilot artifacts ↗</a>
+          <a href="https://github.com/Dvidia-Inference/dvidia-training/blob/main/benchmarks/native_pilot.py">Reproduction script ↗</a>
+        </div>
+      </section>
+
+      <section class="section" id="replay" aria-labelledby="replay-title">
+        <div class="section-heading"><span class="section-number">04</span><h2 id="replay-title">One held-out scene, replayed</h2></div>
+        <p>The candidate is installed into the bounded native placement adapter and tested in the exact scene of the held-out synthetic recording. The arm establishes contact, lifts the free box, and places it at the target. A control replay with identical joint targets and open jaws fails the placement test.</p>
+        <div class="table-wrap">
+          <table>
+            <caption>Independent native qualification · one exact simulation scene</caption>
+            <thead><tr><th scope="col">Run</th><th scope="col">Recorded outcome</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Learned candidate with contact/gripper supervisor</th><td>Pass</td></tr>
+              <tr><th scope="row">Identical joint targets, open jaws</th><td>Fail</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">The replay displays saved native physics states. Playback, scrubbing, and view rotation do not run new training or a new physics experiment. A passing recorded scene does not establish generalization to another scene or a physical robot.</p>
+        <div class="evidence-links">
+          <a href="replay.html">Open the full recorded replay</a>
+          <a href="https://huggingface.co/{{HF_ORG}}/dvidia-training-pilot">Inspect qualification and control receipts ↗</a>
+        </div>
+        <figure class="replay">
+          <iframe src="replay.html" title="Recorded native simulation qualification: learned candidate and open-jaw control in one held-out scene" loading="lazy" sandbox="allow-scripts allow-downloads" referrerpolicy="no-referrer"></iframe>
+          <figcaption>Recorded evidence · simulation only. Select the candidate or open-jaw control inside the replay, or <a href="replay.html">open it in the full view</a>.</figcaption>
+        </figure>
+      </section>
+
+      <section class="section" id="install" aria-labelledby="install-title">
+        <div class="section-heading"><span class="section-number">05</span><h2 id="install-title">Run the tool locally</h2></div>
+        <p>Install Python 3.12+ and FFmpeg first, then use these macOS/Linux commands. The local studio opens at <a href="http://127.0.0.1:8270">127.0.0.1:8270</a> on your own machine.</p>
+        <pre><code>git clone https://github.com/Dvidia-Inference/dvidia-training.git
+cd dvidia-training
+python3.12 -m venv .venv
+.venv/bin/python -m pip install .
+.venv/bin/dvidia-training-studio --directory runs/studio</code></pre>
+        <p>To reproduce the synthetic visual path, create a small example, train it, and inspect its export. Each run requires a fresh output directory.</p>
+        <pre><code>.venv/bin/dvidia-train example --clips 10 --output examples/visual-demo
+.venv/bin/dvidia-train run examples/visual-demo --output runs/visual-demo
+.venv/bin/dvidia-train inspect runs/visual-demo</code></pre>
+        <p>The optional native arm branch adds MuJoCo and the capsule tools through <code>.venv/bin/python -m pip install ".[arm]"</code>. Its task contract and closed-loop qualification are separate from visual fitting.</p>
+        <div class="evidence-links">
+          <a href="https://github.com/Dvidia-Inference/dvidia-training/blob/main/docs/installation.md">Complete installation guide ↗</a>
+          <a href="https://github.com/Dvidia-Inference/dvidia-training/blob/main/docs/installation.md#windows-powershell">Windows PowerShell ↗</a>
+          <a href="https://github.com/Dvidia-Inference/dvidia-training/blob/main/docs/hardware.md">Check your machine ↗</a>
+        </div>
+      </section>
+
+      <section class="section" id="artifacts" aria-labelledby="artifacts-title">
+        <div class="section-heading"><span class="section-number">06</span><h2 id="artifacts-title">Inspect the published artifacts</h2></div>
+        <p>The source, example data, and pilot outputs are available for inspection and local reproduction. Integrity hashes check consistency; they do not authenticate capture history or independently establish measured truth.</p>
+        <dl class="download-list">
+          <div><dt><a href="https://huggingface.co/datasets/{{HF_ORG}}/dvidia-training-examples">Example dataset ↗</a></dt><dd>Explicitly synthetic visual examples and native simulation evidence, with frozen prepared inputs under <code>visual/prepared</code> and <code>native/prepared</code>. These are software and simulation fixtures, not recorded human skill demonstrations.</dd></div>
+          <div><dt><a href="https://huggingface.co/{{HF_ORG}}/dvidia-training-pilot">Pilot artifacts ↗</a></dt><dd>Visual weights, the learned movement candidate, evaluation reports, and qualification/control evidence. A movement candidate remains bound to its declared adapter and scene qualification.</dd></div>
+          <div><dt><a href="https://github.com/Dvidia-Inference/dvidia-training">Source repository ↗</a></dt><dd>The MIT-licensed local training tool, installation guides, data contracts, and reproduction commands.</dd></div>
+          <div><dt><a href="https://research.dvidia.org/papers/skillspace-footage-training/">Research publication ↗</a></dt><dd>The pilot methods, observations, and measured limitations in the DVIDIA research notebook.</dd></div>
+        </dl>
+      </section>
+
+      <section class="section" id="limits" aria-labelledby="limits-title">
+        <div class="section-heading"><span class="section-number">07</span><h2 id="limits-title">What remains open</h2></div>
+        <p>The long-term aim is installable robot skills. This research alpha is a smaller, inspectable step toward that aim.</p>
+        <ul class="limit-list">
+          <li>Visual prediction error does not establish task success, calibrated geometry, or robot competence.</li>
+          <li>No human-video action bridge, shoe organization policy, or demonstration sufficiency threshold has been established.</li>
+          <li>The movement evidence covers one held-out synthetic recording and its exact simulation scene. Independent scene generalization remains unmeasured.</li>
+          <li>Task phases, contact/gripper logic, and recovery remain authored. Hardware sensing, calibration, actuation, and physical qualification remain separate work.</li>
+        </ul>
+        <p class="note">Research alpha · no qualified hardware skill · no hosted training or uploads.</p>
+      </section>
+
+      <footer class="footer">
+        <p>DVIDIA · Open physical skills · MIT licensed</p>
+        <p><a href="https://research.dvidia.org">Research notebook</a> · <a href="https://github.com/Dvidia-Inference/dvidia-training">GitHub</a></p>
+      </footer>
+    </article>
+  </main>
+</body>
+</html>
