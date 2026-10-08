@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "kind": "dvidia.public-huggingface-pilot-verification",
+  "date": "2026-10-08",
+  "scope": "Public authored synthetic v0.1.0 evidence; no human recordings or hardware qualification.",
+  "repositories": [
+    {
+      "repo_id": "Dvidia/dvidia-training-examples",
+      "repo_type": "dataset",
+      "commit": "04598efff57cf47125855881ae18a53d17cc640c",
+      "verified_files": 86,
+      "inventory_sha256": "f5566c087984e9a6f1783e6f3f70f17bc098acca03ece1c12812a032616e7012"
+    },
+    {
+      "repo_id": "Dvidia/dvidia-training-pilot",
+      "repo_type": "model",
+      "commit": "d249e81596d774fbdd2abf2e1438977ccfad69a3",
+      "verified_files": 30,
+      "inventory_sha256": "0bb45f23db29c744915097a4ad0c67c6c8401efb4d5ef3abec694d2db6090e2d"
+    },
+    {
+      "repo_id": "Dvidia/dvidia-training",
+      "repo_type": "space",
+      "commit": "61e9d5f0041bca1422188f06e7a7115f61935b44",
+      "verified_files": 8,
+      "inventory_sha256": "bed21dc57a57cdeead882acceed77cf0e5b383b636ee5391bd0437cf7dde6af9"
+    }
+  ],
+  "verification": "Every planned file downloaded anonymously at its fixed commit and matched by byte count and SHA256. The native ZIP used HTTP byte ranges due to a stalled whole-file transfer.",
+  "dataset_card_update": {
+    "repo_id": "Dvidia/dvidia-training-examples",
+    "commit": "d351a32923d54e3166e8ff780fd827c80174a903",
+    "path": "README.md",
+    "prior_sha256": "40be5f617f01da1d55835a131d600b26fe32e5bf26ec304f2aaef576ac252ab4",
+    "sha256": "92590f355fb7fc2aa65edc65328e4d3f39c7a74a8b6804409a3f07ae33c67f2d",
+    "scope": "Archive viewer metadata and explanatory documentation only; dataset files unchanged."
+  },
+  "consumer_reproduction": {
+    "source": "Public visual-skillspace.zip",
+    "offline": true,
+    "test_rgb_mse": 0.00030387928412713475,
+    "physical_robot_ready": false
+  }
+}
