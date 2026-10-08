@@ -273,6 +273,21 @@ class PublicationTests(unittest.TestCase):
         self.assertTrue(all(call.kwargs['revision'] == 'b' * 40 and call.kwargs['token'] is False
                             for call in download.call_args_list))
 
+    def test_selection_skips_unselected_destinations_but_checks_the_entire_plan(self):
+        api = self.api()
+        with mock.patch.object(publisher, 'client', return_value=(api, 'fixture-token')):
+            with mock.patch.object(huggingface_hub, 'hf_hub_download', side_effect=self.download):
+                with redirect_stdout(io.StringIO()):
+                    results = publisher.publish(self.path, only=['model', 'space'])
+        self.assertEqual({row['repo_type'] for row in results}, {'model', 'space'})
+        self.assertEqual({call.kwargs['repo_type'] for call in api.repo_info.call_args_list}, {'model', 'space'})
+        self.assertEqual(api.create_commit.call_count, 2)
+        (self.root / 'dataset' / 'README.md').write_text('unreviewed change')
+        with mock.patch.object(publisher, 'client') as client:
+            with self.assertRaises(publisher.PublicationError):
+                publisher.publish(self.path, only=['model', 'space'])
+            client.assert_not_called()
+
     def test_main_suppresses_raw_sdk_valueerror_containing_a_secret(self):
         api = self.api()
         secret = 'hf_' + 'Y' * 32

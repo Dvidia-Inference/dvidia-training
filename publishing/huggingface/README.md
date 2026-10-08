@@ -38,6 +38,8 @@ The publisher checks organization membership, refuses private or unrelated exist
 
 Retrying an interrupted publication is supported when destination files still match the same plan. Existing files with changed content require a separately reviewed update workflow; this initial-publication tool refuses to overwrite them.
 
+To complete independent repositories while another download is delayed, add `--only model space` (or `--only dataset`). The entire reviewed plan still passes local inventory and hash checks; only the selected destinations are read or changed. Each invocation's receipt records the repositories it actually verified.
+
 If the accelerated transfer backend stalls, retry the same command with `HF_HUB_DISABLE_XET=1` in its environment to use the SDK's documented fallback. Verification reads use up to four concurrent downloads at fixed commits.
 
 Official references: [Hub uploads](https://huggingface.co/docs/huggingface_hub/guides/upload), [fine-grained token scopes](https://huggingface.co/docs/hub/security-tokens), [SDK environment settings](https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables).

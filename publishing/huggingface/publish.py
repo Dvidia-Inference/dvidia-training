@@ -130,9 +130,13 @@ def verified_downloads(row, revision, token):
         list(pool.map(verify, row['files']))
 
 
-def publish(path):
+def publish(path, only=None):
     path = Path(path).absolute()
     plan = checked_plan(path)
+    selected = set(only or REPOS)
+    if not selected <= set(REPOS):
+        raise PublicationError('Choose only the planned dataset, model or Space.')
+    repositories = [row for row in plan['repositories'] if row['repo_type'] in selected]
     receipt_path = path.parent / 'publication-receipt.json'
     if receipt_path.is_symlink() or (receipt_path.exists() and not receipt_path.is_file()):
         raise PublicationError('Publication receipt must be a plain local file.')
@@ -140,7 +144,7 @@ def publish(path):
     # Freeze the reviewed payload before remote calls. Upload these exact bytes,
     # even if a local file changes while the API preflight is in progress.
     payload = {}
-    for row in plan['repositories']:
+    for row in repositories:
         for item in row['files']:
             raw = (path.parent / row['directory'] / safe_relative(item['path'])).read_bytes()
             if {'bytes': len(raw), 'sha256': sha256(raw).hexdigest()} != {'bytes': item['bytes'], 'sha256': item['sha256']}:
@@ -155,7 +159,7 @@ def publish(path):
     from huggingface_hub.errors import RepositoryNotFoundError
     from huggingface_hub import CommitOperationAdd
     destinations = []
-    for row in plan['repositories']:
+    for row in repositories:
         try:
             info = api.repo_info(row['repo_id'], repo_type=row['repo_type'])
         except RepositoryNotFoundError:
@@ -204,6 +208,8 @@ def main():
     for name in ('check', 'publish'):
         sub = commands.add_parser(name)
         sub.add_argument('plan', type=Path)
+        if name == 'publish':
+            sub.add_argument('--only', nargs='+', choices=tuple(REPOS), help='Publish selected reviewed artifacts independently.')
     args = parser.parse_args()
     try:
         if args.command == 'identity':
@@ -214,7 +220,7 @@ def main():
             plan = checked_plan(args.plan)
             print(json.dumps({'checked_repositories': [r['repo_id'] for r in plan['repositories']]}))
         else:
-            publish(args.plan)
+            publish(args.plan, only=args.only)
     except KeyboardInterrupt:
         print('Publishing interrupted; completed public commits remain available for the same-plan retry.', file=sys.stderr)
         return 130
