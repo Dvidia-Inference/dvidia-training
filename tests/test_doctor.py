@@ -122,7 +122,7 @@ class DoctorTests(unittest.TestCase):
 
     def test_ram_queries_cover_linux_macos_windows_and_unknown(self):
         patch.stopall()
-        with patch.object(doctor.os, 'sysconf', side_effect=lambda key: {'SC_PHYS_PAGES': 1048576, 'SC_PAGE_SIZE': 4096}[key]):
+        with patch.object(doctor.os, 'sysconf', side_effect=lambda key: {'SC_PHYS_PAGES': 1048576, 'SC_PAGE_SIZE': 4096}[key], create=True):
             self.assertEqual(doctor._ram_bytes('Linux'), 4 * doctor.GIB)
         with patch.object(doctor, '_query', return_value=str(8 * doctor.GIB)) as query:
             self.assertEqual(doctor._ram_bytes('Darwin'), 8 * doctor.GIB)

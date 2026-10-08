@@ -52,7 +52,11 @@ def archive_bytes(entries):
     stream = io.BytesIO()
     with zipfile.ZipFile(stream, 'w') as archive:
         for name, data in entries:
-            archive.writestr(name, data)
+            # Windows ZipInfo normalizes backslashes in its constructor. Keep
+            # the actual malicious member bytes intact for the boundary test.
+            member = zipfile.ZipInfo(name)
+            member.filename = member.orig_filename = name
+            archive.writestr(member, data)
     return stream.getvalue()
 
 
