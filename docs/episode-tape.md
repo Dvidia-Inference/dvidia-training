@@ -14,26 +14,29 @@ have not been established across machines.
 ## Record fresh evidence
 
 Install the simulator extra using the [installation guide](installation.md).
+The commands below run from the checkout with its installed virtual environment.
+In Windows PowerShell, replace `.venv/bin/COMMAND` with `.\venv\Scripts\COMMAND.exe`
+and put continued commands on one line.
 Use a fresh output path outside the frozen benchmark directories:
 
 ```sh
 mkdir -p runs/episode-tapes
-python -m dvidia_training.episode_tape record \
+.venv/bin/dvidia-episode-tape record \
   --output runs/episode-tapes/nominal-19050.json \
   --episode-id nominal-19050 \
   --source-recording-id recording-nominal-19050 \
   --session-id simulation-session-19050 \
   --seed 19050 --case nominal
 
-python -m dvidia_training.episode_tape record \
+.venv/bin/dvidia-episode-tape record \
   --output runs/episode-tapes/open-jaw-19050.json \
   --episode-id open-jaw-19050 \
   --source-recording-id recording-open-jaw-19050 \
   --session-id simulation-session-19050 \
   --seed 19050 --case open-jaw
 
-python -m dvidia_training.episode_tape validate runs/episode-tapes/nominal-19050.json
-python -m dvidia_training.episode_tape inspect runs/episode-tapes/open-jaw-19050.json
+.venv/bin/dvidia-episode-tape validate runs/episode-tapes/nominal-19050.json
+.venv/bin/dvidia-episode-tape inspect runs/episode-tapes/open-jaw-19050.json
 ```
 
 The `nominal` case records the unchanged authored controller. `open-jaw` keeps
