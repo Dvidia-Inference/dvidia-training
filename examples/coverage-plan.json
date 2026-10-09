@@ -1,0 +1,167 @@
+{
+  "format": "dvidia.skillspace-coverage-plan",
+  "schema_version": 1,
+  "plan_id": "demo-rigid-placement",
+  "plan_revision": 1,
+  "skill": {
+    "name": "Rigid object placement · planning example",
+    "goal": "Move one supported rigid box onto a marked target and verify stable release.",
+    "operating_envelope": "Authored six-DOF arm with parallel jaws and bounded rigid-box table scene. This is a capture-planning example; shoes, deformables and physical hardware are outside the current adapter."
+  },
+  "cases": [
+    {
+      "id": "nominal",
+      "label": "Nominal placement",
+      "brief": "Show one complete rigid-object placement, from initial state through release and stable final position.",
+      "outcome": "success",
+      "required_groups": 2,
+      "priority": 6
+    },
+    {
+      "id": "new-instance",
+      "label": "Different physical object",
+      "brief": "Use another physical instance within the supported size and material envelope. Preserve its stable object identity.",
+      "outcome": "success",
+      "required_groups": 2,
+      "priority": 8
+    },
+    {
+      "id": "empty-grasp",
+      "label": "Empty grasp",
+      "brief": "Record an observed empty closure with the jaws and object visible, preserving the failed outcome. Do not label commanded closure as holding.",
+      "outcome": "failure",
+      "required_groups": 1,
+      "priority": 9
+    },
+    {
+      "id": "recovery",
+      "label": "Recovery after missed grasp",
+      "brief": "Capture the missed grasp, corrective attempt and final observed result in one complete episode.",
+      "outcome": "recovery",
+      "required_groups": 2,
+      "priority": 10
+    },
+    {
+      "id": "occlusion",
+      "label": "Brief visibility loss",
+      "brief": "Capture a complete placement with a documented short visibility interruption and observable final state. Retain uncertainty where contact is not visible.",
+      "outcome": "success",
+      "required_groups": 2,
+      "priority": 7
+    },
+    {
+      "id": "rotated-start",
+      "label": "Rotated starting object",
+      "brief": "Vary the initial object orientation within the supported envelope, keeping the whole attempt and final outcome visible.",
+      "outcome": "success",
+      "required_groups": 2,
+      "priority": 5
+    }
+  ],
+  "benchmark": {
+    "status": "specified",
+    "environment": "Proposed contact-pick-place-box-v0 simulation suite; no new suite is executed by this planner.",
+    "reason": "Descriptor only. Fresh frozen scenarios and artifact-bound results are still required.",
+    "success_predicate": "Observe grasp, lift, transfer, release and target stability using the independent native task gate; count every attempted trial.",
+    "failure_cases": [
+      "Empty grasp",
+      "Slip or drop",
+      "Unreachable start",
+      "Insufficient jaw force",
+      "Observation loss",
+      "Matched open-jaw negative control"
+    ]
+  },
+  "evidence": [
+    {
+      "id": "demo-nominal-a",
+      "plan_revision": 1,
+      "case_id": "nominal",
+      "media_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "complete": true,
+      "outcome": "success",
+      "review_state": "accepted",
+      "review_origin": "human",
+      "rights_status": "approved",
+      "split": "train",
+      "source_recording_id": "demo-recording-nominal-a",
+      "session_id": "demo-session-nominal-a",
+      "object_instance_id": "demo-object-nominal-a"
+    },
+    {
+      "id": "demo-nominal-b",
+      "plan_revision": 1,
+      "case_id": "nominal",
+      "media_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "complete": true,
+      "outcome": "success",
+      "review_state": "accepted",
+      "review_origin": "human",
+      "rights_status": "approved",
+      "split": "train",
+      "source_recording_id": "demo-recording-nominal-b",
+      "session_id": "demo-session-nominal-b",
+      "object_instance_id": "demo-object-nominal-b"
+    },
+    {
+      "id": "demo-instance-a",
+      "plan_revision": 1,
+      "case_id": "new-instance",
+      "media_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "complete": true,
+      "outcome": "success",
+      "review_state": "accepted",
+      "review_origin": "human",
+      "rights_status": "approved",
+      "split": "dev",
+      "source_recording_id": "demo-recording-instance-a",
+      "session_id": "demo-session-instance-a",
+      "object_instance_id": "demo-object-instance-a"
+    },
+    {
+      "id": "demo-failure-a",
+      "plan_revision": 1,
+      "case_id": "empty-grasp",
+      "media_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "complete": true,
+      "outcome": "failure",
+      "review_state": "accepted",
+      "review_origin": "human",
+      "rights_status": "approved",
+      "split": "train",
+      "source_recording_id": "demo-recording-failure-a",
+      "session_id": "demo-session-failure-a",
+      "object_instance_id": "demo-object-failure-a"
+    },
+    {
+      "id": "demo-recovery-proposal",
+      "plan_revision": 1,
+      "case_id": "recovery",
+      "media_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "complete": true,
+      "outcome": "recovery",
+      "review_state": "proposed",
+      "review_origin": "ai",
+      "rights_status": "approved",
+      "split": "train",
+      "source_recording_id": "demo-recording-recovery-proposal",
+      "session_id": "demo-session-recovery-proposal",
+      "object_instance_id": "demo-object-recovery-proposal"
+    },
+    {
+      "id": "demo-occlusion-pending",
+      "plan_revision": 1,
+      "case_id": "occlusion",
+      "media_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "complete": true,
+      "outcome": "success",
+      "review_state": "proposed",
+      "review_origin": "human",
+      "rights_status": "unknown",
+      "split": "train",
+      "source_recording_id": "demo-recording-occlusion-pending",
+      "session_id": "demo-session-occlusion-pending",
+      "object_instance_id": "demo-object-occlusion-pending"
+    }
+  ]
+}

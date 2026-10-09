@@ -11,9 +11,11 @@ import tempfile
 import threading
 import time
 import unittest
+from unittest import mock
 import zipfile
 
-from dvidia_training.training_studio import TrainingStudioServer, UPLOAD_LIMIT, configure
+from dvidia_training.coverage import MAX_PLAN_BYTES
+from dvidia_training.training_studio import JSON_LIMIT, TrainingStudioServer, UPLOAD_LIMIT, configure
 
 
 def artifact_run(source, output, *, offline=True, seed=17):
@@ -134,6 +136,146 @@ class TrainingStudioHTTPTests(unittest.TestCase):
         self.assertIsNone(state['summary'])
         self.assertEqual(self.request('/download', method='GET')[0], 409)
         self.assertEqual(self.request('/api/result', method='GET')[0], 409)
+
+    def test_coverage_ui_and_example_are_planning_only_and_create_no_job(self):
+        status, headers, body = self.request('/coverage', method='GET')
+        self.assertEqual(status, 200)
+        self.assertIn(b'Cover the skill, one useful example at a time.', body)
+        self.assertIn(b'Not evaluated', body)
+        self.assertIn(b'Not run', body)
+        self.assertIn(b'No footage has been checked', body)
+        self.assertIn("frame-ancestors 'none'", headers['Content-Security-Policy'])
+        self.assertEqual(headers['X-Content-Type-Options'], 'nosniff')
+        self.assertNotIn('Access-Control-Allow-Origin', headers)
+        status, _, plan = self.request('/api/coverage/example', method='GET')
+        self.assertEqual(status, 200)
+        self.assertEqual(plan['format'], 'dvidia.skillspace-coverage-plan')
+        self.assertTrue(plan['plan_id'].startswith('demo-'))
+        status, _, summary = self.request('/api/coverage/inspect', plan)
+        self.assertEqual(status, 200, summary)
+        self.assertEqual(summary['plan'], plan)
+        self.assertEqual(summary['coverage']['cells_met'], 2)
+        self.assertEqual(summary['coverage']['cells_total'], 6)
+        self.assertFalse(summary['coverage']['all_cells_met'])
+        self.assertFalse(summary['robot_skill_acquired'])
+        self.assertFalse(summary['physical_robot_ready'])
+        self.assertFalse(summary['benchmark']['executed'])
+        self.assertFalse(summary['benchmark']['qualified'])
+        self.assertFalse(summary['recognition']['payments_active'])
+        self.assertFalse(summary['recognition']['awards_issued'])
+        self.assertTrue(any('fabricated' in warning for warning in summary['warnings']))
+        self.assertTrue(any('declared metadata' in warning for warning in summary['warnings']))
+        self.assertIsNone(self.server.job)
+        self.assertFalse((self.server.directory / 'jobs').exists())
+        self.assertFalse((self.server.directory / 'uploads').exists())
+        self.assertEqual(self.outcome()['status'], 'idle')
+
+    def test_coverage_routes_keep_the_loopback_origin_and_host_boundary(self):
+        plan = self.request('/api/coverage/example', method='GET')[2]
+        port = self.server.server_address[1]
+        for path, method, value in (('/coverage', 'GET', None),
+                                    ('/api/coverage/example', 'GET', None),
+                                    ('/api/coverage/inspect', 'POST', plan)):
+            for headers in ({'Host': 'evil.example'}, {'Host': f'localhost:{port + 1}'},
+                            {'Origin': 'https://evil.example'}, {'Origin': 'null'},
+                            {'Sec-Fetch-Site': 'cross-site'}):
+                with self.subTest(path=path, headers=headers):
+                    status, _, result = self.request(path, value, method=method, headers=headers)
+                    self.assertEqual(status, 400)
+                    self.assertIn('error', result)
+        self.assertIsNone(self.server.job)
+        self.assertFalse((self.server.directory / 'jobs').exists())
+
+    def test_coverage_inspection_rejects_malformed_forged_and_oversized_json(self):
+        plan = self.request('/api/coverage/example', method='GET')[2]
+        forged_benchmark = json.loads(json.dumps(plan))
+        forged_benchmark['benchmark']['qualified'] = True
+        forged_skill = json.loads(json.dumps(plan))
+        forged_skill['robot_skill_acquired'] = True
+        duplicated_plan = json.dumps(plan).replace('"plan_revision": 1', '"plan_revision": 1, "plan_revision": 1', 1)
+        cases = [('[]', {}), ('{}', {}), ('{"plan_id":"a","plan_id":"b"}', {}),
+                 (duplicated_plan, {}),
+                 ('{"plan_revision":NaN}', {}), ('{"plan_revision":1e999}', {}),
+                 (json.dumps(forged_benchmark), {}), (json.dumps(forged_skill), {}),
+                 (json.dumps({'source': '/etc/passwd'}), {}),
+                 (json.dumps(plan), {'Content-Type': 'text/plain'}),
+                 ('{}', {'Content-Length': str(MAX_PLAN_BYTES + 1)}),
+                 ('{}', {'Transfer-Encoding': 'chunked'})]
+        for raw, headers in cases:
+            with self.subTest(raw=raw[:80], headers=headers):
+                status, _, result = self.request('/api/coverage/inspect', raw=raw, headers=headers)
+                self.assertEqual(status, 400, result)
+                self.assertIn('error', result)
+                if raw == duplicated_plan:
+                    self.assertIn('Duplicate JSON keys', result['error'])
+                self.assertIsNone(self.server.job)
+        self.assertFalse((self.server.directory / 'jobs').exists())
+        self.assertFalse((self.server.directory / 'uploads').exists())
+
+    def test_large_coverage_metadata_roundtrips_without_relaxing_training_limit(self):
+        plan = self.request('/api/coverage/example', method='GET')[2]
+        original = plan['evidence'][0]
+        plan['evidence'] = []
+        for index in range(100):
+            identity = f'http-test-{index}'
+            plan['evidence'].append({**original, 'id': identity,
+                                     'media_sha256': hashlib.sha256(identity.encode()).hexdigest(),
+                                     'source_recording_id': identity + '-recording',
+                                     'session_id': identity + '-session',
+                                     'object_instance_id': identity + '-object'})
+        goal = plan['skill']['goal']
+        plan['skill']['goal'] = '  ' + goal + '  '
+        raw = json.dumps(plan)
+        self.assertGreater(len(raw.encode()), JSON_LIMIT)
+        self.assertLess(len(raw.encode()), MAX_PLAN_BYTES)
+        status, _, summary = self.request('/api/coverage/inspect', raw=raw)
+        self.assertEqual(status, 200, summary)
+        self.assertEqual(summary['plan']['skill']['goal'], goal)
+        self.assertEqual(summary['plan']['evidence'], plan['evidence'])
+        self.assertEqual(summary['coverage']['submitted_attempts'], 100)
+        self.assertEqual(summary['coverage']['accepted_groups'], 100)
+        self.assertFalse(summary['robot_skill_acquired'])
+        self.assertFalse(summary['benchmark']['executed'])
+        self.assertFalse(summary['benchmark']['qualified'])
+        # The planner's metadata ceiling must not expand command/job requests.
+        status, _, error = self.request('/api/train', raw=json.dumps({'source': '/local/export'}) + ' ' * JSON_LIMIT)
+        self.assertEqual(status, 400)
+        self.assertIn('error', error)
+        self.assertIn('32 KiB limit', error['error'])
+        self.assertIsNone(self.server.job)
+        self.assertFalse((self.server.directory / 'jobs').exists())
+        self.assertFalse((self.server.directory / 'uploads').exists())
+
+    def test_coverage_inspection_does_not_open_media_or_submit_work(self):
+        plan = self.request('/api/coverage/example', method='GET')[2]
+        # Import the planner before checking its request-time filesystem boundary.
+        self.assertEqual(self.request('/api/coverage/inspect', plan)[0], 200)
+        with mock.patch.object(Path, 'open', side_effect=AssertionError('Planning must not open a file.')), \
+             mock.patch.object(TrainingStudioServer, 'submit', side_effect=AssertionError('Planning must not submit a job.')):
+            self.assertEqual(self.request('/api/coverage/inspect', plan)[0], 200)
+            self.assertEqual(self.request('/api/coverage/inspect', {'source': '/etc/passwd'})[0], 400)
+        self.assertIsNone(self.server.job)
+        self.assertFalse((self.server.directory / 'jobs').exists())
+
+    def test_valid_and_invalid_coverage_plans_cannot_replace_a_completed_result(self):
+        self.assertEqual(self.train()['status'], 'complete')
+        job = self.server.job
+        archive = self.request('/download', method='GET')[2]
+        state = self.outcome()
+        plan = self.request('/api/coverage/example', method='GET')[2]
+        forged = json.loads(json.dumps(plan))
+        forged['benchmark']['executed'] = True
+        for value, expected_status in ((plan, 200), (forged, 400), ({}, 400),
+                                       ({'source': '/local/replacement'}, 400)):
+            with self.subTest(expected_status=expected_status, fields=list(value)):
+                self.assertEqual(self.request('/api/coverage/inspect', value)[0], expected_status)
+                self.assertIs(self.server.job, job)
+                self.assertEqual(self.outcome(), state)
+                status, _, downloaded = self.request('/download', method='GET')
+                self.assertEqual(status, 200)
+                self.assertEqual(downloaded, archive)
+        self.assertEqual(self.request('/coverage', method='GET')[0], 200)
+        self.assertIs(self.server.job, job)
 
     def test_browser_origin_and_host_guards_cannot_replace_a_completed_result(self):
         self.assertEqual(self.train()['status'], 'complete')

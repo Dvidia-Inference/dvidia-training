@@ -10,6 +10,7 @@ The product path is:
 
 ```mermaid
 flowchart LR
+  P[Plan skill coverage and simulation benchmark] --> A
   A[Skillspace folder, ZIP or manifest link] --> B[Check actual videos and source groups]
   B --> C[Fix training, development and test splits]
   C --> D[Learn a visual model offline]
@@ -41,6 +42,13 @@ Open `http://127.0.0.1:8270`. Select a Skillspace folder or drop its data-only Z
 check the footage, then train and download the result. The server binds only to
 your own machine. To use it on your server, keep that binding and forward the
 port through SSH. Do not expose this local file-reading interface publicly.
+
+Before collecting, open `/coverage` to define the operating envelope, selected
+capture cases and each skill's benchmark description. The [coverage planner](skillspace-coverage.md)
+tallies supplied review metadata and exports a companion plan; it does not inspect
+videos or run training. See the [execution map](roadmap.md) for the remaining gates.
+The [episode tape recorder](episode-tape.md) separately preserves simulated state
+and commands for future outcome/phase models; current learners do not consume it.
 
 The default server prohibits downloads. `--allow-online` enables an explicit
 per-job option to fetch a public DVIDIA manifest and its declared media. Training

@@ -59,9 +59,11 @@ jobs:
           dvidia-train --help
           dvidia-training-studio --help
           dvidia-training-benchmark --help
+          dvidia-skillspace-coverage --help
+          dvidia-episode-tape --help
           dvidia-training-doctor --json
       - name: Test footage, visual training and loopback studio
-        run: python -m unittest tests.test_footage_data tests.test_footage_train tests.test_footage_pipeline tests.test_footage_benchmark tests.test_training_studio tests.test_doctor -v
+        run: python -m unittest tests.test_footage_data tests.test_footage_train tests.test_footage_pipeline tests.test_footage_benchmark tests.test_training_studio tests.test_doctor tests.test_coverage tests.test_episode_tape -v
 
   arm:
     name: Optional arm / Linux / Python 3.12
