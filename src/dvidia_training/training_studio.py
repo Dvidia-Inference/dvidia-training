@@ -336,6 +336,11 @@ class TrainingStudioHandler(BaseHTTPRequestHandler):
             local = True
             if self.path == '/':
                 self.respond(Path(__file__).with_name('training_studio.html').read_bytes(), mime='text/html; charset=utf-8')
+            elif self.path == '/coverage':
+                self.respond(Path(__file__).with_name('coverage_studio.html').read_bytes(), mime='text/html; charset=utf-8')
+            elif self.path == '/api/coverage/example':
+                from .coverage import example_plan
+                self.respond(example_plan())
             elif self.path == '/api/state':
                 self.respond(self.server.state())
             elif self.path == '/api/result':
@@ -364,6 +369,10 @@ class TrainingStudioHandler(BaseHTTPRequestHandler):
                 source, online, seed = self.train_request()
                 kind = 'prepare' if self.path == '/api/prepare' else 'train'
                 self.respond(self.server.submit(kind, source, online, seed), 202)
+            elif self.path == '/api/coverage/inspect':
+                from .coverage import MAX_PLAN_BYTES, summarize_plan, validate_plan
+                plan = validate_plan(self.body('application/json', MAX_PLAN_BYTES))
+                self.respond({**summarize_plan(plan), 'plan': plan})
             elif self.path == '/api/upload':
                 raw = self.body('application/zip', UPLOAD_LIMIT)
                 validate_zip(raw)
