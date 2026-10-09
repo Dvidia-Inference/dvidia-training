@@ -116,3 +116,20 @@ response. Keep the original placement environment and frozen evidence unchanged;
 new profiles and benchmark versions identify these additions. A reaction result
 supports a task's evidence bundle without replacing task success, numerical
 validation or supervised physical qualification.
+
+## Predictive approach and motor memory
+
+[Motor-memory framework v0.2](motor-memory.md) adds separate calibration and task
+evaluation to the one-axis coupon. Its learned actuator model projects delayed
+robot observations through acknowledged commands; an authored governor varies
+approach speed using precision, braking and uncertainty assumptions. Three
+matched configurations and speed tiers expose completion time, error at the
+claim, overshoot, rest/load loss and runtime cost. Known commanded goals and
+synthetic sensing limit what this experiment establishes.
+
+The next learning gates are component ablations, robot-specific geometry and
+action adapters, calibrated sensing/contact, and movement supervision from robot
+tapes or an independently evaluated human-video action bridge. Phase-specific
+expected contacts, bounded recovery and skill-package compatibility need their
+own task tests. A latched hold currently ends execution; it does not recover a
+slipping load or resume after sensor loss.

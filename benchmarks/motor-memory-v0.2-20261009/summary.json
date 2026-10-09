@@ -1,0 +1,4288 @@
+{
+  "format": "dvidia.motor-benchmark",
+  "framework_version": "0.2",
+  "scope": "synthetic one-axis approach, settle, retain; learned dynamics with authored primitive; no RGB/whole-arm/hardware qualification",
+  "physical_robot_ready": false,
+  "benchmark_qualification": false,
+  "recorded_utc": "2026-10-09T14:46:44.839072+00:00",
+  "protocol": {
+    "format": "dvidia.motor-protocol",
+    "schema_version": 1,
+    "framework_version": "0.2",
+    "seed": 20261010,
+    "repeats": 3,
+    "variants": [
+      "slow_feedback",
+      "fast_fixed",
+      "adaptive_predictive"
+    ],
+    "speed_limits_m_s": [
+      0.12,
+      0.2,
+      0.28
+    ],
+    "cases": [
+      {
+        "id": "dev_short",
+        "split": "development",
+        "goal_m": 0.08,
+        "holding": true,
+        "expected_completion": true
+      },
+      {
+        "id": "dev_mid",
+        "split": "development",
+        "goal_m": 0.16,
+        "holding": true,
+        "expected_completion": true
+      },
+      {
+        "id": "dev_goal_update",
+        "split": "development",
+        "goal_m": 0.12,
+        "goal_update_s": 0.45,
+        "updated_goal_m": 0.18,
+        "holding": true,
+        "expected_completion": true
+      },
+      {
+        "id": "dev_load",
+        "split": "development",
+        "goal_m": 0.18,
+        "payload_mass_kg": 0.08,
+        "pair_friction": 0.45,
+        "holding": true,
+        "expected_completion": true
+      },
+      {
+        "id": "dev_delay",
+        "split": "development",
+        "goal_m": 0.16,
+        "sensor_delay_s": 0.02,
+        "position_noise_m": 0.0004,
+        "holding": true,
+        "expected_completion": true
+      },
+      {
+        "id": "dev_missing",
+        "split": "development",
+        "goal_m": 0.18,
+        "missing_start_s": 0.4,
+        "missing_duration_s": 0.05,
+        "expected_completion": false,
+        "holding": true
+      },
+      {
+        "id": "confirm_goal",
+        "split": "confirmation",
+        "goal_m": 0.215,
+        "holding": true,
+        "expected_completion": true
+      },
+      {
+        "id": "confirm_goal_update",
+        "split": "confirmation",
+        "goal_m": 0.23,
+        "goal_update_s": 0.7,
+        "updated_goal_m": 0.105,
+        "holding": true,
+        "expected_completion": true
+      },
+      {
+        "id": "confirm_load",
+        "split": "confirmation",
+        "goal_m": 0.195,
+        "payload_mass_kg": 0.11,
+        "pair_friction": 0.32,
+        "holding": true,
+        "expected_completion": true
+      },
+      {
+        "id": "confirm_delay",
+        "split": "confirmation",
+        "goal_m": 0.175,
+        "sensor_delay_s": 0.04,
+        "position_noise_m": 0.001,
+        "holding": true,
+        "expected_completion": true
+      },
+      {
+        "id": "confirm_blackout",
+        "split": "confirmation",
+        "goal_m": 0.22,
+        "missing_start_s": 0.35,
+        "missing_duration_s": 0.3,
+        "expected_completion": false,
+        "holding": true
+      },
+      {
+        "id": "confirm_slip",
+        "split": "confirmation",
+        "goal_m": 0.2,
+        "pull_start_s": 0.6,
+        "pull_duration_s": 0.08,
+        "pull_n": 12.0,
+        "expected_completion": false,
+        "holding": true
+      }
+    ],
+    "development_only": false,
+    "candidate_sha256": "d88f8789f00a01582e86b72ad65301d3ddecfa02a4b21b2d7c21505f23f9fb14",
+    "control_period_s": 0.01,
+    "sensor_period_s": 0.01,
+    "score_period_s": 0.01,
+    "sensor_prime_s": 0.15,
+    "fixture_config": {
+      "timestep_s": 0.001,
+      "warmup_s": 0.4,
+      "horizon_s": 4.0,
+      "speed_m_s": 0.12,
+      "carriage_mass_kg": 1.0,
+      "actuator_force_limit_n": 15.0,
+      "payload_mass_kg": 0.04,
+      "jaw_force_limit_n": 8.0,
+      "pair_friction": 0.7,
+      "rest_speed_m_s": 0.005,
+      "rest_dwell_s": 0.05,
+      "command_delay_s": 0.02
+    },
+    "controller_config": {
+      "workspace_min_m": -0.05,
+      "workspace_max_m": 0.6,
+      "max_speed_m_s": 0.16,
+      "slow_speed_factor": 0.5,
+      "precision_speed_m_s": 0.025,
+      "fixed_slowdown_distance_m": 0.035,
+      "max_target_lead_m": 0.04,
+      "braking_deceleration_m_s2": 1.0207813704485627,
+      "command_delay_s": 0.02,
+      "max_sensor_age_s": 0.15,
+      "prediction_step_s": 0.001,
+      "uncertainty_scale_m": 0.003,
+      "margin_m": 0.0002,
+      "position_gain_s": 8.0,
+      "max_update_interval_s": 0.05
+    },
+    "completion": {
+      "position_tolerance_m": 0.003,
+      "speed_tolerance_m_s": 0.005,
+      "dwell_s": 0.05
+    },
+    "contact_diagnostics": {
+      "maximum_penetration_m": 0.003,
+      "maximum_force_proxy_n": 1000.0
+    },
+    "reaction_config": {
+      "horizon_s": 0.5,
+      "margin_m": 0.02,
+      "assumed_deceleration_m_s2": 2.0,
+      "command_delay_s": 0.02,
+      "max_sensor_age_s": 0.15,
+      "contact_force_limit_n": 10.0,
+      "slip_speed_limit_m_s": 0.03,
+      "require_motion": true,
+      "require_contact": true
+    },
+    "scope": "synthetic one-axis approach, settle, retain; learned dynamics with authored primitive; no RGB/whole-arm/hardware qualification",
+    "confirmation_scope": "authored combinations excluded from calibration/development; frozen before execution; once inspected these become regression cases",
+    "uncertainty_scope": "bounded authored position noise plus calibration residual envelope; not calibrated confidence",
+    "completion_scope": "observed position/speed dwell; final native audit and retention separate; missing input and goal changes reset verification",
+    "jerk_scope": "finite differences of native velocity at 10 ms scoring cadence, not a native-tick jerk bound",
+    "halt_scope": "latched delayed measured-position hold; no automatic resume/regrip recovery"
+  },
+  "protocol_sha256": "70d50f32a91a33d0ef9d685d123a7bba75e7fcfd375ad97e0f428c085c57e8a6",
+  "candidate_sha256": "d88f8789f00a01582e86b72ad65301d3ddecfa02a4b21b2d7c21505f23f9fb14",
+  "source_sha256": {
+    "motor_memory.py": "acb836c4b139ccd0a58b1e7e438638e390feeca793abe61570840b111d780806",
+    "motor_benchmark.py": "535ee01df0a60ade43f845cd55119f0eac061f8fe16b136f8fb0b1d2565ba976",
+    "motor_metrics.py": "a981953181472fc735dc9b6722b598dab1a5457d77b93270691543c7d19e4c1b",
+    "reaction.py": "46ac1fd0e603bb6a500037fccf41b393bb2165ee2da7819895b0cc497f216e6e",
+    "reaction_native.py": "4fa13b7446fcacfa6333b9904e6b9e34fb0f95bf3a8681e68a15be48e74984e4",
+    "env.py": "929c1d8c3c4cafe0054c633ee5f3e51c551dd6b26ae014ab1ea9219b58eca8e4"
+  },
+  "freeze": {
+    "candidate_sha256": "d88f8789f00a01582e86b72ad65301d3ddecfa02a4b21b2d7c21505f23f9fb14",
+    "protocol_sha256": "70d50f32a91a33d0ef9d685d123a7bba75e7fcfd375ad97e0f428c085c57e8a6",
+    "source_sha256": {
+      "motor_memory.py": "acb836c4b139ccd0a58b1e7e438638e390feeca793abe61570840b111d780806",
+      "motor_benchmark.py": "535ee01df0a60ade43f845cd55119f0eac061f8fe16b136f8fb0b1d2565ba976",
+      "motor_metrics.py": "a981953181472fc735dc9b6722b598dab1a5457d77b93270691543c7d19e4c1b",
+      "reaction.py": "46ac1fd0e603bb6a500037fccf41b393bb2165ee2da7819895b0cc497f216e6e",
+      "reaction_native.py": "4fa13b7446fcacfa6333b9904e6b9e34fb0f95bf3a8681e68a15be48e74984e4",
+      "env.py": "929c1d8c3c4cafe0054c633ee5f3e51c551dd6b26ae014ab1ea9219b58eca8e4"
+    },
+    "recorded_utc": "2026-10-09T14:43:17.733670+00:00",
+    "scope": "authored combinations excluded from calibration/development; frozen before execution; once inspected these become regression cases"
+  },
+  "host": {
+    "system": "Darwin",
+    "release": "25.5.0",
+    "machine": "arm64",
+    "processor": "arm",
+    "logical_cpu_count": 10,
+    "python": "3.12.9",
+    "gpu_used": false,
+    "lifetime_peak_rss_bytes": 111706112,
+    "rss_scope": "process lifetime including imports and all trials; not hardware minimum/per-trial requirement"
+  },
+  "versions": {
+    "mujoco": "3.15.0",
+    "numpy": "2.5.3"
+  },
+  "timing_scope": "per-trial includes fixture/warmup/priming, control, native physics, scoring; benchmark includes JSONL write; excludes imports, calibration and final report serialization",
+  "benchmark_wall_seconds": 207.1578841251321,
+  "limitations": [
+    "Learned component is fitted actuator dynamics; task motion/completion/contact contract authored.",
+    "Synthetic state observations, one travel axis and parallel jaws; no camera, whole-arm geometry or video-to-policy training.",
+    "Braking and uncertainty envelopes are empirical development assumptions, not calibrated hardware confidence/safety bounds.",
+    "Impact-force convergence was unresolved in v0.1; these contact proxies do not establish physical accuracy.",
+    "Repeated authored combinations are correlated; confirmation becomes regression evidence after inspection.",
+    "Latched hold does not regrip, resume or recover a dropped load; failures and false completion claims remain visible."
+  ],
+  "snapshot_scope": "Compact recorded evidence; complete traces and calibration rows remain in local runs and CI artifacts. This folder is not an inspectable full run.",
+  "attempted": 324,
+  "valid": 324,
+  "invalid": 0,
+  "split_summaries": {
+    "development": {
+      "attempted": 162,
+      "valid": 162,
+      "invalid": 0,
+      "errors": 0,
+      "expected_completion": {
+        "attempted_positive": 135,
+        "attempted_negative": 27,
+        "attempted_unknown": 0,
+        "invalid_positive": 0,
+        "invalid_negative": 0,
+        "valid_expected": 135
+      },
+      "success": {
+        "known_valid": 162,
+        "unknown_valid": 0,
+        "succeeded": 135,
+        "failed_known": 27,
+        "conditional_valid": {
+          "estimate": 0.8333333333333334,
+          "numerator": 135,
+          "denominator": 162,
+          "ci95_wilson": {
+            "lower": 0.7683691896812852,
+            "upper": 0.8828551830901119
+          }
+        },
+        "all_attempts": {
+          "estimate": 0.8333333333333334,
+          "numerator": 135,
+          "denominator": 162,
+          "ci95_wilson": {
+            "lower": 0.7683691896812852,
+            "upper": 0.8828551830901119
+          }
+        }
+      },
+      "completion": {
+        "valid_claims": 135,
+        "assessed_claims": 135,
+        "claim_truth_unknown": 0,
+        "false_claims": 0,
+        "false_claims_without_final_completion": 0,
+        "revoked": 0,
+        "revocation_status_unknown": 0,
+        "rest_lost_after_confirmation": 0,
+        "rest_loss_status_unknown": 0,
+        "false_given_assessed_claim": {
+          "estimate": 0.0,
+          "numerator": 0,
+          "denominator": 135,
+          "ci95_wilson": {
+            "lower": 0.0,
+            "upper": 0.02766795201752491
+          }
+        },
+        "false_claim_per_attempt": {
+          "estimate": 0.0,
+          "numerator": 0,
+          "denominator": 162,
+          "ci95_wilson": {
+            "lower": 0.0,
+            "upper": 0.023163440842904465
+          }
+        },
+        "expected_censored": 0,
+        "truth_unsettled": 0,
+        "verified_successes_with_completion": 135
+      },
+      "load": {
+        "holding_valid": 162,
+        "outcome_known": 162,
+        "outcome_unknown": 0,
+        "not_holding_or_unknown": 0,
+        "dropped": 0,
+        "drop_rate": {
+          "estimate": 0.0,
+          "numerator": 0,
+          "denominator": 162,
+          "ci95_wilson": {
+            "lower": 0.0,
+            "upper": 0.023163440842904465
+          }
+        }
+      },
+      "measurements": {
+        "final_error_m": {
+          "count": 162,
+          "missing": 0,
+          "mean": 0.021243092480684435,
+          "median": 2.7755575615628914e-16,
+          "p95": 0.14217015950991627,
+          "min": 0.0,
+          "max": 0.16108507975495812,
+          "worst": 0.16108507975495812
+        },
+        "final_speed_m_s": {
+          "count": 162,
+          "missing": 0,
+          "mean": 1.4972420672922155e-10,
+          "median": 2.7689387940515397e-15,
+          "p95": 1.2962172138030428e-12,
+          "min": 7.299822451449684e-17,
+          "max": 4.4421473534637435e-09,
+          "worst": 4.4421473534637435e-09
+        },
+        "overshoot_m": {
+          "count": 162,
+          "missing": 0,
+          "mean": 9.933473259855954e-05,
+          "median": 7.038335861160594e-05,
+          "p95": 0.0002797385243507866,
+          "min": 0.0,
+          "max": 0.00035761114832078,
+          "worst": 0.00035761114832078
+        },
+        "rms_error_m": {
+          "count": 162,
+          "missing": 0,
+          "mean": 0.0634423510200225,
+          "median": 0.055639713575869165,
+          "p95": 0.1447365573399798,
+          "min": 0.017394792816323085,
+          "max": 0.16230513943635108,
+          "worst": 0.16230513943635108
+        },
+        "error_at_completion_m": {
+          "count": 135,
+          "missing": 27,
+          "mean": 0.00010781983404033942,
+          "median": 0.00010101486733657405,
+          "p95": 0.0002657589340235855,
+          "min": 6.813645834768955e-07,
+          "max": 0.0003272539609893155,
+          "worst": 0.0003272539609893155
+        },
+        "speed_at_completion_m_s": {
+          "count": 135,
+          "missing": 27,
+          "mean": 0.0009953319927362312,
+          "median": 0.0008634866945037025,
+          "p95": 0.0017901783495913174,
+          "min": 2.8690748811798312e-05,
+          "max": 0.002422685137091501,
+          "worst": 0.002422685137091501
+        },
+        "peak_error_after_completion_m": {
+          "count": 135,
+          "missing": 27,
+          "mean": 0.00011389886171625209,
+          "median": 0.00010225309444084063,
+          "p95": 0.0002657589340235855,
+          "min": 2.2920366196221842e-05,
+          "max": 0.0003272539609893155,
+          "worst": 0.0003272539609893155
+        },
+        "peak_acceleration_m_s2": {
+          "count": 162,
+          "missing": 0,
+          "mean": 2.0296819088153453,
+          "median": 1.7056576565891366,
+          "p95": 6.138405333412394,
+          "min": 0.5116972969767408,
+          "max": 8.593767466777328,
+          "worst": 8.593767466777328
+        },
+        "peak_jerk_m_s3": {
+          "count": 162,
+          "missing": 0,
+          "mean": 134.4896259094647,
+          "median": 70.31051618005756,
+          "p95": 612.9786033937743,
+          "min": 21.093154854017264,
+          "max": 858.1700447512828,
+          "worst": 858.1700447512828
+        },
+        "peak_force_proxy_n": {
+          "count": 162,
+          "missing": 0,
+          "mean": 0.0,
+          "median": 0.0,
+          "p95": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "worst": 0.0
+        },
+        "contact_impulse_ns": {
+          "count": 162,
+          "missing": 0,
+          "mean": 0.0,
+          "median": 0.0,
+          "p95": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "worst": 0.0
+        },
+        "max_penetration_m": {
+          "count": 162,
+          "missing": 0,
+          "mean": 0.0,
+          "median": 0.0,
+          "p95": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "worst": 0.0
+        },
+        "reaction_s": {
+          "count": 27,
+          "missing": 135,
+          "mean": 0.4,
+          "median": 0.4,
+          "p95": 0.4,
+          "min": 0.4,
+          "max": 0.4,
+          "worst": 0.4
+        },
+        "sensor_unusable_s": {
+          "count": 162,
+          "missing": 0,
+          "mean": 0.008333333333333333,
+          "median": 0.0,
+          "p95": 0.05,
+          "min": 0.0,
+          "max": 0.05,
+          "worst": 0.05
+        },
+        "predictor_rmse_m": {
+          "count": 162,
+          "missing": 0,
+          "mean": 0.00017394262189995328,
+          "median": 0.0,
+          "p95": 0.0014699683654264177,
+          "min": 0.0,
+          "max": 0.0020380182330135637,
+          "worst": 0.0020380182330135637
+        },
+        "command_latency_s": {
+          "count": 162,
+          "missing": 0,
+          "mean": 0.02,
+          "median": 0.02,
+          "p95": 0.02,
+          "min": 0.02,
+          "max": 0.02,
+          "worst": 0.02
+        },
+        "controller_latency_p50_s": {
+          "count": 162,
+          "missing": 0,
+          "mean": 4.165573261195311e-05,
+          "median": 3.231223672628403e-05,
+          "p95": 9.733345359563828e-05,
+          "min": 8.499948307871819e-06,
+          "max": 0.00011200050357729197,
+          "worst": 0.00011200050357729197
+        },
+        "controller_latency_p95_s": {
+          "count": 162,
+          "missing": 0,
+          "mean": 7.277704418901308e-05,
+          "median": 5.662499461323023e-05,
+          "p95": 0.00015341700054705143,
+          "min": 1.4791032299399376e-05,
+          "max": 0.00021716579794883728,
+          "worst": 0.00021716579794883728
+        },
+        "controller_latency_max_s": {
+          "count": 162,
+          "missing": 0,
+          "mean": 0.00014395758015230115,
+          "median": 0.00012495846021920443,
+          "p95": 0.0003383329603821039,
+          "min": 1.6582896932959557e-05,
+          "max": 0.000550250057131052,
+          "worst": 0.000550250057131052
+        },
+        "claimed_completion_s": {
+          "count": 135,
+          "missing": 27,
+          "mean": 1.547777777777778,
+          "median": 1.54,
+          "p95": 2.91,
+          "min": 0.55,
+          "max": 3.23,
+          "worst": 3.23
+        },
+        "verified_success_completion_s": {
+          "count": 135,
+          "missing": 0,
+          "mean": 1.547777777777778,
+          "median": 1.54,
+          "p95": 2.91,
+          "min": 0.55,
+          "max": 3.23,
+          "worst": 3.23
+        },
+        "truth_settled_s": {
+          "count": 135,
+          "missing": 27,
+          "mean": 1.543777777777778,
+          "median": 1.54,
+          "p95": 2.89,
+          "min": 0.55,
+          "max": 3.23,
+          "worst": 3.23
+        }
+      },
+      "throughput": {
+        "wall_seconds": 104.2246970878914,
+        "simulated_seconds": 648.0,
+        "step_count": 648000,
+        "steps_per_wall_second": 6217.336371374144,
+        "simulated_seconds_per_wall_second": 6.217336371374143,
+        "wall_time_missing": 0,
+        "simulated_time_missing": 0,
+        "step_count_missing": 0
+      },
+      "by_expected_completion": {
+        "expected": {
+          "attempted": 135,
+          "valid": 135,
+          "invalid": 0,
+          "errors": 0,
+          "expected_completion": {
+            "attempted_positive": 135,
+            "attempted_negative": 0,
+            "attempted_unknown": 0,
+            "invalid_positive": 0,
+            "invalid_negative": 0,
+            "valid_expected": 135
+          },
+          "success": {
+            "known_valid": 135,
+            "unknown_valid": 0,
+            "succeeded": 135,
+            "failed_known": 0,
+            "conditional_valid": {
+              "estimate": 1.0,
+              "numerator": 135,
+              "denominator": 135,
+              "ci95_wilson": {
+                "lower": 0.9723320479824751,
+                "upper": 1.0
+              }
+            },
+            "all_attempts": {
+              "estimate": 1.0,
+              "numerator": 135,
+              "denominator": 135,
+              "ci95_wilson": {
+                "lower": 0.9723320479824751,
+                "upper": 1.0
+              }
+            }
+          },
+          "completion": {
+            "valid_claims": 135,
+            "assessed_claims": 135,
+            "claim_truth_unknown": 0,
+            "false_claims": 0,
+            "false_claims_without_final_completion": 0,
+            "revoked": 0,
+            "revocation_status_unknown": 0,
+            "rest_lost_after_confirmation": 0,
+            "rest_loss_status_unknown": 0,
+            "false_given_assessed_claim": {
+              "estimate": 0.0,
+              "numerator": 0,
+              "denominator": 135,
+              "ci95_wilson": {
+                "lower": 0.0,
+                "upper": 0.02766795201752491
+              }
+            },
+            "false_claim_per_attempt": {
+              "estimate": 0.0,
+              "numerator": 0,
+              "denominator": 135,
+              "ci95_wilson": {
+                "lower": 0.0,
+                "upper": 0.02766795201752491
+              }
+            },
+            "expected_censored": 0,
+            "truth_unsettled": 0,
+            "verified_successes_with_completion": 135
+          },
+          "load": {
+            "holding_valid": 135,
+            "outcome_known": 135,
+            "outcome_unknown": 0,
+            "not_holding_or_unknown": 0,
+            "dropped": 0,
+            "drop_rate": {
+              "estimate": 0.0,
+              "numerator": 0,
+              "denominator": 135,
+              "ci95_wilson": {
+                "lower": 0.0,
+                "upper": 0.02766795201752491
+              }
+            }
+          },
+          "measurements": {
+            "final_error_m": {
+              "count": 135,
+              "missing": 0,
+              "mean": 1.8445881653392947e-12,
+              "median": 2.3592239273284576e-16,
+              "p95": 3.869404796574827e-13,
+              "min": 0.0,
+              "max": 4.502195838362866e-11,
+              "worst": 4.502195838362866e-11
+            },
+            "final_speed_m_s": {
+              "count": 135,
+              "missing": 0,
+              "mean": 1.7966876663494028e-10,
+              "median": 3.1514832913657623e-15,
+              "p95": 1.2962172138030428e-12,
+              "min": 7.299822451449684e-17,
+              "max": 4.4421473534637435e-09,
+              "worst": 4.4421473534637435e-09
+            },
+            "overshoot_m": {
+              "count": 135,
+              "missing": 0,
+              "mean": 0.00011920167911827145,
+              "median": 0.00010225317503916032,
+              "p95": 0.0002797385243507866,
+              "min": 2.2920366196221842e-05,
+              "max": 0.00035761114832078,
+              "worst": 0.00035761114832078
+            },
+            "rms_error_m": {
+              "count": 135,
+              "missing": 0,
+              "mean": 0.0498528828586737,
+              "median": 0.05034697624678406,
+              "p95": 0.07951556742762585,
+              "min": 0.017394792816323085,
+              "max": 0.09435684121904468,
+              "worst": 0.09435684121904468
+            },
+            "error_at_completion_m": {
+              "count": 135,
+              "missing": 0,
+              "mean": 0.00010781983404033942,
+              "median": 0.00010101486733657405,
+              "p95": 0.0002657589340235855,
+              "min": 6.813645834768955e-07,
+              "max": 0.0003272539609893155,
+              "worst": 0.0003272539609893155
+            },
+            "speed_at_completion_m_s": {
+              "count": 135,
+              "missing": 0,
+              "mean": 0.0009953319927362312,
+              "median": 0.0008634866945037025,
+              "p95": 0.0017901783495913174,
+              "min": 2.8690748811798312e-05,
+              "max": 0.002422685137091501,
+              "worst": 0.002422685137091501
+            },
+            "peak_error_after_completion_m": {
+              "count": 135,
+              "missing": 0,
+              "mean": 0.00011389886171625209,
+              "median": 0.00010225309444084063,
+              "p95": 0.0002657589340235855,
+              "min": 2.2920366196221842e-05,
+              "max": 0.0003272539609893155,
+              "worst": 0.0003272539609893155
+            },
+            "peak_acceleration_m_s2": {
+              "count": 135,
+              "missing": 0,
+              "mean": 1.4125507350096838,
+              "median": 1.2026786489893957,
+              "p95": 2.4053572979787914,
+              "min": 0.5116972969767408,
+              "max": 2.4053572979787914,
+              "worst": 2.4053572979787914
+            },
+            "peak_jerk_m_s3": {
+              "count": 135,
+              "missing": 0,
+              "mean": 59.22445052572864,
+              "median": 50.638821898305494,
+              "p95": 101.27764379661099,
+              "min": 21.093154854017264,
+              "max": 101.27764379661099,
+              "worst": 101.27764379661099
+            },
+            "peak_force_proxy_n": {
+              "count": 135,
+              "missing": 0,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "worst": 0.0
+            },
+            "contact_impulse_ns": {
+              "count": 135,
+              "missing": 0,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "worst": 0.0
+            },
+            "max_penetration_m": {
+              "count": 135,
+              "missing": 0,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "worst": 0.0
+            },
+            "reaction_s": {
+              "count": 0,
+              "missing": 135,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "sensor_unusable_s": {
+              "count": 135,
+              "missing": 0,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "worst": 0.0
+            },
+            "predictor_rmse_m": {
+              "count": 135,
+              "missing": 0,
+              "mean": 0.00020873114627994392,
+              "median": 0.0,
+              "p95": 0.001492257837540094,
+              "min": 0.0,
+              "max": 0.0020380182330135637,
+              "worst": 0.0020380182330135637
+            },
+            "command_latency_s": {
+              "count": 135,
+              "missing": 0,
+              "mean": 0.02,
+              "median": 0.02,
+              "p95": 0.02,
+              "min": 0.02,
+              "max": 0.02,
+              "worst": 0.02
+            },
+            "controller_latency_p50_s": {
+              "count": 135,
+              "missing": 0,
+              "mean": 4.722145817208069e-05,
+              "median": 3.406254108995199e-05,
+              "p95": 0.00010052102152258158,
+              "min": 1.7686979845166206e-05,
+              "max": 0.00011200050357729197,
+              "worst": 0.00011200050357729197
+            },
+            "controller_latency_p95_s": {
+              "count": 135,
+              "missing": 0,
+              "mean": 8.273366321292189e-05,
+              "median": 6.0625141486525536e-05,
+              "p95": 0.00016683293506503105,
+              "min": 2.9624905437231064e-05,
+              "max": 0.00021716579794883728,
+              "worst": 0.00021716579794883728
+            },
+            "controller_latency_max_s": {
+              "count": 135,
+              "missing": 0,
+              "mean": 0.00016655987473549667,
+              "median": 0.00013875006698071957,
+              "p95": 0.00037333392538130283,
+              "min": 3.8665952160954475e-05,
+              "max": 0.000550250057131052,
+              "worst": 0.000550250057131052
+            },
+            "claimed_completion_s": {
+              "count": 135,
+              "missing": 0,
+              "mean": 1.547777777777778,
+              "median": 1.54,
+              "p95": 2.91,
+              "min": 0.55,
+              "max": 3.23,
+              "worst": 3.23
+            },
+            "verified_success_completion_s": {
+              "count": 135,
+              "missing": 0,
+              "mean": 1.547777777777778,
+              "median": 1.54,
+              "p95": 2.91,
+              "min": 0.55,
+              "max": 3.23,
+              "worst": 3.23
+            },
+            "truth_settled_s": {
+              "count": 135,
+              "missing": 0,
+              "mean": 1.543777777777778,
+              "median": 1.54,
+              "p95": 2.89,
+              "min": 0.55,
+              "max": 3.23,
+              "worst": 3.23
+            }
+          },
+          "throughput": {
+            "wall_seconds": 87.7837576281745,
+            "simulated_seconds": 540.0,
+            "step_count": 540000,
+            "steps_per_wall_second": 6151.479665375878,
+            "simulated_seconds_per_wall_second": 6.151479665375877,
+            "wall_time_missing": 0,
+            "simulated_time_missing": 0,
+            "step_count_missing": 0
+          }
+        },
+        "not_expected": {
+          "attempted": 27,
+          "valid": 27,
+          "invalid": 0,
+          "errors": 0,
+          "expected_completion": {
+            "attempted_positive": 0,
+            "attempted_negative": 27,
+            "attempted_unknown": 0,
+            "invalid_positive": 0,
+            "invalid_negative": 0,
+            "valid_expected": 0
+          },
+          "success": {
+            "known_valid": 27,
+            "unknown_valid": 0,
+            "succeeded": 0,
+            "failed_known": 27,
+            "conditional_valid": {
+              "estimate": 0.0,
+              "numerator": 0,
+              "denominator": 27,
+              "ci95_wilson": {
+                "lower": 0.0,
+                "upper": 0.12455502974186705
+              }
+            },
+            "all_attempts": {
+              "estimate": 0.0,
+              "numerator": 0,
+              "denominator": 27,
+              "ci95_wilson": {
+                "lower": 0.0,
+                "upper": 0.12455502974186705
+              }
+            }
+          },
+          "completion": {
+            "valid_claims": 0,
+            "assessed_claims": 0,
+            "claim_truth_unknown": 0,
+            "false_claims": 0,
+            "false_claims_without_final_completion": 0,
+            "revoked": 0,
+            "revocation_status_unknown": 0,
+            "rest_lost_after_confirmation": 0,
+            "rest_loss_status_unknown": 0,
+            "false_given_assessed_claim": {
+              "estimate": null,
+              "numerator": 0,
+              "denominator": 0,
+              "ci95_wilson": null
+            },
+            "false_claim_per_attempt": {
+              "estimate": 0.0,
+              "numerator": 0,
+              "denominator": 27,
+              "ci95_wilson": {
+                "lower": 0.0,
+                "upper": 0.12455502974186705
+              }
+            },
+            "expected_censored": 0,
+            "truth_unsettled": 0,
+            "verified_successes_with_completion": 0
+          },
+          "load": {
+            "holding_valid": 27,
+            "outcome_known": 27,
+            "outcome_unknown": 0,
+            "not_holding_or_unknown": 0,
+            "dropped": 0,
+            "drop_rate": {
+              "estimate": 0.0,
+              "numerator": 0,
+              "denominator": 27,
+              "ci95_wilson": {
+                "lower": 0.0,
+                "upper": 0.12455502974186705
+              }
+            }
+          },
+          "measurements": {
+            "final_error_m": {
+              "count": 27,
+              "missing": 0,
+              "mean": 0.12745855487488367,
+              "median": 0.1358651860949023,
+              "p95": 0.16108507975495812,
+              "min": 0.09173037218980461,
+              "max": 0.16108507975495812,
+              "worst": 0.16108507975495812
+            },
+            "final_speed_m_s": {
+              "count": 27,
+              "missing": 0,
+              "mean": 1.4072006279278724e-15,
+              "median": 1.1329038100581967e-15,
+              "p95": 2.265254370607468e-15,
+              "min": 4.667900551989831e-16,
+              "max": 2.265254370607468e-15,
+              "worst": 2.265254370607468e-15
+            },
+            "overshoot_m": {
+              "count": 27,
+              "missing": 0,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "worst": 0.0
+            },
+            "rms_error_m": {
+              "count": 27,
+              "missing": 0,
+              "mean": 0.13138969182676655,
+              "median": 0.1389167162234009,
+              "p95": 0.16230513943635108,
+              "min": 0.09901534177628787,
+              "max": 0.16230513943635108,
+              "worst": 0.16230513943635108
+            },
+            "error_at_completion_m": {
+              "count": 0,
+              "missing": 27,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "speed_at_completion_m_s": {
+              "count": 0,
+              "missing": 27,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "peak_error_after_completion_m": {
+              "count": 0,
+              "missing": 27,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "peak_acceleration_m_s2": {
+              "count": 27,
+              "missing": 0,
+              "mean": 5.115337777843653,
+              "median": 4.296883733388664,
+              "p95": 8.593767466777328,
+              "min": 1.841521600023715,
+              "max": 8.593767466777328,
+              "worst": 8.593767466777328
+            },
+            "peak_jerk_m_s3": {
+              "count": 27,
+              "missing": 0,
+              "mean": 510.815502828145,
+              "median": 429.0850223756414,
+              "p95": 858.1700447512828,
+              "min": 183.89358101813247,
+              "max": 858.1700447512828,
+              "worst": 858.1700447512828
+            },
+            "peak_force_proxy_n": {
+              "count": 27,
+              "missing": 0,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "worst": 0.0
+            },
+            "contact_impulse_ns": {
+              "count": 27,
+              "missing": 0,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "worst": 0.0
+            },
+            "max_penetration_m": {
+              "count": 27,
+              "missing": 0,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "worst": 0.0
+            },
+            "reaction_s": {
+              "count": 27,
+              "missing": 0,
+              "mean": 0.4,
+              "median": 0.4,
+              "p95": 0.4,
+              "min": 0.4,
+              "max": 0.4,
+              "worst": 0.4
+            },
+            "sensor_unusable_s": {
+              "count": 27,
+              "missing": 0,
+              "mean": 0.05,
+              "median": 0.05,
+              "p95": 0.05,
+              "min": 0.05,
+              "max": 0.05,
+              "worst": 0.05
+            },
+            "predictor_rmse_m": {
+              "count": 27,
+              "missing": 0,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "worst": 0.0
+            },
+            "command_latency_s": {
+              "count": 27,
+              "missing": 0,
+              "mean": 0.02,
+              "median": 0.02,
+              "p95": 0.02,
+              "min": 0.02,
+              "max": 0.02,
+              "worst": 0.02
+            },
+            "controller_latency_p50_s": {
+              "count": 27,
+              "missing": 0,
+              "mean": 1.3827104811315183e-05,
+              "median": 1.0916031897068024e-05,
+              "p95": 2.254103310406208e-05,
+              "min": 8.499948307871819e-06,
+              "max": 2.6582973077893257e-05,
+              "worst": 2.6582973077893257e-05
+            },
+            "controller_latency_p95_s": {
+              "count": 27,
+              "missing": 0,
+              "mean": 2.2993949069469062e-05,
+              "median": 1.9290950149297714e-05,
+              "p95": 3.8082944229245186e-05,
+              "min": 1.4791032299399376e-05,
+              "max": 4.9625057727098465e-05,
+              "worst": 4.9625057727098465e-05
+            },
+            "controller_latency_max_s": {
+              "count": 27,
+              "missing": 0,
+              "mean": 3.094610723632353e-05,
+              "median": 2.4667009711265564e-05,
+              "p95": 5.683302879333496e-05,
+              "min": 1.6582896932959557e-05,
+              "max": 9.433412924408913e-05,
+              "worst": 9.433412924408913e-05
+            },
+            "claimed_completion_s": {
+              "count": 0,
+              "missing": 27,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "verified_success_completion_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "truth_settled_s": {
+              "count": 0,
+              "missing": 27,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            }
+          },
+          "throughput": {
+            "wall_seconds": 16.4409394597169,
+            "simulated_seconds": 108.0,
+            "step_count": 108000,
+            "steps_per_wall_second": 6568.96768366664,
+            "simulated_seconds_per_wall_second": 6.56896768366664,
+            "wall_time_missing": 0,
+            "simulated_time_missing": 0,
+            "step_count_missing": 0
+          }
+        },
+        "unknown": {
+          "attempted": 0,
+          "valid": 0,
+          "invalid": 0,
+          "errors": 0,
+          "expected_completion": {
+            "attempted_positive": 0,
+            "attempted_negative": 0,
+            "attempted_unknown": 0,
+            "invalid_positive": 0,
+            "invalid_negative": 0,
+            "valid_expected": 0
+          },
+          "success": {
+            "known_valid": 0,
+            "unknown_valid": 0,
+            "succeeded": 0,
+            "failed_known": 0,
+            "conditional_valid": {
+              "estimate": null,
+              "numerator": 0,
+              "denominator": 0,
+              "ci95_wilson": null
+            },
+            "all_attempts": {
+              "estimate": null,
+              "numerator": 0,
+              "denominator": 0,
+              "ci95_wilson": null
+            }
+          },
+          "completion": {
+            "valid_claims": 0,
+            "assessed_claims": 0,
+            "claim_truth_unknown": 0,
+            "false_claims": 0,
+            "false_claims_without_final_completion": 0,
+            "revoked": 0,
+            "revocation_status_unknown": 0,
+            "rest_lost_after_confirmation": 0,
+            "rest_loss_status_unknown": 0,
+            "false_given_assessed_claim": {
+              "estimate": null,
+              "numerator": 0,
+              "denominator": 0,
+              "ci95_wilson": null
+            },
+            "false_claim_per_attempt": {
+              "estimate": null,
+              "numerator": 0,
+              "denominator": 0,
+              "ci95_wilson": null
+            },
+            "expected_censored": 0,
+            "truth_unsettled": 0,
+            "verified_successes_with_completion": 0
+          },
+          "load": {
+            "holding_valid": 0,
+            "outcome_known": 0,
+            "outcome_unknown": 0,
+            "not_holding_or_unknown": 0,
+            "dropped": 0,
+            "drop_rate": {
+              "estimate": null,
+              "numerator": 0,
+              "denominator": 0,
+              "ci95_wilson": null
+            }
+          },
+          "measurements": {
+            "final_error_m": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "final_speed_m_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "overshoot_m": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "rms_error_m": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "error_at_completion_m": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "speed_at_completion_m_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "peak_error_after_completion_m": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "peak_acceleration_m_s2": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "peak_jerk_m_s3": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "peak_force_proxy_n": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "contact_impulse_ns": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "max_penetration_m": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "reaction_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "sensor_unusable_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "predictor_rmse_m": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "command_latency_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "controller_latency_p50_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "controller_latency_p95_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "controller_latency_max_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "claimed_completion_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "verified_success_completion_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "truth_settled_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            }
+          },
+          "throughput": {
+            "wall_seconds": 0,
+            "simulated_seconds": 0,
+            "step_count": 0,
+            "steps_per_wall_second": null,
+            "simulated_seconds_per_wall_second": null,
+            "wall_time_missing": 0,
+            "simulated_time_missing": 0,
+            "step_count_missing": 0
+          }
+        }
+      }
+    },
+    "confirmation": {
+      "attempted": 162,
+      "valid": 162,
+      "invalid": 0,
+      "errors": 0,
+      "expected_completion": {
+        "attempted_positive": 108,
+        "attempted_negative": 54,
+        "attempted_unknown": 0,
+        "invalid_positive": 0,
+        "invalid_negative": 0,
+        "valid_expected": 108
+      },
+      "success": {
+        "known_valid": 162,
+        "unknown_valid": 0,
+        "succeeded": 108,
+        "failed_known": 54,
+        "conditional_valid": {
+          "estimate": 0.6666666666666666,
+          "numerator": 108,
+          "denominator": 162,
+          "ci95_wilson": {
+            "lower": 0.5909566998344502,
+            "upper": 0.7346554865512482
+          }
+        },
+        "all_attempts": {
+          "estimate": 0.6666666666666666,
+          "numerator": 108,
+          "denominator": 162,
+          "ci95_wilson": {
+            "lower": 0.5909566998344502,
+            "upper": 0.7346554865512482
+          }
+        }
+      },
+      "completion": {
+        "valid_claims": 108,
+        "assessed_claims": 108,
+        "claim_truth_unknown": 0,
+        "false_claims": 0,
+        "false_claims_without_final_completion": 0,
+        "revoked": 0,
+        "revocation_status_unknown": 0,
+        "rest_lost_after_confirmation": 0,
+        "rest_loss_status_unknown": 0,
+        "false_given_assessed_claim": {
+          "estimate": 0.0,
+          "numerator": 0,
+          "denominator": 108,
+          "ci95_wilson": {
+            "lower": 0.0,
+            "upper": 0.034347359746557025
+          }
+        },
+        "false_claim_per_attempt": {
+          "estimate": 0.0,
+          "numerator": 0,
+          "denominator": 162,
+          "ci95_wilson": {
+            "lower": 0.0,
+            "upper": 0.023163440842904465
+          }
+        },
+        "expected_censored": 0,
+        "truth_unsettled": 0,
+        "verified_successes_with_completion": 108
+      },
+      "load": {
+        "holding_valid": 162,
+        "outcome_known": 162,
+        "outcome_unknown": 0,
+        "not_holding_or_unknown": 0,
+        "dropped": 27,
+        "drop_rate": {
+          "estimate": 0.16666666666666666,
+          "numerator": 27,
+          "denominator": 162,
+          "ci95_wilson": {
+            "lower": 0.11714481690988812,
+            "upper": 0.23163081031871482
+          }
+        }
+      },
+      "measurements": {
+        "final_error_m": {
+          "count": 162,
+          "missing": 0,
+          "mean": 0.048044580612952664,
+          "median": 8.881784197001252e-16,
+          "p95": 0.18818828151526082,
+          "min": 1.3877787807814457e-17,
+          "max": 0.2040941407576304,
+          "worst": 0.2040941407576304
+        },
+        "final_speed_m_s": {
+          "count": 162,
+          "missing": 0,
+          "mean": 2.1595578725293085e-06,
+          "median": 2.7926563665515113e-15,
+          "p95": 2.3368586528794393e-10,
+          "min": 1.788194978571391e-16,
+          "max": 0.00011646504553828425,
+          "worst": 0.00011646504553828425
+        },
+        "overshoot_m": {
+          "count": 162,
+          "missing": 0,
+          "mean": 8.087653368371438e-05,
+          "median": 3.618561698644218e-05,
+          "p95": 0.00028099481142244975,
+          "min": 0.0,
+          "max": 0.0004207029115729788,
+          "worst": 0.0004207029115729788
+        },
+        "rms_error_m": {
+          "count": 162,
+          "missing": 0,
+          "mean": 0.10096199453397149,
+          "median": 0.08365502591178253,
+          "p95": 0.1900529152913791,
+          "min": 0.04886957978662889,
+          "max": 0.20499615557641238,
+          "worst": 0.20499615557641238
+        },
+        "error_at_completion_m": {
+          "count": 108,
+          "missing": 54,
+          "mean": 0.00010763072177359578,
+          "median": 9.322424274187113e-05,
+          "p95": 0.00029431119742787115,
+          "min": 6.097898919171785e-06,
+          "max": 0.0003851743183631573,
+          "worst": 0.0003851743183631573
+        },
+        "speed_at_completion_m_s": {
+          "count": 108,
+          "missing": 54,
+          "mean": 0.000980648107476944,
+          "median": 0.0008142198731355761,
+          "p95": 0.00237298104297949,
+          "min": 1.1910444229617405e-05,
+          "max": 0.0026753115839507386,
+          "worst": 0.0026753115839507386
+        },
+        "peak_error_after_completion_m": {
+          "count": 108,
+          "missing": 54,
+          "mean": 0.00011273485535235917,
+          "median": 9.366679921286869e-05,
+          "p95": 0.00029431119742787115,
+          "min": 2.2822923127954753e-05,
+          "max": 0.0003851743183631573,
+          "worst": 0.0003851743183631573
+        },
+        "peak_acceleration_m_s2": {
+          "count": 162,
+          "missing": 0,
+          "mean": 2.7703667831583094,
+          "median": 1.78239552065729,
+          "p95": 8.617833866205403,
+          "min": 0.5087839751415085,
+          "max": 8.834098126339388,
+          "worst": 8.834098126339388
+        },
+        "peak_jerk_m_s3": {
+          "count": 162,
+          "missing": 0,
+          "mean": 216.0560615838801,
+          "median": 76.86292215058938,
+          "p95": 859.7388957342715,
+          "min": 20.65971195117634,
+          "max": 883.2779105588386,
+          "worst": 883.2779105588386
+        },
+        "peak_force_proxy_n": {
+          "count": 162,
+          "missing": 0,
+          "mean": 0.0,
+          "median": 0.0,
+          "p95": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "worst": 0.0
+        },
+        "contact_impulse_ns": {
+          "count": 162,
+          "missing": 0,
+          "mean": 0.0,
+          "median": 0.0,
+          "p95": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "worst": 0.0
+        },
+        "max_penetration_m": {
+          "count": 162,
+          "missing": 0,
+          "mean": 0.0,
+          "median": 0.0,
+          "p95": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "worst": 0.0
+        },
+        "reaction_s": {
+          "count": 54,
+          "missing": 108,
+          "mean": 0.48,
+          "median": 0.48,
+          "p95": 0.61,
+          "min": 0.35000000000000003,
+          "max": 0.61,
+          "worst": 0.61
+        },
+        "sensor_unusable_s": {
+          "count": 162,
+          "missing": 0,
+          "mean": 0.049999999999999996,
+          "median": 0.0,
+          "p95": 0.3,
+          "min": 0.0,
+          "max": 0.3,
+          "worst": 0.3
+        },
+        "predictor_rmse_m": {
+          "count": 162,
+          "missing": 0,
+          "mean": 0.0003659277278126731,
+          "median": 0.0,
+          "p95": 0.003098738974891315,
+          "min": 0.0,
+          "max": 0.00418853191749607,
+          "worst": 0.00418853191749607
+        },
+        "command_latency_s": {
+          "count": 162,
+          "missing": 0,
+          "mean": 0.02,
+          "median": 0.02,
+          "p95": 0.02,
+          "min": 0.02,
+          "max": 0.02,
+          "worst": 0.02
+        },
+        "controller_latency_p50_s": {
+          "count": 162,
+          "missing": 0,
+          "mean": 3.9308128539288856e-05,
+          "median": 3.079173620790243e-05,
+          "p95": 9.814556688070297e-05,
+          "min": 6.645568646490574e-06,
+          "max": 0.0001918335910886526,
+          "worst": 0.0001918335910886526
+        },
+        "controller_latency_p95_s": {
+          "count": 162,
+          "missing": 0,
+          "mean": 6.810468075406037e-05,
+          "median": 5.160353612154722e-05,
+          "p95": 0.0001775000710040331,
+          "min": 1.216609962284565e-05,
+          "max": 0.00032258289866149426,
+          "worst": 0.00032258289866149426
+        },
+        "controller_latency_max_s": {
+          "count": 162,
+          "missing": 0,
+          "mean": 0.00017802140899692421,
+          "median": 9.937549475580454e-05,
+          "p95": 0.00039733294397592545,
+          "min": 1.491699367761612e-05,
+          "max": 0.0050135410856455564,
+          "worst": 0.0050135410856455564
+        },
+        "claimed_completion_s": {
+          "count": 108,
+          "missing": 54,
+          "mean": 1.8026851851851853,
+          "median": 1.665,
+          "p95": 3.48,
+          "min": 0.96,
+          "max": 3.81,
+          "worst": 3.81
+        },
+        "verified_success_completion_s": {
+          "count": 108,
+          "missing": 0,
+          "mean": 1.8026851851851853,
+          "median": 1.665,
+          "p95": 3.48,
+          "min": 0.96,
+          "max": 3.81,
+          "worst": 3.81
+        },
+        "truth_settled_s": {
+          "count": 108,
+          "missing": 54,
+          "mean": 1.7926851851851853,
+          "median": 1.665,
+          "p95": 3.48,
+          "min": 0.92,
+          "max": 3.81,
+          "worst": 3.81
+        }
+      },
+      "throughput": {
+        "wall_seconds": 101.63020696095191,
+        "simulated_seconds": 648.0,
+        "step_count": 648000,
+        "steps_per_wall_second": 6376.05707374947,
+        "simulated_seconds_per_wall_second": 6.37605707374947,
+        "wall_time_missing": 0,
+        "simulated_time_missing": 0,
+        "step_count_missing": 0
+      },
+      "by_expected_completion": {
+        "expected": {
+          "attempted": 108,
+          "valid": 108,
+          "invalid": 0,
+          "errors": 0,
+          "expected_completion": {
+            "attempted_positive": 108,
+            "attempted_negative": 0,
+            "attempted_unknown": 0,
+            "invalid_positive": 0,
+            "invalid_negative": 0,
+            "valid_expected": 108
+          },
+          "success": {
+            "known_valid": 108,
+            "unknown_valid": 0,
+            "succeeded": 108,
+            "failed_known": 0,
+            "conditional_valid": {
+              "estimate": 1.0,
+              "numerator": 108,
+              "denominator": 108,
+              "ci95_wilson": {
+                "lower": 0.9656526402534428,
+                "upper": 0.9999999999999999
+              }
+            },
+            "all_attempts": {
+              "estimate": 1.0,
+              "numerator": 108,
+              "denominator": 108,
+              "ci95_wilson": {
+                "lower": 0.9656526402534428,
+                "upper": 0.9999999999999999
+              }
+            }
+          },
+          "completion": {
+            "valid_claims": 108,
+            "assessed_claims": 108,
+            "claim_truth_unknown": 0,
+            "false_claims": 0,
+            "false_claims_without_final_completion": 0,
+            "revoked": 0,
+            "revocation_status_unknown": 0,
+            "rest_lost_after_confirmation": 0,
+            "rest_loss_status_unknown": 0,
+            "false_given_assessed_claim": {
+              "estimate": 0.0,
+              "numerator": 0,
+              "denominator": 108,
+              "ci95_wilson": {
+                "lower": 0.0,
+                "upper": 0.034347359746557025
+              }
+            },
+            "false_claim_per_attempt": {
+              "estimate": 0.0,
+              "numerator": 0,
+              "denominator": 108,
+              "ci95_wilson": {
+                "lower": 0.0,
+                "upper": 0.034347359746557025
+              }
+            },
+            "expected_censored": 0,
+            "truth_unsettled": 0,
+            "verified_successes_with_completion": 108
+          },
+          "load": {
+            "holding_valid": 108,
+            "outcome_known": 108,
+            "outcome_unknown": 0,
+            "not_holding_or_unknown": 0,
+            "dropped": 0,
+            "drop_rate": {
+              "estimate": 0.0,
+              "numerator": 0,
+              "denominator": 108,
+              "ci95_wilson": {
+                "lower": 0.0,
+                "upper": 0.034347359746557025
+              }
+            }
+          },
+          "measurements": {
+            "final_error_m": {
+              "count": 108,
+              "missing": 0,
+              "mean": 9.522912047861594e-08,
+              "median": 2.636779683484747e-16,
+              "p95": 1.5503170081032636e-08,
+              "min": 1.3877787807814457e-17,
+              "max": 3.412703749455792e-06,
+              "worst": 3.412703749455792e-06
+            },
+            "final_speed_m_s": {
+              "count": 108,
+              "missing": 0,
+              "mean": 3.239336807915724e-06,
+              "median": 3.3831531975527345e-15,
+              "p95": 1.5084504438963357e-07,
+              "min": 1.788194978571391e-16,
+              "max": 0.00011646504553828425,
+              "worst": 0.00011646504553828425
+            },
+            "overshoot_m": {
+              "count": 108,
+              "missing": 0,
+              "mean": 0.00012131480052557157,
+              "median": 0.00010225309424000822,
+              "p95": 0.0003107381158466427,
+              "min": 2.2822923127954753e-05,
+              "max": 0.0004207029115729788,
+              "worst": 0.0004207029115729788
+            },
+            "rms_error_m": {
+              "count": 108,
+              "missing": 0,
+              "mean": 0.07595770521215932,
+              "median": 0.0746894860779529,
+              "p95": 0.10602750748327908,
+              "min": 0.04886957978662889,
+              "max": 0.12226918163986827,
+              "worst": 0.12226918163986827
+            },
+            "error_at_completion_m": {
+              "count": 108,
+              "missing": 0,
+              "mean": 0.00010763072177359578,
+              "median": 9.322424274187113e-05,
+              "p95": 0.00029431119742787115,
+              "min": 6.097898919171785e-06,
+              "max": 0.0003851743183631573,
+              "worst": 0.0003851743183631573
+            },
+            "speed_at_completion_m_s": {
+              "count": 108,
+              "missing": 0,
+              "mean": 0.000980648107476944,
+              "median": 0.0008142198731355761,
+              "p95": 0.00237298104297949,
+              "min": 1.1910444229617405e-05,
+              "max": 0.0026753115839507386,
+              "worst": 0.0026753115839507386
+            },
+            "peak_error_after_completion_m": {
+              "count": 108,
+              "missing": 0,
+              "mean": 0.00011273485535235917,
+              "median": 9.366679921286869e-05,
+              "p95": 0.00029431119742787115,
+              "min": 2.2822923127954753e-05,
+              "max": 0.0003851743183631573,
+              "worst": 0.0003851743183631573
+            },
+            "peak_acceleration_m_s2": {
+              "count": 108,
+              "missing": 0,
+              "mean": 1.558536485377869,
+              "median": 1.1949206288264576,
+              "p95": 4.8106915192591915,
+              "min": 0.5087839751415085,
+              "max": 4.8106915192591915,
+              "worst": 4.8106915192591915
+            },
+            "peak_jerk_m_s3": {
+              "count": 108,
+              "missing": 0,
+              "mean": 64.70659143933436,
+              "median": 49.422408225525146,
+              "p95": 202.55647654707664,
+              "min": 20.65971195117634,
+              "max": 202.55647654707664,
+              "worst": 202.55647654707664
+            },
+            "peak_force_proxy_n": {
+              "count": 108,
+              "missing": 0,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "worst": 0.0
+            },
+            "contact_impulse_ns": {
+              "count": 108,
+              "missing": 0,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "worst": 0.0
+            },
+            "max_penetration_m": {
+              "count": 108,
+              "missing": 0,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "worst": 0.0
+            },
+            "reaction_s": {
+              "count": 0,
+              "missing": 108,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "sensor_unusable_s": {
+              "count": 108,
+              "missing": 0,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "worst": 0.0
+            },
+            "predictor_rmse_m": {
+              "count": 108,
+              "missing": 0,
+              "mean": 0.0005488915917190096,
+              "median": 0.0,
+              "p95": 0.00358846050498743,
+              "min": 0.0,
+              "max": 0.00418853191749607,
+              "worst": 0.00418853191749607
+            },
+            "command_latency_s": {
+              "count": 108,
+              "missing": 0,
+              "mean": 0.02,
+              "median": 0.02,
+              "p95": 0.02,
+              "min": 0.02,
+              "max": 0.02,
+              "worst": 0.02
+            },
+            "controller_latency_p50_s": {
+              "count": 108,
+              "missing": 0,
+              "mean": 5.1953529085343085e-05,
+              "median": 3.517698496580124e-05,
+              "p95": 0.00012839597184211016,
+              "min": 2.2395513951778412e-05,
+              "max": 0.0001918335910886526,
+              "worst": 0.0001918335910886526
+            },
+            "controller_latency_p95_s": {
+              "count": 108,
+              "missing": 0,
+              "mean": 9.042014264398151e-05,
+              "median": 6.516638677567244e-05,
+              "p95": 0.00021450011990964413,
+              "min": 3.758305683732033e-05,
+              "max": 0.00032258289866149426,
+              "worst": 0.00032258289866149426
+            },
+            "controller_latency_max_s": {
+              "count": 108,
+              "missing": 0,
+              "mean": 0.00025107877122031315,
+              "median": 0.00014133343938738108,
+              "p95": 0.0006989170797169209,
+              "min": 4.7667184844613075e-05,
+              "max": 0.0050135410856455564,
+              "worst": 0.0050135410856455564
+            },
+            "claimed_completion_s": {
+              "count": 108,
+              "missing": 0,
+              "mean": 1.8026851851851853,
+              "median": 1.665,
+              "p95": 3.48,
+              "min": 0.96,
+              "max": 3.81,
+              "worst": 3.81
+            },
+            "verified_success_completion_s": {
+              "count": 108,
+              "missing": 0,
+              "mean": 1.8026851851851853,
+              "median": 1.665,
+              "p95": 3.48,
+              "min": 0.96,
+              "max": 3.81,
+              "worst": 3.81
+            },
+            "truth_settled_s": {
+              "count": 108,
+              "missing": 0,
+              "mean": 1.7926851851851853,
+              "median": 1.665,
+              "p95": 3.48,
+              "min": 0.92,
+              "max": 3.81,
+              "worst": 3.81
+            }
+          },
+          "throughput": {
+            "wall_seconds": 71.55669279233553,
+            "simulated_seconds": 432.0,
+            "step_count": 432000,
+            "steps_per_wall_second": 6037.171131618757,
+            "simulated_seconds_per_wall_second": 6.037171131618757,
+            "wall_time_missing": 0,
+            "simulated_time_missing": 0,
+            "step_count_missing": 0
+          }
+        },
+        "not_expected": {
+          "attempted": 54,
+          "valid": 54,
+          "invalid": 0,
+          "errors": 0,
+          "expected_completion": {
+            "attempted_positive": 0,
+            "attempted_negative": 54,
+            "attempted_unknown": 0,
+            "invalid_positive": 0,
+            "invalid_negative": 0,
+            "valid_expected": 0
+          },
+          "success": {
+            "known_valid": 54,
+            "unknown_valid": 0,
+            "succeeded": 0,
+            "failed_known": 54,
+            "conditional_valid": {
+              "estimate": 0.0,
+              "numerator": 0,
+              "denominator": 54,
+              "ci95_wilson": {
+                "lower": 0.0,
+                "upper": 0.0664135880908964
+              }
+            },
+            "all_attempts": {
+              "estimate": 0.0,
+              "numerator": 0,
+              "denominator": 54,
+              "ci95_wilson": {
+                "lower": 0.0,
+                "upper": 0.0664135880908964
+              }
+            }
+          },
+          "completion": {
+            "valid_claims": 0,
+            "assessed_claims": 0,
+            "claim_truth_unknown": 0,
+            "false_claims": 0,
+            "false_claims_without_final_completion": 0,
+            "revoked": 0,
+            "revocation_status_unknown": 0,
+            "rest_lost_after_confirmation": 0,
+            "rest_loss_status_unknown": 0,
+            "false_given_assessed_claim": {
+              "estimate": null,
+              "numerator": 0,
+              "denominator": 0,
+              "ci95_wilson": null
+            },
+            "false_claim_per_attempt": {
+              "estimate": 0.0,
+              "numerator": 0,
+              "denominator": 54,
+              "ci95_wilson": {
+                "lower": 0.0,
+                "upper": 0.0664135880908964
+              }
+            },
+            "expected_censored": 0,
+            "truth_unsettled": 0,
+            "verified_successes_with_completion": 0
+          },
+          "load": {
+            "holding_valid": 54,
+            "outcome_known": 54,
+            "outcome_unknown": 0,
+            "not_holding_or_unknown": 0,
+            "dropped": 27,
+            "drop_rate": {
+              "estimate": 0.5,
+              "numerator": 27,
+              "denominator": 54,
+              "ci95_wilson": {
+                "lower": 0.3711458304022563,
+                "upper": 0.6288541695977437
+              }
+            }
+          },
+          "measurements": {
+            "final_error_m": {
+              "count": 54,
+              "missing": 0,
+              "mean": 0.14413355138061704,
+              "median": 0.14662134196481433,
+              "p95": 0.2040941407576304,
+              "min": 0.05291607576975538,
+              "max": 0.2040941407576304,
+              "worst": 0.2040941407576304
+            },
+            "final_speed_m_s": {
+              "count": 54,
+              "missing": 0,
+              "mean": 1.7564773318381342e-15,
+              "median": 1.690085021517804e-15,
+              "p95": 4.091718428527715e-15,
+              "min": 3.339440682519447e-16,
+              "max": 4.091718428527715e-15,
+              "worst": 4.091718428527715e-15
+            },
+            "overshoot_m": {
+              "count": 54,
+              "missing": 0,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "worst": 0.0
+            },
+            "rms_error_m": {
+              "count": 54,
+              "missing": 0,
+              "mean": 0.1509705731775958,
+              "median": 0.15166579714738032,
+              "p95": 0.20499615557641238,
+              "min": 0.07520514884640475,
+              "max": 0.20499615557641238,
+              "worst": 0.20499615557641238
+            },
+            "error_at_completion_m": {
+              "count": 0,
+              "missing": 54,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "speed_at_completion_m_s": {
+              "count": 0,
+              "missing": 54,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "peak_error_after_completion_m": {
+              "count": 0,
+              "missing": 54,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "peak_acceleration_m_s2": {
+              "count": 54,
+              "missing": 0,
+              "mean": 5.19402737871919,
+              "median": 4.3629829981163715,
+              "p95": 8.834098126339388,
+              "min": 1.8466786856154438,
+              "max": 8.834098126339388,
+              "worst": 8.834098126339388
+            },
+            "peak_jerk_m_s3": {
+              "count": 54,
+              "missing": 0,
+              "mean": 518.7550018729717,
+              "median": 435.75420157128093,
+              "p95": 883.2779105588386,
+              "min": 184.22976337162956,
+              "max": 883.2779105588386,
+              "worst": 883.2779105588386
+            },
+            "peak_force_proxy_n": {
+              "count": 54,
+              "missing": 0,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "worst": 0.0
+            },
+            "contact_impulse_ns": {
+              "count": 54,
+              "missing": 0,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "worst": 0.0
+            },
+            "max_penetration_m": {
+              "count": 54,
+              "missing": 0,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "worst": 0.0
+            },
+            "reaction_s": {
+              "count": 54,
+              "missing": 0,
+              "mean": 0.48,
+              "median": 0.48,
+              "p95": 0.61,
+              "min": 0.35000000000000003,
+              "max": 0.61,
+              "worst": 0.61
+            },
+            "sensor_unusable_s": {
+              "count": 54,
+              "missing": 0,
+              "mean": 0.15,
+              "median": 0.15,
+              "p95": 0.3,
+              "min": 0.0,
+              "max": 0.3,
+              "worst": 0.3
+            },
+            "predictor_rmse_m": {
+              "count": 54,
+              "missing": 0,
+              "mean": 0.0,
+              "median": 0.0,
+              "p95": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "worst": 0.0
+            },
+            "command_latency_s": {
+              "count": 54,
+              "missing": 0,
+              "mean": 0.02,
+              "median": 0.02,
+              "p95": 0.02,
+              "min": 0.02,
+              "max": 0.02,
+              "worst": 0.02
+            },
+            "controller_latency_p50_s": {
+              "count": 54,
+              "missing": 0,
+              "mean": 1.4017327447180395e-05,
+              "median": 1.2197473552078009e-05,
+              "p95": 2.3021013475954533e-05,
+              "min": 6.645568646490574e-06,
+              "max": 2.4270499125123024e-05,
+              "worst": 2.4270499125123024e-05
+            },
+            "controller_latency_p95_s": {
+              "count": 54,
+              "missing": 0,
+              "mean": 2.347375697421807e-05,
+              "median": 2.2188061848282814e-05,
+              "p95": 3.8790982216596603e-05,
+              "min": 1.216609962284565e-05,
+              "max": 5.291705019772053e-05,
+              "worst": 5.291705019772053e-05
+            },
+            "controller_latency_max_s": {
+              "count": 54,
+              "missing": 0,
+              "mean": 3.190668455014626e-05,
+              "median": 2.6603927835822105e-05,
+              "p95": 6.658397614955902e-05,
+              "min": 1.491699367761612e-05,
+              "max": 8.93748365342617e-05,
+              "worst": 8.93748365342617e-05
+            },
+            "claimed_completion_s": {
+              "count": 0,
+              "missing": 54,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "verified_success_completion_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "truth_settled_s": {
+              "count": 0,
+              "missing": 54,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            }
+          },
+          "throughput": {
+            "wall_seconds": 30.073514168616384,
+            "simulated_seconds": 216.0,
+            "step_count": 216000,
+            "steps_per_wall_second": 7182.399728509602,
+            "simulated_seconds_per_wall_second": 7.182399728509602,
+            "wall_time_missing": 0,
+            "simulated_time_missing": 0,
+            "step_count_missing": 0
+          }
+        },
+        "unknown": {
+          "attempted": 0,
+          "valid": 0,
+          "invalid": 0,
+          "errors": 0,
+          "expected_completion": {
+            "attempted_positive": 0,
+            "attempted_negative": 0,
+            "attempted_unknown": 0,
+            "invalid_positive": 0,
+            "invalid_negative": 0,
+            "valid_expected": 0
+          },
+          "success": {
+            "known_valid": 0,
+            "unknown_valid": 0,
+            "succeeded": 0,
+            "failed_known": 0,
+            "conditional_valid": {
+              "estimate": null,
+              "numerator": 0,
+              "denominator": 0,
+              "ci95_wilson": null
+            },
+            "all_attempts": {
+              "estimate": null,
+              "numerator": 0,
+              "denominator": 0,
+              "ci95_wilson": null
+            }
+          },
+          "completion": {
+            "valid_claims": 0,
+            "assessed_claims": 0,
+            "claim_truth_unknown": 0,
+            "false_claims": 0,
+            "false_claims_without_final_completion": 0,
+            "revoked": 0,
+            "revocation_status_unknown": 0,
+            "rest_lost_after_confirmation": 0,
+            "rest_loss_status_unknown": 0,
+            "false_given_assessed_claim": {
+              "estimate": null,
+              "numerator": 0,
+              "denominator": 0,
+              "ci95_wilson": null
+            },
+            "false_claim_per_attempt": {
+              "estimate": null,
+              "numerator": 0,
+              "denominator": 0,
+              "ci95_wilson": null
+            },
+            "expected_censored": 0,
+            "truth_unsettled": 0,
+            "verified_successes_with_completion": 0
+          },
+          "load": {
+            "holding_valid": 0,
+            "outcome_known": 0,
+            "outcome_unknown": 0,
+            "not_holding_or_unknown": 0,
+            "dropped": 0,
+            "drop_rate": {
+              "estimate": null,
+              "numerator": 0,
+              "denominator": 0,
+              "ci95_wilson": null
+            }
+          },
+          "measurements": {
+            "final_error_m": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "final_speed_m_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "overshoot_m": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "rms_error_m": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "error_at_completion_m": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "speed_at_completion_m_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "peak_error_after_completion_m": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "peak_acceleration_m_s2": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "peak_jerk_m_s3": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "peak_force_proxy_n": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "contact_impulse_ns": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "max_penetration_m": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "reaction_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "sensor_unusable_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "predictor_rmse_m": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "command_latency_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "controller_latency_p50_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "controller_latency_p95_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "controller_latency_max_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "claimed_completion_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "verified_success_completion_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            },
+            "truth_settled_s": {
+              "count": 0,
+              "missing": 0,
+              "mean": null,
+              "median": null,
+              "p95": null,
+              "min": null,
+              "max": null,
+              "worst": null
+            }
+          },
+          "throughput": {
+            "wall_seconds": 0,
+            "simulated_seconds": 0,
+            "step_count": 0,
+            "steps_per_wall_second": null,
+            "simulated_seconds_per_wall_second": null,
+            "wall_time_missing": 0,
+            "simulated_time_missing": 0,
+            "step_count_missing": 0
+          }
+        }
+      }
+    }
+  },
+  "frontier": {
+    "development": [
+      {
+        "variant": "adaptive_predictive",
+        "speed_limit_m_s": 0.12,
+        "plotted_verified_success_count": 15,
+        "completion_time_s": 1.75,
+        "error_at_completion_m": 0.00012277558447765236,
+        "final_error_m": 2.498001805406602e-16,
+        "point_scope": "medians over the same valid, verified successful trials only; counts and failures remain alongside",
+        "attempted": 18,
+        "valid": 18,
+        "invalid": 0,
+        "success": {
+          "known_valid": 18,
+          "unknown_valid": 0,
+          "succeeded": 15,
+          "failed_known": 3,
+          "conditional_valid": {
+            "estimate": 0.8333333333333334,
+            "numerator": 15,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.6077796189608428,
+              "upper": 0.9416342319413856
+            }
+          },
+          "all_attempts": {
+            "estimate": 0.8333333333333334,
+            "numerator": 15,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.6077796189608428,
+              "upper": 0.9416342319413856
+            }
+          }
+        },
+        "completion": {
+          "valid_claims": 15,
+          "assessed_claims": 15,
+          "claim_truth_unknown": 0,
+          "false_claims": 0,
+          "false_claims_without_final_completion": 0,
+          "revoked": 0,
+          "revocation_status_unknown": 0,
+          "rest_lost_after_confirmation": 0,
+          "rest_loss_status_unknown": 0,
+          "false_given_assessed_claim": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 15,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.20388330103584862
+            }
+          },
+          "false_claim_per_attempt": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          },
+          "expected_censored": 0,
+          "truth_unsettled": 0,
+          "verified_successes_with_completion": 15
+        },
+        "load": {
+          "holding_valid": 18,
+          "outcome_known": 18,
+          "outcome_unknown": 0,
+          "not_holding_or_unknown": 0,
+          "dropped": 0,
+          "drop_rate": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          }
+        }
+      },
+      {
+        "variant": "adaptive_predictive",
+        "speed_limit_m_s": 0.2,
+        "plotted_verified_success_count": 15,
+        "completion_time_s": 1.16,
+        "error_at_completion_m": 0.00019882987597011348,
+        "final_error_m": 1.6653345369377348e-16,
+        "point_scope": "medians over the same valid, verified successful trials only; counts and failures remain alongside",
+        "attempted": 18,
+        "valid": 18,
+        "invalid": 0,
+        "success": {
+          "known_valid": 18,
+          "unknown_valid": 0,
+          "succeeded": 15,
+          "failed_known": 3,
+          "conditional_valid": {
+            "estimate": 0.8333333333333334,
+            "numerator": 15,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.6077796189608428,
+              "upper": 0.9416342319413856
+            }
+          },
+          "all_attempts": {
+            "estimate": 0.8333333333333334,
+            "numerator": 15,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.6077796189608428,
+              "upper": 0.9416342319413856
+            }
+          }
+        },
+        "completion": {
+          "valid_claims": 15,
+          "assessed_claims": 15,
+          "claim_truth_unknown": 0,
+          "false_claims": 0,
+          "false_claims_without_final_completion": 0,
+          "revoked": 0,
+          "revocation_status_unknown": 0,
+          "rest_lost_after_confirmation": 0,
+          "rest_loss_status_unknown": 0,
+          "false_given_assessed_claim": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 15,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.20388330103584862
+            }
+          },
+          "false_claim_per_attempt": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          },
+          "expected_censored": 0,
+          "truth_unsettled": 0,
+          "verified_successes_with_completion": 15
+        },
+        "load": {
+          "holding_valid": 18,
+          "outcome_known": 18,
+          "outcome_unknown": 0,
+          "not_holding_or_unknown": 0,
+          "dropped": 0,
+          "drop_rate": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          }
+        }
+      },
+      {
+        "variant": "adaptive_predictive",
+        "speed_limit_m_s": 0.28,
+        "plotted_verified_success_count": 15,
+        "completion_time_s": 0.91,
+        "error_at_completion_m": 0.0002657589340235855,
+        "final_error_m": 8.326672684688674e-17,
+        "point_scope": "medians over the same valid, verified successful trials only; counts and failures remain alongside",
+        "attempted": 18,
+        "valid": 18,
+        "invalid": 0,
+        "success": {
+          "known_valid": 18,
+          "unknown_valid": 0,
+          "succeeded": 15,
+          "failed_known": 3,
+          "conditional_valid": {
+            "estimate": 0.8333333333333334,
+            "numerator": 15,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.6077796189608428,
+              "upper": 0.9416342319413856
+            }
+          },
+          "all_attempts": {
+            "estimate": 0.8333333333333334,
+            "numerator": 15,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.6077796189608428,
+              "upper": 0.9416342319413856
+            }
+          }
+        },
+        "completion": {
+          "valid_claims": 15,
+          "assessed_claims": 15,
+          "claim_truth_unknown": 0,
+          "false_claims": 0,
+          "false_claims_without_final_completion": 0,
+          "revoked": 0,
+          "revocation_status_unknown": 0,
+          "rest_lost_after_confirmation": 0,
+          "rest_loss_status_unknown": 0,
+          "false_given_assessed_claim": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 15,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.20388330103584862
+            }
+          },
+          "false_claim_per_attempt": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          },
+          "expected_censored": 0,
+          "truth_unsettled": 0,
+          "verified_successes_with_completion": 15
+        },
+        "load": {
+          "holding_valid": 18,
+          "outcome_known": 18,
+          "outcome_unknown": 0,
+          "not_holding_or_unknown": 0,
+          "dropped": 0,
+          "drop_rate": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          }
+        }
+      },
+      {
+        "variant": "fast_fixed",
+        "speed_limit_m_s": 0.12,
+        "plotted_verified_success_count": 15,
+        "completion_time_s": 2.2600000000000002,
+        "error_at_completion_m": 6.09786276367652e-06,
+        "final_error_m": 8.604228440844963e-16,
+        "point_scope": "medians over the same valid, verified successful trials only; counts and failures remain alongside",
+        "attempted": 18,
+        "valid": 18,
+        "invalid": 0,
+        "success": {
+          "known_valid": 18,
+          "unknown_valid": 0,
+          "succeeded": 15,
+          "failed_known": 3,
+          "conditional_valid": {
+            "estimate": 0.8333333333333334,
+            "numerator": 15,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.6077796189608428,
+              "upper": 0.9416342319413856
+            }
+          },
+          "all_attempts": {
+            "estimate": 0.8333333333333334,
+            "numerator": 15,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.6077796189608428,
+              "upper": 0.9416342319413856
+            }
+          }
+        },
+        "completion": {
+          "valid_claims": 15,
+          "assessed_claims": 15,
+          "claim_truth_unknown": 0,
+          "false_claims": 0,
+          "false_claims_without_final_completion": 0,
+          "revoked": 0,
+          "revocation_status_unknown": 0,
+          "rest_lost_after_confirmation": 0,
+          "rest_loss_status_unknown": 0,
+          "false_given_assessed_claim": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 15,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.20388330103584862
+            }
+          },
+          "false_claim_per_attempt": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          },
+          "expected_censored": 0,
+          "truth_unsettled": 0,
+          "verified_successes_with_completion": 15
+        },
+        "load": {
+          "holding_valid": 18,
+          "outcome_known": 18,
+          "outcome_unknown": 0,
+          "not_holding_or_unknown": 0,
+          "dropped": 0,
+          "drop_rate": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          }
+        }
+      },
+      {
+        "variant": "fast_fixed",
+        "speed_limit_m_s": 0.2,
+        "plotted_verified_success_count": 15,
+        "completion_time_s": 1.55,
+        "error_at_completion_m": 9.320535307055788e-06,
+        "final_error_m": 8.881784197001252e-16,
+        "point_scope": "medians over the same valid, verified successful trials only; counts and failures remain alongside",
+        "attempted": 18,
+        "valid": 18,
+        "invalid": 0,
+        "success": {
+          "known_valid": 18,
+          "unknown_valid": 0,
+          "succeeded": 15,
+          "failed_known": 3,
+          "conditional_valid": {
+            "estimate": 0.8333333333333334,
+            "numerator": 15,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.6077796189608428,
+              "upper": 0.9416342319413856
+            }
+          },
+          "all_attempts": {
+            "estimate": 0.8333333333333334,
+            "numerator": 15,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.6077796189608428,
+              "upper": 0.9416342319413856
+            }
+          }
+        },
+        "completion": {
+          "valid_claims": 15,
+          "assessed_claims": 15,
+          "claim_truth_unknown": 0,
+          "false_claims": 0,
+          "false_claims_without_final_completion": 0,
+          "revoked": 0,
+          "revocation_status_unknown": 0,
+          "rest_lost_after_confirmation": 0,
+          "rest_loss_status_unknown": 0,
+          "false_given_assessed_claim": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 15,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.20388330103584862
+            }
+          },
+          "false_claim_per_attempt": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          },
+          "expected_censored": 0,
+          "truth_unsettled": 0,
+          "verified_successes_with_completion": 15
+        },
+        "load": {
+          "holding_valid": 18,
+          "outcome_known": 18,
+          "outcome_unknown": 0,
+          "not_holding_or_unknown": 0,
+          "dropped": 0,
+          "drop_rate": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          }
+        }
+      },
+      {
+        "variant": "fast_fixed",
+        "speed_limit_m_s": 0.28,
+        "plotted_verified_success_count": 15,
+        "completion_time_s": 0.97,
+        "error_at_completion_m": 9.604366934118369e-06,
+        "final_error_m": 2.7755575615628914e-16,
+        "point_scope": "medians over the same valid, verified successful trials only; counts and failures remain alongside",
+        "attempted": 18,
+        "valid": 18,
+        "invalid": 0,
+        "success": {
+          "known_valid": 18,
+          "unknown_valid": 0,
+          "succeeded": 15,
+          "failed_known": 3,
+          "conditional_valid": {
+            "estimate": 0.8333333333333334,
+            "numerator": 15,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.6077796189608428,
+              "upper": 0.9416342319413856
+            }
+          },
+          "all_attempts": {
+            "estimate": 0.8333333333333334,
+            "numerator": 15,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.6077796189608428,
+              "upper": 0.9416342319413856
+            }
+          }
+        },
+        "completion": {
+          "valid_claims": 15,
+          "assessed_claims": 15,
+          "claim_truth_unknown": 0,
+          "false_claims": 0,
+          "false_claims_without_final_completion": 0,
+          "revoked": 0,
+          "revocation_status_unknown": 0,
+          "rest_lost_after_confirmation": 0,
+          "rest_loss_status_unknown": 0,
+          "false_given_assessed_claim": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 15,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.20388330103584862
+            }
+          },
+          "false_claim_per_attempt": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          },
+          "expected_censored": 0,
+          "truth_unsettled": 0,
+          "verified_successes_with_completion": 15
+        },
+        "load": {
+          "holding_valid": 18,
+          "outcome_known": 18,
+          "outcome_unknown": 0,
+          "not_holding_or_unknown": 0,
+          "dropped": 0,
+          "drop_rate": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          }
+        }
+      },
+      {
+        "variant": "slow_feedback",
+        "speed_limit_m_s": 0.12,
+        "plotted_verified_success_count": 15,
+        "completion_time_s": 2.91,
+        "error_at_completion_m": 5.644786611933017e-05,
+        "final_error_m": 3.869404796574827e-13,
+        "point_scope": "medians over the same valid, verified successful trials only; counts and failures remain alongside",
+        "attempted": 18,
+        "valid": 18,
+        "invalid": 0,
+        "success": {
+          "known_valid": 18,
+          "unknown_valid": 0,
+          "succeeded": 15,
+          "failed_known": 3,
+          "conditional_valid": {
+            "estimate": 0.8333333333333334,
+            "numerator": 15,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.6077796189608428,
+              "upper": 0.9416342319413856
+            }
+          },
+          "all_attempts": {
+            "estimate": 0.8333333333333334,
+            "numerator": 15,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.6077796189608428,
+              "upper": 0.9416342319413856
+            }
+          }
+        },
+        "completion": {
+          "valid_claims": 15,
+          "assessed_claims": 15,
+          "claim_truth_unknown": 0,
+          "false_claims": 0,
+          "false_claims_without_final_completion": 0,
+          "revoked": 0,
+          "revocation_status_unknown": 0,
+          "rest_lost_after_confirmation": 0,
+          "rest_loss_status_unknown": 0,
+          "false_given_assessed_claim": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 15,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.20388330103584862
+            }
+          },
+          "false_claim_per_attempt": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          },
+          "expected_censored": 0,
+          "truth_unsettled": 0,
+          "verified_successes_with_completion": 15
+        },
+        "load": {
+          "holding_valid": 18,
+          "outcome_known": 18,
+          "outcome_unknown": 0,
+          "not_holding_or_unknown": 0,
+          "dropped": 0,
+          "drop_rate": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          }
+        }
+      },
+      {
+        "variant": "slow_feedback",
+        "speed_limit_m_s": 0.2,
+        "plotted_verified_success_count": 15,
+        "completion_time_s": 1.86,
+        "error_at_completion_m": 0.00010101486733657405,
+        "final_error_m": 2.7755575615628914e-16,
+        "point_scope": "medians over the same valid, verified successful trials only; counts and failures remain alongside",
+        "attempted": 18,
+        "valid": 18,
+        "invalid": 0,
+        "success": {
+          "known_valid": 18,
+          "unknown_valid": 0,
+          "succeeded": 15,
+          "failed_known": 3,
+          "conditional_valid": {
+            "estimate": 0.8333333333333334,
+            "numerator": 15,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.6077796189608428,
+              "upper": 0.9416342319413856
+            }
+          },
+          "all_attempts": {
+            "estimate": 0.8333333333333334,
+            "numerator": 15,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.6077796189608428,
+              "upper": 0.9416342319413856
+            }
+          }
+        },
+        "completion": {
+          "valid_claims": 15,
+          "assessed_claims": 15,
+          "claim_truth_unknown": 0,
+          "false_claims": 0,
+          "false_claims_without_final_completion": 0,
+          "revoked": 0,
+          "revocation_status_unknown": 0,
+          "rest_lost_after_confirmation": 0,
+          "rest_loss_status_unknown": 0,
+          "false_given_assessed_claim": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 15,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.20388330103584862
+            }
+          },
+          "false_claim_per_attempt": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          },
+          "expected_censored": 0,
+          "truth_unsettled": 0,
+          "verified_successes_with_completion": 15
+        },
+        "load": {
+          "holding_valid": 18,
+          "outcome_known": 18,
+          "outcome_unknown": 0,
+          "not_holding_or_unknown": 0,
+          "dropped": 0,
+          "drop_rate": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          }
+        }
+      },
+      {
+        "variant": "slow_feedback",
+        "speed_limit_m_s": 0.28,
+        "plotted_verified_success_count": 15,
+        "completion_time_s": 1.41,
+        "error_at_completion_m": 0.00014319523367062326,
+        "final_error_m": 2.220446049250313e-16,
+        "point_scope": "medians over the same valid, verified successful trials only; counts and failures remain alongside",
+        "attempted": 18,
+        "valid": 18,
+        "invalid": 0,
+        "success": {
+          "known_valid": 18,
+          "unknown_valid": 0,
+          "succeeded": 15,
+          "failed_known": 3,
+          "conditional_valid": {
+            "estimate": 0.8333333333333334,
+            "numerator": 15,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.6077796189608428,
+              "upper": 0.9416342319413856
+            }
+          },
+          "all_attempts": {
+            "estimate": 0.8333333333333334,
+            "numerator": 15,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.6077796189608428,
+              "upper": 0.9416342319413856
+            }
+          }
+        },
+        "completion": {
+          "valid_claims": 15,
+          "assessed_claims": 15,
+          "claim_truth_unknown": 0,
+          "false_claims": 0,
+          "false_claims_without_final_completion": 0,
+          "revoked": 0,
+          "revocation_status_unknown": 0,
+          "rest_lost_after_confirmation": 0,
+          "rest_loss_status_unknown": 0,
+          "false_given_assessed_claim": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 15,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.20388330103584862
+            }
+          },
+          "false_claim_per_attempt": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          },
+          "expected_censored": 0,
+          "truth_unsettled": 0,
+          "verified_successes_with_completion": 15
+        },
+        "load": {
+          "holding_valid": 18,
+          "outcome_known": 18,
+          "outcome_unknown": 0,
+          "not_holding_or_unknown": 0,
+          "dropped": 0,
+          "drop_rate": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          }
+        }
+      }
+    ],
+    "confirmation": [
+      {
+        "variant": "adaptive_predictive",
+        "speed_limit_m_s": 0.12,
+        "plotted_verified_success_count": 12,
+        "completion_time_s": 1.955,
+        "error_at_completion_m": 0.00012277561568303785,
+        "final_error_m": 3.0531133177191805e-16,
+        "point_scope": "medians over the same valid, verified successful trials only; counts and failures remain alongside",
+        "attempted": 18,
+        "valid": 18,
+        "invalid": 0,
+        "success": {
+          "known_valid": 18,
+          "unknown_valid": 0,
+          "succeeded": 12,
+          "failed_known": 6,
+          "conditional_valid": {
+            "estimate": 0.6666666666666666,
+            "numerator": 12,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.43749467295945105,
+              "upper": 0.837212252491663
+            }
+          },
+          "all_attempts": {
+            "estimate": 0.6666666666666666,
+            "numerator": 12,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.43749467295945105,
+              "upper": 0.837212252491663
+            }
+          }
+        },
+        "completion": {
+          "valid_claims": 12,
+          "assessed_claims": 12,
+          "claim_truth_unknown": 0,
+          "false_claims": 0,
+          "false_claims_without_final_completion": 0,
+          "revoked": 0,
+          "revocation_status_unknown": 0,
+          "rest_lost_after_confirmation": 0,
+          "rest_loss_status_unknown": 0,
+          "false_given_assessed_claim": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 12,
+            "ci95_wilson": {
+              "lower": 2.7755575615628914e-17,
+              "upper": 0.24249400665524085
+            }
+          },
+          "false_claim_per_attempt": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          },
+          "expected_censored": 0,
+          "truth_unsettled": 0,
+          "verified_successes_with_completion": 12
+        },
+        "load": {
+          "holding_valid": 18,
+          "outcome_known": 18,
+          "outcome_unknown": 0,
+          "not_holding_or_unknown": 0,
+          "dropped": 3,
+          "drop_rate": {
+            "estimate": 0.16666666666666666,
+            "numerator": 3,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.05836576805861446,
+              "upper": 0.39222038103915724
+            }
+          }
+        }
+      },
+      {
+        "variant": "adaptive_predictive",
+        "speed_limit_m_s": 0.2,
+        "plotted_verified_success_count": 12,
+        "completion_time_s": 1.2850000000000001,
+        "error_at_completion_m": 0.00018547818656476645,
+        "final_error_m": 2.0816681711721685e-16,
+        "point_scope": "medians over the same valid, verified successful trials only; counts and failures remain alongside",
+        "attempted": 18,
+        "valid": 18,
+        "invalid": 0,
+        "success": {
+          "known_valid": 18,
+          "unknown_valid": 0,
+          "succeeded": 12,
+          "failed_known": 6,
+          "conditional_valid": {
+            "estimate": 0.6666666666666666,
+            "numerator": 12,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.43749467295945105,
+              "upper": 0.837212252491663
+            }
+          },
+          "all_attempts": {
+            "estimate": 0.6666666666666666,
+            "numerator": 12,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.43749467295945105,
+              "upper": 0.837212252491663
+            }
+          }
+        },
+        "completion": {
+          "valid_claims": 12,
+          "assessed_claims": 12,
+          "claim_truth_unknown": 0,
+          "false_claims": 0,
+          "false_claims_without_final_completion": 0,
+          "revoked": 0,
+          "revocation_status_unknown": 0,
+          "rest_lost_after_confirmation": 0,
+          "rest_loss_status_unknown": 0,
+          "false_given_assessed_claim": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 12,
+            "ci95_wilson": {
+              "lower": 2.7755575615628914e-17,
+              "upper": 0.24249400665524085
+            }
+          },
+          "false_claim_per_attempt": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          },
+          "expected_censored": 0,
+          "truth_unsettled": 0,
+          "verified_successes_with_completion": 12
+        },
+        "load": {
+          "holding_valid": 18,
+          "outcome_known": 18,
+          "outcome_unknown": 0,
+          "not_holding_or_unknown": 0,
+          "dropped": 3,
+          "drop_rate": {
+            "estimate": 0.16666666666666666,
+            "numerator": 3,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.05836576805861446,
+              "upper": 0.39222038103915724
+            }
+          }
+        }
+      },
+      {
+        "variant": "adaptive_predictive",
+        "speed_limit_m_s": 0.28,
+        "plotted_verified_success_count": 12,
+        "completion_time_s": 1.155,
+        "error_at_completion_m": 0.00026341005487696273,
+        "final_error_m": 1.6653345369377348e-16,
+        "point_scope": "medians over the same valid, verified successful trials only; counts and failures remain alongside",
+        "attempted": 18,
+        "valid": 18,
+        "invalid": 0,
+        "success": {
+          "known_valid": 18,
+          "unknown_valid": 0,
+          "succeeded": 12,
+          "failed_known": 6,
+          "conditional_valid": {
+            "estimate": 0.6666666666666666,
+            "numerator": 12,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.43749467295945105,
+              "upper": 0.837212252491663
+            }
+          },
+          "all_attempts": {
+            "estimate": 0.6666666666666666,
+            "numerator": 12,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.43749467295945105,
+              "upper": 0.837212252491663
+            }
+          }
+        },
+        "completion": {
+          "valid_claims": 12,
+          "assessed_claims": 12,
+          "claim_truth_unknown": 0,
+          "false_claims": 0,
+          "false_claims_without_final_completion": 0,
+          "revoked": 0,
+          "revocation_status_unknown": 0,
+          "rest_lost_after_confirmation": 0,
+          "rest_loss_status_unknown": 0,
+          "false_given_assessed_claim": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 12,
+            "ci95_wilson": {
+              "lower": 2.7755575615628914e-17,
+              "upper": 0.24249400665524085
+            }
+          },
+          "false_claim_per_attempt": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          },
+          "expected_censored": 0,
+          "truth_unsettled": 0,
+          "verified_successes_with_completion": 12
+        },
+        "load": {
+          "holding_valid": 18,
+          "outcome_known": 18,
+          "outcome_unknown": 0,
+          "not_holding_or_unknown": 0,
+          "dropped": 3,
+          "drop_rate": {
+            "estimate": 0.16666666666666666,
+            "numerator": 3,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.05836576805861446,
+              "upper": 0.39222038103915724
+            }
+          }
+        }
+      },
+      {
+        "variant": "fast_fixed",
+        "speed_limit_m_s": 0.12,
+        "plotted_verified_success_count": 12,
+        "completion_time_s": 2.425,
+        "error_at_completion_m": 1.2587006448155913e-05,
+        "final_error_m": 4.6351811278100286e-15,
+        "point_scope": "medians over the same valid, verified successful trials only; counts and failures remain alongside",
+        "attempted": 18,
+        "valid": 18,
+        "invalid": 0,
+        "success": {
+          "known_valid": 18,
+          "unknown_valid": 0,
+          "succeeded": 12,
+          "failed_known": 6,
+          "conditional_valid": {
+            "estimate": 0.6666666666666666,
+            "numerator": 12,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.43749467295945105,
+              "upper": 0.837212252491663
+            }
+          },
+          "all_attempts": {
+            "estimate": 0.6666666666666666,
+            "numerator": 12,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.43749467295945105,
+              "upper": 0.837212252491663
+            }
+          }
+        },
+        "completion": {
+          "valid_claims": 12,
+          "assessed_claims": 12,
+          "claim_truth_unknown": 0,
+          "false_claims": 0,
+          "false_claims_without_final_completion": 0,
+          "revoked": 0,
+          "revocation_status_unknown": 0,
+          "rest_lost_after_confirmation": 0,
+          "rest_loss_status_unknown": 0,
+          "false_given_assessed_claim": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 12,
+            "ci95_wilson": {
+              "lower": 2.7755575615628914e-17,
+              "upper": 0.24249400665524085
+            }
+          },
+          "false_claim_per_attempt": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          },
+          "expected_censored": 0,
+          "truth_unsettled": 0,
+          "verified_successes_with_completion": 12
+        },
+        "load": {
+          "holding_valid": 18,
+          "outcome_known": 18,
+          "outcome_unknown": 0,
+          "not_holding_or_unknown": 0,
+          "dropped": 3,
+          "drop_rate": {
+            "estimate": 0.16666666666666666,
+            "numerator": 3,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.05836576805861446,
+              "upper": 0.39222038103915724
+            }
+          }
+        }
+      },
+      {
+        "variant": "fast_fixed",
+        "speed_limit_m_s": 0.2,
+        "plotted_verified_success_count": 12,
+        "completion_time_s": 1.74,
+        "error_at_completion_m": 9.670413308668357e-06,
+        "final_error_m": 5.412337245047638e-16,
+        "point_scope": "medians over the same valid, verified successful trials only; counts and failures remain alongside",
+        "attempted": 18,
+        "valid": 18,
+        "invalid": 0,
+        "success": {
+          "known_valid": 18,
+          "unknown_valid": 0,
+          "succeeded": 12,
+          "failed_known": 6,
+          "conditional_valid": {
+            "estimate": 0.6666666666666666,
+            "numerator": 12,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.43749467295945105,
+              "upper": 0.837212252491663
+            }
+          },
+          "all_attempts": {
+            "estimate": 0.6666666666666666,
+            "numerator": 12,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.43749467295945105,
+              "upper": 0.837212252491663
+            }
+          }
+        },
+        "completion": {
+          "valid_claims": 12,
+          "assessed_claims": 12,
+          "claim_truth_unknown": 0,
+          "false_claims": 0,
+          "false_claims_without_final_completion": 0,
+          "revoked": 0,
+          "revocation_status_unknown": 0,
+          "rest_lost_after_confirmation": 0,
+          "rest_loss_status_unknown": 0,
+          "false_given_assessed_claim": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 12,
+            "ci95_wilson": {
+              "lower": 2.7755575615628914e-17,
+              "upper": 0.24249400665524085
+            }
+          },
+          "false_claim_per_attempt": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          },
+          "expected_censored": 0,
+          "truth_unsettled": 0,
+          "verified_successes_with_completion": 12
+        },
+        "load": {
+          "holding_valid": 18,
+          "outcome_known": 18,
+          "outcome_unknown": 0,
+          "not_holding_or_unknown": 0,
+          "dropped": 3,
+          "drop_rate": {
+            "estimate": 0.16666666666666666,
+            "numerator": 3,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.05836576805861446,
+              "upper": 0.39222038103915724
+            }
+          }
+        }
+      },
+      {
+        "variant": "fast_fixed",
+        "speed_limit_m_s": 0.28,
+        "plotted_verified_success_count": 12,
+        "completion_time_s": 1.2,
+        "error_at_completion_m": 1.400400617763281e-05,
+        "final_error_m": 1.6653345369377348e-16,
+        "point_scope": "medians over the same valid, verified successful trials only; counts and failures remain alongside",
+        "attempted": 18,
+        "valid": 18,
+        "invalid": 0,
+        "success": {
+          "known_valid": 18,
+          "unknown_valid": 0,
+          "succeeded": 12,
+          "failed_known": 6,
+          "conditional_valid": {
+            "estimate": 0.6666666666666666,
+            "numerator": 12,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.43749467295945105,
+              "upper": 0.837212252491663
+            }
+          },
+          "all_attempts": {
+            "estimate": 0.6666666666666666,
+            "numerator": 12,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.43749467295945105,
+              "upper": 0.837212252491663
+            }
+          }
+        },
+        "completion": {
+          "valid_claims": 12,
+          "assessed_claims": 12,
+          "claim_truth_unknown": 0,
+          "false_claims": 0,
+          "false_claims_without_final_completion": 0,
+          "revoked": 0,
+          "revocation_status_unknown": 0,
+          "rest_lost_after_confirmation": 0,
+          "rest_loss_status_unknown": 0,
+          "false_given_assessed_claim": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 12,
+            "ci95_wilson": {
+              "lower": 2.7755575615628914e-17,
+              "upper": 0.24249400665524085
+            }
+          },
+          "false_claim_per_attempt": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          },
+          "expected_censored": 0,
+          "truth_unsettled": 0,
+          "verified_successes_with_completion": 12
+        },
+        "load": {
+          "holding_valid": 18,
+          "outcome_known": 18,
+          "outcome_unknown": 0,
+          "not_holding_or_unknown": 0,
+          "dropped": 3,
+          "drop_rate": {
+            "estimate": 0.16666666666666666,
+            "numerator": 3,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.05836576805861446,
+              "upper": 0.39222038103915724
+            }
+          }
+        }
+      },
+      {
+        "variant": "slow_feedback",
+        "speed_limit_m_s": 0.12,
+        "plotted_verified_success_count": 12,
+        "completion_time_s": 3.33,
+        "error_at_completion_m": 5.7698281998329326e-05,
+        "final_error_m": 7.772273574735422e-09,
+        "point_scope": "medians over the same valid, verified successful trials only; counts and failures remain alongside",
+        "attempted": 18,
+        "valid": 18,
+        "invalid": 0,
+        "success": {
+          "known_valid": 18,
+          "unknown_valid": 0,
+          "succeeded": 12,
+          "failed_known": 6,
+          "conditional_valid": {
+            "estimate": 0.6666666666666666,
+            "numerator": 12,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.43749467295945105,
+              "upper": 0.837212252491663
+            }
+          },
+          "all_attempts": {
+            "estimate": 0.6666666666666666,
+            "numerator": 12,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.43749467295945105,
+              "upper": 0.837212252491663
+            }
+          }
+        },
+        "completion": {
+          "valid_claims": 12,
+          "assessed_claims": 12,
+          "claim_truth_unknown": 0,
+          "false_claims": 0,
+          "false_claims_without_final_completion": 0,
+          "revoked": 0,
+          "revocation_status_unknown": 0,
+          "rest_lost_after_confirmation": 0,
+          "rest_loss_status_unknown": 0,
+          "false_given_assessed_claim": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 12,
+            "ci95_wilson": {
+              "lower": 2.7755575615628914e-17,
+              "upper": 0.24249400665524085
+            }
+          },
+          "false_claim_per_attempt": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          },
+          "expected_censored": 0,
+          "truth_unsettled": 0,
+          "verified_successes_with_completion": 12
+        },
+        "load": {
+          "holding_valid": 18,
+          "outcome_known": 18,
+          "outcome_unknown": 0,
+          "not_holding_or_unknown": 0,
+          "dropped": 3,
+          "drop_rate": {
+            "estimate": 0.16666666666666666,
+            "numerator": 3,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.05836576805861446,
+              "upper": 0.39222038103915724
+            }
+          }
+        }
+      },
+      {
+        "variant": "slow_feedback",
+        "speed_limit_m_s": 0.2,
+        "plotted_verified_success_count": 12,
+        "completion_time_s": 2.1100000000000003,
+        "error_at_completion_m": 0.00010101486724439779,
+        "final_error_m": 2.7755575615628914e-16,
+        "point_scope": "medians over the same valid, verified successful trials only; counts and failures remain alongside",
+        "attempted": 18,
+        "valid": 18,
+        "invalid": 0,
+        "success": {
+          "known_valid": 18,
+          "unknown_valid": 0,
+          "succeeded": 12,
+          "failed_known": 6,
+          "conditional_valid": {
+            "estimate": 0.6666666666666666,
+            "numerator": 12,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.43749467295945105,
+              "upper": 0.837212252491663
+            }
+          },
+          "all_attempts": {
+            "estimate": 0.6666666666666666,
+            "numerator": 12,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.43749467295945105,
+              "upper": 0.837212252491663
+            }
+          }
+        },
+        "completion": {
+          "valid_claims": 12,
+          "assessed_claims": 12,
+          "claim_truth_unknown": 0,
+          "false_claims": 0,
+          "false_claims_without_final_completion": 0,
+          "revoked": 0,
+          "revocation_status_unknown": 0,
+          "rest_lost_after_confirmation": 0,
+          "rest_loss_status_unknown": 0,
+          "false_given_assessed_claim": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 12,
+            "ci95_wilson": {
+              "lower": 2.7755575615628914e-17,
+              "upper": 0.24249400665524085
+            }
+          },
+          "false_claim_per_attempt": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          },
+          "expected_censored": 0,
+          "truth_unsettled": 0,
+          "verified_successes_with_completion": 12
+        },
+        "load": {
+          "holding_valid": 18,
+          "outcome_known": 18,
+          "outcome_unknown": 0,
+          "not_holding_or_unknown": 0,
+          "dropped": 3,
+          "drop_rate": {
+            "estimate": 0.16666666666666666,
+            "numerator": 3,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.05836576805861446,
+              "upper": 0.39222038103915724
+            }
+          }
+        }
+      },
+      {
+        "variant": "slow_feedback",
+        "speed_limit_m_s": 0.28,
+        "plotted_verified_success_count": 12,
+        "completion_time_s": 1.59,
+        "error_at_completion_m": 0.0001426993118501252,
+        "final_error_m": 2.220446049250313e-16,
+        "point_scope": "medians over the same valid, verified successful trials only; counts and failures remain alongside",
+        "attempted": 18,
+        "valid": 18,
+        "invalid": 0,
+        "success": {
+          "known_valid": 18,
+          "unknown_valid": 0,
+          "succeeded": 12,
+          "failed_known": 6,
+          "conditional_valid": {
+            "estimate": 0.6666666666666666,
+            "numerator": 12,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.43749467295945105,
+              "upper": 0.837212252491663
+            }
+          },
+          "all_attempts": {
+            "estimate": 0.6666666666666666,
+            "numerator": 12,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.43749467295945105,
+              "upper": 0.837212252491663
+            }
+          }
+        },
+        "completion": {
+          "valid_claims": 12,
+          "assessed_claims": 12,
+          "claim_truth_unknown": 0,
+          "false_claims": 0,
+          "false_claims_without_final_completion": 0,
+          "revoked": 0,
+          "revocation_status_unknown": 0,
+          "rest_lost_after_confirmation": 0,
+          "rest_loss_status_unknown": 0,
+          "false_given_assessed_claim": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 12,
+            "ci95_wilson": {
+              "lower": 2.7755575615628914e-17,
+              "upper": 0.24249400665524085
+            }
+          },
+          "false_claim_per_attempt": {
+            "estimate": 0.0,
+            "numerator": 0,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.0,
+              "upper": 0.17587922364665765
+            }
+          },
+          "expected_censored": 0,
+          "truth_unsettled": 0,
+          "verified_successes_with_completion": 12
+        },
+        "load": {
+          "holding_valid": 18,
+          "outcome_known": 18,
+          "outcome_unknown": 0,
+          "not_holding_or_unknown": 0,
+          "dropped": 3,
+          "drop_rate": {
+            "estimate": 0.16666666666666666,
+            "numerator": 3,
+            "denominator": 18,
+            "ci95_wilson": {
+              "lower": 0.05836576805861446,
+              "upper": 0.39222038103915724
+            }
+          }
+        }
+      }
+    ]
+  },
+  "evidence_manifest": {
+    "freeze.json": "bd1e515ba559e2c6c1bd4f117fd655d00b54c1bd71c844f4d25e3edd020e4e66",
+    "memory.json": "e904223f2f5a79b68d5564fe328fe5657bee7289e9d3b1c9f45f3315c8ed28bb",
+    "protocol.json": "10e6bfca128cdd505f0ea40fe8d13b41248c0642d19d3fd755dede29665beb6d",
+    "protocol.sha256": "7e0fa93ce77a0573154dd53e38c9f4798671435f5ca73c04e2e92f7b9a75b241",
+    "report.html": "b81fa89c8abf7607420e96a383647fe7d1f5a69b47593c94ef801c98b980f22c",
+    "report.json": "5a023e3a00f34100c12210833bc0d81d235071837df168d51118a548d9efa5bb",
+    "sources.json": "290efcf582a633159b8d7377e8b7037f01462a244d86b9227229476a15a50db6",
+    "trials.jsonl": "f91ad1e6d65fe9a9818a35f08c73a0ae0a9e6c05f80122b18f009bdd2ef4d996"
+  }
+}
