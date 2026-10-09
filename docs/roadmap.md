@@ -99,3 +99,20 @@ The next engineering milestone is a tape inspector and a small state-based task
 outcome model on the existing placement environment. The first real Skillspace
 will then test the collection and review loop. See [collection design](skillspace-coverage.md),
 [episode evidence](episode-tape.md) and [existing benchmark protocol](benchmarks.md).
+
+## Reaction and stopping evidence
+
+[Reaction framework v0.1](reaction-framework.md) supplies the first reusable
+monitor and native linear-actuator/parallel-jaw coupon fixtures. It tests authored
+motion/contact/grip/sensor-fault conditions, matched shadow-monitor controls,
+sensor age/dropout, and continued physics after a brake request. Reports retain
+all attempts, conditional detection rates with uncertainty, invalid denominators,
+timing stages, stopping distance, contact/load outcomes and named CPU cost.
+
+This fixture work precedes integration with the six-axis arm. The next gates are
+whole-arm geometry, task-specific expected-contact/retention rules, validated
+material and actuator behavior, deployable sensing and measured physical stopping
+response. Keep the original placement environment and frozen evidence unchanged;
+new profiles and benchmark versions identify these additions. A reaction result
+supports a task's evidence bundle without replacing task success, numerical
+validation or supervised physical qualification.

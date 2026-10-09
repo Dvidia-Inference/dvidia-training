@@ -61,9 +61,10 @@ jobs:
           dvidia-training-benchmark --help
           dvidia-skillspace-coverage --help
           dvidia-episode-tape --help
+          dvidia-reaction --help
           dvidia-training-doctor --json
       - name: Test footage, visual training and loopback studio
-        run: python -m unittest tests.test_footage_data tests.test_footage_train tests.test_footage_pipeline tests.test_footage_benchmark tests.test_training_studio tests.test_doctor tests.test_coverage tests.test_episode_tape -v
+        run: python -m unittest tests.test_footage_data tests.test_footage_train tests.test_footage_pipeline tests.test_footage_benchmark tests.test_training_studio tests.test_doctor tests.test_coverage tests.test_episode_tape tests.test_reaction tests.test_reaction_metrics tests.test_reaction_convergence tests.test_reaction_benchmark -v
 
   arm:
     name: Optional arm / Linux / Python 3.12
@@ -86,6 +87,17 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Train and qualify the synthetic native pilot
         run: python benchmarks/native_pilot.py --output runs/native-pilot
+      - name: Run and verify reaction mechanical coupons
+        run: |
+          dvidia-reaction benchmark --output runs/reaction-ci --repeats 1 --convergence
+          dvidia-reaction inspect runs/reaction-ci
+      - name: Preserve reaction diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: reaction-mechanical-coupons
+          path: runs/reaction-ci
+          if-no-files-found: ignore
 
   container:
     name: Visual CLI container
