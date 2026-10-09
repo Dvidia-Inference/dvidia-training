@@ -62,9 +62,10 @@ jobs:
           dvidia-skillspace-coverage --help
           dvidia-episode-tape --help
           dvidia-reaction --help
+          dvidia-motor-memory --help
           dvidia-training-doctor --json
       - name: Test footage, visual training and loopback studio
-        run: python -m unittest tests.test_footage_data tests.test_footage_train tests.test_footage_pipeline tests.test_footage_benchmark tests.test_training_studio tests.test_doctor tests.test_coverage tests.test_episode_tape tests.test_reaction tests.test_reaction_metrics tests.test_reaction_convergence tests.test_reaction_benchmark -v
+        run: python -m unittest tests.test_footage_data tests.test_footage_train tests.test_footage_pipeline tests.test_footage_benchmark tests.test_training_studio tests.test_doctor tests.test_coverage tests.test_episode_tape tests.test_reaction tests.test_reaction_metrics tests.test_reaction_convergence tests.test_reaction_benchmark tests.test_motor_memory tests.test_motor_metrics tests.test_motor_benchmark -v
 
   arm:
     name: Optional arm / Linux / Python 3.12
@@ -97,6 +98,21 @@ jobs:
         with:
           name: reaction-mechanical-coupons
           path: runs/reaction-ci
+          if-no-files-found: ignore
+      - name: Fit and verify motor memory and matched approach tasks
+        run: |
+          dvidia-motor-memory train --output runs/motor-memory-ci
+          dvidia-motor-memory inspect runs/motor-memory-ci
+          dvidia-motor-memory benchmark --memory runs/motor-memory-ci --output runs/motor-benchmark-ci --repeats 1
+          dvidia-motor-memory inspect runs/motor-benchmark-ci
+      - name: Preserve motor memory and task evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: motor-memory-approach-tasks
+          path: |
+            runs/motor-memory-ci
+            runs/motor-benchmark-ci
           if-no-files-found: ignore
 
   container:

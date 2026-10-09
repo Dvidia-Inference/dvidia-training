@@ -1,0 +1,73 @@
+{
+  "format": "dvidia.motor-memory-candidate",
+  "schema_version": 1,
+  "framework_version": "0.2",
+  "recorded_utc": "2026-10-09T14:42:47.108420+00:00",
+  "memory": {
+    "stiffness_s2": 423.675012020924,
+    "damping_s": 33.97657717769653,
+    "bias_m_s2": -1.2822234788528106e-05,
+    "max_acceleration_m_s2": 4.683999534903795,
+    "acceleration_rmse_m_s2": 0.00028575960024860973,
+    "acceleration_error_bound_m_s2": 0.0006113961123156708,
+    "sample_count": 8000,
+    "expected_contract": {
+      "goal_tolerance_m": 0.003,
+      "velocity_tolerance_m_s": 0.005,
+      "completion_dwell_s": 0.05,
+      "holding_required": true,
+      "expected_contact": "bilateral jaw-payload contact; obstacle contact is unintended"
+    },
+    "fit_scope": "privileged_native_calibration_transitions",
+    "schema_version": "motor-memory-v0.2",
+    "uncertainty_scope": "development_envelope_not_confidence_interval"
+  },
+  "training_protocol_sha256": "5955392efe235ecac58403a8c58efac0581c87577e976cb85b7086b75897a784",
+  "training_sha256": "4bf93edf48c9962a1b8ddd212bb3e8d62c387c439ba552edf4d7460a054c4070",
+  "source_sha256": {
+    "motor_memory.py": "acb836c4b139ccd0a58b1e7e438638e390feeca793abe61570840b111d780806",
+    "motor_benchmark.py": "535ee01df0a60ade43f845cd55119f0eac061f8fe16b136f8fb0b1d2565ba976",
+    "motor_metrics.py": "a981953181472fc735dc9b6722b598dab1a5457d77b93270691543c7d19e4c1b",
+    "reaction.py": "46ac1fd0e603bb6a500037fccf41b393bb2165ee2da7819895b0cc497f216e6e",
+    "reaction_native.py": "4fa13b7446fcacfa6333b9904e6b9e34fb0f95bf3a8681e68a15be48e74984e4",
+    "env.py": "929c1d8c3c4cafe0054c633ee5f3e51c551dd6b26ae014ab1ea9219b58eca8e4"
+  },
+  "braking_trials": [
+    {
+      "speed_m_s": 0.08,
+      "initial_speed_m_s": 0.07999685923971775,
+      "forward_excursion_m": 0.0015673036542112537,
+      "brake_requested_s": 0.6,
+      "brake_applied_s": 0.62,
+      "rest_s": 0.863,
+      "equivalent_deceleration_m_s2": 2.0415627408971253,
+      "dropped": false
+    },
+    {
+      "speed_m_s": 0.16,
+      "initial_speed_m_s": 0.1599937184794355,
+      "forward_excursion_m": 0.0031346073084225073,
+      "brake_requested_s": 0.6,
+      "brake_applied_s": 0.62,
+      "rest_s": 0.897,
+      "equivalent_deceleration_m_s2": 4.083125481794251,
+      "dropped": false
+    },
+    {
+      "speed_m_s": 0.24,
+      "initial_speed_m_s": 0.2399905777191532,
+      "forward_excursion_m": 0.00470191096263381,
+      "brake_requested_s": 0.6,
+      "brake_applied_s": 0.62,
+      "rest_s": 0.914,
+      "equivalent_deceleration_m_s2": 6.12468822269131,
+      "dropped": false
+    }
+  ],
+  "empirical_deceleration_m_s2": 1.0207813704485627,
+  "braking_scope": "half minimum equivalent native stopping deceleration observed in three training coupons; assumption, not guaranteed bound",
+  "training_wall_seconds": 0.8431748750153929,
+  "physical_robot_ready": false,
+  "task_motion_learned_from_video": false,
+  "scope": "fitted one-axis actuator model plus authored feedback movement; synthetic sensing, no whole-arm/hardware qualification"
+}

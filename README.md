@@ -98,6 +98,16 @@ The [reaction framework v0.1](docs/reaction-framework.md) adds a reusable monito
 
 [The first measured run](benchmarks/reaction-v0.1-20261009/README.md) preserves 78 primary trials and eight timestep checks, including late-impact diagnostic failures and payload drops. Run `dvidia-reaction benchmark --output runs/reaction --repeats 3 --convergence`, then `dvidia-reaction inspect runs/reaction` to generate and verify your own offline report.
 
+The [motor-memory framework v0.2](docs/motor-memory.md) fits a compact actuator model on separate native calibration episodes, then compares slow feedback, a fixed fast approach and predictive adaptive control on “approach, settle and retain.” It measures completion time against native error at the completion claim, overshoot, false/revoked completion, retained load and CPU cost. Commanded goals are exact; observations of the moving carriage can be delayed, noisy or missing. The movement profile and slowdown rules are authored. This is a CPU simulation experiment with learned dynamics, and does not train a task policy from human video or drive a physical robot.
+
+```sh
+.venv/bin/dvidia-motor-memory train --output runs/motor-memory
+.venv/bin/dvidia-motor-memory benchmark --memory runs/motor-memory --output runs/motor-benchmark --repeats 3
+.venv/bin/dvidia-motor-memory inspect runs/motor-benchmark
+```
+
+Each command uses a fresh output directory where applicable. The model and complete attempted matrix are frozen before evaluation; development and confirmation partitions remain separate. [The measured v0.2 run](benchmarks/motor-memory-v0.2-20261009/README.md) preserves the candidate, compact attempt receipts and limitations. Complete calibration transitions and scoring traces are retained in local runs and CI artifacts.
+
 ## Public pilot on Hugging Face
 
 [Recorded demo](https://huggingface.co/spaces/Dvidia/dvidia-training) · [Synthetic datasets](https://huggingface.co/datasets/Dvidia/dvidia-training-examples) · [Pilot models and measurements](https://huggingface.co/Dvidia/dvidia-training-pilot)
