@@ -94,6 +94,10 @@ This adds MuJoCo 3.15.0 for the existing bounded simulation placement adapter, n
 
 To measure a candidate before improving it, use the [sample-count and simulation benchmark](docs/benchmarks.md). It compares nested sets of whole recordings, keeps development/test footage fixed, freezes candidate weights before evaluation, and reports new-layout outcomes alongside matched open-jaw controls. It runs locally on a CPU and retains failures and qualification receipts. Install from the current source checkout to get `dvidia-training-benchmark`; the frozen v0.1.0 release predates this tool.
 
+The [reaction framework v0.1](docs/reaction-framework.md) adds a reusable monitor and native linear-actuator/parallel-jaw fixtures for predicted clearance, contact, slip and sensor faults. Its local benchmark reports detection errors with uncertainty, continued-physics braking time/distance, contact and load outcomes, and CPU cost against a matched disabled-intervention baseline. It uses synthetic sensed state; camera perception, whole-arm protection and physical stopping accuracy need further adapters and calibration. It preserves every attempted trial and the existing frozen placement evidence.
+
+[The first measured run](benchmarks/reaction-v0.1-20261009/README.md) preserves 78 primary trials and eight timestep checks, including late-impact diagnostic failures and payload drops. Run `dvidia-reaction benchmark --output runs/reaction --repeats 3 --convergence`, then `dvidia-reaction inspect runs/reaction` to generate and verify your own offline report.
+
 ## Public pilot on Hugging Face
 
 [Recorded demo](https://huggingface.co/spaces/Dvidia/dvidia-training) · [Synthetic datasets](https://huggingface.co/datasets/Dvidia/dvidia-training-examples) · [Pilot models and measurements](https://huggingface.co/Dvidia/dvidia-training-pilot)
