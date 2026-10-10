@@ -21,7 +21,8 @@ YOLOX's included license attributes Megvii Inc., 2021–2022.
 
 DVIDIA modifications include local weight verification, bounded deterministic
 suppression, clipped normalized image boxes, explicit palm-only semantics,
-metadata, runtime limits and validation of model output. No remote Python code
+metadata, bounded inputs and validation of model output. Inference time and peak
+RAM/thread use are not hard capped. No remote Python code
 is downloaded or executed. Source data licensing remains independent from model
 licensing. These license records do not establish rights to any user's footage.
 

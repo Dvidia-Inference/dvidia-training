@@ -29,8 +29,11 @@ UI startup and human review. Single runs, warm machine; this is neither a p95
 latency measurement nor a production throughput guarantee. Peak RAM, energy and
 dollar cost were not measured. No paid inference API was called.
 
-Runtime: Python 3.12.9, OpenCV 5.0.0.93, NumPy 2.5.3, macOS ARM64, four CPU threads,
-one inference worker. Both pinned ONNX models total approximately 40 MB. OpenCV
+Runtime: Python 3.12.9, OpenCV 5.0.0.93, NumPy 2.5.3, macOS ARM64 and one
+inference worker. Four OpenCV threads were requested, but the saved model
+metadata records `cv2.getNumThreads()` as ten after model loading. Actual peak
+thread concurrency was not measured; a four-thread cap is not established.
+Both pinned ONNX models total approximately 40 MB. OpenCV
 5 printed that target selection is unsupported by its new graph engine; this
 build uses the OpenCV CPU backend and no GPU path was requested or measured.
 

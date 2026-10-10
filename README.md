@@ -47,6 +47,12 @@ palm detectors to propose timestamped image observations. Open the original vide
 inspect its boxes and timeline, correct labels, and save a separate review revision.
 Raw evidence stays unchanged. No account, cloud inference, or GPU is needed.
 
+[Observation Lab release](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/observation-lab-v0.1.0) · [Research paper](https://research.dvidia.org/papers/dvidia-observation-lab/) · [Synthetic review demo](https://huggingface.co/spaces/Dvidia/observation-lab)
+
+Use the `observation-lab-v0.1.0` tag for this feature. The hosted demo uses
+authored synthetic clips and keeps edits in your browser; actual detection runs
+locally with the optional observation runtime and explicitly provisioned models.
+
 The [first feasibility run](benchmarks/observation-20261010/README.md) completed
 six public excerpts. This establishes the integration, not accuracy: labels can
 be wrong, outcomes remain unknown, and there is no 3D reconstruction, automatic

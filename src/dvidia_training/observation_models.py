@@ -82,8 +82,9 @@ class OpenCVDetector:
 
     Both exact model files must be provisioned separately, unless include_hands
     is false. Construction rejects changed bytes before loading any network.
-    Instances are intended for serial use in one worker, with at most four CPU
-    threads. detect accepts a local image path and returns normalized xyxy boxes.
+    Instances are intended for serial use in one worker. Four OpenCV threads are
+    requested; metadata records the reported count, not a verified concurrency
+    cap. detect accepts a local image path and returns normalized xyxy boxes.
     """
 
     def __init__(self, weights_dir, *, threshold=0.35, hand_threshold=0.5,

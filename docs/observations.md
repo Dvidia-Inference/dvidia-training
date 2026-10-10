@@ -8,6 +8,14 @@ model has been trained and no SpatialLM weights are included.
 
 ## Setup
 
+The public Observation Lab release is pinned separately from the older training
+pilot. Obtain it with:
+
+```sh
+git clone --branch observation-lab-v0.1.0 https://github.com/Dvidia-Inference/dvidia-training.git
+cd dvidia-training
+```
+
 From this repository checkout, with Python 3.12+ and FFmpeg/ffprobe installed:
 
 ```sh
@@ -102,8 +110,10 @@ the same account. Hashes detect accidental changes but are not digital signature
 
 The run stores copied originals, sampled frames, raw proposals, failures, recipe,
 model hashes, source rights and review revisions. Allow scratch space beyond the
-input size. Four CPU threads and one inference worker are used; this is not a
-hard RAM/container limit. Do not install it on a production database machine
+input size. One inference worker is used and four OpenCV threads are requested;
+the six-clip pilot recorded `cv2.getNumThreads()` as ten after loading. Actual
+peak thread concurrency was not measured, so no four-thread cap is established.
+There is no hard inference-time, RAM or container limit. Do not install it on a production database machine
 without a separate resource-constrained deployment test.
 
 ## Next gates
@@ -120,3 +130,8 @@ without a separate resource-constrained deployment test.
 
 See [model licenses](observation-models.md), [UI contract](observation-ui.md) and
 the [actual feasibility report](../benchmarks/observation-20261010/README.md).
+
+[Try the synthetic review demo](https://huggingface.co/spaces/Dvidia/observation-lab)
+or [read the research publication](https://research.dvidia.org/papers/dvidia-observation-lab/).
+The hosted demo has authored boxes and browser-local review state; live detection
+of permitted footage runs in the installed local tool.
