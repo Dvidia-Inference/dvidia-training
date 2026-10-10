@@ -40,6 +40,14 @@ Open [the collection planner](http://127.0.0.1:8270/coverage) in the same local 
 
 The [episode tape recorder](docs/episode-tape.md) preserves the existing simulated arm's measured state, requested/applied commands, contacts and sensor ages. Recording needs the optional arm extra; validation and inspection need only Python's standard library. These tools are available from the current checkout and do not train a new policy or change the older Hugging Face pilot.
 
+## DVIDIA Observation Lab
+
+The separately tagged [Observation Lab v0.1 release](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/observation-lab-v0.1.0) provides local CPU object/palm detection, a video review timeline, append-only corrections and JSON export. Install that tag using its [setup and input guide](https://github.com/Dvidia-Inference/dvidia-training/blob/observation-lab-v0.1.0/docs/observations.md); the default training checkout above does not include this feature yet.
+
+[Interactive Hugging Face demo](https://huggingface.co/spaces/Dvidia/observation-lab) · [Research paper and pilot evidence](https://research.dvidia.org/papers/dvidia-observation-lab/) · [Detector provenance and licenses](https://github.com/Dvidia-Inference/dvidia-training/blob/observation-lab-v0.1.0/docs/observation-models.md)
+
+The hosted demo uses DVIDIA-authored synthetic fixtures and browser-local review state. Actual detector inference runs in the installed local tool. The six-excerpt pilot demonstrates integration; annotation accuracy, automatic task understanding and robot learning remain unmeasured. This is an observation workflow, with no newly trained DVIDIA detector weights.
+
 ## Try the pipeline
 
 Generate an explicitly synthetic example, then train and verify its output:
@@ -100,4 +108,4 @@ To measure a candidate before improving it, use the [sample-count and simulation
 
 The demo presents saved candidate and open-jaw control playback from one exact simulation scene. Training runs locally; the dataset and model cards document reproducible inputs, CPU measurements and the limits of this research alpha. [Maintainer publishing tools](publishing/huggingface/README.md) stage only the already-public synthetic release and use a credential from macOS Keychain without printing or caching it.
 
-MIT licensed. Research and measured limitations: [research.dvidia.org](https://research.dvidia.org). Contact: [hello@dvidia.org](mailto:hello@dvidia.org).
+DVIDIA original code is [MIT licensed](LICENSE). The separately tagged Observation Lab's adapted detector code and upstream model artifacts retain [Apache 2.0 licenses and attribution](https://github.com/Dvidia-Inference/dvidia-training/blob/observation-lab-v0.1.0/docs/observation-models.md); its package declares `MIT AND Apache-2.0`. The Hugging Face Observation Lab demo's own code and authored fixtures are MIT, with [third-party boundaries documented separately](https://huggingface.co/spaces/Dvidia/observation-lab/blob/main/THIRD_PARTY.md). Source footage permissions remain independent. Research and measured limitations: [research.dvidia.org](https://research.dvidia.org). Contact: [hello@dvidia.org](mailto:hello@dvidia.org).
