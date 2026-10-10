@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Observation lab · DVIDIA</title>
+  <style>
+    :root { color-scheme: light; --paper:#f8f7f3; --card:#fffefa; --ink:#20231f; --muted:#656961; --line:#dddeda; --blue:#2859e7; --blue-soft:#edf1ff; --green:#2d624b; --green-soft:#eaf2ec; --red:#964737; --radius:16px; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font:15px/1.5 "IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; -webkit-font-smoothing:antialiased; }
+    button,input,select,textarea { font:inherit; color:inherit; }
+    button,select,input,textarea { min-height:44px; }
+    button { cursor:pointer; border:1px solid var(--line); background:var(--card); border-radius:9px; padding:10px 15px; font-weight:550; }
+    button:hover:not(:disabled) { border-color:#8c9388; background:#f1f1ec; }
+    button:disabled { cursor:default; opacity:.42; }
+    button.primary { background:var(--blue); color:white; border-color:var(--blue); box-shadow:0 2px 3px #15275112; }
+    button.primary:hover:not(:disabled) { background:#1949d4; border-color:#1949d4; }
+    :where(button,input,select,textarea,a,summary):focus-visible { outline:3px solid var(--blue); outline-offset:3px; }
+    a { color:var(--blue); text-underline-offset:3px; }
+    input,select,textarea { background:#fff; border:1px solid #bcc2b9; border-radius:8px; padding:10px 12px; width:100%; }
+    textarea { resize:vertical; min-height:72px; }
+    input[type=checkbox] { width:18px; height:18px; min-height:18px; accent-color:var(--blue); }
+    input[type=range] { accent-color:var(--blue); padding:0; border:0; background:transparent; cursor:pointer; }
+    h1,h2,h3,p { margin:0; }
+    h1 { font-size:clamp(25px,3vw,35px); line-height:1.16; letter-spacing:-1.1px; font-weight:550; }
+    h2 { font-size:17px; letter-spacing:-.25px; font-weight:600; }
+    h3 { font-size:14px; font-weight:600; }
+    [hidden] { display:none!important; }
+    .shell { width:min(1480px,100%); margin:auto; padding:0 36px; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; gap:16px; min-height:86px; border-bottom:1px solid var(--line); }
+    .brand { display:flex; gap:10px; align-items:center; }
+    .wordmark { font-size:20px; line-height:1.1; font-weight:700; letter-spacing:-.8px; }
+    .brand small { display:block; font-size:10px; margin-top:4px; color:var(--muted); letter-spacing:1.2px; text-transform:uppercase; }
+    .local { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--muted); }
+    .dot { width:6px; height:6px; flex-shrink:0; background:var(--green); border-radius:50%; }
+    .page-heading { display:flex; justify-content:space-between; gap:24px; align-items:end; padding:31px 0 25px; }
+    .eyebrow { font:10px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:1.4px; text-transform:uppercase; color:var(--muted); margin-bottom:9px; }
+    .heading-copy { min-width:0; }
+    .heading-copy p { margin-top:10px; color:var(--muted); font-size:14px; }
+    .episode-nav { display:flex; align-items:center; gap:8px; flex-shrink:0; }
+    .episode-nav button { width:44px; padding:8px; font-size:20px; line-height:1; }
+    .episode-count { padding:0 8px; font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--muted); white-space:nowrap; }
+    .workspace { display:grid; grid-template-columns:minmax(0,1fr) 352px; gap:24px; align-items:start; padding-bottom:20px; }
+    .footage-column,.review-column { min-width:0; }
+    .video-card { border:1px solid #202621; border-radius:var(--radius); overflow:hidden; background:#171c19; color:#fff; }
+    .video-stage { aspect-ratio:16/9; position:relative; isolation:isolate; overflow:hidden; background:#141916; }
+    video { width:100%; height:100%; display:block; object-fit:contain; }
+    .video-state { position:absolute; inset:0; display:grid; place-content:center; padding:28px; text-align:center; gap:10px; color:#c4ccc5; }
+    .video-state svg { margin:auto auto 8px; color:#758478; }
+    .video-state strong { color:#eef1eb; font-size:17px; font-weight:500; }
+    .video-state p { max-width:320px; font-size:13px; }
+    .video-tag { position:absolute; left:16px; top:16px; display:flex; align-items:center; gap:7px; padding:6px 10px; border:1px solid #ffffff28; border-radius:6px; background:#151b17d9; color:#e8ede7; font:10px/1.5 ui-monospace,monospace; text-transform:uppercase; letter-spacing:.8px; pointer-events:none; }
+    .video-tag .dot { background:#90b7a0; }
+    .overlay { position:absolute; pointer-events:none; overflow:hidden; }
+    .bounding-box { position:absolute; border:2px solid #81a2ff; background:#3c6cff08; border-radius:2px; }
+    .bounding-box.accepted { border-color:#a1dfb9; background:#8dcb970b; }
+    .box-label { position:absolute; left:-2px; top:0; transform:translateY(-100%); background:#c6d5ff; color:#122345; font:11px/1.5 ui-monospace,monospace; padding:3px 6px; border-radius:3px 3px 0 0; white-space:nowrap; max-width:220px; overflow:hidden; text-overflow:ellipsis; }
+    .bounding-box.near-top .box-label { transform:none; top:0; }
+    .bounding-box.accepted .box-label { background:#b5e3c3; color:#153e28; }
+    .player-controls { display:flex; align-items:center; gap:10px; padding:9px 12px; background:#1e2520; border-top:1px solid #ffffff12; }
+    .player-controls button { color:#f4f6f1; border-color:transparent; background:transparent; min-width:44px; padding:8px 10px; }
+    .player-controls button:hover:not(:disabled) { background:#ffffff14; border-color:transparent; }
+    .play-control { font-size:13px; }
+    .time-readout { font:12px/1.5 ui-monospace,monospace; color:#c0c9c0; white-space:nowrap; }
+    .player-spacer { flex:1; }
+    .box-toggle { display:flex; align-items:center; min-height:44px; gap:8px; color:#d5dcd4; font-size:12px; cursor:pointer; white-space:nowrap; }
+    .box-toggle input { accent-color:#92adff; }
+    .playback-speed { width:72px; background:#1e2520; color:#d5dcd4; border-color:#424c44; font-size:12px; padding:8px; }
+    .timeline-card { margin-top:15px; padding:18px 20px 17px; border:1px solid var(--line); border-radius:var(--radius); background:var(--card); }
+    .section-head { display:flex; align-items:center; justify-content:space-between; gap:14px; }
+    .section-head p,.small { color:var(--muted); font-size:12px; }
+    .seek-wrap { margin-top:5px; }
+    #seek { display:block; width:100%; margin:0; height:44px; }
+    .timeline { position:relative; margin-top:2px; padding:0 0 12px; }
+    .timeline-lane { display:grid; grid-template-columns:72px minmax(0,1fr); gap:12px; align-items:center; min-height:30px; }
+    .lane-label { color:var(--muted); font-size:10px; }
+    .lane-track { position:relative; height:18px; border-radius:4px; background:#eeefe9; overflow:hidden; }
+    .timeline-segment { position:absolute; top:4px; height:10px; border-radius:2px; min-width:2px; background:#92a9ed; }
+    .timeline-segment.approved { background:#78aa88; }
+    .timeline-cursor { position:absolute; z-index:2; width:1px; top:0; bottom:0; background:#242f26; pointer-events:none; }
+    .timeline-ticks { display:flex; justify-content:space-between; margin:6px 0 0 84px; color:var(--muted); font:10px/1.5 ui-monospace,monospace; }
+    .timeline-note { font-size:11px; color:var(--muted); border-top:1px solid #e8e8e2; padding-top:12px; }
+    .raw-section { margin-top:26px; }
+    .raw-section .section-head { align-items:start; }
+    .raw-section .section-head p { margin-top:4px; }
+    .count { display:inline-flex; align-items:center; justify-content:center; min-width:22px; height:22px; border:1px solid var(--line); border-radius:6px; padding:0 6px; font:11px/1 ui-monospace,monospace; margin-left:6px; color:var(--muted); vertical-align:middle; }
+    .chips { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,185px),1fr)); gap:9px; margin-top:15px; }
+    .event-chip { display:flex; align-items:start; gap:10px; text-align:left; padding:13px 12px; min-height:72px; border-radius:11px; font-weight:400; min-width:0; }
+    .event-chip[aria-pressed=true] { border-color:#6b8aec; background:var(--blue-soft); box-shadow:0 0 0 1px #6b8aec; }
+    .chip-number { flex-shrink:0; font:10px/1.5 ui-monospace,monospace; color:var(--muted); padding-top:2px; }
+    .chip-copy { min-width:0; }
+    .chip-title { display:block; font-size:13px; font-weight:550; overflow-wrap:anywhere; line-height:1.4; }
+    .chip-time { display:block; font:10px/1.5 ui-monospace,monospace; color:var(--muted); margin-top:7px; overflow-wrap:anywhere; }
+    .empty { padding:21px 17px; border:1px dashed #cbd0c4; border-radius:10px; color:var(--muted); font-size:13px; margin-top:14px; }
+    .panel { border:1px solid var(--line); border-radius:var(--radius); background:var(--card); overflow:hidden; }
+    .panel-head { padding:20px 20px 16px; border-bottom:1px solid var(--line); }
+    .panel-head p { margin-top:5px; color:var(--muted); font-size:12px; }
+    .panel-body { padding:19px 20px 20px; }
+    .label { display:block; font-size:12px; font-weight:550; margin-bottom:7px; }
+    .editor-meta { display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+    .pill { display:inline-flex; align-items:center; padding:4px 8px; border-radius:5px; font:10px/1.5 ui-monospace,monospace; color:var(--muted); background:#eeeee7; }
+    .pill.pending { color:#785e2e; background:#f2ecde; }
+    .pill.approved { color:var(--green); background:var(--green-soft); }
+    .pill.rejected { color:var(--red); background:#f7eae5; }
+    .field { margin-bottom:16px; }
+    .time-fields { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .field-help { color:var(--muted); font-size:11px; margin:7px 0 0; }
+    .decision-buttons { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:18px 0 0; }
+    .decision-buttons button { font-size:13px; }
+    #approve[aria-pressed=true] { color:var(--green); border-color:#659374; background:var(--green-soft); }
+    #reject[aria-pressed=true] { color:var(--red); border-color:#bd9386; background:#f7eae5; }
+    .reset-decision { border:0; background:transparent; color:var(--muted); font-size:11px; display:block; margin:7px auto -6px; }
+    .original-note { margin-top:16px; padding-top:14px; border-top:1px solid var(--line); color:var(--muted); font-size:11px; overflow-wrap:anywhere; }
+    .review-column .panel + .panel { margin-top:16px; }
+    .accepted-list { display:grid; gap:8px; margin:14px 0 0; }
+    .accepted-row { padding:12px; text-align:left; border-color:#d2dfd2; background:#f3f7f0; display:flex; justify-content:space-between; gap:10px; font-size:12px; min-width:0; }
+    .accepted-row strong { font-size:12px; font-weight:550; overflow-wrap:anywhere; }
+    .accepted-row span { font:10px/1.5 ui-monospace,monospace; color:var(--green); white-space:nowrap; }
+    .outcome-field { border-top:1px solid var(--line); margin-top:20px; padding-top:18px; }
+    .outcome-field select { font-size:13px; }
+    .completion-check { display:flex; gap:9px; align-items:start; cursor:pointer; min-height:44px; margin:15px 0 9px; font-size:12px; }
+    .completion-check input { flex-shrink:0; margin-top:2px; }
+    .save-button { width:100%; }
+    .save-message { min-height:18px; color:var(--muted); font-size:11px; text-align:center; margin-top:9px; }
+    .download-button { width:100%; margin-top:9px; font-size:12px; }
+    .evidence { grid-column:1 / -1; border-top:1px solid var(--line); padding-top:14px; }
+    summary { cursor:pointer; min-height:44px; display:flex; align-items:center; gap:9px; font-size:12px; color:var(--muted); }
+    summary::before { content:'+'; font:18px/1 ui-monospace,monospace; }
+    details[open] summary::before { content:'−'; }
+    .evidence dl { display:grid; grid-template-columns:100px minmax(0,1fr); gap:9px 15px; font-size:12px; margin:9px 0 20px; }
+    .evidence dt { color:var(--muted); }
+    .evidence dd { margin:0; overflow-wrap:anywhere; }
+    .notice { display:flex; align-items:center; justify-content:space-between; gap:15px; border:1px solid #d5ae9b; border-radius:10px; background:#fff3ec; color:#723929; margin:0 0 20px; padding:14px 16px; font-size:13px; }
+    .notice p { max-width:850px; }
+    .notice button { flex-shrink:0; }
+    .failure-notice { border:1px solid #d8c7a9; background:#faf4e8; border-radius:10px; padding:0 15px; margin:0 0 20px; }
+    .failure-notice summary { color:#725b35; }
+    .failure-notice ul { margin:0 0 15px; padding-left:20px; color:#725b35; font-size:12px; }
+    .failure-notice li { margin-top:8px; overflow-wrap:anywhere; }
+    .footer { display:flex; justify-content:space-between; gap:20px; border-top:1px solid var(--line); padding:19px 0 26px; color:var(--muted); font-size:11px; }
+    .footer span:first-child { color:#454d42; }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    .busy { opacity:.65; pointer-events:none; }
+    dialog { max-width:min(430px,calc(100vw - 32px)); border:1px solid var(--line); border-radius:16px; padding:24px; color:var(--ink); background:var(--card); }
+    dialog::backdrop { background:#17201960; }
+    dialog h2 { margin-bottom:10px; }
+    dialog p { font-size:14px; color:var(--muted); }
+    .dialog-actions { display:flex; gap:10px; justify-content:end; margin-top:22px; flex-wrap:wrap; }
+    @media (min-width:1400px) { .workspace { grid-template-columns:minmax(0,1fr) 372px; gap:28px; } }
+    @media (max-width:1030px) { .shell { padding:0 24px; } .workspace { gap:18px; grid-template-columns:minmax(0,1fr) 320px; } .panel-head,.panel-body { padding-left:17px; padding-right:17px; } .timeline-card { padding:15px; } .player-controls { gap:5px; } .box-toggle { font-size:11px; } .time-readout { font-size:11px; } }
+    @media (max-width:820px) { .workspace { grid-template-columns:1fr; } .review-column { display:grid; grid-template-columns:1fr 1fr; gap:16px; } .review-column .panel + .panel { margin:0; } .page-heading { padding-top:25px; } .local { max-width:180px; text-align:right; } }
+    @media (max-width:570px) { .shell { padding:0 16px; } .topbar { min-height:73px; } .brand small { font-size:9px; } .local { font-size:10px; max-width:114px; line-height:1.5; } .page-heading { align-items:start; flex-wrap:wrap; gap:16px; padding:23px 0 20px; } .heading-copy { width:100%; } h1 { font-size:28px; } .heading-copy p { font-size:12px; } .episode-nav { justify-content:end; width:100%; } .episode-count { margin-right:auto; padding-left:0; } .video-card { border-radius:12px; } .video-tag { left:10px; top:10px; font-size:8px; padding:4px 6px; } .player-controls { flex-wrap:wrap; gap:0; padding:5px 7px; } .play-control { padding:8px!important; } .time-readout { margin-left:2px; } .player-spacer { min-width:5px; } .box-toggle { margin-left:3px; margin-right:3px; } .playback-speed { width:64px; } .review-column { grid-template-columns:1fr; } .timeline-card { padding:14px; } .timeline-card .section-head { gap:8px; align-items:start; } .timeline-card h2 { font-size:15px; } .timeline-card .small { font-size:10px; text-align:right; max-width:105px; } .timeline-lane { grid-template-columns:60px minmax(0,1fr); gap:7px; } .timeline-ticks { margin-left:67px; } .lane-label { font-size:9px; } .raw-section .section-head { gap:8px; } .raw-section h2 { font-size:15px; } .raw-section .section-head p { font-size:11px; } #add-event { font-size:11px; padding:9px; flex-shrink:0; } .chips { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; } .event-chip { padding:11px 9px; gap:7px; } .chip-title { font-size:12px; } .chip-time { font-size:9px; } .footer { flex-direction:column; gap:7px; } .video-state { padding:15px; gap:3px; } .video-state svg { width:24px; height:24px; margin-bottom:3px; } .video-state strong { font-size:14px; } .video-state p { font-size:11px; } .notice { align-items:start; flex-direction:column; } }
+    @media (max-width:360px) { .shell { padding:0 12px; } .wordmark { font-size:18px; } .local { max-width:100px; } .player-controls { padding:4px; } .playback-speed { width:58px; padding:5px; } .box-toggle { gap:4px; font-size:10px; } .time-readout { font-size:10px; } .play-control { font-size:11px; } }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation:none!important; transition:none!important; } }
+  </style>
+</head>
+<body>
+<div class="shell">
+  <header class="topbar">
+    <div class="brand" aria-label="DVIDIA">
+      <svg width="36" height="36" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#20231f"/><g fill="#f8f7f3"><rect x="8" y="20" width="4.6" height="24" rx="1.2" opacity=".28"/><rect x="14.1" y="20" width="4.6" height="24" rx="1.2" opacity=".38"/><rect x="20.2" y="20" width="4.6" height="24" rx="1.2" opacity=".48"/><rect x="26.3" y="20" width="4.6" height="24" rx="1.2" opacity=".58"/><rect x="32.4" y="20" width="4.6" height="24" rx="1.2" opacity=".68"/><rect x="38.5" y="20" width="4.6" height="24" rx="1.2" opacity=".78"/><rect x="44.6" y="20" width="4.6" height="24" rx="1.2" opacity=".9"/></g><rect x="50.7" y="20" width="4.6" height="24" rx="1.2" fill="#7394ff"/></svg>
+      <div><div class="wordmark">DVIDIA</div><small>Applied physical AI</small></div>
+    </div>
+    <div class="local"><span class="dot" aria-hidden="true"></span><span>Local review · Footage stays here</span></div>
+  </header>
+  <main>
+    <div class="page-heading">
+      <div class="heading-copy"><div class="eyebrow">From footage to reviewed evidence</div><h1>Observation lab</h1><p id="episode-title">Connecting to your local episodes…</p></div>
+      <nav class="episode-nav" aria-label="Episode navigation"><span class="episode-count" id="episode-count">— / —</span><button id="previous" aria-label="Previous episode" disabled>←</button><button id="next" aria-label="Next episode" disabled>→</button></nav>
+    </div>
+    <div class="notice" id="error-notice" role="alert" hidden><p id="error-text"></p><button id="retry">Try again</button></div>
+    <details id="run-failures" class="failure-notice" hidden><summary id="failure-summary"></summary><ul id="failure-list"></ul></details>
+    <div class="workspace" id="workspace" aria-busy="true">
+      <div class="footage-column">
+        <section class="video-card" aria-label="Episode footage and spatial observations">
+          <div class="video-stage" id="video-stage">
+            <video id="video" preload="metadata" playsinline aria-label="Episode footage"></video>
+            <div id="video-empty" class="video-state"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="5" y="8" width="30" height="24" rx="5" stroke="currentColor" stroke-width="1.5"/><path d="m17 15 9 5-9 5V15Z" stroke="currentColor" stroke-width="1.5"/></svg><strong id="video-empty-title">Your footage, ready for a closer look.</strong><p id="video-empty-text">Loading the local observation record.</p></div>
+            <div class="overlay" id="overlay" aria-hidden="true"></div>
+            <div class="video-tag" id="video-tag" hidden><span class="dot"></span><span id="video-tag-text">Sampled observations</span></div>
+          </div>
+          <div class="player-controls">
+            <button id="play" class="play-control" aria-label="Play episode" disabled>▶ Play</button>
+            <span id="time-readout" class="time-readout">0:00 / 0:00</span>
+            <span class="player-spacer"></span>
+            <label class="box-toggle"><input id="show-boxes" type="checkbox" checked> Boxes</label>
+            <label class="sr-only" for="speed">Playback speed</label><select id="speed" class="playback-speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select>
+          </div>
+        </section>
+        <section class="timeline-card" aria-labelledby="timeline-heading">
+          <div class="section-head"><h2 id="timeline-heading">One shared timeline</h2><span class="small" id="box-summary">No sampled boxes yet</span></div>
+          <div class="seek-wrap"><label class="sr-only" for="seek">Seek episode in seconds</label><input id="seek" type="range" min="0" max="1" value="0" step="0.01" disabled></div>
+          <div class="timeline" aria-label="Timeline of raw observations and accepted draft events">
+            <div class="timeline-lane"><span class="lane-label">Raw model</span><div id="raw-track" class="lane-track"></div></div>
+            <div class="timeline-lane"><span class="lane-label">Accepted</span><div id="accepted-track" class="lane-track"></div></div>
+            <div class="timeline-ticks" id="timeline-ticks"><span>0:00</span><span>—</span><span>—</span><span>—</span></div>
+          </div>
+          <p class="timeline-note">Boxes are sampled detections. Hand boxes mark detected palms; overlap does not prove a grasp.</p>
+        </section>
+        <section class="raw-section" aria-labelledby="raw-heading">
+          <div class="section-head"><div><h2 id="raw-heading">Raw observations <span id="raw-count" class="count">0</span></h2><p>Original model output. Select an event to review.</p></div><button id="add-event" disabled>+ Add missed event</button></div>
+          <div id="raw-events" class="chips"></div>
+          <p id="raw-empty" class="empty">No observations loaded.</p>
+          <div id="manual-section" hidden><h3 style="margin-top:20px">Added by reviewer</h3><div id="manual-events" class="chips"></div></div>
+        </section>
+      </div>
+      <aside class="review-column" aria-label="Event review">
+        <section class="panel">
+          <div class="panel-head"><h2>Review the moment</h2><p>Watch, adjust, then make a decision.</p></div>
+          <div class="panel-body">
+            <p id="editor-empty" class="small">Select an observation or add an event the model missed.</p>
+            <form id="event-form" hidden>
+              <div class="editor-meta"><span id="event-origin" class="pill">Model observation</span><span id="decision-pill" class="pill pending">Pending</span></div>
+              <div class="field"><label class="label" for="event-label">Event label</label><input id="event-label" maxlength="240" required autocomplete="off"></div>
+              <div class="time-fields"><div class="field"><label class="label" for="event-start">Start · seconds</label><input id="event-start" type="number" min="0" step="any" required inputmode="decimal"></div><div class="field"><label class="label" for="event-end">End · seconds</label><input id="event-end" type="number" min="0" step="any" required inputmode="decimal"></div></div>
+              <p id="timing-help" class="field-help">Use the timeline to check the boundaries.</p>
+              <div class="decision-buttons"><button id="approve" type="button" aria-pressed="false">✓ Approve</button><button id="reject" type="button" aria-pressed="false">× Reject</button></div>
+              <button id="reset-decision" type="button" class="reset-decision" hidden>Return to pending</button>
+              <button id="remove-manual" type="button" class="reset-decision" hidden>Remove this new event</button>
+              <p class="original-note" id="original-note"></p>
+            </form>
+          </div>
+        </section>
+        <section class="panel">
+          <div class="panel-body">
+            <div class="section-head"><h2>Accepted events <span id="accepted-count" class="count">0</span></h2><span id="draft-pill" class="pill">Saved</span></div>
+            <p id="accepted-empty" class="small" style="margin-top:11px">Nothing accepted yet.</p><div id="accepted-events" class="accepted-list"></div>
+            <div class="outcome-field"><label class="label" for="outcome">Observed outcome</label><select id="outcome" disabled><option value="unknown">Unknown</option><option value="visible_completion">Visible completion</option><option value="incomplete">Incomplete</option></select><p class="field-help">A reviewer’s visual assessment of this episode.</p></div>
+            <label class="completion-check"><input id="review-complete" type="checkbox" disabled><span>I have reviewed every event.<br><span class="small" id="pending-count">No episode loaded</span></span></label>
+            <button id="save" class="primary save-button" disabled>Save revision</button><p id="save-message" class="save-message" role="status" aria-live="polite">Waiting for an episode</p>
+            <button id="download" class="download-button" disabled>↓ Download saved review</button>
+          </div>
+        </section>
+      </aside>
+      <details class="evidence"><summary>Source, analysis and limitations</summary><dl id="provenance"></dl><p class="small">Accuracy has not been measured on this episode. An accepted visual event is not evidence of robot skill or task success.</p></details>
+    </div>
+  </main>
+  <footer class="footer"><span>DVIDIA · Observation pilot</span><span>Human review required · Accuracy not measured · Robot capability not evaluated</span></footer>
+</div>
+<dialog id="leave-dialog" aria-labelledby="leave-heading"><h2 id="leave-heading">Keep your review changes?</h2><p>Your current edits have not been saved to a revision.</p><div class="dialog-actions"><button id="stay">Keep reviewing</button><button id="discard">Discard edits</button><button id="save-leave" class="primary">Save &amp; continue</button></div></dialog>
+<script>
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const state = { episodes:[], index:-1, episode:null, events:[], outcome:'unknown', complete:false, selected:null, dirty:false, loading:false, saving:false, targetIndex:null };
+  const copy = value => JSON.parse(JSON.stringify(value));
+  const finite = value => Number.isFinite(Number(value)) ? Number(value) : 0;
+  const duration = () => finite(state.episode?.duration_seconds) > 0 ? finite(state.episode.duration_seconds) : Math.max(0,Number.isFinite($('video').duration) ? $('video').duration : 0);
+  const stamp = value => { const s = Math.max(0, finite(value)); return `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2,'0')}`; };
+  const precise = value => `${finite(value).toFixed(2)}s`;
+  const setText = (id,value) => { $(id).textContent = String(value ?? ''); };
+  const node = (tag,text,className) => { const el = document.createElement(tag); if (text !== undefined) el.textContent = String(text); if (className) el.className = className; return el; };
+  const selected = () => state.events.find(event => event.id === state.selected);
+  const observation = event => (state.episode?.observations || []).find(raw => raw.id === (event.observation_id || event.id));
+  const api = {
+    async request(path,body) {
+      const response = await fetch(path, body === undefined ? {cache:'no-store'} : {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+      let result; try { result = await response.json(); } catch { throw new Error('The local server returned an unreadable response.'); }
+      if (!response.ok) throw new Error(result.error || `The local server could not complete this request (${response.status}).`);
+      return result;
+    },
+    list() { return this.request('/api/episodes'); },
+    episode(id) { return this.request(`/api/episodes/${encodeURIComponent(id)}`); },
+    save(id,body) { return this.request(`/api/episodes/${encodeURIComponent(id)}/review`,body); }
+  };
+  function error(message) { setText('error-text', message); setText('retry',state.episode ? 'Dismiss' : 'Try again'); $('error-notice').hidden = false; }
+  function clearError() { $('error-notice').hidden = true; }
+  function setBusy(value) { state.loading = value; $('workspace').setAttribute('aria-busy',String(value)); $('workspace').classList.toggle('busy',value); updateControls(); }
+  function updateControls() {
+    const loaded = !!state.episode, blocked = state.loading || state.saving;
+    $('previous').disabled = blocked || state.index <= 0;
+    $('next').disabled = blocked || state.index < 0 || state.index >= state.episodes.length - 1;
+    for (const id of ['add-event','outcome','review-complete']) $(id).disabled = !loaded || blocked;
+    $('save').disabled = !loaded || !state.dirty || blocked;
+    $('download').disabled = !loaded || state.dirty || blocked;
+    $('save-leave').disabled = blocked;
+    setText('save',state.saving ? 'Saving revision…' : 'Save revision');
+  }
+  function markDirty() {
+    state.dirty = true;
+    setText('save-message','Unsaved changes · Save to keep this review');
+    renderReviewSummary(); updateControls();
+  }
+  function eventChip(event,index,isRaw) {
+    const button = node('button',undefined,'event-chip'); button.type = 'button';
+    const eventId = isRaw ? state.events.find(item => item.observation_id === event.id || item.id === event.id)?.id : event.id;
+    button.setAttribute('aria-pressed',String(eventId === state.selected));
+    const label = event.label || 'Unlabeled observation';
+    button.setAttribute('aria-label',`${index + 1}. ${label}, ${precise(event.start_seconds)} to ${precise(event.end_seconds)}${isRaw ? ', raw model output' : ', added by reviewer'}`);
+    button.append(node('span',String(index + 1).padStart(2,'0'),'chip-number'));
+    const text = node('span',undefined,'chip-copy'); text.append(node('span',label,'chip-title'),node('span',`${precise(event.start_seconds)} — ${precise(event.end_seconds)}`,'chip-time')); button.append(text);
+    button.addEventListener('click',() => selectEvent(eventId,true)); return button;
+  }
+  function renderEvents() {
+    const raw = state.episode?.observations || [];
+    $('raw-events').replaceChildren(...raw.map((event,index) => eventChip(event,index,true)));
+    setText('raw-count',raw.length); $('raw-empty').hidden = raw.length > 0;
+    setText('raw-empty',state.episode ? 'No event observations were produced. Watch the footage and add any events you can verify.' : 'No observations loaded.');
+    const manual = state.events.filter(event => !observation(event));
+    $('manual-section').hidden = manual.length === 0;
+    $('manual-events').replaceChildren(...manual.map((event,index) => eventChip(event,index,false)));
+  }
+  function renderTimeline() {
+    const total = duration() || 1;
+    for (const [id,events,approved] of [['raw-track',state.episode?.observations || [],false],['accepted-track',state.events.filter(event => event.decision === 'approved'),true]]) {
+      const track = $(id); track.replaceChildren();
+      for (const event of events) {
+        const block = node('span',undefined,`timeline-segment${approved ? ' approved' : ''}`);
+        const start = Math.max(0,Math.min(total,finite(event.start_seconds))), end = Math.max(start,Math.min(total,finite(event.end_seconds)));
+        block.style.left = `${start / total * 100}%`; block.style.width = `${(end - start) / total * 100}%`;
+        block.title = `${event.label}: ${precise(start)} – ${precise(end)}`; track.append(block);
+      }
+      track.append(node('span',undefined,'timeline-cursor'));
+    }
+    $('timeline-ticks').replaceChildren(...[0,total / 3,total * 2 / 3,total].map(time => node('span',stamp(time))));
+    updatePlayback();
+  }
+  function renderReviewSummary() {
+    const approved = state.events.filter(event => event.decision === 'approved');
+    setText('accepted-count',approved.length); $('accepted-empty').hidden = approved.length > 0;
+    $('accepted-events').replaceChildren(...approved.map(event => {
+      const row = node('button',undefined,'accepted-row'); row.type = 'button'; row.append(node('strong',event.label),node('span',`${precise(event.start_seconds)}–${precise(event.end_seconds)}`)); row.addEventListener('click',() => selectEvent(event.id,true)); return row;
+    }));
+    setText('draft-pill',state.dirty ? 'Unsaved draft' : 'Saved');
+    const pending = state.events.filter(event => event.decision === 'pending').length;
+    const rejected = state.events.filter(event => event.decision === 'rejected').length;
+    setText('pending-count',`${pending} pending · ${rejected} rejected`);
+    renderTimeline();
+  }
+  function renderEditor() {
+    const event = selected(); $('event-form').hidden = !event; $('editor-empty').hidden = !!event;
+    if (!event) return;
+    const raw = observation(event);
+    setText('event-origin',raw ? 'Model observation' : 'Added by reviewer');
+    setText('decision-pill',event.decision.charAt(0).toUpperCase() + event.decision.slice(1));
+    $('decision-pill').className = `pill ${event.decision}`;
+    $('event-label').value = event.label; $('event-start').value = finite(event.start_seconds); $('event-end').value = finite(event.end_seconds);
+    $('event-start').max = $('event-end').max = duration() || '';
+    $('approve').setAttribute('aria-pressed',String(event.decision === 'approved')); $('reject').setAttribute('aria-pressed',String(event.decision === 'rejected')); $('reset-decision').hidden = event.decision === 'pending';
+    $('remove-manual').hidden = !!raw || (state.episode.review?.events || []).some(saved => saved.id === event.id);
+    const confidence = raw && Number.isFinite(raw.confidence) ? ` · Detector score ${raw.confidence.toFixed(2)} (uncalibrated)` : '';
+    setText('original-note',raw ? `Original: ${raw.label || 'Unlabeled observation'} · ${precise(raw.start_seconds)}–${precise(raw.end_seconds)}${confidence}. This original record stays unchanged.` : 'This event was added during human review. It has no detector score or generated bounding box.');
+    $('event-label').setCustomValidity(''); $('event-end').setCustomValidity('');
+  }
+  function selectEvent(id,seek) {
+    if (!id) return;
+    if (id !== state.selected && !captureEditor()) { $('event-form').reportValidity(); return; }
+    state.selected = id; renderEvents(); renderEditor();
+    if (seek && selected()) { $('video').currentTime = Math.min(duration(),finite(selected().start_seconds)); updatePlayback(); }
+    if (seek && window.matchMedia('(max-width:820px)').matches) document.querySelector('.review-column').scrollIntoView({block:'start',behavior:'auto'});
+  }
+  function captureEditor() {
+    const event = selected(); if (!event) return true;
+    const label = $('event-label').value.trim(), start = $('event-start').valueAsNumber, end = $('event-end').valueAsNumber;
+    $('event-label').setCustomValidity(label ? '' : 'Enter a label for this event.');
+    $('event-end').setCustomValidity(Number.isFinite(end) && end > start ? '' : 'End must be later than start.');
+    if (!$('event-form').checkValidity()) return false;
+    const changed = event.label !== label || event.start_seconds !== start || event.end_seconds !== end;
+    Object.assign(event,{label,start_seconds:start,end_seconds:end});
+    if (changed) { state.complete = false; $('review-complete').checked = false; markDirty(); renderEvents(); }
+    return true;
+  }
+  function decide(decision) {
+    if (!captureEditor()) { $('event-form').reportValidity(); return; }
+    const event = selected(); if (!event) return; event.decision = decision; state.complete = false; $('review-complete').checked = false;
+    markDirty(); renderEditor(); setText('save-message',`${decision === 'approved' ? 'Approved in draft' : decision === 'rejected' ? 'Rejected in draft' : 'Returned to pending'} · Save to keep this review`);
+  }
+  function renderProvenance() {
+    const episode = state.episode, source = episode.source || {}, recipe = episode.recipe || {}, metrics = episode.metrics || {};
+    const kind = {public:'Public source',synthetic:'Synthetic fixture',user_authorized:'User-authorized footage'}[source.kind] || source.kind || 'Not supplied';
+    const model = recipe.model, modelLabel = typeof model === 'string' ? model : model?.kind || 'Not supplied';
+    const rows = [['Source',kind],['Credit',source.credit || 'Not supplied'],['License',source.license || 'Not supplied'],['Source hash',source.sha256 || 'Not supplied'],['Recipe',recipe.id || 'Not supplied'],['Model',modelLabel],['Analysis',`${Number.isFinite(metrics.frames) ? metrics.frames + ' sampled frames' : 'Frame count not supplied'}${Number.isFinite(metrics.detected_frames) ? ' · ' + metrics.detected_frames + ' with detections' : ''}${Number.isFinite(metrics.elapsed_seconds) ? ' · ' + metrics.elapsed_seconds.toFixed(1) + 's elapsed' : ''}`],['Review',`Revision ${episode.review?.revision ?? 0} · ${episode.review?.status || 'unreviewed'}`]];
+    if (source.source_url) rows.push(['Source page',source.source_url]);
+    if (Array.isArray(model?.models)) for (const asset of model.models) rows.push([asset.role || 'Model file',`${asset.name || 'Name not supplied'} · ${asset.license || 'License not supplied'}`]);
+    if (recipe.notes) rows.push(['Notes',typeof recipe.notes === 'string' ? recipe.notes : JSON.stringify(recipe.notes)]);
+    $('provenance').replaceChildren(...rows.flatMap(([key,value]) => [node('dt',key),node('dd',value)]));
+  }
+  function acceptEpisode(episode,index,keepTime) {
+    const oldTime = $('video').currentTime || 0, oldId = state.episode?.id;
+    const raw = Array.isArray(episode.observations) ? episode.observations : [];
+    episode.observations = raw;
+    const existing = Array.isArray(episode.review?.events) ? episode.review.events : [];
+    state.events = copy(existing);
+    for (const item of raw) if (!state.events.some(event => event.observation_id === item.id || event.id === item.id)) state.events.push({id:item.id,observation_id:item.id,label:item.label || '',start_seconds:finite(item.start_seconds),end_seconds:finite(item.end_seconds),decision:'pending'});
+    state.events.forEach(event => { if (!['pending','approved','rejected'].includes(event.decision)) event.decision = 'pending'; });
+    state.episode = episode; state.index = index; state.outcome = ['unknown','visible_completion','incomplete'].includes(episode.review?.outcome) ? episode.review.outcome : 'unknown'; state.complete = episode.review?.status === 'reviewed'; state.dirty = false;
+    state.selected = state.events.some(event => event.id === state.selected) ? state.selected : state.events[0]?.id || null;
+    setText('episode-title',`${episode.source?.kind === 'synthetic' ? 'Synthetic fixture · ' : ''}${episode.title || episode.id}`); setText('episode-count',`${index + 1} / ${state.episodes.length} episodes`);
+    setText('video-tag-text',episode.source?.kind === 'synthetic' ? 'Synthetic fixture · Sampled detections' : 'Sampled model detections');
+    $('outcome').value = state.outcome; $('review-complete').checked = state.complete;
+    const url = episode.video_url;
+    if (typeof url === 'string' && url) {
+      const parsed = new URL(url,location.href);
+      if (parsed.origin !== location.origin) throw new Error('This local review only plays footage served by the local episode server.');
+      if (oldId !== episode.id || !$('video').getAttribute('src')) { $('video').src = parsed.href; $('video').load(); }
+      else if (keepTime) $('video').currentTime = oldTime;
+      $('video-empty').hidden = true; $('video-tag').hidden = false;
+    } else { $('video').removeAttribute('src'); $('video').load(); $('video-empty').hidden = false; $('video-tag').hidden = true; setText('video-empty-title','No playable footage in this episode.'); setText('video-empty-text','The observation record is available for inspection.'); }
+    renderEvents(); renderEditor(); renderReviewSummary(); renderProvenance(); updateControls();
+    setText('save-message',`Revision ${episode.review?.revision ?? 0} · ${state.complete ? 'Review complete' : 'Human review required'}`);
+  }
+  async function loadEpisode(index) {
+    setBusy(true); clearError(); $('video').pause();
+    try { const episode = await api.episode(state.episodes[index].id); acceptEpisode(episode,index,false); }
+    catch (err) { error(err.message); }
+    finally { setBusy(false); }
+  }
+  async function initialize() {
+    setBusy(true); clearError();
+    try {
+      const result = await api.list(); state.episodes = Array.isArray(result) ? result : result.episodes || [];
+      const failures = Array.isArray(result.failures) ? result.failures : [];
+      $('run-failures').hidden = failures.length === 0;
+      setText('failure-summary',`${failures.length} ${failures.length === 1 ? 'episode could' : 'episodes could'} not be analyzed · View failures`);
+      $('failure-list').replaceChildren(...failures.map(failure => node('li',`${failure.id || 'Episode'}: ${failure.error || 'Analysis failed; inspect the local run receipt.'}`)));
+      if (!state.episodes.length) { setText('episode-title','No episodes available yet.'); setText('video-empty-title','Your next review starts with footage.'); setText('video-empty-text','Add an episode through the local observation workflow, then refresh this page.'); setText('raw-empty','No model output or review data has been loaded.'); setText('save-message','No episode to review'); setText('episode-count','0 episodes'); return; }
+      const wanted = new URLSearchParams(location.search).get('episode'); const index = Math.max(0,state.episodes.findIndex(episode => episode.id === wanted));
+      const episode = await api.episode(state.episodes[index].id); acceptEpisode(episode,index,false);
+    } catch (err) { error(err.message); setText('episode-title','The local observation server is unavailable.'); setText('video-empty-title','Unable to load this episode.'); setText('video-empty-text','Check the local server, then try again.'); }
+    finally { setBusy(false); }
+  }
+  async function save() {
+    if (!captureEditor()) { $('event-form').reportValidity(); return false; }
+    if (!state.episode || state.saving) return false;
+    const invalid = state.events.find(event => !event.label.trim() || !Number.isFinite(event.start_seconds) || !Number.isFinite(event.end_seconds) || event.start_seconds < 0 || event.end_seconds <= event.start_seconds || event.end_seconds > duration() + .01);
+    if (invalid) { selectEvent(invalid.id,false); error('Check each event label and timing. Events must fit within this episode.'); return false; }
+    if (state.complete && state.events.some(event => event.decision === 'pending')) { error('Decide on every event before marking this review complete. You can save an unfinished review with the checkbox cleared.'); return false; }
+    state.saving = true; clearError(); updateControls();
+    try {
+      await api.save(state.episode.id,{base_revision:state.episode.review?.revision ?? 0,events:copy(state.events),outcome:state.outcome,status:state.complete ? 'reviewed' : 'in_review'});
+      const episode = await api.episode(state.episode.id); acceptEpisode(episode,state.index,true);
+      setText('save-message',`Saved revision ${episode.review?.revision ?? 0} · ${state.complete ? 'Review complete' : 'Review in progress'}`); return true;
+    } catch (err) { error(err.message); setText('save-message','Could not verify a saved revision · Edits kept here'); return false; }
+    finally { state.saving = false; updateControls(); }
+  }
+  function navigate(index) {
+    if (index < 0 || index >= state.episodes.length) return;
+    captureEditor();
+    if (state.dirty) { state.targetIndex = index; $('leave-dialog').showModal(); return; }
+    loadEpisode(index);
+  }
+  function fitOverlay() {
+    const video = $('video'), stage = $('video-stage'), ratio = video.videoWidth / video.videoHeight;
+    if (!Number.isFinite(ratio) || !ratio) { $('overlay').replaceChildren(); return; }
+    let width = stage.clientWidth, height = width / ratio;
+    if (height > stage.clientHeight) { height = stage.clientHeight; width = height * ratio; }
+    Object.assign($('overlay').style,{width:`${width}px`,height:`${height}px`,left:`${(stage.clientWidth-width)/2}px`,top:`${(stage.clientHeight-height)/2}px`});
+  }
+  function renderBoxes() {
+    const overlay = $('overlay'); overlay.replaceChildren();
+    if (!state.episode || !$('show-boxes').checked) { setText('box-summary',$('show-boxes').checked ? 'No sampled boxes yet' : 'Boxes hidden'); return; }
+    const time = $('video').currentTime || 0, samples = [];
+    for (const raw of state.episode.observations) {
+      const boxes = Array.isArray(raw.boxes) ? raw.boxes : [];
+      const nearest = boxes.reduce((best,box) => Math.abs(finite(box.time_seconds) - time) < Math.abs(finite(best?.time_seconds ?? -10000) - time) ? box : best,null);
+      if (!nearest || Math.abs(finite(nearest.time_seconds) - time) > .25) continue;
+      for (const box of boxes.filter(box => Math.abs(finite(box.time_seconds) - finite(nearest.time_seconds)) < .001)) samples.push({...box,label:box.label || raw.label});
+    }
+    const seen = new Set(); let visible = 0;
+    for (const sample of samples) {
+      if (!Array.isArray(sample.xyxy) || sample.xyxy.length !== 4 || !sample.xyxy.every(Number.isFinite)) continue;
+      const [x1,y1,x2,y2] = sample.xyxy.map(value => Math.min(1,Math.max(0,value))); if (x2 <= x1 || y2 <= y1) continue;
+      const key = [x1,y1,x2,y2,sample.label].join('|'); if (seen.has(key)) continue; seen.add(key);
+      const box = node('div',undefined,`bounding-box${sample.accepted ? ' accepted' : ''}${y1 < .1 ? ' near-top' : ''}`);
+      Object.assign(box.style,{left:`${x1*100}%`,top:`${y1*100}%`,width:`${(x2-x1)*100}%`,height:`${(y2-y1)*100}%`}); box.append(node('span',sample.label || 'Detected object','box-label')); overlay.append(box); visible++;
+    }
+    setText('box-summary',visible ? `${visible} sampled ${visible === 1 ? 'box' : 'boxes'} · ${stamp(time)}` : 'No sampled boxes at this time');
+  }
+  function updatePlayback() {
+    const video = $('video'), total = duration(), time = video.currentTime || 0;
+    setText('time-readout',`${stamp(time)} / ${stamp(total)}`); $('seek').max = total || 1; $('seek').value = time; $('seek').disabled = !total; $('seek').setAttribute('aria-valuetext',`${precise(time)} of ${precise(total)}`);
+    $('play').disabled = !video.getAttribute('src') || !total;
+    setText('play',video.paused ? '▶ Play' : 'Ⅱ Pause'); $('play').setAttribute('aria-label',video.paused ? 'Play episode' : 'Pause episode');
+    for (const cursor of document.querySelectorAll('.timeline-cursor')) cursor.style.left = `${total ? Math.min(100,time / total * 100) : 0}%`;
+    renderBoxes();
+  }
+  $('play').addEventListener('click',async () => { const video = $('video'); if (video.paused) { try { await video.play(); } catch { error('This browser could not play the local video. The observation record is still available for review.'); } } else video.pause(); });
+  $('seek').addEventListener('input',() => { $('video').currentTime = finite($('seek').value); updatePlayback(); });
+  $('speed').addEventListener('change',() => { $('video').playbackRate = finite($('speed').value); });
+  $('show-boxes').addEventListener('change',renderBoxes);
+  for (const name of ['timeupdate','play','pause','ended']) $('video').addEventListener(name,updatePlayback);
+  let frameRequest = null;
+  const frameVideo = $('video');
+  function stopFrames() { if (frameRequest !== null) { if (frameVideo.cancelVideoFrameCallback) frameVideo.cancelVideoFrameCallback(frameRequest); else cancelAnimationFrame(frameRequest); frameRequest = null; } }
+  function nextFrame() { if (frameVideo.paused || frameVideo.ended) { frameRequest = null; return; } renderBoxes(); frameRequest = frameVideo.requestVideoFrameCallback ? frameVideo.requestVideoFrameCallback(nextFrame) : requestAnimationFrame(nextFrame); }
+  frameVideo.addEventListener('play',() => { stopFrames(); nextFrame(); }); frameVideo.addEventListener('pause',stopFrames); frameVideo.addEventListener('ended',stopFrames);
+  $('video').addEventListener('loadedmetadata',() => { fitOverlay(); renderTimeline(); updatePlayback(); });
+  $('video').addEventListener('error',() => { if (!$('video').getAttribute('src')) return; $('video-empty').hidden = false; setText('video-empty-title','This video could not be played.'); setText('video-empty-text','Check that the local episode contains a browser-compatible video.'); $('play').disabled = true; });
+  if ('ResizeObserver' in window) new ResizeObserver(() => { fitOverlay(); renderBoxes(); }).observe($('video-stage')); else window.addEventListener('resize',fitOverlay);
+  $('event-form').addEventListener('submit',event => event.preventDefault());
+  for (const id of ['event-label','event-start','event-end']) { $(id).addEventListener('input',() => { if (!state.dirty) markDirty(); state.complete = false; $('review-complete').checked = false; }); $(id).addEventListener('change',captureEditor); }
+  $('approve').addEventListener('click',() => decide('approved')); $('reject').addEventListener('click',() => decide('rejected')); $('reset-decision').addEventListener('click',() => decide('pending'));
+  $('remove-manual').addEventListener('click',() => {
+    const event = selected(); if (!event || observation(event) || (state.episode.review?.events || []).some(saved => saved.id === event.id)) return;
+    state.events = state.events.filter(item => item.id !== event.id); state.selected = state.events[0]?.id || null;
+    state.complete = false; $('review-complete').checked = false; markDirty(); renderEvents(); renderEditor();
+  });
+  $('add-event').addEventListener('click',() => {
+    if (!captureEditor()) { $('event-form').reportValidity(); return; }
+    const total = duration(); if (total <= 0) { error('The episode duration is unavailable. Load playable footage before adding an event.'); return; }
+    const start = Math.min(Math.max(0,total-.01),Number(($('video').currentTime || 0).toFixed(2))), id = `manual-${crypto.randomUUID()}`;
+    state.events.push({id,observation_id:null,label:'',start_seconds:start,end_seconds:Math.min(total,Number((start+1).toFixed(2))),decision:'pending'});
+    state.complete = false; $('review-complete').checked = false; state.selected = id; markDirty(); renderEvents(); renderEditor(); $('event-label').focus();
+  });
+  $('outcome').addEventListener('change',() => { state.outcome = $('outcome').value; markDirty(); });
+  $('review-complete').addEventListener('change',() => { state.complete = $('review-complete').checked; markDirty(); });
+  $('save').addEventListener('click',save);
+  $('download').addEventListener('click',() => {
+    if (!state.episode || state.dirty) return;
+    const receipt = {episode_id:state.episode.id,source_sha256:state.episode.source?.sha256 || null,review:state.episode.review || {revision:0,status:'unreviewed',outcome:'unknown',events:[]}};
+    const url = URL.createObjectURL(new Blob([JSON.stringify(receipt,null,2)+'\n'],{type:'application/json'})), link = node('a'); link.href = url; link.download = `${String(state.episode.id).replace(/[^a-z0-9_-]/gi,'-')}.review-r${state.episode.review?.revision ?? 0}.json`; document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url),1000);
+  });
+  $('previous').addEventListener('click',() => navigate(state.index-1)); $('next').addEventListener('click',() => navigate(state.index+1));
+  $('stay').addEventListener('click',() => $('leave-dialog').close()); $('discard').addEventListener('click',() => { $('leave-dialog').close(); loadEpisode(state.targetIndex); }); $('save-leave').addEventListener('click',async () => { if (await save()) { $('leave-dialog').close(); loadEpisode(state.targetIndex); } });
+  $('retry').addEventListener('click',() => { if (state.episode) clearError(); else initialize(); });
+  window.addEventListener('beforeunload',event => { if (state.dirty) { event.preventDefault(); event.returnValue = ''; } });
+  initialize();
+})();
+</script>
+</body>
+</html>

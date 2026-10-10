@@ -40,6 +40,18 @@ Open [the collection planner](http://127.0.0.1:8270/coverage) in the same local 
 
 The [episode tape recorder](docs/episode-tape.md) preserves the existing simulated arm's measured state, requested/applied commands, contacts and sensor ages. Recording needs the optional arm extra; validation and inspection need only Python's standard library. These tools are available from the current checkout and do not train a new policy or change the older Hugging Face pilot.
 
+## Review what is visible in a video
+
+The new [local observation lab](docs/observations.md) uses optional CPU object and
+palm detectors to propose timestamped image observations. Open the original video,
+inspect its boxes and timeline, correct labels, and save a separate review revision.
+Raw evidence stays unchanged. No account, cloud inference, or GPU is needed.
+
+The [first feasibility run](benchmarks/observation-20261010/README.md) completed
+six public excerpts. This establishes the integration, not accuracy: labels can
+be wrong, outcomes remain unknown, and there is no 3D reconstruction, automatic
+action understanding, or human-video-to-robot control bridge.
+
 ## Try the pipeline
 
 Generate an explicitly synthetic example, then train and verify its output:
