@@ -1,80 +1,129 @@
 # Local observation review
 
-`src/dvidia_training/observation_studio.html` is the dependency-free review page
-served by the observation pilot. It makes no network requests outside its local
-origin and does not include sample observations or fallback fixture data.
+The dependency-free page served by the observation lab combines the original
+video, sampled boxes, timeline and review queue. It makes no requests beyond its
+local origin. There are no fallback detections or automatic action descriptions.
 
-The video and timeline share one clock. Bounding boxes use normalized
-`[x1, y1, x2, y2]` coordinates and follow the displayed video area, including
-letterboxing. A box appears only within 0.25 seconds of its sampled timestamp;
-there is no tracking or interpolation claim. Box labels always come from raw
-model output, even after an event is reviewed. The separate green timeline and
-accepted list represent the review draft.
+## Grouped review
 
-Reviewers can select an observation, correct its label and boundaries, approve
-or reject it, and add a missed event. Original observations remain visible and
-unchanged. Newly added unsaved events can be removed; persisted events retain
-their review history and can be rejected in a later revision. Observed outcome
-defaults to `unknown`. The other choices are `visible_completion` and
-`incomplete`, describing a person's visual assessment rather than robot success.
+The main queue groups observations with the same original label, evidence type,
+current review label and decision when their intervals overlap or have gaps no
+larger than 0.25 seconds. This is a presentation aid, not physical object identity,
+tracking, an action segment or proof of continuity through an occlusion.
 
-Saving posts the complete draft with the current base revision and fetches the
-episode again to confirm persistence. A reviewer must explicitly mark completion,
-and every event must have a decision before a review is marked complete.
-Conflicts or other save errors preserve the local draft. Previous/next navigation
-offers to save, discard, or keep reviewing when changes exist. The browser also
-warns before closing a page with unsaved edits. Downloads contain the last saved
-review, episode ID, and original source hash; downloading is disabled while a
-draft is unsaved.
+Each card shows its exact interval and number of included observations. Confirm
+or reject applies only to the members shown in the selected group, then advances
+to the next pending group. Confirming a group never approves an unrelated group.
+Edited descriptions apply to those members; their individual timings remain
+unchanged. Differently corrected or decided observations stay separate. Manual
+annotations always remain independent.
 
-## HTTP contract
+Expand a group's individual observations to edit one label or interval. The
+original raw list remains under **Inspect original evidence**. Nothing is dropped,
+suppressed or removed from the stored model record. The immutable source IDs,
+raw labels, sample timestamps, scores and boxes remain inspectable.
+
+The six initial pilot clips present 72 original proposals as 33 initial groups:
+shirt 7 → 4, stir 25 → 8, pack 7 → 4, onion 10 → 5, melon 14 → 7 and jeans 9 → 5.
+These are counts of UI items, not measured reductions in review time or improved
+model accuracy. Corrections can split groups. All original proposals still require
+an explicit decision before a review can be finished.
+
+## Video and timeline
+
+The timeline is attached to the video, highlights the selected interval, and
+shows confirmed intervals separately. Selecting a card seeks to its start.
+**Replay moment** plays just that interval. Individual edits can set boundaries
+from the playhead or explicit numeric values.
+
+Boxes use normalized `[x1,y1,x2,y2]` image coordinates and respect letterboxing.
+Samples are indexed once per episode and looked up with binary search. DOM
+nodes are reused by track and updated only when the displayed sample changes;
+identical samples do not rebuild the overlay. No new tracking or interpolation
+was added. Boxes appear only within 0.25 seconds of a real sampled timestamp,
+retain raw model labels and disappear through unsupported gaps. Palm rectangles
+remain palm detections; overlap does not establish contact or grasp.
+
+## Automatic saving and completion
+
+Valid drafts save after a 650ms pause. Only one request is in flight at a time.
+The response advances the base revision without replacing newer edits; any
+changes made during the request are saved in the next revision. Invalid input
+remains visibly unsaved and cannot be overwritten by an older save response.
+
+Errors preserve the draft and expose an explicit retry. Conflicting tabs never
+silently overwrite one another. A conflict offers export of the unsaved draft
+(including current editor input) or explicit discard/reload. Episode navigation
+and browser closing protect unsaved changes. No shared browser cache of private
+annotations is added: a reload before successful persistence can lose unsaved
+input, so heed the leave warning or export the draft.
+
+Draft autosave uses `in_review`. **Finish review** is a separate deliberate
+operation and is available only after every proposal has a decision. Failed
+completion stays visibly unsaved. Outcomes default to `unknown`; a person can
+select visible completion or incomplete when finishing. None implies robot skill
+qualification. Export of the saved review is disabled while a draft is unsaved.
+
+The local server stores append-only revisions tied to the original source and
+annotation hashes. The public synthetic demo instead uses its existing browser
+storage adapter; its UI explicitly describes that storage boundary.
+
+## Mobile and accessibility
+
+Below 821px, selecting a card opens a native dialog styled as a bottom sheet,
+with a large Confirm & next action, a reject action and a replay control. The
+page brings the video into view above it where viewport height allows. Closing
+returns to the queue, or to the finish panel once every item is decided. The dialog
+traps focus and makes background content inert. Detailed timing remains collapsed.
+On desktop, the same editor stays beside the player. Resizing handles the dialog
+state; landscape uses the layout appropriate to its available width.
+
+Controls have at least 44px touch targets; main decision buttons are 50px. Inputs
+use 16px text on phones. Semantic buttons, native dialog behavior, labeled inputs,
+visible focus, text status labels and polite save feedback accompany the color
+cues. Playback is never automatically started by opening a group. Reduced-motion
+preferences are honored.
+
+## HTTP and data contract
 
 - `GET /api/episodes`: `{ "episodes": [{ "id": "..." }], "failures": [] }`.
-  Optional failures remain visible above the review workspace.
-- `GET /api/episodes/{id}`: the episode document below.
+- `GET /api/episodes/{id}`: the episode, immutable observations and latest review.
 - `POST /api/episodes/{id}/review`: `{ "base_revision": 0, "events": [],
-  "outcome": "unknown", "status": "in_review" }`; returns the saved review.
-- The episode's `video_url` must resolve to the same origin. The server must
-  support browser video byte ranges.
+  "outcome": "unknown", "status": "in_review" }`; responds with `{ "review": ... }`.
+- Same-origin video URLs support byte ranges. Writes require the local origin.
 
-An episode has `id`, optional `title`, `video_url`, `duration_seconds`,
-`observations`, and `review`. Each observation has `id`, `label`, `start_seconds`,
-`end_seconds`, optional numeric `confidence`, and a `boxes` array. Each box has
-`time_seconds`, normalized `xyxy`, and an optional `label`.
+Each review event retains `id`, `observation_id`, `label`, `start_seconds`,
+`end_seconds` and `decision` (`pending`, `approved`, `rejected`). New manual events
+use a `manual-` UUID and `observation_id: null`. No group ID or automatic approval
+is added to the backend contract; grouping is derived from the full event list.
 
-The review has `revision`, `status`, `outcome`, and `events`. Review events carry
-`id`, `observation_id`, `label`, `start_seconds`, `end_seconds`, and `decision`
-(`pending`, `approved`, or `rejected`). New manual events use a `manual-` UUID
-and `observation_id: null`. Missing review entries are shown as pending.
+## Repeatable checks
 
-Optional provenance: `source.{sha256,kind,credit,license}`,
-`recipe.{id,model,notes}`, and
-`metrics.{elapsed_seconds,frames,detected_frames}`. Missing values are labeled
-as not supplied. Model metadata accepts a name or an object with `kind` and a
-`models` list of `role`, `name`, and `license` entries. Source kind distinguishes
-public, synthetic, and authorized user footage. No accuracy or robot competence
-metric is inferred.
+`tests/test_observation_review_core.py` runs the pure JavaScript grouping and
+sample-boundary invariants when Node.js is installed. The existing Python tests
+cover the real decoder, bounded HTTP API, media integrity and review revisions.
 
-## Accessibility and responsive behavior
+For isolated browser tests, use a new synthetic fixture directory in one terminal:
 
-Controls support keyboard input, visible focus, explicit names, and a minimum
-44px target. Checkboxes use their full labeled area as the target. The video
-never autoplays. Review/save feedback uses a polite status region; server errors
-use an alert. Raw event chips expose label and exact timing to screen readers.
-The layout stacks at tablet and phone widths, supports 320px-wide screens, and
-honors reduced-motion preferences. Selecting an event on a stacked layout brings
-the editor into view; accepted event timing retains decimal seconds. Provenance
-follows the review panels in both the visual and document order. There are no
-third-party assets or scripts.
+```sh
+PYTHONPATH=src .venv/bin/python tests/browser/serve_observation_fixture.py --directory runs/review-browser-fixture --port 8283
+```
 
-## Interface verification
+With Playwright and its Chromium browser already installed, in another terminal:
 
-An isolated copy of the six-episode pilot was checked in a headless Chromium
-browser on October 10, 2026. Checks exercised real playback, sampled overlays,
-label correction and approval with save/reload, adding/removing a new event,
-manual-event persistence, saved-review download including the original source
-hash, and unsaved navigation. Desktop, 390px, and 320px layouts were captured;
-phone layouts had no horizontal overflow and their visible controls met the
-44px target. Browser console/page errors were absent. Local receipts and
-screenshots are in the ignored `runs/observation-ui-qa-v1/` directory. This
-verifies interface behavior only, not model accuracy or human review quality.
+```sh
+node tests/browser/observation_review.cjs
+```
+
+`PLAYWRIGHT_MODULE` can select an existing package location. `OBSERVATION_URL`
+selects another loopback fixture URL; `OBSERVATION_OUTPUT` selects an ignored
+receipt/screenshot directory. The tests require a fresh unreviewed fixture.
+They simulate overlapping saves, invalid edits, conflicts, failed writes and
+failed completion, then exercise persistence, export, manual events, phone and
+landscape layouts, repeated sheet opening, rotation and scroll-lock recovery.
+They never modify the original pilot run or production data.
+
+The overlay mutation check makes ten seeks within a single sample and observes
+zero DOM mutations. This is a regression invariant, not a phone FPS benchmark.
+Headless Chromium checks do not establish Safari or physical-device performance.
+Model accuracy and human annotation speed remain unmeasured.

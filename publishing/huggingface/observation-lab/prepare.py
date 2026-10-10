@@ -94,7 +94,6 @@ def stage(namespace, output):
         'Connecting to your local episodes…': 'Loading the synthetic demo…',
         'Your footage, ready for a closer look.': 'A schematic clip, ready to review.',
         'Loading the local observation record.': 'Loading authored demonstration annotations.',
-        'Raw model': 'Authored',
         'Raw observations': 'Authored observations',
         'Original model output. Select an event to review.': 'Authored sample proposals. Select an event to review.',
         'Select an observation or add an event the model missed.': 'Select a sample annotation or add an event you can verify.',
@@ -111,7 +110,9 @@ def stage(namespace, output):
         'could not play the local video': 'could not play the synthetic video',
         'Check that the local episode contains a browser-compatible video.': 'Try a browser with MP4/H.264 playback; the sample annotation remains available.',
         'DVIDIA · Observation pilot': 'DVIDIA · Synthetic workflow demo',
-        'Saved revision ${episode.review?.revision ?? 0}': 'Saved in this browser · Revision ${episode.review?.revision ?? 0}',
+        'Saved revision ${state.episode.review?.revision ?? 0}': 'Saved in this browser · Revision ${state.episode.review?.revision ?? 0}',
+        'Saving locally…': 'Saving in this browser…',
+        'Saved locally · Revision': 'Saved in this browser · Revision',
     }
     for old, new in replacements.items():
         if old not in ui:

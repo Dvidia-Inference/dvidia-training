@@ -152,6 +152,77 @@
     @media (max-width:820px) { .workspace { grid-template-columns:1fr; } .review-column { display:grid; grid-template-columns:1fr 1fr; gap:16px; } .review-column .panel + .panel { margin:0; } .page-heading { padding-top:25px; } .local { max-width:180px; text-align:right; } }
     @media (max-width:570px) { .shell { padding:0 16px; } .topbar { min-height:73px; } .brand small { font-size:9px; } .local { font-size:10px; max-width:114px; line-height:1.5; } .page-heading { align-items:start; flex-wrap:wrap; gap:16px; padding:23px 0 20px; } .heading-copy { width:100%; } h1 { font-size:28px; } .heading-copy p { font-size:12px; } .episode-nav { justify-content:end; width:100%; } .episode-count { margin-right:auto; padding-left:0; } .video-card { border-radius:12px; } .video-tag { left:10px; top:10px; font-size:8px; padding:4px 6px; } .player-controls { flex-wrap:wrap; gap:0; padding:5px 7px; } .play-control { padding:8px!important; } .time-readout { margin-left:2px; } .player-spacer { min-width:5px; } .box-toggle { margin-left:3px; margin-right:3px; } .playback-speed { width:64px; } .review-column { grid-template-columns:1fr; } .timeline-card { padding:14px; } .timeline-card .section-head { gap:8px; align-items:start; } .timeline-card h2 { font-size:15px; } .timeline-card .small { font-size:10px; text-align:right; max-width:105px; } .timeline-lane { grid-template-columns:60px minmax(0,1fr); gap:7px; } .timeline-ticks { margin-left:67px; } .lane-label { font-size:9px; } .raw-section .section-head { gap:8px; } .raw-section h2 { font-size:15px; } .raw-section .section-head p { font-size:11px; } #add-event { font-size:11px; padding:9px; flex-shrink:0; } .chips { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; } .event-chip { padding:11px 9px; gap:7px; } .chip-title { font-size:12px; } .chip-time { font-size:9px; } .footer { flex-direction:column; gap:7px; } .video-state { padding:15px; gap:3px; } .video-state svg { width:24px; height:24px; margin-bottom:3px; } .video-state strong { font-size:14px; } .video-state p { font-size:11px; } .notice { align-items:start; flex-direction:column; } }
     @media (max-width:360px) { .shell { padding:0 12px; } .wordmark { font-size:18px; } .local { max-width:100px; } .player-controls { padding:4px; } .playback-speed { width:58px; padding:5px; } .box-toggle { gap:4px; font-size:10px; } .time-readout { font-size:10px; } .play-control { font-size:11px; } }
+    /* The timeline and queue are part of the player, with one focused editor. */
+    .topbar { min-height:68px; } .page-heading { padding:23px 0 20px; }
+    .video-card { border-color:var(--line); background:var(--card); color:var(--ink); }
+    .timeline-card { margin:0; border:0; border-radius:0; padding:16px 20px; }
+    .timeline-note { border:0; padding-top:10px; font-size:10px; }
+    .timeline-lane { min-height:18px; } .lane-track { height:12px; } .timeline-segment { top:3px; height:6px; }
+    .queue-heading { margin-top:10px; font-size:13px; font-weight:550; }
+    .review-groups { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin-top:12px; }
+    .group-card { min-width:0; display:flex; align-items:center; gap:10px; text-align:left; padding:12px; font-weight:400; border-radius:12px; }
+    .group-card[aria-pressed=true] { background:var(--blue-soft); border-color:#7897f1; box-shadow:0 0 0 1px #7897f1; }
+    .group-card strong { display:block; font-size:13px; overflow-wrap:anywhere; line-height:1.35; }
+    .group-card small { display:block; font-size:10px; color:var(--muted); margin-top:4px; }
+    .group-symbol { display:grid; place-items:center; width:30px; height:30px; flex-shrink:0; border-radius:9px; color:#49639a; background:#edf0f6; }
+    .group-symbol svg { width:19px; height:19px; }
+    .group-card.approved .group-symbol { background:var(--green-soft); color:var(--green); }
+    .group-card.rejected .group-symbol { background:#f4eae6; color:var(--red); }
+    .group-card.rejected strong { color:var(--muted); }
+    .review-tools { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:10px 0 0; }
+    .review-tools .small { font-size:11px; } .review-tools button { border:0; font-size:12px; }
+    .raw-section { margin-top:10px; border-top:1px solid var(--line); }
+    .raw-section section { padding:10px 0 20px; } .raw-section summary { font-size:12px; }
+    #review-editor { position:static; margin:0; padding:0; width:100%; max-width:none; max-height:none; color:var(--ink); }
+    #review-editor:not([open]) { display:none; }
+    #close-editor { display:none; font-size:24px; padding:0; min-width:44px; border:0; }
+    .review-column { position:sticky; top:18px; }
+    .review-column .panel + .panel { margin-top:14px; }
+    #group-scope { font-size:12px; } .editor-meta { margin-bottom:12px; }
+    .replay-row { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+    #replay { font-size:12px; } #moment-time { font:11px ui-monospace,monospace; }
+    #event-label { font-size:16px; } #timing-details input { font-size:16px; }
+    #group-members,#timing-details { margin-top:6px; border-top:1px solid var(--line); }
+    #group-member-list { display:grid; gap:7px; padding-bottom:8px; max-height:180px; overflow:auto; }
+    #group-member-list button { text-align:left; font-size:12px; font-weight:400; }
+    .decision-buttons { grid-template-columns:1fr 1.6fr; margin-top:14px; }
+    .decision-buttons button { min-height:50px; font-size:14px; }
+    .original-note { font-size:10px; margin-top:10px; padding-top:10px; }
+    .review-column .panel-body { padding:18px; }
+    #review-progress { width:100%; height:5px; display:block; margin:14px 0; accent-color:var(--blue); }
+    #pending-count { margin-top:6px; } .outcome-field { margin-top:8px; padding-top:12px; }
+    .outcome-field .field-help { font-size:10px; } .outcome-field select { font-size:16px; }
+    #finish { margin-top:12px; min-height:50px; }
+    .download-actions { display:flex; flex-wrap:wrap; gap:4px; margin-top:8px; }
+    .download-actions button { background:transparent; border:0; font-size:11px; padding:8px; }
+    #save { margin-top:8px; } .accepted-row { flex-wrap:wrap; }
+    @media (max-width:1030px) and (min-width:821px) { .review-groups { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (max-width:820px) {
+      .shell { padding:0 16px; } .topbar { min-height:58px; } .brand small { display:none; }
+      .brand svg { width:30px; height:30px; } .wordmark { font-size:18px; }
+      .page-heading { flex-wrap:nowrap; align-items:center; padding:18px 0; gap:8px; }
+      .heading-copy { width:auto; } .heading-copy .eyebrow { display:none; } h1 { font-size:24px; }
+      .heading-copy p { font-size:12px; margin-top:6px; max-width:40ch; }
+      .episode-nav { width:auto; flex-wrap:wrap; gap:4px; max-width:98px; }
+      .episode-count { width:100%; text-align:center; font-size:10px; margin:0; padding:0; }
+      .episode-nav button { width:44px; } .review-column { position:static; display:block; }
+      .review-groups { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .group-card { padding:10px; gap:7px; min-height:66px; } .group-card strong { font-size:12px; }
+      .group-symbol { width:25px; height:28px; } .group-card small { font-size:10px; }
+      .timeline-card { padding:12px; } .timeline-card .section-head .small { max-width:130px; font-size:10px; }
+      .timeline-card h2 { font-size:14px; } .timeline-note { font-size:10px; }
+      .review-tools { padding-bottom:4px; } .footer { display:none; }
+      .review-column .panel + .panel { margin-top:0; } .evidence { margin-bottom:20px; }
+      #review-editor { position:fixed; inset:auto 0 0; width:100%; margin:0; max-height:68dvh; max-width:none; overflow:auto; border-radius:22px 22px 0 0; box-shadow:0 -12px 50px #15212a22; padding-bottom:env(safe-area-inset-bottom); overscroll-behavior:contain; }
+      #review-editor::backdrop { background:#12202e28; }
+      #close-editor { display:block; } #review-editor .panel-head { padding:12px 18px 8px; }
+      #review-editor .panel-body { padding:12px 18px 14px; }
+      #review-editor .decision-buttons { position:sticky; bottom:0; background:var(--card); padding:10px 0 max(4px,env(safe-area-inset-bottom)); z-index:2; }
+      #review-editor .original-note { margin-bottom:0; } .editor-meta { margin-bottom:8px; }
+      .field { margin-bottom:10px; } #group-scope { font-size:11px; }
+      .replay-row { margin-bottom:4px; } #group-members summary,#timing-details summary { font-size:11px; }
+    }
+    @media (max-width:360px) { .shell { padding:0 10px; } h1 { font-size:21px; } .local { max-width:95px; } .group-symbol { display:none; } .group-card { padding:10px; } .decision-buttons button { font-size:13px; padding:10px 8px; } }
     @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation:none!important; transition:none!important; } }
   </style>
 </head>
@@ -166,7 +237,7 @@
   </header>
   <main>
     <div class="page-heading">
-      <div class="heading-copy"><div class="eyebrow">From footage to reviewed evidence</div><h1>Observation lab</h1><p id="episode-title">Connecting to your local episodes…</p></div>
+      <div class="heading-copy"><div class="eyebrow">Observation lab</div><h1>Review your video.</h1><p id="episode-title">Connecting to your local episodes…</p></div>
       <nav class="episode-nav" aria-label="Episode navigation"><span class="episode-count" id="episode-count">— / —</span><button id="previous" aria-label="Previous episode" disabled>←</button><button id="next" aria-label="Next episode" disabled>→</button></nav>
     </div>
     <div class="notice" id="error-notice" role="alert" hidden><p id="error-text"></p><button id="retry">Try again</button></div>
@@ -187,49 +258,54 @@
             <label class="box-toggle"><input id="show-boxes" type="checkbox" checked> Boxes</label>
             <label class="sr-only" for="speed">Playback speed</label><select id="speed" class="playback-speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select>
           </div>
-        </section>
         <section class="timeline-card" aria-labelledby="timeline-heading">
-          <div class="section-head"><h2 id="timeline-heading">One shared timeline</h2><span class="small" id="box-summary">No sampled boxes yet</span></div>
+          <div class="section-head"><h2 id="timeline-heading">Watch. Check. Continue.</h2><span class="small" id="box-summary">No sampled boxes yet</span></div>
           <div class="seek-wrap"><label class="sr-only" for="seek">Seek episode in seconds</label><input id="seek" type="range" min="0" max="1" value="0" step="0.01" disabled></div>
           <div class="timeline" aria-label="Timeline of raw observations and accepted draft events">
-            <div class="timeline-lane"><span class="lane-label">Raw model</span><div id="raw-track" class="lane-track"></div></div>
+            <div class="timeline-lane"><span class="lane-label">Selected</span><div id="raw-track" class="lane-track"></div></div>
             <div class="timeline-lane"><span class="lane-label">Accepted</span><div id="accepted-track" class="lane-track"></div></div>
             <div class="timeline-ticks" id="timeline-ticks"><span>0:00</span><span>—</span><span>—</span><span>—</span></div>
           </div>
-          <p class="timeline-note">Boxes are sampled detections. Hand boxes mark detected palms; overlap does not prove a grasp.</p>
+          <div class="section-head queue-heading"><span id="group-progress">Loading suggestions</span><span class="small" id="group-reduction"></span></div>
+          <div id="review-groups" class="review-groups" aria-label="Grouped observations"></div>
+          <p class="timeline-note">Grouped by label and time. Boxes are sampled detections. Hand boxes mark detected palms; overlap does not prove a grasp.</p>
         </section>
-        <section class="raw-section" aria-labelledby="raw-heading">
-          <div class="section-head"><div><h2 id="raw-heading">Raw observations <span id="raw-count" class="count">0</span></h2><p>Original model output. Select an event to review.</p></div><button id="add-event" disabled>+ Add missed event</button></div>
+        </section>
+        <div class="review-tools"><span class="small" id="autosave-status" role="status" aria-live="polite">Edits save automatically</span><button id="add-event" disabled>+ Add missed event</button></div>
+        <details class="raw-section" id="raw-details"><summary>Inspect original evidence <span id="raw-count" class="count">0</span></summary><section aria-labelledby="raw-heading">
+          <div class="section-head"><div><h2 id="raw-heading">Raw observations</h2><p>Original model output. Select an event to review.</p></div></div>
           <div id="raw-events" class="chips"></div>
           <p id="raw-empty" class="empty">No observations loaded.</p>
           <div id="manual-section" hidden><h3 style="margin-top:20px">Added by reviewer</h3><div id="manual-events" class="chips"></div></div>
-        </section>
+        </section></details>
       </div>
       <aside class="review-column" aria-label="Event review">
-        <section class="panel">
-          <div class="panel-head"><h2>Review the moment</h2><p>Watch, adjust, then make a decision.</p></div>
+        <dialog id="review-editor" open aria-labelledby="editor-heading" class="panel">
+          <div class="panel-head"><div class="section-head"><h2 id="editor-heading">Check this suggestion</h2><button id="close-editor" aria-label="Close review editor" type="button">×</button></div><p id="group-scope">Watch, adjust, then make a decision.</p></div>
           <div class="panel-body">
             <p id="editor-empty" class="small">Select an observation or add an event the model missed.</p>
             <form id="event-form" hidden>
               <div class="editor-meta"><span id="event-origin" class="pill">Model observation</span><span id="decision-pill" class="pill pending">Pending</span></div>
               <div class="field"><label class="label" for="event-label">Event label</label><input id="event-label" maxlength="240" required autocomplete="off"></div>
-              <div class="time-fields"><div class="field"><label class="label" for="event-start">Start · seconds</label><input id="event-start" type="number" min="0" step="any" required inputmode="decimal"></div><div class="field"><label class="label" for="event-end">End · seconds</label><input id="event-end" type="number" min="0" step="any" required inputmode="decimal"></div></div>
-              <p id="timing-help" class="field-help">Use the timeline to check the boundaries.</p>
-              <div class="decision-buttons"><button id="approve" type="button" aria-pressed="false">✓ Approve</button><button id="reject" type="button" aria-pressed="false">× Reject</button></div>
+              <div class="replay-row"><button id="replay" type="button">↻ Replay moment</button><span id="moment-time" class="small"></span></div>
+              <details id="timing-details"><summary>Adjust timing</summary><div class="time-fields"><div class="field"><label class="label" for="event-start">Start · seconds</label><input id="event-start" type="number" min="0" step="any" required inputmode="decimal"></div><div class="field"><label class="label" for="event-end">End · seconds</label><input id="event-end" type="number" min="0" step="any" required inputmode="decimal"></div></div><div class="time-fields"><button id="set-start" type="button">Start at playhead</button><button id="set-end" type="button">End at playhead</button></div></details>
+              <details id="group-members"><summary id="group-members-label">Individual observations</summary><div id="group-member-list"></div></details>
+              <div class="decision-buttons"><button id="reject" type="button">Not correct</button><button id="approve" type="button" class="primary">Confirm &amp; next →</button></div>
               <button id="reset-decision" type="button" class="reset-decision" hidden>Return to pending</button>
               <button id="remove-manual" type="button" class="reset-decision" hidden>Remove this new event</button>
               <p class="original-note" id="original-note"></p>
+              <p id="editor-save-status" class="field-help" role="status" aria-live="polite"></p><button id="retry-editor" type="button" hidden>Retry save</button>
             </form>
           </div>
-        </section>
+        </dialog>
         <section class="panel">
           <div class="panel-body">
-            <div class="section-head"><h2>Accepted events <span id="accepted-count" class="count">0</span></h2><span id="draft-pill" class="pill">Saved</span></div>
-            <p id="accepted-empty" class="small" style="margin-top:11px">Nothing accepted yet.</p><div id="accepted-events" class="accepted-list"></div>
+            <div class="section-head"><h2 id="completion-heading">Your review</h2><span id="draft-pill" class="pill">Saved</span></div>
+            <p class="small" id="pending-count">No episode loaded</p><progress id="review-progress" max="1" value="0" aria-label="Review progress"></progress>
+            <details id="accepted-details"><summary>Confirmed <span id="accepted-count" class="count">0</span></summary><p id="accepted-empty" class="small">Nothing accepted yet.</p><div id="accepted-events" class="accepted-list"></div></details>
             <div class="outcome-field"><label class="label" for="outcome">Observed outcome</label><select id="outcome" disabled><option value="unknown">Unknown</option><option value="visible_completion">Visible completion</option><option value="incomplete">Incomplete</option></select><p class="field-help">A reviewer’s visual assessment of this episode.</p></div>
-            <label class="completion-check"><input id="review-complete" type="checkbox" disabled><span>I have reviewed every event.<br><span class="small" id="pending-count">No episode loaded</span></span></label>
-            <button id="save" class="primary save-button" disabled>Save revision</button><p id="save-message" class="save-message" role="status" aria-live="polite">Waiting for an episode</p>
-            <button id="download" class="download-button" disabled>↓ Download saved review</button>
+            <button id="finish" class="primary save-button" disabled>Finish review</button><button id="save" class="save-button" hidden>Retry save</button><p id="save-message" class="save-message" role="status" aria-live="polite">Waiting for an episode</p>
+            <div class="download-actions"><button id="download" disabled>↓ Export saved review</button><button id="download-draft" hidden>↓ Export unsaved draft</button><button id="reload-review" hidden>Reload saved review</button></div>
           </div>
         </section>
       </aside>
@@ -243,21 +319,50 @@
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
-  const state = { episodes:[], index:-1, episode:null, events:[], outcome:'unknown', complete:false, selected:null, dirty:false, loading:false, saving:false, targetIndex:null };
+  const state = { episodes:[], index:-1, episode:null, events:[], outcome:'unknown', complete:false, selected:null, dirty:false, loading:false, saving:false, targetIndex:null, mode:'group', groups:[], version:0, saveError:false, conflict:false, invalid:false, replayEnd:null };
+  let saveTimer = null, savePromise = null;
+  let returnScroll=null;
+  const phone = window.matchMedia('(max-width:820px)');
+  // BEGIN REVIEW CORE — grouping is a presentation aid, never an object/action identity claim.
+  function groupObservations(events, observations) {
+    const originals = new Map(observations.map(row => [row.id,row]));
+    const buckets = new Map(), groups = [];
+    for (const event of [...events].sort((a,b) => a.start_seconds-b.start_seconds || a.id.localeCompare(b.id))) {
+      const raw = originals.get(event.observation_id);
+      const key = raw ? JSON.stringify([raw.label,raw.evidence,event.label,event.decision]) : `manual:${event.id}`;
+      let group = buckets.get(key);
+      if (!group || event.start_seconds > group.end + .25) {
+        group = {id:event.id, ids:[], label:event.label, start:event.start_seconds, end:event.end_seconds, decision:event.decision, raw:!!raw};
+        buckets.set(key,group); groups.push(group);
+      }
+      group.ids.push(event.id); group.end = Math.max(group.end,event.end_seconds);
+    }
+    return groups.sort((a,b) => a.start-b.start || a.id.localeCompare(b.id));
+  }
+  function nearestSample(boxes,time) {
+    let low=0, high=boxes.length;
+    while (low<high) { const middle=(low+high)>>>1; if (boxes[middle].time_seconds<time) low=middle+1; else high=middle; }
+    const before=boxes[low-1], after=boxes[low];
+    const result = !before ? after : !after ? before : time-before.time_seconds <= after.time_seconds-time ? before : after;
+    return result && Math.abs(result.time_seconds-time)<=.25 ? result : null;
+  }
+  // END REVIEW CORE
   const copy = value => JSON.parse(JSON.stringify(value));
   const finite = value => Number.isFinite(Number(value)) ? Number(value) : 0;
   const duration = () => finite(state.episode?.duration_seconds) > 0 ? finite(state.episode.duration_seconds) : Math.max(0,Number.isFinite($('video').duration) ? $('video').duration : 0);
   const stamp = value => { const s = Math.max(0, finite(value)); return `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2,'0')}`; };
   const precise = value => `${finite(value).toFixed(2)}s`;
-  const setText = (id,value) => { $(id).textContent = String(value ?? ''); };
+  const setText = (id,value) => { const text=String(value ?? ''); if($(id).textContent!==text) $(id).textContent=text; };
   const node = (tag,text,className) => { const el = document.createElement(tag); if (text !== undefined) el.textContent = String(text); if (className) el.className = className; return el; };
   const selected = () => state.events.find(event => event.id === state.selected);
   const observation = event => (state.episode?.observations || []).find(raw => raw.id === (event.observation_id || event.id));
+  const currentGroup = () => state.groups.find(group => group.ids.includes(state.selected));
+  const selectedEvents = () => state.mode === 'group' ? state.events.filter(event => currentGroup()?.ids.includes(event.id)) : state.events.filter(event => event.id === state.selected);
   const api = {
     async request(path,body) {
       const response = await fetch(path, body === undefined ? {cache:'no-store'} : {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
       let result; try { result = await response.json(); } catch { throw new Error('The local server returned an unreadable response.'); }
-      if (!response.ok) throw new Error(result.error || `The local server could not complete this request (${response.status}).`);
+      if (!response.ok) { const err=new Error(result.error || `The local server could not complete this request (${response.status}).`); err.status=response.status; throw err; }
       return result;
     },
     list() { return this.request('/api/episodes'); },
@@ -268,19 +373,79 @@
   function clearError() { $('error-notice').hidden = true; }
   function setBusy(value) { state.loading = value; $('workspace').setAttribute('aria-busy',String(value)); $('workspace').classList.toggle('busy',value); updateControls(); }
   function updateControls() {
-    const loaded = !!state.episode, blocked = state.loading || state.saving;
-    $('previous').disabled = blocked || state.index <= 0;
-    $('next').disabled = blocked || state.index < 0 || state.index >= state.episodes.length - 1;
-    for (const id of ['add-event','outcome','review-complete']) $(id).disabled = !loaded || blocked;
-    $('save').disabled = !loaded || !state.dirty || blocked;
-    $('download').disabled = !loaded || state.dirty || blocked;
-    $('save-leave').disabled = blocked;
-    setText('save',state.saving ? 'Saving revision…' : 'Save revision');
+    const loaded=!!state.episode, blocked=state.loading;
+    const finished=state.complete && !state.dirty && state.episode?.review?.status==='reviewed';
+    $('previous').disabled=blocked || state.saving || state.index<=0;
+    $('next').disabled=blocked || state.saving || state.index<0 || state.index>=state.episodes.length-1;
+    for (const id of ['add-event','outcome']) $(id).disabled=!loaded || blocked;
+    const pending=state.events.some(event=>event.decision==='pending');
+    setText('completion-heading',finished?'Review complete':pending?'Your review':'Ready to finish');
+    $('finish').disabled=!loaded || blocked || state.saving || pending || state.invalid || finished || state.conflict;
+    setText('finish',finished?'Review complete ✓':state.saving && state.complete?'Finishing…':'Finish review');
+    $('save').hidden=!state.saveError; $('save').disabled=state.saving || state.conflict || !state.dirty;
+    $('download').disabled=!loaded || state.dirty || state.saving;
+    $('download-draft').hidden=!state.saveError; $('reload-review').hidden=!state.conflict;
+    $('save-leave').disabled=state.saving || state.conflict;
+    $('discard').disabled=state.saving;
+    setText('draft-pill',state.saveError?'Not saved':state.saving?'Saving…':state.dirty?'Draft':'Saved');
+    const message=state.conflict?'Changed in another tab · Your draft is kept here':state.saveError?'Could not save · Your draft is kept here':state.invalid?'Check the description and timing':state.saving?'Saving locally…':state.dirty?'Saving shortly…':loaded?`Saved locally · Revision ${state.episode.review?.revision ?? 0}`:'Edits save automatically';
+    setText('autosave-status',message); setText('save-message',message);
+    setText('editor-save-status',state.conflict?'This review changed elsewhere. Close this panel to export your draft or reload.':message);
+    $('retry-editor').hidden=!state.saveError || state.conflict; $('retry-editor').disabled=state.saving;
+  }
+  function scheduleSave() {
+    clearTimeout(saveTimer);
+    if (state.dirty && !state.invalid && !state.saveError && !state.conflict) saveTimer=setTimeout(()=>save(),650);
   }
   function markDirty() {
-    state.dirty = true;
-    setText('save-message','Unsaved changes · Save to keep this review');
-    renderReviewSummary(); updateControls();
+    state.version++; state.dirty=true; state.complete=false;
+    renderReviewSummary(); updateControls(); scheduleSave();
+  }
+  function symbol(decision) {
+    const icon=node('span',undefined,'group-symbol'); icon.setAttribute('aria-hidden','true');
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg'); svg.setAttribute('viewBox','0 0 24 24'); svg.setAttribute('fill','none');
+    const path=document.createElementNS(svg.namespaceURI,'path'); path.setAttribute('stroke','currentColor'); path.setAttribute('stroke-width','1.6'); path.setAttribute('stroke-linecap','round'); path.setAttribute('stroke-linejoin','round');
+    path.setAttribute('d',decision==='approved'?'m6 12 4 4 8-9':decision==='rejected'?'m7 7 10 10M17 7 7 17':'M5 8 12 4 19 8 12 12 5 8Zm0 4 7 4 7-4M5 16l7 4 7-4'); svg.append(path); icon.append(svg); return icon;
+  }
+  function renderGroups() {
+    state.groups=groupObservations(state.events,state.episode?.observations || []);
+    const resolved=state.groups.filter(group=>group.decision!=='pending').length;
+    setText('group-progress',`${resolved} of ${state.groups.length} groups checked`);
+    setText('group-reduction',`${state.events.length} observations`);
+    $('review-groups').replaceChildren(...state.groups.map(group=>{
+      const button=node('button',undefined,`group-card ${group.decision}`); button.type='button';
+      button.setAttribute('aria-pressed',String(state.mode==='group' && group.ids.includes(state.selected)));
+      button.setAttribute('aria-label',`${group.label || 'New event'}, ${group.ids.length} observations, ${group.decision}`);
+      const copy=node('span'); copy.append(node('strong',group.label || 'New event'),node('small',`${precise(group.start)}–${precise(group.end)} · ${group.ids.length} ${group.ids.length===1?'item':'items'}`));
+      button.append(symbol(group.decision),copy); button.addEventListener('click',()=>selectGroup(group.id)); return button;
+    }));
+  }
+  function openEditor() {
+    const panel=$('review-editor');
+    if (phone.matches && !panel.open) {
+      returnScroll=window.scrollY;
+      document.documentElement.style.overflow='hidden'; panel.showModal();
+      panel.scrollTop=0;
+      window.scrollTo({top:Math.max(0,$('video-stage').getBoundingClientRect().top+window.scrollY-8),behavior:'instant'});
+    }
+  }
+  function restoreEditorScroll() {
+    if(returnScroll===null) return;
+    const top=returnScroll; returnScroll=null;
+    document.documentElement.style.overflow='';
+    if(state.events.length && state.events.every(event=>event.decision!=='pending')) document.querySelector('.review-column > section').scrollIntoView({block:'start',behavior:'instant'});
+    else window.scrollTo({top,behavior:'instant'});
+  }
+  function closeEditor() {
+    $('review-editor').close();
+    restoreEditorScroll();
+  }
+  function selectGroup(id) {
+    if (!captureEditor()) { openEditor(); $('event-form').reportValidity(); return; }
+    state.mode='group'; state.selected=id; state.replayEnd=null;
+    renderReviewSummary(); renderEditor();
+    const group=currentGroup(); if(group) { $('video').pause(); $('video').currentTime=group.start; updatePlayback(); }
+    openEditor();
   }
   function eventChip(event,index,isRaw) {
     const button = node('button',undefined,'event-chip'); button.type = 'button';
@@ -303,7 +468,8 @@
   }
   function renderTimeline() {
     const total = duration() || 1;
-    for (const [id,events,approved] of [['raw-track',state.episode?.observations || [],false],['accepted-track',state.events.filter(event => event.decision === 'approved'),true]]) {
+    const group=currentGroup(), focus=state.mode==='group' && group?[{label:group.label,start_seconds:group.start,end_seconds:group.end}]:selected()?[selected()]:[];
+    for (const [id,events,approved] of [['raw-track',focus,false],['accepted-track',state.events.filter(event => event.decision === 'approved'),true]]) {
       const track = $(id); track.replaceChildren();
       for (const event of events) {
         const block = node('span',undefined,`timeline-segment${approved ? ' approved' : ''}`);
@@ -317,54 +483,72 @@
     updatePlayback();
   }
   function renderReviewSummary() {
-    const approved = state.events.filter(event => event.decision === 'approved');
-    setText('accepted-count',approved.length); $('accepted-empty').hidden = approved.length > 0;
-    $('accepted-events').replaceChildren(...approved.map(event => {
-      const row = node('button',undefined,'accepted-row'); row.type = 'button'; row.append(node('strong',event.label),node('span',`${precise(event.start_seconds)}–${precise(event.end_seconds)}`)); row.addEventListener('click',() => selectEvent(event.id,true)); return row;
+    renderGroups();
+    const approved=state.groups.filter(group=>group.decision==='approved');
+    setText('accepted-count',approved.length); $('accepted-empty').hidden=approved.length>0;
+    $('accepted-events').replaceChildren(...approved.map(group=>{
+      const row=node('button',undefined,'accepted-row'); row.type='button'; row.append(node('strong',group.label),node('span',`${precise(group.start)}–${precise(group.end)}`)); row.addEventListener('click',()=>selectGroup(group.id)); return row;
     }));
-    setText('draft-pill',state.dirty ? 'Unsaved draft' : 'Saved');
-    const pending = state.events.filter(event => event.decision === 'pending').length;
-    const rejected = state.events.filter(event => event.decision === 'rejected').length;
-    setText('pending-count',`${pending} pending · ${rejected} rejected`);
-    renderTimeline();
+    const pending=state.events.filter(event=>event.decision==='pending').length;
+    setText('pending-count',pending?`${pending} observations left to check`:'Every observation has a decision.');
+    $('review-progress').max=Math.max(1,state.events.length); $('review-progress').value=state.events.length-pending;
+    document.querySelector('.outcome-field').hidden=pending>0;
+    renderTimeline(); updateControls();
   }
   function renderEditor() {
-    const event = selected(); $('event-form').hidden = !event; $('editor-empty').hidden = !!event;
-    if (!event) return;
-    const raw = observation(event);
-    setText('event-origin',raw ? 'Model observation' : 'Added by reviewer');
-    setText('decision-pill',event.decision.charAt(0).toUpperCase() + event.decision.slice(1));
-    $('decision-pill').className = `pill ${event.decision}`;
-    $('event-label').value = event.label; $('event-start').value = finite(event.start_seconds); $('event-end').value = finite(event.end_seconds);
-    $('event-start').max = $('event-end').max = duration() || '';
-    $('approve').setAttribute('aria-pressed',String(event.decision === 'approved')); $('reject').setAttribute('aria-pressed',String(event.decision === 'rejected')); $('reset-decision').hidden = event.decision === 'pending';
-    $('remove-manual').hidden = !!raw || (state.episode.review?.events || []).some(saved => saved.id === event.id);
-    const confidence = raw && Number.isFinite(raw.confidence) ? ` · Detector score ${raw.confidence.toFixed(2)} (uncalibrated)` : '';
-    setText('original-note',raw ? `Original: ${raw.label || 'Unlabeled observation'} · ${precise(raw.start_seconds)}–${precise(raw.end_seconds)}${confidence}. This original record stays unchanged.` : 'This event was added during human review. It has no detector score or generated bounding box.');
+    const events=selectedEvents(), event=events[0]; $('event-form').hidden=!event; $('editor-empty').hidden=!!event;
+    if(!event) return;
+    const raw=observation(event), group=state.mode==='group'?currentGroup():null, multiple=events.length>1;
+    const start=group?.start ?? event.start_seconds, end=group?.end ?? event.end_seconds;
+    setText('editor-heading',state.mode==='group'?'Check this suggestion':'Inspect one observation');
+    setText('group-scope',multiple?`${events.length} nearby observations · Confirm applies to all shown below.`:'Watch the moment, then confirm or correct it.');
+    setText('event-origin',raw?'Model observation':'Added by reviewer');
+    setText('decision-pill',{pending:'Needs a check',approved:'Confirmed',rejected:'Rejected'}[event.decision]); $('decision-pill').className=`pill ${event.decision}`;
+    $('event-label').value=event.label; $('event-start').value=event.start_seconds; $('event-end').value=event.end_seconds;
+    $('event-start').max=$('event-end').max=duration() || '';
+    $('event-start').disabled=$('event-end').disabled=multiple;
+    $('timing-details').hidden=multiple; $('group-members').hidden=!multiple;
+    setText('moment-time',`${precise(start)}–${precise(end)}`);
+    setText('group-members-label',`${events.length} individual observations · Inspect timing`);
+    $('group-member-list').replaceChildren(...events.map(item=>{
+      const b=node('button',`${item.label} · ${precise(item.start_seconds)}–${precise(item.end_seconds)}`); b.type='button'; b.addEventListener('click',()=>selectEvent(item.id,true)); return b;
+    }));
+    $('reset-decision').hidden=event.decision==='pending';
+    $('remove-manual').hidden=!!raw || (state.episode.review?.events || []).some(saved=>saved.id===event.id);
+    const confidence=raw && Number.isFinite(raw.confidence)?` · Detector score ${raw.confidence.toFixed(2)} (uncalibrated)`:'';
+    setText('original-note',multiple?'Grouped by label and nearby time, not physical identity. Individual timestamps and raw evidence stay unchanged.':raw?`Original: ${raw.label} · ${precise(raw.start_seconds)}–${precise(raw.end_seconds)}${confidence}. This original record stays unchanged.`:'Added during review; no model-generated box or score.');
     $('event-label').setCustomValidity(''); $('event-end').setCustomValidity('');
   }
   function selectEvent(id,seek) {
-    if (!id) return;
-    if (id !== state.selected && !captureEditor()) { $('event-form').reportValidity(); return; }
-    state.selected = id; renderEvents(); renderEditor();
-    if (seek && selected()) { $('video').currentTime = Math.min(duration(),finite(selected().start_seconds)); updatePlayback(); }
-    if (seek && window.matchMedia('(max-width:820px)').matches) document.querySelector('.review-column').scrollIntoView({block:'start',behavior:'auto'});
+    if(!id) return;
+    if(!captureEditor()) { openEditor(); $('event-form').reportValidity(); return; }
+    state.mode='individual'; state.selected=id; state.replayEnd=null;
+    renderReviewSummary(); renderEvents(); renderEditor();
+    if(seek && selected()) { $('video').pause(); $('video').currentTime=selected().start_seconds; updatePlayback(); openEditor(); }
   }
   function captureEditor() {
-    const event = selected(); if (!event) return true;
-    const label = $('event-label').value.trim(), start = $('event-start').valueAsNumber, end = $('event-end').valueAsNumber;
-    $('event-label').setCustomValidity(label ? '' : 'Enter a label for this event.');
-    $('event-end').setCustomValidity(Number.isFinite(end) && end > start ? '' : 'End must be later than start.');
-    if (!$('event-form').checkValidity()) return false;
-    const changed = event.label !== label || event.start_seconds !== start || event.end_seconds !== end;
-    Object.assign(event,{label,start_seconds:start,end_seconds:end});
-    if (changed) { state.complete = false; $('review-complete').checked = false; markDirty(); renderEvents(); }
+    const events=selectedEvents(); if(!events.length) return true;
+    const label=$('event-label').value.trim(), start=$('event-start').valueAsNumber, end=$('event-end').valueAsNumber;
+    $('event-label').setCustomValidity(label?'':'Enter a label for this event.');
+    $('event-end').setCustomValidity(events.length>1 || Number.isFinite(end) && end>start?'':'End must be later than start.');
+    if(!$('event-form').checkValidity()) { state.version++; state.invalid=true; state.dirty=true; state.complete=false; clearTimeout(saveTimer); updateControls(); return false; }
+    const changed=events.some(event=>event.label!==label || (events.length===1 && (event.start_seconds!==start || event.end_seconds!==end)));
+    const wasInvalid=state.invalid; state.invalid=false;
+    for(const event of events) { event.label=label; if(events.length===1) Object.assign(event,{start_seconds:start,end_seconds:end}); }
+    if(changed || wasInvalid) { markDirty(); renderEvents(); }
     return true;
   }
-  function decide(decision) {
-    if (!captureEditor()) { $('event-form').reportValidity(); return; }
-    const event = selected(); if (!event) return; event.decision = decision; state.complete = false; $('review-complete').checked = false;
-    markDirty(); renderEditor(); setText('save-message',`${decision === 'approved' ? 'Approved in draft' : decision === 'rejected' ? 'Rejected in draft' : 'Returned to pending'} · Save to keep this review`);
+  function decide(decision,advance=true) {
+    if(!captureEditor()) { $('event-form').reportValidity(); return; }
+    const events=selectedEvents(); if(!events.length) return;
+    for(const event of events) event.decision=decision;
+    markDirty(); renderEvents();
+    if(advance) {
+      const next=state.groups.find(group=>group.decision==='pending');
+      if(next) { state.mode='group'; state.selected=next.id; $('video').pause(); $('video').currentTime=next.start; }
+      else if(phone.matches) closeEditor();
+    }
+    renderReviewSummary(); renderEditor();
   }
   function renderProvenance() {
     const episode = state.episode, source = episode.source || {}, recipe = episode.recipe || {}, metrics = episode.metrics || {};
@@ -384,11 +568,11 @@
     state.events = copy(existing);
     for (const item of raw) if (!state.events.some(event => event.observation_id === item.id || event.id === item.id)) state.events.push({id:item.id,observation_id:item.id,label:item.label || '',start_seconds:finite(item.start_seconds),end_seconds:finite(item.end_seconds),decision:'pending'});
     state.events.forEach(event => { if (!['pending','approved','rejected'].includes(event.decision)) event.decision = 'pending'; });
-    state.episode = episode; state.index = index; state.outcome = ['unknown','visible_completion','incomplete'].includes(episode.review?.outcome) ? episode.review.outcome : 'unknown'; state.complete = episode.review?.status === 'reviewed'; state.dirty = false;
+    state.episode = episode; state.index = index; state.outcome = ['unknown','visible_completion','incomplete'].includes(episode.review?.outcome) ? episode.review.outcome : 'unknown'; state.complete = episode.review?.status === 'reviewed'; state.dirty = false; state.version=0; state.saveError=false; state.conflict=false; state.invalid=false; state.mode='group'; state.replayEnd=null;
     state.selected = state.events.some(event => event.id === state.selected) ? state.selected : state.events[0]?.id || null;
     setText('episode-title',`${episode.source?.kind === 'synthetic' ? 'Synthetic fixture · ' : ''}${episode.title || episode.id}`); setText('episode-count',`${index + 1} / ${state.episodes.length} episodes`);
     setText('video-tag-text',episode.source?.kind === 'synthetic' ? 'Synthetic fixture · Sampled detections' : 'Sampled model detections');
-    $('outcome').value = state.outcome; $('review-complete').checked = state.complete;
+    $('outcome').value = state.outcome;
     const url = episode.video_url;
     if (typeof url === 'string' && url) {
       const parsed = new URL(url,location.href);
@@ -397,7 +581,7 @@
       else if (keepTime) $('video').currentTime = oldTime;
       $('video-empty').hidden = true; $('video-tag').hidden = false;
     } else { $('video').removeAttribute('src'); $('video').load(); $('video-empty').hidden = false; $('video-tag').hidden = true; setText('video-empty-title','No playable footage in this episode.'); setText('video-empty-text','The observation record is available for inspection.'); }
-    renderEvents(); renderEditor(); renderReviewSummary(); renderProvenance(); updateControls();
+    indexBoxes(); renderEvents(); renderReviewSummary(); renderEditor(); renderProvenance(); updateControls();
     setText('save-message',`Revision ${episode.review?.revision ?? 0} · ${state.complete ? 'Review complete' : 'Human review required'}`);
   }
   async function loadEpisode(index) {
@@ -421,54 +605,84 @@
     finally { setBusy(false); }
   }
   async function save() {
-    if (!captureEditor()) { $('event-form').reportValidity(); return false; }
-    if (!state.episode || state.saving) return false;
-    const invalid = state.events.find(event => !event.label.trim() || !Number.isFinite(event.start_seconds) || !Number.isFinite(event.end_seconds) || event.start_seconds < 0 || event.end_seconds <= event.start_seconds || event.end_seconds > duration() + .01);
-    if (invalid) { selectEvent(invalid.id,false); error('Check each event label and timing. Events must fit within this episode.'); return false; }
-    if (state.complete && state.events.some(event => event.decision === 'pending')) { error('Decide on every event before marking this review complete. You can save an unfinished review with the checkbox cleared.'); return false; }
-    state.saving = true; clearError(); updateControls();
-    try {
-      await api.save(state.episode.id,{base_revision:state.episode.review?.revision ?? 0,events:copy(state.events),outcome:state.outcome,status:state.complete ? 'reviewed' : 'in_review'});
-      const episode = await api.episode(state.episode.id); acceptEpisode(episode,state.index,true);
-      setText('save-message',`Saved revision ${episode.review?.revision ?? 0} · ${state.complete ? 'Review complete' : 'Review in progress'}`); return true;
-    } catch (err) { error(err.message); setText('save-message','Could not verify a saved revision · Edits kept here'); return false; }
-    finally { state.saving = false; updateControls(); }
+    clearTimeout(saveTimer);
+    if(!captureEditor() || !state.episode || state.conflict) return false;
+    if(savePromise) return savePromise;
+    if(!state.dirty) return true;
+    const invalid=state.events.find(event=>!event.label.trim() || !Number.isFinite(event.start_seconds) || !Number.isFinite(event.end_seconds) || event.start_seconds<0 || event.end_seconds<=event.start_seconds || event.end_seconds>duration());
+    if(invalid) { error('Check the event description and timing before saving.'); return false; }
+    if(state.complete && state.events.some(event=>event.decision==='pending')) { error('Check every observation before finishing.'); return false; }
+    const version=state.version, eid=state.episode.id, body={base_revision:state.episode.review?.revision ?? 0,events:copy(state.events),outcome:state.outcome,status:state.complete?'reviewed':'in_review'};
+    state.saving=true; state.saveError=false; clearError(); updateControls();
+    savePromise=(async()=>{
+      try {
+        const result=await api.save(eid,body), review=result.review;
+        if(!review || review.revision!==body.base_revision+1) throw new Error('The server did not confirm the saved revision.');
+        state.episode.review=review; state.dirty=state.version!==version; state.saveError=false;
+        setText('save-message',`Saved revision ${state.episode.review?.revision ?? 0}`);
+        return true;
+      } catch(err) {
+        state.saveError=true; state.conflict=err.status===409 || /another tab|reload before saving|review changed/i.test(err.message);
+        error(err.message); return false;
+      } finally { state.saving=false; savePromise=null; updateControls(); if(state.dirty && !state.saveError) scheduleSave(); }
+    })();
+    return savePromise;
   }
   function navigate(index) {
-    if (index < 0 || index >= state.episodes.length) return;
-    captureEditor();
-    if (state.dirty) { state.targetIndex = index; $('leave-dialog').showModal(); return; }
+    if(index<0 || index>=state.episodes.length || state.saving) return;
+    captureEditor(); clearTimeout(saveTimer);
+    if(state.dirty) { state.targetIndex=index; $('leave-dialog').showModal(); return; }
     loadEpisode(index);
+  }
+  async function replayMoment() {
+    if(!captureEditor()) return;
+    const group=state.mode==='group'?currentGroup():null, event=selected(); if(!event) return;
+    $('video').currentTime=group?.start ?? event.start_seconds; state.replayEnd=group?.end ?? event.end_seconds;
+    try { await $('video').play(); } catch { error('This browser could not play the local video.'); }
+  }
+  let boxTracks=[], boxNodes=new Map(), lastBoxKey='';
+  function indexBoxes() {
+    $('overlay').replaceChildren(); boxNodes.clear(); lastBoxKey='';
+    boxTracks=(state.episode?.observations || []).filter(row=>row.boxes?.length).map(row=>({id:row.id,label:row.label,boxes:[...row.boxes].sort((a,b)=>a.time_seconds-b.time_seconds)}));
   }
   function fitOverlay() {
     const video = $('video'), stage = $('video-stage'), ratio = video.videoWidth / video.videoHeight;
-    if (!Number.isFinite(ratio) || !ratio) { $('overlay').replaceChildren(); return; }
+    $('overlay').hidden=!Number.isFinite(ratio) || !ratio;
+    if ($('overlay').hidden) return;
     let width = stage.clientWidth, height = width / ratio;
     if (height > stage.clientHeight) { height = stage.clientHeight; width = height * ratio; }
     Object.assign($('overlay').style,{width:`${width}px`,height:`${height}px`,left:`${(stage.clientWidth-width)/2}px`,top:`${(stage.clientHeight-height)/2}px`});
   }
   function renderBoxes() {
-    const overlay = $('overlay'); overlay.replaceChildren();
-    if (!state.episode || !$('show-boxes').checked) { setText('box-summary',$('show-boxes').checked ? 'No sampled boxes yet' : 'Boxes hidden'); return; }
-    const time = $('video').currentTime || 0, samples = [];
-    for (const raw of state.episode.observations) {
-      const boxes = Array.isArray(raw.boxes) ? raw.boxes : [];
-      const nearest = boxes.reduce((best,box) => Math.abs(finite(box.time_seconds) - time) < Math.abs(finite(best?.time_seconds ?? -10000) - time) ? box : best,null);
-      if (!nearest || Math.abs(finite(nearest.time_seconds) - time) > .25) continue;
-      for (const box of boxes.filter(box => Math.abs(finite(box.time_seconds) - finite(nearest.time_seconds)) < .001)) samples.push({...box,label:box.label || raw.label});
+    const time=$('video').currentTime || 0, samples=[], seen=new Set();
+    if(state.episode && $('show-boxes').checked) for(const track of boxTracks) {
+      const sample=nearestSample(track.boxes,time); if(!sample) continue;
+      if(!Array.isArray(sample.xyxy) || sample.xyxy.length!==4 || !sample.xyxy.every(Number.isFinite)) continue;
+      const key=[...sample.xyxy,sample.label || track.label].join('|'); if(seen.has(key)) continue;
+      seen.add(key); samples.push({track,sample});
     }
-    const seen = new Set(); let visible = 0;
-    for (const sample of samples) {
-      if (!Array.isArray(sample.xyxy) || sample.xyxy.length !== 4 || !sample.xyxy.every(Number.isFinite)) continue;
-      const [x1,y1,x2,y2] = sample.xyxy.map(value => Math.min(1,Math.max(0,value))); if (x2 <= x1 || y2 <= y1) continue;
-      const key = [x1,y1,x2,y2,sample.label].join('|'); if (seen.has(key)) continue; seen.add(key);
-      const box = node('div',undefined,`bounding-box${sample.accepted ? ' accepted' : ''}${y1 < .1 ? ' near-top' : ''}`);
-      Object.assign(box.style,{left:`${x1*100}%`,top:`${y1*100}%`,width:`${(x2-x1)*100}%`,height:`${(y2-y1)*100}%`}); box.append(node('span',sample.label || 'Detected object','box-label')); overlay.append(box); visible++;
+    const key=samples.map(({track,sample})=>`${track.id}:${sample.time_seconds}`).join('|');
+    if(key!==lastBoxKey) {
+      const active=new Set();
+      for(const {track,sample} of samples) {
+        active.add(track.id); let entry=boxNodes.get(track.id);
+        if(!entry) { const box=node('div',undefined,'bounding-box'), label=node('span',undefined,'box-label'); box.append(label); $('overlay').append(box); entry={box,label,time:null}; boxNodes.set(track.id,entry); }
+        entry.box.hidden=false;
+        if(entry.time!==sample.time_seconds) {
+          const [x1,y1,x2,y2]=sample.xyxy.map(value=>Math.min(1,Math.max(0,value)));
+          Object.assign(entry.box.style,{left:`${x1*100}%`,top:`${y1*100}%`,width:`${(x2-x1)*100}%`,height:`${(y2-y1)*100}%`});
+          entry.box.classList.toggle('near-top',y1<.1); entry.label.textContent=sample.label || track.label; entry.time=sample.time_seconds;
+        }
+      }
+      for(const [id,entry] of boxNodes) if(!active.has(id)) entry.box.hidden=true;
+      lastBoxKey=key;
     }
-    setText('box-summary',visible ? `${visible} sampled ${visible === 1 ? 'box' : 'boxes'} · ${stamp(time)}` : 'No sampled boxes at this time');
+    const summary=$('show-boxes').checked?`${samples.length} sampled ${samples.length===1?'box':'boxes'}`:'Boxes hidden';
+    if($('box-summary').textContent!==summary) setText('box-summary',summary);
   }
   function updatePlayback() {
     const video = $('video'), total = duration(), time = video.currentTime || 0;
+    if(state.replayEnd!==null && time>=state.replayEnd) { state.replayEnd=null; video.pause(); }
     setText('time-readout',`${stamp(time)} / ${stamp(total)}`); $('seek').max = total || 1; $('seek').value = time; $('seek').disabled = !total; $('seek').setAttribute('aria-valuetext',`${precise(time)} of ${precise(total)}`);
     $('play').disabled = !video.getAttribute('src') || !total;
     setText('play',video.paused ? '▶ Play' : 'Ⅱ Pause'); $('play').setAttribute('aria-label',video.paused ? 'Play episode' : 'Pause episode');
@@ -476,43 +690,62 @@
     renderBoxes();
   }
   $('play').addEventListener('click',async () => { const video = $('video'); if (video.paused) { try { await video.play(); } catch { error('This browser could not play the local video. The observation record is still available for review.'); } } else video.pause(); });
-  $('seek').addEventListener('input',() => { $('video').currentTime = finite($('seek').value); updatePlayback(); });
+  $('seek').addEventListener('input',() => { state.replayEnd=null; $('video').currentTime = finite($('seek').value); updatePlayback(); });
   $('speed').addEventListener('change',() => { $('video').playbackRate = finite($('speed').value); });
   $('show-boxes').addEventListener('change',renderBoxes);
   for (const name of ['timeupdate','play','pause','ended']) $('video').addEventListener(name,updatePlayback);
   let frameRequest = null;
   const frameVideo = $('video');
   function stopFrames() { if (frameRequest !== null) { if (frameVideo.cancelVideoFrameCallback) frameVideo.cancelVideoFrameCallback(frameRequest); else cancelAnimationFrame(frameRequest); frameRequest = null; } }
-  function nextFrame() { if (frameVideo.paused || frameVideo.ended) { frameRequest = null; return; } renderBoxes(); frameRequest = frameVideo.requestVideoFrameCallback ? frameVideo.requestVideoFrameCallback(nextFrame) : requestAnimationFrame(nextFrame); }
+  function nextFrame() { if(state.replayEnd!==null && frameVideo.currentTime>=state.replayEnd) { state.replayEnd=null; frameVideo.pause(); } if (frameVideo.paused || frameVideo.ended) { frameRequest = null; return; } renderBoxes(); frameRequest = frameVideo.requestVideoFrameCallback ? frameVideo.requestVideoFrameCallback(nextFrame) : requestAnimationFrame(nextFrame); }
   frameVideo.addEventListener('play',() => { stopFrames(); nextFrame(); }); frameVideo.addEventListener('pause',stopFrames); frameVideo.addEventListener('ended',stopFrames);
   $('video').addEventListener('loadedmetadata',() => { fitOverlay(); renderTimeline(); updatePlayback(); });
   $('video').addEventListener('error',() => { if (!$('video').getAttribute('src')) return; $('video-empty').hidden = false; setText('video-empty-title','This video could not be played.'); setText('video-empty-text','Check that the local episode contains a browser-compatible video.'); $('play').disabled = true; });
   if ('ResizeObserver' in window) new ResizeObserver(() => { fitOverlay(); renderBoxes(); }).observe($('video-stage')); else window.addEventListener('resize',fitOverlay);
   $('event-form').addEventListener('submit',event => event.preventDefault());
-  for (const id of ['event-label','event-start','event-end']) { $(id).addEventListener('input',() => { if (!state.dirty) markDirty(); state.complete = false; $('review-complete').checked = false; }); $(id).addEventListener('change',captureEditor); }
-  $('approve').addEventListener('click',() => decide('approved')); $('reject').addEventListener('click',() => decide('rejected')); $('reset-decision').addEventListener('click',() => decide('pending'));
+  for(const id of ['event-label','event-start','event-end']) $(id).addEventListener('input',captureEditor);
+  $('approve').addEventListener('click',() => decide('approved')); $('reject').addEventListener('click',() => decide('rejected')); $('reset-decision').addEventListener('click',() => decide('pending',false));
   $('remove-manual').addEventListener('click',() => {
     const event = selected(); if (!event || observation(event) || (state.episode.review?.events || []).some(saved => saved.id === event.id)) return;
     state.events = state.events.filter(item => item.id !== event.id); state.selected = state.events[0]?.id || null;
-    state.complete = false; $('review-complete').checked = false; markDirty(); renderEvents(); renderEditor();
+    state.complete = false; markDirty(); renderEvents(); renderEditor();
   });
   $('add-event').addEventListener('click',() => {
     if (!captureEditor()) { $('event-form').reportValidity(); return; }
     const total = duration(); if (total <= 0) { error('The episode duration is unavailable. Load playable footage before adding an event.'); return; }
     const start = Math.min(Math.max(0,total-.01),Number(($('video').currentTime || 0).toFixed(2))), id = `manual-${crypto.randomUUID()}`;
     state.events.push({id,observation_id:null,label:'',start_seconds:start,end_seconds:Math.min(total,Number((start+1).toFixed(2))),decision:'pending'});
-    state.complete = false; $('review-complete').checked = false; state.selected = id; markDirty(); renderEvents(); renderEditor(); $('event-label').focus();
+    state.complete = false; state.selected = id; state.mode='individual'; markDirty(); renderEvents(); renderEditor(); openEditor(); $('event-label').focus();
   });
   $('outcome').addEventListener('change',() => { state.outcome = $('outcome').value; markDirty(); });
-  $('review-complete').addEventListener('change',() => { state.complete = $('review-complete').checked; markDirty(); });
-  $('save').addEventListener('click',save);
-  $('download').addEventListener('click',() => {
-    if (!state.episode || state.dirty) return;
-    const receipt = {episode_id:state.episode.id,source_sha256:state.episode.source?.sha256 || null,review:state.episode.review || {revision:0,status:'unreviewed',outcome:'unknown',events:[]}};
-    const url = URL.createObjectURL(new Blob([JSON.stringify(receipt,null,2)+'\n'],{type:'application/json'})), link = node('a'); link.href = url; link.download = `${String(state.episode.id).replace(/[^a-z0-9_-]/gi,'-')}.review-r${state.episode.review?.revision ?? 0}.json`; document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url),1000);
+  $('finish').addEventListener('click',async()=>{
+    if(!captureEditor() || state.events.some(event=>event.decision==='pending')) return;
+    state.complete=true; state.version++; state.dirty=true; await save(); renderReviewSummary();
   });
+  $('replay').addEventListener('click',replayMoment);
+  for(const edge of ['start','end']) $('set-'+edge).addEventListener('click',()=>{ $('event-'+edge).value=Math.min(duration(),$('video').currentTime); captureEditor(); });
+  $('close-editor').addEventListener('click',()=>{ captureEditor(); closeEditor(); });
+  $('review-editor').addEventListener('close',()=>{
+    // Native Escape also restores the page. Ignore a queued close after reopening.
+    if(!$('review-editor').open) restoreEditorScroll();
+  });
+  function arrangeEditor() { const panel=$('review-editor'); if(panel.open) closeEditor(); if(!phone.matches) panel.setAttribute('open',''); }
+  phone.addEventListener('change',arrangeEditor); arrangeEditor();
+  $('download-draft').addEventListener('click',()=>downloadReview(true));
+  $('reload-review').addEventListener('click',()=>{ state.targetIndex=state.index; $('leave-dialog').showModal(); });
+  $('save').addEventListener('click',save);
+  $('retry-editor').addEventListener('click',save);
+  function downloadReview(draft=false) {
+    if(!state.episode || (!draft && state.dirty)) return;
+    const receipt={episode_id:state.episode.id,source_sha256:state.episode.source?.sha256 || null,
+      ...(draft?{unsaved:true,base_revision:state.episode.review?.revision ?? 0,editor_draft:{id:state.selected,mode:state.mode,label:$('event-label').value,start:$('event-start').value,end:$('event-end').value}}:{}),
+      review:draft?{events:copy(state.events),outcome:state.outcome,status:'in_review'}:state.episode.review};
+    const url=URL.createObjectURL(new Blob([JSON.stringify(receipt,null,2)+'\n'],{type:'application/json'})), link=node('a');
+    link.href=url; link.download=`${state.episode.id}.${draft?'unsaved-draft':'review-r'+(state.episode.review?.revision ?? 0)}.json`; document.body.append(link); link.click(); link.remove(); setTimeout(()=>URL.revokeObjectURL(url),1000);
+  }
+  $('download').addEventListener('click',()=>downloadReview());
   $('previous').addEventListener('click',() => navigate(state.index-1)); $('next').addEventListener('click',() => navigate(state.index+1));
-  $('stay').addEventListener('click',() => $('leave-dialog').close()); $('discard').addEventListener('click',() => { $('leave-dialog').close(); loadEpisode(state.targetIndex); }); $('save-leave').addEventListener('click',async () => { if (await save()) { $('leave-dialog').close(); loadEpisode(state.targetIndex); } });
+  $('stay').addEventListener('click',() => { $('leave-dialog').close(); scheduleSave(); }); $('discard').addEventListener('click',() => { $('leave-dialog').close(); loadEpisode(state.targetIndex); }); $('save-leave').addEventListener('click',async () => { if (await save() && !state.dirty) { $('leave-dialog').close(); loadEpisode(state.targetIndex); } });
   $('retry').addEventListener('click',() => { if (state.episode) clearError(); else initialize(); });
   window.addEventListener('beforeunload',event => { if (state.dirty) { event.preventDefault(); event.returnValue = ''; } });
   initialize();
