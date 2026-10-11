@@ -1,0 +1,19 @@
+{
+  "schema": "dvidia.native-grasp-publication/v1",
+  "source_commit": "ac920cbf70147a7edeb0c706a9b71047f318e12f",
+  "receipt_base_url": "https://research.dvidia.org/downloads/topics/physical-grounding/runs/2026-10-11-native-grasp/replay/receipt/",
+  "receipt_integrity_sha256": "d72d3bbd1b443d735437dc18fed875e0f957886a7b05bd0aac3424ac195905a0",
+  "network_check": {
+    "scope": "one local confirmation process launched under macOS sandbox network denial; no hardware or real-time qualification",
+    "launcher": "sandbox-exec",
+    "policy": "(version 1)(allow default)(deny network*)",
+    "exit_code": 0
+  },
+  "tests": {
+    "suite": "python -m unittest discover -s tests",
+    "passed": 537,
+    "seconds": 191.34
+  },
+  "physical_robot_ready": false,
+  "learned_policy": false
+}
