@@ -27,6 +27,14 @@ needs fresh confirmation scenarios; it cannot silently reuse a known test set.
 
 ## Current foundation and next builds
 
+The [hardware reference foundation](hardware-reference.md) now separates the
+authored box arm from a pinned UR5e/coupled-gripper assembly. Its mechanical
+inventory, CPU timestep comparisons and paired replay scorer make the next
+hardware gaps measurable. Actual hardware selection, serial/frame calibration,
+motor/gripper response, contact/slip evidence and shoe-specific task training
+precede physical skill qualification. Left/right five-finger assets are audited
+separately; the two-arm assembly remains to be built.
+
 | Order | Build and owner role | Current state | Evidence needed to advance |
 | --- | --- | --- | --- |
 | 1 | Collection planning — product + data | Local coverage planner, versioned briefs and declared source-group tallies implemented. | First skill's observable goal, operating envelope, actual recordings and reviewed capture lineage. |

@@ -1,0 +1,64 @@
+{
+  "schema": "dvidia.paired-fidelity/v1",
+  "reference_profile": "authored-two-joint-fixture",
+  "model_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "physical_hardware_id": "synthetic-no-physical-hardware",
+  "protocol_id": "synthetic-paired-values-v1",
+  "source_group": "original-authored-fixture-one-group",
+  "command_replay_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+  "provenance": "synthetic_fixture",
+  "alignment": {
+    "time_alignment_reviewed": false,
+    "coordinate_alignment_reviewed": false
+  },
+  "time_basis": "shared_elapsed_seconds",
+  "coordinate_frame": "robot_base",
+  "joint_names": ["shoulder", "elbow"],
+  "samples": [
+    {
+      "t_seconds": 0,
+      "simulator": {
+        "joint_position_rad": [0, 0],
+        "tcp_position_m": [0, 0, 0],
+        "tcp_quaternion_wxyz": [1, 0, 0, 0],
+        "gripper_gap_m": 0.04
+      },
+      "physical": {
+        "joint_position_rad": [0.1, -0.2],
+        "tcp_position_m": [0.003, 0.004, 0],
+        "tcp_quaternion_wxyz": [1, 0, 0, 0],
+        "gripper_gap_m": 0.041
+      }
+    },
+    {
+      "t_seconds": 0.02,
+      "simulator": {
+        "joint_position_rad": [0, 0],
+        "tcp_position_m": [0, 0, 0],
+        "tcp_quaternion_wxyz": [1, 0, 0, 0],
+        "gripper_gap_m": 0.04
+      },
+      "physical": {
+        "joint_position_rad": [0.3, -0.4],
+        "tcp_position_m": [0.006, 0.008, 0],
+        "tcp_quaternion_wxyz": [0.7071067811865476, 0, 0, 0.7071067811865475],
+        "gripper_gap_m": 0.038
+      }
+    },
+    {
+      "t_seconds": 0.05,
+      "simulator": {
+        "joint_position_rad": [0, 0],
+        "tcp_position_m": [0, 0, 0],
+        "tcp_quaternion_wxyz": [1, 0, 0, 0],
+        "gripper_gap_m": 0.04
+      },
+      "physical": {
+        "joint_position_rad": [0, 0],
+        "tcp_position_m": [0, 0, 0],
+        "tcp_quaternion_wxyz": [0, 0, 0, 1],
+        "gripper_gap_m": 0.04
+      }
+    }
+  ]
+}

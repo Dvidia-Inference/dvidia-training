@@ -119,6 +119,14 @@ Recording quotas are proposed study sizes, not known sufficiency thresholds.
 
 ## Try the pipeline
 
+The [hardware reference bench](docs/hardware-reference.md) assembles a pinned
+UR5e arm and coupled Robotiq gripper, audits actual joint/actuator/collision
+structure, and compares CPU physics at three timesteps. Optional left/right
+five-finger references have separate contracts. A paired replay scorer measures
+joint, tool and jaw errors once aligned physical recordings are available.
+These tools use the `feat/hardware-reference-v0.1` candidate branch; the new
+reference has no learned task policy or measured physical fidelity.
+
 Generate an explicitly synthetic example, then train and verify its output:
 
 ```sh
