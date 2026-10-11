@@ -67,9 +67,42 @@ jobs:
           dvidia-observation-studio --help
           dvidia-motion --help
           dvidia-transition --help
+          dvidia-embodiment --help
           dvidia-training-doctor --json
       - name: Test footage, visual training and loopback studio
-        run: python -m unittest tests.test_footage_data tests.test_footage_train tests.test_footage_pipeline tests.test_footage_benchmark tests.test_training_studio tests.test_doctor tests.test_coverage tests.test_episode_tape tests.test_reaction tests.test_reaction_metrics tests.test_reaction_convergence tests.test_reaction_benchmark tests.test_motor_memory tests.test_motor_metrics tests.test_motor_benchmark tests.test_observations tests.test_observation_models tests.test_motion tests.test_motion_benchmark tests.test_transition_model tests.test_transition_pilot tests.test_transition_cli -v
+        run: python -m unittest tests.test_footage_data tests.test_footage_train tests.test_footage_pipeline tests.test_footage_benchmark tests.test_training_studio tests.test_doctor tests.test_coverage tests.test_episode_tape tests.test_reaction tests.test_reaction_metrics tests.test_reaction_convergence tests.test_reaction_benchmark tests.test_motor_memory tests.test_motor_metrics tests.test_motor_benchmark tests.test_observations tests.test_observation_models tests.test_motion tests.test_motion_benchmark tests.test_transition_model tests.test_transition_pilot tests.test_transition_cli tests.test_embodiment_calibration tests.test_embodiment_cli tests.test_reference_sim -v
+
+  reference:
+    name: Hardware reference / Linux / Python 3.12
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.12"
+      - name: Provision pinned reference models
+        run: |
+          python -m pip install ".[arm]"
+          dvidia-embodiment fetch-assets --output runs/reference-assets-ci --hands
+          dvidia-embodiment verify-assets runs/reference-assets-ci --hands
+      - name: Test compiled mechanics, collisions and replay scoring
+        env:
+          DVIDIA_REFERENCE_ASSETS: runs/reference-assets-ci
+        run: python -m unittest tests.test_reference_sim tests.test_embodiment_cli tests.test_embodiment_calibration -v
+      - name: Retain all numerical reference attempts
+        run: |
+          dvidia-embodiment benchmark runs/reference-assets-ci --hands --output runs/reference-bench-ci --repeats 1 --seconds 2
+          dvidia-embodiment inspect runs/reference-bench-ci
+      - name: Preserve reference evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: hardware-reference-bench
+          path: runs/reference-bench-ci
+          if-no-files-found: ignore
 
   motion:
     name: Causal image motion / Linux / Python 3.12
