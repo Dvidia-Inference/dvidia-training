@@ -4,6 +4,7 @@ const browserTypes=require(process.env.PLAYWRIGHT_MODULE||'playwright');
 const base=process.env.REFERENCE_REPLAY_URL||'http://127.0.0.1:8291/';
 const out=path.resolve(process.env.REFERENCE_REPLAY_OUTPUT||'runs/reference-replay-browser');fs.mkdirSync(out,{recursive:true});
 (async()=>{
+ await require('./reference_replay_loader.cjs')();
  const browser=await browserTypes[process.env.PLAYWRIGHT_BROWSER||'chromium'].launch({headless:true,...((process.env.PLAYWRIGHT_BROWSER||'chromium')==='chromium'?{args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{}),...(process.env.PLAYWRIGHT_EXECUTABLE_PATH?{executablePath:process.env.PLAYWRIGHT_EXECUTABLE_PATH}:{}),...(process.env.PLAYWRIGHT_CHANNEL?{channel:process.env.PLAYWRIGHT_CHANNEL}:{})});
  const context=await browser.newContext({viewport:{width:1440,height:1000}}), page=await context.newPage();
  const errors=[],remote=[],checks=[],requests=[];page.on('pageerror',error=>errors.push(error.message));page.on('request',request=>{requests.push(request.url());if(new URL(request.url()).origin!==new URL(base).origin&&!request.url().startsWith('data:'))remote.push(request.url());});

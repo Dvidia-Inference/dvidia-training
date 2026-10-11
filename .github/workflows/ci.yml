@@ -93,6 +93,7 @@ jobs:
         run: |
           npm ci --ignore-scripts --prefix viewer
           npm run --prefix viewer build
+          node tests/browser/reference_replay_loader.cjs
           git diff --exit-code -- src/dvidia_training/reference_replay.bundle.js src/dvidia_training/reference_replay.third-party.txt
       - name: Provision pinned reference models
         run: |
