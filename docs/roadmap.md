@@ -1,6 +1,6 @@
 # Execution map: footage to installable skills
 
-Working map, 9 October 2026. This is the team's sequence of builds and evidence
+Working map, updated 10 October 2026. This is the team's sequence of builds and evidence
 gates. A completed software component does not establish robot competence.
 
 ## The product loop
@@ -99,6 +99,28 @@ The next engineering milestone is a tape inspector and a small state-based task
 outcome model on the existing placement environment. The first real Skillspace
 will then test the collection and review loop. See [collection design](skillspace-coverage.md),
 [episode evidence](episode-tape.md) and [existing benchmark protocol](benchmarks.md).
+
+## Observation Lab next version
+
+[Observation Lab v0.2 plan](observation-v0.2-plan.md) prioritizes independent
+reference scoring, box and event correction, bounded offline batches, reviewed
+dataset export and [causal motion prediction](motion-prediction-plan.md). Image
+speed/forecasts, calibrated metric motion and real-time robot interaction have
+separate evidence gates. It separates the software release from measured annotation
+quality and keeps visual labels distinct from robot action supervision. Grouped
+review and autosave are already implemented; the next evidence gate is the
+planned complete-task cohort with blinded references and measured review effort.
+
+The [first image-motion alpha](motion-observations.md) is now runnable from the
+candidate source checkout: one manually seeded region, causal sparse-feature
+translation, image-anchor velocity, 100/250/500 ms constant-velocity forecasts,
+authored benchmark scoring and read-only replay. Its original source clocks,
+hashes, tracking losses and conditional score denominators are retained.
+The published Observation Lab v0.1 tag/Space remain unchanged and the full v0.2
+has not shipped. Real-scene anchor references, correction/export integration,
+bounded live observation, calibration and action-conditioned interaction still
+need their respective evidence gates. Motion speed is analysis-image pixels/s;
+no physical speed or robot control follows from these forecasts.
 
 ## Reaction and stopping evidence
 

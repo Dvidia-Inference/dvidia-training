@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DVIDIA · Motion Lab</title>
+<style>
+:root{color-scheme:light;--paper:#f7f6f2;--ink:#212725;--muted:#68716c;--line:#dddeda;--green:#147c65;--orange:#b65819;--violet:#7350a2}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 system-ui,-apple-system,sans-serif}button,select,input{font:inherit}button,select{min-height:44px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:8px 12px;color:var(--ink)}button{cursor:pointer}button:hover{background:#eeefeb}button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--green);outline-offset:3px}a{color:var(--green)}header{border-bottom:1px solid var(--line);padding:18px 30px;display:flex;justify-content:space-between;gap:20px;align-items:center}.brand{font-weight:780;letter-spacing:.16em;font-size:16px}.badge{font:11px/1.5 ui-monospace,monospace;letter-spacing:.06em;padding:5px 8px;border:1px solid var(--line);border-radius:4px;color:var(--muted)}main{max-width:1450px;margin:auto;padding:26px 30px 40px}.intro{display:flex;justify-content:space-between;gap:28px;align-items:start;margin-bottom:22px}h1{font:normal 32px/1.2 Georgia,serif;margin:0 0 8px}p{margin:0 0 12px}.intro p{max-width:670px;color:var(--muted)}.eyebrow{font:11px ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}.layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:22px}.card{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}.toolbar{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.toolbar select{max-width:100%}.stage{position:relative;background:#e6e7e3;min-height:180px;aspect-ratio:16/9}video{display:block;width:100%;height:100%;position:absolute;inset:0;object-fit:contain}canvas{position:absolute;pointer-events:none}.controls{border-top:1px solid var(--line);padding:14px 16px}.timeline{width:100%;min-height:36px;accent-color:var(--green);cursor:pointer}.control-row{display:flex;gap:16px;justify-content:space-between;align-items:center;flex-wrap:wrap}.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted)}.legend span:before{content:"";display:inline-block;width:9px;height:9px;margin-right:6px;border-radius:50%;background:var(--green)}.legend .forecast:before{background:var(--orange)}.legend .envelope:before{background:var(--orange);opacity:.25;border:1px solid var(--orange)}.check{display:flex;gap:8px;align-items:center;min-height:44px;font-size:13px}input[type=checkbox]{width:18px;height:18px;accent-color:var(--orange)}.horizons{display:flex;gap:7px}.horizons button[aria-pressed=true]{border-color:var(--orange);color:var(--orange);background:#fff4eb}.note{color:var(--muted);font-size:12px}.status-line{display:flex;justify-content:space-between;gap:15px;margin:12px 0 0;font-size:12px}.status-line strong{color:var(--green)}aside .card{padding:19px;margin-bottom:16px}h2{font-size:14px;margin:0 0 16px}dl{margin:0}dl>div{padding:10px 0;border-top:1px solid #eeefeb}dt{font-size:11px;color:var(--muted);letter-spacing:.04em}dd{margin:2px 0 0;font:14px ui-monospace,monospace;overflow-wrap:anywhere}.big{font:28px Georgia,serif}.small-unit{font:12px system-ui,sans-serif;color:var(--muted)}.scope{font-size:13px;color:var(--muted)}.scope strong{color:var(--ink)}.full{width:100%;margin-top:8px}.results{margin-top:22px;padding:20px}.results h2{margin-bottom:8px}table{border-collapse:collapse;width:100%;font-size:13px;margin:15px 0}th,td{border-bottom:1px solid var(--line);padding:10px 8px;text-align:right;font-variant-numeric:tabular-nums}th:first-child,td:first-child{text-align:left}th{font-size:11px;color:var(--muted);font-weight:500}.scroll{overflow:auto}.error{background:#fff3e9;border:1px solid #ebc5a7;padding:14px;color:#874316;margin-bottom:16px;white-space:pre-wrap}footer{padding-top:30px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}[hidden]{display:none!important}@media(max-width:920px){.layout{grid-template-columns:1fr}aside{display:grid;grid-template-columns:1fr 1fr;gap:16px}aside .card{margin:0}.intro{display:block}.intro .badge{display:inline-block;margin-top:8px}}@media(max-width:580px){header{padding:15px 16px}main{padding:23px 16px}.layout{gap:16px}aside{grid-template-columns:1fr}.toolbar{align-items:stretch}.toolbar select{width:100%}h1{font-size:28px}.status-line{display:block}.results{padding:16px}.stage{min-height:0}.control-row{gap:8px}.horizons{width:100%}.horizons button{flex:1}.legend{gap:10px}.badge{font-size:10px}.results table{min-width:500px}}
+.layout>section,.layout>aside{min-width:0}select{appearance:none;height:44px;padding-right:30px;background-image:linear-gradient(45deg,transparent 50%,#68716c 50%),linear-gradient(135deg,#68716c 50%,transparent 50%);background-position:calc(100% - 14px) 19px,calc(100% - 9px) 19px;background-size:5px 5px;background-repeat:no-repeat}.timeline{margin-left:0;margin-right:0}
+</style>
+</head>
+<body>
+<header><div class="brand">DVIDIA</div><span class="badge">MOTION LAB · v0.2 ALPHA</span></header>
+<main>
+ <div class="intro"><div><div class="eyebrow">Observation → motion → prediction</div><h1>See movement. Measure what comes next.</h1><p>Replay a selected image region and compare short forecasts with what actually happened. Every prediction uses only observations available at that moment.</p></div><span class="badge">LOCAL REPLAY · CPU · READ ONLY</span></div>
+ <div id="error" class="error" role="alert" hidden></div>
+ <div class="layout">
+ <section>
+  <div class="card">
+   <div class="toolbar"><label for="episode" class="eyebrow" style="margin:0">Recording</label><select id="episode" aria-label="Choose a recording"></select><span id="scope-badge" class="badge">Loading evidence</span></div>
+   <div class="stage" id="stage"><video id="video" controls playsinline preload="metadata" aria-label="Recorded motion video"></video><canvas id="overlay" aria-hidden="true"></canvas></div>
+   <div class="controls">
+    <input id="timeline" class="timeline" type="range" min="0" max="1" step="0.001" value="0" aria-label="Recording time">
+    <div class="control-row"><div class="horizons" role="group" aria-label="Forecast horizon"><button data-horizon="0.1" aria-pressed="true">100 ms</button><button data-horizon="0.25" aria-pressed="false">250 ms</button><button data-horizon="0.5" aria-pressed="false">500 ms</button></div><label class="check"><input id="envelope" type="checkbox" checked>Show heuristic envelope</label></div>
+    <div class="legend"><span>Observed anchor &amp; history</span><span class="forecast">Predicted endpoint</span><span class="envelope">Uncalibrated envelope</span></div>
+    <div class="status-line"><strong id="state">Loading</strong><span id="time" class="note">—</span></div>
+   </div>
+  </div>
+  <div class="card results" id="results" hidden><h2>Forecast benchmark · this recording</h2><p class="note">Errors compare forecasts with authored reference positions. “Hold current” predicts no movement on the same scored rows. Smaller endpoint error is better; abstentions are counted separately.</p><div class="scroll"><table><thead><tr><th>Horizon</th><th>Mean error<br>forecast / hold</th><th>95th percentile<br>forecast</th><th>Worst error<br>forecast</th><th>Scored / available</th></tr></thead><tbody id="score-rows"></tbody></table></div><p class="note" id="score-note"></p><p class="note" id="batch-note"></p></div>
+ </section>
+ <aside>
+  <div class="card"><h2>Observed image motion</h2><dl><div><dt>SPEED</dt><dd><span id="speed" class="big">—</span> <span class="small-unit">image px/s</span></dd></div><div><dt>IMAGE VELOCITY · X / Y</dt><dd id="velocity">—</dd></div><div><dt>ANCHOR · X / Y</dt><dd id="anchor">—</dd></div><div><dt>FEATURE SUPPORT</dt><dd id="support">—</dd></div><div><dt>OBSERVATION AGE AT PLAYHEAD</dt><dd id="age">—</dd></div><div><dt>ANALYSIS IMAGE</dt><dd id="dimensions">—</dd></div></dl><p class="note" style="margin:14px 0 0">The anchor follows image features. It is not a measured object center or a physical speed.</p></div>
+  <div class="card"><h2>Evidence &amp; scope</h2><p class="scope" id="seed-label"></p><p class="scope"><strong>Fixed camera, manually selected region.</strong> Tracking stops after a loss. Start a new analysis to select the object again.</p><p class="scope">No depth, contact prediction or robot commands. Live response time and real footage accuracy have not been established.</p><p class="scope" id="run-scope"></p><button id="export" class="full">Export run receipt</button></div>
+ </aside>
+ </div>
+ <footer><span>DVIDIA research · Original motion code &amp; authored fixtures: MIT</span><a href="https://github.com/Dvidia-Inference/dvidia-training" target="_blank" rel="noopener noreferrer">Source &amp; installation ↗</a></footer>
+</main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const video=$('video'),canvas=$('overlay'),ctx=canvas.getContext('2d');
+let current=null,benchmark=null,horizon=.1,loadVersion=0;
+const fmt=(value,digits=1)=>typeof value==='number'&&Number.isFinite(value)?value.toFixed(digits):'—';
+function error(message){$('error').textContent=message;$('error').hidden=false}
+async function get(url){const r=await fetch(url);if(!r.ok)throw new Error('Evidence could not be loaded. Inspect the run before replaying.');return r.json()}
+function findRow(rows,t){let low=0,high=rows.length;while(low<high){const mid=(low+high)>>1;if(rows[mid].acquired_time_seconds<=t)low=mid+1;else high=mid}return low-1}
+function resize(){if(!current)return;const dims=current.run.protocol.analysis_image_size_pixels;if(!dims)return;const rect=$('stage').getBoundingClientRect();const source=video.videoWidth&&video.videoHeight?[video.videoWidth,video.videoHeight]:dims;const scale=Math.min(rect.width/source[0],rect.height/source[1]);const width=source[0]*scale,height=source[1]*scale;canvas.style.left=(rect.width-width)/2+'px';canvas.style.top=(rect.height-height)/2+'px';canvas.style.width=width+'px';canvas.style.height=height+'px';canvas.width=dims[0];canvas.height=dims[1]}
+function draw(){
+ if(!current)return;
+ const rows=current.run.rows,t=video.currentTime||0,i=findRow(rows,t),row=i>=0?rows[i]:null;
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+ $('timeline').value=t;$('time').textContent=fmt(t,3)+' / '+fmt(video.duration,3)+' s · source time';
+ const age=row?t-row.acquired_time_seconds:null;
+ const stale=row&&age>row.estimator.max_prediction_age_seconds;
+ const tracked=row&&row.status==='tracked';
+ $('state').textContent=!row?'No observation yet':!tracked?'Tracking lost · forecasts withheld':stale?'Observation expired · forecasts withheld':row.velocity_xy_pixels_per_second?'Tracking · causal forecast':'Tracking · velocity warming up';
+ $('state').style.color=!tracked||stale?'#b65819':'#147c65';
+ $('speed').textContent=tracked&&!stale?fmt(row.speed_pixels_per_second):'—';
+ $('velocity').textContent=tracked&&!stale&&row.velocity_xy_pixels_per_second?row.velocity_xy_pixels_per_second.map(v=>fmt(v)).join(' / ')+' px/s':'—';
+ $('anchor').textContent=tracked?row.observed_anchor_xy_pixels.map(v=>fmt(v)).join(' / ')+' px'+(stale?' · last observed':''):'—';
+ $('support').textContent=row?String(row.support_count):'—';$('age').textContent=age===null?'—':fmt(age*1000,1)+' ms';
+ if(!tracked)return;
+ const anchor=row.observed_anchor_xy_pixels;
+ const history=[];for(let j=i;j>=0&&j>=i-30;j--){if(rows[j].status!=='tracked'||(j<i&&rows[j+1].continuity!=='continued'))break;history.push(rows[j].observed_anchor_xy_pixels)}
+ ctx.strokeStyle=stale?'#909b95':'#147c65';ctx.lineWidth=2;ctx.beginPath();history.forEach((p,j)=>j?ctx.lineTo(...p):ctx.moveTo(...p));ctx.stroke();
+ ctx.fillStyle=stale?'#909b95':'#147c65';ctx.beginPath();ctx.arc(...anchor,4,0,Math.PI*2);ctx.fill();
+ if(stale||row.prediction_use_before_time_seconds===null||t>row.prediction_use_before_time_seconds)return;
+ const prediction=row.forecasts.find(f=>Math.abs(f.horizon_seconds-horizon)<1e-8);if(!prediction)return;
+ const point=prediction.center_xy_pixels,radius=prediction.uncertainty_radius_pixels;
+ if($('envelope').checked&&radius!==null){ctx.fillStyle='rgba(182,88,25,.12)';ctx.strokeStyle='rgba(182,88,25,.4)';ctx.lineWidth=1;ctx.beginPath();ctx.arc(...point,radius,0,Math.PI*2);ctx.fill();ctx.stroke()}
+ ctx.strokeStyle='#b65819';ctx.lineWidth=2;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(...anchor);ctx.lineTo(...point);ctx.stroke();ctx.setLineDash([]);ctx.beginPath();ctx.arc(...point,5,0,Math.PI*2);ctx.stroke();
+ ctx.font='12px system-ui';ctx.fillStyle='#874316';ctx.fillText(Math.round(horizon*1000)+' ms forecast',Math.min(canvas.width-106,Math.max(3,point[0]+9)),Math.min(canvas.height-7,Math.max(14,point[1]-8)));
+}
+function showScores(scores){
+ $('results').hidden=!scores;$('score-rows').replaceChildren();if(!scores)return;
+ for(const entry of Object.values(scores.forecasts)){
+  const cv=entry.constant_velocity,hold=entry.hold_current_paired;
+  const cells=[Math.round(entry.horizon_seconds*1000)+' ms',fmt(cv.mean,2)+' / '+fmt(hold.mean,2)+' px',fmt(cv.p95,2)+' px',fmt(cv.max,2)+' px',cv.count+' / '+entry.future_reference_available];
+  const tr=document.createElement('tr');for(const cell of cells){const td=document.createElement('td');td.textContent=cell;tr.append(td)}$('score-rows').append(tr)
+ }
+ const track=scores.tracking;
+ $('score-note').textContent='Authored visible-frame tracking coverage: '+fmt(track.track_coverage_visible*100,1)+'%. Endpoint truth uses the nearest future reference frame; 250 ms can fall between frames. Tail frames without future truth are censored. Envelopes are heuristic, not calibrated probabilities.';
+ $('batch-note').textContent=benchmark?'Batch: '+benchmark.completed+' / '+benchmark.attempted+' attempts completed; '+fmt(benchmark.timing.batch_elapsed_seconds,2)+' s processing for '+fmt(benchmark.timing.attempted_source_duration_seconds,1)+' s of authored footage. Offline throughput excludes fixture generation and does not measure live response time.':'';
+}
+async function choose(id){
+ const version=++loadVersion;video.pause();current=null;ctx.clearRect(0,0,canvas.width,canvas.height);$('state').textContent='Loading evidence';$('error').hidden=true;
+ try{const data=await get('/api/episodes/'+encodeURIComponent(id));if(version!==loadVersion)return;current=data;const run=data.run,dims=run.protocol.analysis_image_size_pixels;
+ $('dimensions').textContent=dims?dims.join(' × ')+' px':'Unavailable';$('seed-label').textContent='Human region label: '+run.seed.label+'.';$('run-scope').textContent=benchmark?'Authored synthetic fixture. This is an engineering check, not an independent real-world accuracy test.':'Local recording. Independent motion accuracy has not been assessed.';
+ $('scope-badge').textContent=benchmark?'AUTHORED SYNTHETIC FIXTURE':'LOCAL RECORDING';
+ showScores(data.scores);video.removeAttribute('src');if(run.media){video.src=data.video_url;video.load()}else{video.load();error('This attempt failed before a replay was available. '+run.errors.map(e=>e.error).join(' '))}
+ if(run.status==='failed'&&run.media)error('Partial evidence from a failed attempt. '+run.errors.map(e=>e.error).join(' '));resize();draw();
+ }catch(e){error(e.message)}
+}
+$('episode').addEventListener('change',()=>choose($('episode').value));
+$('timeline').addEventListener('input',()=>{video.currentTime=Number($('timeline').value);draw()});
+document.querySelectorAll('[data-horizon]').forEach(button=>button.addEventListener('click',()=>{horizon=Number(button.dataset.horizon);document.querySelectorAll('[data-horizon]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));draw()}));
+$('envelope').addEventListener('change',draw);
+video.addEventListener('loadedmetadata',()=>{$('timeline').max=Number.isFinite(video.duration)?video.duration:1;resize();draw()});
+for(const event of ['timeupdate','seeking','seeked','pause'])video.addEventListener(event,draw);
+video.addEventListener('error',()=>{if(current&&current.run.media)error('The retained video could not be replayed. Inspect the bundle or use a browser with support for this video format.')});
+window.addEventListener('resize',()=>{resize();draw()});
+function animate(){if(!video.paused)draw();requestAnimationFrame(animate)}requestAnimationFrame(animate);
+$('export').addEventListener('click',()=>{if(!current)return;const blob=new Blob([JSON.stringify(current.run,null,2)+'\n'],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='dvidia-motion-'+$('episode').value+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});
+(async()=>{try{const data=await get('/api/episodes');benchmark=data.benchmark;for(const episode of data.episodes){const option=document.createElement('option');option.value=episode.id;option.textContent=episode.title+(episode.status==='failed'?' · failed attempt':'');$('episode').append(option)}if(!data.episodes.length)throw new Error('No retained episodes.');const preferred=data.episodes.find(e=>e.id==='constant_velocity')||data.episodes[0];$('episode').value=preferred.id;await choose(preferred.id)}catch(e){error(e.message)}})();
+</script>
+</body></html>

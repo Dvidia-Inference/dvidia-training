@@ -58,6 +58,31 @@ six public excerpts. This establishes the integration, not accuracy: labels can
 be wrong, outcomes remain unknown, and there is no 3D reconstruction, automatic
 action understanding, or human-video-to-robot control bridge.
 
+## Estimate and forecast image motion
+
+The [first image-motion alpha](docs/motion-observations.md) is available in the
+candidate source checkout. Manually seed one first-frame region; causal CPU
+feature tracking estimates its image-anchor speed and forecasts a path at
+100, 250 and 500 ms. Lost tracks stay lost. Actual integer video timestamps,
+tracking support, units, source/implementation hashes and failed attempts are
+preserved. This feature trains no model and requires no detector weights.
+
+```sh
+.venv/bin/python -m pip install '.[observations]'
+.venv/bin/dvidia-motion benchmark --output runs/image-motion-001
+.venv/bin/dvidia-motion inspect runs/image-motion-001
+.venv/bin/dvidia-motion studio runs/image-motion-001 --port 8286
+```
+
+Use the [candidate source installation instructions](docs/motion-observations.md#install-from-source),
+not the frozen `observation-lab-v0.1.0` tag, for `dvidia-motion`. The authored
+benchmark and read-only local replay test image tracking and prediction, not
+real detector accuracy. Speeds are analysis-image pixels/second; physical speed,
+moving-camera compensation, live robot latency and interaction prediction remain
+unqualified. This is one component toward [the full Observation Lab v0.2](docs/observation-v0.2-plan.md).
+See the [measured authored benchmark](benchmarks/motion-alpha-20261010/README.md),
+including conditional errors, failed tracking and forecast tails.
+
 ## Try the pipeline
 
 Generate an explicitly synthetic example, then train and verify its output:
@@ -132,4 +157,7 @@ Each command uses a fresh output directory where applicable. The model and compl
 
 The demo presents saved candidate and open-jaw control playback from one exact simulation scene. Training runs locally; the dataset and model cards document reproducible inputs, CPU measurements and the limits of this research alpha. [Maintainer publishing tools](publishing/huggingface/README.md) stage only the already-public synthetic release and use a credential from macOS Keychain without printing or caching it.
 
-MIT licensed. Research and measured limitations: [research.dvidia.org](https://research.dvidia.org). Contact: [hello@dvidia.org](mailto:hello@dvidia.org).
+Original DVIDIA code is MIT licensed; observation detector adaptations retain
+Apache 2.0 notices and upstream models retain their own licenses. Input footage
+has separate rights. Research and measured limitations: [research.dvidia.org](https://research.dvidia.org).
+Contact: [hello@dvidia.org](mailto:hello@dvidia.org).

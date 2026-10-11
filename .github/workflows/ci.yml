@@ -65,9 +65,42 @@ jobs:
           dvidia-motor-memory --help
           dvidia-observe --help
           dvidia-observation-studio --help
+          dvidia-motion --help
           dvidia-training-doctor --json
       - name: Test footage, visual training and loopback studio
-        run: python -m unittest tests.test_footage_data tests.test_footage_train tests.test_footage_pipeline tests.test_footage_benchmark tests.test_training_studio tests.test_doctor tests.test_coverage tests.test_episode_tape tests.test_reaction tests.test_reaction_metrics tests.test_reaction_convergence tests.test_reaction_benchmark tests.test_motor_memory tests.test_motor_metrics tests.test_motor_benchmark tests.test_observations tests.test_observation_models -v
+        run: python -m unittest tests.test_footage_data tests.test_footage_train tests.test_footage_pipeline tests.test_footage_benchmark tests.test_training_studio tests.test_doctor tests.test_coverage tests.test_episode_tape tests.test_reaction tests.test_reaction_metrics tests.test_reaction_convergence tests.test_reaction_benchmark tests.test_motor_memory tests.test_motor_metrics tests.test_motor_benchmark tests.test_observations tests.test_observation_models tests.test_motion tests.test_motion_benchmark -v
+
+  motion:
+    name: Causal image motion / Linux / Python 3.12
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.12"
+      - name: Install CPU optical-flow runtime
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install ".[observations]"
+          python -m pip check
+          dvidia-motion --help
+      - name: Verify source clocks, causal rows, scoring and local replay
+        run: python -m unittest tests.test_motion tests.test_motion_video tests.test_motion_benchmark tests.test_motion_studio -v
+      - name: Run and inspect authored tracking and prediction fixtures
+        run: |
+          dvidia-motion benchmark --output runs/image-motion-ci
+          dvidia-motion inspect runs/image-motion-ci
+      - name: Preserve every attempted synthetic motion case
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: authored-image-motion
+          path: runs/image-motion-ci
+          if-no-files-found: ignore
 
   observations:
     name: Observation detectors / Linux / Python 3.12
