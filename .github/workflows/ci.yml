@@ -68,6 +68,9 @@ jobs:
           dvidia-motion --help
           dvidia-transition --help
           dvidia-embodiment --help
+          dvidia-reference-task --help
+          dvidia-robot-sim --help
+          dvidia-robot-sim list
           dvidia-training-doctor --json
       - name: Test footage, visual training and loopback studio
         run: python -m unittest tests.test_footage_data tests.test_footage_train tests.test_footage_pipeline tests.test_footage_benchmark tests.test_training_studio tests.test_doctor tests.test_coverage tests.test_episode_tape tests.test_reaction tests.test_reaction_metrics tests.test_reaction_convergence tests.test_reaction_benchmark tests.test_motor_memory tests.test_motor_metrics tests.test_motor_benchmark tests.test_observations tests.test_observation_models tests.test_motion tests.test_motion_benchmark tests.test_transition_model tests.test_transition_pilot tests.test_transition_cli tests.test_embodiment_calibration tests.test_embodiment_cli tests.test_reference_sim -v
@@ -90,6 +93,7 @@ jobs:
         run: |
           npm ci --ignore-scripts --prefix viewer
           npm run --prefix viewer build
+          node tests/browser/reference_replay_loader.cjs
           git diff --exit-code -- src/dvidia_training/reference_replay.bundle.js src/dvidia_training/reference_replay.third-party.txt
       - name: Provision pinned reference models
         run: |
@@ -99,13 +103,18 @@ jobs:
       - name: Test compiled mechanics, collisions and replay scoring
         env:
           DVIDIA_REFERENCE_ASSETS: runs/reference-assets-ci
-        run: python -m unittest tests.test_reference_sim tests.test_reference_replay tests.test_embodiment_cli tests.test_embodiment_calibration -v
+        run: python -m unittest tests.test_reference_sim tests.test_reference_replay tests.test_embodiment_cli tests.test_embodiment_calibration tests.test_reference_task tests.test_reference_task_benchmark tests.test_reference_task_replay -v
       - name: Retain all numerical reference attempts
         run: |
           dvidia-embodiment benchmark runs/reference-assets-ci --hands --output runs/reference-bench-ci --repeats 1 --seconds 2
           dvidia-embodiment inspect runs/reference-bench-ci
       - name: Export native mesh and recorded 3D poses
         run: dvidia-embodiment export-replay runs/reference-assets-ci runs/reference-bench-ci --output runs/reference-replay-ci
+      - name: Retain native task and matched control attempts
+        run: |
+          dvidia-reference-task benchmark runs/reference-assets-ci --output runs/reference-task-ci --nominal 1 --stress 0
+          dvidia-reference-task inspect runs/reference-task-ci
+          dvidia-reference-task export-replay runs/reference-assets-ci runs/reference-task-ci --output runs/reference-task-replay-ci
       - name: Preserve reference evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
@@ -114,6 +123,39 @@ jobs:
           path: |
             runs/reference-bench-ci
             runs/reference-replay-ci
+            runs/reference-task-ci
+            runs/reference-task-replay-ci
+          if-no-files-found: ignore
+      - name: Verify additional CPU arm profiles
+        run: |
+          dvidia-robot-sim fetch piper --output runs/robot-profile-assets-ci
+          dvidia-robot-sim fetch so101 --output runs/robot-profile-assets-ci
+          dvidia-robot-sim audit piper runs/robot-profile-assets-ci
+          dvidia-robot-sim audit so101 runs/robot-profile-assets-ci
+          dvidia-robot-sim benchmark piper runs/robot-profile-assets-ci --output runs/piper-smoke-ci
+          dvidia-robot-sim benchmark so101 runs/robot-profile-assets-ci --output runs/so101-smoke-ci
+      - name: Test profile contracts against pinned native assets
+        env:
+          DVIDIA_ROBOT_PROFILE_ASSETS: runs/robot-profile-assets-ci
+        run: python -m unittest tests.test_robot_profiles tests.test_piper_task tests.test_piper_task_benchmark -v
+      - name: Retain PiPER contact task and matched controls
+        run: |
+          dvidia-piper-task benchmark runs/robot-profile-assets-ci --output runs/piper-task-ci --nominal 1 --stress 0
+          dvidia-piper-task inspect runs/piper-task-ci
+      - name: Test bounded static simulation publication without credentials
+        run: |
+          python -m pip install -r publishing/huggingface/requirements.txt
+          python -m unittest discover -s publishing/huggingface -p 'test_publish_robot_sim.py' -v
+          python -m unittest discover -s publishing/huggingface/robot-simulation-lab -p 'test_*.py' -v
+      - name: Preserve additional profile evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: additional-robot-profiles
+          path: |
+            runs/piper-task-ci
+            runs/piper-smoke-ci
+            runs/so101-smoke-ci
           if-no-files-found: ignore
 
   motion:

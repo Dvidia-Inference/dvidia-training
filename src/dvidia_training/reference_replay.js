@@ -33,7 +33,15 @@ function localHref(value) {
   return value;
 }
 async function response(href) {
-  const result = await fetch(localHref(href), {credentials: 'omit', redirect: 'error'});
+  const requested = new URL(localHref(href), location.href);
+  assert(requested.origin === location.origin, 'Replay assets must start in this directory’s origin.');
+  // This exact public HF Space serves its larger local files through this
+  // observed download host. All other deployments retain strict redirects.
+  const hosted = location.protocol === 'https:' && location.host === 'dvidia-robot-simulation-lab.static.hf.space';
+  const result = await fetch(requested.href, {credentials: 'omit', referrerPolicy: 'no-referrer', redirect: hosted ? 'follow' : 'error'});
+  const final = new URL(result.url);
+  assert(!final.username && !final.password && (final.origin === location.origin ||
+    (hosted && final.protocol === 'https:' && final.host === 'us.aws.cdn.hf.co')), 'Unexpected replay download origin.');
   assert(result.ok, `Could not load ${href} (HTTP ${result.status}).`); return result;
 }
 async function readBounded(stream, limit, label) {
