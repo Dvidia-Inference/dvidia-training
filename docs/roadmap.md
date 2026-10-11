@@ -1,6 +1,6 @@
 # Execution map: footage to installable skills
 
-Working map, updated 10 October 2026. This is the team's sequence of builds and evidence
+Working map, updated 11 October 2026. This is the team's sequence of builds and evidence
 gates. A completed software component does not establish robot competence.
 
 ## The product loop
@@ -31,8 +31,8 @@ needs fresh confirmation scenarios; it cannot silently reuse a known test set.
 | --- | --- | --- | --- |
 | 1 | Collection planning — product + data | Local coverage planner, versioned briefs and declared source-group tallies implemented. | First skill's observable goal, operating envelope, actual recordings and reviewed capture lineage. |
 | 2 | Contribution review — data + product | Proposed official-site connection; the local planner imports declarations only. | Immutable review receipts tied to original bytes, plan revision, intended-use permission and complete outcomes; source-group and near-duplicate audits. |
-| 3 | Episode evidence — simulation | Recorder preserves state, requests, applied commands, sensor age and authored phases at control boundaries. | Task-specific episode corpus, retained failure cases and synchronized inspector. Tapes are not consumed by a learner yet. |
-| 4 | Task and state models — learning | Existing small visual predictor and bounded movement head; outcome/phase supervisor proposed. | Choose deployable sensor inputs, compare with simple baselines and measure held-out boundary, outcome and false-completion errors. Keep authored labels and privileged state outside deployment inputs. |
+| 3 | Episode evidence — simulation | Recorder preserves state, requests, applied commands, sensor age and authored phases at control boundaries. A compact actuator learner now consumes before-state and issued-command evidence. | Shoe-specific corpus, retained failure cases and synchronized inspector. Sensor-shaped simulator inputs still need hardware counterparts. |
+| 4 | Task and state models — learning | Small visual predictor, bounded movement head and next-boundary actuator predictor; outcome/phase supervisor proposed. | Compare with matched baselines and measure held-out boundary, outcome and false-completion errors. Keep authored labels and future state outside deployment inputs; qualify sensed physical inputs separately. |
 | 5 | Task simulation — simulation | Existing rigid-box placement adapter and frozen benchmark; other tasks need environments. | Validated assets/contact behavior, robot/gripper/sensor contract, reset distributions and independently observable task outcomes. |
 | 6 | Qualification and sample efficiency — evaluation | Local benchmark runner and frozen sample-count evidence exist. | Learning curves over independent source groups, multiple collection orders, frozen candidates, nominal/stress/control strata, all attempted trials and measured cost. |
 | 7 | Installable skill — runtime | Simulation candidate capsule and compatibility checks exist. | Bundle model, task, observation/action contract, adapter, data/protocol hashes, calibration requirements and artifact-bound qualification results. |
@@ -43,6 +43,14 @@ They are not included in the frozen v0.1.0 release or the older Hugging Face pil
 No new task policy is trained by adding these components.
 
 ## First incoming skills
+
+The [laptop skill pilot](laptop-skill-pilot.md) supplies a proposed shoe collection
+plan and a separate CPU actuator-learning experiment. It uses twelve native
+scene groups and three jaw-command interventions per group, with training,
+development and frozen test partitions. Its seven outputs predict joint/jaw
+changes at one 20 ms boundary; it is neither a shoe policy nor a contact/outcome
+model. Physical shoe sensing, shoe task physics and robot integration remain
+the next task-specific builds.
 
 Start with one bounded task and one supported robot/gripper rather than declaring
 a universal skill. For shoe organization, distinguish pairing, alignment and

@@ -83,6 +83,40 @@ unqualified. This is one component toward [the full Observation Lab v0.2](docs/o
 See the [measured authored benchmark](benchmarks/motion-alpha-20261010/README.md),
 including conditional errors, failed tracking and forecast tails.
 
+## Learn a compact command-to-movement model
+
+The [laptop skill pilot](docs/laptop-skill-pilot.md) connects episode tapes to a
+small action-conditioned predictor. It learns the next 20 ms of joint and jaw
+movement from current state and issued commands, using CPU ridge regression.
+Separate simulation groups test it against no movement, current velocity,
+training-mean movement and a matched model with commands removed. A local,
+offline report exposes prediction errors, artifact size and model-only timing.
+
+```sh
+.venv/bin/python -m pip install '.[arm]'
+.venv/bin/dvidia-transition corpus --output runs/actuator-corpus
+.venv/bin/dvidia-transition run runs/actuator-corpus/corpus.json --output runs/actuator-pilot
+.venv/bin/dvidia-transition inspect runs/actuator-pilot
+```
+
+Use the `feat/laptop-skill-pilot-v0.1` candidate source branch for these commands,
+then open `runs/actuator-pilot/report.html`. Generation uses the existing native
+rigid-box simulator; fitting and inference need no language model, GPU or remote
+service. Simulator measurements are privileged, even though the selected inputs
+resemble signals a robot could expose. The predictor issues no robot commands
+and establishes neither grasp success nor shoe organization.
+
+The [retained CPU benchmark](benchmarks/actuator-pilot-20261011/README.md) includes
+the trained 6.3 KiB predictor, frozen protocol and complete attempt receipts.
+Its warm model computation measured 0.207 ms at p95 on one laptop; sensing and
+actuation are excluded. Command inputs reduce test RMSE, while some stationary
+gripper and worst-error results regress. Read all error measures before reusing it.
+
+The [first shoe collection plan](examples/shoe-organizing-coverage.json) defines
+one shoe, one marked slot and complete attempts. Its benchmark remains blocked
+until a validated shoe environment and compatible physical adapter exist.
+Recording quotas are proposed study sizes, not known sufficiency thresholds.
+
 ## Try the pipeline
 
 Generate an explicitly synthetic example, then train and verify its output:

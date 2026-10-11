@@ -109,8 +109,12 @@ authenticity, sensor accuracy or task mastery.
 
 ## Next consumers
 
-The first consumers should be a synchronized episode inspector and a frozen
-training/confirmation split, followed by a compact state-based outcome model.
+The [compact actuator pilot](laptop-skill-pilot.md) now consumes current joint
+position, velocity, jaw gap and issued commands from these tapes to predict the
+next boundary's joint/jaw deltas. It excludes future measurements, authored
+phases and final applied controls from inputs, and compares separate source
+groups with simple baselines. It does not predict grasp retention or task
+success. A synchronized inspector and compact outcome model remain next builds.
 The current visual predictor and movement head do not consume these tapes.
 A future learner must choose deployable inputs explicitly and hold privileged
 object state and authored phase labels out of its deployment feature vector.
