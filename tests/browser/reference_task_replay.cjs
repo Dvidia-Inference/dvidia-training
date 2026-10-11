@@ -71,7 +71,11 @@ fs.mkdirSync(out,{recursive:true});
   checks.push('Initial, observed carry and terminal target views captured from actual state; completed source labels require measured lifted transfer and final target tolerance');
   await seek(carry);await page.locator('#collision').click();assert.equal(await page.locator('#mode-label').textContent(),'Native collision proxies');await page.locator('#collision').click();
   await page.locator('#play').click();await page.waitForTimeout(100);await page.locator('#play').click();
-  await page.waitForTimeout(100);const renders=await page.locator('#canvas').getAttribute('data-render-count');await page.waitForTimeout(180);assert.equal(await page.locator('#canvas').getAttribute('data-render-count'),renders);
+  assert.equal(await page.locator('#play').getAttribute('aria-pressed'),'false');
+  // A queued WebGL render may drain after pause on a busy software renderer.
+  // Require a sustained idle period within five seconds, then verify it stays idle.
+  await page.waitForFunction(()=>{const value=document.querySelector('#canvas').dataset.renderCount,now=performance.now();const sample=window.__idleRenderSample;if(!sample||sample.value!==value){window.__idleRenderSample={value,since:now};return false;}return now-sample.since>=350;},{},{timeout:5000});
+  const renders=await page.locator('#canvas').getAttribute('data-render-count');await page.waitForTimeout(250);assert.equal(await page.locator('#canvas').getAttribute('data-render-count'),renders);
   for(const size of [{width:390,height:844},{width:320,height:740}]){
    await page.setViewportSize(size);await page.waitForTimeout(120);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
    const small=await page.locator('button:visible,select:visible,input:visible').evaluateAll(nodes=>nodes.filter(n=>n.getBoundingClientRect().height<43.5).map(n=>n.id));assert.deepEqual(small,[]);

@@ -35,11 +35,12 @@ motor/gripper response, contact/slip evidence and shoe-specific task training
 precede physical skill qualification. Left/right five-finger assets are audited
 separately; the two-arm assembly remains to be built.
 
-The [upcoming hardware list](hardware-roadmap.md) now tracks YAM, OpenArm, PiPER,
-ARX X5 and PAROL6 alongside the proposed SO-101 entry profile. YAM is the first
-six-axis candidate; OpenArm is the later two-arm candidate. Each addition needs a
-pinned simulator, physical adapter and its own benchmark/qualification evidence.
-These are planned targets; their DVIDIA integrations have not been implemented.
+The [robot simulation library](robot-simulation-library.md) adds PiPER and SO-101
+pinned models, native audits and unloaded CPU motion benchmarks. These profiles
+have no learned object-task or physical qualification. The [hardware roadmap](hardware-roadmap.md)
+keeps YAM, OpenArm, ARX X5 and PAROL6 as further targets; OpenArm remains the
+later two-arm candidate. Every additional task and physical adapter needs its
+own evidence.
 
 The [native grasp task benchmark](native-task-benchmark.md) adds a separate
 rigid-block contact task to the pinned reference assembly. Frozen scene plans,

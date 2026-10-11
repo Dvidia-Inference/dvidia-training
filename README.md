@@ -2,7 +2,7 @@
 
 # DVIDIA Training
 
-[Install locally](docs/installation.md) · [Hardware guide](docs/hardware.md) · [Execution map](docs/roadmap.md) · [Upcoming arms](docs/hardware-roadmap.md) · [Official site](https://dvidia.org/) · [Research](https://research.dvidia.org/papers/skillspace-footage-training/) · [Frozen benchmark evidence](benchmarks/sample-count-19047/README.md)
+[Install locally](docs/installation.md) · [Hardware guide](docs/hardware.md) · [Execution map](docs/roadmap.md) · [Robot simulations](docs/robot-simulation-library.md) · [Upcoming arms](docs/hardware-roadmap.md) · [Official site](https://dvidia.org/) · [Research](https://research.dvidia.org/papers/skillspace-footage-training/) · [Frozen benchmark evidence](benchmarks/sample-count-19047/README.md)
 
 [Recorded demo](https://huggingface.co/spaces/Dvidia/dvidia-training) · [Synthetic datasets](https://huggingface.co/datasets/Dvidia/dvidia-training-examples) · [Pilot models](https://huggingface.co/Dvidia/dvidia-training-pilot)
 
@@ -13,6 +13,13 @@ pinned six-axis arm and coupled gripper to free-object grasp, carry and release
 attempts. It retains matched open-jaw/hold controls, frozen protocols and local
 3D replay. This candidate source uses an authored controller; it is a test
 environment for the next learned skill, separate from the older hosted pilot.
+
+The [robot simulation library](docs/robot-simulation-library.md) adds pinned
+PiPER (six arm axes) and SO-101 (five arm axes) profiles with separate grippers,
+explicit CPU asset provisioning, native audits and unloaded motion benchmarks.
+They have no object-task or physical qualification yet. The
+[Robot Simulation Lab](https://huggingface.co/spaces/Dvidia/robot-simulation-lab)
+publishes recorded evidence and local run instructions.
 
 Train a small visual model from Skillspace footage on your own computer or server. The pipeline checks actual videos and source groups, fixes training/development/test splits, fits weights on a CPU, and exports a result with held-out measurements and integrity hashes.
 

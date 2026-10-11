@@ -66,7 +66,8 @@ learner's task actions unnoticed.
 ## Small local models to compare
 
 Start with a DVIDIA behavioral-cloning MLP with two hidden layers of 64 units and
-an eight-boundary causal window: 160 ms at the proposed 50-Hz command cadence.
+an eight-boundary causal window: eight samples spaced 20 ms apart, spanning
+140 ms from first to last at the proposed 50-Hz command cadence.
 Compare it with a single-boundary MLP and a four-action chunk head that replans
 each boundary and initially executes only its first action. These are proposed
 compact designs, not implementations or measured reproductions of ACT. If
