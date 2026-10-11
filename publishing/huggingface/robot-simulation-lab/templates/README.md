@@ -63,6 +63,8 @@ Space entry sends commands to a physical robot.
 
 {{PIPER_TASK_SUMMARY}}
 
+{{PIPER_GRIP_SUMMARY}}
+
 ## Provenance and licensing
 
 The native export, its complete receipt, model license files, upstream notices,

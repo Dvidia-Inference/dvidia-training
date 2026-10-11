@@ -1,5 +1,6 @@
 """Offline fixed-destination publication checks. No real token or network use."""
 from hashlib import sha256
+import gzip
 import json
 from pathlib import Path
 from types import SimpleNamespace
@@ -208,6 +209,53 @@ class RobotSimulationPublicationTests(unittest.TestCase):
             api.create_commit.assert_not_called()
             api.create_repo.assert_not_called()
             if variant!='bytes': verify.assert_not_called()
+
+    def compressed_episode(self,extra=None,comment=None):
+        episode = {'schema':'dvidia.piper-task-episode/v1','profile':'piper-rigid-block-task-v0.1',
+                   'physical_robot_ready':False,'learned_policy':False,**(extra or {})}
+        data = gzip.compress(json.dumps(episode).encode(),mtime=0)
+        if comment is not None:
+            header=bytearray(data[:10]);header[3]|=8
+            data=bytes(header)+comment+b'\0'+data[10:]
+        target=self.space/'tasks/piper-grip/attempts/friction080-layout00--guarded_placement.json.gz'
+        target.parent.mkdir(parents=True,exist_ok=True)
+        target.write_bytes(data)
+        self.refresh()
+        return target,data
+
+    def test_only_scoped_compressed_grip_json_is_allowed_and_private_decoded_or_header_bytes_fail(self):
+        self.compressed_episode()
+        publisher.checked_plan(self.path)
+        for name in ('attempt.json.gz','tasks/piper/attempts/attempt.json.gz','tasks/other/attempts/attempt.json.gz',
+                     'tasks/piper-grip/attempt.json.gz','tasks/piper-grip/attempts/weights.bin.gz',
+                     'tasks/piper-grip/attempts/.hidden.json.gz'):
+            with self.subTest(name=name),self.assertRaises(PublicationError): publisher._artifact_name(name)
+        for extra,comment in [({'note':'/Users/roguedev/private'},None),({'note':'hf_'+'a'*32},None),
+                              ({},b'hf_'+b'a'*32),({},b'/Users/roguedev/private')]:
+            self.compressed_episode(extra,comment)
+            with self.subTest(extra=extra,comment=comment),self.assertRaises(PublicationError):
+                publisher.publish_robot_sim(self.path)
+
+    def test_compressed_grip_corruption_scope_concatenation_and_decoded_bounds_fail_before_credentials(self):
+        target,valid=self.compressed_episode()
+        publisher._artifact_plaintext(target.relative_to(self.space).as_posix(),valid)
+        from dvidia_training import piper_grip_benchmark as benchmark
+        for data in (b'not gzip',valid+valid,gzip.compress(b'not JSON',mtime=0),
+                     gzip.compress(b'{"physical_robot_ready":true}',mtime=0)):
+            target.write_bytes(data);self.refresh()
+            with self.subTest(data=data[:10]),self.assertRaises(PublicationError): publisher.publish_robot_sim(self.path)
+        self.compressed_episode({'large':'x'*2000})
+        with patch.object(benchmark,'MAX_FILE_BYTES',512),self.assertRaises(PublicationError):
+            publisher.publish_robot_sim(self.path)
+
+    def test_exact_credential_in_gzip_header_or_decoded_json_is_rejected_after_freeze(self):
+        for extra,comment in [({'note':'fixture-token'},None),({},b'fixture-token')]:
+            self.compressed_episode(extra,comment)
+            api=self.api()
+            with self.subTest(extra=extra,comment=comment),patch.object(publisher,'client',return_value=(api,'fixture-token')), \
+                    self.assertRaises(PublicationError): publisher.publish_robot_sim(self.path)
+            api.whoami.assert_not_called()
+            api.create_commit.assert_not_called()
 
 
 if __name__=='__main__':
