@@ -18,14 +18,17 @@ class TransitionReportTests(unittest.TestCase):
                         'limitations': ['</script><script>window.INJECTED=true</script>'],
                         'metrics': {'test': {}}}
             raw = json.dumps(document, indent=2) + '\n'
-            (root/'report.json').write_text(raw)
+            (root/'report.json').write_text(raw, encoding='utf8')
             write_report_page(root)
-            html = (root/'report.html').read_text()
+            html = (root/'report.html').read_text(encoding='utf8')
             embedded = re.search(r'<script id="receipt" type="application/json">(.*?)</script>', html, re.S).group(1)
             self.assertEqual(json.loads(embedded), raw)
             self.assertNotIn('</script><script>window.INJECTED', html)
             self.assertIn('connect-src \'none\'', html)
             self.assertNotIn('src="https:', html)
+            self.assertIn('—', html)
+            self.assertIn('·', html)
+            self.assertNotIn('â€”', html)
             with self.assertRaises(FileExistsError):
                 write_report_page(root)
 
@@ -33,7 +36,7 @@ class TransitionReportTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             for raw in ('{}', '{"kind":"dvidia.actuator-transition-pilot.v1","x":NaN}'):
-                (root/'report.json').write_text(raw)
+                (root/'report.json').write_text(raw, encoding='utf8')
                 with self.assertRaises(ValueError):
                     write_report_page(root)
                 self.assertFalse((root/'report.html').exists())

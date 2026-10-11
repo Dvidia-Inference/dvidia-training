@@ -2,10 +2,13 @@
 from copy import deepcopy
 from hashlib import sha256
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
 from tempfile import TemporaryDirectory
+from types import SimpleNamespace
+from unittest.mock import patch
 import unittest
 
 from dvidia_training.episode_tape import canonical, digest, validate_tape
@@ -276,6 +279,47 @@ assert len(extract_rows(fixture())['rows'])==1
             self.assertNotEqual(restored['intercept'][0], self.model['intercept'][0])
             with self.assertRaises(FileExistsError):
                 write_model(path, self.model)
+
+    def test_loading_without_posix_flags_still_checks_regular_file_and_symlink(self):
+        import dvidia_training.transition_model as transition_model
+        portable_os = SimpleNamespace(O_RDONLY=os.O_RDONLY, O_BINARY=getattr(os,'O_BINARY',0),
+                                      open=os.open, fdopen=os.fdopen, fstat=os.fstat)
+        with TemporaryDirectory() as directory:
+            path = Path(directory)/'model.json'
+            write_model(path,self.model)
+            with patch.object(transition_model,'os',portable_os):
+                self.assertEqual(load_model(path),self.model)
+                with self.assertRaises(ValueError):
+                    load_model(Path(directory))
+                link = Path(directory)/'link.json'
+                try:
+                    link.symlink_to(path)
+                except OSError:
+                    pass  # Some Windows installations do not grant symlink permission.
+                else:
+                    with self.assertRaises(ValueError):
+                        load_model(link)
+
+    def test_model_path_swap_is_detected_before_parsing_when_file_identity_exists(self):
+        import dvidia_training.transition_model as transition_model
+        with TemporaryDirectory() as directory:
+            path = Path(directory)/'model.json'
+            other = Path(directory)/'replacement.json'
+            write_model(path,self.model)
+            write_model(other,self.model)
+            before = path.lstat()
+            with path.open('rb') as stream:
+                opened = os.fstat(stream.fileno())
+            if not before.st_ino or not opened.st_ino:
+                self.skipTest('Path/descriptor identity is unavailable on this platform.')
+            original_open = os.open
+            def swapped_open(name,flags):
+                path.unlink()
+                other.rename(path)
+                return original_open(name,flags)
+            with patch.object(transition_model.os,'open',side_effect=swapped_open):
+                with self.assertRaisesRegex(ValueError,'identity changed'):
+                    load_model(path)
 
     def test_unknown_fields_false_scope_and_model_hash_tampering_refused(self):
         for key, value in [('unexpected', 'executable'), ('physical_robot_ready', True),

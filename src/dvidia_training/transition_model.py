@@ -374,15 +374,32 @@ def write_model(path, model):
 
 
 def load_model(path):
-    """Load a regular, non-symlink bounded data file; no executable format."""
+    """Load bounded data; reject links and detect file swaps where IDs exist.
+
+    POSIX retains nonblocking/no-follow flags. Windows uses binary mode and the
+    same pre-open regular-file check; identity comparison is possible only when
+    both path and descriptor stat expose nonzero inode identifiers.
+    """
     path = Path(path)
     try:
-        descriptor = os.open(path, os.O_RDONLY | os.O_NONBLOCK | getattr(os, 'O_NOFOLLOW', 0))
+        before = path.lstat()
+        if not stat.S_ISREG(before.st_mode) or before.st_size > MAX_MODEL_BYTES:
+            raise ValueError('Model must be a regular non-symlink file at most 256 KiB.')
+        flags = os.O_RDONLY | getattr(os, 'O_NONBLOCK', 0) | getattr(os, 'O_NOFOLLOW', 0) | getattr(os, 'O_BINARY', 0)
+        descriptor = os.open(path, flags)
+    except (OSError, ValueError) as exc:
+        raise ValueError('Model cannot be opened as a regular non-symlink file at most 256 KiB.') from exc
+    try:
+        with os.fdopen(descriptor, 'rb') as source:
+            info = os.fstat(source.fileno())
+            if not stat.S_ISREG(info.st_mode) or info.st_size > MAX_MODEL_BYTES:
+                raise ValueError('Model must be a regular file at most 256 KiB.')
+            before_ino, after_ino = getattr(before, 'st_ino', None), getattr(info, 'st_ino', None)
+            before_dev, after_dev = getattr(before, 'st_dev', None), getattr(info, 'st_dev', None)
+            if before_ino not in (None, 0) and after_ino not in (None, 0) and before_dev is not None and after_dev is not None:
+                if (before_dev, before_ino) != (after_dev, after_ino):
+                    raise ValueError('Model file identity changed during opening.')
+            raw = source.read(MAX_MODEL_BYTES+1)
     except OSError as exc:
-        raise ValueError('Model cannot be opened as a regular non-symlink file.') from exc
-    with os.fdopen(descriptor, 'rb') as source:
-        info = os.fstat(source.fileno())
-        if not stat.S_ISREG(info.st_mode) or info.st_size > MAX_MODEL_BYTES:
-            raise ValueError('Model must be a regular file at most 256 KiB.')
-        raw = source.read(MAX_MODEL_BYTES+1)
+        raise ValueError('Model regular-file read failed.') from exc
     return validate_model(raw)

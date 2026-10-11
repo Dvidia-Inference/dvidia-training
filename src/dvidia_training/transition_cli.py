@@ -18,7 +18,7 @@ def write_report_page(directory):
     if type(document) is not dict or document.get('kind') != 'dvidia.actuator-transition-pilot.v1':
         raise ValueError('Unsupported actuator pilot receipt.')
     embedded = json.dumps(raw, ensure_ascii=True).replace('<', '\\u003c').replace('>', '\\u003e').replace('&', '\\u0026')
-    template = Path(__file__).with_name('transition_pilot.html').read_text()
+    template = Path(__file__).with_name('transition_pilot.html').read_text(encoding='utf8')
     with (directory / 'report.html').open('x', encoding='utf8') as output:
         output.write(template.replace('__DVIDIA_RECEIPT__', embedded))
 
