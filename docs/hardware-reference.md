@@ -71,6 +71,12 @@ data; the original numerical receipt stays intact under `receipt/`. Playback is
 recorded simulation, not live physics, a trained task or a hardware controller.
 Original asset licenses and bundled Three.js notices accompany every export.
 
+Reconstruction requires the recorded compiled-model hash to match. Native
+compilation can differ across platforms; a mismatch is rejected rather than
+silently substituting another model. In that case, run a new benchmark on the
+current machine and export that receipt, retaining both sets of results. An
+already exported browser replay is portable and needs no native simulator.
+
 Optional native mesh viewing is
 available with `dvidia-embodiment view runs/reference-assets`. On macOS launch
 the module using `.venv/bin/mjpython -m dvidia_training.embodiment_cli view

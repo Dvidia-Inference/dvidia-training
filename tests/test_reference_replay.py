@@ -16,8 +16,9 @@ from dvidia_training import reference_sim as sim
 BUNDLE = Path(__file__).resolve().parent.parent / 'benchmarks/hardware-reference-20261011'
 
 
-def small_report():
-    report = json.loads((BUNDLE / 'report.json').read_text())
+def small_report(source=None):
+    report = (deepcopy(source) if source is not None
+              else json.loads((BUNDLE / 'report.json').read_text()))
     report['protocol']['repeats'] = 1
     report['protocol']['seconds_per_case'] = .1
     report['attempts'] = [attempt for attempt in report['attempts'] if attempt['repeat'] == 0]
@@ -154,6 +155,14 @@ class NativeReplayTests(unittest.TestCase):
         cls.assets = Path(os.environ['DVIDIA_REFERENCE_ASSETS'])
         cls.mj, cls.np = sim._native_imports()
         cls.temporary = tempfile.TemporaryDirectory()
+        # A native model's serialized digest can vary across architectures.
+        # Keep the published macOS receipt frozen; exercise reconstruction with
+        # a newly sealed local-platform fixture and retain strict digest checks.
+        cls.report = sim.benchmark_reference(cls.assets, repeats=1, seconds=4.)
+        if cls.report['valid_attempts'] != 9:
+            raise AssertionError('Local native replay fixture must contain nine valid attempts')
+        cls.bundle = Path(cls.temporary.name) / 'receipt'
+        write_bundle(cls.bundle, cls.report)
         cls.output = Path(cls.temporary.name) / 'replay'
         original_read = replay._read
         def fixture_frontend(path, limit):
@@ -162,7 +171,7 @@ class NativeReplayTests(unittest.TestCase):
             return original_read(path, limit)
         with patch.object(replay, '_read', side_effect=fixture_frontend), \
                 patch.object(cls.mj, 'mj_step', side_effect=AssertionError('Replay must not step physics')):
-            cls.summary = replay.export_replay(cls.assets, BUNDLE, cls.output)
+            cls.summary = replay.export_replay(cls.assets, cls.bundle, cls.output)
         cls.scene = json.loads((cls.output / 'scene.json').read_text())
         cls.motion = json.loads((cls.output / 'motion.json').read_text())
         cls.geometry = (cls.output / 'geometry.bin').read_bytes()
@@ -247,7 +256,7 @@ class NativeReplayTests(unittest.TestCase):
 
     def test_original_receipts_licenses_and_compressed_data_are_complete_and_sealed(self):
         for name in ('report.json', 'report.html', 'integrity.json'):
-            self.assertEqual((self.output / 'receipt' / name).read_bytes(), (BUNDLE / name).read_bytes())
+            self.assertEqual((self.output / 'receipt' / name).read_bytes(), (self.bundle / name).read_bytes())
         for folder in ('universal_robots_ur5e', 'robotiq_2f85'):
             for name in ('LICENSE', 'README.md'):
                 self.assertEqual((self.output / 'licenses' / folder / name).read_bytes(), (self.assets / folder / name).read_bytes())
@@ -261,7 +270,18 @@ class NativeReplayTests(unittest.TestCase):
             data = (self.output / name).read_bytes()
             self.assertEqual(len(data), expected['bytes'])
             self.assertEqual(sha256(data).hexdigest(), expected['sha256'])
-        self.assertEqual(self.motion['source']['report_sha256'], sha256((BUNDLE / 'report.json').read_bytes()).hexdigest())
+        self.assertEqual(self.motion['source']['report_sha256'], sha256((self.bundle / 'report.json').read_bytes()).hexdigest())
+
+    def test_incompatible_compiled_model_is_explicitly_rejected_before_reconstruction(self):
+        changed = small_report(self.report)
+        changed['attempts'][0]['compiled_model_sha256'] = '0' * 64
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_bundle(root / 'receipt', changed)
+            with patch.object(replay, '_poses', side_effect=AssertionError('Incompatible model must not reconstruct')):
+                with self.assertRaisesRegex(ValueError, 'compiled model digest differs'):
+                    replay.export_replay(self.assets, root / 'receipt', root / 'output')
+            self.assertFalse((root / 'output').exists())
 
     def test_incompatible_or_modified_receipts_fail_before_creating_output(self):
         mutations = (
@@ -274,7 +294,7 @@ class NativeReplayTests(unittest.TestCase):
             lambda r: r['attempts'][0]['trajectory'][0].update(tcp_quaternion_wxyz=[1, 0, 0, 0]),
         )
         for mutate in mutations:
-            changed = small_report()
+            changed = small_report(self.report)
             mutate(changed)
             with self.subTest(mutation=mutate), tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
