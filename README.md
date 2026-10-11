@@ -2,7 +2,7 @@
 
 # DVIDIA Training
 
-[Install locally](docs/installation.md) · [Hardware guide](docs/hardware.md) · [Execution map](docs/roadmap.md) · [Official site](https://dvidia.org/) · [Research](https://research.dvidia.org/papers/skillspace-footage-training/) · [Frozen benchmark evidence](benchmarks/sample-count-19047/README.md)
+[Install locally](docs/installation.md) · [Hardware guide](docs/hardware.md) · [Execution map](docs/roadmap.md) · [Upcoming arms](docs/hardware-roadmap.md) · [Official site](https://dvidia.org/) · [Research](https://research.dvidia.org/papers/skillspace-footage-training/) · [Frozen benchmark evidence](benchmarks/sample-count-19047/README.md)
 
 [Recorded demo](https://huggingface.co/spaces/Dvidia/dvidia-training) · [Synthetic datasets](https://huggingface.co/datasets/Dvidia/dvidia-training-examples) · [Pilot models](https://huggingface.co/Dvidia/dvidia-training-pilot)
 
@@ -124,7 +124,11 @@ UR5e arm and coupled Robotiq gripper, audits actual joint/actuator/collision
 structure, and compares CPU physics at three timesteps. Optional left/right
 five-finger references have separate contracts. A paired replay scorer measures
 joint, tool and jaw errors once aligned physical recordings are available.
-These tools use the `feat/hardware-reference-v0.1` candidate branch; the new
+Export actual mesh geometry and recorded native poses to an offline interactive
+3D replay with orbit controls, six-joint readouts and collision-proxy inspection.
+The [upcoming hardware list](docs/hardware-roadmap.md) tracks YAM, OpenArm, PiPER,
+ARX X5 and PAROL6 as planned additions requiring separate profiles and benchmarks.
+These tools use the `feat/reference-3d-replay` candidate branch; the new
 reference has no learned task policy or measured physical fidelity.
 
 Generate an explicitly synthetic example, then train and verify its output:

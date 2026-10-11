@@ -37,7 +37,7 @@ builtins.__import__=guarded
 from dvidia_training.embodiment_cli import main
 main(sys.argv[2:])
 '''
-        for command in ([], ['benchmark'], ['score-paired'], ['fetch-assets'], ['inspect']):
+        for command in ([], ['benchmark'], ['score-paired'], ['fetch-assets'], ['inspect'], ['export-replay']):
             with self.subTest(command=command):
                 result = subprocess.run([sys.executable, '-S', '-c', code, str(ROOT / 'src'), *command, '--help'],
                                         capture_output=True, text=True, timeout=10)
