@@ -77,7 +77,7 @@ original MIT notice, distributed separately with the benchmark.
 The [complete 30-attempt receipt](../benchmarks/piper-grip-20261011/README.md)
 records a regression: **guarded placement 2/6 versus original placement 4/6**.
 Both controllers complete the normal cases, but at friction 0.55 the original
-completes 2/2 while the guard aborts 0/2 completed tasks. At friction 0.15 the
+completes 2/2 while the guard aborts both attempts (0/2 complete). At friction 0.15 the
 guard withholds qualification, retries once per scene, then aborts; neither
 controller completes those tasks. No successful recovery is demonstrated.
 

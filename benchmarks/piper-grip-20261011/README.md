@@ -74,4 +74,6 @@ and reassessment using drift rate and persistent contact on fresh layouts.
 [Readable complete report](receipt/report.html) · [Exact report](receipt/report.json) ·
 [Whole-command execution measurement](execution.json) ·
 [Research article](https://research.dvidia.org/papers/piper-grip-validation-and-recovery/) ·
-[Hugging Face lab](https://huggingface.co/spaces/Dvidia/robot-simulation-lab)
+[Hugging Face lab](https://huggingface.co/spaces/Dvidia/robot-simulation-lab) ·
+[Immutable hosted evidence](https://huggingface.co/spaces/Dvidia/robot-simulation-lab/tree/bf64e4c3592058d3cf30616f0202e7ffc6cc2b4e/tasks/piper-grip) ·
+[Verified publication receipt](huggingface-publication.json)
