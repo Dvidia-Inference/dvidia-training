@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; object-src 'none'; base-uri 'none'">
+<title>DVIDIA · Actuator Lab</title>
+<style>
+:root{color-scheme:light;--ink:#23332e;--muted:#68736e;--line:#d8ded6;--green:#28674f;--paper:#f8f8f1}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 Georgia,serif;background-image:radial-gradient(#74816b13 .6px,transparent .7px);background-size:4px 4px}
+header{border-bottom:1px solid var(--line);padding:20px 5vw;display:flex;justify-content:space-between;gap:20px;font:13px/1.4 system-ui,sans-serif;letter-spacing:.07em}header b{letter-spacing:.15em}main{max-width:1100px;padding:42px 28px 80px;margin:auto}h1{font-size:clamp(30px,5vw,48px);font-weight:400;line-height:1.15;margin:10px 0 16px}h2{font-size:25px;font-weight:400;margin:0 0 12px}p{max-width:760px}.eyebrow{font:12px system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--green)}.muted{color:var(--muted)}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin:32px 0}.card{padding:18px;border:1px solid var(--line);min-width:0}.card b{display:block;font:25px system-ui,sans-serif}.card span{font:12px system-ui,sans-serif;color:var(--muted)}section{padding:28px 0;border-top:1px solid var(--line)}.controls{display:flex;flex-wrap:wrap;gap:14px;margin:18px 0}label{font:12px system-ui,sans-serif;display:grid;gap:5px}select,button{font:14px system-ui,sans-serif;min-height:44px;height:44px;border:1px solid #aab6a8;background:#fffef8;color:var(--ink);padding:8px 12px;border-radius:3px;max-width:100%}button{cursor:pointer}button:focus-visible,select:focus-visible{outline:3px solid #679983;outline-offset:3px}.scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;font:14px/1.5 system-ui,sans-serif}th,td{text-align:left;padding:13px 8px;border-bottom:1px solid var(--line)}th{font-weight:500;color:var(--muted)}.bar{display:block;width:100%;height:6px;background:#e4e8df;margin-top:7px}.bar i{display:block;height:100%;background:var(--green)}.note{font:13px/1.65 system-ui,sans-serif;max-width:850px}.flow{display:flex;flex-wrap:wrap;gap:8px;font:13px system-ui,sans-serif;margin:20px 0}.flow span{padding:8px 12px;border:1px solid var(--line)}.badge{font:12px system-ui,sans-serif;border:1px solid var(--line);padding:5px 9px;display:inline-block}.details{font:13px/1.65 system-ui,sans-serif}summary{cursor:pointer;min-height:44px;padding:8px 0}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f0f2e9;padding:15px;max-height:400px;overflow:auto;font:12px/1.5 monospace}footer{font:12px system-ui,sans-serif;margin-top:35px;color:var(--muted)}@media(max-width:620px){main{padding:28px 16px 50px}.cards{grid-template-columns:1fr}.card b{font-size:22px}header{padding:16px}.controls>*{width:100%}td,th{padding:12px 6px}}
+</style>
+</head>
+<body>
+<header><b>DVIDIA</b><span>ACTUATOR LAB · LAPTOP PILOT</span></header>
+<main>
+<span class="eyebrow">A small learned movement predictor</span>
+<h1>What changes after a command?</h1>
+<p class="muted">This experiment learns the next joint positions and gripper opening from current measurements and a requested movement. It compares the learned result with simple predictors on separate simulation groups.</p>
+<span class="badge" id="status">Reading retained evidence…</span>
+<div class="cards">
+<div class="card"><b id="size">—</b><span>Saved action-model size</span></div>
+<div class="card"><b id="latency">—</b><span>Warm model computation, p95</span></div>
+<div class="card"><b id="rows">—</b><span>Scored test transitions</span></div>
+</div>
+<section><h2>Prediction error</h2><p class="note muted">Lower error is better. These are next-boundary actuator measurements, not grasp success or shoe placement. Each transition normally spans 20 ms. Longer trajectories and closed-loop control have not been tested here. Transitions are correlated; the held-out evidence comes from two reset groups and six recordings.</p>
+<div class="controls"><label>Evidence slice<select id="slice"><option value="all">All test transitions</option><option value="moving">Moving arm</option><option value="jaw_changing">Changing gripper</option></select></label><label>Measurement<select id="unit"><option value="jaw">Gripper opening · millimetres</option><option value="joints">Joint position · radians</option></select></label></div>
+<div class="scroll"><table><thead><tr><th>Predictor</th><th id="error-unit">RMSE · mm</th><th id="mae-unit">Mean absolute · mm</th><th id="max-unit">Worst absolute · mm</th><th>Scored transitions</th></tr></thead><tbody id="models"></tbody></table></div><p class="note" id="empty"></p><p class="note" id="tradeoff"></p></section>
+<section><h2>Where this fits in a skillspace</h2><div class="flow"><span>Skill goal</span><span>Reviewed recordings</span><span>Robot commands + observations</span><span>Compact learned model</span><span>Task benchmark</span><span>Compatible robot adapter</span></div><p class="note">Human footage supplies visual examples and task structure. Synchronized robot demonstrations supply movement supervision. This pilot connects episode tapes to a compact predictor; it does not train from shoe videos or send commands to a physical arm.</p></section>
+<section><h2>The first shoe task</h2><p>Move one shoe from a marked pickup area into one marked slot, then verify its position, direction and stable release.</p><p class="note muted">Start with a fixed table and camera, one shoe and tucked laces. The separate collection plan records missing conditions and complete failures. A validated shoe environment, sensed object state, robot adapter and physical trials are still required.</p></section>
+<section><h2>Evidence and limits</h2><ul id="limits" class="note"></ul><p class="note">Current observations come from native simulator state. The model uses only current joint position, velocity, gripper gap and issued targets; authored phase, future state and final applied controls are excluded from its inputs.</p><button id="export" type="button">Download exact run receipt</button><details class="details"><summary>Inspect groups, baselines and timing scope</summary><pre id="receipt-view"></pre></details></section>
+<footer>DVIDIA research · Local, offline report · Simulation scope only</footer>
+</main>
+<script id="receipt" type="application/json">__DVIDIA_RECEIPT__</script>
+<script>
+'use strict';
+const raw=JSON.parse(document.getElementById('receipt').textContent), data=JSON.parse(raw);
+const names={action:'Learned · with commands',state:'Learned · state only',persistence:'No movement',constant_velocity:'Current velocity',training_mean:'Training mean movement'};
+const node=id=>document.getElementById(id), metrics=data.metrics||{}, models=metrics.test||{};
+const human=(value,digits=3)=>Number.isFinite(value)?value.toFixed(digits):'Not measured';
+node('status').textContent=data.status==='completed'?'Completed simulation experiment':'Incomplete experiment · inspect retained attempts';
+const artifacts=data.model_artifacts||{}, artifact=artifacts.action||{};
+node('size').textContent=Number.isFinite(artifact.bytes)?human(artifact.bytes/1024,1)+' KiB':'See receipt';
+const timing=data.timings||{}, actionTiming=(timing.inference||{}).action||{};
+node('latency').textContent=Number.isFinite(actionTiming.p95_microseconds)?human(actionTiming.p95_microseconds/1000)+' ms':'See timing receipt';
+node('rows').textContent=Number.isInteger(models.action?.rows)?String(models.action.rows):'Not scored';
+Object.keys(metrics.per_case||{}).forEach(key=>{const opt=document.createElement('option');opt.value='case:'+key;opt.textContent='Case · '+key;node('slice').append(opt)});
+function draw(){
+ const value=node('slice').value, unit=node('unit').value;
+ const selected=value==='all'?models:value.startsWith('case:')?(metrics.per_case||{})[value.slice(5)]:(metrics.slices||{})[value];
+ const key=unit==='jaw'?'jaw_rmse_m':'joint_rmse_rad',scale=unit==='jaw'?1000:1;
+ const suffix=unit==='jaw'?'mm':'rad',digits=unit==='jaw'?3:6;node('error-unit').textContent='RMSE · '+suffix;node('mae-unit').textContent='Mean absolute · '+suffix;node('max-unit').textContent='Worst absolute · '+suffix;node('models').replaceChildren();
+ const entries=Object.entries(names).map(([key,label])=>({key,label,metric:selected?.[key]}));
+ const max=Math.max(...entries.map(item=>Number.isFinite(item.metric?.[key])?item.metric[key]*scale:0),1e-12);
+ entries.forEach(item=>{const row=document.createElement('tr');const name=document.createElement('td');name.textContent=item.label;const error=document.createElement('td');const val=item.metric?.[key];error.textContent=human(Number.isFinite(val)?val*scale:NaN,digits);if(Number.isFinite(val)){const bar=document.createElement('span');bar.className='bar';const fill=document.createElement('i');fill.style.width=Math.max(0,Math.min(100,val*scale/max*100))+'%';bar.append(fill);error.append(bar)}const count=document.createElement('td');count.textContent=Number.isInteger(item.metric?.rows)?String(item.metric.rows):'—';const absolute=document.createElement('td'),worst=document.createElement('td');absolute.textContent=human(Number.isFinite(item.metric?.[unit==='jaw'?'jaw_mae_m':'joint_mae_rad'])?item.metric[unit==='jaw'?'jaw_mae_m':'joint_mae_rad']*scale:NaN,digits);worst.textContent=human(Number.isFinite(item.metric?.[unit==='jaw'?'jaw_max_abs_error_m':'joint_max_abs_error_rad'])?item.metric[unit==='jaw'?'jaw_max_abs_error_m':'joint_max_abs_error_rad']*scale:NaN,digits);row.append(name,error,absolute,worst,count);node('models').append(row)});
+ node('empty').textContent=selected?'':'This slice has no scored evidence in the retained receipt.';const action=selected?.action,persist=selected?.persistence;node('tradeoff').textContent=unit==='jaw'&&Number.isFinite(action?.jaw_rmse_m)&&Number.isFinite(persist?.jaw_rmse_m)&&action.jaw_rmse_m<persist.jaw_rmse_m&&(action.jaw_mae_m>persist.jaw_mae_m||action.jaw_max_abs_error_m>persist.jaw_max_abs_error_m)?'Tradeoff: lower gripper RMSE does not improve every error measure. Mean or worst error is higher than the no-movement baseline in this slice.':'RMSE, mean absolute error and worst error describe different failure patterns; review all three.';
+}
+node('slice').addEventListener('change',draw);node('unit').addEventListener('change',draw);draw();
+(data.limitations||[]).forEach(value=>{const li=document.createElement('li');li.textContent=String(value);node('limits').append(li)});
+node('receipt-view').textContent=JSON.stringify({counts:data.counts,freeze:data.freeze,hardware:data.hardware,timings:data.timings,attempts:data.attempts,matched_branch:data.matched_branch},null,2);
+node('export').addEventListener('click',()=>{const blob=new Blob([raw],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='dvidia-actuator-pilot-report.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});
+</script>
+</body></html>

@@ -1,0 +1,86 @@
+{
+  "format": "dvidia.skillspace-coverage-plan",
+  "schema_version": 1,
+  "plan_id": "shoe-slot-pilot",
+  "plan_revision": 1,
+  "skill": {
+    "name": "Place one shoe into a marked slot · proposed pilot",
+    "goal": "Move one shoe from a marked pickup area into one marked slot and observe stable release. Proposed study criteria are toe direction within 15 degrees of the slot direction, center within 20 mm of its reference, and stability for 1 second. These require calibrated observable measurements and have not been validated as task criteria.",
+    "operating_envelope": "Proposed physical capture plan: one shoe, fixed table and calibrated camera, documented reachable pickup/goal regions, and verified arm payload and gripper grasp compatibility. Start with tucked or absent loose laces, no clutter, and observable pickup/release. Pair matching, arbitrary footwear, autonomous physical operation and shoe simulation are outside this plan. Per-condition group quotas estimate collection workload; they are not sufficient training sample counts."
+  },
+  "cases": [
+    {
+      "id": "nominal-placement",
+      "label": "Complete marked-slot placement",
+      "brief": "Record a complete supervised robot attempt from the initial shoe state through grasp, transfer, release and observed final stability. Retain synchronized camera frames, measured robot state and issued commands. This five-group target is a revisable workload estimate, not a known training threshold.",
+      "outcome": "success",
+      "required_groups": 5,
+      "priority": 8
+    },
+    {
+      "id": "different-shoe-pair",
+      "label": "Different physical shoe pair",
+      "brief": "Use a different physical pair within the verified grasp/payload envelope; retain its stable pair identity for both left and right shoes and every related cut. Document the grasp region, material and geometry. This five-group target estimates workload and does not establish generalization.",
+      "outcome": "success",
+      "required_groups": 5,
+      "priority": 9
+    },
+    {
+      "id": "rotated-start",
+      "label": "Changed initial orientation",
+      "brief": "Vary the shoe's initial toe direction within the documented reachable and observable envelope. Preserve the complete corrective placement and final orientation measurement. The three-group target is a planning estimate; it does not enumerate every possible orientation.",
+      "outcome": "success",
+      "required_groups": 3,
+      "priority": 7
+    },
+    {
+      "id": "goal-offset",
+      "label": "Changed slot position",
+      "brief": "Move the marked slot to a documented offset within the verified workspace. Record its calibrated position and direction, the complete attempt and the final measured result. The three-group target estimates workload; do not exceed reach or collision-clearance limits to fill the cell.",
+      "outcome": "success",
+      "required_groups": 3,
+      "priority": 7
+    },
+    {
+      "id": "empty-or-missed-grasp",
+      "label": "Observed empty or missed grasp",
+      "brief": "Retain a genuine unsuccessful supervised attempt with the jaws and shoe visible. Distinguish a requested closure from measured contact and retention. Do not induce an unsafe drop or reach to create a negative example. The two-group target estimates failure-evidence workload.",
+      "outcome": "failure",
+      "required_groups": 2,
+      "priority": 10
+    },
+    {
+      "id": "supervised-recovery",
+      "label": "Correction after a failed grasp",
+      "brief": "Record the initial missed grasp, a supervised corrective attempt and its observed successful placement in one complete episode. Retain all issued commands and identify operator assistance. The two-group target is an estimate, not evidence that an autonomous recovery policy exists.",
+      "outcome": "recovery",
+      "required_groups": 2,
+      "priority": 9
+    },
+    {
+      "id": "changed-lighting",
+      "label": "Different observable lighting",
+      "brief": "Record a complete placement under a documented lighting change while the shoe, gripper and final slot remain measurable. Retain camera/calibration identity and measurement uncertainty. The three-group target estimates workload; it does not certify visual robustness.",
+      "outcome": "success",
+      "required_groups": 3,
+      "priority": 6
+    }
+  ],
+  "benchmark": {
+    "status": "blocked",
+    "environment": "A validated shoe-organizing task environment and compatible physical robot adapter have not been supplied.",
+    "reason": "The existing native arm adapter models a bounded upright rigid box, not shoe geometry, deformation, laces or calibrated hardware. This capture plan contains no footage, executed shoe benchmark, trained shoe policy or physical qualification.",
+    "success_predicate": "Proposed, unvalidated: a calibrated observation verifies grasp, transfer and release of one shoe; toe direction is within 15 degrees, center within 20 mm, and the final shoe remains stable for 1 second. Freeze measurement procedures and task criteria before independent confirmation.",
+    "failure_cases": [
+      "Empty grasp or unsuccessful pickup",
+      "Slip, drop or loss of retention",
+      "Final shoe position or toe direction outside the proposed tolerance",
+      "Release followed by unstable final placement",
+      "Missing, stale or uncalibrated object/robot measurements",
+      "Start, goal, payload or grasp region outside the verified hardware envelope",
+      "Unsupported shoe geometry or loose-lace interaction",
+      "False declaration of task completion"
+    ]
+  },
+  "evidence": []
+}
