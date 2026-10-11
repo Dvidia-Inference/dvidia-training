@@ -13,13 +13,13 @@ hardware controller or an acquired shoe skill.
 
 ## Install, provision once, then run offline
 
-Use the candidate `feat/hardware-reference-v0.1` source branch until this feature
+Use the candidate `feat/reference-3d-replay` source branch until this feature
 is released. Python 3.12+, NumPy 2.5.3 and the optional MuJoCo 3.15.0 runtime are
 required for simulation. FFmpeg is unnecessary for this mechanics-only bench.
 Use `.venv\Scripts\COMMAND.exe` in Windows PowerShell.
 
 ```sh
-git clone --branch feat/hardware-reference-v0.1 https://github.com/Dvidia-Inference/dvidia-training.git
+git clone --branch feat/reference-3d-replay https://github.com/Dvidia-Inference/dvidia-training.git
 cd dvidia-training
 python3.12 -m venv .venv
 .venv/bin/python -m pip install '.[arm]'
@@ -43,13 +43,48 @@ After provisioning, these commands use no network:
 .venv/bin/dvidia-embodiment inspect runs/reference-bench
 ```
 
-Open `runs/reference-bench/report.html` for a local schematic replay and timing /
-numerical comparisons. Its poses come from native physics; it draws link and pad
-centers, not the full mesh or contact surfaces. Optional native mesh viewing is
+The original `runs/reference-bench/report.html` is a flat projection of recorded
+3D link/pad centers with timing and numerical comparisons. The native physics
+already models three-dimensional positions and orientations; the arm's six DOFs
+are six rotating joints, not six spatial dimensions.
+
+For an interactive 3D replay of the actual mesh and collision geometry, export
+the frozen poses without rerunning physics:
+
+```sh
+.venv/bin/dvidia-embodiment export-replay runs/reference-assets runs/reference-bench --output runs/reference-3d
+.venv/bin/python -m http.server 8290 --bind 127.0.0.1 --directory runs/reference-3d
+```
+
+Open `http://127.0.0.1:8290/`. Rotate/zoom the view, inspect all six arm joints and
+the coupled gripper, switch visual meshes/collision proxies, and scrub the
+recorded timeline. This browser requires WebGL2; ordinary integrated graphics
+may suffice, but frame rate is measured per device rather than guaranteed. The
+viewer is locally bundled and requests no CDN, API or model service. Node is
+needed only to rebuild its browser bundle from source, not to export or view it.
+
+The exporter verifies the frozen receipt and pinned assets, reconstructs recorded
+joint/linkage poses with native forward kinematics and checks TCP/pad/link-center
+agreement before publishing geometry and transforms. It never advances physics
+or changes the original benchmark. Binary meshes/transforms are float32 display
+data; the original numerical receipt stays intact under `receipt/`. Playback is
+recorded simulation, not live physics, a trained task or a hardware controller.
+Original asset licenses and bundled Three.js notices accompany every export.
+
+Reconstruction requires the recorded compiled-model hash to match. Native
+compilation can differ across platforms; a mismatch is rejected rather than
+silently substituting another model. In that case, run a new benchmark on the
+current machine and export that receipt, retaining both sets of results. An
+already exported browser replay is portable and needs no native simulator.
+
+Optional native mesh viewing is
 available with `dvidia-embodiment view runs/reference-assets`. On macOS launch
 the module using `.venv/bin/mjpython -m dvidia_training.embodiment_cli view
 runs/reference-assets`; MuJoCo's graphical viewer needs its supported desktop
 graphics context. Headless benchmarking requires no GPU or graphical viewer.
+
+The [upcoming hardware list](hardware-roadmap.md) records the next arm candidates
+and the evidence required for each supported hardware profile.
 
 `inspect` checks bounded regular files, hashes and attempt-count consistency.
 That establishes artifact consistency, not authentic measurements or recomputed

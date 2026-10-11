@@ -83,6 +83,14 @@ jobs:
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
         with:
           python-version: "3.12"
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "22"
+      - name: Verify reproducible local viewer bundle
+        run: |
+          npm ci --ignore-scripts --prefix viewer
+          npm run --prefix viewer build
+          git diff --exit-code -- src/dvidia_training/reference_replay.bundle.js src/dvidia_training/reference_replay.third-party.txt
       - name: Provision pinned reference models
         run: |
           python -m pip install ".[arm]"
@@ -91,17 +99,21 @@ jobs:
       - name: Test compiled mechanics, collisions and replay scoring
         env:
           DVIDIA_REFERENCE_ASSETS: runs/reference-assets-ci
-        run: python -m unittest tests.test_reference_sim tests.test_embodiment_cli tests.test_embodiment_calibration -v
+        run: python -m unittest tests.test_reference_sim tests.test_reference_replay tests.test_embodiment_cli tests.test_embodiment_calibration -v
       - name: Retain all numerical reference attempts
         run: |
           dvidia-embodiment benchmark runs/reference-assets-ci --hands --output runs/reference-bench-ci --repeats 1 --seconds 2
           dvidia-embodiment inspect runs/reference-bench-ci
+      - name: Export native mesh and recorded 3D poses
+        run: dvidia-embodiment export-replay runs/reference-assets-ci runs/reference-bench-ci --output runs/reference-replay-ci
       - name: Preserve reference evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: hardware-reference-bench
-          path: runs/reference-bench-ci
+          path: |
+            runs/reference-bench-ci
+            runs/reference-replay-ci
           if-no-files-found: ignore
 
   motion:

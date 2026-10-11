@@ -105,10 +105,17 @@ def main(argv=None):
     score.add_argument("--output", type=Path, required=True)
     inspect = commands.add_parser("inspect", help="Verify bounded report artifact integrity; no native simulator needed")
     inspect.add_argument("directory", type=Path)
+    replay = commands.add_parser("export-replay", help="Export actual native geometry and recorded poses to an offline interactive 3D replay")
+    replay.add_argument("assets", type=Path)
+    replay.add_argument("bundle", type=Path)
+    replay.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
     try:
         if args.command == "inspect":
             result = inspect_bundle(args.directory)
+        elif args.command == "export-replay":
+            from .reference_replay import export_replay
+            result = export_replay(args.assets, args.bundle, args.output)
         elif args.command == "score-paired":
             from .embodiment_calibration import load_trace, score_trace
             result = score_trace(load_trace(args.trace))

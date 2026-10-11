@@ -1,0 +1,11 @@
+import {readFile, writeFile} from 'node:fs/promises';
+import {createRequire} from 'node:module';
+import {fileURLToPath} from 'node:url';
+import path from 'node:path';
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const require = createRequire(path.join(root, 'viewer/package.json'));
+const {build} = require('esbuild');
+await build({entryPoints:[path.join(root,'src/dvidia_training/reference_replay.js')],outfile:path.join(root,'src/dvidia_training/reference_replay.bundle.js'),bundle:true,minify:true,format:'iife',target:['es2020'],platform:'browser',alias:{'three':path.join(root,'viewer/node_modules/three/build/three.module.js'),'three/addons/controls/OrbitControls.js':path.join(root,'viewer/node_modules/three/examples/jsm/controls/OrbitControls.js')},nodePaths:[path.join(root,'viewer/node_modules')],legalComments:'none',charset:'utf8',banner:{js:'/* DVIDIA reference replay. MIT; bundled Three.js r180, MIT. See reference_replay.third-party.txt. */'}});
+const license = await readFile(path.join(root,'viewer/node_modules/three/LICENSE'),'utf8');
+await writeFile(path.join(root,'src/dvidia_training/reference_replay.third-party.txt'),'DVIDIA self-hosted reference replay\n\nThree.js 0.180.0 and OrbitControls\nhttps://github.com/mrdoob/three.js/tree/r180\n\n'+license);
+console.log('Built reference_replay.bundle.js and reference_replay.third-party.txt with pinned local dependencies.');
