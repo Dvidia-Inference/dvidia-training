@@ -448,6 +448,29 @@ class RobotSimulationPreparationTests(unittest.TestCase):
         self.assertIn('canonical deterministic gzip',card)
         self.assertIn('dvidia-piper-grip inspect',card)
 
+    def test_grip_leading_completion_comparison_is_derived_and_exposes_regression(self):
+        report,_=piper_grip_fixture(self.root/'grip-summary')
+        outcomes = (
+            ((2,2,1),(1,0,0),'baseline 5/6 versus guarded 1/6',True),
+            ((0,0,0),(0,0,0),'baseline 0/6 versus guarded 0/6',False),
+            ((1,0,0),(1,2,0),'baseline 1/6 versus guarded 3/6',False),
+        )
+        for baseline,guarded,expected,regressed in outcomes:
+            with self.subTest(expected=expected):
+                candidate=deepcopy(report)
+                for variant,counts in (('baseline_placement',baseline),('guarded_placement',guarded)):
+                    rows=[row for row in candidate['summary'] if row['variant']==variant]
+                    for row,count in zip(rows,counts):
+                        row['success']=count
+                summary=prepare._grip_summary(candidate)
+                self.assertTrue(summary.startswith('Placement completion: '+expected+'.'))
+                self.assertEqual('This cohort does not show improved placement success.' in summary,regressed)
+                self.assertIn('Retries and qualification decisions do not imply successful recovery.',summary)
+                card=prepare._piper_grip_card(candidate,'a'*40)
+                self.assertIn('<strong>Placement completion: '+expected+'.</strong>',card)
+                self.assertLess(card.index('Placement completion:'),card.index('privileged native state'))
+                self.assertEqual('This cohort does not show improved placement success.' in card,regressed)
+
     def test_grip_source_scope_pairing_denominator_decoded_seals_and_bytes_are_rechecked(self):
         from dvidia_training import piper_grip_benchmark as grip
         for variant in ('scope','count','summary','drop','decoded_hash','changed','private','unlisted','symlink'):

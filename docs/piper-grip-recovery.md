@@ -71,3 +71,20 @@ The measured host and timing scope accompany each report. These CPU results do
 not establish universal minimum RAM or a sensor-to-actuator real-time guarantee.
 DVIDIA's original tooling is MIT; the pinned upstream PiPER model retains its
 original MIT notice, distributed separately with the benchmark.
+
+## Frozen confirmation result
+
+The [complete 30-attempt receipt](../benchmarks/piper-grip-20261011/README.md)
+records a regression: **guarded placement 2/6 versus original placement 4/6**.
+Both controllers complete the normal cases, but at friction 0.55 the original
+completes 2/2 while the guard aborts 0/2 completed tasks. At friction 0.15 the
+guard withholds qualification, retries once per scene, then aborts; neither
+controller completes those tasks. No successful recovery is demonstrated.
+
+The measured runtime is commit `3ee94706f436690c6d1d8554eda9202d23620e3c`,
+seed 731209, executed from an installed wheel with network denied. The full
+30-attempt command takes 104.261 wall seconds for 600 simulated seconds,
+including compression and final inspection on the recorded CPU host. All
+53 over-budget computation windows remain visible; real-time control is not
+established. The regression identifies a concrete next experiment, rather than
+a qualified replacement for the original controller.

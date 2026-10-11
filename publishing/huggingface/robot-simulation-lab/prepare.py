@@ -357,24 +357,34 @@ def _sealed_piper_grip(directory):
 
 
 def _grip_summary(report,*,html=False):
+    placement = {}
+    for variant in ('baseline_placement','guarded_placement'):
+        grouped = [row for row in report['summary'] if row['variant']==variant]
+        placement[variant] = (sum(row['success'] for row in grouped),sum(row['attempted'] for row in grouped))
+    baseline,guarded = placement['baseline_placement'],placement['guarded_placement']
+    comparison = f'Placement completion: baseline {baseline[0]}/{baseline[1]} versus guarded {guarded[0]}/{guarded[1]}.'
+    regression = ('This cohort does not show improved placement success.'
+                  if baseline[1] and guarded[1] and guarded[0]*baseline[1]<baseline[0]*guarded[1] else '')
+    recovery = 'Retries and qualification decisions do not imply successful recovery.'
     note = (f"Frozen {report['cohort']} cohort: {report['attempted']} planned attempts across six synthetic scenes. "
             'Two shared layouts at each friction; five variants per scene. Counts are descriptive, not physical reliability or detector accuracy.')
     rows = [f"μ={row['friction']:.2f} / {row['variant']}: {row['success']}/{row['attempted']} completed, {row['valid']} numerically valid"
             for row in report['summary']]
     if html:
-        return '<strong>'+escape(note)+'</strong><br>'+'<br>'.join(escape(line) for line in rows)
-    return note+'\n\n'+'\n'.join('- '+line for line in rows)
+        return ('<p><strong>'+escape(comparison)+'</strong>'+(' '+escape(regression) if regression else '')+'</p>'
+                '<p>'+escape(recovery)+'</p><p>'+escape(note)+'</p>'+'<br>'.join(escape(line) for line in rows))
+    return '\n\n'.join(line for line in (comparison,regression,recovery,note) if line)+'\n\n'+'\n'.join('- '+line for line in rows)
 
 
 def _piper_grip_card(report,source_commit):
     if report is None:
         return ''
     return ('<article class="profile"><span class="status">PiPER guarded grip comparison · synthetic</span>'
-            '<h2>Test the grip. Inspect recovery.</h2><p>Baseline and guarded controllers use privileged native state. '
+            '<h2>Test the grip. Inspect recovery.</h2><div class="summary">'+_grip_summary(report,html=True)+
+            '</div><p>Baseline and guarded controllers use privileged native state. '
             'Each has its own matched open-jaw replay; a shared hold control remains. Qualification decisions, retries, '
             'alarms, unresolved opportunities and aborts are retained. These are authored policies with uncalibrated '
-            'contact, not learned skills or a physically qualified detector.</p><div class="summary">'+_grip_summary(report,html=True)+
-            '</div><div class="links"><a href="tasks/piper-grip/report.html">Full paired comparison ↗</a>'
+            'contact, not learned skills or a physically qualified detector.</p><div class="links"><a href="tasks/piper-grip/report.html">Full paired comparison ↗</a>'
             '<a href="tasks/piper-grip/report.json">All outcomes and diagnostics ↗</a>'
             '<a href="tasks/piper-grip/protocol.json">Frozen guard and evaluation contract ↗</a>'
             '<a href="tasks/piper-grip/integrity.json">Stored and decoded attempt hashes ↗</a>'
