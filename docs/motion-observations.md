@@ -64,8 +64,9 @@ reports an unsupported video format instead of substituting a different source.
 
 ## Analyze your permitted footage
 
-Use a stationary camera and a textured, clearly visible target for the first
-trial. Keep original frame times and the complete motion/outcome. The input
+Use a stationary camera, an unrotated square-pixel recording and a textured,
+clearly visible target for the first trial. Keep original frame times and the
+complete motion/outcome. The input
 uses the existing strict [`dvidia.observation-source.v1` manifest](observations.md#supply-permitted-videos),
 including original SHA-256, session/recording groups, credit, license and an
 explicit `local_analysis` permission declaration. The declaration records the
@@ -83,10 +84,15 @@ Choose one listed episode and manually specify its first-frame region:
 
 `--box` is normalized `x1,y1,x2,y2`, from 0 to 1, in the decoded source raster.
 It is a human-authored region, not a model detection or proof of physical object
-identity. Automatic rotation is disabled; a phone recording's rotation metadata
-is not applied to this coordinate system. The first decoded image is retained
-as `seed.png` for inspection. Box drawing/correction and automatic semantic
-object selection remain subsequent interface work.
+identity. Intake and replay reject nonzero rotation, nonidentity display
+matrices and explicit non-square pixel aspect ratios so browser overlays cannot
+silently use different coordinates from the tracker. Undefined aspect metadata
+uses the square-pixel raster default; it does not establish physical calibration.
+Automatic rotation is disabled. If normalization is needed, keep the original,
+record the normalized copy's new hash and choose new seed coordinates for it.
+The first decoded image is retained as `seed.png` for inspection. Box
+drawing/correction and automatic semantic object selection remain subsequent
+interface work.
 
 ## What the baseline computes
 

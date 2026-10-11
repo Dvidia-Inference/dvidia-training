@@ -20,7 +20,7 @@ import subprocess
 import threading
 import time
 
-from .footage_data import _local_file, canonical, probe_video
+from .footage_data import _json, _local_file, canonical, probe_video
 from .observation_pipeline import validate_manifest, validate_timebase
 from .observations import box, digest, file_hash, identity, number, text
 
@@ -30,6 +30,8 @@ MAX_DECODE_SECONDS = 120
 MAX_STDERR_BYTES = 2 * 1024 * 1024
 MAX_STDERR_LINE_BYTES = 8192
 MAX_TIMESTAMP_QUEUE = 16
+MAX_GEOMETRY_BYTES = 64 * 1024
+MAX_GEOMETRY_SECONDS = 10
 MAX_TRACK_GAP_SECONDS = 0.25
 MIN_FEATURES = 6
 FEATURE_RECIPE = {
@@ -46,6 +48,7 @@ FEATURE_RECIPE = {
 }
 LIMITATIONS = [
     'Fixed-camera scope; camera movement is not compensated or detected.',
+    'Unrotated square-pixel display geometry only; explicit aspect/rotation/transforms are checked before decoding.',
     'Human-authored seed and label; no automatic semantic object detection.',
     'Image anchor from initial feature translation, not a physical object centroid.',
     'Units are analysis-image pixels and pixels/second, not metric 3D motion.',
@@ -84,6 +87,143 @@ def _stop_process(process):
         # owned direct child. Never signal an unrelated group or process.
         if process.poll() is None:
             process.kill()
+
+
+def _display_geometry_from_metadata(metadata):
+    """Allow only the browser's identity raster display geometry.
+
+    Absent/undefined SAR means no aspect override: a browser displays the coded
+    raster with square pixels. Explicit non-square ratios or display transforms
+    cannot be silently erased by the motion decoder's setsar/noautorotate flags.
+    """
+    if type(metadata) is not dict:
+        raise MotionVideoError('Display geometry metadata must be a data-only object.')
+    streams = metadata.get('streams')
+    if type(streams) is not list or len(streams) != 1 or type(streams[0]) is not dict:
+        raise MotionVideoError('Could not establish one primary video display geometry.')
+    stream = streams[0]
+    sar = stream.get('sample_aspect_ratio')
+    undefined = sar is None or sar in ('N/A', '0:1')
+    if not undefined:
+        if type(sar) is not str or not re.fullmatch(r'[0-9]{1,10}:[0-9]{1,10}', sar):
+            raise MotionVideoError('Sample aspect ratio is unknown; use a square-pixel source.')
+        numerator, denominator = (int(value) for value in sar.split(':'))
+        if numerator <= 0 or denominator <= 0 or numerator != denominator:
+            raise MotionVideoError('Non-square sample aspect ratio is unsupported; source/display anchors would differ.')
+
+    def check_rotation(value):
+        if type(value) not in (str, int, float) or (type(value) is str and len(value) > 80):
+            raise MotionVideoError('Unknown display rotation is unsupported.')
+        try:
+            angle = float(value)
+        except (ValueError, OverflowError) as exc:
+            raise MotionVideoError('Unknown display rotation is unsupported.') from exc
+        if not math.isfinite(angle) or angle != 0:
+            raise MotionVideoError('Rotated video is unsupported; use an unrotated source with identity display geometry.')
+
+    def check_tags(value):
+        if type(value) is not dict:
+            raise MotionVideoError('Display rotation tags must be a data-only object.')
+        for key, angle in value.items():
+            if key.lower() in ('rotate', 'rotation'):
+                check_rotation(angle)
+
+    check_tags(stream.get('tags', {}))
+    container = metadata.get('format', {})
+    if type(container) is not dict:
+        raise MotionVideoError('Display container metadata must be a data-only object.')
+    check_tags(container.get('tags', {}))
+    side_data = stream.get('side_data_list', [])
+    if type(side_data) is not list or len(side_data) > 64:
+        raise MotionVideoError('Video display side data exceeds the supported envelope.')
+    matrix_count = 0
+    identity_matrix = [65536, 0, 0, 0, 65536, 0, 0, 0, 1073741824]
+    for entry in side_data:
+        if type(entry) is not dict:
+            raise MotionVideoError('Video display side data must contain data-only objects.')
+        if 'rotation' in entry:
+            check_rotation(entry['rotation'])
+        if entry.get('side_data_type') == 'Display Matrix' or 'displaymatrix' in entry:
+            matrix_count += 1
+            matrix = entry.get('displaymatrix')
+            if type(matrix) is not str or len(matrix) > 2048:
+                raise MotionVideoError('Unknown display matrix is unsupported; identity geometry is required.')
+            lines = matrix.strip().splitlines()
+            if len(lines) != 3:
+                raise MotionVideoError('Unknown display matrix is unsupported; identity geometry is required.')
+            values = []
+            for row_index, line in enumerate(lines):
+                match = re.fullmatch(r'\s*([0-9a-fA-F]{8}):\s*(-?[0-9]{1,12})\s+(-?[0-9]{1,12})\s+(-?[0-9]{1,12})\s*', line)
+                if match is None or int(match.group(1), 16) != row_index:
+                    raise MotionVideoError('Unknown display matrix is unsupported; identity geometry is required.')
+                values.extend(int(match.group(index)) for index in (2, 3, 4))
+            if values != identity_matrix or matrix_count > 1:
+                raise MotionVideoError('Nonidentity display matrix is unsupported; reflected, rotated or transformed overlays would misalign.')
+    return {'effective_sample_aspect_ratio': [1, 1], 'declared_sample_aspect_ratio': sar,
+            'sample_aspect_ratio_basis': 'unspecified-raster-default' if undefined else 'explicit-square-pixels',
+            'display_rotation_degrees': 0, 'display_matrix': 'explicit-identity' if matrix_count else 'absent-identity-default',
+            'geometry_status': 'identity_display_geometry'}
+
+
+def _probe_display_geometry(video, *, timeout_seconds=MAX_GEOMETRY_SECONDS):
+    """Read at most 64 KiB of local display metadata within a 10-second watchdog."""
+    command = ['ffprobe', '-v', 'error', '-protocol_whitelist', 'file',
+               '-format_whitelist', 'mov,matroska,webm,avi', '-select_streams', 'v:0',
+               '-show_entries', 'stream=sample_aspect_ratio:stream_tags=rotate,rotation,ROTATE,ROTATION:'
+               'stream_side_data=side_data_type,displaymatrix,rotation:format_tags=rotate,rotation,ROTATE,ROTATION',
+               '-of', 'json', str(video)]
+    try:
+        process = subprocess.Popen(command, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
+                                   stderr=subprocess.DEVNULL, start_new_session=(os.name == 'posix'))
+    except OSError as exc:
+        raise MotionVideoError('ffprobe is unavailable for the local display geometry check.') from exc
+    timed_out = threading.Event()
+
+    def expire():
+        timed_out.set()
+        _stop_process(process)
+
+    watchdog = threading.Timer(timeout_seconds, expire)
+    watchdog.daemon = True
+    watchdog.start()
+    try:
+        raw = process.stdout.read(MAX_GEOMETRY_BYTES + 1)
+        if timed_out.is_set():
+            raise MotionVideoError('Local display geometry check exceeded its 10-second watchdog.')
+        if len(raw) > MAX_GEOMETRY_BYTES:
+            raise MotionVideoError('Display geometry metadata exceeds its 64 KiB limit.')
+        try:
+            result = process.wait(timeout=2)
+        except subprocess.TimeoutExpired as exc:
+            raise MotionVideoError('Local display geometry probe did not exit after its bounded output.') from exc
+        if result:
+            raise MotionVideoError('Could not inspect local display geometry; no external media was fetched.')
+        try:
+            metadata = _json(raw, maximum=MAX_GEOMETRY_BYTES)
+        except ValueError as exc:
+            raise MotionVideoError('Display geometry probe did not return bounded finite JSON metadata.') from exc
+        return _display_geometry_from_metadata(metadata)
+    finally:
+        watchdog.cancel()
+        _stop_process(process)
+        try:
+            process.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            pass
+        process.stdout.close()
+
+
+def validate_display_geometry(video):
+    """Return bounded identity-display metadata or reject the local clip.
+
+    This public intake/replay guard does not rewrite media. Absent/undefined SAR
+    is recorded as the square-pixel raster default; explicit non-square aspect,
+    nonzero rotation or a nonidentity/unknown display matrix is rejected.
+    """
+    video = Path(video)
+    if video.is_symlink() or not video.is_file() or not 0 < video.stat().st_size <= 128 * 1024 * 1024:
+        raise MotionVideoError('Display geometry requires a bounded, regular local video file.')
+    return _probe_display_geometry(video.resolve())
 
 
 def _decoded_frames(video, width, height, *, sample_hz, max_frames, duration,
@@ -359,7 +499,10 @@ def analyze_video(manifest_path, episode_id, output, *, seed_box, label='object'
                 'cadence_note': 'Velocity needs two actual observations no more than 0.15 seconds apart; low source/sample cadence can prevent every forecast.',
                 'processing_budget': {'seconds': 150, 'enforcement': 'cooperative check between processed frames; native tracking call is not preempted'},
                 'timebase': 'FFmpeg showinfo integer input PTS multiplied by declared rational time base; zero origin required',
-                'video_rotation': 'automatic rotation disabled; seed coordinates use decoded source raster',
+                'video_rotation': 'identity display geometry required; automatic rotation disabled; seed coordinates use decoded source raster',
+                'display_geometry_policy': 'explicit non-square SAR and nonzero rotation/nonidentity display matrices rejected; absent SAR uses square-pixel raster default',
+                'display_geometry_probe_limits': {'maximum_stdout_bytes': MAX_GEOMETRY_BYTES,
+                                                  'watchdog_seconds': MAX_GEOMETRY_SECONDS},
                 'hardware': {'platform': platform.system(), 'machine': platform.machine()},
                 'implementation_sha256': {'motion_video.py': file_hash(Path(__file__)),
                                           'observation_pipeline.py': file_hash(Path(__file__).with_name('observation_pipeline.py'))},
@@ -381,17 +524,18 @@ def analyze_video(manifest_path, episode_id, output, *, seed_box, label='object'
         if info['duration_seconds'] > max_duration_seconds or max(info['width'], info['height']) > 4096:
             raise MotionVideoError('Source exceeds the selected duration or 4096-pixel source-side limit.')
         validate_timebase(source_path, info)
+        display_geometry = validate_display_geometry(source_path)
         target = output / ('original' + source_path.suffix.lower())
         shutil.copyfile(source_path, target)
         if file_hash(target) != actual_hash:
             raise MotionVideoError('Original changed during local intake.')
         width, height = _dimensions(info['width'], info['height'])
-        source.update(bytes=target.stat().st_size, timing=info)
+        source.update(bytes=target.stat().st_size, timing=info, display_geometry=display_geometry)
         media = {'path': target.name, 'sha256': actual_hash, 'bytes': target.stat().st_size}
         protocol.update(original_image_size_pixels=[info['width'], info['height']],
                         analysis_image_size_pixels=[width, height],
                         source_to_analysis_scale_xy=[width / info['width'], height / info['height']],
-                        source_sha256=actual_hash)
+                        source_sha256=actual_hash, display_geometry=display_geometry)
         timings['intake_seconds'] = time.monotonic() - stage_started
         stage = 'dependency_setup'
         stage_started = time.monotonic()

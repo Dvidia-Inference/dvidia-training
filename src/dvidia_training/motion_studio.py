@@ -120,6 +120,11 @@ def load_motion_run(path):
         if (type(source) is not dict or source.get('sha256') != media['sha256']
                 or source.get('bytes') != media['bytes'] or protocol.get('source_sha256') != media['sha256']):
             raise ValueError('Motion media no longer matches its declared original.')
+        from .motion_video import validate_display_geometry
+        display_geometry = validate_display_geometry(video)
+        if protocol.get('display_geometry') is not None or source.get('display_geometry') is not None:
+            if protocol.get('display_geometry') != display_geometry or source.get('display_geometry') != display_geometry:
+                raise ValueError('Motion display geometry differs from the recorded source.')
     elif run['status'] == 'completed':
         raise ValueError('A completed motion run requires copied source media.')
     if run['status'] == 'completed' and not rows:

@@ -87,6 +87,8 @@ class MotionVideoTest(unittest.TestCase):
         self.assertEqual(receipt['seed']['kind'], 'human_authored_image_region')
         self.assertEqual(receipt['protocol']['analysis_image_size_pixels'], [160, 120])
         self.assertEqual(receipt['protocol']['original_image_size_pixels'], [160, 120])
+        self.assertEqual(receipt['protocol']['display_geometry']['geometry_status'], 'identity_display_geometry')
+        self.assertEqual(receipt['source']['display_geometry']['effective_sample_aspect_ratio'], [1, 1])
         self.assertEqual(file_hash(self.root/'run'/'original.mp4'), file_hash(video))
         self.assertEqual(receipt['media']['bytes'], video.stat().st_size)
         self.assertEqual(receipt['protocol_sha256'], digest(receipt['protocol']))
@@ -163,6 +165,88 @@ class MotionVideoTest(unittest.TestCase):
         self.assertEqual(receipt['status'], 'failed')
         self.assertEqual(receipt['errors'][0]['stage'], 'intake')
         self.assertEqual(receipt['rows'], [])
+
+    def rotated_video(self, source, angle):
+        """Create real track rotation, accounting for FFmpeg metadata changes."""
+        target = self.root / f'rotation-{angle}.mp4'
+        commands = [
+            ['ffmpeg', '-hide_banner', '-loglevel', 'error', '-nostdin', '-y',
+             '-i', str(source), '-map', '0', '-c', 'copy',
+             '-metadata:s:v:0', f'rotate={angle}', str(target)],
+            ['ffmpeg', '-hide_banner', '-loglevel', 'error', '-nostdin', '-y',
+             '-display_rotation', str(angle), '-i', str(source),
+             '-map', '0', '-c', 'copy', str(target)],
+        ]
+        for command in commands:
+            result = subprocess.run(command, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
+                                    stderr=subprocess.PIPE, timeout=20, check=False)
+            if result.returncode:
+                continue
+            proof = subprocess.run(['ffprobe', '-v', 'error', '-select_streams', 'v:0',
+                '-show_entries', 'stream_tags=rotate:stream_side_data=side_data_type,displaymatrix,rotation',
+                '-of', 'json', str(target)], stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE, timeout=10, check=False)
+            if proof.returncode or len(proof.stdout) > 65536:
+                continue
+            stream = json.loads(proof.stdout)['streams'][0]
+            angles = [entry.get('rotation', 0) for entry in stream.get('side_data_list', [])]
+            if 'rotate' in stream.get('tags', {}):
+                angles.append(stream['tags']['rotate'])
+            if any(float(value) != 0 for value in angles):
+                return target
+        self.skipTest(f'Installed FFmpeg cannot encode inspectable {angle}-degree stream-copy rotation metadata.')
+
+    def assert_geometry_intake_rejected(self, video, message):
+        receipt = self.analyze(video)
+        self.assertEqual(receipt['status'], 'failed')
+        self.assertEqual(receipt['errors'][0]['stage'], 'intake')
+        self.assertIn(message, receipt['errors'][0]['error'])
+        self.assertEqual(receipt['rows'], [])
+        self.assertEqual(receipt['frames'], [])
+        self.assertIsNone(receipt['media'])
+        self.assertFalse((self.root/'run'/'seed.png').exists())
+        self.assertFalse(any((self.root/'run').glob('original.*')))
+        self.assertTrue((self.root/'run'/'run.json').is_file())
+
+    def test_actual_90_degree_metadata_rotation_is_rejected_before_decode(self):
+        source = self.video(count=3)
+        self.assert_geometry_intake_rejected(self.rotated_video(source, 90), 'Rotated video')
+
+    def test_actual_180_degree_metadata_rotation_is_rejected_before_decode(self):
+        source = self.video(count=3)
+        self.assert_geometry_intake_rejected(self.rotated_video(source, 180), 'Rotated video')
+
+    def test_actual_anamorphic_sample_aspect_ratio_is_rejected_before_decode(self):
+        video = self.video(count=3, pts_filter='setsar=2/1')
+        self.assert_geometry_intake_rejected(video, 'Non-square sample aspect ratio')
+
+    def test_display_matrix_requires_exact_identity_even_if_rotation_is_zero(self):
+        identity = '\n00000000: 65536 0 0\n00000001: 0 65536 0\n00000002: 0 0 1073741824\n'
+        matrix = {'side_data_type': 'Display Matrix', 'displaymatrix': identity, 'rotation': 0}
+        metadata = {'streams': [{'sample_aspect_ratio': '1:1', 'side_data_list': [matrix]}]}
+        self.assertEqual(mv._display_geometry_from_metadata(metadata)['display_matrix'], 'explicit-identity')
+        for value in (identity.replace('65536 0 0', '-65536 0 0', 1),
+                      identity.replace('65536 0 0', '65536 5 0', 1),
+                      identity.replace('0 0 1073741824', '100 0 1073741824'),
+                      'unknown display matrix'):
+            with self.subTest(value=value), self.assertRaises(mv.MotionVideoError):
+                mv._display_geometry_from_metadata({'streams': [{'sample_aspect_ratio': '1:1',
+                    'side_data_list': [{**matrix, 'displaymatrix': value}]}]})
+
+    def test_rotation_tags_and_unknown_display_metadata_cannot_claim_identity(self):
+        for tags in ({'rotate': '90'}, {'rotation': '180'}, {'ROTATE': 'nan'}, {'rotate': True}):
+            with self.subTest(tags=tags), self.assertRaises(mv.MotionVideoError):
+                mv._display_geometry_from_metadata({'streams': [{'sample_aspect_ratio': '1:1', 'tags': tags}]})
+        with self.assertRaises(mv.MotionVideoError):
+            mv._display_geometry_from_metadata({'streams': [{'sample_aspect_ratio': '1:1',
+                'side_data_list': [{'side_data_type': 'Display Matrix', 'rotation': 0}]}]})
+        for ratio in ('16:15', '4:3', '1:0', 'invalid', True):
+            with self.subTest(ratio=ratio), self.assertRaises(mv.MotionVideoError):
+                mv._display_geometry_from_metadata({'streams': [{'sample_aspect_ratio': ratio}]})
+        for ratio in (None, 'N/A', '0:1'):
+            source = {} if ratio is None else {'sample_aspect_ratio': ratio}
+            self.assertEqual(mv._display_geometry_from_metadata({'streams': [source]})['sample_aspect_ratio_basis'],
+                             'unspecified-raster-default')
 
     def test_invalid_limits_and_unknown_episode_create_no_output(self):
         video = self.video(count=3)
@@ -268,6 +352,47 @@ class MotionVideoTest(unittest.TestCase):
                 list(mv._decoded_frames(self.root/'never-read.mp4', 16, 16,
                     sample_hz=30, max_frames=2, duration=1, timeout_seconds=2))
         self.assertIsNotNone(processes[0].poll())
+
+    def test_display_geometry_probe_watchdog_stops_blocked_owned_child(self):
+        original_popen = subprocess.Popen
+        processes = []
+
+        def blocked(*args, **kwargs):
+            child = original_popen([sys.executable, '-c', 'import time; time.sleep(30)'], **kwargs)
+            processes.append(child)
+            return child
+
+        with patch.object(mv.subprocess, 'Popen', side_effect=blocked):
+            with self.assertRaisesRegex(mv.MotionVideoError, '10-second watchdog'):
+                mv._probe_display_geometry(self.root/'never-read.mp4', timeout_seconds=0.05)
+        self.assertIsNotNone(processes[0].poll())
+
+    def test_display_geometry_probe_stdout_is_bounded_and_child_stopped(self):
+        original_popen = subprocess.Popen
+        processes = []
+
+        def oversized(*args, **kwargs):
+            child = original_popen([sys.executable, '-c',
+                'import sys,time; sys.stdout.write("x"*70000); sys.stdout.flush(); time.sleep(30)'], **kwargs)
+            processes.append(child)
+            return child
+
+        with patch.object(mv.subprocess, 'Popen', side_effect=oversized):
+            with self.assertRaisesRegex(mv.MotionVideoError, '64 KiB limit'):
+                mv._probe_display_geometry(self.root/'never-read.mp4', timeout_seconds=2)
+        self.assertIsNotNone(processes[0].poll())
+
+    def test_public_display_guard_rejects_missing_files_and_symlinks(self):
+        with self.assertRaisesRegex(mv.MotionVideoError, 'regular local video'):
+            mv.validate_display_geometry(self.root/'missing.mp4')
+        video = self.video(count=3)
+        link = self.root/'linked.mp4'
+        try:
+            link.symlink_to(video)
+        except (OSError, NotImplementedError):
+            self.skipTest('This platform does not permit creating a symlink fixture.')
+        with self.assertRaisesRegex(mv.MotionVideoError, 'regular local video'):
+            mv.validate_display_geometry(link)
 
 
 if __name__ == '__main__':

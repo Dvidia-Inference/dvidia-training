@@ -220,6 +220,83 @@ class MotionStudioTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'media|source'):
             load_motion_run(self.run_dir/'run.json')
 
+    def test_display_geometry_descriptor_cannot_disagree_with_retained_media(self):
+        for fields in (('source',), ('protocol',), ('source', 'protocol')):
+            run = deepcopy(self.receipt)
+            for field in fields:
+                run[field]['display_geometry']['display_rotation_degrees'] = 180
+            write_run_parts(self.run_dir, run)
+            with self.subTest(fields=fields), self.assertRaisesRegex(ValueError, 'display geometry'):
+                load_motion_run(self.run_dir/'run.json')
+
+    def test_older_identity_receipt_without_geometry_descriptors_remains_replayable(self):
+        run = self.read_run()
+        run['protocol'].pop('display_geometry', None)
+        run['source'].pop('display_geometry', None)
+        write_run_parts(self.run_dir, run)
+        loaded = load_motion_run(self.run_dir/'run.json')
+        self.assertEqual(loaded['rows'], self.receipt['rows'])
+        self.assertNotIn('display_geometry', loaded['protocol'])
+        self.assertNotIn('display_geometry', loaded['source'])
+        report, episodes = load_motion_bundle(self.run_dir)
+        self.assertIsNone(report)
+        self.assertEqual(episodes['episode']['run']['media']['sha256'], self.receipt['media']['sha256'])
+
+    def rotated_video(self, source, angle):
+        """Require real nonidentity metadata; support pre/post-FFmpeg 9 recipes."""
+        target = self.root/f'rotated-{angle}.mp4'
+        commands = [
+            ['ffmpeg', '-hide_banner', '-loglevel', 'error', '-nostdin', '-y',
+             '-i', str(source), '-map', '0', '-c', 'copy',
+             '-metadata:s:v:0', f'rotate={angle}', str(target)],
+            ['ffmpeg', '-hide_banner', '-loglevel', 'error', '-nostdin', '-y',
+             '-display_rotation', str(angle), '-i', str(source),
+             '-map', '0', '-c', 'copy', str(target)],
+        ]
+        for command in commands:
+            result = subprocess.run(command, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
+                                    stderr=subprocess.PIPE, timeout=20, check=False)
+            if result.returncode:
+                continue
+            proof = subprocess.run(['ffprobe', '-v', 'error', '-select_streams', 'v:0',
+                '-show_entries', 'stream_tags=rotate:stream_side_data=side_data_type,displaymatrix,rotation',
+                '-of', 'json', str(target)], stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE, timeout=10, check=False)
+            if proof.returncode or len(proof.stdout) > 65536:
+                continue
+            metadata = json.loads(proof.stdout)
+            streams = metadata.get('streams', [])
+            if len(streams) != 1:
+                continue
+            stream = streams[0]
+            angles = [entry.get('rotation', 0) for entry in stream.get('side_data_list', [])]
+            if 'rotate' in stream.get('tags', {}):
+                angles.append(stream['tags']['rotate'])
+            if any(float(value) % 360 != 0 for value in angles):
+                return target
+        self.skipTest('Installed FFmpeg cannot create inspectable stream-copy rotation metadata.')
+
+    def test_older_rotated_receipt_cannot_bypass_startup_geometry_check_by_rebinding_hashes(self):
+        run = self.read_run()
+        media_path = self.run_dir/run['media']['path']
+        rotated = self.rotated_video(media_path, 90)
+        shutil.copyfile(rotated, media_path)
+        changed_hash, changed_size = file_hash(media_path), media_path.stat().st_size
+        run['media'].update(sha256=changed_hash, bytes=changed_size)
+        run['source'].update(sha256=changed_hash, bytes=changed_size)
+        run['protocol']['source_sha256'] = changed_hash
+        run['protocol'].pop('display_geometry', None)
+        run['source'].pop('display_geometry', None)
+        write_run_parts(self.run_dir, run)
+        # Every retained hash is coherent. The media's actual display transform,
+        # rather than a stale/missing descriptor, must reject replay startup.
+        self.assertEqual(run['media']['sha256'], file_hash(media_path))
+        self.assertEqual(run['protocol_sha256'], digest(run['protocol']))
+        with self.assertRaisesRegex(ValueError, 'Rotated video|display geometry'):
+            load_motion_run(self.run_dir/'run.json')
+        with self.assertRaisesRegex(ValueError, 'Rotated video|display geometry'):
+            MotionServer(('127.0.0.1', 0), self.run_dir)
+
     def test_missing_evidence_file_is_rejected(self):
         (self.run_dir/'frames.json').unlink()
         with self.assertRaises((ValueError, FileNotFoundError)):
