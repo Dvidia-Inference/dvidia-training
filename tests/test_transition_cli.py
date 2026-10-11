@@ -18,7 +18,7 @@ class TransitionReportTests(unittest.TestCase):
                         'limitations': ['</script><script>window.INJECTED=true</script>'],
                         'metrics': {'test': {}}}
             raw = json.dumps(document, indent=2) + '\n'
-            (root/'report.json').write_text(raw, encoding='utf8')
+            (root/'report.json').write_bytes(raw.encode('utf8'))
             write_report_page(root)
             html = (root/'report.html').read_text(encoding='utf8')
             embedded = re.search(r'<script id="receipt" type="application/json">(.*?)</script>', html, re.S).group(1)
@@ -32,11 +32,22 @@ class TransitionReportTests(unittest.TestCase):
             with self.assertRaises(FileExistsError):
                 write_report_page(root)
 
+    def test_page_preserves_crlf_and_non_ascii_receipt_bytes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            document = {'kind':'dvidia.actuator-transition-pilot.v1','limitations':['Measured jaw — Δ']}
+            raw = (json.dumps(document,ensure_ascii=False,indent=2)+'\n').replace('\n','\r\n')
+            (root/'report.json').write_bytes(raw.encode('utf8'))
+            write_report_page(root)
+            html = (root/'report.html').read_text(encoding='utf8')
+            embedded = re.search(r'<script id="receipt" type="application/json">(.*?)</script>',html,re.S).group(1)
+            self.assertEqual(json.loads(embedded).encode('utf8'),(root/'report.json').read_bytes())
+
     def test_wrong_kind_and_nonfinite_receipts_are_not_rendered(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             for raw in ('{}', '{"kind":"dvidia.actuator-transition-pilot.v1","x":NaN}'):
-                (root/'report.json').write_text(raw, encoding='utf8')
+                (root/'report.json').write_bytes(raw.encode('utf8'))
                 with self.assertRaises(ValueError):
                     write_report_page(root)
                 self.assertFalse((root/'report.html').exists())
