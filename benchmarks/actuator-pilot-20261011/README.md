@@ -9,6 +9,9 @@ The exact final run artifacts are retained without modification. These original
 DVIDIA model artifacts, evidence and documentation use the [MIT license](LICENSE).
 The source candidate is
 [`feat/laptop-skill-pilot-v0.1`](https://github.com/Dvidia-Inference/dvidia-training/tree/feat/laptop-skill-pilot-v0.1).
+The measured source is pinned to [commit `0d3f05f`](https://github.com/Dvidia-Inference/dvidia-training/tree/0d3f05f186423e18b15ed8362d772b7d74ec0207);
+[source.json](source.json) retains supplemental code hashes without modifying
+the frozen receipt bundle.
 See the [pilot guide](../../docs/laptop-skill-pilot.md) for installation and the
 [episode-tape contract](../../docs/episode-tape.md) for signal provenance.
 

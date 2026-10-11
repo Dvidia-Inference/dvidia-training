@@ -1,0 +1,36 @@
+{
+  "kind": "dvidia.actuator-pilot-source-reference.v1",
+  "source_commit": "0d3f05f186423e18b15ed8362d772b7d74ec0207",
+  "repository": "https://github.com/Dvidia-Inference/dvidia-training",
+  "scope": "Post-run source snapshot; this supplements, and does not alter, frozen run receipts.",
+  "files": [
+    {
+      "file": "src/dvidia_training/transition_model.py",
+      "sha256": "4154267b52885113996d58ba996890eac13d674c4c18c48b7282d27273b6a96e"
+    },
+    {
+      "file": "src/dvidia_training/transition_pilot.py",
+      "sha256": "cafb5e31bd9a07f224339e1f636abccc5f8aecd1efce0ecb4413bbb79441217c"
+    },
+    {
+      "file": "src/dvidia_training/transition_cli.py",
+      "sha256": "b98fb1bc37ef4688f07d4c09b799bb5a668ad7fe38faa73eaed0c94d0cd0ddcf"
+    },
+    {
+      "file": "src/dvidia_training/arm_env.py",
+      "sha256": "e4af9b75364a568284b1e6d96469deacf498dd87a60b067fa5e310fe15c54c00"
+    },
+    {
+      "file": "src/dvidia_training/arm_policy.py",
+      "sha256": "d6d53d87703fb8608390092309285afb6a2c8fd3103a7abd77668be85469eab3"
+    },
+    {
+      "file": "src/dvidia_training/episode_tape.py",
+      "sha256": "abae9a4bd0080c7f638c5c82c050fb1364a20769998c054354b918233669f5d2"
+    },
+    {
+      "file": "pyproject.toml",
+      "sha256": "7b58e1ffe288b8b989b19d2ceb6807a7f18a2d870e8ca21d0db7808670bb212e"
+    }
+  ]
+}
