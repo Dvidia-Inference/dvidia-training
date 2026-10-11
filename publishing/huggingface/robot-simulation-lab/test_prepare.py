@@ -86,6 +86,51 @@ def profile_fixture(root,identity):
     return payload,{'report':report,'files':records,'valid_attempts':3,'attempts':3}
 
 
+def piper_task_fixture(root):
+    """Compact invented failed/invalid source tapes; loader is patched in staging tests."""
+    from dvidia_training import piper_task_benchmark as benchmark
+    root.mkdir()
+    scenes = [{'id':stratum+'-00','stratum':stratum,'seed':index,'config':{}}
+              for index,stratum in enumerate(('nominal','low_friction'))]
+    protocol = {'schema':benchmark.PROTOCOL_SCHEMA,'profile':benchmark.task.PROFILE,'scope':benchmark.SCOPE,
+        'physical_robot_ready':False,'learned_policy':False,'cohort':'development','scenes':scenes,
+        'controls':list(benchmark.CONTROLS),'planned_attempts':6,
+        'native_command_units':['rad']*6+['m'],'simulation_asset_license':'MIT'}
+    payload = {'protocol.json':bench._json_bytes(protocol),'report.html':b'PiPER contact fixture, every attempt',
+        'licenses/agilex_piper/LICENSE':b'Original MIT PiPER license fixture\n',
+        'licenses/agilex_piper/README.md':b'Original model notice fixture\n'}
+    attempts = []
+    for scene in scenes:
+        for control in benchmark.CONTROLS:
+            identity = scene['id']+'--'+control
+            raw = {'schema':benchmark.task.SCHEMA,'profile':benchmark.task.PROFILE,'scope':benchmark.task.SCOPE,
+                'id':identity,'scene_id':scene['id'],'control':control,'physical_robot_ready':False,
+                'valid':not (scene['stratum']=='low_friction' and control=='hold'),'success':False,
+                'reason':'fixture failure','trajectory':[{'fixture_native_state':0}],
+                'actions':[{'fixture_command':0}],'arm_tape':[[0]*6]}
+            name = 'attempts/'+identity+'.json'
+            payload[name] = bench._json_bytes(raw)
+            attempts.append({**benchmark._summary(raw),'result_file':name})
+    report = {'schema':benchmark.SCHEMA,'profile':benchmark.task.PROFILE,'scope':benchmark.SCOPE,
+        'physical_robot_ready':False,'learned_policy':False,'simulation_asset_license':'MIT',
+        'cohort':'development','protocol':protocol,'protocol_sha256':sha256(payload['protocol.json']).hexdigest(),
+        'scenes':scenes,'attempted':6,'valid_attempts':5,'attempts':attempts,
+        'summary':benchmark.aggregate(attempts,scenes)}
+    payload['report.json'] = bench._json_bytes(report)
+    piper_task_reseal(root,report,payload)
+    return report,payload
+
+
+def piper_task_reseal(root,report,payload):
+    payload['report.json'] = bench._json_bytes(report)
+    payload['integrity.json'] = bench._json_bytes({'schema':'dvidia.piper-task-integrity/v1',
+        'files':{name:record(raw) for name,raw in payload.items() if name!='integrity.json'}})
+    for name,raw in payload.items():
+        path = root/name
+        path.parent.mkdir(parents=True,exist_ok=True)
+        path.write_bytes(raw)
+
+
 class RobotSimulationPreparationTests(unittest.TestCase):
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory()
@@ -225,6 +270,95 @@ class RobotSimulationPreparationTests(unittest.TestCase):
             with self.subTest(variant=variant),patch.object(robot_profiles,'inspect_benchmark',return_value=checked),self.assertRaises(ValueError):
                 prepare.stage(self.replay,self.output,source_commit='a'*40,profile_benchmarks=sources)
             self.assertFalse(self.output.exists())
+
+    def test_piper_contact_pilot_preserves_all_failed_and_invalid_attempts_and_separate_mechanics(self):
+        from dvidia_training import piper_task_benchmark as benchmark,robot_profiles
+        source = self.root/'piper-task'
+        report,payload = piper_task_fixture(source)
+        profile = self.root/'piper'
+        _,inspected = profile_fixture(profile,'piper')
+        with patch.object(benchmark,'load_task_bundle',return_value=(report,payload)), \
+                patch.object(robot_profiles,'inspect_benchmark',return_value=inspected):
+            plan = prepare.stage(self.replay,self.output,source_commit='a'*40,
+                piper_task_benchmark=source,profile_benchmarks=[profile])
+        self.assertEqual(publisher.checked_plan(self.output/'publication-plan.json'),plan)
+        for name,raw in payload.items():
+            self.assertEqual((self.output/'space/tasks/piper'/name).read_bytes(),raw)
+        for name,raw in self.original.items():
+            self.assertEqual((self.output/'space/replay'/name).read_bytes(),raw)
+        landing = (self.output/'space/index.html').read_text()
+        self.assertIn('Recorded PiPER contact pilot · synthetic',landing)
+        self.assertIn('Recorded native mechanics · unloaded',landing)
+        self.assertIn('6 planned attempts across 2 synthetic scenes',landing)
+        self.assertIn('low_friction / hold: 0/1 completed, 0 numerically valid',landing)
+        self.assertIn('tasks/piper/report.html',landing)
+        self.assertIn('tasks/piper/protocol.json',landing)
+        self.assertIn('tasks/piper/licenses/agilex_piper/LICENSE',landing)
+        self.assertIn('No PiPER 3D viewer is included',landing)
+        self.assertIn('/blob/'+'a'*40+'/docs/piper-contact-pilot.md',landing)
+        provenance = json.loads((self.output/'space/provenance.json').read_bytes())
+        pilot = provenance['contact_task_benchmarks']['piper']
+        self.assertEqual((pilot['attempted'],pilot['valid_attempts']),(6,5))
+        self.assertTrue(all(row['success']==0 for row in pilot['summary']))
+        self.assertFalse(pilot['physical_robot_ready'])
+        self.assertFalse(pilot['learned_policy'])
+        self.assertEqual(pilot['source_integrity'],record(payload['integrity.json']))
+        self.assertIn('## PiPER contact pilot',(self.output/'space/README.md').read_text())
+
+    def test_piper_contact_profile_scope_denominator_counts_and_full_tape_must_agree(self):
+        from dvidia_training import piper_task_benchmark as benchmark
+        for variant in ('profile','scope','physical','learned','count','summary','drop','raw_outcome','extra','license','private'):
+            with self.subTest(variant=variant),tempfile.TemporaryDirectory() as folder:
+                root = Path(folder).resolve()
+                source = root/'piper-task'
+                report,payload = piper_task_fixture(source)
+                if variant=='profile': report['profile']='other-task'
+                elif variant=='scope': report['scope']='Physical learned skills'
+                elif variant=='physical': report['physical_robot_ready']=True
+                elif variant=='learned': report['learned_policy']=True
+                elif variant=='count': report['attempted']=5
+                elif variant=='summary': report['summary'][0]['success']=1
+                elif variant=='drop':
+                    missing = report['attempts'].pop()['result_file']
+                    payload.pop(missing)
+                    (source/missing).unlink()
+                    report['attempted']=5
+                elif variant=='raw_outcome':
+                    name = report['attempts'][0]['result_file']
+                    raw = json.loads(payload[name]);raw['success']=True
+                    payload[name]=bench._json_bytes(raw)
+                elif variant=='extra': payload['extra.json']=b'{}'
+                elif variant=='license':
+                    name='licenses/agilex_piper/LICENSE'
+                    payload.pop(name);(source/name).unlink()
+                else: payload['private.txt']=b'/Users/roguedev/private'
+                piper_task_reseal(source,report,payload)
+                output = root/'publication'
+                with patch.object(benchmark,'load_task_bundle',return_value=(report,payload)),self.assertRaises(ValueError):
+                    prepare.stage(self.replay,output,source_commit='a'*40,piper_task_benchmark=source)
+                self.assertFalse(output.exists())
+
+    def test_piper_task_snapshot_seal_paths_and_total_budget_are_rechecked_before_writes(self):
+        from dvidia_training import piper_task_benchmark as benchmark
+        for variant in ('changed','manifest','unlisted','symlink','total'):
+            with self.subTest(variant=variant),tempfile.TemporaryDirectory() as folder:
+                root = Path(folder).resolve()
+                source = root/'piper-task'
+                report,payload = piper_task_fixture(source)
+                if variant=='changed': (source/'report.html').write_bytes(b'changed after inspection')
+                elif variant=='manifest':
+                    manifest=json.loads(payload['integrity.json']);manifest['files']['report.html']['sha256']='0'*64
+                    payload['integrity.json']=bench._json_bytes(manifest)
+                    (source/'integrity.json').write_bytes(payload['integrity.json'])
+                elif variant=='unlisted': (source/'unlisted.json').write_bytes(b'{}')
+                elif variant=='symlink': (source/'linked.json').symlink_to(source/'report.json')
+                output = root/'publication'
+                cap = sum(len(raw) for raw in self.original.values())+sum(len(raw) for raw in payload.values())-1
+                with patch.object(benchmark,'load_task_bundle',return_value=(report,payload)), \
+                        patch.object(publisher,'MAX_TOTAL_BYTES',cap if variant=='total' else publisher.MAX_TOTAL_BYTES), \
+                        self.assertRaises(ValueError):
+                    prepare.stage(self.replay,output,source_commit='a'*40,piper_task_benchmark=source)
+                self.assertFalse(output.exists())
 
 
 if __name__=='__main__':

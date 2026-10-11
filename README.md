@@ -17,7 +17,9 @@ environment for the next learned skill, separate from the older hosted pilot.
 The [robot simulation library](docs/robot-simulation-library.md) adds pinned
 PiPER (six arm axes) and SO-101 (five arm axes) profiles with separate grippers,
 explicit CPU asset provisioning, native audits and unloaded motion benchmarks.
-They have no object-task or physical qualification yet. The
+PiPER also has a [native contact pilot](docs/piper-contact-pilot.md) with an
+authored pickup-and-place controller and matched controls. SO-101 remains at
+unloaded mechanics; learned policies and physical qualification remain open. The
 [Robot Simulation Lab](https://huggingface.co/spaces/Dvidia/robot-simulation-lab)
 publishes recorded evidence and local run instructions.
 
@@ -139,9 +141,9 @@ five-finger references have separate contracts. A paired replay scorer measures
 joint, tool and jaw errors once aligned physical recordings are available.
 Export actual mesh geometry and recorded native poses to an offline interactive
 3D replay with orbit controls, six-joint readouts and collision-proxy inspection.
-The [upcoming hardware list](docs/hardware-roadmap.md) tracks YAM, OpenArm, PiPER,
-ARX X5 and PAROL6 as planned additions requiring separate profiles and benchmarks.
-These tools use the `feat/reference-3d-replay` candidate branch; the new
+The [hardware list](docs/hardware-roadmap.md) tracks implemented PiPER/SO-101
+profiles and upcoming YAM, OpenArm, ARX X5 and PAROL6 integrations.
+These tools use the `feat/reference-task-benchmark` candidate branch; the new
 reference has no learned task policy or measured physical fidelity.
 
 Generate an explicitly synthetic example, then train and verify its output:

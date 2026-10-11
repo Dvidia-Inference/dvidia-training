@@ -159,7 +159,113 @@ def _sealed_profile(directory):
     return identity,payload,report
 
 
-def _profile_cards(profile_reports=(),source_commit='main'):
+def _sealed_piper_task(directory):
+    from dvidia_training import piper_task_benchmark as benchmark
+    root = Path(directory).absolute()
+    publisher._plain(root)
+    if not root.is_dir():
+        raise ValueError('PiPER task evidence must be an explicitly supplied plain benchmark directory.')
+    report,files = benchmark.load_task_bundle(root)
+    if (type(report) is not dict or type(files) is not dict or not 9<=len(files)<=42
+            or 'integrity.json' not in files or any(type(raw) is not bytes for raw in files.values())):
+        raise ValueError('Invalid bounded PiPER task evidence snapshot.')
+    manifest = _decode(files['integrity.json'])
+    if (type(manifest) is not dict or set(manifest)!={'schema','files'}
+            or manifest['schema']!='dvidia.piper-task-integrity/v1' or type(manifest['files']) is not dict
+            or set(manifest['files'])!=set(files)-{'integrity.json'}):
+        raise ValueError('PiPER task snapshot differs from its original integrity inventory.')
+    total = 0
+    for name,raw in files.items():
+        source = root/publisher._artifact_name(name)
+        if len(raw)>publisher.MAX_FILE_BYTES or publisher._bytes(source,publisher.MAX_FILE_BYTES)!=raw:
+            raise ValueError('PiPER task evidence changed after validated inspection.')
+        publisher._no_private_bytes(raw)
+        total += len(raw)
+        if total>publisher.MAX_TOTAL_BYTES:
+            raise ValueError('PiPER task evidence exceeds the Space publication budget.')
+        if name!='integrity.json':
+            record = manifest['files'][name]
+            if (type(record) is not dict or set(record)!={'bytes','sha256'}
+                    or type(record['bytes']) is not int or record!=_record(raw)):
+                raise ValueError('PiPER task snapshot digest differs from its original seal.')
+    actual = set()
+    for file in root.rglob('*'):
+        publisher._plain(file)
+        if file.is_file():
+            actual.add(file.relative_to(root).as_posix())
+    if actual!=set(files):
+        raise ValueError('PiPER task evidence contains files outside its sealed inventory.')
+    required = {'report.json','report.html','protocol.json','integrity.json',
+                'licenses/agilex_piper/LICENSE','licenses/agilex_piper/README.md'}
+    if not required<=set(files) or _decode(files['report.json'])!=report:
+        raise ValueError('PiPER task report or complete model notices are missing from the snapshot.')
+    protocol = _decode(files['protocol.json'])
+    if (report.get('schema')!='dvidia.piper-task-benchmark/v1'
+            or report.get('profile')!='piper-rigid-block-task-v0.1'
+            or report.get('physical_robot_ready') is not False or report.get('learned_policy') is not False
+            or report.get('simulation_asset_license')!='MIT' or report.get('scope')!=benchmark.SCOPE
+            or type(protocol) is not dict or protocol.get('schema')!='dvidia.piper-task-protocol/v1'
+            or protocol.get('profile')!=report['profile'] or protocol.get('scope')!=benchmark.SCOPE
+            or protocol.get('physical_robot_ready') is not False or protocol.get('learned_policy') is not False
+            or protocol.get('native_command_units')!=['rad']*6+['m']
+            or protocol.get('simulation_asset_license')!='MIT'
+            or report.get('cohort') not in ('development','confirmation') or protocol.get('cohort')!=report['cohort']
+            or report.get('protocol')!=protocol
+            or report.get('protocol_sha256')!=sha256(files['protocol.json']).hexdigest()):
+        raise ValueError('Only the reviewed authored, synthetic, simulation-only PiPER contact pilot may be staged.')
+    scenes,attempts = report.get('scenes'),report.get('attempts')
+    if (type(scenes) is not list or not 1<=len(scenes)<=12 or scenes!=protocol.get('scenes')
+            or any(type(scene) is not dict or type(scene.get('id')) is not str
+                   or scene.get('stratum') not in ('nominal','low_friction') for scene in scenes)
+            or len({scene['id'] for scene in scenes})!=len(scenes)
+            or type(attempts) is not list or len(attempts)!=len(scenes)*3
+            or type(report.get('attempted')) is not int or report['attempted']!=len(attempts)
+            or protocol.get('controls')!=list(benchmark.CONTROLS)
+            or type(protocol.get('planned_attempts')) is not int or protocol['planned_attempts']!=len(attempts)):
+        raise ValueError('PiPER contact pilot must retain its complete planned denominator.')
+    identities = {scene['id']+'--'+control for scene in scenes for control in benchmark.CONTROLS}
+    seen,result_files = set(),set()
+    for attempt in attempts:
+        if (type(attempt) is not dict or type(attempt.get('id')) is not str
+                or type(attempt.get('scene_id')) is not str
+                or attempt['id'] not in identities or attempt['id'] in seen
+                or attempt.get('control') not in benchmark.CONTROLS
+                or attempt.get('scene_id')+'--'+attempt['control']!=attempt['id']
+                or type(attempt.get('valid')) is not bool or type(attempt.get('success')) is not bool
+                or (attempt['success'] and not attempt['valid'])):
+            raise ValueError('PiPER contact pilot attempt identity or outcome differs from the complete plan.')
+        name = 'attempts/'+attempt['id']+'.json'
+        if attempt.get('result_file')!=name or name not in files:
+            raise ValueError('PiPER contact pilot is missing a complete source attempt.')
+        raw = _decode(files[name])
+        if type(raw) is not dict or benchmark._summary(raw)!={key:value for key,value in attempt.items() if key!='result_file'}:
+            raise ValueError('PiPER contact pilot outcome differs from its complete source attempt.')
+        seen.add(attempt['id']);result_files.add(name)
+    if (set(files)!=required|result_files or type(report.get('valid_attempts')) is not int
+            or report['valid_attempts']!=sum(row['valid'] for row in attempts)
+            or report.get('summary')!=benchmark.aggregate(attempts,scenes)):
+        raise ValueError('PiPER contact pilot inventory or stratified counts differ from all source attempts.')
+    return files,report
+
+
+def _piper_task_card(report,source_commit):
+    if report is None:
+        return ''
+    return ('<article class="profile"><span class="status">Recorded PiPER contact pilot · synthetic</span>'
+            '<h2>PiPER: authored grasp, carry and release</h2><p>Six arm commands in radians and one jaw command in metres. '
+            'This pilot uses an authored controller and privileged native simulator state. Contact is uncalibrated; '
+            'no learned skill, shoe competence or physical robot is qualified. No PiPER 3D viewer is included.</p>'
+            '<div class="summary">'+_summary(report,html=True)+'</div><div class="links">'
+            '<a href="tasks/piper/report.html">Every contact attempt ↗</a>'
+            '<a href="tasks/piper/report.json">Complete task report ↗</a>'
+            '<a href="tasks/piper/protocol.json">Frozen protocol ↗</a>'
+            '<a href="tasks/piper/integrity.json">All task file hashes ↗</a>'
+            '<a href="tasks/piper/licenses/agilex_piper/LICENSE">Original MIT model license ↗</a>'
+            '<a href="https://github.com/Dvidia-Inference/dvidia-training/blob/'+source_commit+
+            '/docs/piper-contact-pilot.md">Pinned PiPER contact guide ↗</a></div></article>')
+
+
+def _profile_cards(profile_reports=(),source_commit='main',piper_task_report=None):
     profiles = [
         ('UR5e + Robotiq 2F-85','Recorded native contact task',
          'Six arm joints, eight articulated gripper coordinates and a free rigid block. Full source outcomes and matched controls are available.',
@@ -176,7 +282,7 @@ def _profile_cards(profile_reports=(),source_commit='main'):
         identity = profile['id']
         recorded.append('<article class="profile"><span class="status">Recorded native mechanics · unloaded</span><h2>'+escape(profile['name'])+
             '</h2><p>'+str(profile['arm_axes'])+' arm axes + '+str(profile['gripper_axes'])+' gripper axis. '
-            'Native model structure and authored unloaded motion are measured. No contact task, learned policy or physical robot is qualified. '
+            'This separate bundle measures native model structure and authored unloaded motion. Its numerical receipts do not qualify a contact task, learned policy or physical robot. '
             'Simulation asset license: '+escape(profile['simulation_asset_license'])+'.</p>'
             '<div class="links"><a href="profiles/'+identity+'/report.html">Numerical report ↗</a>'
             '<a href="profiles/'+identity+'/report.json">Complete recorded states ↗</a>'
@@ -188,11 +294,11 @@ def _profile_cards(profile_reports=(),source_commit='main'):
     authored = ['<article class="profile"><span class="status">'+escape(status)+'</span><h2>'+escape(title)+
                    '</h2><p>'+escape(description)+'</p><a href="'+escape(href,quote=True)+'">'+escape(label)+
                    '</a></article>' for title,status,description,href,label in profiles]
-    return authored[0]+''.join(recorded)+''.join(authored[1:])
+    return authored[0]+_piper_task_card(piper_task_report,source_commit)+''.join(recorded)+''.join(authored[1:])
 
 
 def stage(replay,output,*,source_commit=None,expected_remote_commit=None,profile_benchmarks=None,
-          remove_starter_stylesheet=None):
+          remove_starter_stylesheet=None,piper_task_benchmark=None):
     replay_files,report,motion = _sealed_replay(replay)
     if profile_benchmarks is not None and (type(profile_benchmarks) is not list or len(profile_benchmarks)>2):
         raise ValueError('Supply at most two explicit native profile benchmark directories.')
@@ -218,15 +324,36 @@ def stage(replay,output,*,source_commit=None,expected_remote_commit=None,profile
                                     'source_report':_record(profile_files['report.json']),
                                     'profile':profile_report['profile'],'task_qualified':False,'physical_robot_ready':False}
         profile_reports.append(profile_report)
+    piper_task_report = None
+    task_records = {}
+    if piper_task_benchmark is not None:
+        task_files,piper_task_report = _sealed_piper_task(piper_task_benchmark)
+        payload.update({'tasks/piper/'+name:raw for name,raw in task_files.items()})
+        task_records['piper'] = {'profile':piper_task_report['profile'],'source_integrity':_record(task_files['integrity.json']),
+            'source_report':_record(task_files['report.json']),'source_protocol':_record(task_files['protocol.json']),
+            'cohort':piper_task_report['cohort'],'attempt_ids':[row['id'] for row in piper_task_report['attempts']],
+            'native_command_units':['rad']*6+['m'],'attempted':piper_task_report['attempted'],
+            'valid_attempts':piper_task_report['valid_attempts'],'summary':piper_task_report['summary'],
+            'physical_robot_ready':False,'learned_policy':False,'scope':piper_task_report['scope'],
+            'byte_preservation':'Complete original protocol, report, every raw attempt, integrity and MIT model notices retained under tasks/piper/'}
     readme = publisher._bytes(HERE/'templates/README.md',1024*1024).decode()
     index = publisher._bytes(HERE/'templates/index.html',1024*1024).decode()
-    profile_summary = ('Only the UR5e contact-task benchmark is included in this payload; other native profiles remain upcoming.'
+    profile_summary = ('No separate unloaded numerical profile bundles are included in this payload.'
                        if not profile_reports else '\n'.join('- '+p['profile']['name']+': '+str(p['profile']['arm_axes'])+
                            ' arm axes + 1 gripper axis; recorded unloaded native mechanics, not task-qualified. '
                            'Complete report, traces, hashes and original '+p['profile']['simulation_asset_license']+
                            ' notice: `profiles/'+p['profile']['id']+'/`.' for p in profile_reports))
-    readme = readme.replace('{{BENCHMARK_SUMMARY}}',_summary(report)).replace('{{PROFILE_SUMMARY}}',profile_summary).replace('{{SOURCE_COMMIT}}',source_commit)
-    index = index.replace('{{BENCHMARK_SUMMARY}}',_summary(report,html=True)).replace('{{PROFILE_CARDS}}',_profile_cards(profile_reports,source_commit)).replace('{{SOURCE_COMMIT}}',source_commit)
+    piper_summary = ('' if piper_task_report is None else '## PiPER contact pilot\n\n'+_summary(piper_task_report)+
+        '\n\nAuthored controller, synthetic scenes and privileged native simulator state. Contact is uncalibrated; '
+        'no learned skill or physical robot is qualified. This is separate from the unloaded PiPER mechanics bundle; '
+        'no PiPER 3D viewer is included. Every attempted episode, including failed and invalid attempts, remains under '
+        '`tasks/piper/attempts/`. Inspect [the complete task report](tasks/piper/report.html), '
+        '[frozen protocol](tasks/piper/protocol.json), [file hashes](tasks/piper/integrity.json), and '
+        '[original MIT model license](tasks/piper/licenses/agilex_piper/LICENSE). '
+        '[Local PiPER contact guide](https://github.com/Dvidia-Inference/dvidia-training/blob/'+source_commit+
+        '/docs/piper-contact-pilot.md).\n')
+    readme = readme.replace('{{BENCHMARK_SUMMARY}}',_summary(report)).replace('{{PROFILE_SUMMARY}}',profile_summary).replace('{{PIPER_TASK_SUMMARY}}',piper_summary).replace('{{SOURCE_COMMIT}}',source_commit)
+    index = index.replace('{{BENCHMARK_SUMMARY}}',_summary(report,html=True)).replace('{{PROFILE_CARDS}}',_profile_cards(profile_reports,source_commit,piper_task_report)).replace('{{SOURCE_COMMIT}}',source_commit)
     if '{{' in readme or '{{' in index:
         raise ValueError('Space template contains an unresolved publication placeholder.')
     payload.update({'README.md':readme.encode(),'index.html':index.encode(),'LICENSE':publisher._bytes(ROOT/'LICENSE',1024*1024)})
@@ -239,9 +366,11 @@ def stage(replay,output,*,source_commit=None,expected_remote_commit=None,profile
                   'source_task_integrity':_record(replay_files['receipt/integrity.json']),
                   'byte_preservation':'Every original replay file, complete raw task attempt, integrity file and model notice is retained byte-for-byte under replay/',
                   'software_license':'MIT','native_model_licenses':{'UR5e':'BSD-3-Clause','Robotiq 2F-85':'BSD-2-Clause'},
-                  'profile_benchmarks':profile_records,
-                  'profile_gallery':'UR5e has contact-task evidence; supplied PiPER/SO-101 bundles are unloaded native mechanics evidence; all remaining profiles stay upcoming'}
+                  'profile_benchmarks':profile_records,'contact_task_benchmarks':task_records,
+                  'profile_gallery':'UR5e replay and explicitly supplied PiPER pilot have authored contact-task evidence; separate PiPER/SO-101 numerical bundles remain unloaded mechanics evidence; all remaining profiles stay upcoming'}
     provenance['native_model_licenses'].update({p['profile']['name']:p['profile']['simulation_asset_license'] for p in profile_reports})
+    if piper_task_report is not None:
+        provenance['native_model_licenses']['PiPER contact pilot']='MIT'
     payload['provenance.json'] = (json.dumps(provenance,indent=2)+'\n').encode()
     total = sum(len(raw) for raw in payload.values())
     if total > publisher.MAX_TOTAL_BYTES:
@@ -283,8 +412,10 @@ if __name__=='__main__':
     parser.add_argument('--remove-starter-stylesheet',type=Path,
                         help='Reviewed local copy of the exact remote style.css; requires --expected-remote-commit')
     parser.add_argument('--profile-benchmark',type=Path,action='append',default=[])
+    parser.add_argument('--piper-task-benchmark',type=Path)
     args = parser.parse_args()
     result = stage(args.replay,args.output,source_commit=args.source_commit,expected_remote_commit=args.expected_remote_commit,
-                   profile_benchmarks=args.profile_benchmark,remove_starter_stylesheet=args.remove_starter_stylesheet)
+                   profile_benchmarks=args.profile_benchmark,remove_starter_stylesheet=args.remove_starter_stylesheet,
+                   piper_task_benchmark=args.piper_task_benchmark)
     print(json.dumps({'repo_id':result['repository']['repo_id'],'files':len(result['repository']['files']),
                       'bytes':result['total_bytes'],'sdk':'static'},indent=2))
