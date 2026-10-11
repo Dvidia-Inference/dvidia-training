@@ -154,6 +154,61 @@ class RobotSimulationPublicationTests(unittest.TestCase):
         self.assertEqual(api.create_commit.call_args.kwargs['parent_commit'],'a'*40)
         api.create_repo.assert_not_called()
 
+    def test_starter_stylesheet_removal_needs_exact_parent_bounded_hash_and_one_allowed_path(self):
+        valid = {'path':'style.css','bytes':20,'sha256':sha256(b'fixture starter css!').hexdigest()}
+        variants = [([valid],None),([valid,valid],'a'*40),([None],'a'*40),
+            ([{**valid,'path':'unrelated.txt'}],'a'*40),
+            ([{**valid,'bytes':True}],'a'*40),([{**valid,'bytes':-1}],'a'*40),
+            ([{**valid,'bytes':publisher.MAX_STARTER_STYLESHEET_BYTES+1}],'a'*40),
+            ([{**valid,'sha256':'short'}],'a'*40),([{**valid,'extra':'field'}],'a'*40),
+            ({'style.css':valid},'a'*40)]
+        for removals,parent in variants:
+            self.plan['expected_remote_commit'] = parent
+            self.plan['remove_files'] = removals
+            self.save()
+            with self.subTest(removals=removals,parent=parent),self.assertRaises(PublicationError):
+                publisher.publish_robot_sim(self.path)
+
+    def test_reviewed_bootstrap_verifies_and_deletes_only_style_at_exact_parent_in_one_commit(self):
+        raw = b'body { color: black; }\n'
+        removal = {'path':'style.css','bytes':len(raw),'sha256':sha256(raw).hexdigest()}
+        self.plan.update(expected_remote_commit='a'*40,remove_files=[removal])
+        self.save()
+        api = self.api(['.gitattributes','README.md','index.html','style.css'])
+        with patch.object(publisher,'client',return_value=(api,'fixture-token')), \
+                patch.object(publisher,'verified_downloads') as verify:
+            result = publisher.publish_robot_sim(self.path)
+        self.assertEqual(result['removed_files'],[removal])
+        self.assertEqual(verify.call_args_list[0].args,({**self.plan['repository'],'files':[removal]},'a'*40,False))
+        self.assertEqual(verify.call_args_list[1].args,(self.plan['repository'],'b'*40,False))
+        operations = api.create_commit.call_args.kwargs['operations']
+        deletes = [operation for operation in operations if type(operation).__name__=='CommitOperationDelete']
+        adds = [operation for operation in operations if type(operation).__name__=='CommitOperationAdd']
+        self.assertEqual([operation.path_in_repo for operation in deletes],['style.css'])
+        self.assertFalse(deletes[0].is_folder)
+        self.assertEqual({operation.path_in_repo for operation in adds},set(f['path'] for f in self.plan['repository']['files']))
+        self.assertEqual(api.create_commit.call_args.kwargs['parent_commit'],'a'*40)
+        api.create_commit.assert_called_once()
+        api.create_repo.assert_not_called()
+
+    def test_bootstrap_changed_remote_bytes_parent_missing_stylesheet_and_unrelated_files_block_commit(self):
+        removal = {'path':'style.css','bytes':1,'sha256':sha256(b'x').hexdigest()}
+        self.plan.update(expected_remote_commit='a'*40,remove_files=[removal])
+        self.save()
+        for variant in ('bytes','parent','missing','unrelated'):
+            existing = ['README.md','index.html','style.css']
+            if variant=='missing': existing.remove('style.css')
+            if variant=='unrelated': existing.append('unrelated.txt')
+            api = self.api(existing)
+            if variant=='parent': api.repo_info.return_value.sha = 'c'*40
+            with self.subTest(variant=variant),patch.object(publisher,'client',return_value=(api,'fixture-token')), \
+                    patch.object(publisher,'verified_downloads',side_effect=PublicationError('Remote hash mismatch')) as verify, \
+                    self.assertRaises(PublicationError):
+                publisher.publish_robot_sim(self.path)
+            api.create_commit.assert_not_called()
+            api.create_repo.assert_not_called()
+            if variant!='bytes': verify.assert_not_called()
+
 
 if __name__=='__main__':
     unittest.main()

@@ -168,6 +168,19 @@ class RobotSimulationPreparationTests(unittest.TestCase):
         self.output.mkdir()
         with self.assertRaises(FileExistsError): prepare.stage(self.replay,self.output,source_commit='a'*40)
 
+    def test_reviewed_starter_removal_records_only_exact_css_hash_and_requires_parent(self):
+        style = self.root/'style.css'
+        raw = b'body { color: black; }\n'
+        style.write_bytes(raw)
+        with self.assertRaises(publisher.PublicationError):
+            prepare.stage(self.replay,self.output,source_commit='a'*40,remove_starter_stylesheet=style)
+        self.assertFalse(self.output.exists())
+        plan = prepare.stage(self.replay,self.output,source_commit='a'*40,expected_remote_commit='b'*40,
+                             remove_starter_stylesheet=style)
+        self.assertEqual(plan['remove_files'],[{'path':'style.css',**record(raw)}])
+        self.assertFalse((self.output/'space/style.css').exists())
+        self.assertEqual(publisher.checked_plan(self.output/'publication-plan.json'),plan)
+
     def test_two_profile_bundles_retain_exact_traces_and_licenses_with_correct_axes_and_scope(self):
         from dvidia_training import robot_profiles
         roots = [self.root/'piper',self.root/'so101']

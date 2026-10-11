@@ -22,6 +22,7 @@ MAX_FILE_BYTES = 32*1024*1024
 MAX_TOTAL_BYTES = 150*1024*1024
 ALLOWED_SUFFIXES = {'.md', '.html', '.js', '.json', '.txt', '.png', '.bin', '.gz'}
 SHA = re.compile(r'(?:[a-f0-9]{40}|[a-f0-9]{64})')
+MAX_STARTER_STYLESHEET_BYTES = 64*1024
 
 
 def _plain(path):
@@ -59,6 +60,23 @@ def _no_private_bytes(raw):
         raise PublicationError('Possible credential or private local path in publication bytes.')
 
 
+def _reviewed_removals(plan):
+    """Only an explicitly reviewed HF static starter stylesheet can be removed."""
+    removals = plan.get('remove_files',[])
+    if type(removals) is not list or len(removals)>1:
+        raise PublicationError('Only one reviewed static starter stylesheet removal is supported.')
+    for item in removals:
+        if (type(item) is not dict or set(item)!={'path','bytes','sha256'}
+                or item['path']!='style.css' or type(item['bytes']) is not int
+                or not 0<=item['bytes']<=MAX_STARTER_STYLESHEET_BYTES
+                or type(item['sha256']) is not str
+                or re.fullmatch(r'[a-f0-9]{64}',item['sha256']) is None):
+            raise PublicationError('Starter stylesheet removal needs its exact bounded bytes and SHA-256.')
+    if removals and plan.get('expected_remote_commit') is None:
+        raise PublicationError('Starter stylesheet removal requires an exact reviewed remote parent commit.')
+    return removals
+
+
 def _checked_plan_bytes(path):
     path = Path(path).absolute()
     plan_bytes = _bytes(path, 1024*1024)
@@ -69,6 +87,7 @@ def _checked_plan_bytes(path):
     parent = plan.get('expected_remote_commit')
     if parent is not None and (type(parent) is not str or SHA.fullmatch(parent) is None):
         raise PublicationError('A reviewed update must name its exact remote parent commit.')
+    _reviewed_removals(plan)
     row = plan.get('repository')
     expected = {'repo_id': REPO_ID, 'repo_type': 'space', 'space_sdk': 'static', 'directory': 'space'}
     if type(row) is not dict or any(row.get(key) != value for key,value in expected.items()):
@@ -135,6 +154,7 @@ def publish_robot_sim(path):
     plan,plan_bytes = _checked_plan_bytes(path)
     plan_digest = sha256(plan_bytes).hexdigest()
     row = plan['repository']
+    removals = _reviewed_removals(plan)
     target = path.parent/'publication-receipt.json'
     _plain(target)
     if target.exists() and not target.is_file():
@@ -153,7 +173,7 @@ def publish_robot_sim(path):
     identity = api.whoami()
     if 'Dvidia' not in {o.get('name') for o in identity.get('orgs',[])}:
         raise PublicationError('The publishing account is not in Dvidia.')
-    from huggingface_hub import CommitOperationAdd
+    from huggingface_hub import CommitOperationAdd, CommitOperationDelete
     from huggingface_hub.errors import RepositoryNotFoundError
     try:
         info = api.repo_info(REPO_ID,repo_type='space')
@@ -170,11 +190,18 @@ def publish_robot_sim(path):
     else:
         checked_remote(info,'space')
         existing = {x.rfilename for x in info.siblings}- {'.gitattributes'}
-        if existing-set(payload):
+        removal_names = {item['path'] for item in removals}
+        if existing-set(payload)-removal_names:
             raise PublicationError('Destination has unrelated files; refusing to modify it.')
         if parent is not None:
             if info.sha != parent:
                 raise PublicationError('Remote parent changed; prepare a fresh reviewed plan.')
+            if not removal_names<=existing:
+                raise PublicationError('Reviewed starter stylesheet is missing at the remote parent.')
+            # Verify the exact public bytes at the locked parent before queuing
+            # the one permitted deletion alongside the frozen upload.
+            if removals:
+                verified_downloads({**row,'files':removals},info.sha,False)
         else:
             # Same-plan retries must prove existing files already match. Changed
             # content requires an explicitly reviewed exact-parent update plan.
@@ -183,7 +210,8 @@ def publish_robot_sim(path):
         revision = info.sha
     else:
         result = api.create_commit(REPO_ID,repo_type='space',parent_commit=info.sha,
-            operations=[CommitOperationAdd(path_in_repo=name,path_or_fileobj=raw) for name,raw in payload.items()],
+            operations=[CommitOperationAdd(path_in_repo=name,path_or_fileobj=raw) for name,raw in payload.items()]
+                       +[CommitOperationDelete(path_in_repo=item['path'],is_folder=False) for item in removals],
             commit_message='Publish reviewed DVIDIA native robot simulation evidence and local tools')
         revision = result.oid
     if type(revision) is not str or SHA.fullmatch(revision) is None:
@@ -192,7 +220,7 @@ def publish_robot_sim(path):
     result = {'repo_id':REPO_ID,'repo_type':'space','commit':revision,
               'url':'https://huggingface.co/spaces/'+REPO_ID,'verified_files':len(row['files']),
               'scope':'Recorded native simulation evidence; no live physics, learned policy or physical robot qualification',
-              'plan_sha256':plan_digest}
+              'plan_sha256':plan_digest,'removed_files':removals}
     _plain(target)
     target.write_text(json.dumps(result,indent=2)+'\n')
     return result

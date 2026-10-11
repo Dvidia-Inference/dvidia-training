@@ -191,7 +191,8 @@ def _profile_cards(profile_reports=(),source_commit='main'):
     return authored[0]+''.join(recorded)+''.join(authored[1:])
 
 
-def stage(replay,output,*,source_commit=None,expected_remote_commit=None,profile_benchmarks=None):
+def stage(replay,output,*,source_commit=None,expected_remote_commit=None,profile_benchmarks=None,
+          remove_starter_stylesheet=None):
     replay_files,report,motion = _sealed_replay(replay)
     if profile_benchmarks is not None and (type(profile_benchmarks) is not list or len(profile_benchmarks)>2):
         raise ValueError('Supply at most two explicit native profile benchmark directories.')
@@ -201,6 +202,11 @@ def stage(replay,output,*,source_commit=None,expected_remote_commit=None,profile
         raise ValueError('Source must be pinned to a full committed Git revision.')
     if expected_remote_commit is not None and (type(expected_remote_commit) is not str or publisher.SHA.fullmatch(expected_remote_commit) is None):
         raise ValueError('Reviewed updates must name the exact remote parent commit.')
+    removals = []
+    if remove_starter_stylesheet is not None:
+        raw = publisher._bytes(Path(remove_starter_stylesheet).absolute(),publisher.MAX_STARTER_STYLESHEET_BYTES)
+        removals = [{'path':'style.css',**_record(raw)}]
+    publisher._reviewed_removals({'expected_remote_commit':expected_remote_commit,'remove_files':removals})
     payload = {'replay/'+name:raw for name,raw in replay_files.items()}
     profile_records,profile_reports = {},[]
     for directory in profile_benchmarks or []:
@@ -257,6 +263,7 @@ def stage(replay,output,*,source_commit=None,expected_remote_commit=None,profile
             stream.write(raw)
     plan = {'kind':publisher.KIND,'schema_version':1,'namespace':'Dvidia','private':False,
             'source_commit':source_commit,'expected_remote_commit':expected_remote_commit,
+            'remove_files':removals,
             'repository':{'repo_id':publisher.REPO_ID,'repo_type':'space','space_sdk':'static','directory':'space',
                           'files':[{'path':name,**_record(raw)} for name,raw in sorted(payload.items())]},
             'total_bytes':total,'source_replay_integrity_sha256':provenance['source_replay_integrity']['sha256'],
@@ -273,8 +280,11 @@ if __name__=='__main__':
     parser.add_argument('--output',required=True,type=Path)
     parser.add_argument('--source-commit')
     parser.add_argument('--expected-remote-commit')
+    parser.add_argument('--remove-starter-stylesheet',type=Path,
+                        help='Reviewed local copy of the exact remote style.css; requires --expected-remote-commit')
     parser.add_argument('--profile-benchmark',type=Path,action='append',default=[])
     args = parser.parse_args()
-    result = stage(args.replay,args.output,source_commit=args.source_commit,expected_remote_commit=args.expected_remote_commit,profile_benchmarks=args.profile_benchmark)
+    result = stage(args.replay,args.output,source_commit=args.source_commit,expected_remote_commit=args.expected_remote_commit,
+                   profile_benchmarks=args.profile_benchmark,remove_starter_stylesheet=args.remove_starter_stylesheet)
     print(json.dumps({'repo_id':result['repository']['repo_id'],'files':len(result['repository']['files']),
                       'bytes':result['total_bytes'],'sdk':'static'},indent=2))
