@@ -8,6 +8,12 @@
 
 **Research alpha.** The recorded demo covers the original one-scene simulation pilot; the frozen benchmark is a separate experiment. Training runs locally. No human-video action bridge or hardware skill is established.
 
+The new [native grasp task benchmark](docs/native-task-benchmark.md) connects the
+pinned six-axis arm and coupled gripper to free-object grasp, carry and release
+attempts. It retains matched open-jaw/hold controls, frozen protocols and local
+3D replay. This candidate source uses an authored controller; it is a test
+environment for the next learned skill, separate from the older hosted pilot.
+
 Train a small visual model from Skillspace footage on your own computer or server. The pipeline checks actual videos and source groups, fixes training/development/test splits, fits weights on a CPU, and exports a result with held-out measurements and integrity hashes.
 
 The base install needs **Python 3.12+, NumPy and FFmpeg**. It needs no GPU, CUDA, account or API key. Training is offline by default; downloading software or public footage is a separate, explicit step.

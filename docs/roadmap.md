@@ -41,13 +41,21 @@ six-axis candidate; OpenArm is the later two-arm candidate. Each addition needs 
 pinned simulator, physical adapter and its own benchmark/qualification evidence.
 These are planned targets; their DVIDIA integrations have not been implemented.
 
+The [native grasp task benchmark](native-task-benchmark.md) adds a separate
+rigid-block contact task to the pinned reference assembly. Frozen scene plans,
+authored placement, recorded-arm/open-jaw and hold controls retain complete
+attempts before any learned task policy is qualified. The next action-learning
+experiment must replace the task decisions it claims to learn and evaluate the
+result in a closed loop. This contact fixture does not establish shoe physics
+or physical transfer.
+
 | Order | Build and owner role | Current state | Evidence needed to advance |
 | --- | --- | --- | --- |
 | 1 | Collection planning — product + data | Local coverage planner, versioned briefs and declared source-group tallies implemented. | First skill's observable goal, operating envelope, actual recordings and reviewed capture lineage. |
 | 2 | Contribution review — data + product | Proposed official-site connection; the local planner imports declarations only. | Immutable review receipts tied to original bytes, plan revision, intended-use permission and complete outcomes; source-group and near-duplicate audits. |
 | 3 | Episode evidence — simulation | Recorder preserves state, requests, applied commands, sensor age and authored phases at control boundaries. A compact actuator learner now consumes before-state and issued-command evidence. | Shoe-specific corpus, retained failure cases and synchronized inspector. Sensor-shaped simulator inputs still need hardware counterparts. |
 | 4 | Task and state models — learning | Small visual predictor, bounded movement head and next-boundary actuator predictor; outcome/phase supervisor proposed. | Compare with matched baselines and measure held-out boundary, outcome and false-completion errors. Keep authored labels and future state outside deployment inputs; qualify sensed physical inputs separately. |
-| 5 | Task simulation — simulation | Existing rigid-box placement adapter and frozen benchmark; other tasks need environments. | Validated assets/contact behavior, robot/gripper/sensor contract, reset distributions and independently observable task outcomes. |
+| 5 | Task simulation — simulation | Earlier rigid-box adapter plus a separate pinned UR5e/Robotiq contact task, complete traces and matched controls. | Measured physical agreement, shoe-specific assets/contact, calibrated sensors and independently observable task outcomes on every additional embodiment. |
 | 6 | Qualification and sample efficiency — evaluation | Local benchmark runner and frozen sample-count evidence exist. | Learning curves over independent source groups, multiple collection orders, frozen candidates, nominal/stress/control strata, all attempted trials and measured cost. |
 | 7 | Installable skill — runtime | Simulation candidate capsule and compatibility checks exist. | Bundle model, task, observation/action contract, adapter, data/protocol hashes, calibration requirements and artifact-bound qualification results. |
 | 8 | Physical transfer — robotics | Unqualified. | Hardware timing/calibration checks, measured limits and a separate supervised physical evaluation. Simulation results alone cannot advance this stage. |
@@ -117,10 +125,14 @@ contract; an executable benchmark additionally needs:
   hardware and measurement boundaries. CPU-only support is measured per task.
 - A supported operating envelope and explicit simulation-only or physical scope.
 
-The next engineering milestone is a tape inspector and a small state-based task
-outcome model on the existing placement environment. The first real Skillspace
-will then test the collection and review loop. See [collection design](skillspace-coverage.md),
-[episode evidence](episode-tape.md) and [existing benchmark protocol](benchmarks.md).
+The next learning milestone is a [small native action policy](native-grasp-learning.md)
+that chooses all six arm targets and the gripper command, compared with the
+authored contact baseline in fresh closed-loop trials. A synchronized tape
+inspector and task outcome model support diagnosis, while additional robot
+profiles each need their own controls and benchmark. The first real Skillspace
+will test the collection/review and action-supervision bridge. See
+[collection design](skillspace-coverage.md), [episode evidence](episode-tape.md)
+and the [native task protocol](native-task-benchmark.md).
 
 ## Observation Lab next version
 
