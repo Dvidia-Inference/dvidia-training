@@ -399,19 +399,25 @@ class PiperTaskPolicy:
         return self.env.pose_action(goal.tolist(), orientation, jaw)
 
 
-def run_episode(assets, config=None, *, seed=0, control='placement', arm_tape=None):
+def run_episode(assets, config=None, *, seed=0, control='placement', arm_tape=None, policy_mode='baseline'):
     config = _config(config)
     if control not in ('placement', 'replay_open_jaw', 'hold'):
         raise ValueError('Unknown PiPER task control')
+    if policy_mode not in ('baseline', 'guarded'):
+        raise ValueError('PiPER policy mode must be baseline or guarded')
+    from . import piper_grip_guard as grip_guard
     started, latencies, environment, phase = time.perf_counter(), [], None, 'validation'
     result = {'schema': SCHEMA, 'profile': PROFILE, 'scope': SCOPE, 'physical_robot_ready': False,
-              'seed': seed, 'control': control, 'config': asdict(config), 'timestep_seconds': config.timestep,
+              'seed': seed, 'control': control, 'policy_mode': policy_mode, 'config': asdict(config), 'timestep_seconds': config.timestep,
               'valid': False, 'success': False, 'reason': 'not_started', 'error': None, 'warnings': [],
               'simulated_seconds': 0., 'trajectory': [], 'actions': [], 'arm_tape': [], 'metrics': {}, 'timing': {},
               'contract': task_contract(), 'platform': {'system': platform.system(), 'machine': platform.machine(), 'python': platform.python_version()}}
     source = Path(__file__).parent
     result['implementation_sha256'] = {name: sha256((source/name).read_bytes()).hexdigest()
                                        for name in ('piper_task.py', 'robot_profiles.py', 'robot_profiles.lock.json', 'reference_task.py', 'reference_sim.py')}
+    result['policy_implementation_sha256'] = {'piper_grip_guard.py': sha256((source/'piper_grip_guard.py').read_bytes()).hexdigest()}
+    result['grip_guard'] = grip_guard.inactive_summary(policy_mode)
+    policy = None
     try:
         if control == 'replay_open_jaw':
             if type(arm_tape) is not list or len(arm_tape) != round(config.timeout_s/config.control_dt):
@@ -436,10 +442,14 @@ def run_episode(assets, config=None, *, seed=0, control='placement', arm_tape=No
                                       'geom_body_names': [mj.mj_id2name(environment.model, mj.mjtObj.mjOBJ_BODY, int(body)) for body in environment.model.geom_bodyid]}
         result['trajectory'].append(observation)
         result['timing']['setup_seconds'] = time.perf_counter()-started
-        policy, hold, phase = PiperTaskPolicy(environment), observation['joint_position_rad'], 'rollout'
+        policy = (grip_guard.GuardedPiperTaskPolicy(environment) if policy_mode == 'guarded' and control == 'placement'
+                  else PiperTaskPolicy(environment))
+        hold, phase = observation['joint_position_rad'], 'rollout'
         for index in range(round(config.timeout_s/config.control_dt)):
             began = time.perf_counter()
             action = policy(observation) if control == 'placement' else {'joint_targets_rad': hold if control == 'hold' else arm_tape[index], 'gripper_position_m': .035}
+            if isinstance(policy, grip_guard.GuardedPiperTaskPolicy):
+                observation['guard_diagnostic'] = dict(policy.diagnostic)
             record = {'t_seconds': observation['t_seconds'], **action, 'phase': policy.issued_phase if control == 'placement' else control}
             result['actions'].append(record)
             result['arm_tape'].append(list(action['joint_targets_rad']))
@@ -447,6 +457,8 @@ def run_episode(assets, config=None, *, seed=0, control='placement', arm_tape=No
             observation, info = environment.step(action)
             latencies.append(time.perf_counter()-began)
             if observation is not None:
+                if isinstance(policy, grip_guard.GuardedPiperTaskPolicy):
+                    observation['guard_diagnostic'] = None
                 result['trajectory'].append(observation)
             if environment.done:
                 break
@@ -457,6 +469,8 @@ def run_episode(assets, config=None, *, seed=0, control='placement', arm_tape=No
         if environment is not None:
             result['warnings'] = list(getattr(environment, 'warnings', []))
             result['simulated_seconds'] = getattr(environment, 'elapsed', 0.)
+    if isinstance(policy, grip_guard.GuardedPiperTaskPolicy):
+        result['grip_guard'] = policy.summary()
     elapsed = time.perf_counter()-started
     result['timing'].update(episode_wall_seconds=elapsed, control_step_seconds=sim._summary(latencies) if latencies else None,
                             control_boundaries=len(latencies), missed_control_boundaries=sum(x > config.control_dt for x in latencies),
@@ -465,9 +479,9 @@ def run_episode(assets, config=None, *, seed=0, control='placement', arm_tape=No
     return result
 
 
-def run_matched(assets, config=None, *, seed=0):
+def run_matched(assets, config=None, *, seed=0, policy_mode='baseline'):
     config = _config(config)
-    placement = run_episode(assets, config, seed=seed)
+    placement = run_episode(assets, config, seed=seed, policy_mode=policy_mode)
     tape = placement['arm_tape'] if placement['valid'] and len(placement['arm_tape']) == round(config.timeout_s/config.control_dt) else None
-    return [placement, run_episode(assets, config, seed=seed, control='replay_open_jaw', arm_tape=tape),
-            run_episode(assets, config, seed=seed, control='hold')]
+    return [placement, run_episode(assets, config, seed=seed, control='replay_open_jaw', arm_tape=tape, policy_mode=policy_mode),
+            run_episode(assets, config, seed=seed, control='hold', policy_mode=policy_mode)]

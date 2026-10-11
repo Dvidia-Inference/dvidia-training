@@ -1,6 +1,7 @@
 """Data-only staging, exact model notices and complete task receipt boundaries."""
 from copy import deepcopy
 from hashlib import sha256
+import gzip
 import importlib.util
 import json
 from pathlib import Path
@@ -129,6 +130,60 @@ def piper_task_reseal(root,report,payload):
         path = root/name
         path.parent.mkdir(parents=True,exist_ok=True)
         path.write_bytes(raw)
+
+
+def piper_grip_fixture(root):
+    """Small invented gzip tapes; native semantic loader is patched in these tests."""
+    from dvidia_training import piper_grip_benchmark as benchmark
+    root.mkdir()
+    scenes = [{'id':f'friction{round(friction*100):03}-layout{index:02}',
+        'friction':friction,'stratum':stratum,'layout_index':index,'config':{'friction':friction}}
+        for friction,stratum in zip(benchmark.FRICTIONS,benchmark.STRATA) for index in (0,1)]
+    protocol = {'schema':benchmark.PROTOCOL_SCHEMA,'profile':benchmark.task.PROFILE,'scope':benchmark.SCOPE,
+        'physical_robot_ready':False,'learned_policy':False,'simulation_asset_license':'MIT',
+        'cohort':'development','scenes':scenes,'variants':list(benchmark.VARIANTS),'planned_attempts':30,
+        'native_command_units':['rad']*6+['m']}
+    payload = {'protocol.json':bench._json_bytes(protocol),'report.html':b'Every compressed attempt is linked',
+        'licenses/agilex_piper/LICENSE':b'Original MIT model fixture\n',
+        'licenses/agilex_piper/README.md':b'Original model notice fixture\n'}
+    attempts = []
+    for scene in scenes:
+        for variant in benchmark.VARIANTS:
+            identity=scene['id']+'--'+variant
+            valid=not (scene['friction']==.15 and scene['layout_index']==1 and variant=='hold')
+            raw={'schema':benchmark.task.SCHEMA,'profile':benchmark.task.PROFILE,'scope':benchmark.task.SCOPE,
+                'id':identity,'scene_id':scene['id'],'variant':variant,'physical_robot_ready':False,'learned_policy':False,
+                'valid':valid,'success':False,'config':scene['config'],'control':'hold' if variant=='hold' else
+                    'replay_open_jaw' if variant.endswith('open_jaw') else 'placement',
+                'policy_mode':'guarded' if variant.startswith('guarded') else 'baseline',
+                'trajectory':[{'fixture':0}],'actions':[{'fixture':0}],'arm_tape':[[0]*6],
+                'grip_evaluation':{'qualification_decisions':[],'alarms':[],'following_opportunity':False if valid else None,
+                    'sampled_drop_events':0,'aborted':False,'retry_count':0}}
+            name='attempts/'+identity+'.json.gz'
+            payload[name]=gzip.compress(bench._json_bytes(raw),mtime=0)
+            attempts.append({**benchmark._summary(raw),'result_file':name})
+    report={'schema':benchmark.SCHEMA,'profile':benchmark.task.PROFILE,'scope':benchmark.SCOPE,
+        'physical_robot_ready':False,'learned_policy':False,'simulation_asset_license':'MIT','cohort':'development',
+        'protocol':protocol,'protocol_sha256':sha256(payload['protocol.json']).hexdigest(),
+        'scenes':scenes,'attempted':30,'valid_attempts':29,'attempts':attempts,
+        'summary':benchmark.aggregate(attempts,scenes)}
+    piper_grip_reseal(root,report,payload)
+    return report,payload
+
+
+def piper_grip_reseal(root,report,payload):
+    from dvidia_training import piper_grip_benchmark as benchmark
+    payload['report.json']=bench._json_bytes(report)
+    records={}
+    for name,data in payload.items():
+        if name=='integrity.json': continue
+        records[name]=record(data)
+        if name.endswith('.json.gz'):
+            decoded=benchmark.decode_attempt(data)
+            records[name].update(encoding='gzip',decoded_bytes=len(decoded),decoded_sha256=sha256(decoded).hexdigest())
+    payload['integrity.json']=bench._json_bytes({'schema':benchmark.INTEGRITY_SCHEMA,'files':records})
+    for name,data in payload.items():
+        target=root/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(data)
 
 
 class RobotSimulationPreparationTests(unittest.TestCase):
@@ -359,6 +414,105 @@ class RobotSimulationPreparationTests(unittest.TestCase):
                         self.assertRaises(ValueError):
                     prepare.stage(self.replay,output,source_commit='a'*40,piper_task_benchmark=source)
                 self.assertFalse(output.exists())
+
+    def test_grip_comparison_retains_all_thirty_canonical_tapes_and_original_pilot(self):
+        from dvidia_training import piper_grip_benchmark as grip,piper_task_benchmark as pilot
+        source=self.root/'grip';report,payload=piper_grip_fixture(source)
+        baseline=self.root/'pilot';pilot_report,pilot_files=piper_task_fixture(baseline)
+        with patch.object(grip,'load_grip_bundle',return_value=(report,payload)), \
+                patch.object(pilot,'load_task_bundle',return_value=(pilot_report,pilot_files)):
+            plan=prepare.stage(self.replay,self.output,source_commit='a'*40,
+                piper_task_benchmark=baseline,piper_grip_benchmark=source)
+        self.assertEqual(publisher.checked_plan(self.output/'publication-plan.json'),plan)
+        for name,data in payload.items():
+            self.assertEqual((self.output/'space/tasks/piper-grip'/name).read_bytes(),data)
+        for name,data in pilot_files.items():
+            self.assertEqual((self.output/'space/tasks/piper'/name).read_bytes(),data)
+        for name,data in self.original.items():
+            self.assertEqual((self.output/'space/replay'/name).read_bytes(),data)
+        landing=(self.output/'space/index.html').read_text()
+        self.assertIn('30 planned attempts across six synthetic scenes',landing)
+        self.assertIn('μ=0.55 / guarded_placement: 0/2 completed',landing)
+        self.assertIn('μ=0.15 / hold: 0/2 completed, 1 numerically valid',landing)
+        self.assertIn('tasks/piper-grip/report.html',landing)
+        self.assertIn('/blob/'+'a'*40+'/docs/piper-grip-recovery.md',landing)
+        provenance=json.loads((self.output/'space/provenance.json').read_bytes())
+        compared=provenance['contact_task_benchmarks']['piper-grip']
+        self.assertEqual((compared['attempted'],compared['valid_attempts']),(30,29))
+        self.assertEqual(len(compared['attempt_ids']),30)
+        self.assertTrue(all(row['success']==0 for row in compared['summary']))
+        self.assertEqual(compared['source_integrity'],record(payload['integrity.json']))
+        self.assertGreater(compared['decoded_bytes'],compared['stored_bytes'])
+        self.assertFalse(compared['learned_policy'])
+        card=(self.output/'space/README.md').read_text()
+        self.assertIn('canonical deterministic gzip',card)
+        self.assertIn('dvidia-piper-grip inspect',card)
+
+    def test_grip_leading_completion_comparison_is_derived_and_exposes_regression(self):
+        report,_=piper_grip_fixture(self.root/'grip-summary')
+        outcomes = (
+            ((2,2,1),(1,0,0),'baseline 5/6 versus guarded 1/6',True),
+            ((0,0,0),(0,0,0),'baseline 0/6 versus guarded 0/6',False),
+            ((1,0,0),(1,2,0),'baseline 1/6 versus guarded 3/6',False),
+        )
+        for baseline,guarded,expected,regressed in outcomes:
+            with self.subTest(expected=expected):
+                candidate=deepcopy(report)
+                for variant,counts in (('baseline_placement',baseline),('guarded_placement',guarded)):
+                    rows=[row for row in candidate['summary'] if row['variant']==variant]
+                    for row,count in zip(rows,counts):
+                        row['success']=count
+                summary=prepare._grip_summary(candidate)
+                self.assertTrue(summary.startswith('Placement completion: '+expected+'.'))
+                self.assertEqual('This cohort does not show improved placement success.' in summary,regressed)
+                self.assertIn('Retries and qualification decisions do not imply successful recovery.',summary)
+                card=prepare._piper_grip_card(candidate,'a'*40)
+                self.assertIn('<strong>Placement completion: '+expected+'.</strong>',card)
+                self.assertLess(card.index('Placement completion:'),card.index('privileged native state'))
+                self.assertEqual('This cohort does not show improved placement success.' in card,regressed)
+
+    def test_grip_source_scope_pairing_denominator_decoded_seals_and_bytes_are_rechecked(self):
+        from dvidia_training import piper_grip_benchmark as grip
+        for variant in ('scope','count','summary','drop','decoded_hash','changed','private','unlisted','symlink'):
+            with self.subTest(variant=variant),tempfile.TemporaryDirectory() as folder:
+                root=Path(folder).resolve();source=root/'grip';report,payload=piper_grip_fixture(source)
+                if variant=='scope': report['learned_policy']=True
+                elif variant=='count': report['attempted']=29
+                elif variant=='summary': report['summary'][0]['success']=1
+                elif variant=='drop':
+                    name=report['attempts'].pop()['result_file'];payload.pop(name);(source/name).unlink()
+                elif variant=='private':
+                    name=report['attempts'][0]['result_file'];raw=json.loads(grip.decode_attempt(payload[name]))
+                    raw['note']='/Users/roguedev/private'
+                    payload[name]=gzip.compress(bench._json_bytes(raw),mtime=0)
+                    report['attempts'][0]={**grip._summary(raw),'result_file':name}
+                piper_grip_reseal(source,report,payload)
+                if variant=='decoded_hash':
+                    seal=json.loads(payload['integrity.json']);name=report['attempts'][0]['result_file']
+                    seal['files'][name]['decoded_sha256']='0'*64
+                    payload['integrity.json']=bench._json_bytes(seal);(source/'integrity.json').write_bytes(payload['integrity.json'])
+                elif variant=='changed': (source/'report.html').write_bytes(b'changed after inspection')
+                elif variant=='unlisted': (source/'unlisted.json').write_bytes(b'{}')
+                elif variant=='symlink': (source/'linked.json').symlink_to(source/'report.json')
+                output=root/'publication'
+                with patch.object(grip,'load_grip_bundle',return_value=(report,payload)),self.assertRaises(ValueError):
+                    prepare.stage(self.replay,output,source_commit='a'*40,piper_grip_benchmark=source)
+                self.assertFalse(output.exists())
+
+    def test_grip_staging_keeps_existing_publication_cap_and_bound_decoding(self):
+        from dvidia_training import piper_grip_benchmark as grip
+        source=self.root/'grip';report,payload=piper_grip_fixture(source)
+        cap=sum(len(raw) for raw in self.original.values())+sum(len(raw) for raw in payload.values())-1
+        for variant in ('stored','decoded'):
+            with self.subTest(variant=variant),patch.object(grip,'load_grip_bundle',return_value=(report,payload)), \
+                    patch.object(publisher,'MAX_TOTAL_BYTES',cap if variant=='stored' else publisher.MAX_TOTAL_BYTES), \
+                    patch.object(grip,'MAX_DECODED_BYTES',1 if variant=='decoded' else grip.MAX_DECODED_BYTES), \
+                    self.assertRaises(ValueError):
+                prepare.stage(self.replay,self.output,source_commit='a'*40,piper_grip_benchmark=source)
+            self.assertFalse(self.output.exists())
+        plan=prepare.stage(self.replay,self.output,source_commit='a'*40)
+        self.assertFalse(any(row['path'].startswith('tasks/piper-grip/') for row in plan['repository']['files']))
+        self.assertNotIn('PiPER guarded grip comparison',(self.output/'space/index.html').read_text())
 
 
 if __name__=='__main__':

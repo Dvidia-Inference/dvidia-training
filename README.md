@@ -23,6 +23,11 @@ unloaded mechanics; learned policies and physical qualification remain open. The
 [Robot Simulation Lab](https://huggingface.co/spaces/Dvidia/robot-simulation-lab)
 publishes recorded evidence and local run instructions.
 
+The [PiPER grip-recovery candidate](docs/piper-grip-recovery.md) adds a short
+test lift before carrying, one supported recovery attempt, and a paired
+benchmark against the original controller. It uses current simulator state;
+task completion, grip qualification, retries and aborts are recorded separately.
+
 Train a small visual model from Skillspace footage on your own computer or server. The pipeline checks actual videos and source groups, fixes training/development/test splits, fits weights on a CPU, and exports a result with held-out measurements and integrity hashes.
 
 The base install needs **Python 3.12+, NumPy and FFmpeg**. It needs no GPU, CUDA, account or API key. Training is offline by default; downloading software or public footage is a separate, explicit step.

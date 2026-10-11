@@ -23,6 +23,7 @@ MAX_TOTAL_BYTES = 150*1024*1024
 ALLOWED_SUFFIXES = {'.md', '.html', '.js', '.json', '.txt', '.png', '.bin', '.gz'}
 SHA = re.compile(r'(?:[a-f0-9]{40}|[a-f0-9]{64})')
 MAX_STARTER_STYLESHEET_BYTES = 64*1024
+GRIP_ATTEMPT_PATH = re.compile(r'tasks/piper-grip/attempts/[a-z0-9][a-z0-9_.-]{0,159}\.json\.gz')
 
 
 def _plain(path):
@@ -51,13 +52,43 @@ def _artifact_name(name):
         raise PublicationError('Unexpected Robot Simulation Lab artifact type.')
     if relative.suffix in ('.bin', '.gz') and relative.name not in (
             'geometry.bin', 'motion.bin', 'geometry.bin.gz', 'motion.bin.gz'):
-        raise PublicationError('Only native geometry and recorded motion binaries may be published.')
+        if GRIP_ATTEMPT_PATH.fullmatch(relative.as_posix()) is None:
+            raise PublicationError('Only native geometry, recorded motion and scoped PiPER grip JSON may be published.')
     return relative
 
 
 def _no_private_bytes(raw):
     if re.search(rb'hf_[A-Za-z0-9]{30,}', raw) or b'/Users/roguedev/' in raw:
         raise PublicationError('Possible credential or private local path in publication bytes.')
+
+
+def _artifact_plaintext(name, raw):
+    if GRIP_ATTEMPT_PATH.fullmatch(name) is None:
+        return raw
+    # Reuse the benchmark's one bounded decompressor, including in the
+    # standalone publisher. This requires no native engine or network.
+    root = str(Path(__file__).resolve().parents[2]/'src')
+    if root not in sys.path:
+        sys.path.insert(0,root)
+    from dvidia_training.piper_grip_benchmark import decode_attempt
+    from dvidia_training.reference_replay import _decode
+    try:
+        decoded = decode_attempt(raw)
+        episode = _decode(decoded)
+        if (type(episode) is not dict or episode.get('schema')!='dvidia.piper-task-episode/v1'
+                or episode.get('profile')!='piper-rigid-block-task-v0.1'
+                or episode.get('physical_robot_ready') is not False or episode.get('learned_policy') is not False):
+            raise ValueError('Unexpected compressed task episode')
+        return decoded
+    except (ValueError,OSError) as exc:
+        raise PublicationError('Invalid or oversized compressed PiPER grip attempt JSON.') from exc
+
+
+def _no_private_artifact_bytes(name,raw):
+    # Gzip optional header/comment bytes are not present in decoded JSON.
+    _no_private_bytes(raw)
+    if GRIP_ATTEMPT_PATH.fullmatch(name):
+        _no_private_bytes(_artifact_plaintext(name,raw))
 
 
 def _reviewed_removals(plan):
@@ -115,7 +146,7 @@ def _checked_plan_bytes(path):
         if (type(item.get('bytes')) is not int or item['bytes'] != len(raw)
                 or type(item.get('sha256')) is not str or item['sha256'] != sha256(raw).hexdigest()):
             raise PublicationError('Staged artifact differs from the reviewed plan.')
-        _no_private_bytes(raw)
+        _no_private_artifact_bytes(item['path'],raw)
         total += len(raw)
         if total > MAX_TOTAL_BYTES:
             raise PublicationError('Robot Simulation Lab exceeds its total publication cap.')
@@ -165,10 +196,10 @@ def publish_robot_sim(path):
         raw = _bytes(path.parent/'space'/_artifact_name(item['path']), MAX_FILE_BYTES)
         if {'bytes':len(raw),'sha256':sha256(raw).hexdigest()} != {'bytes':item['bytes'],'sha256':item['sha256']}:
             raise PublicationError('Publication changed before freezing.')
-        _no_private_bytes(raw)
+        _no_private_artifact_bytes(item['path'],raw)
         payload[item['path']] = raw
     api, token = client(path.parent/'publisher-cache')
-    if any(token.encode() in raw for raw in payload.values()):
+    if any(token.encode() in raw or token.encode() in _artifact_plaintext(name,raw) for name,raw in payload.items()):
         raise PublicationError('Credential found in frozen upload bytes.')
     identity = api.whoami()
     if 'Dvidia' not in {o.get('name') for o in identity.get('orgs',[])}:

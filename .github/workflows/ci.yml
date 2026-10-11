@@ -71,6 +71,7 @@ jobs:
           dvidia-reference-task --help
           dvidia-robot-sim --help
           dvidia-robot-sim list
+          dvidia-piper-grip --help
           dvidia-training-doctor --json
       - name: Test footage, visual training and loopback studio
         run: python -m unittest tests.test_footage_data tests.test_footage_train tests.test_footage_pipeline tests.test_footage_benchmark tests.test_training_studio tests.test_doctor tests.test_coverage tests.test_episode_tape tests.test_reaction tests.test_reaction_metrics tests.test_reaction_convergence tests.test_reaction_benchmark tests.test_motor_memory tests.test_motor_metrics tests.test_motor_benchmark tests.test_observations tests.test_observation_models tests.test_motion tests.test_motion_benchmark tests.test_transition_model tests.test_transition_pilot tests.test_transition_cli tests.test_embodiment_calibration tests.test_embodiment_cli tests.test_reference_sim -v
@@ -137,11 +138,15 @@ jobs:
       - name: Test profile contracts against pinned native assets
         env:
           DVIDIA_ROBOT_PROFILE_ASSETS: runs/robot-profile-assets-ci
-        run: python -m unittest tests.test_robot_profiles tests.test_piper_task tests.test_piper_task_benchmark -v
+        run: python -m unittest tests.test_robot_profiles tests.test_piper_task tests.test_piper_task_benchmark tests.test_piper_grip_guard tests.test_piper_grip_benchmark -v
       - name: Retain PiPER contact task and matched controls
         run: |
           dvidia-piper-task benchmark runs/robot-profile-assets-ci --output runs/piper-task-ci --nominal 1 --stress 0
           dvidia-piper-task inspect runs/piper-task-ci
+      - name: Retain paired grip validation and recovery evidence
+        run: |
+          dvidia-piper-grip benchmark --assets runs/robot-profile-assets-ci --output runs/piper-grip-ci
+          dvidia-piper-grip inspect runs/piper-grip-ci
       - name: Test bounded static simulation publication without credentials
         run: |
           python -m pip install -r publishing/huggingface/requirements.txt
@@ -154,6 +159,7 @@ jobs:
           name: additional-robot-profiles
           path: |
             runs/piper-task-ci
+            runs/piper-grip-ci
             runs/piper-smoke-ci
             runs/so101-smoke-ci
           if-no-files-found: ignore
