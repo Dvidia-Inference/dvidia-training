@@ -7,7 +7,8 @@ name = "dvidia-training"
 version = "0.1.0"
 description = "Local CPU training from Skillspace footage, with optional simulation movement candidates"
 readme = "README.md"
-license = "MIT"
+license = "MIT AND Apache-2.0"
+license-files = ["LICENSE", "third_party/observation-models/*LICENSE.txt"]
 requires-python = ">=3.12"
 dependencies = ["numpy==2.5.3"]
 classifiers = [
@@ -18,6 +19,7 @@ classifiers = [
 
 [project.optional-dependencies]
 arm = ["mujoco==3.15.0"]
+observations = ["opencv-python==5.0.0.93"]
 
 [project.urls]
 Homepage = "https://research.dvidia.org/papers/skillspace-footage-training/"
@@ -34,6 +36,8 @@ dvidia-skillspace-coverage = "dvidia_training.coverage:main"
 dvidia-episode-tape = "dvidia_training.episode_tape:main"
 dvidia-reaction = "dvidia_training.reaction_benchmark:main"
 dvidia-motor-memory = "dvidia_training.motor_benchmark:main"
+dvidia-observe = "dvidia_training.observation_pipeline:main"
+dvidia-observation-studio = "dvidia_training.observation_studio:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

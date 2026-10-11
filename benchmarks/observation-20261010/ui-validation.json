@@ -1,0 +1,22 @@
+{
+  "scope": "Local isolated UI QA copy; not model accuracy",
+  "checks": [
+    "Desktop loads real episode and unknown outcome without horizontal overflow",
+    "Video plays, sampled overlays render, and box visibility toggles",
+    "Corrected approval persists after reload while raw label and unknown outcome remain unchanged",
+    "A new blank manual event can be removed; a labeled manual event can be approved and saved",
+    "Downloaded review matches persisted revision and original source hash",
+    "Episode navigation protects unsaved changes, preserves Keep reviewing, and honors explicit discard",
+    "Structured model and source provenance render as readable text",
+    "390px phone layout has no horizontal overflow and visible controls have 44px targets",
+    "320px phone layout has no horizontal overflow and visible controls have 44px targets",
+    "No browser console or page errors",
+    "Accepted events preserve decimal timing, including 0.25s\u20130.50s",
+    "Overlay counts match timestamp-bounded real evidence at 12 sample and gap boundaries",
+    "Pending events block completion without writing an invalid revision",
+    "390px: event selection reveals editor, provenance follows review, no overflow, 44px controls",
+    "320px: event selection reveals editor, provenance follows review, no overflow, 44px controls"
+  ],
+  "console_errors": [],
+  "screenshots": "Kept locally with ignored QA run; no source frames redistributed"
+}

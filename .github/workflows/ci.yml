@@ -63,9 +63,52 @@ jobs:
           dvidia-episode-tape --help
           dvidia-reaction --help
           dvidia-motor-memory --help
+          dvidia-observe --help
+          dvidia-observation-studio --help
           dvidia-training-doctor --json
       - name: Test footage, visual training and loopback studio
-        run: python -m unittest tests.test_footage_data tests.test_footage_train tests.test_footage_pipeline tests.test_footage_benchmark tests.test_training_studio tests.test_doctor tests.test_coverage tests.test_episode_tape tests.test_reaction tests.test_reaction_metrics tests.test_reaction_convergence tests.test_reaction_benchmark tests.test_motor_memory tests.test_motor_metrics tests.test_motor_benchmark -v
+        run: python -m unittest tests.test_footage_data tests.test_footage_train tests.test_footage_pipeline tests.test_footage_benchmark tests.test_training_studio tests.test_doctor tests.test_coverage tests.test_episode_tape tests.test_reaction tests.test_reaction_metrics tests.test_reaction_convergence tests.test_reaction_benchmark tests.test_motor_memory tests.test_motor_metrics tests.test_motor_benchmark tests.test_observations tests.test_observation_models -v
+
+  observations:
+    name: Observation detectors / Linux / Python 3.12
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.12"
+      - name: Install observation runtime
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install ".[observations]"
+          python -m pip check
+      - name: Verify review contracts and explicitly provision pinned detectors
+        run: |
+          python -m unittest tests.test_observations tests.test_observation_models -v
+          python -m unittest discover -s publishing/huggingface -p 'test_publish_observation.py' -v
+          python -m unittest discover -s publishing/huggingface/observation-lab -p 'test_*.py' -v
+          node publishing/huggingface/observation-lab/test_adapter.cjs
+          python scripts/download_observation_models.py --download --output runs/observation-models-ci
+      - name: Smoke test actual ONNX loading and inference
+        run: |
+          python - <<'PY'
+          import json, tempfile
+          from pathlib import Path
+          import cv2, numpy as np
+          from dvidia_training.observation_models import OpenCVDetector
+          detector = OpenCVDetector('runs/observation-models-ci')
+          with tempfile.TemporaryDirectory() as directory:
+              frame = Path(directory) / 'neutral.png'
+              assert cv2.imwrite(str(frame), np.full((240, 320, 3), 240, np.uint8))
+              rows = detector.detect(frame)
+              assert isinstance(rows, list)
+          print(json.dumps({'scope': 'neutral-image model-loading smoke test; no accuracy measurement',
+                            'proposals': len(rows), 'runtime': detector.metadata}))
+          PY
 
   arm:
     name: Optional arm / Linux / Python 3.12
