@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DVIDIA · Shoe asset benchmark</title><style>body{font:18px/1.65 Georgia,serif;max-width:1000px;margin:auto;padding:24px;background:#fafaf7;color:#292d27}a{color:#396751}.scroll{overflow:auto}table{border-collapse:collapse;font:14px/1.5 system-ui}td,th{text-align:left;padding:10px;border-bottom:1px solid #ddd}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}</style><main><p>DVIDIA RESEARCH</p><h1>Shoe assets: load, drop, settle</h1><p>Native CPU scene loading, free rigid-shoe gravity and passive table support. Original procedural shoe proxies with assumed physical properties. No shoe grasping, organizing policy, deformation calibration, learned skill or hardware qualification.</p><p>54 planned attempts. Failures and invalid attempts remain in the denominator. Support success is expected with the table; zero support successes are expected with its collisions disabled.</p><p><a href="protocol.json">Frozen protocol and catalog</a> · <a href="attempts.json">Every native trajectory</a> · <a href="report.json">Report</a> · <a href="integrity.json">Integrity</a></p><div class="scroll"><table><thead><tr><th>Arm</th><th>Control</th><th>Attempts</th><th>Valid</th><th>Supported</th><th>Gravity</th><th>Other contact</th><th>Expected outcome</th></tr></thead><tbody><tr><td>ur5e</td><td>table_support</td><td>9</td><td>9</td><td>9</td><td>9</td><td>0</td><td>9</td></tr><tr><td>ur5e</td><td>table_disabled</td><td>9</td><td>9</td><td>0</td><td>9</td><td>0</td><td>9</td></tr><tr><td>piper</td><td>table_support</td><td>9</td><td>9</td><td>9</td><td>9</td><td>0</td><td>9</td></tr><tr><td>piper</td><td>table_disabled</td><td>9</td><td>9</td><td>0</td><td>9</td><td>0</td><td>9</td></tr><tr><td>so101</td><td>table_support</td><td>9</td><td>9</td><td>9</td><td>9</td><td>0</td><td>9</td></tr><tr><td>so101</td><td>table_disabled</td><td>9</td><td>9</td><td>0</td><td>9</td><td>0</td><td>9</td></tr></tbody></table></div><h2>Measurement scope</h2><p>Native-step timings measure mj_step only on this host; state extraction, mj_forward, compilation, rendering, sensing, training and actuation are excluded. Attempt wall includes verification, compilation, physics and state extraction. Run wall ends before report serialization. Process peak RSS includes prior allocations and is not a minimum memory requirement. These measurements do not establish real-time robot performance.</p><pre>{
+  &quot;attempt_wall&quot;: {
+    &quot;count&quot;: 54,
+    &quot;max_seconds&quot;: 6.704695750027895,
+    &quot;p50_seconds&quot;: 0.10058806301094592,
+    &quot;p95_seconds&quot;: 0.1465771359624341,
+    &quot;p99_seconds&quot;: 3.3758932149712857,
+    &quot;total_seconds&quot;: 12.352415461326018
+  },
+  &quot;compile&quot;: {
+    &quot;count&quot;: 54,
+    &quot;max_seconds&quot;: 0.4138097499962896,
+    &quot;p50_seconds&quot;: 0.06565612449776381,
+    &quot;p95_seconds&quot;: 0.0985709686996415,
+    &quot;p99_seconds&quot;: 0.37721267603570585,
+    &quot;total_seconds&quot;: 4.094927620142698
+  },
+  &quot;native_step&quot;: {
+    &quot;count&quot;: 27000,
+    &quot;max_seconds&quot;: 0.00011191610246896744,
+    &quot;p50_seconds&quot;: 8.500181138515472e-06,
+    &quot;p95_seconds&quot;: 1.5750061720609665e-05,
+    &quot;p99_seconds&quot;: 2.3417582269757922e-05,
+    &quot;total_seconds&quot;: 0.2501475957687944
+  },
+  &quot;process_peak_rss_bytes&quot;: 1111916544,
+  &quot;run_wall_seconds&quot;: 12.361563832964748,
+  &quot;scope&quot;: &quot;Native-step timings measure mj_step only on this host; state extraction, mj_forward, compilation, rendering, sensing, training and actuation are excluded. Attempt wall includes verification, compilation, physics and state extraction. Run wall ends before report serialization. Process peak RSS includes prior allocations and is not a minimum memory requirement. These measurements do not establish real-time robot performance.&quot;,
+  &quot;simulated_seconds&quot;: 54.0,
+  &quot;simulated_seconds_per_run_wall_second&quot;: 4.368379335306871
+}</pre><p>Sampled trajectories are privileged native state. The first library checks composition and passive support. A manipulation controller and measured shoe properties are separate evidence requirements.</p><footer><a href="https://research.dvidia.org/">DVIDIA research</a> · <a href="https://github.com/Dvidia-Inference/dvidia-training">GitHub</a> · <a href="https://x.com/iammrriver">@iammrriver</a> · <a href="mailto:hello@dvidia.org">hello@dvidia.org</a></footer></main></html>
