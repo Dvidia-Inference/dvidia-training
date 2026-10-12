@@ -46,7 +46,9 @@ python -m http.server 8000 --bind 127.0.0.1 --directory ./trainer-scene
 On Windows use `py -3.12 -m venv .venv`, `.venv\Scripts\python.exe`
 and `.venv\Scripts\dvidia-assets.exe`; activation is optional.
 
-Open http://localhost:8000. Choose trainer, ankle-boot, slipper or all.
+Open http://localhost:8000. The selector offers only the exported shoe families.
+Use `--pair all` with a fresh output directory to include trainers, ankle boots
+and slippers in one preview.
 Use a fresh output directory for each export.
 
 The exporter compiles verified native arm assets, adds shoe bodies and an
