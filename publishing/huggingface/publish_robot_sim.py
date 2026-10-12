@@ -19,11 +19,19 @@ from publish import PublicationError, checked_remote, client, verified_downloads
 REPO_ID = 'Dvidia/robot-simulation-lab'
 KIND = 'dvidia.robot-simulation-lab-publication'
 MAX_FILE_BYTES = 32*1024*1024
-MAX_TOTAL_BYTES = 150*1024*1024
+# v0.3 adds all 84 sealed contact-memory attempts while retaining prior evidence.
+# Only the complete stored payload cap increases; decoded/file bounds stay fixed.
+MAX_TOTAL_BYTES = 256*1024*1024
 ALLOWED_SUFFIXES = {'.md', '.html', '.js', '.json', '.txt', '.png', '.bin', '.gz'}
 SHA = re.compile(r'(?:[a-f0-9]{40}|[a-f0-9]{64})')
 MAX_STARTER_STYLESHEET_BYTES = 64*1024
+MAX_ATTEMPT_JSON_DEPTH = 64
 GRIP_ATTEMPT_PATH = re.compile(r'tasks/piper-grip/attempts/[a-z0-9][a-z0-9_.-]{0,159}\.json\.gz')
+CONTACT_ATTEMPT_PATH = re.compile(r'tasks/piper-contact-v03/attempts/[a-z0-9][a-z0-9_.-]{0,159}\.json\.gz')
+
+
+def _compressed_attempt(name):
+    return GRIP_ATTEMPT_PATH.fullmatch(name) or CONTACT_ATTEMPT_PATH.fullmatch(name)
 
 
 def _plain(path):
@@ -52,8 +60,8 @@ def _artifact_name(name):
         raise PublicationError('Unexpected Robot Simulation Lab artifact type.')
     if relative.suffix in ('.bin', '.gz') and relative.name not in (
             'geometry.bin', 'motion.bin', 'geometry.bin.gz', 'motion.bin.gz'):
-        if GRIP_ATTEMPT_PATH.fullmatch(relative.as_posix()) is None:
-            raise PublicationError('Only native geometry, recorded motion and scoped PiPER grip JSON may be published.')
+        if _compressed_attempt(relative.as_posix()) is None:
+            raise PublicationError('Only native geometry, recorded motion and scoped PiPER attempt JSON may be published.')
     return relative
 
 
@@ -62,9 +70,9 @@ def _no_private_bytes(raw):
         raise PublicationError('Possible credential or private local path in publication bytes.')
 
 
-def _artifact_plaintext(name, raw):
-    if GRIP_ATTEMPT_PATH.fullmatch(name) is None:
-        return raw
+def _artifact_json_texts(name, raw):
+    if _compressed_attempt(name) is None:
+        return raw,raw
     # Reuse the benchmark's one bounded decompressor, including in the
     # standalone publisher. This requires no native engine or network.
     root = str(Path(__file__).resolve().parents[2]/'src')
@@ -79,16 +87,39 @@ def _artifact_plaintext(name, raw):
                 or episode.get('profile')!='piper-rigid-block-task-v0.1'
                 or episode.get('physical_robot_ready') is not False or episode.get('learned_policy') is not False):
             raise ValueError('Unexpected compressed task episode')
-        return decoded
-    except (ValueError,OSError) as exc:
-        raise PublicationError('Invalid or oversized compressed PiPER grip attempt JSON.') from exc
+        stack = [(iter((episode,)),0)]
+        while stack:
+            iterator,depth = stack[-1]
+            try:
+                value = next(iterator)
+            except StopIteration:
+                stack.pop()
+                continue
+            if type(value) in (dict,list):
+                if depth>=MAX_ATTEMPT_JSON_DEPTH:
+                    raise ValueError('Task JSON exceeds its nesting bound')
+                stack.append((iter(value.values() if type(value) is dict else value),depth+1))
+        # Resolve escaped string characters for privacy checks only. The frozen
+        # original compressed/decoded evidence is never rewritten.
+        normalized = json.dumps(episode,ensure_ascii=False,allow_nan=False,separators=(',',':')).encode('utf-8')
+        if len(normalized)>MAX_FILE_BYTES:
+            raise ValueError('Normalized task JSON exceeds its byte bound')
+        return decoded,normalized
+    except (ValueError,OSError,UnicodeError,RecursionError) as exc:
+        raise PublicationError('Invalid or oversized compressed PiPER attempt JSON.') from exc
+
+
+def _artifact_plaintext(name, raw):
+    return _artifact_json_texts(name,raw)[0]
 
 
 def _no_private_artifact_bytes(name,raw):
     # Gzip optional header/comment bytes are not present in decoded JSON.
     _no_private_bytes(raw)
-    if GRIP_ATTEMPT_PATH.fullmatch(name):
-        _no_private_bytes(_artifact_plaintext(name,raw))
+    if _compressed_attempt(name):
+        decoded,normalized = _artifact_json_texts(name,raw)
+        _no_private_bytes(decoded)
+        _no_private_bytes(normalized)
 
 
 def _reviewed_removals(plan):
@@ -199,7 +230,8 @@ def publish_robot_sim(path):
         _no_private_artifact_bytes(item['path'],raw)
         payload[item['path']] = raw
     api, token = client(path.parent/'publisher-cache')
-    if any(token.encode() in raw or token.encode() in _artifact_plaintext(name,raw) for name,raw in payload.items()):
+    if any(token.encode() in raw or any(token.encode() in text for text in _artifact_json_texts(name,raw))
+           for name,raw in payload.items()):
         raise PublicationError('Credential found in frozen upload bytes.')
     identity = api.whoami()
     if 'Dvidia' not in {o.get('name') for o in identity.get('orgs',[])}:

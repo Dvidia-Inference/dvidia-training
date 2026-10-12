@@ -50,6 +50,16 @@ experiment must replace the task decisions it claims to learn and evaluate the
 result in a closed loop. This contact fixture does not establish shoe physics
 or physical transfer.
 
+The [PiPER contact-history v0.3 experiment](piper-contact-memory-v03.md) is the
+next contact decision study. It isolates a test lift from a bounded slowdown,
+closed hold and reassessment response across mass/friction variation. Keep
+settling/slip hypotheses separate from observed object loss, and resumed motion
+separate from completed recovery. Following that study, add measured compliant
+objects and calibrated sensing before training a compact contact-conditioned
+policy. Record synchronized visual evidence, commands, joint/jaw response,
+contact observations and complete outcomes so Skillspace contains physical
+interaction evidence as well as footage. The current controller is authored.
+
 | Order | Build and owner role | Current state | Evidence needed to advance |
 | --- | --- | --- | --- |
 | 1 | Collection planning — product + data | Local coverage planner, versioned briefs and declared source-group tallies implemented. | First skill's observable goal, operating envelope, actual recordings and reviewed capture lineage. |

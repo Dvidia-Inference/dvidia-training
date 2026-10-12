@@ -376,6 +376,138 @@ def _grip_summary(report,*,html=False):
     return '\n\n'.join(line for line in (comparison,regression,recovery,note) if line)+'\n\n'+'\n'.join('- '+line for line in rows)
 
 
+def _sealed_piper_contact(directory):
+    from dvidia_training import piper_contact_benchmark as benchmark
+    root = Path(directory).absolute()
+    publisher._plain(root)
+    if not root.is_dir():
+        raise ValueError('PiPER v0.3 evidence must be an explicitly supplied plain benchmark directory.')
+    report,files = benchmark.load_contact_bundle(root)
+    required = {'report.json','report.html','protocol.json','integrity.json',
+                'licenses/agilex_piper/LICENSE','licenses/agilex_piper/README.md'}
+    if (type(report) is not dict or type(files) is not dict or len(files)!=90
+            or not required<=set(files) or any(type(raw) is not bytes for raw in files.values())):
+        raise ValueError('PiPER v0.3 must retain all eighty-four compressed attempts and model notices.')
+    manifest = _decode(files['integrity.json'])
+    if (type(manifest) is not dict or set(manifest)!={'schema','files'}
+            or manifest['schema']!='dvidia.piper-contact-integrity/v0.3' or type(manifest['files']) is not dict
+            or set(manifest['files'])!=set(files)-{'integrity.json'} or _decode(files['report.json'])!=report):
+        raise ValueError('PiPER v0.3 snapshot differs from its original complete seal/report.')
+    protocol = _decode(files['protocol.json'])
+    if (report.get('schema')!='dvidia.piper-contact-benchmark/v0.3' or type(protocol) is not dict
+            or protocol.get('schema')!='dvidia.piper-contact-protocol/v0.3'
+            or report.get('profile')!='piper-rigid-block-task-v0.1' or protocol.get('profile')!=report['profile']
+            or any(doc.get('physical_robot_ready') is not False or doc.get('learned_policy') is not False
+                   or doc.get('scope')!=benchmark.SCOPE or doc.get('simulation_asset_license')!='MIT'
+                   for doc in (report,protocol))
+            or report.get('protocol')!=protocol or report.get('cohort') not in ('development','confirmation')
+            or protocol.get('cohort')!=report['cohort'] or protocol.get('native_command_units')!=['rad']*6+['m']
+            or protocol.get('variants')!=list(benchmark.VARIANTS)
+            or type(protocol.get('planned_attempts')) is not int or protocol['planned_attempts']!=84
+            or report.get('protocol_sha256')!=sha256(files['protocol.json']).hexdigest()):
+        raise ValueError('Only the pinned authored synthetic PiPER v0.3 comparison may be staged.')
+    scenes,attempts = report.get('scenes'),report.get('attempts')
+    if (type(scenes) is not list or len(scenes)!=12 or scenes!=protocol.get('scenes')
+            or any(type(scene) is not dict or type(scene.get('id')) is not str
+                   or scene.get('friction') not in benchmark.FRICTIONS or scene.get('mass_kg') not in benchmark.MASSES
+                   or type(scene.get('layout_index')) is not int or scene['layout_index'] not in (0,1) for scene in scenes)
+            or len({scene['id'] for scene in scenes})!=12
+            or {(s['friction'],s['mass_kg'],s['layout_index']) for s in scenes}!=
+                {(f,m,i) for f in benchmark.FRICTIONS for m in benchmark.MASSES for i in (0,1)}
+            or type(attempts) is not list or len(attempts)!=84
+            or type(report.get('attempted')) is not int or report['attempted']!=84):
+        raise ValueError('PiPER v0.3 must retain every friction, mass, layout and paired attempt.')
+    expected = {scene['id']+'--'+variant for scene in scenes for variant in benchmark.VARIANTS}
+    lookup = {}
+    for row in attempts:
+        if (type(row) is not dict or type(row.get('id')) is not str or type(row.get('scene_id')) is not str
+                or type(row.get('variant')) is not str or row['id'] not in expected or row['id'] in lookup
+                or row['id']!=row['scene_id']+'--'+row['variant']
+                or row.get('result_file')!='attempts/'+row['id']+'.json.gz'
+                or type(row.get('valid')) is not bool or type(row.get('success')) is not bool
+                or (row['success'] and not row['valid'])):
+            raise ValueError('PiPER v0.3 attempt differs from its complete paired plan.')
+        lookup[row['id']]=row
+    if (set(files)!=required|{row['result_file'] for row in attempts}
+            or report.get('summary')!=benchmark.aggregate(attempts,scenes)
+            or type(report.get('valid_attempts')) is not int or report['valid_attempts']!=sum(row['valid'] for row in attempts)):
+        raise ValueError('PiPER v0.3 inventory or friction/mass-stratified counts differ from all attempts.')
+    total,decoded_total = 0,0
+    for name,data in files.items():
+        publisher._artifact_name('tasks/piper-contact-v03/'+name)
+        if len(data)>publisher.MAX_FILE_BYTES or publisher._bytes(root/name,publisher.MAX_FILE_BYTES)!=data:
+            raise ValueError('PiPER v0.3 evidence changed after validated inspection.')
+        decoded = data
+        if name!='integrity.json':
+            record = manifest['files'][name]
+            compressed = name.startswith('attempts/')
+            keys = {'bytes','sha256','encoding','decoded_bytes','decoded_sha256'} if compressed else {'bytes','sha256'}
+            if (type(record) is not dict or set(record)!=keys or type(record['bytes']) is not int
+                    or {key:record[key] for key in ('bytes','sha256')}!=_record(data)):
+                raise ValueError('PiPER v0.3 stored bytes differ from their original seal.')
+            if compressed:
+                decoded = benchmark.decode_attempt(data,record)
+                raw = _decode(decoded)
+                identity = name.removeprefix('attempts/').removesuffix('.json.gz')
+                if (type(raw) is not dict or benchmark._summary(raw)!=
+                        {key:value for key,value in lookup[identity].items() if key!='result_file'}):
+                    raise ValueError('PiPER v0.3 outcome differs from its complete decoded source attempt.')
+        publisher._no_private_bytes(data)
+        publisher._no_private_bytes(decoded)
+        total+=len(data);decoded_total+=len(decoded)
+        if total>publisher.MAX_TOTAL_BYTES or decoded_total>benchmark.MAX_DECODED_BYTES:
+            raise ValueError('PiPER v0.3 evidence exceeds its stored or decoded byte budget.')
+    actual = set()
+    for path in root.rglob('*'):
+        publisher._plain(path)
+        if path.is_file():
+            actual.add(path.relative_to(root).as_posix())
+    if actual!=set(files):
+        raise ValueError('PiPER v0.3 contains files outside its original sealed inventory.')
+    return files,report,{'stored_bytes':total,'decoded_bytes':decoded_total}
+
+
+def _contact_summary(report,*,html=False):
+    totals = {}
+    for variant in ('baseline_placement','probe_only_placement','history_placement'):
+        grouped = [row for row in report['summary'] if row['variant']==variant]
+        totals[variant] = (sum(row['success'] for row in grouped),sum(row['attempted'] for row in grouped))
+    baseline,probe,history = (totals[key] for key in ('baseline_placement','probe_only_placement','history_placement'))
+    comparison = (f'Placement completion: baseline {baseline[0]}/{baseline[1]}, '
+                  f'probe-only {probe[0]}/{probe[1]}, history {history[0]}/{history[1]}.')
+    recovery = 'Retries, resumes and release refusals do not imply successful placement or recovery.'
+    note = (f"Frozen {report['cohort']} cohort: {report['attempted']} planned attempts across twelve synthetic scenes. "
+            'Three frictions, two masses and two shared layouts; seven variants per scene. '
+            'Every failed or invalid attempt remains in the denominator. Counts are descriptive, not physical reliability or detector accuracy.')
+    rows = [f"μ={row['friction']:.2f}, mass={row['mass_kg']:.2f} kg / {row['variant']}: "
+            f"{row['success']}/{row['attempted']} completed, {row['valid']} numerically valid" for row in report['summary']]
+    if html:
+        return ('<p><strong>'+escape(comparison)+'</strong></p><p>'+escape(recovery)+'</p><p>'+escape(note)+
+                '</p><details><summary>Inspect all friction, mass and control counts</summary>'+
+                '<br>'.join(escape(line) for line in rows)+'</details>')
+    return '\n\n'.join((comparison,recovery,note))+'\n\n'+'\n'.join('- '+line for line in rows)
+
+
+def _piper_contact_card(report,source_commit):
+    if report is None:
+        return ''
+    return ('<article class="profile"><span class="status">PiPER contact memory v0.3 · synthetic</span>'
+            '<h2>Compare probe and contact history.</h2><div class="summary">'+_contact_summary(report,html=True)+
+            '</div><p>Three authored controllers use privileged native simulator state. Each placement policy has '
+            'its own matched open-jaw replay; a shared hold control remains. Full contact history, decisions, '
+            'refusals, retries, resumes, aborts and invalid outcomes are retained. Uncalibrated contact proxies '
+            'do not qualify a learned skill, physical detector or robot.</p><div class="links">'
+            '<a href="tasks/piper-contact-v03/report.html">Full three-policy comparison ↗</a>'
+            '<a href="tasks/piper-contact-v03/report.json">Every outcome and diagnostic ↗</a>'
+            '<a href="tasks/piper-contact-v03/protocol.json">Frozen contact-memory protocol ↗</a>'
+            '<a href="tasks/piper-contact-v03/integrity.json">Stored and decoded attempt hashes ↗</a>'
+            '<a href="https://github.com/Dvidia-Inference/dvidia-training/blob/'+source_commit+
+            '/docs/piper-contact-memory-v03.md">Pinned offline inspection guide ↗</a></div>'
+            '<p class="tiny">All eighty-four full attempts are retained as deterministic gzip JSON with original '
+            'stored and decoded hashes. Previous task and numerical evidence remains separate and unchanged. '
+            'This adds no PiPER 3D viewer or physical qualification.</p></article>')
+
+
 def _piper_grip_card(report,source_commit):
     if report is None:
         return ''
@@ -395,7 +527,7 @@ def _piper_grip_card(report,source_commit):
             'evidence to the existing contact pilot; it adds no PiPER 3D viewer.</p></article>')
 
 
-def _profile_cards(profile_reports=(),source_commit='main',piper_task_report=None,piper_grip_report=None):
+def _profile_cards(profile_reports=(),source_commit='main',piper_task_report=None,piper_grip_report=None,piper_contact_report=None):
     profiles = [
         ('UR5e + Robotiq 2F-85','Recorded native contact task',
          'Six arm joints, eight articulated gripper coordinates and a free rigid block. Full source outcomes and matched controls are available.',
@@ -424,11 +556,11 @@ def _profile_cards(profile_reports=(),source_commit='main',piper_task_report=Non
     authored = ['<article class="profile"><span class="status">'+escape(status)+'</span><h2>'+escape(title)+
                    '</h2><p>'+escape(description)+'</p><a href="'+escape(href,quote=True)+'">'+escape(label)+
                    '</a></article>' for title,status,description,href,label in profiles]
-    return authored[0]+_piper_task_card(piper_task_report,source_commit)+_piper_grip_card(piper_grip_report,source_commit)+''.join(recorded)+''.join(authored[1:])
+    return authored[0]+_piper_contact_card(piper_contact_report,source_commit)+_piper_task_card(piper_task_report,source_commit)+_piper_grip_card(piper_grip_report,source_commit)+''.join(recorded)+''.join(authored[1:])
 
 
 def stage(replay,output,*,source_commit=None,expected_remote_commit=None,profile_benchmarks=None,
-          remove_starter_stylesheet=None,piper_task_benchmark=None,piper_grip_benchmark=None):
+          remove_starter_stylesheet=None,piper_task_benchmark=None,piper_grip_benchmark=None,piper_contact_benchmark=None):
     replay_files,report,motion = _sealed_replay(replay)
     if profile_benchmarks is not None and (type(profile_benchmarks) is not list or len(profile_benchmarks)>2):
         raise ValueError('Supply at most two explicit native profile benchmark directories.')
@@ -478,6 +610,19 @@ def stage(replay,output,*,source_commit=None,expected_remote_commit=None,profile
             'canonical_attempt_storage':'Deterministic single-member gzip JSON; original stored and decoded SHA-256/byte sizes retained in source seal',
             'byte_preservation':'Complete original protocol, report, thirty canonical attempt files, integrity and MIT notices retained under tasks/piper-grip/',
             **sizes}
+    piper_contact_report = None
+    if piper_contact_benchmark is not None:
+        contact_files,piper_contact_report,sizes = _sealed_piper_contact(piper_contact_benchmark)
+        payload.update({'tasks/piper-contact-v03/'+name:raw for name,raw in contact_files.items()})
+        task_records['piper-contact-v03'] = {'profile':piper_contact_report['profile'],
+            'source_integrity':_record(contact_files['integrity.json']),
+            'source_report':_record(contact_files['report.json']),'source_protocol':_record(contact_files['protocol.json']),
+            'cohort':piper_contact_report['cohort'],'attempt_ids':[row['id'] for row in piper_contact_report['attempts']],
+            'attempted':84,'valid_attempts':piper_contact_report['valid_attempts'],'summary':piper_contact_report['summary'],
+            'native_command_units':['rad']*6+['m'],'physical_robot_ready':False,'learned_policy':False,'scope':piper_contact_report['scope'],
+            'canonical_attempt_storage':'Deterministic single-member gzip JSON; original stored and decoded SHA-256/byte sizes retained in source seal',
+            'byte_preservation':'Complete original protocol, report, eighty-four canonical attempt files, integrity and MIT notices retained under tasks/piper-contact-v03/',
+            **sizes}
     readme = publisher._bytes(HERE/'templates/README.md',1024*1024).decode()
     index = publisher._bytes(HERE/'templates/index.html',1024*1024).decode()
     profile_summary = ('No separate unloaded numerical profile bundles are included in this payload.'
@@ -505,8 +650,19 @@ def stage(replay,output,*,source_commit=None,expected_remote_commit=None,profile
         '/docs/piper-grip-recovery.md). No archive extraction is needed. '
         '[Full comparison](tasks/piper-grip/report.html) · [Original protocol](tasks/piper-grip/protocol.json) · '
         '[Stored and decoded hashes](tasks/piper-grip/integrity.json).\n')
-    readme = readme.replace('{{BENCHMARK_SUMMARY}}',_summary(report)).replace('{{PROFILE_SUMMARY}}',profile_summary).replace('{{PIPER_TASK_SUMMARY}}',piper_summary).replace('{{PIPER_GRIP_SUMMARY}}',grip_summary).replace('{{SOURCE_COMMIT}}',source_commit)
-    index = index.replace('{{BENCHMARK_SUMMARY}}',_summary(report,html=True)).replace('{{PROFILE_CARDS}}',_profile_cards(profile_reports,source_commit,piper_task_report,piper_grip_report)).replace('{{SOURCE_COMMIT}}',source_commit)
+    contact_summary = ('' if piper_contact_report is None else '## PiPER contact memory v0.3\n\n'+_contact_summary(piper_contact_report)+
+        '\n\nBaseline, probe-only and history are authored controllers with privileged native state, each with its own '
+        'matched open-jaw replay and a common hold control. Full diagnostics, contact-memory decisions, refusals, '
+        'retries, resumes and aborts are retained. These synthetic trials establish no learned competence, physical '
+        'reliability or detector accuracy.\n\nEvery attempt is canonical deterministic gzip JSON under '
+        '`tasks/piper-contact-v03/attempts/`; the original seal records both stored and decoded bytes and SHA-256. '
+        'Download all files in `tasks/piper-contact-v03/` together for the pinned offline inspection workflow in '
+        '[the v0.3 guide](https://github.com/Dvidia-Inference/dvidia-training/blob/'+source_commit+
+        '/docs/piper-contact-memory-v03.md). [Full comparison](tasks/piper-contact-v03/report.html) · '
+        '[Every outcome](tasks/piper-contact-v03/report.json) · [Original protocol](tasks/piper-contact-v03/protocol.json) · '
+        '[Stored and decoded hashes](tasks/piper-contact-v03/integrity.json).\n')
+    readme = readme.replace('{{BENCHMARK_SUMMARY}}',_summary(report)).replace('{{PROFILE_SUMMARY}}',profile_summary).replace('{{PIPER_TASK_SUMMARY}}',piper_summary).replace('{{PIPER_GRIP_SUMMARY}}',grip_summary).replace('{{PIPER_CONTACT_SUMMARY}}',contact_summary).replace('{{SOURCE_COMMIT}}',source_commit)
+    index = index.replace('{{BENCHMARK_SUMMARY}}',_summary(report,html=True)).replace('{{PROFILE_CARDS}}',_profile_cards(profile_reports,source_commit,piper_task_report,piper_grip_report,piper_contact_report)).replace('{{SOURCE_COMMIT}}',source_commit)
     if '{{' in readme or '{{' in index:
         raise ValueError('Space template contains an unresolved publication placeholder.')
     payload.update({'README.md':readme.encode(),'index.html':index.encode(),'LICENSE':publisher._bytes(ROOT/'LICENSE',1024*1024)})
@@ -519,6 +675,8 @@ def stage(replay,output,*,source_commit=None,expected_remote_commit=None,profile
                   'source_task_integrity':_record(replay_files['receipt/integrity.json']),
                   'byte_preservation':'Every original replay file, complete raw task attempt, integrity file and model notice is retained byte-for-byte under replay/',
                   'software_license':'MIT','native_model_licenses':{'UR5e':'BSD-3-Clause','Robotiq 2F-85':'BSD-2-Clause'},
+                  'publication_byte_bounds':{'stored_payload_bytes':publisher.MAX_TOTAL_BYTES,'per_file_bytes':publisher.MAX_FILE_BYTES,
+                      'scope':'v0.3 raises the stored Space cap to 256 MiB to retain prior evidence plus all eighty-four new attempts; bounded single-member decompression is unchanged'},
                   'profile_benchmarks':profile_records,'contact_task_benchmarks':task_records,
                   'profile_gallery':'UR5e replay and explicitly supplied PiPER pilot have authored contact-task evidence; separate PiPER/SO-101 numerical bundles remain unloaded mechanics evidence; all remaining profiles stay upcoming'}
     provenance['native_model_licenses'].update({p['profile']['name']:p['profile']['simulation_asset_license'] for p in profile_reports})
@@ -526,6 +684,8 @@ def stage(replay,output,*,source_commit=None,expected_remote_commit=None,profile
         provenance['native_model_licenses']['PiPER contact pilot']='MIT'
     if piper_grip_report is not None:
         provenance['native_model_licenses']['PiPER guarded grip comparison']='MIT'
+    if piper_contact_report is not None:
+        provenance['native_model_licenses']['PiPER contact memory v0.3']='MIT'
     payload['provenance.json'] = (json.dumps(provenance,indent=2)+'\n').encode()
     total = sum(len(raw) for raw in payload.values())
     if total > publisher.MAX_TOTAL_BYTES:
@@ -569,9 +729,11 @@ if __name__=='__main__':
     parser.add_argument('--profile-benchmark',type=Path,action='append',default=[])
     parser.add_argument('--piper-task-benchmark',type=Path)
     parser.add_argument('--piper-grip-benchmark',type=Path)
+    parser.add_argument('--piper-contact-benchmark',type=Path)
     args = parser.parse_args()
     result = stage(args.replay,args.output,source_commit=args.source_commit,expected_remote_commit=args.expected_remote_commit,
                    profile_benchmarks=args.profile_benchmark,remove_starter_stylesheet=args.remove_starter_stylesheet,
-                   piper_task_benchmark=args.piper_task_benchmark,piper_grip_benchmark=args.piper_grip_benchmark)
+                   piper_task_benchmark=args.piper_task_benchmark,piper_grip_benchmark=args.piper_grip_benchmark,
+                   piper_contact_benchmark=args.piper_contact_benchmark)
     print(json.dumps({'repo_id':result['repository']['repo_id'],'files':len(result['repository']['files']),
                       'bytes':result['total_bytes'],'sdk':'static'},indent=2))

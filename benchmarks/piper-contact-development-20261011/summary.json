@@ -1,0 +1,813 @@
+{
+  "schema": "dvidia.piper-contact-memory-development/v1",
+  "scope": "Exploratory development; separate from reserved fresh confirmation; all13 scripted attempts retained including failures; no parameter tuning, two diagnostic correctness refinements",
+  "candidate_changes": {
+    "r0": "initial finite design",
+    "r1": "settling pairwise excursion guard; emitted unscaled targets for audit",
+    "r2": "clear completed settling dwell on resume; native behavior unchanged"
+  },
+  "attempts": [
+    {
+      "file": "attempts/r0/history-low.json.gz",
+      "bytes": 723501,
+      "sha256": "acee8a0f41679657a0ad00085e93b04606a712bf4612722b91bb30607ed6c196",
+      "source_directory": "sources/r0",
+      "mode": "history",
+      "friction": 0.15,
+      "mass_kg": 0.04,
+      "seed": 921707,
+      "valid": true,
+      "success": false,
+      "simulated_seconds": 20.00000000000146,
+      "action_count": 1000,
+      "error": null,
+      "warnings": [],
+      "first_success_time_seconds": null,
+      "max_object_lift_m": 7.505521159355266e-05,
+      "retention_lost": false,
+      "unexpected_contact_native_ticks": 0,
+      "retry_count": 1,
+      "slowdown_count": 0,
+      "reassessment_count": 0,
+      "resume_count": 0,
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.259999999999199,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "alarm",
+          "t_seconds": 11.619999999999,
+          "reason": "object_not_following"
+        },
+        {
+          "type": "retry_started",
+          "t_seconds": 11.619999999999,
+          "reason": "supported_object_only"
+        },
+        {
+          "type": "retry_completed",
+          "t_seconds": 13.27999999999808,
+          "reason": "open_recenter_complete"
+        },
+        {
+          "type": "probe_started",
+          "t_seconds": 14.159999999997591,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "alarm",
+          "t_seconds": 14.519999999997392,
+          "reason": "object_not_following"
+        },
+        {
+          "type": "abort",
+          "t_seconds": 14.519999999997392,
+          "reason": "retry_budget_exhausted:object_not_following"
+        }
+      ],
+      "target_distance_m": 0.12013775551934067,
+      "encoding": "gzip",
+      "decoded_bytes": 4271896,
+      "decoded_sha256": "e0937762208f30f3efab78eaab7c0d6546f1c56921f18ab338b3cafa4480c7e6"
+    },
+    {
+      "file": "attempts/r0/history-moderate.json.gz",
+      "bytes": 797150,
+      "sha256": "0098f49f743cb0d5b388f77228a82862c271b028125641269083fb5176a912b6",
+      "source_directory": "sources/r0",
+      "mode": "history",
+      "friction": 0.55,
+      "mass_kg": 0.04,
+      "seed": 921707,
+      "valid": true,
+      "success": true,
+      "simulated_seconds": 20.00000000000146,
+      "action_count": 1000,
+      "error": null,
+      "warnings": [],
+      "first_success_time_seconds": 18.42099999999953,
+      "max_object_lift_m": 0.09532845368419295,
+      "retention_lost": false,
+      "unexpected_contact_native_ticks": 0,
+      "retry_count": 0,
+      "slowdown_count": 1,
+      "reassessment_count": 1,
+      "resume_count": 1,
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.259999999999199,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "acquisition_qualified",
+          "t_seconds": 11.859999999998866,
+          "reason": "sustained_table_free_probe"
+        },
+        {
+          "type": "slowdown_started",
+          "t_seconds": 11.9799999999988,
+          "reason": "persistent_local_offset_trend"
+        },
+        {
+          "type": "reassessment_started",
+          "t_seconds": 12.099999999998733,
+          "reason": "bounded_slowdown_complete"
+        },
+        {
+          "type": "carry_resumed",
+          "t_seconds": 12.319999999998611,
+          "reason": "sustained_loaded_relative_settling"
+        }
+      ],
+      "target_distance_m": 0.002057331426889979,
+      "encoding": "gzip",
+      "decoded_bytes": 4203582,
+      "decoded_sha256": "72340c8fc8af977f2634fcd5cde237292a771444dd411ad7a4956b93ac4d746e"
+    },
+    {
+      "file": "attempts/r0/history-nominal.json.gz",
+      "bytes": 786460,
+      "sha256": "89fb6ec0f87f0b9023510294b63328ec0c2a622911169515cf8ee8fe8b4c5b15",
+      "source_directory": "sources/r0",
+      "mode": "history",
+      "friction": 0.8,
+      "mass_kg": 0.04,
+      "seed": 921707,
+      "valid": true,
+      "success": true,
+      "simulated_seconds": 20.00000000000146,
+      "action_count": 1000,
+      "error": null,
+      "warnings": [],
+      "first_success_time_seconds": 15.591999999996798,
+      "max_object_lift_m": 0.09809307681104411,
+      "retention_lost": false,
+      "unexpected_contact_native_ticks": 0,
+      "retry_count": 0,
+      "slowdown_count": 0,
+      "reassessment_count": 0,
+      "resume_count": 0,
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.259999999999199,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "acquisition_qualified",
+          "t_seconds": 11.859999999998866,
+          "reason": "sustained_table_free_probe"
+        }
+      ],
+      "target_distance_m": 0.004433586013405143,
+      "encoding": "gzip",
+      "decoded_bytes": 4206172,
+      "decoded_sha256": "5bfc275a5bb65f48197b965e04310a9c906124c39cc6a5d5b039d67cfd825eb9"
+    },
+    {
+      "file": "attempts/r0/probe_only-low.json.gz",
+      "bytes": 723510,
+      "sha256": "58d4ff92c686c93df7fc8e68f3fc02b44c8e132284164ee653f27cb2c174e167",
+      "source_directory": "sources/r0",
+      "mode": "probe_only",
+      "friction": 0.15,
+      "mass_kg": 0.04,
+      "seed": 921707,
+      "valid": true,
+      "success": false,
+      "simulated_seconds": 20.00000000000146,
+      "action_count": 1000,
+      "error": null,
+      "warnings": [],
+      "first_success_time_seconds": null,
+      "max_object_lift_m": 7.505521159355266e-05,
+      "retention_lost": false,
+      "unexpected_contact_native_ticks": 0,
+      "retry_count": 1,
+      "slowdown_count": 0,
+      "reassessment_count": 0,
+      "resume_count": 0,
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.259999999999199,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "alarm",
+          "t_seconds": 11.619999999999,
+          "reason": "object_not_following"
+        },
+        {
+          "type": "retry_started",
+          "t_seconds": 11.619999999999,
+          "reason": "supported_object_only"
+        },
+        {
+          "type": "retry_completed",
+          "t_seconds": 13.27999999999808,
+          "reason": "open_recenter_complete"
+        },
+        {
+          "type": "probe_started",
+          "t_seconds": 14.159999999997591,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "alarm",
+          "t_seconds": 14.519999999997392,
+          "reason": "object_not_following"
+        },
+        {
+          "type": "abort",
+          "t_seconds": 14.519999999997392,
+          "reason": "retry_budget_exhausted:object_not_following"
+        }
+      ],
+      "target_distance_m": 0.12013775551934067,
+      "encoding": "gzip",
+      "decoded_bytes": 4271902,
+      "decoded_sha256": "ce5c8f3fd0fc82745793e7feea6f23fb2d7fc226f27d1ebc2cd24fcd61de4f59"
+    },
+    {
+      "file": "attempts/r0/probe_only-moderate.json.gz",
+      "bytes": 775306,
+      "sha256": "bf6e0441590dcde1fa326e902a5be82e9a2d4e3de51fe33351a5ea4ed1830c52",
+      "source_directory": "sources/r0",
+      "mode": "probe_only",
+      "friction": 0.55,
+      "mass_kg": 0.04,
+      "seed": 921707,
+      "valid": true,
+      "success": true,
+      "simulated_seconds": 20.00000000000146,
+      "action_count": 1000,
+      "error": null,
+      "warnings": [],
+      "first_success_time_seconds": 15.631999999996776,
+      "max_object_lift_m": 0.07943010427252246,
+      "retention_lost": false,
+      "unexpected_contact_native_ticks": 0,
+      "retry_count": 0,
+      "slowdown_count": 0,
+      "reassessment_count": 0,
+      "resume_count": 0,
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.259999999999199,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "acquisition_qualified",
+          "t_seconds": 11.859999999998866,
+          "reason": "sustained_table_free_probe"
+        }
+      ],
+      "target_distance_m": 0.006108177152081407,
+      "encoding": "gzip",
+      "decoded_bytes": 4153500,
+      "decoded_sha256": "a939c1f5f38f2ae40cd202d8b10addc8540a554718e6bdd6cf49852c05e771c7"
+    },
+    {
+      "file": "attempts/r0/probe_only-nominal.json.gz",
+      "bytes": 786446,
+      "sha256": "bf95ffbeb79a67ad2b8d59cdd9af136adeabd94f46df69aaba1b7679768f0f18",
+      "source_directory": "sources/r0",
+      "mode": "probe_only",
+      "friction": 0.8,
+      "mass_kg": 0.04,
+      "seed": 921707,
+      "valid": true,
+      "success": true,
+      "simulated_seconds": 20.00000000000146,
+      "action_count": 1000,
+      "error": null,
+      "warnings": [],
+      "first_success_time_seconds": 15.591999999996798,
+      "max_object_lift_m": 0.09809307681104411,
+      "retention_lost": false,
+      "unexpected_contact_native_ticks": 0,
+      "retry_count": 0,
+      "slowdown_count": 0,
+      "reassessment_count": 0,
+      "resume_count": 0,
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.259999999999199,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "acquisition_qualified",
+          "t_seconds": 11.859999999998866,
+          "reason": "sustained_table_free_probe"
+        }
+      ],
+      "target_distance_m": 0.004433586013405143,
+      "encoding": "gzip",
+      "decoded_bytes": 4205430,
+      "decoded_sha256": "a168981d41e7151c63bdf4ab87bf342e7783452e81acb31aead0dbe39f314f86"
+    },
+    {
+      "file": "attempts/r1/baseline-current.json.gz",
+      "bytes": 715805,
+      "sha256": "98d4f2679745fcbceba9faba7b87b3a3b446dfe70feb8c56b88b5c0ad8720187",
+      "source_directory": "sources/r1",
+      "mode": "baseline",
+      "friction": 0.8,
+      "mass_kg": 0.04,
+      "seed": 921708,
+      "valid": true,
+      "success": true,
+      "simulated_seconds": 20.00000000000146,
+      "action_count": 1000,
+      "error": null,
+      "warnings": [],
+      "first_success_time_seconds": 14.99199999999713,
+      "max_object_lift_m": 0.09770252463579783,
+      "retention_lost": false,
+      "unexpected_contact_native_ticks": 0,
+      "retry_count": 0,
+      "slowdown_count": 0,
+      "reassessment_count": 0,
+      "resume_count": 0,
+      "events": [],
+      "target_distance_m": 0.004687654888349376,
+      "encoding": "gzip",
+      "decoded_bytes": 3300091,
+      "decoded_sha256": "d0f7408b675da05dc77e853f9c75b056367b90c03f3f36d7664e73d3df2dacde"
+    },
+    {
+      "file": "attempts/r1/baseline-frozen-v02.json.gz",
+      "bytes": 715807,
+      "sha256": "94ee6cb8c3580b14661be88ef9a4354124ef264e59ad459305af9bb9349a84af",
+      "source_directory": "sources/frozen-v02",
+      "mode": "baseline",
+      "friction": 0.8,
+      "mass_kg": 0.04,
+      "seed": 921708,
+      "valid": true,
+      "success": true,
+      "simulated_seconds": 20.00000000000146,
+      "action_count": 1000,
+      "error": null,
+      "warnings": [],
+      "first_success_time_seconds": 14.99199999999713,
+      "max_object_lift_m": 0.09770252463579783,
+      "retention_lost": false,
+      "unexpected_contact_native_ticks": 0,
+      "retry_count": 0,
+      "slowdown_count": 0,
+      "reassessment_count": 0,
+      "resume_count": 0,
+      "events": [],
+      "target_distance_m": 0.004687654888349376,
+      "encoding": "gzip",
+      "decoded_bytes": 3300087,
+      "decoded_sha256": "ec5d5623a3f2a6eeaa57fb4968d2de0f424d7290499e3f963f17f838f9cb9216"
+    },
+    {
+      "file": "attempts/r1/low06.json.gz",
+      "bytes": 724054,
+      "sha256": "bfb521bc49b896d8021db76fec50fb1c7c4681204a0d4528281af470f2301435",
+      "source_directory": "sources/r1",
+      "mode": "history",
+      "friction": 0.15,
+      "mass_kg": 0.06,
+      "seed": 921708,
+      "valid": true,
+      "success": false,
+      "simulated_seconds": 20.00000000000146,
+      "action_count": 1000,
+      "error": null,
+      "warnings": [],
+      "first_success_time_seconds": null,
+      "max_object_lift_m": 5.892534758972223e-05,
+      "retention_lost": false,
+      "unexpected_contact_native_ticks": 0,
+      "retry_count": 1,
+      "slowdown_count": 0,
+      "reassessment_count": 0,
+      "resume_count": 0,
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.259999999999199,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "alarm",
+          "t_seconds": 11.619999999999,
+          "reason": "object_not_following"
+        },
+        {
+          "type": "retry_started",
+          "t_seconds": 11.619999999999,
+          "reason": "supported_object_only"
+        },
+        {
+          "type": "retry_completed",
+          "t_seconds": 13.25999999999809,
+          "reason": "open_recenter_complete"
+        },
+        {
+          "type": "probe_started",
+          "t_seconds": 14.139999999997602,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "alarm",
+          "t_seconds": 14.499999999997403,
+          "reason": "object_not_following"
+        },
+        {
+          "type": "abort",
+          "t_seconds": 14.499999999997403,
+          "reason": "retry_budget_exhausted:object_not_following"
+        }
+      ],
+      "target_distance_m": 0.12070054764799788,
+      "encoding": "gzip",
+      "decoded_bytes": 4373737,
+      "decoded_sha256": "e8f840e32617ebc757a82269f28a71df7d6fd3ab754aefe40cd98e5ebb98c564"
+    },
+    {
+      "file": "attempts/r1/moderate04.json.gz",
+      "bytes": 820840,
+      "sha256": "987f0032217d23eb588d033bd38fc6c389fbed79d466d9bc477240d220a7068c",
+      "source_directory": "sources/r1",
+      "mode": "history",
+      "friction": 0.55,
+      "mass_kg": 0.04,
+      "seed": 921708,
+      "valid": true,
+      "success": true,
+      "simulated_seconds": 20.00000000000146,
+      "action_count": 1000,
+      "error": null,
+      "warnings": [],
+      "first_success_time_seconds": 18.42099999999953,
+      "max_object_lift_m": 0.09532845368419295,
+      "retention_lost": false,
+      "unexpected_contact_native_ticks": 0,
+      "retry_count": 0,
+      "slowdown_count": 1,
+      "reassessment_count": 1,
+      "resume_count": 1,
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.259999999999199,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "acquisition_qualified",
+          "t_seconds": 11.859999999998866,
+          "reason": "sustained_table_free_probe"
+        },
+        {
+          "type": "slowdown_started",
+          "t_seconds": 11.9799999999988,
+          "reason": "persistent_local_offset_trend"
+        },
+        {
+          "type": "reassessment_started",
+          "t_seconds": 12.099999999998733,
+          "reason": "bounded_slowdown_complete"
+        },
+        {
+          "type": "carry_resumed",
+          "t_seconds": 12.319999999998611,
+          "reason": "sustained_loaded_relative_settling"
+        }
+      ],
+      "target_distance_m": 0.002057331426889979,
+      "encoding": "gzip",
+      "decoded_bytes": 4352227,
+      "decoded_sha256": "53655685ba5423f3c090a3b5bb1a8bd15077ed00e42f508fb5434a79d310b777"
+    },
+    {
+      "file": "attempts/r1/moderate06.json.gz",
+      "bytes": 717385,
+      "sha256": "4b02c5c2daad623353fa23a828133c5708683cda64d83d89f5eac9db0fc5c745",
+      "source_directory": "sources/r1",
+      "mode": "history",
+      "friction": 0.55,
+      "mass_kg": 0.06,
+      "seed": 921708,
+      "valid": true,
+      "success": false,
+      "simulated_seconds": 20.00000000000146,
+      "action_count": 1000,
+      "error": null,
+      "warnings": [],
+      "first_success_time_seconds": null,
+      "max_object_lift_m": 0.0001527763255191189,
+      "retention_lost": false,
+      "unexpected_contact_native_ticks": 0,
+      "retry_count": 0,
+      "slowdown_count": 0,
+      "reassessment_count": 0,
+      "resume_count": 0,
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.259999999999199,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "alarm",
+          "t_seconds": 11.639999999998988,
+          "reason": "relative_slip"
+        },
+        {
+          "type": "abort",
+          "t_seconds": 11.639999999998988,
+          "reason": "relative_slip"
+        }
+      ],
+      "target_distance_m": 0.12036443756905521,
+      "encoding": "gzip",
+      "decoded_bytes": 4398756,
+      "decoded_sha256": "82628ee8d86011a87362b12387fe5a13a5251857bce649562cab016edf6f55d6"
+    },
+    {
+      "file": "attempts/r1/nominal06.json.gz",
+      "bytes": 822044,
+      "sha256": "701523786cb50f5f14429dd97c93a3f04e392be3ba0dd27f5cb02a583e8b8a40",
+      "source_directory": "sources/r1",
+      "mode": "history",
+      "friction": 0.8,
+      "mass_kg": 0.06,
+      "seed": 921708,
+      "valid": true,
+      "success": true,
+      "simulated_seconds": 20.00000000000146,
+      "action_count": 1000,
+      "error": null,
+      "warnings": [],
+      "first_success_time_seconds": 18.52599999999966,
+      "max_object_lift_m": 0.09274118802611993,
+      "retention_lost": false,
+      "unexpected_contact_native_ticks": 0,
+      "retry_count": 0,
+      "slowdown_count": 1,
+      "reassessment_count": 1,
+      "resume_count": 1,
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.259999999999199,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "acquisition_qualified",
+          "t_seconds": 11.879999999998855,
+          "reason": "sustained_table_free_probe"
+        },
+        {
+          "type": "slowdown_started",
+          "t_seconds": 11.999999999998789,
+          "reason": "persistent_local_offset_trend"
+        },
+        {
+          "type": "reassessment_started",
+          "t_seconds": 12.119999999998722,
+          "reason": "bounded_slowdown_complete"
+        },
+        {
+          "type": "carry_resumed",
+          "t_seconds": 12.3399999999986,
+          "reason": "sustained_loaded_relative_settling"
+        }
+      ],
+      "target_distance_m": 0.00199937905553124,
+      "encoding": "gzip",
+      "decoded_bytes": 4346793,
+      "decoded_sha256": "5d8f984535caf453d919babd4af143eb32f56eb613d798d26d0ef31bd02ccb9a"
+    },
+    {
+      "file": "attempts/r2/moderate04.json.gz",
+      "bytes": 817971,
+      "sha256": "22638fc214e6df30c78bf33413e9704ab205a4968fc4e3c40916d23e1c3f5797",
+      "source_directory": "sources/r2",
+      "mode": "history",
+      "friction": 0.55,
+      "mass_kg": 0.04,
+      "seed": 921709,
+      "valid": true,
+      "success": true,
+      "simulated_seconds": 20.00000000000146,
+      "action_count": 1000,
+      "error": null,
+      "warnings": [],
+      "first_success_time_seconds": 18.42099999999953,
+      "max_object_lift_m": 0.09532845368419295,
+      "retention_lost": false,
+      "unexpected_contact_native_ticks": 0,
+      "retry_count": 0,
+      "slowdown_count": 1,
+      "reassessment_count": 1,
+      "resume_count": 1,
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.259999999999199,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "acquisition_qualified",
+          "t_seconds": 11.859999999998866,
+          "reason": "sustained_table_free_probe"
+        },
+        {
+          "type": "slowdown_started",
+          "t_seconds": 11.9799999999988,
+          "reason": "persistent_local_offset_trend"
+        },
+        {
+          "type": "reassessment_started",
+          "t_seconds": 12.099999999998733,
+          "reason": "bounded_slowdown_complete"
+        },
+        {
+          "type": "carry_resumed",
+          "t_seconds": 12.319999999998611,
+          "reason": "sustained_loaded_relative_settling"
+        }
+      ],
+      "target_distance_m": 0.002057331426889979,
+      "encoding": "gzip",
+      "decoded_bytes": 4346724,
+      "decoded_sha256": "e69dc8c1556160be595df323a84894cf258fe77de41974714a90c4890863e9ec"
+    }
+  ],
+  "baseline_comparison": {
+    "actions_exact": true,
+    "every_qpos_qvel_exact": true,
+    "current": "attempts/r1/baseline-current.json.gz",
+    "frozen_v02": "attempts/r1/baseline-frozen-v02.json.gz"
+  },
+  "source_sha256": {
+    "piper_task.py": "4e3f16e6075842631ddb7aa7d53ea6d6c95b54934f7eb751da61b60a432fa167",
+    "piper_grip_guard.py": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb",
+    "piper_contact_memory.py": "f608d6647046f6fa02d8ad5e87fad10853837520a6a0fae2043c7ad260a06c4c"
+  },
+  "tests": {
+    "old_and_new_full_native_tests_passed": 33,
+    "additional_unit_regressions_passed": 2
+  },
+  "motion_caveat": "First120ms after requested .35 delta scaling still accelerated TCP in two held cases; subsequent measured-position hold reduced motion; not instantaneous slowing or stopping.",
+  "asset_provenance": {
+    "profile": "piper",
+    "repository": "https://github.com/google-deepmind/mujoco_menagerie",
+    "commit": "0059d4335f8156206f63a35662313385f7ad6d74",
+    "files_verified": 90,
+    "bytes_verified": 34562302,
+    "lock_sha256": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+    "simulation_asset_license": "MIT"
+  },
+  "source_snapshots": {
+    "r0": {
+      "piper_contact_memory.py": "4079a8cc6576425dca51819eff802417f32d6d5544cc9708424cd6dade353bbf",
+      "piper_grip_guard.py": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb",
+      "piper_task.py": "4e3f16e6075842631ddb7aa7d53ea6d6c95b54934f7eb751da61b60a432fa167",
+      "reference_sim.py": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8",
+      "reference_task.py": "bbc768ccc202b8dd41cbd235b206e6478806ce47c1f30ae15dc662c0c1edcc3e",
+      "robot_profiles.lock.json": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+      "robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d"
+    },
+    "r1": {
+      "piper_contact_memory.py": "e1101eae73e8742e92c96bf58d5245844492ef88959551e53c40af77b74010f4",
+      "piper_grip_guard.py": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb",
+      "piper_task.py": "4e3f16e6075842631ddb7aa7d53ea6d6c95b54934f7eb751da61b60a432fa167",
+      "reference_sim.py": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8",
+      "reference_task.py": "bbc768ccc202b8dd41cbd235b206e6478806ce47c1f30ae15dc662c0c1edcc3e",
+      "robot_profiles.lock.json": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+      "robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d"
+    },
+    "r2": {
+      "piper_contact_memory.py": "f608d6647046f6fa02d8ad5e87fad10853837520a6a0fae2043c7ad260a06c4c",
+      "piper_grip_guard.py": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb",
+      "piper_task.py": "4e3f16e6075842631ddb7aa7d53ea6d6c95b54934f7eb751da61b60a432fa167",
+      "reference_sim.py": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8",
+      "reference_task.py": "bbc768ccc202b8dd41cbd235b206e6478806ce47c1f30ae15dc662c0c1edcc3e",
+      "robot_profiles.lock.json": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+      "robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d"
+    },
+    "frozen-v02": {
+      "piper_grip_guard.py": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb",
+      "piper_task.py": "7ff3cbe17ce77e8fed7a097c930d8cf85f9babdccdd9a5ad18fc2cd49e33716b",
+      "reference_sim.py": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8",
+      "reference_task.py": "bbc768ccc202b8dd41cbd235b206e6478806ce47c1f30ae15dc662c0c1edcc3e",
+      "robot_profiles.lock.json": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+      "robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d"
+    }
+  },
+  "motion_windows": {
+    "attempts/r1/moderate04.json.gz": [
+      {
+        "event": "slowdown_started",
+        "t_seconds": 11.9799999999988,
+        "before": {
+          "sample_count": 7,
+          "span_s": 0.1199999999999335,
+          "tcp_path_m": 0.009575393239281886,
+          "tcp_mean_speed_m_s": 0.0797949436607266
+        },
+        "after": {
+          "sample_count": 7,
+          "span_s": 0.1199999999999335,
+          "tcp_path_m": 0.010662965082908446,
+          "tcp_mean_speed_m_s": 0.08885804235761963
+        }
+      },
+      {
+        "event": "reassessment_started",
+        "t_seconds": 12.099999999998733,
+        "before": {
+          "sample_count": 7,
+          "span_s": 0.1199999999999335,
+          "tcp_path_m": 0.010662965082908446,
+          "tcp_mean_speed_m_s": 0.08885804235761963
+        },
+        "after": {
+          "sample_count": 7,
+          "span_s": 0.1199999999999335,
+          "tcp_path_m": 0.001448895050617854,
+          "tcp_mean_speed_m_s": 0.012074125421822143
+        }
+      },
+      {
+        "event": "carry_resumed",
+        "t_seconds": 12.319999999998611,
+        "before": {
+          "sample_count": 7,
+          "span_s": 0.1199999999999335,
+          "tcp_path_m": 0.0004338067069261231,
+          "tcp_mean_speed_m_s": 0.0036150558910530294
+        },
+        "after": {
+          "sample_count": 7,
+          "span_s": 0.1199999999999335,
+          "tcp_path_m": 0.004115489232645753,
+          "tcp_mean_speed_m_s": 0.03429574360540028
+        }
+      }
+    ],
+    "attempts/r1/nominal06.json.gz": [
+      {
+        "event": "slowdown_started",
+        "t_seconds": 11.999999999998789,
+        "before": {
+          "sample_count": 7,
+          "span_s": 0.1199999999999335,
+          "tcp_path_m": 0.009419084470713256,
+          "tcp_mean_speed_m_s": 0.07849237058932064
+        },
+        "after": {
+          "sample_count": 7,
+          "span_s": 0.1199999999999335,
+          "tcp_path_m": 0.010211741888515898,
+          "tcp_mean_speed_m_s": 0.08509784907101298
+        }
+      },
+      {
+        "event": "reassessment_started",
+        "t_seconds": 12.119999999998722,
+        "before": {
+          "sample_count": 7,
+          "span_s": 0.1199999999999335,
+          "tcp_path_m": 0.010211741888515898,
+          "tcp_mean_speed_m_s": 0.08509784907101298
+        },
+        "after": {
+          "sample_count": 7,
+          "span_s": 0.1199999999999335,
+          "tcp_path_m": 0.0013792017131988334,
+          "tcp_mean_speed_m_s": 0.011493347609996648
+        }
+      },
+      {
+        "event": "carry_resumed",
+        "t_seconds": 12.3399999999986,
+        "before": {
+          "sample_count": 7,
+          "span_s": 0.1199999999999335,
+          "tcp_path_m": 0.0005257645683007268,
+          "tcp_mean_speed_m_s": 0.004381371402508484
+        },
+        "after": {
+          "sample_count": 7,
+          "span_s": 0.1199999999999335,
+          "tcp_path_m": 0.003892867753863666,
+          "tcp_mean_speed_m_s": 0.03244056461554853
+        }
+      }
+    ]
+  }
+}
