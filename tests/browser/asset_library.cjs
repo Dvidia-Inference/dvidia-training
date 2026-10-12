@@ -76,8 +76,41 @@ async function main(){
       records.push({width,renderCount:Number(await page.locator('#canvas').getAttribute('data-render-count')),renderedPixels:afterOrbit.counts,errors,remoteDownloads:remote.length,overflow});
       await page.close();
     }
-    await fs.writeFile(path.join(output,'acceptance.json'),JSON.stringify({url,records},null,2)+'\n');
-    console.log(JSON.stringify({passed:true,records},null,2));
+    // Deterministically reproduce a RAF queued before a later play/resume
+    // handler. Its timestamp must not read a negative or earlier pose index.
+    const stale=await browser.newPage({viewport:{width:900,height:900}});
+    const staleErrors=[];
+    stale.on('pageerror',error=>staleErrors.push(error.message));
+    await stale.addInitScript(()=>{
+      const original=window.requestAnimationFrame.bind(window);
+      window.__assetTestPastRaf=false;
+      window.requestAnimationFrame=callback=>original(timestamp=>callback(window.__assetTestPastRaf?timestamp-10000:timestamp));
+    });
+    await stale.goto(url,{waitUntil:'networkidle'});
+    await stale.waitForFunction(()=>document.querySelector('#stage').dataset.ready==='true');
+    await stale.evaluate(()=>{
+      const timeline=document.querySelector('#timeline');timeline.value='60';timeline.dispatchEvent(new Event('input',{bubbles:true}));
+      window.__assetTestPastRaf=true;document.querySelector('#play').click();
+    });
+    await stale.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+    assert.equal(await stale.locator('#timeline').inputValue(),'60','An earlier RAF timestamp must preserve the resumed frame');
+    await stale.locator('#play').click();
+    await stale.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+    assert.equal(await stale.locator('#timeline').inputValue(),'60','A queued frame after pause must preserve the pose');
+    await stale.evaluate(()=>{
+      const timeline=document.querySelector('#timeline');timeline.value='0';timeline.dispatchEvent(new Event('input',{bubbles:true}));
+      document.querySelector('#play').click();
+    });
+    await stale.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+    assert.equal(await stale.locator('#timeline').inputValue(),'0','An earlier RAF timestamp must never produce a negative frame');
+    await stale.evaluate(()=>{window.__assetTestPastRaf=false;});
+    await stale.waitForFunction(()=>Number(document.querySelector('#timeline').value)>0);
+    await stale.locator('#play').click();
+    assert.deepEqual(staleErrors,[]);
+    await stale.close();
+    const timestampRegression={forcedTimestampOffsetMs:-10000,resumeFrame:60,pausedFrame:60,initialFrame:0,normalPlaybackResumed:true,errors:staleErrors};
+    await fs.writeFile(path.join(output,'acceptance.json'),JSON.stringify({url,records,timestampRegression},null,2)+'\n');
+    console.log(JSON.stringify({passed:true,records,timestampRegression},null,2));
   }finally{await browser.close();}
 }
 main().catch(e=>{console.error(e);process.exitCode=1;});

@@ -131,6 +131,16 @@ class AssetLibraryPublicationTests(unittest.TestCase):
                     prepare.bundle(benchmark,previews,destination,'c'*40)
             self.assertFalse(destination.exists())
 
+    def test_explicit_viewer_revision_keeps_frozen_benchmark_revision(self):
+        benchmark,previews=self.runtime_fixture()
+        output=self.root/'corrected-viewer'
+        with patch('dvidia_training.asset_benchmark.inspect_benchmark'), \
+             patch('dvidia_training.asset_preview.inspect_preview',side_effect=self.inspect_fixture_preview):
+            prepare.bundle(benchmark,previews,output,'d'*40,benchmark_source_commit='c'*40)
+            provenance=prepare.check_library(output)
+            self.assertEqual(provenance['source_commit'],'d'*40)
+            self.assertEqual(provenance['benchmark_source_commit'],'c'*40)
+
     def test_check_library_rejects_resealed_preview_robot_mismatch(self):
         benchmark,previews=self.runtime_fixture()
         output=self.root/'reviewed-library'

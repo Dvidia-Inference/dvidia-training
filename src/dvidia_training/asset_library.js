@@ -25,8 +25,18 @@ function validate(geometry,poses){
 function quat(q,target){target.set(q[1],q[2],q[3],q[0]);}
 function primitive(geom,meshes){switch(geom.type){case'mesh':return meshes.get(geom.mesh_id);case'box':return new THREE.BoxGeometry(...geom.size.map(x=>x*2));case'sphere':return new THREE.SphereGeometry(geom.size[0],24,16);case'ellipsoid':{const g=new THREE.SphereGeometry(1,32,20);g.scale(...geom.size);return g;}case'capsule':{const g=new THREE.CapsuleGeometry(geom.size[0],2*geom.size[1],6,20);g.rotateX(Math.PI/2);return g;}case'cylinder':{const g=new THREE.CylinderGeometry(geom.size[0],geom.size[0],geom.size[1]*2,28);g.rotateX(Math.PI/2);return g;}case'plane':return new THREE.PlaneGeometry(Math.max(4,geom.size[0]*2),Math.max(4,geom.size[1]*2));}}
 function requestRender(){if(!requested&&renderer){requested=true;requestAnimationFrame(render);}}
-function draw(index){frame=index;$('timeline').value=String(index);const row=motion.rows[index];bodies.forEach((body,i)=>{const o=(index*bodies.length+i)*28;body.position.set(poseBytes.getFloat32(o,true),poseBytes.getFloat32(o+4,true),poseBytes.getFloat32(o+8,true));body.quaternion.set(poseBytes.getFloat32(o+16,true),poseBytes.getFloat32(o+20,true),poseBytes.getFloat32(o+24,true),poseBytes.getFloat32(o+12,true));});$('clock').textContent=row.t_seconds.toFixed(2)+' / 2.00 s';$('contacts').textContent=String(row.contact_count);$('status').textContent='Recorded frame '+(index+1)+'/101 · Native physics step 2 ms · '+bodies.length+' body poses · Browser physics: none.';requestRender();}
-function render(now){requested=false;if(playing){const next=Math.min(100,Math.floor((now-start)/20));if(next!==frame)draw(next);if(next===100){playing=false;$('play').textContent='Play settling';$('play').setAttribute('aria-pressed','false');}}renderer.render(world,camera);$('canvas').dataset.renderCount=String(++renderCount);if(playing)requestRender();}
+function draw(index){assert(Number.isInteger(index)&&index>=0&&index<motion.frame_count,'Recorded frame index is outside the native pose buffer.');frame=index;$('timeline').value=String(index);const row=motion.rows[index];bodies.forEach((body,i)=>{const o=(index*bodies.length+i)*28;body.position.set(poseBytes.getFloat32(o,true),poseBytes.getFloat32(o+4,true),poseBytes.getFloat32(o+8,true));body.quaternion.set(poseBytes.getFloat32(o+16,true),poseBytes.getFloat32(o+20,true),poseBytes.getFloat32(o+24,true),poseBytes.getFloat32(o+12,true));});$('clock').textContent=row.t_seconds.toFixed(2)+' / 2.00 s';$('contacts').textContent=String(row.contact_count);$('status').textContent='Recorded frame '+(index+1)+'/101 · Native physics step 2 ms · '+bodies.length+' body poses · Browser physics: none.';requestRender();}
+function render(now){
+  requested=false;
+  if(playing){
+    // A queued RAF timestamp can precede performance.now() in a later play
+    // handler. Never seek backwards or index before the recorded pose buffer.
+    const next=Math.min(motion.frame_count-1,Math.max(frame,0,Math.floor((now-start)/20)));
+    if(next!==frame)draw(next);
+    if(next===motion.frame_count-1){playing=false;$('play').textContent='Play settling';$('play').setAttribute('aria-pressed','false');}
+  }
+  renderer.render(world,camera);$('canvas').dataset.renderCount=String(++renderCount);if(playing)requestRender();
+}
 function preset(name){const aspect=Math.max(1,1/camera.aspect),distance=radius*aspect;const positions={home:[1.35,-1.75,1.15],top:[0,0,2.3],front:[0,-2.3,.3]};camera.position.copy(focus).add(new THREE.Vector3(...positions[name]).multiplyScalar(distance));controls.target.copy(focus);controls.update();requestRender();}
 function setup(geometry){
   assert($('canvas').getContext('webgl2'),'WebGL2 is unavailable.');renderer=new THREE.WebGLRenderer({canvas:$('canvas'),antialias:true,alpha:true,powerPreference:'low-power'});renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.25;

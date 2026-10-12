@@ -61,7 +61,7 @@ def check_library(directory):
         raise ValueError('Invalid asset library provenance')
     inspect_benchmark(root/'benchmark')
     protocol=json.loads(files['benchmark/protocol.json'])
-    if protocol.get('source_commit')!=provenance['source_commit'] or protocol.get('implementation_sha256')!=implementation_hashes():
+    if protocol.get('source_commit')!=provenance.get('benchmark_source_commit') or publisher.SHA.fullmatch(provenance.get('benchmark_source_commit','')) is None or protocol.get('implementation_sha256')!=implementation_hashes():
         raise ValueError('Library source or installed runtime differs from the frozen benchmark')
     for robot in ROBOTS:
         if inspect_preview(root/'previews'/robot)['robot']!=robot:
@@ -90,15 +90,16 @@ python3.12 -m venv .venv
 <footer><span>Original shoe assets and tooling: MIT. Robot models retain their own licenses.</span><a href="https://x.com/iammrriver">@iammrriver</a><a href="mailto:hello@dvidia.org">hello@dvidia.org</a></footer></main></body></html>'''.encode()
 
 
-def bundle(benchmark, previews, output, source_commit):
+def bundle(benchmark, previews, output, source_commit, benchmark_source_commit=None):
     from dvidia_training.asset_benchmark import inspect_benchmark, implementation_hashes
     from dvidia_training.asset_preview import inspect_preview
     from dvidia_training.asset_library import catalog
-    if publisher.SHA.fullmatch(source_commit) is None or set(previews)!=set(ROBOTS):
+    benchmark_source_commit = benchmark_source_commit or source_commit
+    if publisher.SHA.fullmatch(source_commit) is None or publisher.SHA.fullmatch(benchmark_source_commit) is None or set(previews)!=set(ROBOTS):
         raise ValueError('Three declared robot previews and a pinned source are required')
     inspect_benchmark(benchmark)
     protocol=json.loads((Path(benchmark)/'protocol.json').read_bytes())
-    if protocol.get('source_commit')!=source_commit or protocol.get('implementation_sha256')!=implementation_hashes():
+    if protocol.get('source_commit')!=benchmark_source_commit or protocol.get('implementation_sha256')!=implementation_hashes():
         raise ValueError('Requested source or installed runtime differs from the frozen benchmark')
     payload = {'benchmark/'+n:b for n,b in read_payload(benchmark).items()}
     for robot,path in previews.items():
@@ -108,7 +109,7 @@ def bundle(benchmark, previews, output, source_commit):
     payload.update({'index.html':landing(source_commit),'catalog.json':encoded(catalog()),
                     'README.md':(ROOT/'docs/asset-library.md').read_bytes(),
                     'LICENSE':(ROOT/'LICENSE').read_bytes(),
-                    'provenance.json':encoded({'schema':SCHEMA,'source_commit':source_commit,'robots':list(ROBOTS),
+                    'provenance.json':encoded({'schema':SCHEMA,'source_commit':source_commit,'benchmark_source_commit':benchmark_source_commit,'robots':list(ROBOTS),
                         'physical_robot_ready':False,'learned_policy':False,
                         'scope':'Original synthetic rigid shoe scene assets. Native gravity/support tests and recorded previews; no shoe skill or measured physical calibration.'})})
     payload['library-integrity.json']=encoded({'schema':SCHEMA,'files':{n:record(b) for n,b in sorted(payload.items())}})
@@ -169,6 +170,7 @@ def main():
     sub=parser.add_subparsers(dest='command',required=True)
     p=sub.add_parser('bundle')
     p.add_argument('--benchmark',required=True,type=Path)
+    p.add_argument('--benchmark-source-commit',help='Explicit frozen benchmark revision when viewer/publication source differs')
     for robot in ROBOTS:p.add_argument('--'+robot,required=True,type=Path)
     for command in (p,):
         command.add_argument('--output',required=True,type=Path)
@@ -181,7 +183,7 @@ def main():
     p.add_argument('--expected-remote-commit',required=True)
     args=parser.parse_args()
     if args.command=='bundle':
-        result=bundle(args.benchmark,{r:getattr(args,r) for r in ROBOTS},args.output,args.source_commit)
+        result=bundle(args.benchmark,{r:getattr(args,r) for r in ROBOTS},args.output,args.source_commit,args.benchmark_source_commit)
     else:result=stage(args.base_plan,args.library,args.output,args.source_commit,args.expected_remote_commit)
     print(json.dumps(result,indent=2))
 

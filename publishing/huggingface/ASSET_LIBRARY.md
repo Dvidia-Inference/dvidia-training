@@ -28,3 +28,8 @@ The bundle inspector establishes portable consistency and bounded contents, not
 physical accuracy or publisher authenticity. Native numerical evidence comes from
 the original benchmark run. Real shoe contact, deformation, policy learning and
 hardware qualification remain separate work.
+
+When a presentation-only fix follows the frozen native run, pass the corrected
+source as `--source-commit` and the original runtime as `--benchmark-source-commit`
+to `bundle`. Both revisions remain explicit. The native implementation hashes
+must still match; a physics change requires a new benchmark.
