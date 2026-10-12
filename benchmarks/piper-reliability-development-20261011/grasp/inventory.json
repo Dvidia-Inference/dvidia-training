@@ -1,0 +1,752 @@
+{
+  "schema": "dvidia.piper-grasp-development-inventory/v1",
+  "raw_attempts": 76,
+  "files": {
+    "README.md": {
+      "bytes": 5376,
+      "sha256": "0818cb6a762dd4646521dc75c4bf5482fb06a1fa7aff4ada5307dc3ee1d6f37f"
+    },
+    "analysis.json": {
+      "bytes": 42534,
+      "sha256": "503ddb4c333cb4a4dd324806880d30cc5ed8ea3b8552919082800948242c90a3"
+    },
+    "analyze.py": {
+      "bytes": 5142,
+      "sha256": "2453e324c8c6271a095cac47b42ba1e2bfd017dc48dc7101ac384ef0bee73579"
+    },
+    "r0/friction055-mass060-layout00-yaw-45.json.gz": {
+      "bytes": 721675,
+      "sha256": "e2d257231f106f3533996ee47ec3274d2f6883ae9245d671705e9747d4f23671"
+    },
+    "r0/friction055-mass060-layout00-yaw0.json.gz": {
+      "bytes": 748962,
+      "sha256": "83b2e964e93c93a4651deb567d2726a827ace8eaac37d3fe41cb4305a419d819"
+    },
+    "r0/friction055-mass060-layout00-yaw45.json.gz": {
+      "bytes": 711160,
+      "sha256": "a7d6a1b6059b8b2d1010421c571f41085bcc9e15014521115ae32ee5bb2e3d96"
+    },
+    "r0/friction055-mass060-layout01-yaw-45.json.gz": {
+      "bytes": 721232,
+      "sha256": "b53012dde586bf65b1f51d40e209f97230173fb2f221bd76ca89935576554d8e"
+    },
+    "r0/friction055-mass060-layout01-yaw0.json.gz": {
+      "bytes": 748860,
+      "sha256": "5657a35d58044e324533517e414c0c6420a78840db9861646cbb88c8a8f496c2"
+    },
+    "r0/friction055-mass060-layout01-yaw45.json.gz": {
+      "bytes": 712494,
+      "sha256": "2765c1dce9aeba58fe215ebc3dc27a27dfd46d4780efa33db0d3ff6085a2196b"
+    },
+    "r0/friction080-mass040-layout00-yaw-45.json.gz": {
+      "bytes": 728092,
+      "sha256": "c428b30be006abb531cab7fa386bac46d0742a09d88cd2e4317809a0f775e05c"
+    },
+    "r0/friction080-mass040-layout00-yaw0.json.gz": {
+      "bytes": 817110,
+      "sha256": "e6ad89c03c7e05c4c014e45b03a27cdb731b387d58d745330b395afbab62598e"
+    },
+    "r0/friction080-mass040-layout00-yaw45.json.gz": {
+      "bytes": 712793,
+      "sha256": "5287b80caf7abd7d969c74735858f559f20b749fc9481f3d40b30eed168ea583"
+    },
+    "r0/friction080-mass040-layout01-yaw-45.json.gz": {
+      "bytes": 725629,
+      "sha256": "6766df84f176712bbd89a000bb23965dbea7b402e89a74e1b0b625900933e58a"
+    },
+    "r0/friction080-mass040-layout01-yaw0.json.gz": {
+      "bytes": 818753,
+      "sha256": "b8ca20c1a44c076083cbf564f9e37a69d071780753952695759b6730accc7e08"
+    },
+    "r0/friction080-mass040-layout01-yaw45.json.gz": {
+      "bytes": 713809,
+      "sha256": "3afb67a5c0701d7c89be82c04a77b39474a1dcad86aec3ab0d5f1bfa7d35cafa"
+    },
+    "r0/plan.json": {
+      "bytes": 1320,
+      "sha256": "ef76312228cd378dc6510f0c713b88b29aa1c216779e9ec2a5fd821665f614b5"
+    },
+    "r0/run.py": {
+      "bytes": 2406,
+      "sha256": "4ec1b7526a4b903f417b61e110808da3df1fb1ef16127de8f382ccd350bdd004"
+    },
+    "r0/sources/piper_contact_benchmark.py": {
+      "bytes": 53158,
+      "sha256": "6ebd44c3704cda8679335f988df0dcc7817b3f8da314b7a4fe8b3939215728bb"
+    },
+    "r0/sources/piper_contact_memory.py": {
+      "bytes": 14507,
+      "sha256": "f608d6647046f6fa02d8ad5e87fad10853837520a6a0fae2043c7ad260a06c4c"
+    },
+    "r0/sources/piper_contact_recovery.py": {
+      "bytes": 11322,
+      "sha256": "81058659b332f4d1233fb88d9e3d84fd935f5a9fe9d418b040a4a536b5291f6c"
+    },
+    "r0/sources/piper_grip_benchmark.py": {
+      "bytes": 43360,
+      "sha256": "7ab72a8cbe77d4db96d3fa45087571e3e1d64f40fe92b6f37032936701f318e1"
+    },
+    "r0/sources/piper_grip_guard.py": {
+      "bytes": 15452,
+      "sha256": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb"
+    },
+    "r0/sources/piper_recovery_benchmark.py": {
+      "bytes": 45299,
+      "sha256": "081ec18d90c91fe910c957ab3485444cfe2376ef7277be92823806c7c0e290bd"
+    },
+    "r0/sources/piper_task.py": {
+      "bytes": 32893,
+      "sha256": "589d6e4a4466bbda92ec6617508b3e06b635c237d0229399e44e301300cdeef5"
+    },
+    "r0/sources/piper_task_benchmark.py": {
+      "bytes": 36515,
+      "sha256": "d1294fac93bb42a26a654c6fd0950718e528cbf3cd96ffcd53118da0a1646776"
+    },
+    "r0/summary.json": {
+      "bytes": 159871,
+      "sha256": "7979f6921c771f713786647bbdd0f48d7c5f4d841206e55fa7e9977c5c8964e3"
+    },
+    "r1/friction055-mass060-layout00-yaw-45.json.gz": {
+      "bytes": 747472,
+      "sha256": "9fabe4da4fc93b7eb7e4c2d7e024e46fad51d5e8c8015336b6e315a6ca0907cd"
+    },
+    "r1/friction055-mass060-layout00-yaw45.json.gz": {
+      "bytes": 717242,
+      "sha256": "34654505dd2c4186374e31249dbc289b92582d4638ad40e84074247838c6d87c"
+    },
+    "r1/friction055-mass060-layout01-yaw-45.json.gz": {
+      "bytes": 750263,
+      "sha256": "7c4aac532faf4f80a5fb1334f748cd22f35e64fce6596d6d42ba278098abcea4"
+    },
+    "r1/friction055-mass060-layout01-yaw45.json.gz": {
+      "bytes": 719505,
+      "sha256": "32de90daf62eb77931d205d512759db43e43f1442e2999557f4a9f42ecd363cb"
+    },
+    "r1/friction080-mass040-layout00-yaw-45.json.gz": {
+      "bytes": 748858,
+      "sha256": "973114e49b34bdd90889293bb5d2bef42b212b568ce8d769d5955a8ee9cd88f8"
+    },
+    "r1/friction080-mass040-layout00-yaw45.json.gz": {
+      "bytes": 718278,
+      "sha256": "630f04661ea5a801aa17d65b1c6116fd1bca54bac3e2fd36017fac04d7d46491"
+    },
+    "r1/friction080-mass040-layout01-yaw-45.json.gz": {
+      "bytes": 750672,
+      "sha256": "71d3d1a5f148e0798fb4598e44c06bb5f88e8d39283359a00446a2a797ee82a1"
+    },
+    "r1/friction080-mass040-layout01-yaw45.json.gz": {
+      "bytes": 719596,
+      "sha256": "eac96187d0454e25e8508fa70e38c006f8fdafd968c36793f9d85431693f3000"
+    },
+    "r1/plan-count-correction.json": {
+      "bytes": 286,
+      "sha256": "10893e163e2d4a21bc41efae1d5771e6e7a029b6e0bbdbe9bcd2003b507a907a"
+    },
+    "r1/plan.json": {
+      "bytes": 1469,
+      "sha256": "65837fcd6601bc1da178beb96355e3021d5fb60c49d0ae42d7adbe6a27b8ee38"
+    },
+    "r1/run.py": {
+      "bytes": 2445,
+      "sha256": "06c314a2078171d2286c2173710059429f8ef2213787b84da2c11e8a126c81b4"
+    },
+    "r1/sources/piper_contact_benchmark.py": {
+      "bytes": 53158,
+      "sha256": "6ebd44c3704cda8679335f988df0dcc7817b3f8da314b7a4fe8b3939215728bb"
+    },
+    "r1/sources/piper_contact_memory.py": {
+      "bytes": 14507,
+      "sha256": "f608d6647046f6fa02d8ad5e87fad10853837520a6a0fae2043c7ad260a06c4c"
+    },
+    "r1/sources/piper_contact_recovery.py": {
+      "bytes": 11322,
+      "sha256": "81058659b332f4d1233fb88d9e3d84fd935f5a9fe9d418b040a4a536b5291f6c"
+    },
+    "r1/sources/piper_grip_benchmark.py": {
+      "bytes": 43360,
+      "sha256": "7ab72a8cbe77d4db96d3fa45087571e3e1d64f40fe92b6f37032936701f318e1"
+    },
+    "r1/sources/piper_grip_guard.py": {
+      "bytes": 15452,
+      "sha256": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb"
+    },
+    "r1/sources/piper_reacquisition.py": {
+      "bytes": 10037,
+      "sha256": "7abee6d29a97e43ac6a8d8a7391558eb416f410461be4fb690db55c507590726"
+    },
+    "r1/sources/piper_recovery_benchmark.py": {
+      "bytes": 45299,
+      "sha256": "081ec18d90c91fe910c957ab3485444cfe2376ef7277be92823806c7c0e290bd"
+    },
+    "r1/sources/piper_task.py": {
+      "bytes": 32893,
+      "sha256": "589d6e4a4466bbda92ec6617508b3e06b635c237d0229399e44e301300cdeef5"
+    },
+    "r1/sources/piper_task_benchmark.py": {
+      "bytes": 36515,
+      "sha256": "d1294fac93bb42a26a654c6fd0950718e528cbf3cd96ffcd53118da0a1646776"
+    },
+    "r1/summary.json": {
+      "bytes": 123045,
+      "sha256": "db390123aa9d5a6728f23c30bfb30551be60b597a579ab17310c0508b5a8d43c"
+    },
+    "r2/friction055-mass060-layout00-yaw-45.json.gz": {
+      "bytes": 701142,
+      "sha256": "c6da94e284133467f0124df7a6d7c702481d389855e9635861edf6396c194e07"
+    },
+    "r2/friction055-mass060-layout00-yaw0.json.gz": {
+      "bytes": 701302,
+      "sha256": "543525141143dcfaafada1f502bef7973b0e474e5256149d5a1b7eaeec17bca0"
+    },
+    "r2/friction055-mass060-layout01-yaw-45.json.gz": {
+      "bytes": 698029,
+      "sha256": "619ad45813ebf90115b78fd6393e7a40a71671957b7a13a0027ba48f5dd9f2db"
+    },
+    "r2/friction055-mass060-layout01-yaw0.json.gz": {
+      "bytes": 698090,
+      "sha256": "457a8cffa3d466222be3ee638ef947c15b24c58dda24f5127cc61a047e7a3b30"
+    },
+    "r2/friction080-mass040-layout00-yaw-45.json.gz": {
+      "bytes": 702904,
+      "sha256": "942f284c7c981e7af09375859d09e24c7a4ce4a0284d5902102a9e97eaca8963"
+    },
+    "r2/friction080-mass040-layout00-yaw0.json.gz": {
+      "bytes": 702636,
+      "sha256": "f8708616e2b0c5ac901fb2a9d08178e6651378ddb8f57593dc7ad27ba644e516"
+    },
+    "r2/friction080-mass040-layout01-yaw-45.json.gz": {
+      "bytes": 698688,
+      "sha256": "2d9c0582b12912b29c204b8e7db9b97b3080a07e5c2a6c36832f85cde696ae07"
+    },
+    "r2/friction080-mass040-layout01-yaw0.json.gz": {
+      "bytes": 698852,
+      "sha256": "db93bb936f40912f341b32b8aa784e1189cc56443ec17e208917c648d29e4190"
+    },
+    "r2/plan.json": {
+      "bytes": 1612,
+      "sha256": "0fc4db75f90c0bf32768ab6faa2939ec13b4394ff570240eca1670d0a7d1b144"
+    },
+    "r2/run.py": {
+      "bytes": 2707,
+      "sha256": "7c3894f5d92b677203bb515eeeb0d3ee9de03529883bbeb045b887b7f9a1a7f3"
+    },
+    "r2/sources/piper_contact_benchmark.py": {
+      "bytes": 53158,
+      "sha256": "6ebd44c3704cda8679335f988df0dcc7817b3f8da314b7a4fe8b3939215728bb"
+    },
+    "r2/sources/piper_contact_memory.py": {
+      "bytes": 14507,
+      "sha256": "f608d6647046f6fa02d8ad5e87fad10853837520a6a0fae2043c7ad260a06c4c"
+    },
+    "r2/sources/piper_contact_recovery.py": {
+      "bytes": 11322,
+      "sha256": "81058659b332f4d1233fb88d9e3d84fd935f5a9fe9d418b040a4a536b5291f6c"
+    },
+    "r2/sources/piper_grasp_strategy.py": {
+      "bytes": 4893,
+      "sha256": "180d58c32cae9a55499ab02f4022e7acb60f147c3149a3c84d5c7ac01144ca39"
+    },
+    "r2/sources/piper_grip_benchmark.py": {
+      "bytes": 43360,
+      "sha256": "7ab72a8cbe77d4db96d3fa45087571e3e1d64f40fe92b6f37032936701f318e1"
+    },
+    "r2/sources/piper_grip_guard.py": {
+      "bytes": 15452,
+      "sha256": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb"
+    },
+    "r2/sources/piper_reacquisition.py": {
+      "bytes": 10593,
+      "sha256": "0786f95d4e236fd1f620fecea94b84a40e3a9ac40a32693c730545eb789414f7"
+    },
+    "r2/sources/piper_recovery_benchmark.py": {
+      "bytes": 45299,
+      "sha256": "081ec18d90c91fe910c957ab3485444cfe2376ef7277be92823806c7c0e290bd"
+    },
+    "r2/sources/piper_task.py": {
+      "bytes": 32893,
+      "sha256": "589d6e4a4466bbda92ec6617508b3e06b635c237d0229399e44e301300cdeef5"
+    },
+    "r2/sources/piper_task_benchmark.py": {
+      "bytes": 36515,
+      "sha256": "d1294fac93bb42a26a654c6fd0950718e528cbf3cd96ffcd53118da0a1646776"
+    },
+    "r2/summary.json": {
+      "bytes": 78547,
+      "sha256": "1aee9c0ef3c3b48678b9dbedbfc1b5e3229784a594454360f9afedaf26677717"
+    },
+    "r3/friction055-mass060-layout00-yaw-45.json.gz": {
+      "bytes": 746798,
+      "sha256": "f09695a72176a30f66d76dc45c4bf57c4cac4d91a753563ddb867c27040b8ad7"
+    },
+    "r3/friction055-mass060-layout00-yaw0.json.gz": {
+      "bytes": 693963,
+      "sha256": "eae102a19dbce4d1873b23300514c44f587a664b99a1a4c2c323d317bf7adfd2"
+    },
+    "r3/friction055-mass060-layout01-yaw-45.json.gz": {
+      "bytes": 735380,
+      "sha256": "71dfb7cf387eefbf0c41963145a69a805bc161b835d9f3ba850d29e74d8f8641"
+    },
+    "r3/friction055-mass060-layout01-yaw0.json.gz": {
+      "bytes": 695337,
+      "sha256": "c259d6248345f0ee07b67a43a9cdf8d0d242214ad487ea3418eff076a9ce2417"
+    },
+    "r3/friction080-mass040-layout00-yaw-45.json.gz": {
+      "bytes": 775936,
+      "sha256": "36e21584b793d9bd631f49fa713d5d563b8c54cc71985df678199a4fac746b3e"
+    },
+    "r3/friction080-mass040-layout00-yaw0.json.gz": {
+      "bytes": 695338,
+      "sha256": "6d2e45c99656ba230f9c4d0e6f311b43b2955329867a1a6a7d1d4a56ae7b6c8b"
+    },
+    "r3/friction080-mass040-layout01-yaw-45.json.gz": {
+      "bytes": 773889,
+      "sha256": "c08b556670d0f9a6cd2bc21fc7c87b0220de045805d680b9252b470ad62d87fa"
+    },
+    "r3/friction080-mass040-layout01-yaw0.json.gz": {
+      "bytes": 696282,
+      "sha256": "61e5b5051d6e463fff7ae1818b0d00f90bf8e55b6efb8a774778fb47eb7ad1f4"
+    },
+    "r3/plan.json": {
+      "bytes": 1680,
+      "sha256": "e4ca8931975850235d1f57b429eb8d1557ae9d361186d6fd62e9009bb546bbd2"
+    },
+    "r3/run.py": {
+      "bytes": 2775,
+      "sha256": "d73e49a8c29197432c48290e7d93a2a0f51734c33e41c4ce388090f8a710f1da"
+    },
+    "r3/sources/piper_contact_benchmark.py": {
+      "bytes": 53158,
+      "sha256": "6ebd44c3704cda8679335f988df0dcc7817b3f8da314b7a4fe8b3939215728bb"
+    },
+    "r3/sources/piper_contact_memory.py": {
+      "bytes": 14507,
+      "sha256": "f608d6647046f6fa02d8ad5e87fad10853837520a6a0fae2043c7ad260a06c4c"
+    },
+    "r3/sources/piper_contact_recovery.py": {
+      "bytes": 11322,
+      "sha256": "81058659b332f4d1233fb88d9e3d84fd935f5a9fe9d418b040a4a536b5291f6c"
+    },
+    "r3/sources/piper_grasp_strategy.py": {
+      "bytes": 5169,
+      "sha256": "c8aeefaa6cde484b8ecc9c54cdd100184054c2edb111d1b183863338ae4cde13"
+    },
+    "r3/sources/piper_grip_benchmark.py": {
+      "bytes": 43360,
+      "sha256": "7ab72a8cbe77d4db96d3fa45087571e3e1d64f40fe92b6f37032936701f318e1"
+    },
+    "r3/sources/piper_grip_guard.py": {
+      "bytes": 15452,
+      "sha256": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb"
+    },
+    "r3/sources/piper_reacquisition.py": {
+      "bytes": 11468,
+      "sha256": "0072f29850e8f3651cead684abc5333b3d8d0112801d0d6a2abe480a1da1a5c4"
+    },
+    "r3/sources/piper_recovery_benchmark.py": {
+      "bytes": 45299,
+      "sha256": "081ec18d90c91fe910c957ab3485444cfe2376ef7277be92823806c7c0e290bd"
+    },
+    "r3/sources/piper_task.py": {
+      "bytes": 32893,
+      "sha256": "589d6e4a4466bbda92ec6617508b3e06b635c237d0229399e44e301300cdeef5"
+    },
+    "r3/sources/piper_task_benchmark.py": {
+      "bytes": 36515,
+      "sha256": "d1294fac93bb42a26a654c6fd0950718e528cbf3cd96ffcd53118da0a1646776"
+    },
+    "r3/summary.json": {
+      "bytes": 142998,
+      "sha256": "85e4a521a60cafcb324d2add5bc594c844e6d84f61074b91046d89f07024296f"
+    },
+    "r4/friction055-mass060-layout00-yaw-30.json.gz": {
+      "bytes": 737560,
+      "sha256": "49dbb54285fee94341a9eb48d99141f04b0057b8caddfba8799a9585de4b7831"
+    },
+    "r4/friction055-mass060-layout00-yaw-45.json.gz": {
+      "bytes": 798277,
+      "sha256": "9b72a864de641ab80f8f0349babdd3c09d13ad4f412360dd06e7931cea82d92a"
+    },
+    "r4/friction055-mass060-layout01-yaw-30.json.gz": {
+      "bytes": 738189,
+      "sha256": "0f5771b65d3b23b97e69b0b08f943bff55a80aa9b379dba2365bb52c2ade159e"
+    },
+    "r4/friction055-mass060-layout01-yaw-45.json.gz": {
+      "bytes": 755370,
+      "sha256": "ea35e6b183bc9ea8f8510fbaa4aec473bceef61961c1eb5e17ba1c99de0d0bfe"
+    },
+    "r4/friction080-mass040-layout00-yaw-30.json.gz": {
+      "bytes": 808349,
+      "sha256": "dd60f8ee6bc5f1ed3fbd627ed249ff8ab055ae68baafa2a63b3841c16f705fa8"
+    },
+    "r4/friction080-mass040-layout00-yaw-45.json.gz": {
+      "bytes": 797020,
+      "sha256": "420af368c1150a4da3e366c7afbbb7288bcb712d1d56b424e176eabd2b82ff4f"
+    },
+    "r4/friction080-mass040-layout01-yaw-30.json.gz": {
+      "bytes": 809653,
+      "sha256": "f543671e0a1ecc7b8453294183eb67e187f4ad28d1df4031a8ffd5fd3090e0dc"
+    },
+    "r4/friction080-mass040-layout01-yaw-45.json.gz": {
+      "bytes": 797930,
+      "sha256": "3b0951b4278ce881cab083dd1ec5a180b51c19176af4bb4533523e8e1fcf0627"
+    },
+    "r4/plan.json": {
+      "bytes": 1788,
+      "sha256": "a8d2bce5d2bd9ce1c577f937d06b17d48fa462043bb26fce95f86986ce290637"
+    },
+    "r4/run.py": {
+      "bytes": 2809,
+      "sha256": "01dd6a5ced71d6333d07781abb836fc0a98e1a32a1fa1b3ddc4a476519bcf2d8"
+    },
+    "r4/sources/piper_contact_benchmark.py": {
+      "bytes": 53158,
+      "sha256": "6ebd44c3704cda8679335f988df0dcc7817b3f8da314b7a4fe8b3939215728bb"
+    },
+    "r4/sources/piper_contact_memory.py": {
+      "bytes": 14507,
+      "sha256": "f608d6647046f6fa02d8ad5e87fad10853837520a6a0fae2043c7ad260a06c4c"
+    },
+    "r4/sources/piper_contact_recovery.py": {
+      "bytes": 11322,
+      "sha256": "81058659b332f4d1233fb88d9e3d84fd935f5a9fe9d418b040a4a536b5291f6c"
+    },
+    "r4/sources/piper_grasp_strategy.py": {
+      "bytes": 6512,
+      "sha256": "f482bcf74c0b210c3f87f6ed770fada5927b918e280d899eafbc0cfc027e4862"
+    },
+    "r4/sources/piper_grip_benchmark.py": {
+      "bytes": 43360,
+      "sha256": "7ab72a8cbe77d4db96d3fa45087571e3e1d64f40fe92b6f37032936701f318e1"
+    },
+    "r4/sources/piper_grip_guard.py": {
+      "bytes": 15452,
+      "sha256": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb"
+    },
+    "r4/sources/piper_reacquisition.py": {
+      "bytes": 12341,
+      "sha256": "80e240afb7e39d540e9f07488c2daf050ee752052dab838e13982e428903a909"
+    },
+    "r4/sources/piper_recovery_benchmark.py": {
+      "bytes": 45299,
+      "sha256": "081ec18d90c91fe910c957ab3485444cfe2376ef7277be92823806c7c0e290bd"
+    },
+    "r4/sources/piper_reliability_benchmark.py": {
+      "bytes": 31056,
+      "sha256": "d6b7d38fbf785724c068351f91bbbcfef6e584a2219d84f7c6f3e666df58a6c6"
+    },
+    "r4/sources/piper_task.py": {
+      "bytes": 34355,
+      "sha256": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f"
+    },
+    "r4/sources/piper_task_benchmark.py": {
+      "bytes": 36515,
+      "sha256": "d1294fac93bb42a26a654c6fd0950718e528cbf3cd96ffcd53118da0a1646776"
+    },
+    "r4/summary.json": {
+      "bytes": 171621,
+      "sha256": "2a5d6d50be4d294d12635a290f81da82f518c6d872649d0baab427ccbbb1e5d2"
+    },
+    "r5/friction055-mass060-layout00-clamp0.05.json.gz": {
+      "bytes": 754994,
+      "sha256": "14c1142c55b3e55743e2fb8366acf844d1c6ff92f763b27cbf348097933a728a"
+    },
+    "r5/friction055-mass060-layout00-clamp0.1.json.gz": {
+      "bytes": 757086,
+      "sha256": "22b583808c982da6a08b813f5679ad458abdb325cb5bc66767de39f14d33ce44"
+    },
+    "r5/friction055-mass060-layout01-clamp0.05.json.gz": {
+      "bytes": 758647,
+      "sha256": "9093f200d8d1ffd4e84b2a784af3766200c5f3faab0992cdda995c0454bcca79"
+    },
+    "r5/friction055-mass060-layout01-clamp0.1.json.gz": {
+      "bytes": 758108,
+      "sha256": "b5ba853d298cac7410600dba8238672e25bf397957cfeb5fc838f8358deb5a35"
+    },
+    "r5/friction080-mass040-layout00-clamp0.05.json.gz": {
+      "bytes": 756014,
+      "sha256": "d07180d299d5769afe1793366c480fcc8acf6e68dc18f8f2129d36917aabc557"
+    },
+    "r5/friction080-mass040-layout00-clamp0.1.json.gz": {
+      "bytes": 803116,
+      "sha256": "4413599e85ccd587f8dee8ba6d5b507876ce7ff94138f6a8676f6af569359067"
+    },
+    "r5/friction080-mass040-layout01-clamp0.05.json.gz": {
+      "bytes": 758317,
+      "sha256": "d52c90783850608ed31f8a57f1603fc001b0fed9666bff109b1b3b40892b8d2c"
+    },
+    "r5/friction080-mass040-layout01-clamp0.1.json.gz": {
+      "bytes": 803950,
+      "sha256": "01637354c39db3b7846b8871dcfb19e6ab0110498ec778b26277502d32cbeec7"
+    },
+    "r5/plan.json": {
+      "bytes": 1790,
+      "sha256": "1adc2b381a988774ed9b658843d9215f3d4d6b7058a1e1eb99b2a973bb62cdcd"
+    },
+    "r5/run.py": {
+      "bytes": 2793,
+      "sha256": "c31c9c9cdc28203af63c91fcbee1acc1c76bea32c4f3f4b954ed14c995710748"
+    },
+    "r5/sources/piper_contact_benchmark.py": {
+      "bytes": 53158,
+      "sha256": "6ebd44c3704cda8679335f988df0dcc7817b3f8da314b7a4fe8b3939215728bb"
+    },
+    "r5/sources/piper_contact_memory.py": {
+      "bytes": 14507,
+      "sha256": "f608d6647046f6fa02d8ad5e87fad10853837520a6a0fae2043c7ad260a06c4c"
+    },
+    "r5/sources/piper_contact_recovery.py": {
+      "bytes": 11322,
+      "sha256": "81058659b332f4d1233fb88d9e3d84fd935f5a9fe9d418b040a4a536b5291f6c"
+    },
+    "r5/sources/piper_grasp_strategy.py": {
+      "bytes": 7226,
+      "sha256": "3f0721d0bd0ecbc681651cc604e6abc7a640cb7c130e7241955e61036f6510d9"
+    },
+    "r5/sources/piper_grip_benchmark.py": {
+      "bytes": 43360,
+      "sha256": "7ab72a8cbe77d4db96d3fa45087571e3e1d64f40fe92b6f37032936701f318e1"
+    },
+    "r5/sources/piper_grip_guard.py": {
+      "bytes": 15452,
+      "sha256": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb"
+    },
+    "r5/sources/piper_reacquisition.py": {
+      "bytes": 12341,
+      "sha256": "80e240afb7e39d540e9f07488c2daf050ee752052dab838e13982e428903a909"
+    },
+    "r5/sources/piper_recovery_benchmark.py": {
+      "bytes": 45299,
+      "sha256": "081ec18d90c91fe910c957ab3485444cfe2376ef7277be92823806c7c0e290bd"
+    },
+    "r5/sources/piper_reliability_benchmark.py": {
+      "bytes": 31056,
+      "sha256": "d6b7d38fbf785724c068351f91bbbcfef6e584a2219d84f7c6f3e666df58a6c6"
+    },
+    "r5/sources/piper_task.py": {
+      "bytes": 34355,
+      "sha256": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f"
+    },
+    "r5/sources/piper_task_benchmark.py": {
+      "bytes": 36515,
+      "sha256": "d1294fac93bb42a26a654c6fd0950718e528cbf3cd96ffcd53118da0a1646776"
+    },
+    "r5/summary.json": {
+      "bytes": 230014,
+      "sha256": "7bdafed941f3e680b2abef5ac9f4814366442d61e2ab59f26510db2c4c7ed416"
+    },
+    "r6/friction015-mass040-layout00.json.gz": {
+      "bytes": 718939,
+      "sha256": "af9b4e376b2198d5c1b067ac89acc7793820511f54309374980c3bdbf866cbaa"
+    },
+    "r6/friction015-mass040-layout01.json.gz": {
+      "bytes": 719371,
+      "sha256": "ffdceaf2db81e0d4555ca49abd9db97da3a8b00a191fa9154313b83ca5738f55"
+    },
+    "r6/friction015-mass060-layout00.json.gz": {
+      "bytes": 714827,
+      "sha256": "cc5662a08afa5c968a94f0cf62903cc362d5065949b5aac57e397773fac695a0"
+    },
+    "r6/friction015-mass060-layout01.json.gz": {
+      "bytes": 714852,
+      "sha256": "d54b6a06b5a02ff8db77d30d42003c9adfa408dee0bd8e5681a348be46316a2f"
+    },
+    "r6/friction055-mass040-layout00.json.gz": {
+      "bytes": 803807,
+      "sha256": "046a77f21dc8921aa2d6432467107f99a1c5d3cfcf59da56ec5b12f673d219a2"
+    },
+    "r6/friction055-mass040-layout01.json.gz": {
+      "bytes": 805942,
+      "sha256": "b216599a472d1c69c9e67d336e4277b0283c9dcb7e5f2f3f40187aef48deeb15"
+    },
+    "r6/friction055-mass060-layout00.json.gz": {
+      "bytes": 806317,
+      "sha256": "9e87e5777a080f3550f98a43869e7fece498d3fa4df24945b175db31092b596a"
+    },
+    "r6/friction055-mass060-layout01.json.gz": {
+      "bytes": 763931,
+      "sha256": "f7c6ac90142ddf36314e80edca5c80909036467d6b5238ab801189aab9b72288"
+    },
+    "r6/friction080-mass040-layout00.json.gz": {
+      "bytes": 805125,
+      "sha256": "ea513ffab65f216f8b5ea0c6753b625edabdf66eb2301be634820d17eafefb61"
+    },
+    "r6/friction080-mass040-layout01.json.gz": {
+      "bytes": 805904,
+      "sha256": "eef8b739633acac8e5f44d6fd8c8847a54df500b172d35a0c01491cd14b19cc7"
+    },
+    "r6/friction080-mass060-layout00.json.gz": {
+      "bytes": 804699,
+      "sha256": "bb4403d6415463a857f8890b1ba7dad1f700b6aecd4ff5651e32567bff585ef1"
+    },
+    "r6/friction080-mass060-layout01.json.gz": {
+      "bytes": 806891,
+      "sha256": "3e58d3a22f3e324cddf249ff30191d34edf76da131d2753a10386ce816b2adb0"
+    },
+    "r6/plan.json": {
+      "bytes": 12853,
+      "sha256": "875f6139c30a96d2d5f3ac2fa9627af0c384159b56f8de7462c2c86adbc692c6"
+    },
+    "r6/run.py": {
+      "bytes": 2151,
+      "sha256": "c5d16e531b6f2cf4aa0428e8624d397918baadeaf23594ac9c149fa1a7c84978"
+    },
+    "r6/sources/piper_contact_benchmark.py": {
+      "bytes": 53158,
+      "sha256": "6ebd44c3704cda8679335f988df0dcc7817b3f8da314b7a4fe8b3939215728bb"
+    },
+    "r6/sources/piper_contact_memory.py": {
+      "bytes": 14507,
+      "sha256": "f608d6647046f6fa02d8ad5e87fad10853837520a6a0fae2043c7ad260a06c4c"
+    },
+    "r6/sources/piper_contact_recovery.py": {
+      "bytes": 11322,
+      "sha256": "81058659b332f4d1233fb88d9e3d84fd935f5a9fe9d418b040a4a536b5291f6c"
+    },
+    "r6/sources/piper_grasp_strategy.py": {
+      "bytes": 7226,
+      "sha256": "c88325601c5c4c04a827f2342128c088205eedc439b62597d88eda40c698a0fb"
+    },
+    "r6/sources/piper_grip_benchmark.py": {
+      "bytes": 43360,
+      "sha256": "7ab72a8cbe77d4db96d3fa45087571e3e1d64f40fe92b6f37032936701f318e1"
+    },
+    "r6/sources/piper_grip_guard.py": {
+      "bytes": 15452,
+      "sha256": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb"
+    },
+    "r6/sources/piper_reacquisition.py": {
+      "bytes": 12341,
+      "sha256": "80e240afb7e39d540e9f07488c2daf050ee752052dab838e13982e428903a909"
+    },
+    "r6/sources/piper_recovery_benchmark.py": {
+      "bytes": 45299,
+      "sha256": "081ec18d90c91fe910c957ab3485444cfe2376ef7277be92823806c7c0e290bd"
+    },
+    "r6/sources/piper_reliability_benchmark.py": {
+      "bytes": 47109,
+      "sha256": "f0ff03f8bf2bafe46a5a4ea75a78fda6f9855e7014790ba13be65d5b09bd060a"
+    },
+    "r6/sources/piper_task.py": {
+      "bytes": 34355,
+      "sha256": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f"
+    },
+    "r6/sources/piper_task_benchmark.py": {
+      "bytes": 36515,
+      "sha256": "d1294fac93bb42a26a654c6fd0950718e528cbf3cd96ffcd53118da0a1646776"
+    },
+    "r6/summary.json": {
+      "bytes": 289978,
+      "sha256": "9fbe2be06faa03f284005cebca0e2aa5b4027fdcd692a3d467d62b4d529f4f21"
+    },
+    "r7/friction015-mass040-layout00.json.gz": {
+      "bytes": 719015,
+      "sha256": "d877f3383400c7b9727340aa49f4e31b3feb9266f396858f9357c99386b58eea"
+    },
+    "r7/friction015-mass040-layout01.json.gz": {
+      "bytes": 719721,
+      "sha256": "c9902b5fe3181e36829bc13bdbec8ee7a268ab7ecd637e6dcdb7b16909c29b69"
+    },
+    "r7/friction015-mass060-layout00.json.gz": {
+      "bytes": 714995,
+      "sha256": "8d3396e4480a242149e44e73e856d8267cdd19a4e92a53bb921c48708b6afaf7"
+    },
+    "r7/friction015-mass060-layout01.json.gz": {
+      "bytes": 715575,
+      "sha256": "b9b8ff35089e73c108666927efa9eee2f4b3ac04ef35e87ce6815f099dd3bbec"
+    },
+    "r7/friction055-mass040-layout00.json.gz": {
+      "bytes": 805629,
+      "sha256": "d945f55b6cdf545a4ecdd2fa3f199165330d3786cc862cbb3ae3aaddb03bdecb"
+    },
+    "r7/friction055-mass040-layout01.json.gz": {
+      "bytes": 805939,
+      "sha256": "9638e5363196c4ab58dc95cffc67c05c8513a70f1e6dc14dee5dfa6750d48d44"
+    },
+    "r7/friction055-mass060-layout00.json.gz": {
+      "bytes": 808597,
+      "sha256": "e263c499cc763ef49c6ceaf65dfe2bb382d94c17aa56153ae39883f1242c2f39"
+    },
+    "r7/friction055-mass060-layout01.json.gz": {
+      "bytes": 808519,
+      "sha256": "a928a879456e63fb03bde9699ab17a40122f7c9505b08e5af210d6d636289d6e"
+    },
+    "r7/friction080-mass040-layout00.json.gz": {
+      "bytes": 806430,
+      "sha256": "fa9e14c105f66e4c5051e5552fe44f3b8387c74ae68caf4c498d7a16f027ccc1"
+    },
+    "r7/friction080-mass040-layout01.json.gz": {
+      "bytes": 806674,
+      "sha256": "2ef9be6684a864919fab70f8533c952dd3652aed420f0484902e04f8b8cdf242"
+    },
+    "r7/friction080-mass060-layout00.json.gz": {
+      "bytes": 805401,
+      "sha256": "372d21d4b49fc82120961f0c648f8a7347e72462a6e9245c7a121fc55a8f99e3"
+    },
+    "r7/friction080-mass060-layout01.json.gz": {
+      "bytes": 806030,
+      "sha256": "ab66d49886aa72cdceaef17f0b2f8f7a98dcde44d3fae3d2820e4f36ea76e505"
+    },
+    "r7/plan.json": {
+      "bytes": 12947,
+      "sha256": "88f615b6bd9902a1803959818e0a4e3874452b287a072af35752cb6336050e6b"
+    },
+    "r7/run.py": {
+      "bytes": 2238,
+      "sha256": "d46ad22e09cdef37195d00da62f3cd6c98e803bfc34238795cee7cf7a5d036d6"
+    },
+    "r7/sources/piper_contact_benchmark.py": {
+      "bytes": 53158,
+      "sha256": "6ebd44c3704cda8679335f988df0dcc7817b3f8da314b7a4fe8b3939215728bb"
+    },
+    "r7/sources/piper_contact_memory.py": {
+      "bytes": 14507,
+      "sha256": "f608d6647046f6fa02d8ad5e87fad10853837520a6a0fae2043c7ad260a06c4c"
+    },
+    "r7/sources/piper_contact_recovery.py": {
+      "bytes": 11322,
+      "sha256": "81058659b332f4d1233fb88d9e3d84fd935f5a9fe9d418b040a4a536b5291f6c"
+    },
+    "r7/sources/piper_grasp_strategy.py": {
+      "bytes": 7329,
+      "sha256": "a2cbf9f954f6428894bd11cb42f228fe86f2ae88ba62e431f78bc33c7f3db36b"
+    },
+    "r7/sources/piper_grip_benchmark.py": {
+      "bytes": 43360,
+      "sha256": "7ab72a8cbe77d4db96d3fa45087571e3e1d64f40fe92b6f37032936701f318e1"
+    },
+    "r7/sources/piper_grip_guard.py": {
+      "bytes": 15452,
+      "sha256": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb"
+    },
+    "r7/sources/piper_reacquisition.py": {
+      "bytes": 12346,
+      "sha256": "b1eaffd7f9d80f21d3b9371e1adbe8b9c730a834745d8160c558937d35691e21"
+    },
+    "r7/sources/piper_recovery_benchmark.py": {
+      "bytes": 45299,
+      "sha256": "081ec18d90c91fe910c957ab3485444cfe2376ef7277be92823806c7c0e290bd"
+    },
+    "r7/sources/piper_reliability_benchmark.py": {
+      "bytes": 47168,
+      "sha256": "f421232fa402db5d9fd0c4ad55f7b5f9481333b8ab14f05885556f9dd5500120"
+    },
+    "r7/sources/piper_task.py": {
+      "bytes": 34355,
+      "sha256": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f"
+    },
+    "r7/sources/piper_task_benchmark.py": {
+      "bytes": 36515,
+      "sha256": "d1294fac93bb42a26a654c6fd0950718e528cbf3cd96ffcd53118da0a1646776"
+    },
+    "r7/summary.json": {
+      "bytes": 287491,
+      "sha256": "34dbb187cd8aa16a763f5e08180d01d5048129f15db64f992341a31e4bc4562a"
+    },
+    "source-attribution.json": {
+      "bytes": 361,
+      "sha256": "8cea5f5e440780c479f170777c03689ed947f44f1978b546c691de4468b01ada"
+    }
+  },
+  "total_bytes": 61047885,
+  "scope": "All development candidates, complete native episode traces, startup source snapshots and plans; no fresh confirmation or hardware qualification."
+}

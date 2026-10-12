@@ -1,0 +1,74 @@
+[
+  {
+    "case": "friction080-mass060-layout00--recovery_placement.json.gz",
+    "valid": true,
+    "success": false,
+    "old_success": false,
+    "first_success_s": null,
+    "abort": "second_probe_timeout",
+    "events": [
+      [
+        "probe_started",
+        11.359999999999143,
+        "slow_load_bearing_check"
+      ],
+      [
+        "acquisition_qualified",
+        11.9799999999988,
+        "sustained_table_free_probe"
+      ],
+      [
+        "reassessment_started",
+        12.099999999998733,
+        "persistent_bilateral_contact_loss"
+      ],
+      [
+        "second_probe_started",
+        12.399999999998567,
+        "sustained_loaded_unsupported_low_hold"
+      ],
+      [
+        "abort",
+        13.61999999999789,
+        "second_probe_timeout"
+      ]
+    ],
+    "error": null
+  },
+  {
+    "case": "friction080-mass060-layout01--recovery_placement.json.gz",
+    "valid": true,
+    "success": false,
+    "old_success": false,
+    "first_success_s": null,
+    "abort": "second_probe_timeout",
+    "events": [
+      [
+        "probe_started",
+        11.139999999999265,
+        "slow_load_bearing_check"
+      ],
+      [
+        "acquisition_qualified",
+        11.759999999998922,
+        "sustained_table_free_probe"
+      ],
+      [
+        "reassessment_started",
+        11.839999999998877,
+        "persistent_bilateral_contact_loss"
+      ],
+      [
+        "second_probe_started",
+        12.119999999998722,
+        "sustained_loaded_unsupported_low_hold"
+      ],
+      [
+        "abort",
+        13.339999999998046,
+        "second_probe_timeout"
+      ]
+    ],
+    "error": null
+  }
+]

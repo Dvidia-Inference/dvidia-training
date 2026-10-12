@@ -1,0 +1,104 @@
+[
+  {
+    "case": "friction080-mass060-layout00--recovery_placement.json.gz",
+    "valid": true,
+    "success": true,
+    "old_success": false,
+    "first_success_s": 17.01399999999781,
+    "abort": null,
+    "events": [
+      [
+        "probe_started",
+        11.359999999999143,
+        "slow_load_bearing_check"
+      ],
+      [
+        "acquisition_qualified",
+        11.9799999999988,
+        "sustained_table_free_probe"
+      ],
+      [
+        "reassessment_started",
+        12.099999999998733,
+        "persistent_bilateral_contact_loss"
+      ],
+      [
+        "second_probe_started",
+        12.399999999998567,
+        "sustained_loaded_unsupported_low_hold"
+      ],
+      [
+        "second_probe_qualified",
+        13.25999999999809,
+        "original_height_and_settling_gates_met"
+      ],
+      [
+        "carry_resumed",
+        13.25999999999809,
+        "second_probe_sustained_loaded_relative_settling"
+      ],
+      [
+        "speed_restoration_started",
+        13.579999999997913,
+        "sustained_loaded_relative_stability_after_resume"
+      ],
+      [
+        "full_speed_restored",
+        13.879999999997747,
+        "bounded_stable_time_ramp_complete"
+      ]
+    ],
+    "error": null
+  },
+  {
+    "case": "friction080-mass060-layout01--recovery_placement.json.gz",
+    "valid": true,
+    "success": true,
+    "old_success": false,
+    "first_success_s": 16.9229999999977,
+    "abort": null,
+    "events": [
+      [
+        "probe_started",
+        11.139999999999265,
+        "slow_load_bearing_check"
+      ],
+      [
+        "acquisition_qualified",
+        11.759999999998922,
+        "sustained_table_free_probe"
+      ],
+      [
+        "reassessment_started",
+        11.839999999998877,
+        "persistent_bilateral_contact_loss"
+      ],
+      [
+        "second_probe_started",
+        12.119999999998722,
+        "sustained_loaded_unsupported_low_hold"
+      ],
+      [
+        "second_probe_qualified",
+        12.979999999998245,
+        "original_height_and_settling_gates_met"
+      ],
+      [
+        "carry_resumed",
+        12.979999999998245,
+        "second_probe_sustained_loaded_relative_settling"
+      ],
+      [
+        "speed_restoration_started",
+        13.339999999998046,
+        "sustained_loaded_relative_stability_after_resume"
+      ],
+      [
+        "full_speed_restored",
+        13.63999999999788,
+        "bounded_stable_time_ramp_complete"
+      ]
+    ],
+    "error": null
+  }
+]
