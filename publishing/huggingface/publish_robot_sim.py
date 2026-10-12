@@ -27,7 +27,7 @@ SHA = re.compile(r'(?:[a-f0-9]{40}|[a-f0-9]{64})')
 MAX_STARTER_STYLESHEET_BYTES = 64*1024
 MAX_ATTEMPT_JSON_DEPTH = 64
 GRIP_ATTEMPT_PATH = re.compile(r'tasks/piper-grip/attempts/[a-z0-9][a-z0-9_.-]{0,159}\.json\.gz')
-CONTACT_ATTEMPT_PATH = re.compile(r'tasks/piper-contact-v03/attempts/[a-z0-9][a-z0-9_.-]{0,159}\.json\.gz')
+CONTACT_ATTEMPT_PATH = re.compile(r'tasks/(?:piper-contact-v03|piper-recovery-v04)/attempts/[a-z0-9][a-z0-9_.-]{0,159}\.json\.gz')
 
 
 def _compressed_attempt(name):
