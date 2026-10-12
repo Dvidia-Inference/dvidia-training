@@ -305,6 +305,68 @@ def piper_recovery_reseal(root,report,payload):
         target=root/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(data)
 
 
+def piper_reliability_fixture(root,seed=950031):
+    """Invented data-only full inventory; semantic/native loader is patched."""
+    from dvidia_training import piper_reliability_benchmark as benchmark
+    root.mkdir()
+    scenes = [{'id':f'friction{round(f*100):03}-mass{round(m*1000):03}-layout{i:02}',
+        'friction':f,'mass_kg':m,'stratum':stratum,'layout_index':i,'config':{'friction':f,'mass_kg':m}}
+        for f,stratum in zip(benchmark.FRICTIONS,benchmark.STRATA) for m in benchmark.MASSES for i in (0,1)]
+    protocol = {'schema':benchmark.PROTOCOL_SCHEMA,'profile':benchmark.task.PROFILE,'scope':benchmark.SCOPE,
+        'physical_robot_ready':False,'learned_policy':False,'simulation_asset_license':'MIT',
+        'cohort':'development','seed':seed,'scenes':scenes,'variants':list(benchmark.VARIANTS),'planned_attempts':12*len(benchmark.VARIANTS),
+        'native_command_units':['rad']*6+['m']}
+    payload = {'protocol.json':bench._json_bytes(protocol),'report.html':b'All eighty-four canonical attempts are linked',
+        'licenses/agilex_piper/LICENSE':b'Original MIT model fixture\n',
+        'licenses/agilex_piper/README.md':b'Original model notice fixture\n'}
+    attempts = []
+    for scene in scenes:
+        for variant in benchmark.VARIANTS:
+            identity=scene['id']+'--'+variant
+            control,mode=benchmark._variant(variant)
+            valid=not (scene['friction']==.15 and scene['mass_kg']==.06 and scene['layout_index']==1 and variant=='hold')
+            following={'qualification_decisions':[],'alarms':[],'following_opportunity':False if valid else None,
+                       'sampled_drop_events':0,'aborted':False,'retry_count':0}
+            raw={'schema':benchmark.task.SCHEMA,'profile':benchmark.task.PROFILE,'scope':benchmark.task.SCOPE,
+                'id':identity,'scene_id':scene['id'],'variant':variant,'physical_robot_ready':False,'learned_policy':False,
+                'valid':valid,'success':False,'config':scene['config'],'control':control,'policy_mode':mode,
+                'trajectory':[{'fixture':0}],'actions':[{'fixture':0}],'arm_tape':[[0]*6],
+                'grip_guard':{'schema':'dvidia.piper-grip-guard/v1' if mode=='baseline' else 'dvidia.piper-contact-memory/v0.3',
+                              'mode':mode,'active':control=='placement' and mode!='baseline','retry_count':0,'aborted':False},
+                'contact_evaluation':{'following':following,'interventions':[],
+                    'resume_decisions':0,'loaded_settling_observed_at_resume':0,
+                    'low_tcp_motion_observed_at_resume':0,'unresolved_resume_windows':0,
+                    'resumed_completed':False,'resumed_not_completed':False}}
+            raw['recovery_evaluation']={'contact':raw['contact_evaluation'],'holds':[],
+                'restoration_started':0,'full_speed_restored':0,'second_probe_started':0,'second_probe_qualified':0,'completion_time_s':None,'abort_time_s':None}
+            name='attempts/'+identity+'.json.gz'
+            payload[name]=gzip.compress(bench._json_bytes(raw),mtime=0)
+            attempts.append({**benchmark._summary(raw),'result_file':name})
+    report={'schema':benchmark.SCHEMA,'profile':benchmark.task.PROFILE,'scope':benchmark.SCOPE,
+        'physical_robot_ready':False,'learned_policy':False,'simulation_asset_license':'MIT','cohort':'development',
+        'protocol':protocol,'protocol_sha256':sha256(payload['protocol.json']).hexdigest(),
+        'scenes':scenes,'attempted':12*len(benchmark.VARIANTS),'valid_attempts':12*len(benchmark.VARIANTS)-1,'attempts':attempts,
+        'summary':benchmark.aggregate(attempts,scenes),'paired_comparisons':benchmark.paired_comparisons(attempts,scenes),
+        'quality_gates':{'complete_planned_denominator':True,'all_native_attempts_valid':False,'all_controls_fail':True}}
+    piper_reliability_reseal(root,report,payload)
+    return report,payload
+
+
+def piper_reliability_reseal(root,report,payload):
+    from dvidia_training import piper_reliability_benchmark as benchmark
+    payload['report.json']=bench._json_bytes(report)
+    records={}
+    for name,data in payload.items():
+        if name=='integrity.json': continue
+        records[name]=record(data)
+        if name.endswith('.json.gz'):
+            decoded=benchmark.decode_attempt(data)
+            records[name].update(encoding='gzip',decoded_bytes=len(decoded),decoded_sha256=sha256(decoded).hexdigest())
+    payload['integrity.json']=bench._json_bytes({'schema':benchmark.INTEGRITY_SCHEMA,'files':records})
+    for name,data in payload.items():
+        target=root/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(data)
+
+
 class RobotSimulationPreparationTests(unittest.TestCase):
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory()
@@ -316,6 +378,93 @@ class RobotSimulationPreparationTests(unittest.TestCase):
         self.guard = patch.object(publisher,'client',side_effect=AssertionError('Staging must not read credentials'))
         self.guard.start()
         self.addCleanup(self.guard.stop)
+
+    def test_v05_three_cohorts_keep_every_original_byte_and_separate_denominators(self):
+        from dvidia_training import piper_reliability_benchmark as reliability,piper_recovery_benchmark as recovery
+        cohorts=[]
+        for seed in (950031,950131,950231):
+            source=self.root/str(seed)
+            report,payload=piper_reliability_fixture(source,seed)
+            cohorts.append((source,report,payload))
+        prior_source=self.root/'prior'
+        prior_report,prior_files=piper_recovery_fixture(prior_source)
+        lookup={source:(report,payload) for source,report,payload in cohorts}
+        with patch.object(reliability,'load_reliability_bundle',side_effect=lambda path:lookup[path]), \
+                patch.object(recovery,'load_recovery_bundle',return_value=(prior_report,prior_files)):
+            plan=prepare.stage(self.replay,self.output,source_commit='a'*40,piper_recovery_benchmark=prior_source,
+                               piper_reliability_benchmarks=[source for source,_,_ in cohorts])
+        self.assertEqual(publisher.checked_plan(self.output/'publication-plan.json'),plan)
+        for source,report,payload in cohorts:
+            prefix='tasks/piper-reliability-v05/development-'+str(report['protocol']['seed'])
+            for name,raw in payload.items():
+                self.assertEqual((self.output/'space'/prefix/name).read_bytes(),raw)
+        for prefix,payload in (('tasks/piper-recovery-v04',prior_files),('replay',self.original)):
+            for name,raw in payload.items():
+                self.assertEqual((self.output/'space'/prefix/name).read_bytes(),raw)
+        landing=(self.output/'space/index.html').read_text()
+        self.assertEqual(landing.count('PiPER reliability v0.5 · synthetic'),3)
+        self.assertIn('Every failed or invalid attempt remains in the denominator.',landing)
+        self.assertIn('cohort label alone does not establish independence',landing)
+        self.assertIn('0 gained, 0 lost, 0 shared successful scenes, 12 neither completed',landing)
+        self.assertIn('No shared-success completion-time comparison is available.',landing)
+        self.assertIn('all native attempts valid: not met',landing)
+        provenance=json.loads((self.output/'space/provenance.json').read_bytes())
+        entries=[v for k,v in provenance['contact_task_benchmarks'].items() if k.startswith('piper-reliability-v05/')]
+        self.assertEqual(len(entries),3)
+        self.assertTrue(all(r['attempted']==12*len(reliability.VARIANTS) for r in entries))
+        self.assertEqual(provenance['publication_byte_bounds']['stored_payload_bytes'],512*1024*1024)
+        self.assertEqual(provenance['publication_byte_bounds']['per_file_bytes'],32*1024*1024)
+        self.assertIn('PiPER reliability v0.5',(self.output/'space/README.md').read_text())
+
+    def test_v05_rejects_unbounded_duplicate_or_malformed_cohorts_before_writes(self):
+        from dvidia_training import piper_reliability_benchmark as reliability
+        source=self.root/'reliability';report,payload=piper_reliability_fixture(source)
+        for supplied in ('not-a-list',[source]*4,[source,source]):
+            with self.subTest(supplied=supplied),patch.object(reliability,'load_reliability_bundle',return_value=(report,payload)),self.assertRaises(ValueError):
+                prepare.stage(self.replay,self.output,source_commit='a'*40,piper_reliability_benchmarks=supplied)
+            self.assertFalse(self.output.exists())
+        for invalid in (True,-1,999989,'../escape'):
+            changed=deepcopy(report);changed['protocol']['seed']=invalid
+            with self.subTest(invalid=invalid),patch.object(reliability,'load_reliability_bundle',return_value=(changed,payload)),self.assertRaises(ValueError):
+                prepare.stage(self.replay,self.output,source_commit='a'*40,piper_reliability_benchmarks=[source])
+            self.assertFalse(self.output.exists())
+
+    def test_v05_rechecks_complete_seals_scope_raw_bytes_and_limits(self):
+        from dvidia_training import piper_reliability_benchmark as reliability
+        for variant in ('scope','count','summary','drop','decoded_hash','changed','private','unlisted','stored','decoded','file'):
+            with self.subTest(variant=variant),tempfile.TemporaryDirectory() as folder:
+                root=Path(folder).resolve();source=root/'reliability';report,payload=piper_reliability_fixture(source)
+                if variant=='scope': report['learned_policy']=True
+                elif variant=='count': report['attempted']-=1
+                elif variant=='summary': report['summary'][0]['success']=1
+                elif variant=='drop':
+                    name=report['attempts'].pop()['result_file'];payload.pop(name);(source/name).unlink()
+                elif variant=='private':
+                    name=report['attempts'][0]['result_file'];raw=json.loads(reliability.decode_attempt(payload[name]))
+                    raw['note']='/Users/roguedev/private';payload[name]=gzip.compress(bench._json_bytes(raw),mtime=0)
+                    report['attempts'][0]={**reliability._summary(raw),'result_file':name}
+                piper_reliability_reseal(source,report,payload)
+                if variant=='decoded_hash':
+                    seal=json.loads(payload['integrity.json']);name=report['attempts'][0]['result_file']
+                    seal['files'][name]['decoded_sha256']='0'*64
+                    payload['integrity.json']=bench._json_bytes(seal);(source/'integrity.json').write_bytes(payload['integrity.json'])
+                elif variant=='changed': (source/'report.html').write_bytes(b'changed after portable inspection')
+                elif variant=='unlisted': (source/'extra.json').write_bytes(b'{}')
+                with patch.object(reliability,'load_reliability_bundle',return_value=(report,payload)), \
+                        patch.object(publisher,'MAX_TOTAL_BYTES',1 if variant=='stored' else publisher.MAX_TOTAL_BYTES), \
+                        patch.object(publisher,'MAX_FILE_BYTES',1 if variant=='file' else publisher.MAX_FILE_BYTES), \
+                        patch.object(reliability,'MAX_DECODED_BYTES',1 if variant=='decoded' else reliability.MAX_DECODED_BYTES),self.assertRaises(ValueError):
+                    prepare.stage(self.replay,root/'output',source_commit='a'*40,piper_reliability_benchmarks=[source])
+                self.assertFalse((root/'output').exists())
+
+    def test_v05_summary_exposes_gains_losses_shared_timing_without_pooled_success_claim(self):
+        report,_=piper_reliability_fixture(self.root/'summary')
+        paired=report['paired_comparisons'][0]
+        paired.update(gained_successes=2,lost_successes=1,common_successes=3,neither_succeeded=6,common_success_mean_delta_s=.7)
+        summary=prepare._reliability_summary(report)
+        self.assertIn('2 gained, 1 lost, 3 shared successful scenes, 6 neither completed',summary)
+        self.assertIn('+0.700 simulated seconds (candidate minus reference)',summary)
+        self.assertNotIn('improved',summary)
 
     def test_staging_retains_every_exact_receipt_binary_and_component_notice(self):
         plan = prepare.stage(self.replay,self.output,source_commit='a'*40)
@@ -664,11 +813,11 @@ class RobotSimulationPreparationTests(unittest.TestCase):
         self.assertEqual(compared['source_integrity'],record(payload['integrity.json']))
         self.assertGreater(compared['decoded_bytes'],compared['stored_bytes'])
         self.assertFalse(compared['learned_policy'])
-        self.assertEqual(provenance['publication_byte_bounds']['stored_payload_bytes'],256*1024*1024)
+        self.assertEqual(provenance['publication_byte_bounds']['stored_payload_bytes'],512*1024*1024)
         self.assertEqual(provenance['publication_byte_bounds']['per_file_bytes'],32*1024*1024)
         readme=(self.output/'space/README.md').read_text()
         self.assertIn(comparison,readme)
-        self.assertIn('256 MiB of stored files',readme)
+        self.assertIn('512 MiB of stored files',readme)
 
     def test_v03_summary_derives_all_three_completion_totals_without_claiming_improvement(self):
         report,_=piper_contact_fixture(self.root/'summary')
@@ -768,11 +917,11 @@ class RobotSimulationPreparationTests(unittest.TestCase):
         self.assertEqual(compared['source_integrity'],record(payload['integrity.json']))
         self.assertGreater(compared['decoded_bytes'],compared['stored_bytes'])
         self.assertFalse(compared['learned_policy'])
-        self.assertEqual(provenance['publication_byte_bounds']['stored_payload_bytes'],256*1024*1024)
+        self.assertEqual(provenance['publication_byte_bounds']['stored_payload_bytes'],512*1024*1024)
         self.assertEqual(provenance['publication_byte_bounds']['per_file_bytes'],32*1024*1024)
         readme=(self.output/'space/README.md').read_text()
         self.assertIn(comparison,readme)
-        self.assertIn('256 MiB of stored files',readme)
+        self.assertIn('512 MiB of stored files',readme)
 
     def test_v04_summary_derives_all_three_completion_totals_without_claiming_improvement(self):
         report,_=piper_recovery_fixture(self.root/'summary')

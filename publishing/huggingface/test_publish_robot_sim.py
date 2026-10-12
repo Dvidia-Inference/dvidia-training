@@ -108,7 +108,7 @@ class RobotSimulationPublicationTests(unittest.TestCase):
             with self.subTest(card=card),self.assertRaises(PublicationError): publisher.checked_plan(self.path)
 
     def test_byte_bounds_are_checked_without_credential_access(self):
-        self.assertEqual(publisher.MAX_TOTAL_BYTES,256*1024*1024)
+        self.assertEqual(publisher.MAX_TOTAL_BYTES,512*1024*1024)
         self.assertEqual(publisher.MAX_FILE_BYTES,32*1024*1024)
         with patch.object(publisher,'MAX_TOTAL_BYTES',self.plan['total_bytes']):
             self.assertEqual(publisher.checked_plan(self.path),self.plan)
@@ -289,6 +289,38 @@ class RobotSimulationPublicationTests(unittest.TestCase):
             api.whoami.assert_not_called()
             api.create_commit.assert_not_called()
 
+    def test_v05_scoped_cohorts_keep_gzip_privacy_corruption_and_decoding_limits(self):
+        folder='piper-reliability-v05/confirmation-950031'
+        target,valid=self.compressed_episode(folder=folder)
+        publisher.checked_plan(self.path)
+        for name in ('tasks/piper-reliability-v05/attempts/a.json.gz',
+                     'tasks/piper-reliability-v05/arbitrary/attempts/a.json.gz',
+                     'tasks/piper-reliability-v05/confirmation-999989/attempts/a.json.gz',
+                     'tasks/piper-reliability-v05/development-01/attempts/a.json.gz',
+                     'tasks/piper-reliability-v05/development-1/attempts/weights.bin.gz'):
+            with self.subTest(name=name),self.assertRaises(PublicationError):
+                publisher._artifact_name(name)
+        for extra,comment in [({'note':'/Users/roguedev/private'},None),({},b'hf_'+b'a'*32),
+                              ({'physical_robot_ready':True},None),({'learned_policy':True},None)]:
+            self.compressed_episode(extra,comment,folder=folder)
+            with self.subTest(extra=extra,comment=comment),self.assertRaises(PublicationError):
+                publisher.publish_robot_sim(self.path)
+        for data in (b'not gzip',valid+valid,gzip.compress(b'not JSON',mtime=0)):
+            target.write_bytes(data);self.refresh()
+            with self.subTest(data=data[:10]),self.assertRaises(PublicationError): publisher.publish_robot_sim(self.path)
+        self.compressed_episode({'large':'x'*2000},folder=folder)
+        from dvidia_training import piper_grip_benchmark as benchmark
+        with patch.object(benchmark,'MAX_FILE_BYTES',512),self.assertRaises(PublicationError):
+            publisher.publish_robot_sim(self.path)
+
+    def test_v05_cohort_limit_is_enforced_again_in_publication_plan(self):
+        for seed in (1,2,3):
+            self.compressed_episode(folder='piper-reliability-v05/confirmation-'+str(seed))
+        publisher.checked_plan(self.path)
+        self.compressed_episode(folder='piper-reliability-v05/confirmation-4')
+        with self.assertRaisesRegex(PublicationError,'At most three'):
+            publisher.publish_robot_sim(self.path)
+
     def escaped_episode(self,folder,value):
         target,_=self.compressed_episode({'note':'escape-fixture'},folder=folder)
         raw=gzip.decompress(target.read_bytes()).replace(b'escape-fixture',
@@ -299,7 +331,7 @@ class RobotSimulationPublicationTests(unittest.TestCase):
         return target,data
 
     def test_escaped_json_private_paths_and_token_patterns_are_rejected_without_rewriting_evidence(self):
-        for folder in ('piper-grip','piper-contact-v03','piper-recovery-v04'):
+        for folder in ('piper-grip','piper-contact-v03','piper-recovery-v04','piper-reliability-v05/confirmation-950031'):
             for value in ('/Users/roguedev/private','hf_'+'a'*32):
                 with self.subTest(folder=folder,value=value):
                     target,data=self.escaped_episode(folder,value)
@@ -308,7 +340,7 @@ class RobotSimulationPublicationTests(unittest.TestCase):
                     target.unlink();self.refresh()
 
     def test_escaped_exact_in_memory_credential_is_rejected_before_remote_identity(self):
-        for folder in ('piper-grip','piper-contact-v03','piper-recovery-v04'):
+        for folder in ('piper-grip','piper-contact-v03','piper-recovery-v04','piper-reliability-v05/confirmation-950031'):
             target,data=self.escaped_episode(folder,'fixture-token')
             api=self.api()
             with self.subTest(folder=folder),patch.object(publisher,'client',return_value=(api,'fixture-token')), \

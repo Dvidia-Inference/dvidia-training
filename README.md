@@ -45,6 +45,15 @@ grasps are refused 2.88–2.90 seconds sooner. No completion is gained or lost.
 Eight failures per mode remain visible, including two held blocks that never
 satisfy the unchanged resume gate.
 
+The [reliability v0.5 study](docs/piper-reliability-v05.md) adds a bounded second
+lift and a fixed alternate-grasp planner. Three frozen fresh cohorts complete
+**15/36 placements with v0.4, 18/36 with second-lift recovery, and 23/36 with the
+revised grasp**, with no lost baseline successes and all 144 negative controls
+failing. All 252 attempts are retained in the [complete evidence](benchmarks/piper-reliability-v05-20261012/README.md).
+The revised grasp takes about 0.77 simulated seconds longer on shared successes;
+thirteen failures remain. Loaded-host computation delays are reported, with no
+physical real-time claim. This remains authored simulation, not a learned skill.
+
 Train a small visual model from Skillspace footage on your own computer or server. The pipeline checks actual videos and source groups, fixes training/development/test splits, fits weights on a CPU, and exports a result with held-out measurements and integrity hashes.
 
 The base install needs **Python 3.12+, NumPy and FFmpeg**. It needs no GPU, CUDA, account or API key. Training is offline by default; downloading software or public footage is a separate, explicit step.

@@ -200,3 +200,20 @@ tapes or an independently evaluated human-video action bridge. Phase-specific
 expected contacts, bounded recovery and skill-package compatibility need their
 own task tests. A latched hold currently ends execution; it does not recover a
 slipping load or resume after sensor loss.
+
+
+## PiPER reliability follow-up
+
+[PiPER v0.5](piper-reliability-v05.md) now preserves a three-cohort comparison:
+15/36 original placements, 18/36 with a bounded second lift, 23/36 with a fixed
+alternate grasp, and zero lost baseline completions. Keep the full denominator,
+remaining thirteen failures, shared-success slowdown and loaded-host deadline
+misses visible when describing this improvement. The current controllers are
+authored and use simulator observations.
+
+The next priority is the remaining acquisition/carry failure mechanism, followed
+by separately frozen disturbance and sensor-delay studies. A future Skillspace
+capsule needs an explicit observation contract, compatible arm/gripper profile,
+operating range, task scorer and bounded recovery behavior. Physical calibration
+and hardware evidence remain required before a simulated skill can become an
+installable physical skill.
