@@ -1,52 +1,83 @@
-# PiPER contact confirmation · 11 October 2026
+# PiPER contact history v0.3 · 11 October 2026
 
-This folder is a **summary mirror**, not a standalone inspectable task bundle.
-The original integrity file names all source files, including attempts that are
-kept in the [complete Hugging Face bundle](https://huggingface.co/spaces/Dvidia/robot-simulation-lab/tree/b07b6e0e95a19158384734d140abb36a9adb670b/tasks/piper).
-Do not drop missing attempts or rewrite that seal to inspect this subset.
+In this frozen synthetic cohort, contact history completed **6/12 placements**,
+versus **4/12 original** and **4/12 probe-only** placements. Both additional
+successes were 60 g blocks at friction 0.8. All **84 native attempts** are valid;
+all **48 negative controls** fail. These related scenes do not estimate physical
+reliability or settling/slip detector accuracy.
 
-Frozen source: `c9a72584b4f35c38ad2616894f56da719bba0182`. The installed wheel
-matched source hashes and ran with network denied: seed 642103, two nominal
-scenes and one low-friction scene, three controls per scene. All nine attempts
-are numerically valid; each retains 20 simulated seconds, 1,000 issued commands
-and 1,001 state boundaries.
+| Friction | Mass | Original | Probe only | Contact history |
+| --- | ---: | ---: | ---: | ---: |
+| 0.8 | 40 g | 2/2 | 2/2 | 2/2 |
+| 0.8 | 60 g | 0/2 | 0/2 | 2/2 |
+| 0.55 | 40 g | 2/2 | 2/2 | 2/2 |
+| 0.55 | 60 g | 0/2 | 0/2 | 0/2 |
+| 0.15 | 40 g | 0/2 | 0/2 | 0/2 |
+| 0.15 | 60 g | 0/2 | 0/2 | 0/2 |
 
-| Condition | Placement | Open-jaw replay | Hold |
-| --- | ---: | ---: | ---: |
-| Nominal friction 0.8 | 2/2 | 0/2 | 0/2 |
-| Low friction 0.15 | 0/1 | 0/1 | 0/1 |
+Each scene has three separate matched requested-arm/open-jaw replays and one
+initial-arm hold. Their complete command tapes and all failures are retained.
+The new controller keeps the original native mechanics, gains, force caps and
+scorer. Probe-only uses the identical acquisition test/retry as contact history,
+then removes postqualification carry monitoring only.
 
-The block is 40 mm wide and 40 g, with a support surface 60 mm above the arm's
-base plane and about 120 mm of required horizontal transfer. Native servos,
-force limits and robot gravity compensation are unchanged. Grasp/carry/release
-is authored with privileged simulator state. There is no object weld or
-post-reset pose assignment. Position, not final object orientation, is scored.
+Four history attempts resumed after closed reassessment and completed the task.
+They contain five holds and five resume events; one heavier-block task needed
+two holds. This is observed recovery within those attempts. Only two placements
+improve over both paired alternatives; the two moderate-friction 40 g tasks
+already succeed without intervention. Six history acquisition retries all fail.
 
-Nominal final position error was 4.643–4.682 mm in simulator truth; maximum
-lift was 97.842–97.911 mm. The first successful dwell completed at
-15.112–15.132 simulated seconds. The slippery block failed to lift; its maximum
-height change was 0.132 mm. The full 20-second traces remain even after success.
+All five resume windows show loaded, unsupported contact. Four pass a separate
+recorded absolute TCP peak-speed threshold of 10 mm/s. The first resume in the
+heavier-block layout01 case fails that low-motion check and is followed by the
+second hold. Relative settling and low absolute movement are different measures.
 
-Complete attempts took 1.386–2.285 wall seconds on this host, including asset
-checks, native compilation, reset, planning, physics and trace construction.
-Per-attempt control computation p95 ranged 1.755–2.986 ms. **One of 9,000
-control windows exceeded 20 ms** (28.182 ms in the first nominal placement).
-That outlier remains. Rendering, disk serialization, sensor/transport latency
-and learned inference are outside these timings; host load was uncontrolled.
-The process lifetime peak RSS before final inspection/export was 759,169,024
-bytes. This is not minimum RAM or a real-time guarantee.
+Requested target scaling is not a physical speed limit. Two slowdown phases end
+early after 80 ms and 20 ms on bilateral contact loss; their 100 ms after-windows
+include part of the hold. Across five holds, actual mean TCP speed during the
+first 100 ms is 11.248–33.074 mm/s, and mean speed across the whole 220–240 ms
+hold is 7.211–20.503 mm/s. Native inertia remains. Full before/after and intervening
+TCP/object motion windows are recorded rather than assuming an instantaneous stop.
 
-Runtime: macOS 26.5.2 arm64, 10 logical CPUs, Python 3.12.9, MuJoCo 3.15.0,
-NumPy 2.5.3; CPU workload with one requested BLAS/OpenMP thread and no GPU.
+## Reproduce and inspect
 
-Development preceded this frozen cohort. The first high-support/downward-grasp
-attempt failed at a wrist limit and contacted the table. A low support and an
-explicit pitched carry orientation enabled later nominal and perturbed runs;
-low-friction failure was retained. Those tuned development runs are not part of
-this nine-attempt denominator, and the small synthetic confirmation cohort is
-not proof of population reliability or independent physical trials.
+[Installation and local run guide](../../docs/piper-contact-memory-v03.md).
+Inspect the complete original bundle, not this parent directory:
 
-[Run the pilot](../../docs/piper-contact-pilot.md) ·
-[Report](report.json) · [Frozen protocol](protocol.json)
+```sh
+dvidia-piper-contact inspect benchmarks/piper-contact-20261011/receipt
+```
 
-No learned policy, shoe manipulation or physical hardware is qualified.
+Frozen runtime: `c8868c873f075116b71d908d464890e09778726b`.
+Fresh confirmation seed: **813407**. Two shared XY layouts, three frictions,
+two masses and seven variants produce 84 attempts. Each retains 20 simulated
+seconds, 1,000 issued commands and 1,001 native states. All eleven installed-wheel
+runtime sources matched the frozen source before execution with OS process-level
+network access denied. The complete byte-identical 90-file receipt includes all
+84 deterministic gzip JSON trajectories, protocol, report, original seal and MIT
+model notices. Execution and publication records remain outside that seal.
+
+The entire installed command simulated 1,680 seconds in **213.620 wall seconds**,
+including startup, evaluation, compression, report output and final inspection.
+Individual attempts took 1.269–5.017 seconds. Per-attempt control p95 ranged
+1.369–8.316 ms, but **75 of 84,000** computation windows exceeded 20 ms; the
+maximum was **225.096 ms**. No warnings or prohibited-contact ticks occurred.
+These are CPU computation measurements, not sensor-to-actuator reaction times.
+
+Measured host: macOS 26.5.2 arm64, ten reported logical CPUs, Python 3.12.9,
+MuJoCo 3.15.0, NumPy 2.5.3, one OpenBLAS/OpenMP thread, no GPU workload.
+Process peak RSS was 808,239,104 bytes; the whole-command child-process measure
+reported the same high-water value. This is not a minimum RAM specification.
+Host load was uncontrolled and every timing outlier remains public.
+
+The [13-attempt development appendix](../piper-contact-development-20261011/README.md)
+retains every exploratory trace and source snapshot separately. No controller
+threshold was tuned on this confirmation cohort. This controller uses privileged
+simulator poses/contact forces; it does not learn a skill from footage, infer
+material properties, simulate deformation, implement calibrated sensing or
+qualify a physical robot.
+
+[Full readable report](receipt/report.html) · [Exact report](receipt/report.json) ·
+[Execution measurement](execution.json) · [Source provenance](provenance.json) ·
+[Research article](https://research.dvidia.org/papers/piper-contact-history-v03/) ·
+[Hugging Face lab](https://huggingface.co/spaces/Dvidia/robot-simulation-lab)

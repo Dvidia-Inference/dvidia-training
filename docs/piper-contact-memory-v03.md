@@ -10,6 +10,11 @@ The previous guard completed 2/6 placements versus the original controller's
 the original controller completed. A probe-only comparison is needed to
 separate the effect of the probe motion from the effect of intervening.
 
+The [frozen confirmation](../benchmarks/piper-contact-20261011/README.md) completed
+6/12 history placements versus 4/12 original and 4/12 probe-only placements.
+All 84 attempts were valid, and all 48 negative controls failed. The two added
+successes were heavier blocks at friction 0.8; lower-friction failures remain.
+
 ## Run on a local CPU
 
 Install Python 3.12 or newer and provision the pinned model once. Simulation
