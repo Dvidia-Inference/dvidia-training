@@ -25,7 +25,8 @@ Four history attempts resumed after closed reassessment and completed the task.
 They contain five holds and five resume events; one heavier-block task needed
 two holds. This is observed recovery within those attempts. Only two placements
 improve over both paired alternatives; the two moderate-friction 40 g tasks
-already succeed without intervention. Six history acquisition retries all fail.
+already succeed without intervention. They take 2.837 and 2.903 additional
+simulated seconds versus probe-only. Six history acquisition retries all fail.
 
 All five resume windows show loaded, unsupported contact. Four pass a separate
 recorded absolute TCP peak-speed threshold of 10 mm/s. The first resume in the
@@ -68,7 +69,8 @@ Measured host: macOS 26.5.2 arm64, ten reported logical CPUs, Python 3.12.9,
 MuJoCo 3.15.0, NumPy 2.5.3, one OpenBLAS/OpenMP thread, no GPU workload.
 Process peak RSS was 808,239,104 bytes; the whole-command child-process measure
 reported the same high-water value. This is not a minimum RAM specification.
-Host load was uncontrolled and every timing outlier remains public.
+Host load was uncontrolled. Every attempt retains timing summaries, maxima and
+miss counts; raw per-decision wall-time samples are not retained.
 
 The [13-attempt development appendix](../piper-contact-development-20261011/README.md)
 retains every exploratory trace and source snapshot separately. No controller
@@ -81,3 +83,5 @@ qualify a physical robot.
 [Execution measurement](execution.json) · [Source provenance](provenance.json) ·
 [Research article](https://research.dvidia.org/papers/piper-contact-history-v03/) ·
 [Hugging Face lab](https://huggingface.co/spaces/Dvidia/robot-simulation-lab)
+
+[Immutable hosted original bundle](https://huggingface.co/spaces/Dvidia/robot-simulation-lab/tree/a6bf57fd64e61486dafaa93fd96168f953ccff80/tasks/piper-contact-v03) · [Verified publication receipt](huggingface-publication.json)

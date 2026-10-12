@@ -70,8 +70,9 @@ are separate events and measures. Resumption alone is not successful recovery.
 
 Development may inform the controller, but confirmation uses a fresh reserved
 seed after the implementation and protocol are frozen. Preserve every complete
-compressed trajectory, command tape, native state, warning, timing outlier and
-original model notice. The inspector checks stored and decoded hashes and the
+compressed trajectory, command tape, native state, warning, per-attempt timing
+summary, maximum and miss count, and original model notice. Raw per-decision
+wall-time samples are not retained in this version. The inspector checks stored and decoded hashes and the
 recorded evidence contract. It does not authenticate a publisher or independently
 recompute physics.
 
