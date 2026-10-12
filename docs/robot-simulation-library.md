@@ -68,9 +68,11 @@ The next library layer is a collection of versioned assets that people can take
 into a local simulator, compose into a task, and reuse across Skillspaces. This
 extends the current pinned arm profiles with grippers, objects, environments and
 replaceable camera/sensor profiles.
-The object catalog, package registry, compatibility resolver and asset-browser
-interface described here are **planned**, not implemented by the current PiPER
-results. Adding many meshes will grow the visual catalog; tested interaction
+The [first shoe asset release](asset-library.md) implements a local catalog,
+strict versioned scene loader, six synthetic rigid shoe proxies and native 3D
+previews for all three supported arms. Its gravity/support benchmark checks this
+bounded composition layer. A public package registry, measured physical
+compatibility resolver, sensor profiles and shoe manipulation remain **planned**. Adding many meshes will grow the visual catalog; tested interaction
 models and per-skill evidence will grow its useful manipulation coverage.
 
 | Package kind | Reusable contents | Evidence needed before a stronger claim |
@@ -181,7 +183,9 @@ The catalog UI should let users preview an asset, inspect the physics evidence,
 filter by arm/gripper and simulator compatibility, and download a pinned package
 with a runnable example and benchmark command. Skillspace should link the exact
 asset/benchmark versions it needs and expose missing coverage as collection tasks.
-These interface and distribution capabilities are part of the roadmap.
+The first release provides these browsing, scene-download and local-run basics
+for the three arms and synthetic shoe proxies. The broader registry and
+interaction-qualified package workflow remain part of the roadmap.
 
 ## What the first task teaches us
 

@@ -1,0 +1,111 @@
+{
+  "attempted": 54,
+  "attempts_sha256": "78a9ae2aa84bb484b6bddda21773663afa586e48321493fef2542218fc49f8eb",
+  "catalog_sha256": "49f8cf25ea1a90a0760940353cd21e08c8de8d90e42c325738ec4faad5a96e15",
+  "hardware": {
+    "cpu_model": "Apple M5",
+    "logical_cpu_count": 10,
+    "machine": "arm64",
+    "platform": "Darwin",
+    "python": "3.12.9",
+    "total_memory_bytes": 25769803776
+  },
+  "physical_robot_ready": false,
+  "protocol_sha256": "d5abad1ebf9eda71d1f47606ba0664b9e4bfe6970c54088bf43d5e818782268d",
+  "schema": "dvidia.asset-library-benchmark/v1",
+  "scope": "Native CPU scene loading, free rigid-shoe gravity and passive table support. Original procedural shoe proxies with assumed physical properties. No shoe grasping, organizing policy, deformation calibration, learned skill or hardware qualification.",
+  "shoe_manipulation_qualified": false,
+  "summary": [
+    {
+      "attempted": 9,
+      "control": "table_support",
+      "expected_outcome": 9,
+      "gravity_success": 9,
+      "robot": "ur5e",
+      "support_success": 9,
+      "unexpected_contact_attempts": 0,
+      "valid": 9
+    },
+    {
+      "attempted": 9,
+      "control": "table_disabled",
+      "expected_outcome": 9,
+      "gravity_success": 9,
+      "robot": "ur5e",
+      "support_success": 0,
+      "unexpected_contact_attempts": 0,
+      "valid": 9
+    },
+    {
+      "attempted": 9,
+      "control": "table_support",
+      "expected_outcome": 9,
+      "gravity_success": 9,
+      "robot": "piper",
+      "support_success": 9,
+      "unexpected_contact_attempts": 0,
+      "valid": 9
+    },
+    {
+      "attempted": 9,
+      "control": "table_disabled",
+      "expected_outcome": 9,
+      "gravity_success": 9,
+      "robot": "piper",
+      "support_success": 0,
+      "unexpected_contact_attempts": 0,
+      "valid": 9
+    },
+    {
+      "attempted": 9,
+      "control": "table_support",
+      "expected_outcome": 9,
+      "gravity_success": 9,
+      "robot": "so101",
+      "support_success": 9,
+      "unexpected_contact_attempts": 0,
+      "valid": 9
+    },
+    {
+      "attempted": 9,
+      "control": "table_disabled",
+      "expected_outcome": 9,
+      "gravity_success": 9,
+      "robot": "so101",
+      "support_success": 0,
+      "unexpected_contact_attempts": 0,
+      "valid": 9
+    }
+  ],
+  "timing": {
+    "attempt_wall": {
+      "count": 54,
+      "max_seconds": 6.704695750027895,
+      "p50_seconds": 0.10058806301094592,
+      "p95_seconds": 0.1465771359624341,
+      "p99_seconds": 3.3758932149712857,
+      "total_seconds": 12.352415461326018
+    },
+    "compile": {
+      "count": 54,
+      "max_seconds": 0.4138097499962896,
+      "p50_seconds": 0.06565612449776381,
+      "p95_seconds": 0.0985709686996415,
+      "p99_seconds": 0.37721267603570585,
+      "total_seconds": 4.094927620142698
+    },
+    "native_step": {
+      "count": 27000,
+      "max_seconds": 0.00011191610246896744,
+      "p50_seconds": 8.500181138515472e-06,
+      "p95_seconds": 1.5750061720609665e-05,
+      "p99_seconds": 2.3417582269757922e-05,
+      "total_seconds": 0.2501475957687944
+    },
+    "process_peak_rss_bytes": 1111916544,
+    "run_wall_seconds": 12.361563832964748,
+    "scope": "Native-step timings measure mj_step only on this host; state extraction, mj_forward, compilation, rendering, sensing, training and actuation are excluded. Attempt wall includes verification, compilation, physics and state extraction. Run wall ends before report serialization. Process peak RSS includes prior allocations and is not a minimum memory requirement. These measurements do not establish real-time robot performance.",
+    "simulated_seconds": 54.0,
+    "simulated_seconds_per_run_wall_second": 4.368379335306871
+  }
+}

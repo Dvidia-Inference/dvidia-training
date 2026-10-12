@@ -1,0 +1,1128 @@
+{
+  "schema": "dvidia.asset-catalog/v1",
+  "version": "0.1.0",
+  "license": "MIT",
+  "license_scope": "Original DVIDIA catalog and procedural shoes only; robot simulation assets retain their individual licenses.",
+  "scope": "Reusable native scene assets with synthetic rigid shoes. Scene loading and gravity/contact checks do not demonstrate shoe manipulation, learning or physical robot transfer.",
+  "units": {
+    "length": "m",
+    "mass": "kg",
+    "time": "s",
+    "angle": "rad",
+    "quaternion": "wxyz"
+  },
+  "world_frame": "right-handed; robot base reference at world origin, +z up",
+  "robots": [
+    {
+      "id": "ur5e",
+      "name": "UR5e + Robotiq 2F-85",
+      "version": "0.1.0",
+      "immutable_id": "dvidia/robots/ur5e-2f85@0.1.0",
+      "arm_axes": 6,
+      "gripper_command_axes": 1,
+      "gripper_mechanical_joints": 8,
+      "native_command_units": [
+        "rad",
+        "rad",
+        "rad",
+        "rad",
+        "rad",
+        "rad",
+        "native_0_255"
+      ],
+      "gripper_command": "Native coupled gripper servo input [0,255]; not a measured gap or calibrated force.",
+      "licenses": {
+        "universal_robots_ur5e": "BSD-3-Clause",
+        "robotiq_2f85": "BSD-2-Clause"
+      },
+      "source": {
+        "repository": "https://github.com/google-deepmind/mujoco_menagerie",
+        "commit": "0059d4335f8156206f63a35662313385f7ad6d74",
+        "verification": "Packaged SHA256 allowlist; assets are read from verified bytes, without network access.",
+        "model_urls": [
+          "https://github.com/google-deepmind/mujoco_menagerie/tree/0059d4335f8156206f63a35662313385f7ad6d74/universal_robots_ur5e",
+          "https://github.com/google-deepmind/mujoco_menagerie/tree/0059d4335f8156206f63a35662313385f7ad6d74/robotiq_2f85"
+        ],
+        "home_scope": "Authored scene initialization: UR5e and PiPER use the upstream home arm pose, zero gripper coordinates; SO101 uses its zero reference pose."
+      },
+      "home_joint_positions": {
+        "shoulder_pan_joint": -1.5708,
+        "shoulder_lift_joint": -1.5708,
+        "elbow_joint": 1.5708,
+        "wrist_1_joint": -1.5708,
+        "wrist_2_joint": -1.5708,
+        "wrist_3_joint": 0
+      },
+      "expected_dimensions": {
+        "nq": 14,
+        "nv": 14,
+        "nu": 7,
+        "neq": 3
+      },
+      "compatibility": {
+        "scene_loading": true,
+        "shoe_grasp_qualified": false,
+        "physical_robot_ready": false,
+        "scope": "Pinned native arm and gripper can share a rigid-shoe scene. This does not establish reachability, graspability, a shoe manipulation skill, or hardware compatibility."
+      },
+      "openness_scope": "These licenses cover pinned simulation assets; SDK and physical hardware design licenses are separate."
+    },
+    {
+      "id": "piper",
+      "name": "AgileX PiPER",
+      "version": "0.1.0",
+      "immutable_id": "dvidia/robots/piper@0.1.0",
+      "arm_axes": 6,
+      "gripper_command_axes": 1,
+      "gripper_mechanical_joints": 2,
+      "native_command_units": [
+        "rad",
+        "rad",
+        "rad",
+        "rad",
+        "rad",
+        "rad",
+        "m"
+      ],
+      "gripper_command": "single-finger slide target in metres, native range [0,0.035]; not total jaw gap",
+      "licenses": {
+        "agilex_piper": "MIT"
+      },
+      "source": {
+        "repository": "https://github.com/google-deepmind/mujoco_menagerie",
+        "commit": "0059d4335f8156206f63a35662313385f7ad6d74",
+        "verification": "Packaged SHA256 allowlist; assets are read from verified bytes, without network access.",
+        "model_urls": [
+          "https://github.com/google-deepmind/mujoco_menagerie/tree/0059d4335f8156206f63a35662313385f7ad6d74/agilex_piper"
+        ],
+        "home_scope": "Authored scene initialization: UR5e and PiPER use the upstream home arm pose, zero gripper coordinates; SO101 uses its zero reference pose."
+      },
+      "home_joint_positions": {
+        "joint1": 0,
+        "joint2": 1.57,
+        "joint3": -1.3485,
+        "joint4": 0,
+        "joint5": 0,
+        "joint6": 0,
+        "joint7": 0,
+        "joint8": 0
+      },
+      "expected_dimensions": {
+        "nq": 8,
+        "nv": 8,
+        "nu": 7,
+        "neq": 1
+      },
+      "compatibility": {
+        "scene_loading": true,
+        "shoe_grasp_qualified": false,
+        "physical_robot_ready": false,
+        "scope": "Pinned native arm and gripper can share a rigid-shoe scene. This does not establish reachability, graspability, a shoe manipulation skill, or hardware compatibility."
+      },
+      "openness_scope": "These licenses cover pinned simulation assets; SDK and physical hardware design licenses are separate."
+    },
+    {
+      "id": "so101",
+      "name": "The Robot Studio SO101",
+      "version": "0.1.0",
+      "immutable_id": "dvidia/robots/so101@0.1.0",
+      "arm_axes": 5,
+      "gripper_command_axes": 1,
+      "gripper_mechanical_joints": 1,
+      "native_command_units": [
+        "rad",
+        "rad",
+        "rad",
+        "rad",
+        "rad",
+        "rad"
+      ],
+      "gripper_command": "moving-jaw hinge angle target in radians; not linear jaw gap",
+      "licenses": {
+        "robotstudio_so101": "Apache-2.0"
+      },
+      "source": {
+        "repository": "https://github.com/google-deepmind/mujoco_menagerie",
+        "commit": "0059d4335f8156206f63a35662313385f7ad6d74",
+        "verification": "Packaged SHA256 allowlist; assets are read from verified bytes, without network access.",
+        "model_urls": [
+          "https://github.com/google-deepmind/mujoco_menagerie/tree/0059d4335f8156206f63a35662313385f7ad6d74/robotstudio_so101"
+        ],
+        "home_scope": "Authored scene initialization: UR5e and PiPER use the upstream home arm pose, zero gripper coordinates; SO101 uses its zero reference pose."
+      },
+      "home_joint_positions": {
+        "shoulder_pan": 0,
+        "shoulder_lift": 0,
+        "elbow_flex": 0,
+        "wrist_flex": 0,
+        "wrist_roll": 0,
+        "gripper": 0
+      },
+      "expected_dimensions": {
+        "nq": 6,
+        "nv": 6,
+        "nu": 6,
+        "neq": 0
+      },
+      "compatibility": {
+        "scene_loading": true,
+        "shoe_grasp_qualified": false,
+        "physical_robot_ready": false,
+        "scope": "Pinned native arm and gripper can share a rigid-shoe scene. This does not establish reachability, graspability, a shoe manipulation skill, or hardware compatibility."
+      },
+      "openness_scope": "These licenses cover pinned simulation assets; SDK and physical hardware design licenses are separate."
+    }
+  ],
+  "shoes": [
+    {
+      "id": "trainer-left",
+      "name": "Trainer / left",
+      "version": "0.1.0",
+      "immutable_id": "dvidia/shoes/trainer-left@0.1.0",
+      "family": "trainer",
+      "pair_id": "dvidia/shoes/trainer-pair@0.1.0",
+      "side": "left",
+      "license": "MIT",
+      "source": {
+        "kind": "original_procedural",
+        "author": "DVIDIA",
+        "scope": "New primitive geometry; no redistributed scans, videos, photographs or model weights."
+      },
+      "properties": {
+        "dimensions_m": {
+          "value": [
+            0.28,
+            0.1,
+            0.087
+          ],
+          "units": "m; length x, width y, maximum height z",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "mass_kg": {
+          "value": 0.3,
+          "units": "kg",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "sliding_friction": {
+          "value": 0.8,
+          "units": "dimensionless",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "torsional_friction": {
+          "value": 0.005,
+          "units": "m",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "rolling_friction": {
+          "value": 0.0001,
+          "units": "m",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "mass_distribution": {
+          "value": "Component mass fractions; overlapping solid primitives, inertia inferred by MuJoCo.",
+          "units": "model assumption",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "deformation": {
+          "value": "Rigid-body proxy; no flexibility, crushing, cloth, laces, shell failure or deformation.",
+          "units": "model class",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "contact_solver": {
+          "value": {
+            "condim": 4,
+            "priority": 1,
+            "solref": [
+              0.02,
+              1
+            ],
+            "solimp": [
+              0.9,
+              0.95,
+              0.001,
+              0.5,
+              2
+            ]
+          },
+          "units": "MuJoCo solver parameters; no calibrated stiffness or damping",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        }
+      },
+      "frame": {
+        "origin": "sole bottom center",
+        "axes": "right-handed; +x toward toe, +y lateral, +z up",
+        "sole_bottom_z_m": 0,
+        "initial_bottom_z_m": 0.08
+      },
+      "geometry": [
+        {
+          "name": "sole",
+          "type": "box",
+          "size_m": [
+            0.14,
+            0.05,
+            0.01
+          ],
+          "position_m": [
+            0,
+            0,
+            0.01
+          ],
+          "mass_fraction": 0.35,
+          "rgba": [
+            0.16,
+            0.17,
+            0.18,
+            1
+          ]
+        },
+        {
+          "name": "upper",
+          "type": "ellipsoid",
+          "size_m": [
+            0.122,
+            0.047,
+            0.035
+          ],
+          "position_m": [
+            -0.005,
+            0.003,
+            0.052
+          ],
+          "mass_fraction": 0.55,
+          "rgba": [
+            0.2,
+            0.38,
+            0.58,
+            1
+          ]
+        },
+        {
+          "name": "toe",
+          "type": "ellipsoid",
+          "size_m": [
+            0.04,
+            0.047,
+            0.026
+          ],
+          "position_m": [
+            0.095,
+            0.003,
+            0.045
+          ],
+          "mass_fraction": 0.1,
+          "rgba": [
+            0.78,
+            0.82,
+            0.83,
+            1
+          ]
+        }
+      ],
+      "fidelity": {
+        "geometry": "authored coarse proxy",
+        "native_contact": "available for numerical testing",
+        "measured_contact": "untested",
+        "deformation": "unsupported",
+        "shoe_grasp_qualified": false,
+        "physical_robot_ready": false
+      }
+    },
+    {
+      "id": "trainer-right",
+      "name": "Trainer / right",
+      "version": "0.1.0",
+      "immutable_id": "dvidia/shoes/trainer-right@0.1.0",
+      "family": "trainer",
+      "pair_id": "dvidia/shoes/trainer-pair@0.1.0",
+      "side": "right",
+      "license": "MIT",
+      "source": {
+        "kind": "original_procedural",
+        "author": "DVIDIA",
+        "scope": "New primitive geometry; no redistributed scans, videos, photographs or model weights."
+      },
+      "properties": {
+        "dimensions_m": {
+          "value": [
+            0.28,
+            0.1,
+            0.087
+          ],
+          "units": "m; length x, width y, maximum height z",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "mass_kg": {
+          "value": 0.3,
+          "units": "kg",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "sliding_friction": {
+          "value": 0.8,
+          "units": "dimensionless",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "torsional_friction": {
+          "value": 0.005,
+          "units": "m",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "rolling_friction": {
+          "value": 0.0001,
+          "units": "m",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "mass_distribution": {
+          "value": "Component mass fractions; overlapping solid primitives, inertia inferred by MuJoCo.",
+          "units": "model assumption",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "deformation": {
+          "value": "Rigid-body proxy; no flexibility, crushing, cloth, laces, shell failure or deformation.",
+          "units": "model class",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "contact_solver": {
+          "value": {
+            "condim": 4,
+            "priority": 1,
+            "solref": [
+              0.02,
+              1
+            ],
+            "solimp": [
+              0.9,
+              0.95,
+              0.001,
+              0.5,
+              2
+            ]
+          },
+          "units": "MuJoCo solver parameters; no calibrated stiffness or damping",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        }
+      },
+      "frame": {
+        "origin": "sole bottom center",
+        "axes": "right-handed; +x toward toe, +y lateral, +z up",
+        "sole_bottom_z_m": 0,
+        "initial_bottom_z_m": 0.08
+      },
+      "geometry": [
+        {
+          "name": "sole",
+          "type": "box",
+          "size_m": [
+            0.14,
+            0.05,
+            0.01
+          ],
+          "position_m": [
+            0,
+            0,
+            0.01
+          ],
+          "mass_fraction": 0.35,
+          "rgba": [
+            0.16,
+            0.17,
+            0.18,
+            1
+          ]
+        },
+        {
+          "name": "upper",
+          "type": "ellipsoid",
+          "size_m": [
+            0.122,
+            0.047,
+            0.035
+          ],
+          "position_m": [
+            -0.005,
+            -0.003,
+            0.052
+          ],
+          "mass_fraction": 0.55,
+          "rgba": [
+            0.2,
+            0.38,
+            0.58,
+            1
+          ]
+        },
+        {
+          "name": "toe",
+          "type": "ellipsoid",
+          "size_m": [
+            0.04,
+            0.047,
+            0.026
+          ],
+          "position_m": [
+            0.095,
+            -0.003,
+            0.045
+          ],
+          "mass_fraction": 0.1,
+          "rgba": [
+            0.78,
+            0.82,
+            0.83,
+            1
+          ]
+        }
+      ],
+      "fidelity": {
+        "geometry": "authored coarse proxy",
+        "native_contact": "available for numerical testing",
+        "measured_contact": "untested",
+        "deformation": "unsupported",
+        "shoe_grasp_qualified": false,
+        "physical_robot_ready": false
+      }
+    },
+    {
+      "id": "ankle-boot-left",
+      "name": "Ankle Boot / left",
+      "version": "0.1.0",
+      "immutable_id": "dvidia/shoes/ankle-boot-left@0.1.0",
+      "family": "ankle-boot",
+      "pair_id": "dvidia/shoes/ankle-boot-pair@0.1.0",
+      "side": "left",
+      "license": "MIT",
+      "source": {
+        "kind": "original_procedural",
+        "author": "DVIDIA",
+        "scope": "New primitive geometry; no redistributed scans, videos, photographs or model weights."
+      },
+      "properties": {
+        "dimensions_m": {
+          "value": [
+            0.29,
+            0.108,
+            0.19
+          ],
+          "units": "m; length x, width y, maximum height z",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "mass_kg": {
+          "value": 0.5,
+          "units": "kg",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "sliding_friction": {
+          "value": 0.9,
+          "units": "dimensionless",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "torsional_friction": {
+          "value": 0.005,
+          "units": "m",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "rolling_friction": {
+          "value": 0.0001,
+          "units": "m",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "mass_distribution": {
+          "value": "Component mass fractions; overlapping solid primitives, inertia inferred by MuJoCo.",
+          "units": "model assumption",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "deformation": {
+          "value": "Rigid-body proxy; no flexibility, crushing, cloth, laces, shell failure or deformation.",
+          "units": "model class",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "contact_solver": {
+          "value": {
+            "condim": 4,
+            "priority": 1,
+            "solref": [
+              0.02,
+              1
+            ],
+            "solimp": [
+              0.9,
+              0.95,
+              0.001,
+              0.5,
+              2
+            ]
+          },
+          "units": "MuJoCo solver parameters; no calibrated stiffness or damping",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        }
+      },
+      "frame": {
+        "origin": "sole bottom center",
+        "axes": "right-handed; +x toward toe, +y lateral, +z up",
+        "sole_bottom_z_m": 0,
+        "initial_bottom_z_m": 0.08
+      },
+      "geometry": [
+        {
+          "name": "sole",
+          "type": "box",
+          "size_m": [
+            0.145,
+            0.054,
+            0.012
+          ],
+          "position_m": [
+            0,
+            0,
+            0.012
+          ],
+          "mass_fraction": 0.35,
+          "rgba": [
+            0.16,
+            0.17,
+            0.18,
+            1
+          ]
+        },
+        {
+          "name": "upper",
+          "type": "ellipsoid",
+          "size_m": [
+            0.13,
+            0.05,
+            0.04
+          ],
+          "position_m": [
+            0.01,
+            0.004,
+            0.064
+          ],
+          "mass_fraction": 0.3,
+          "rgba": [
+            0.37,
+            0.24,
+            0.16,
+            1
+          ]
+        },
+        {
+          "name": "ankle",
+          "type": "ellipsoid",
+          "size_m": [
+            0.047,
+            0.049,
+            0.055
+          ],
+          "position_m": [
+            -0.085,
+            0.004,
+            0.135
+          ],
+          "mass_fraction": 0.35,
+          "rgba": [
+            0.37,
+            0.24,
+            0.16,
+            1
+          ]
+        }
+      ],
+      "fidelity": {
+        "geometry": "authored coarse proxy",
+        "native_contact": "available for numerical testing",
+        "measured_contact": "untested",
+        "deformation": "unsupported",
+        "shoe_grasp_qualified": false,
+        "physical_robot_ready": false
+      }
+    },
+    {
+      "id": "ankle-boot-right",
+      "name": "Ankle Boot / right",
+      "version": "0.1.0",
+      "immutable_id": "dvidia/shoes/ankle-boot-right@0.1.0",
+      "family": "ankle-boot",
+      "pair_id": "dvidia/shoes/ankle-boot-pair@0.1.0",
+      "side": "right",
+      "license": "MIT",
+      "source": {
+        "kind": "original_procedural",
+        "author": "DVIDIA",
+        "scope": "New primitive geometry; no redistributed scans, videos, photographs or model weights."
+      },
+      "properties": {
+        "dimensions_m": {
+          "value": [
+            0.29,
+            0.108,
+            0.19
+          ],
+          "units": "m; length x, width y, maximum height z",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "mass_kg": {
+          "value": 0.5,
+          "units": "kg",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "sliding_friction": {
+          "value": 0.9,
+          "units": "dimensionless",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "torsional_friction": {
+          "value": 0.005,
+          "units": "m",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "rolling_friction": {
+          "value": 0.0001,
+          "units": "m",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "mass_distribution": {
+          "value": "Component mass fractions; overlapping solid primitives, inertia inferred by MuJoCo.",
+          "units": "model assumption",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "deformation": {
+          "value": "Rigid-body proxy; no flexibility, crushing, cloth, laces, shell failure or deformation.",
+          "units": "model class",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "contact_solver": {
+          "value": {
+            "condim": 4,
+            "priority": 1,
+            "solref": [
+              0.02,
+              1
+            ],
+            "solimp": [
+              0.9,
+              0.95,
+              0.001,
+              0.5,
+              2
+            ]
+          },
+          "units": "MuJoCo solver parameters; no calibrated stiffness or damping",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        }
+      },
+      "frame": {
+        "origin": "sole bottom center",
+        "axes": "right-handed; +x toward toe, +y lateral, +z up",
+        "sole_bottom_z_m": 0,
+        "initial_bottom_z_m": 0.08
+      },
+      "geometry": [
+        {
+          "name": "sole",
+          "type": "box",
+          "size_m": [
+            0.145,
+            0.054,
+            0.012
+          ],
+          "position_m": [
+            0,
+            0,
+            0.012
+          ],
+          "mass_fraction": 0.35,
+          "rgba": [
+            0.16,
+            0.17,
+            0.18,
+            1
+          ]
+        },
+        {
+          "name": "upper",
+          "type": "ellipsoid",
+          "size_m": [
+            0.13,
+            0.05,
+            0.04
+          ],
+          "position_m": [
+            0.01,
+            -0.004,
+            0.064
+          ],
+          "mass_fraction": 0.3,
+          "rgba": [
+            0.37,
+            0.24,
+            0.16,
+            1
+          ]
+        },
+        {
+          "name": "ankle",
+          "type": "ellipsoid",
+          "size_m": [
+            0.047,
+            0.049,
+            0.055
+          ],
+          "position_m": [
+            -0.085,
+            -0.004,
+            0.135
+          ],
+          "mass_fraction": 0.35,
+          "rgba": [
+            0.37,
+            0.24,
+            0.16,
+            1
+          ]
+        }
+      ],
+      "fidelity": {
+        "geometry": "authored coarse proxy",
+        "native_contact": "available for numerical testing",
+        "measured_contact": "untested",
+        "deformation": "unsupported",
+        "shoe_grasp_qualified": false,
+        "physical_robot_ready": false
+      }
+    },
+    {
+      "id": "slipper-left",
+      "name": "Slipper / left",
+      "version": "0.1.0",
+      "immutable_id": "dvidia/shoes/slipper-left@0.1.0",
+      "family": "slipper",
+      "pair_id": "dvidia/shoes/slipper-pair@0.1.0",
+      "side": "left",
+      "license": "MIT",
+      "source": {
+        "kind": "original_procedural",
+        "author": "DVIDIA",
+        "scope": "New primitive geometry; no redistributed scans, videos, photographs or model weights."
+      },
+      "properties": {
+        "dimensions_m": {
+          "value": [
+            0.27,
+            0.102,
+            0.055
+          ],
+          "units": "m; length x, width y, maximum height z",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "mass_kg": {
+          "value": 0.15,
+          "units": "kg",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "sliding_friction": {
+          "value": 0.65,
+          "units": "dimensionless",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "torsional_friction": {
+          "value": 0.005,
+          "units": "m",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "rolling_friction": {
+          "value": 0.0001,
+          "units": "m",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "mass_distribution": {
+          "value": "Component mass fractions; overlapping solid primitives, inertia inferred by MuJoCo.",
+          "units": "model assumption",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "deformation": {
+          "value": "Rigid-body proxy; no flexibility, crushing, cloth, laces, shell failure or deformation.",
+          "units": "model class",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "contact_solver": {
+          "value": {
+            "condim": 4,
+            "priority": 1,
+            "solref": [
+              0.02,
+              1
+            ],
+            "solimp": [
+              0.9,
+              0.95,
+              0.001,
+              0.5,
+              2
+            ]
+          },
+          "units": "MuJoCo solver parameters; no calibrated stiffness or damping",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        }
+      },
+      "frame": {
+        "origin": "sole bottom center",
+        "axes": "right-handed; +x toward toe, +y lateral, +z up",
+        "sole_bottom_z_m": 0,
+        "initial_bottom_z_m": 0.08
+      },
+      "geometry": [
+        {
+          "name": "sole",
+          "type": "box",
+          "size_m": [
+            0.135,
+            0.051,
+            0.009
+          ],
+          "position_m": [
+            0,
+            0,
+            0.009
+          ],
+          "mass_fraction": 0.35,
+          "rgba": [
+            0.16,
+            0.17,
+            0.18,
+            1
+          ]
+        },
+        {
+          "name": "upper",
+          "type": "ellipsoid",
+          "size_m": [
+            0.09,
+            0.049,
+            0.017
+          ],
+          "position_m": [
+            0.045,
+            0.002,
+            0.038
+          ],
+          "mass_fraction": 0.65,
+          "rgba": [
+            0.52,
+            0.31,
+            0.37,
+            1
+          ]
+        }
+      ],
+      "fidelity": {
+        "geometry": "authored coarse proxy",
+        "native_contact": "available for numerical testing",
+        "measured_contact": "untested",
+        "deformation": "unsupported",
+        "shoe_grasp_qualified": false,
+        "physical_robot_ready": false
+      }
+    },
+    {
+      "id": "slipper-right",
+      "name": "Slipper / right",
+      "version": "0.1.0",
+      "immutable_id": "dvidia/shoes/slipper-right@0.1.0",
+      "family": "slipper",
+      "pair_id": "dvidia/shoes/slipper-pair@0.1.0",
+      "side": "right",
+      "license": "MIT",
+      "source": {
+        "kind": "original_procedural",
+        "author": "DVIDIA",
+        "scope": "New primitive geometry; no redistributed scans, videos, photographs or model weights."
+      },
+      "properties": {
+        "dimensions_m": {
+          "value": [
+            0.27,
+            0.102,
+            0.055
+          ],
+          "units": "m; length x, width y, maximum height z",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "mass_kg": {
+          "value": 0.15,
+          "units": "kg",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "sliding_friction": {
+          "value": 0.65,
+          "units": "dimensionless",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "torsional_friction": {
+          "value": 0.005,
+          "units": "m",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "rolling_friction": {
+          "value": 0.0001,
+          "units": "m",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "mass_distribution": {
+          "value": "Component mass fractions; overlapping solid primitives, inertia inferred by MuJoCo.",
+          "units": "model assumption",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "deformation": {
+          "value": "Rigid-body proxy; no flexibility, crushing, cloth, laces, shell failure or deformation.",
+          "units": "model class",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        },
+        "contact_solver": {
+          "value": {
+            "condim": 4,
+            "priority": 1,
+            "solref": [
+              0.02,
+              1
+            ],
+            "solimp": [
+              0.9,
+              0.95,
+              0.001,
+              0.5,
+              2
+            ]
+          },
+          "units": "MuJoCo solver parameters; no calibrated stiffness or damping",
+          "evidence": "untested",
+          "source": "Authored synthetic proxy for numerical scene tests; no real shoe, scan, measurement, material fit or calibration supports this value."
+        }
+      },
+      "frame": {
+        "origin": "sole bottom center",
+        "axes": "right-handed; +x toward toe, +y lateral, +z up",
+        "sole_bottom_z_m": 0,
+        "initial_bottom_z_m": 0.08
+      },
+      "geometry": [
+        {
+          "name": "sole",
+          "type": "box",
+          "size_m": [
+            0.135,
+            0.051,
+            0.009
+          ],
+          "position_m": [
+            0,
+            0,
+            0.009
+          ],
+          "mass_fraction": 0.35,
+          "rgba": [
+            0.16,
+            0.17,
+            0.18,
+            1
+          ]
+        },
+        {
+          "name": "upper",
+          "type": "ellipsoid",
+          "size_m": [
+            0.09,
+            0.049,
+            0.017
+          ],
+          "position_m": [
+            0.045,
+            -0.002,
+            0.038
+          ],
+          "mass_fraction": 0.65,
+          "rgba": [
+            0.52,
+            0.31,
+            0.37,
+            1
+          ]
+        }
+      ],
+      "fidelity": {
+        "geometry": "authored coarse proxy",
+        "native_contact": "available for numerical testing",
+        "measured_contact": "untested",
+        "deformation": "unsupported",
+        "shoe_grasp_qualified": false,
+        "physical_robot_ready": false
+      }
+    }
+  ],
+  "environment": {
+    "id": "open-support-plane",
+    "version": "0.1.0",
+    "license": "MIT",
+    "geometry": "Infinite collision plane at z=0; displayed with 2 m half extents. Not a finite tabletop or rack.",
+    "name": "asset_table",
+    "gravity_m_s2": [
+      0,
+      0,
+      -9.81
+    ],
+    "property_evidence": "untested authored environment",
+    "default_layout": "Three columns x=.40,.76,1.12 m; two rows y=.38,.56 m; sole bottoms begin z=.08 m. Layout separates loading tests from reachability claims."
+  },
+  "limitations": [
+    "All shoe physical properties are untested synthetic assumptions.",
+    "Left/right labels identify mirrored procedural instances, not scanned real shoes.",
+    "Arm command interfaces differ; installing a scene does not install a learned controller.",
+    "No deformation, real-world calibration, graspability claim or closed-loop sensor stack."
+  ]
+}

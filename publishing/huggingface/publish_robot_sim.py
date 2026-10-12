@@ -22,6 +22,7 @@ MAX_FILE_BYTES = 32*1024*1024
 # v0.5 retains every prior receipt and adds at most three complete cohorts.
 # Only the stored payload cap increases; decoded/per-file bounds stay fixed.
 MAX_TOTAL_BYTES = 512*1024*1024
+MAX_FILES = 700  # Prior receipts plus the bounded three-arm shoe asset library.
 MAX_RELIABILITY_COHORTS = 3
 ALLOWED_SUFFIXES = {'.md', '.html', '.js', '.json', '.txt', '.png', '.bin', '.gz'}
 SHA = re.compile(r'(?:[a-f0-9]{40}|[a-f0-9]{64})')
@@ -166,7 +167,7 @@ def _checked_plan_bytes(path):
     if not base.is_dir():
         raise PublicationError('Expected a plain staged Robot Simulation Lab directory.')
     files = row.get('files')
-    if (type(files) is not list or not 3 <= len(files) <= 600 or any(type(f) is not dict for f in files)
+    if (type(files) is not list or not 3 <= len(files) <= MAX_FILES or any(type(f) is not dict for f in files)
             or any(type(f.get('path')) is not str for f in files)
             or len({f['path'] for f in files}) != len(files)):
         raise PublicationError('Invalid complete Robot Simulation Lab inventory.')

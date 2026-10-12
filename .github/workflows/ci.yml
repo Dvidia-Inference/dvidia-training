@@ -71,6 +71,8 @@ jobs:
           dvidia-reference-task --help
           dvidia-robot-sim --help
           dvidia-robot-sim list
+          dvidia-assets --help
+          dvidia-assets list
           dvidia-piper-grip --help
           dvidia-piper-contact --help
           dvidia-piper-recovery --help
@@ -97,8 +99,9 @@ jobs:
         run: |
           npm ci --ignore-scripts --prefix viewer
           npm run --prefix viewer build
+          npm run --prefix viewer build:assets
           node tests/browser/reference_replay_loader.cjs
-          git diff --exit-code -- src/dvidia_training/reference_replay.bundle.js src/dvidia_training/reference_replay.third-party.txt
+          git diff --exit-code -- src/dvidia_training/reference_replay.bundle.js src/dvidia_training/reference_replay.third-party.txt src/dvidia_training/asset_library.bundle.js
       - name: Provision pinned reference models
         run: |
           python -m pip install ".[arm]"
@@ -142,6 +145,14 @@ jobs:
         env:
           DVIDIA_ROBOT_PROFILE_ASSETS: runs/robot-profile-assets-ci
         run: python -m unittest tests.test_robot_profiles tests.test_piper_task tests.test_piper_task_benchmark tests.test_piper_grip_guard tests.test_piper_grip_benchmark tests.test_piper_contact_memory tests.test_piper_contact_benchmark tests.test_piper_contact_recovery tests.test_piper_recovery_benchmark -v
+      - name: Test reusable shoe assets and scene previews
+        env:
+          DVIDIA_ASSET_PREVIEW_TEST_ASSETS: runs/robot-profile-assets-ci
+          DVIDIA_ASSET_UR5E_ROOT: runs/reference-assets-ci
+          DVIDIA_ASSET_LIBRARY_ROOTS: '{"ur5e":"runs/reference-assets-ci","piper":"runs/robot-profile-assets-ci","so101":"runs/robot-profile-assets-ci"}'
+          DVIDIA_REFERENCE_ASSETS: runs/reference-assets-ci
+          DVIDIA_ROBOT_PROFILE_ASSETS: runs/robot-profile-assets-ci
+        run: python -m unittest tests.test_asset_library tests.test_asset_benchmark tests.test_asset_preview -v
       - name: Retain PiPER contact task and matched controls
         run: |
           dvidia-piper-task benchmark runs/robot-profile-assets-ci --output runs/piper-task-ci --nominal 1 --stress 0
@@ -154,6 +165,7 @@ jobs:
         run: |
           python -m pip install -r publishing/huggingface/requirements.txt
           python -m unittest discover -s publishing/huggingface -p 'test_publish_robot_sim.py' -v
+          python -m unittest discover -s publishing/huggingface -p 'test_prepare_asset_library.py' -v
           python -m unittest discover -s publishing/huggingface/robot-simulation-lab -p 'test_*.py' -v
       - name: Preserve additional profile evidence
         if: always()
