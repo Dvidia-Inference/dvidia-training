@@ -23,6 +23,12 @@ unloaded mechanics; learned policies and physical qualification remain open. The
 [Robot Simulation Lab](https://huggingface.co/spaces/Dvidia/robot-simulation-lab)
 publishes recorded evidence and local run instructions.
 
+The [asset-library roadmap](docs/robot-simulation-library.md#reusable-asset-library-planned-product-layer)
+extends this toward reusable objects, environments, grippers and sensor profiles,
+starting with a shoe-organization collection. Packages will distinguish measured,
+estimated and untested physical properties and link to compatible skill benchmarks.
+The object catalog and installation interface are planned work.
+
 The [PiPER grip-recovery candidate](docs/piper-grip-recovery.md) adds a short
 test lift before carrying, one supported recovery attempt, and a paired
 benchmark against the original controller. It uses current simulator state;

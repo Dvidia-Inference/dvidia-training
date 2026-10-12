@@ -75,6 +75,46 @@ The coverage planner and recorder are available from the current source checkout
 They are not included in the frozen v0.1.0 release or the older Hugging Face pilot.
 No new task policy is trained by adding these components.
 
+## Reusable assets beneath every Skillspace
+
+The planned [asset-library layer](robot-simulation-library.md#reusable-asset-library-planned-product-layer)
+will provide reusable arm/gripper profiles, object families, environments and
+replaceable camera/sensor packages that people can download and compose in their simulator. Current pinned
+robot profiles and rigid-block task receipts are the starting point. A broad
+object catalog, calibrated shoe physics, asset registry and compatibility UI
+remain to be built. This layer supports the existing footage-to-skill loop;
+assets alone do not train or qualify a skill.
+
+| Sequence | Deliverable | Acceptance evidence |
+| --- | --- | --- |
+| A | Package manifest and contribution contract | Version/content identity, provenance, original licenses, redistribution status, frames/units and explicit measured/estimated/untested state for each physical property. |
+| B | Reusable arm, gripper, environment and sensor packages | Pinned native audits, interface/adapter compatibility, declared limits, camera frames/units/timing, reproducible scene composition and runtime/memory measurements. Reuse the existing model profiles first. |
+| C | First shoe instance collection and geometry proxies | Rights-reviewed originals, persistent shoe/pair/session IDs, scale/mass evidence, collision geometry and tabletop/rack fixtures; unmeasured friction or deformation remains labeled untested. |
+| D | Contact and compliance evidence | Recorded grip/lift/hold/release experiments on actual contact pairs; measured load/deformation response, uncertainty and simulator residuals. Keep rigid and flexible models distinct. |
+| E | Skill-bound benchmark packages | Pairing, alignment and placement each have an independent scorer, declared resets/disturbances, matched baselines/controls, complete failed attempts and untouched confirmation instances. |
+| F | Catalog, installation and community growth | Preview/search by asset family, physics evidence and compatible embodiment; download a locked package with reproducible examples. New assets/ports/arms pass the same import, licensing and interaction-evidence gates. |
+
+Track fidelity separately for geometry, native mechanics, measured contact,
+measured deformation and task benchmarks. A detailed mesh does not establish
+calibrated friction or flexibility, and an object class cannot inherit measured
+properties from every other instance. Bind a skill capsule to its exact arm,
+gripper, sensor/action adapter, asset versions and benchmark receipt. Every skill
+needs a runnable simulation benchmark before simulation qualification; collection
+can continue while a missing environment or contact model is being built.
+
+Plan separate coverage for recognition variations (lighting, textures, views and
+occlusion) and manipulation variations (mass, friction, stiffness and contacts).
+Then benchmark their combinations. Sensor profiles should be replaceable with
+explicit calibration, observation units, sampling/delay and missing-data
+contracts; visual variety alone does not validate physics or a sensing pipeline.
+
+The first shoe milestone is a bounded organization task on one selected
+arm/gripper, using several physical shoe instances and complete interaction
+recordings. Keep physical-instance/session groups separate in development and
+confirmation. Extend to more shoe families and embodiments after diagnosing the
+initial error and cost budget. Shoe tying, bimanual transfers and five-finger
+hands require their own deformation, collision, sensing and control evidence.
+
 ## First incoming skills
 
 The [laptop skill pilot](laptop-skill-pilot.md) supplies a proposed shoe collection

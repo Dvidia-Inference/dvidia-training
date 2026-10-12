@@ -36,6 +36,13 @@ and every raw software computation duration. No failed attempt was discarded.
 - **227037:** [Report](receipts/227037/report.html) · [JSON](receipts/227037/report.json) · [Protocol](receipts/227037/protocol.json) · [Seal](receipts/227037/integrity.json) · [Execution](executions/227037.json)
 - **862186:** [Report](receipts/862186/report.html) · [JSON](receipts/862186/report.json) · [Protocol](receipts/862186/protocol.json) · [Seal](receipts/862186/integrity.json) · [Execution](executions/862186.json)
 - [Complete aggregate, failures, forces and motion](analysis.json) · [Analysis source](analyze.py) · [Installed runtime check](installed-runtime.json) · [Loaded-host context](host-load.json) · [Publication provenance](provenance.json)
+- [Verified Hugging Face publication](huggingface-publication.json) · [GitHub checks for the frozen code/results head](github-validation.json)
+
+All 563 public Hugging Face payload files were downloaded and matched to the
+prepared bytes at revision [d10b2c8a3b2484600585c16f897befc1ff0374b0](https://huggingface.co/spaces/Dvidia/robot-simulation-lab/tree/d10b2c8a3b2484600585c16f897befc1ff0374b0).
+The GitHub snapshot records 28 passing checks for code/results commit
+`0545ac47aedcd7c197341986533aa3e74c263ac6`; later publication-only commits have
+their own checks. These outer publication records do not change the sealed runs.
 
 The original 270 receipt files total **178,935,621 stored bytes**; with compressed
 attempts decoded, seal-listed contents total **1,022,818,422 bytes**. Storage is
