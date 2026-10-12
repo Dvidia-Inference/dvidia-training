@@ -1,0 +1,474 @@
+[
+  {
+    "case": "friction015-mass040-layout00--recovery_placement.json.gz",
+    "valid": true,
+    "success": false,
+    "old_success": false,
+    "first_success_s": null,
+    "abort": "retry_budget_exhausted:object_not_following",
+    "events": [
+      [
+        "probe_started",
+        11.179999999999243,
+        "slow_load_bearing_check"
+      ],
+      [
+        "alarm",
+        11.519999999999055,
+        "object_not_following"
+      ],
+      [
+        "retry_started",
+        11.519999999999055,
+        "supported_object_only"
+      ],
+      [
+        "retry_completed",
+        13.179999999998135,
+        "open_recenter_complete"
+      ],
+      [
+        "probe_started",
+        14.059999999997647,
+        "slow_load_bearing_check"
+      ],
+      [
+        "alarm",
+        14.419999999997447,
+        "object_not_following"
+      ],
+      [
+        "abort",
+        14.419999999997447,
+        "retry_budget_exhausted:object_not_following"
+      ]
+    ],
+    "error": null
+  },
+  {
+    "case": "friction015-mass040-layout01--recovery_placement.json.gz",
+    "valid": true,
+    "success": false,
+    "old_success": false,
+    "first_success_s": null,
+    "abort": "unchanged_grasp_not_following",
+    "events": [
+      [
+        "probe_started",
+        11.159999999999254,
+        "slow_load_bearing_check"
+      ],
+      [
+        "alarm",
+        11.499999999999066,
+        "object_not_following"
+      ],
+      [
+        "unchanged_retry_refused",
+        11.499999999999066,
+        "stable_closed_supported_grasp_did_not_follow"
+      ],
+      [
+        "abort",
+        11.499999999999066,
+        "unchanged_grasp_not_following"
+      ]
+    ],
+    "error": null
+  },
+  {
+    "case": "friction015-mass060-layout00--recovery_placement.json.gz",
+    "valid": true,
+    "success": false,
+    "old_success": false,
+    "first_success_s": null,
+    "abort": "unchanged_grasp_not_following",
+    "events": [
+      [
+        "probe_started",
+        11.179999999999243,
+        "slow_load_bearing_check"
+      ],
+      [
+        "alarm",
+        11.539999999999043,
+        "object_not_following"
+      ],
+      [
+        "unchanged_retry_refused",
+        11.539999999999043,
+        "stable_closed_supported_grasp_did_not_follow"
+      ],
+      [
+        "abort",
+        11.539999999999043,
+        "unchanged_grasp_not_following"
+      ]
+    ],
+    "error": null
+  },
+  {
+    "case": "friction015-mass060-layout01--recovery_placement.json.gz",
+    "valid": true,
+    "success": false,
+    "old_success": false,
+    "first_success_s": null,
+    "abort": "unchanged_grasp_not_following",
+    "events": [
+      [
+        "probe_started",
+        11.159999999999254,
+        "slow_load_bearing_check"
+      ],
+      [
+        "alarm",
+        11.499999999999066,
+        "object_not_following"
+      ],
+      [
+        "unchanged_retry_refused",
+        11.499999999999066,
+        "stable_closed_supported_grasp_did_not_follow"
+      ],
+      [
+        "abort",
+        11.499999999999066,
+        "unchanged_grasp_not_following"
+      ]
+    ],
+    "error": null
+  },
+  {
+    "case": "friction055-mass040-layout00--recovery_placement.json.gz",
+    "valid": true,
+    "success": true,
+    "old_success": true,
+    "first_success_s": 15.847999999996656,
+    "abort": null,
+    "events": [
+      [
+        "probe_started",
+        11.179999999999243,
+        "slow_load_bearing_check"
+      ],
+      [
+        "acquisition_qualified",
+        11.77999999999891,
+        "sustained_table_free_probe"
+      ],
+      [
+        "slowdown_started",
+        11.919999999998833,
+        "persistent_local_offset_trend"
+      ],
+      [
+        "reassessment_started",
+        12.039999999998766,
+        "bounded_slowdown_complete"
+      ],
+      [
+        "carry_resumed",
+        12.259999999998644,
+        "sustained_loaded_relative_settling"
+      ],
+      [
+        "speed_restoration_started",
+        12.379999999998578,
+        "sustained_loaded_relative_stability_after_resume"
+      ],
+      [
+        "full_speed_restored",
+        12.679999999998412,
+        "bounded_stable_time_ramp_complete"
+      ]
+    ],
+    "error": null
+  },
+  {
+    "case": "friction055-mass040-layout01--recovery_placement.json.gz",
+    "valid": true,
+    "success": true,
+    "old_success": true,
+    "first_success_s": 15.833999999996664,
+    "abort": null,
+    "events": [
+      [
+        "probe_started",
+        11.159999999999254,
+        "slow_load_bearing_check"
+      ],
+      [
+        "acquisition_qualified",
+        11.759999999998922,
+        "sustained_table_free_probe"
+      ],
+      [
+        "slowdown_started",
+        11.879999999998855,
+        "persistent_local_offset_trend"
+      ],
+      [
+        "reassessment_started",
+        11.999999999998789,
+        "bounded_slowdown_complete"
+      ],
+      [
+        "carry_resumed",
+        12.219999999998667,
+        "sustained_loaded_relative_settling"
+      ],
+      [
+        "speed_restoration_started",
+        12.3399999999986,
+        "sustained_loaded_relative_stability_after_resume"
+      ],
+      [
+        "full_speed_restored",
+        12.639999999998434,
+        "bounded_stable_time_ramp_complete"
+      ]
+    ],
+    "error": null
+  },
+  {
+    "case": "friction055-mass060-layout00--recovery_placement.json.gz",
+    "valid": true,
+    "success": false,
+    "old_success": false,
+    "first_success_s": null,
+    "abort": "retry_budget_exhausted:object_not_following",
+    "events": [
+      [
+        "probe_started",
+        11.179999999999243,
+        "slow_load_bearing_check"
+      ],
+      [
+        "alarm",
+        11.559999999999032,
+        "object_not_following"
+      ],
+      [
+        "retry_started",
+        11.559999999999032,
+        "supported_object_only"
+      ],
+      [
+        "retry_completed",
+        13.219999999998112,
+        "open_recenter_complete"
+      ],
+      [
+        "probe_started",
+        14.099999999997625,
+        "slow_load_bearing_check"
+      ],
+      [
+        "alarm",
+        14.479999999997414,
+        "object_not_following"
+      ],
+      [
+        "abort",
+        14.479999999997414,
+        "retry_budget_exhausted:object_not_following"
+      ]
+    ],
+    "error": null
+  },
+  {
+    "case": "friction055-mass060-layout01--recovery_placement.json.gz",
+    "valid": true,
+    "success": false,
+    "old_success": false,
+    "first_success_s": null,
+    "abort": "retry_budget_exhausted:relative_slip",
+    "events": [
+      [
+        "probe_started",
+        11.159999999999254,
+        "slow_load_bearing_check"
+      ],
+      [
+        "alarm",
+        11.539999999999043,
+        "object_not_following"
+      ],
+      [
+        "retry_started",
+        11.539999999999043,
+        "supported_object_only"
+      ],
+      [
+        "retry_completed",
+        13.199999999998123,
+        "open_recenter_complete"
+      ],
+      [
+        "probe_started",
+        14.079999999997636,
+        "slow_load_bearing_check"
+      ],
+      [
+        "alarm",
+        14.459999999997425,
+        "relative_slip"
+      ],
+      [
+        "abort",
+        14.459999999997425,
+        "retry_budget_exhausted:relative_slip"
+      ]
+    ],
+    "error": null
+  },
+  {
+    "case": "friction080-mass040-layout00--recovery_placement.json.gz",
+    "valid": true,
+    "success": true,
+    "old_success": true,
+    "first_success_s": 15.470999999996865,
+    "abort": null,
+    "events": [
+      [
+        "probe_started",
+        11.179999999999243,
+        "slow_load_bearing_check"
+      ],
+      [
+        "acquisition_qualified",
+        11.77999999999891,
+        "sustained_table_free_probe"
+      ]
+    ],
+    "error": null
+  },
+  {
+    "case": "friction080-mass040-layout01--recovery_placement.json.gz",
+    "valid": true,
+    "success": true,
+    "old_success": true,
+    "first_success_s": 15.450999999996876,
+    "abort": null,
+    "events": [
+      [
+        "probe_started",
+        11.159999999999254,
+        "slow_load_bearing_check"
+      ],
+      [
+        "acquisition_qualified",
+        11.759999999998922,
+        "sustained_table_free_probe"
+      ]
+    ],
+    "error": null
+  },
+  {
+    "case": "friction080-mass060-layout00--recovery_placement.json.gz",
+    "valid": true,
+    "success": true,
+    "old_success": true,
+    "first_success_s": 15.849999999996655,
+    "abort": null,
+    "events": [
+      [
+        "probe_started",
+        11.179999999999243,
+        "slow_load_bearing_check"
+      ],
+      [
+        "acquisition_qualified",
+        11.7999999999989,
+        "sustained_table_free_probe"
+      ],
+      [
+        "slowdown_started",
+        11.919999999998833,
+        "persistent_local_offset_trend"
+      ],
+      [
+        "reassessment_started",
+        11.999999999998789,
+        "persistent_bilateral_contact_loss"
+      ],
+      [
+        "carry_resumed",
+        12.239999999998656,
+        "sustained_loaded_relative_settling"
+      ],
+      [
+        "speed_restoration_started",
+        12.359999999998589,
+        "sustained_loaded_relative_stability_after_resume"
+      ],
+      [
+        "full_speed_restored",
+        12.659999999998423,
+        "bounded_stable_time_ramp_complete"
+      ]
+    ],
+    "error": null
+  },
+  {
+    "case": "friction080-mass060-layout01--recovery_placement.json.gz",
+    "valid": true,
+    "success": true,
+    "old_success": true,
+    "first_success_s": 16.232999999996856,
+    "abort": null,
+    "events": [
+      [
+        "probe_started",
+        11.159999999999254,
+        "slow_load_bearing_check"
+      ],
+      [
+        "acquisition_qualified",
+        11.77999999999891,
+        "sustained_table_free_probe"
+      ],
+      [
+        "slowdown_started",
+        11.899999999998844,
+        "persistent_local_offset_trend"
+      ],
+      [
+        "reassessment_started",
+        11.919999999998833,
+        "persistent_bilateral_contact_loss"
+      ],
+      [
+        "carry_resumed",
+        12.1599999999987,
+        "sustained_loaded_relative_settling"
+      ],
+      [
+        "slowdown_started",
+        12.3399999999986,
+        "persistent_local_offset_trend"
+      ],
+      [
+        "reassessment_started",
+        12.459999999998534,
+        "bounded_slowdown_complete"
+      ],
+      [
+        "carry_resumed",
+        12.679999999998412,
+        "sustained_loaded_relative_settling"
+      ],
+      [
+        "speed_restoration_started",
+        12.799999999998345,
+        "sustained_loaded_relative_stability_after_resume"
+      ],
+      [
+        "full_speed_restored",
+        13.139999999998157,
+        "bounded_stable_time_ramp_complete"
+      ]
+    ],
+    "error": null
+  }
+]

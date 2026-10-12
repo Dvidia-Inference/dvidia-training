@@ -382,11 +382,12 @@ def _sealed_piper_comparison(directory, benchmark, loader, version, namespace):
     if not root.is_dir():
         raise ValueError('PiPER '+version+' evidence must be an explicitly supplied plain benchmark directory.')
     report,files = loader(root)
+    expected_attempts = 12*len(benchmark.VARIANTS)
     required = {'report.json','report.html','protocol.json','integrity.json',
                 'licenses/agilex_piper/LICENSE','licenses/agilex_piper/README.md'}
-    if (type(report) is not dict or type(files) is not dict or len(files)!=90
+    if (type(report) is not dict or type(files) is not dict or len(files)!=expected_attempts+6
             or not required<=set(files) or any(type(raw) is not bytes for raw in files.values())):
-        raise ValueError('PiPER '+version+' must retain all eighty-four compressed attempts and model notices.')
+        raise ValueError('PiPER '+version+' must retain every planned compressed attempt and model notice.')
     manifest = _decode(files['integrity.json'])
     if (type(manifest) is not dict or set(manifest)!={'schema','files'}
             or manifest['schema']!=benchmark.INTEGRITY_SCHEMA or type(manifest['files']) is not dict
@@ -402,7 +403,7 @@ def _sealed_piper_comparison(directory, benchmark, loader, version, namespace):
             or report.get('protocol')!=protocol or report.get('cohort') not in ('development','confirmation')
             or protocol.get('cohort')!=report['cohort'] or protocol.get('native_command_units')!=['rad']*6+['m']
             or protocol.get('variants')!=list(benchmark.VARIANTS)
-            or type(protocol.get('planned_attempts')) is not int or protocol['planned_attempts']!=84
+            or type(protocol.get('planned_attempts')) is not int or protocol['planned_attempts']!=expected_attempts
             or report.get('protocol_sha256')!=sha256(files['protocol.json']).hexdigest()):
         raise ValueError('Only the pinned authored synthetic PiPER '+version+' comparison may be staged.')
     scenes,attempts = report.get('scenes'),report.get('attempts')
@@ -413,8 +414,8 @@ def _sealed_piper_comparison(directory, benchmark, loader, version, namespace):
             or len({scene['id'] for scene in scenes})!=12
             or {(s['friction'],s['mass_kg'],s['layout_index']) for s in scenes}!=
                 {(f,m,i) for f in benchmark.FRICTIONS for m in benchmark.MASSES for i in (0,1)}
-            or type(attempts) is not list or len(attempts)!=84
-            or type(report.get('attempted')) is not int or report['attempted']!=84):
+            or type(attempts) is not list or len(attempts)!=expected_attempts
+            or type(report.get('attempted')) is not int or report['attempted']!=expected_attempts):
         raise ValueError('PiPER '+version+' must retain every friction, mass, layout and paired attempt.')
     expected = {scene['id']+'--'+variant for scene in scenes for variant in benchmark.VARIANTS}
     lookup = {}
@@ -474,6 +475,69 @@ def _sealed_piper_contact(directory):
 def _sealed_piper_recovery(directory):
     from dvidia_training import piper_recovery_benchmark as benchmark
     return _sealed_piper_comparison(directory, benchmark, benchmark.load_recovery_bundle, 'v0.4', 'piper-recovery-v04')
+
+
+def _sealed_piper_reliability(directory):
+    from dvidia_training import piper_reliability_benchmark as benchmark
+    root = Path(directory).absolute()
+    report,files = benchmark.load_reliability_bundle(root)
+    protocol = report['protocol']
+    if type(protocol.get('seed')) is not int or not 0<=protocol['seed']<=999988:
+        raise ValueError('Reliability publication requires the bounded protocol seed.')
+    identity = report['cohort']+'-'+str(protocol['seed'])
+    namespace = 'piper-reliability-v05/'+identity
+    # The loader validated portable recorded/probe consistency. Reuse that exact
+    # snapshot for the common byte/inventory/denominator/privacy checks.
+    files,report,sizes = _sealed_piper_comparison(root, benchmark, lambda _: (report,files), 'v0.5', namespace)
+    return identity,files,report,sizes
+
+
+def _reliability_summary(report,*,html=False):
+    modes=[v.removesuffix('_placement') for v in report['protocol']['variants'] if v.endswith('_placement')]
+    labels={'recovery':'v0.4','reacquire':'v0.5 second lift','reacquire_grasp':'v0.5 full'}
+    totals=[]
+    for mode in modes:
+        rows=[r for r in report['summary'] if r['variant']==mode+'_placement']
+        totals.append(f"{labels.get(mode,mode)} {sum(r['success'] for r in rows)}/{sum(r['attempted'] for r in rows)}")
+    comparison='Placement completion: '+', '.join(totals)+'.'
+    pairs=[]
+    for paired in report['paired_comparisons']:
+        line=(f"{labels.get(paired['candidate'],paired['candidate'])} versus {labels.get(paired['reference'],paired['reference'])}: "
+              f"{paired['gained_successes']} gained, {paired['lost_successes']} lost, "
+              f"{paired['common_successes']} shared successful scenes, {paired['neither_succeeded']} neither completed.")
+        delta=paired['common_success_mean_delta_s']
+        line+=(' No shared-success completion-time comparison is available.' if delta is None else
+               f' Mean completion-time change on shared successes: {delta:+.3f} simulated seconds (candidate minus reference).')
+        pairs.append(line)
+    controls=[r for r in report['summary'] if not r['variant'].endswith('_placement')]
+    note=(f"Protocol cohort: {report['cohort']}; seed {report['protocol']['seed']}. {report['attempted']} planned attempts across twelve synthetic scenes. "
+          f"Matched open-jaw and hold controls: {sum(r['success'] for r in controls)}/{sum(r['attempted'] for r in controls)} completed. "
+          'Every failed or invalid attempt remains in the denominator. Cohorts are reported separately; a cohort label alone does not establish independence. '
+          'Counts are descriptive synthetic evidence, not physical reliability, detector accuracy, learned competence or real-time sensor performance.')
+    gates=['Pilot gate '+name.replace('_',' ')+': '+('passed' if value else 'not met')
+           for name,value in report['quality_gates'].items() if type(value) is bool]
+    rows=[f"μ={row['friction']:.2f}, mass={row['mass_kg']:.2f} kg / {row['variant']}: "
+          f"{row['success']}/{row['attempted']} completed, {row['valid']} numerically valid" for row in report['summary']]
+    if html:
+        return ('<p><strong>'+escape(comparison)+'</strong></p>'+''.join('<p>'+escape(line)+'</p>' for line in pairs+[note])+
+                '<details><summary>Inspect every stratum, control and pilot gate</summary>'+
+                '<br>'.join(escape(line) for line in gates+rows)+'</details>')
+    return '\n\n'.join([comparison,*pairs,note])+'\n\n'+'\n'.join('- '+line for line in gates+rows)
+
+
+def _piper_reliability_card(identity,report,source_commit):
+    prefix='tasks/piper-reliability-v05/'+identity
+    return ('<article class="profile"><span class="status">PiPER reliability v0.5 · synthetic</span>'
+            '<h2>Measure placement reliability.</h2><div class="summary">'+_reliability_summary(report,html=True)+
+            '</div><p>The original height, retention and placement gates remain. Second-lift and alternate-grasp controllers use privileged simulator observations; '
+            'a recovered grip is not automatically a completed placement. These are recorded receipts, with no PiPER 3D viewer or live browser physics.</p>'
+            '<div class="links"><a href="'+prefix+'/report.html">Complete paired comparison ↗</a>'
+            '<a href="'+prefix+'/report.json">Every outcome and diagnostic ↗</a>'
+            '<a href="'+prefix+'/protocol.json">Frozen protocol ↗</a>'
+            '<a href="'+prefix+'/integrity.json">Stored and decoded hashes ↗</a>'
+            '<a href="'+prefix+'/licenses/agilex_piper/LICENSE">Original MIT model license ↗</a>'
+            '<a href="https://github.com/Dvidia-Inference/dvidia-training/blob/'+source_commit+
+            '/docs/piper-reliability-v05-plan.md">Pinned experiment plan ↗</a></div></article>')
 
 
 def _contact_summary(report,*,html=False):
@@ -583,7 +647,7 @@ def _piper_grip_card(report,source_commit):
             'evidence to the existing contact pilot; it adds no PiPER 3D viewer.</p></article>')
 
 
-def _profile_cards(profile_reports=(),source_commit='main',piper_task_report=None,piper_grip_report=None,piper_contact_report=None,piper_recovery_report=None):
+def _profile_cards(profile_reports=(),source_commit='main',piper_task_report=None,piper_grip_report=None,piper_contact_report=None,piper_recovery_report=None,piper_reliability_reports=()):
     profiles = [
         ('UR5e + Robotiq 2F-85','Recorded native contact task',
          'Six arm joints, eight articulated gripper coordinates and a free rigid block. Full source outcomes and matched controls are available.',
@@ -612,11 +676,13 @@ def _profile_cards(profile_reports=(),source_commit='main',piper_task_report=Non
     authored = ['<article class="profile"><span class="status">'+escape(status)+'</span><h2>'+escape(title)+
                    '</h2><p>'+escape(description)+'</p><a href="'+escape(href,quote=True)+'">'+escape(label)+
                    '</a></article>' for title,status,description,href,label in profiles]
-    return authored[0]+_piper_recovery_card(piper_recovery_report,source_commit)+_piper_contact_card(piper_contact_report,source_commit)+_piper_task_card(piper_task_report,source_commit)+_piper_grip_card(piper_grip_report,source_commit)+''.join(recorded)+''.join(authored[1:])
+    return authored[0]+''.join(_piper_reliability_card(identity,report,source_commit) for identity,report in piper_reliability_reports)+_piper_recovery_card(piper_recovery_report,source_commit)+_piper_contact_card(piper_contact_report,source_commit)+_piper_task_card(piper_task_report,source_commit)+_piper_grip_card(piper_grip_report,source_commit)+''.join(recorded)+''.join(authored[1:])
 
 
 def stage(replay,output,*,source_commit=None,expected_remote_commit=None,profile_benchmarks=None,
-          remove_starter_stylesheet=None,piper_task_benchmark=None,piper_grip_benchmark=None,piper_contact_benchmark=None,piper_recovery_benchmark=None):
+          remove_starter_stylesheet=None,piper_task_benchmark=None,piper_grip_benchmark=None,piper_contact_benchmark=None,piper_recovery_benchmark=None,piper_reliability_benchmarks=None):
+    if piper_reliability_benchmarks is not None and (type(piper_reliability_benchmarks) is not list or len(piper_reliability_benchmarks)>publisher.MAX_RELIABILITY_COHORTS):
+        raise ValueError('Supply at most three explicit reliability benchmark directories.')
     replay_files,report,motion = _sealed_replay(replay)
     if profile_benchmarks is not None and (type(profile_benchmarks) is not list or len(profile_benchmarks)>2):
         raise ValueError('Supply at most two explicit native profile benchmark directories.')
@@ -692,6 +758,25 @@ def stage(replay,output,*,source_commit=None,expected_remote_commit=None,profile
             'canonical_attempt_storage':'Deterministic single-member gzip JSON; original stored and decoded SHA-256/byte sizes retained in source seal',
             'byte_preservation':'Complete original protocol, report, eighty-four canonical attempt files, integrity and MIT notices retained under tasks/piper-recovery-v04/',
             **sizes}
+    piper_reliability_reports = []
+    for directory in piper_reliability_benchmarks or []:
+        identity,reliability_files,reliability_report,sizes = _sealed_piper_reliability(directory)
+        namespace='piper-reliability-v05/'+identity
+        if namespace in task_records:
+            raise ValueError('Reliability cohorts must have distinct cohort/seed identities.')
+        payload.update({'tasks/'+namespace+'/'+name:raw for name,raw in reliability_files.items()})
+        piper_reliability_reports.append((identity,reliability_report))
+        task_records[namespace]={'profile':reliability_report['profile'],
+            'source_integrity':_record(reliability_files['integrity.json']),
+            'source_report':_record(reliability_files['report.json']),'source_protocol':_record(reliability_files['protocol.json']),
+            'cohort':reliability_report['cohort'],'seed':reliability_report['protocol']['seed'],
+            'attempt_ids':[row['id'] for row in reliability_report['attempts']],
+            'attempted':reliability_report['attempted'],'valid_attempts':reliability_report['valid_attempts'],
+            'summary':reliability_report['summary'],'paired_comparisons':reliability_report['paired_comparisons'],
+            'quality_gates':reliability_report['quality_gates'],
+            'native_command_units':['rad']*6+['m'],'physical_robot_ready':False,'learned_policy':False,'scope':reliability_report['scope'],
+            'canonical_attempt_storage':'Original deterministic single-member gzip JSON and stored/decoded seals',
+            'byte_preservation':'Every original protocol, report, canonical attempt, integrity and model notice retained under tasks/'+namespace+'/', **sizes}
     readme = publisher._bytes(HERE/'templates/README.md',1024*1024).decode()
     index = publisher._bytes(HERE/'templates/index.html',1024*1024).decode()
     profile_summary = ('No separate unloaded numerical profile bundles are included in this payload.'
@@ -741,8 +826,14 @@ def stage(replay,output,*,source_commit=None,expected_remote_commit=None,profile
         '/docs/piper-contact-recovery-v04.md). [Full comparison](tasks/piper-recovery-v04/report.html) · '
         '[Every outcome](tasks/piper-recovery-v04/report.json) · [Original protocol](tasks/piper-recovery-v04/protocol.json) · '
         '[Stored and decoded hashes](tasks/piper-recovery-v04/integrity.json).\n')
+    reliability_summary='\n\n'.join('## PiPER reliability v0.5 — '+identity+'\n\n'+_reliability_summary(item)+
+        '\n\n[Complete comparison](tasks/piper-reliability-v05/'+identity+'/report.html) · '
+        '[Original seal](tasks/piper-reliability-v05/'+identity+'/integrity.json). '
+        'Download this entire cohort directory to retain all attempts and original notices.'
+        for identity,item in piper_reliability_reports)
+    readme = readme.replace('{{PIPER_RELIABILITY_SUMMARY}}',reliability_summary)
     readme = readme.replace('{{BENCHMARK_SUMMARY}}',_summary(report)).replace('{{PROFILE_SUMMARY}}',profile_summary).replace('{{PIPER_TASK_SUMMARY}}',piper_summary).replace('{{PIPER_GRIP_SUMMARY}}',grip_summary).replace('{{PIPER_CONTACT_SUMMARY}}',contact_summary).replace('{{PIPER_RECOVERY_SUMMARY}}',recovery_summary).replace('{{SOURCE_COMMIT}}',source_commit)
-    index = index.replace('{{BENCHMARK_SUMMARY}}',_summary(report,html=True)).replace('{{PROFILE_CARDS}}',_profile_cards(profile_reports,source_commit,piper_task_report,piper_grip_report,piper_contact_report,piper_recovery_report)).replace('{{SOURCE_COMMIT}}',source_commit)
+    index = index.replace('{{BENCHMARK_SUMMARY}}',_summary(report,html=True)).replace('{{PROFILE_CARDS}}',_profile_cards(profile_reports,source_commit,piper_task_report,piper_grip_report,piper_contact_report,piper_recovery_report,piper_reliability_reports)).replace('{{SOURCE_COMMIT}}',source_commit)
     if '{{' in readme or '{{' in index:
         raise ValueError('Space template contains an unresolved publication placeholder.')
     payload.update({'README.md':readme.encode(),'index.html':index.encode(),'LICENSE':publisher._bytes(ROOT/'LICENSE',1024*1024)})
@@ -756,7 +847,7 @@ def stage(replay,output,*,source_commit=None,expected_remote_commit=None,profile
                   'byte_preservation':'Every original replay file, complete raw task attempt, integrity file and model notice is retained byte-for-byte under replay/',
                   'software_license':'MIT','native_model_licenses':{'UR5e':'BSD-3-Clause','Robotiq 2F-85':'BSD-2-Clause'},
                   'publication_byte_bounds':{'stored_payload_bytes':publisher.MAX_TOTAL_BYTES,'per_file_bytes':publisher.MAX_FILE_BYTES,
-                      'scope':'256 MiB stored Space cap; all supplied prior evidence and new attempts retained; bounded single-member decompression unchanged'},
+                      'scope':'512 MiB stored Space cap; up to three v0.5 cohorts; all supplied prior evidence and new attempts retained; bounded single-member decompression unchanged'},
                   'profile_benchmarks':profile_records,'contact_task_benchmarks':task_records,
                   'profile_gallery':'UR5e replay and explicitly supplied PiPER pilot have authored contact-task evidence; separate PiPER/SO-101 numerical bundles remain unloaded mechanics evidence; all remaining profiles stay upcoming'}
     provenance['native_model_licenses'].update({p['profile']['name']:p['profile']['simulation_asset_license'] for p in profile_reports})
@@ -768,6 +859,8 @@ def stage(replay,output,*,source_commit=None,expected_remote_commit=None,profile
         provenance['native_model_licenses']['PiPER contact memory v0.3']='MIT'
     if piper_recovery_report is not None:
         provenance['native_model_licenses']['PiPER grip recovery v0.4']='MIT'
+    if piper_reliability_reports:
+        provenance['native_model_licenses']['PiPER reliability v0.5']='MIT'
     payload['provenance.json'] = (json.dumps(provenance,indent=2)+'\n').encode()
     total = sum(len(raw) for raw in payload.values())
     if total > publisher.MAX_TOTAL_BYTES:
@@ -813,10 +906,12 @@ if __name__=='__main__':
     parser.add_argument('--piper-grip-benchmark',type=Path)
     parser.add_argument('--piper-contact-benchmark',type=Path)
     parser.add_argument('--piper-recovery-benchmark',type=Path)
+    parser.add_argument('--piper-reliability-benchmark',type=Path,action='append',default=[],
+                        help='Complete v0.5 sealed cohort; repeat at most three times with distinct cohort/seed identities')
     args = parser.parse_args()
     result = stage(args.replay,args.output,source_commit=args.source_commit,expected_remote_commit=args.expected_remote_commit,
                    profile_benchmarks=args.profile_benchmark,remove_starter_stylesheet=args.remove_starter_stylesheet,
                    piper_task_benchmark=args.piper_task_benchmark,piper_grip_benchmark=args.piper_grip_benchmark,
-                   piper_contact_benchmark=args.piper_contact_benchmark,piper_recovery_benchmark=args.piper_recovery_benchmark)
+                   piper_contact_benchmark=args.piper_contact_benchmark,piper_recovery_benchmark=args.piper_recovery_benchmark,piper_reliability_benchmarks=args.piper_reliability_benchmark)
     print(json.dumps({'repo_id':result['repository']['repo_id'],'files':len(result['repository']['files']),
                       'bytes':result['total_bytes'],'sdk':'static'},indent=2))

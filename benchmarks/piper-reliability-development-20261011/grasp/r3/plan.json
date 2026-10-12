@@ -1,0 +1,27 @@
+{
+  "purpose": "Development on already-published v0.4 scenes. Fixed tool-only world yaw candidates, original carry/initial approach. Only exact downward grasp target uses orientation-error clamp .20 rad; approach/carry/probe keeps original .05 rad. Read-through policy view preserves world config/model, native mechanics and scorer.",
+  "source_protocol_sha256": "8eb254792c10d6a475eabf50dac2ed572bd6c5b69da6db7b34abe53376cd8388",
+  "scene_ids": [
+    "friction080-mass040-layout00",
+    "friction080-mass040-layout01",
+    "friction055-mass060-layout00",
+    "friction055-mass060-layout01"
+  ],
+  "candidate_yaw_degrees": [
+    0,
+    -45
+  ],
+  "planned_attempts": 8,
+  "source_sha256": {
+    "piper_contact_recovery.py": "81058659b332f4d1233fb88d9e3d84fd935f5a9fe9d418b040a4a536b5291f6c",
+    "piper_task.py": "589d6e4a4466bbda92ec6617508b3e06b635c237d0229399e44e301300cdeef5",
+    "piper_grip_benchmark.py": "7ab72a8cbe77d4db96d3fa45087571e3e1d64f40fe92b6f37032936701f318e1",
+    "piper_contact_benchmark.py": "6ebd44c3704cda8679335f988df0dcc7817b3f8da314b7a4fe8b3939215728bb",
+    "piper_grip_guard.py": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb",
+    "piper_grasp_strategy.py": "c8aeefaa6cde484b8ecc9c54cdd100184054c2edb111d1b183863338ae4cde13",
+    "piper_task_benchmark.py": "d1294fac93bb42a26a654c6fd0950718e528cbf3cd96ffcd53118da0a1646776",
+    "piper_contact_memory.py": "f608d6647046f6fa02d8ad5e87fad10853837520a6a0fae2043c7ad260a06c4c",
+    "piper_reacquisition.py": "0072f29850e8f3651cead684abc5333b3d8d0112801d0d6a2abe480a1da1a5c4",
+    "piper_recovery_benchmark.py": "081ec18d90c91fe910c957ab3485444cfe2376ef7277be92823806c7c0e290bd"
+  }
+}

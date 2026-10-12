@@ -19,9 +19,10 @@ from publish import PublicationError, checked_remote, client, verified_downloads
 REPO_ID = 'Dvidia/robot-simulation-lab'
 KIND = 'dvidia.robot-simulation-lab-publication'
 MAX_FILE_BYTES = 32*1024*1024
-# v0.3 adds all 84 sealed contact-memory attempts while retaining prior evidence.
-# Only the complete stored payload cap increases; decoded/file bounds stay fixed.
-MAX_TOTAL_BYTES = 256*1024*1024
+# v0.5 retains every prior receipt and adds at most three complete cohorts.
+# Only the stored payload cap increases; decoded/per-file bounds stay fixed.
+MAX_TOTAL_BYTES = 512*1024*1024
+MAX_RELIABILITY_COHORTS = 3
 ALLOWED_SUFFIXES = {'.md', '.html', '.js', '.json', '.txt', '.png', '.bin', '.gz'}
 SHA = re.compile(r'(?:[a-f0-9]{40}|[a-f0-9]{64})')
 MAX_STARTER_STYLESHEET_BYTES = 64*1024
@@ -29,9 +30,11 @@ MAX_ATTEMPT_JSON_DEPTH = 64
 GRIP_ATTEMPT_PATH = re.compile(r'tasks/piper-grip/attempts/[a-z0-9][a-z0-9_.-]{0,159}\.json\.gz')
 CONTACT_ATTEMPT_PATH = re.compile(r'tasks/(?:piper-contact-v03|piper-recovery-v04)/attempts/[a-z0-9][a-z0-9_.-]{0,159}\.json\.gz')
 
+RELIABILITY_COHORT_PATH = re.compile(r'(?:development|confirmation)-(?:0|[1-9][0-9]{0,5})')
+RELIABILITY_ATTEMPT_PATH = re.compile(r'tasks/piper-reliability-v05/(?:development|confirmation)-(?:0|[1-9][0-9]{0,5})/attempts/[a-z0-9][a-z0-9_.-]{0,159}\.json\.gz')
 
 def _compressed_attempt(name):
-    return GRIP_ATTEMPT_PATH.fullmatch(name) or CONTACT_ATTEMPT_PATH.fullmatch(name)
+    return GRIP_ATTEMPT_PATH.fullmatch(name) or CONTACT_ATTEMPT_PATH.fullmatch(name) or RELIABILITY_ATTEMPT_PATH.fullmatch(name)
 
 
 def _plain(path):
@@ -55,6 +58,10 @@ def _artifact_name(name):
         relative = safe_relative(name)
     except ValueError as exc:
         raise PublicationError('Invalid Robot Simulation Lab artifact path.') from exc
+    if relative.parts[:2] == ('tasks','piper-reliability-v05'):
+        if (len(relative.parts)<4 or RELIABILITY_COHORT_PATH.fullmatch(relative.parts[2]) is None
+                or int(relative.parts[2].rsplit('-',1)[1])>999988):
+            raise PublicationError('Reliability evidence requires a bounded cohort and seed namespace.')
     if (any(p.startswith('.') for p in relative.parts)
             or (relative.suffix not in ALLOWED_SUFFIXES and relative.name != 'LICENSE')):
         raise PublicationError('Unexpected Robot Simulation Lab artifact type.')
@@ -170,6 +177,10 @@ def _checked_plan_bytes(path):
             actual.add(current.relative_to(base).as_posix())
     if actual != {f['path'] for f in files} or not {'README.md','index.html','LICENSE','provenance.json'} <= actual:
         raise PublicationError('Staged files differ from the complete reviewed inventory.')
+    cohorts={f['path'].split('/')[2] for f in files
+             if f['path'].startswith('tasks/piper-reliability-v05/') and len(f['path'].split('/'))>=4}
+    if len(cohorts)>MAX_RELIABILITY_COHORTS:
+        raise PublicationError('At most three complete reliability cohorts may be published.')
     total = 0
     for item in files:
         source = base/_artifact_name(item['path'])

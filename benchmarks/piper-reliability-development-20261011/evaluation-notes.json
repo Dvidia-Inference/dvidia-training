@@ -1,0 +1,454 @@
+{
+  "schema": "dvidia.piper-reliability-evaluation-notes/v0.5-draft",
+  "status": "proposed_before_candidate_selection_and_fresh_confirmation",
+  "plan": "docs/piper-reliability-v05-plan.md",
+  "basis": {
+    "report": "benchmarks/piper-recovery-v04-20261011/receipt/report.json",
+    "report_sha256": "899a05b44e9b76a597fb2683d433e445d84ae485ed95d15de463f3dab3173164",
+    "attempted": 84,
+    "valid_attempts": 84,
+    "comparison": [
+      {
+        "reference": "history",
+        "candidate": "recovery_carry",
+        "attempted_pairs": 12,
+        "common_successes": 4,
+        "gained_successes": 0,
+        "lost_successes": 0,
+        "neither_succeeded": 8,
+        "common_success_mean_delta_s": -1.2700000000015015,
+        "pairs": [
+          {
+            "scene_id": "friction080-mass040-layout00",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": true,
+            "candidate_success": true,
+            "completion_delta_s": 0.0,
+            "common_abort_delta_s": null
+          },
+          {
+            "scene_id": "friction080-mass040-layout01",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": true,
+            "candidate_success": true,
+            "completion_delta_s": 0.0,
+            "common_abort_delta_s": null
+          },
+          {
+            "scene_id": "friction080-mass060-layout00",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": 0.0
+          },
+          {
+            "scene_id": "friction080-mass060-layout01",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": 0.0
+          },
+          {
+            "scene_id": "friction055-mass040-layout00",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": true,
+            "candidate_success": true,
+            "completion_delta_s": -2.440000000002982,
+            "common_abort_delta_s": null
+          },
+          {
+            "scene_id": "friction055-mass040-layout01",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": true,
+            "candidate_success": true,
+            "completion_delta_s": -2.640000000003024,
+            "common_abort_delta_s": null
+          },
+          {
+            "scene_id": "friction055-mass060-layout00",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": 0.0
+          },
+          {
+            "scene_id": "friction055-mass060-layout01",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": 0.0
+          },
+          {
+            "scene_id": "friction015-mass040-layout00",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": 0.0
+          },
+          {
+            "scene_id": "friction015-mass040-layout01",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": 0.0
+          },
+          {
+            "scene_id": "friction015-mass060-layout00",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": 0.0
+          },
+          {
+            "scene_id": "friction015-mass060-layout01",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": 0.0
+          }
+        ]
+      },
+      {
+        "reference": "history",
+        "candidate": "recovery",
+        "attempted_pairs": 12,
+        "common_successes": 4,
+        "gained_successes": 0,
+        "lost_successes": 0,
+        "neither_succeeded": 8,
+        "common_success_mean_delta_s": -1.2700000000015015,
+        "pairs": [
+          {
+            "scene_id": "friction080-mass040-layout00",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": true,
+            "candidate_success": true,
+            "completion_delta_s": 0.0,
+            "common_abort_delta_s": null
+          },
+          {
+            "scene_id": "friction080-mass040-layout01",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": true,
+            "candidate_success": true,
+            "completion_delta_s": 0.0,
+            "common_abort_delta_s": null
+          },
+          {
+            "scene_id": "friction080-mass060-layout00",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": 0.0
+          },
+          {
+            "scene_id": "friction080-mass060-layout01",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": 0.0
+          },
+          {
+            "scene_id": "friction055-mass040-layout00",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": true,
+            "candidate_success": true,
+            "completion_delta_s": -2.440000000002982,
+            "common_abort_delta_s": null
+          },
+          {
+            "scene_id": "friction055-mass040-layout01",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": true,
+            "candidate_success": true,
+            "completion_delta_s": -2.640000000003024,
+            "common_abort_delta_s": null
+          },
+          {
+            "scene_id": "friction055-mass060-layout00",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": 0.0
+          },
+          {
+            "scene_id": "friction055-mass060-layout01",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": 0.0
+          },
+          {
+            "scene_id": "friction015-mass040-layout00",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": -2.8999999999983928
+          },
+          {
+            "scene_id": "friction015-mass040-layout01",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": -2.8999999999983928
+          },
+          {
+            "scene_id": "friction015-mass060-layout00",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": -2.879999999998404
+          },
+          {
+            "scene_id": "friction015-mass060-layout01",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": -2.8999999999983928
+          }
+        ]
+      },
+      {
+        "reference": "recovery_carry",
+        "candidate": "recovery",
+        "attempted_pairs": 12,
+        "common_successes": 4,
+        "gained_successes": 0,
+        "lost_successes": 0,
+        "neither_succeeded": 8,
+        "common_success_mean_delta_s": 0.0,
+        "pairs": [
+          {
+            "scene_id": "friction080-mass040-layout00",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": true,
+            "candidate_success": true,
+            "completion_delta_s": 0.0,
+            "common_abort_delta_s": null
+          },
+          {
+            "scene_id": "friction080-mass040-layout01",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": true,
+            "candidate_success": true,
+            "completion_delta_s": 0.0,
+            "common_abort_delta_s": null
+          },
+          {
+            "scene_id": "friction080-mass060-layout00",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": 0.0
+          },
+          {
+            "scene_id": "friction080-mass060-layout01",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": 0.0
+          },
+          {
+            "scene_id": "friction055-mass040-layout00",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": true,
+            "candidate_success": true,
+            "completion_delta_s": 0.0,
+            "common_abort_delta_s": null
+          },
+          {
+            "scene_id": "friction055-mass040-layout01",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": true,
+            "candidate_success": true,
+            "completion_delta_s": 0.0,
+            "common_abort_delta_s": null
+          },
+          {
+            "scene_id": "friction055-mass060-layout00",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": 0.0
+          },
+          {
+            "scene_id": "friction055-mass060-layout01",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": 0.0
+          },
+          {
+            "scene_id": "friction015-mass040-layout00",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": -2.8999999999983928
+          },
+          {
+            "scene_id": "friction015-mass040-layout01",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": -2.8999999999983928
+          },
+          {
+            "scene_id": "friction015-mass060-layout00",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": -2.879999999998404
+          },
+          {
+            "scene_id": "friction015-mass060-layout01",
+            "reference_valid": true,
+            "candidate_valid": true,
+            "reference_success": false,
+            "candidate_success": false,
+            "completion_delta_s": null,
+            "common_abort_delta_s": -2.8999999999983928
+          }
+        ]
+      }
+    ]
+  },
+  "development_seeds": [
+    813407,
+    941827
+  ],
+  "fresh_seeds": null,
+  "fresh_seed_owner": "release_owner_reserves_independently_after_runtime_freeze",
+  "primary_reference": "frozen_v04_recovery",
+  "primary_measure": "full_valid_placement_completions_per_planned_placement_and_matched_gained_lost_counts",
+  "recommended_modes_if_two_changes_selected": [
+    "v04_reference",
+    "carry_only_candidate",
+    "full_candidate"
+  ],
+  "controls": "own_complete_open_jaw_arm_tape_per_mode_plus_common_hold",
+  "nominal_cohort": {
+    "scenes": 12,
+    "shared_layouts": 2,
+    "frictions": [
+      0.8,
+      0.55,
+      0.15
+    ],
+    "masses_kg": [
+      0.04,
+      0.06
+    ],
+    "variants_if_three_modes": 7,
+    "attempts_if_three_modes": 84,
+    "preferred_independent_cohort_count": 3,
+    "tuning_between_confirmation_cohorts": false
+  },
+  "claim_gates": {
+    "gained_full_completions_min": 1,
+    "lost_reference_completions_max": 0,
+    "lost_known_successes_max": 0,
+    "negative_control_successes_max": 0,
+    "invalid_native_attempts_max": 0,
+    "solver_warnings_max": 0,
+    "prohibited_native_contact_ticks_max": 0,
+    "unchanged_model_and_scorer": true
+  },
+  "metrics": [
+    "full_success_by_stratum",
+    "matched_gained_lost_neither",
+    "common_success_completion_delta",
+    "new_success_completion_times",
+    "full_lift_and_retention",
+    "probe_budget_and_actual_motion",
+    "held_intervals_including_unresolved",
+    "actual_sampled_tcp_object_speed",
+    "native_prohibited_contact_ticks",
+    "peak_pad_force_and_actuator_trace",
+    "raw_compute_p50_p95_p99_max",
+    "compute_20ms_overrun_count_and_fraction",
+    "wall_throughput",
+    "rss_with_scope"
+  ],
+  "implementation_reuse": [
+    "piper_task.run_episode",
+    "piper_task_benchmark._episode",
+    "piper_grip_benchmark.decode_attempt",
+    "piper_recovery_benchmark._timing_samples",
+    "piper_recovery_benchmark._completion_timestamp",
+    "piper_contact_benchmark._motion_window"
+  ],
+  "pitfalls": [
+    "No repeat of an unchanged supported grasp can be assumed to increase pinch force.",
+    "New stable-low probe must re-earn old resume gate; no silently lowered height.",
+    "No unsupported opening/regrasp.",
+    "New probe budget consumes original 20 seconds.",
+    "Old inspector hardcodes protocol counts and modes; no global monkeypatch.",
+    "A compatibility view must not erase unverified new native movement.",
+    "Distinct scene strata share layouts and are not IID trials.",
+    "Privileged state and compute timing do not establish sensor latency or hardware safety."
+  ],
+  "disturbance_scope": {
+    "current": "causal_sequence_and_layout_regressions_only",
+    "next_native_extension": "preregistered_matched_bounded_horizontal_force_pulse_during_lifted_carry",
+    "current_native_external_force_support_established": false,
+    "pool_with_nominal_results": false
+  }
+}

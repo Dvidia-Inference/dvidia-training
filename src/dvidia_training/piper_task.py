@@ -399,17 +399,21 @@ class PiperTaskPolicy:
         return self.env.pose_action(goal.tolist(), orientation, jaw)
 
 
-def run_episode(assets, config=None, *, seed=0, control='placement', arm_tape=None, policy_mode='baseline', record_step_timings=False):
+def run_episode(assets, config=None, *, seed=0, control='placement', arm_tape=None, policy_mode='baseline', record_step_timings=False, record_policy_inputs=False):
     config = _config(config)
     if type(record_step_timings) is not bool:
         raise ValueError('record_step_timings must be a boolean')
+    if type(record_policy_inputs) is not bool:
+        raise ValueError('record_policy_inputs must be a boolean')
     if control not in ('placement', 'replay_open_jaw', 'hold'):
         raise ValueError('Unknown PiPER task control')
-    if policy_mode not in ('baseline', 'guarded', 'probe_only', 'history', 'recovery_carry', 'recovery'):
+    if policy_mode not in ('baseline', 'guarded', 'probe_only', 'history', 'recovery_carry', 'recovery', 'reacquire', 'reacquire_grasp'):
         raise ValueError('Unknown PiPER policy mode')
     from . import piper_grip_guard as grip_guard
     from . import piper_contact_memory as contact_memory
     from . import piper_contact_recovery as contact_recovery
+    from . import piper_reacquisition as reacquisition
+    from . import piper_grasp_strategy as grasp_strategy
     started, latencies, environment, phase = time.perf_counter(), [], None, 'validation'
     result = {'schema': SCHEMA, 'profile': PROFILE, 'scope': SCOPE, 'physical_robot_ready': False,
               'seed': seed, 'control': control, 'policy_mode': policy_mode, 'config': asdict(config), 'timestep_seconds': config.timestep,
@@ -420,13 +424,21 @@ def run_episode(assets, config=None, *, seed=0, control='placement', arm_tape=No
     result['implementation_sha256'] = {name: sha256((source/name).read_bytes()).hexdigest()
                                        for name in ('piper_task.py', 'robot_profiles.py', 'robot_profiles.lock.json', 'reference_task.py', 'reference_sim.py')}
     result['policy_implementation_sha256'] = {'piper_grip_guard.py': sha256((source/'piper_grip_guard.py').read_bytes()).hexdigest()}
-    recovery_mode = policy_mode in contact_recovery.MODES
+    reacquisition_mode = policy_mode in ('reacquire', 'reacquire_grasp')
+    grasp_mode = policy_mode == 'reacquire_grasp'
+    recovery_mode = policy_mode in contact_recovery.MODES or reacquisition_mode
     memory_mode = policy_mode in ('probe_only', 'history') or recovery_mode
     if memory_mode:
         result['policy_implementation_sha256']['piper_contact_memory.py'] = sha256((source/'piper_contact_memory.py').read_bytes()).hexdigest()
     if recovery_mode:
         result['policy_implementation_sha256']['piper_contact_recovery.py'] = sha256((source/'piper_contact_recovery.py').read_bytes()).hexdigest()
-    result['grip_guard'] = (contact_recovery.inactive_summary(policy_mode) if recovery_mode else
+    if reacquisition_mode:
+        result['policy_implementation_sha256']['piper_reacquisition.py'] = sha256((source/'piper_reacquisition.py').read_bytes()).hexdigest()
+    if grasp_mode:
+        result['policy_implementation_sha256']['piper_grasp_strategy.py'] = sha256((source/'piper_grasp_strategy.py').read_bytes()).hexdigest()
+    result['grip_guard'] = (grasp_strategy.inactive_summary(policy_mode) if grasp_mode else
+                           reacquisition.inactive_summary(policy_mode) if reacquisition_mode else
+                           contact_recovery.inactive_summary(policy_mode) if recovery_mode else
                            contact_memory.inactive_summary(policy_mode) if memory_mode else grip_guard.inactive_summary(policy_mode))
     policy = None
     try:
@@ -438,6 +450,8 @@ def run_episode(assets, config=None, *, seed=0, control='placement', arm_tape=No
         result['asset_provenance'] = robot_profiles.verify_assets('piper', _asset_root(assets))
         environment = PiperTaskEnv(assets, config)
         observation, info = environment.reset(seed)
+        if record_policy_inputs:
+            observation['native_lift_seen'] = bool(environment.lift_seen)
         mj, np = sim._native_imports()
         result['platform'].update(mujoco_version=mj.__version__, numpy_version=np.__version__)
         result['compiled_model_sha256'] = sim.model_digest(environment.model)
@@ -453,7 +467,9 @@ def run_episode(assets, config=None, *, seed=0, control='placement', arm_tape=No
                                       'geom_body_names': [mj.mj_id2name(environment.model, mj.mjtObj.mjOBJ_BODY, int(body)) for body in environment.model.geom_bodyid]}
         result['trajectory'].append(observation)
         result['timing']['setup_seconds'] = time.perf_counter()-started
-        policy = (contact_recovery.ContactRecoveryPiperTaskPolicy(environment, policy_mode) if recovery_mode and control == 'placement'
+        policy = (grasp_strategy.GraspReacquisitionPiperTaskPolicy(environment, policy_mode) if grasp_mode and control == 'placement'
+                  else reacquisition.ReacquisitionPiperTaskPolicy(environment, policy_mode) if reacquisition_mode and control == 'placement'
+                  else contact_recovery.ContactRecoveryPiperTaskPolicy(environment, policy_mode) if recovery_mode and control == 'placement'
                   else contact_memory.ContactMemoryPiperTaskPolicy(environment, policy_mode) if memory_mode and control == 'placement'
                   else grip_guard.GuardedPiperTaskPolicy(environment) if policy_mode == 'guarded' and control == 'placement'
                   else PiperTaskPolicy(environment))
@@ -470,6 +486,8 @@ def run_episode(assets, config=None, *, seed=0, control='placement', arm_tape=No
             observation, info = environment.step(action)
             latencies.append(time.perf_counter()-began)
             if observation is not None:
+                if record_policy_inputs:
+                    observation['native_lift_seen'] = bool(environment.lift_seen)
                 if isinstance(policy, grip_guard.GuardedPiperTaskPolicy):
                     observation['guard_diagnostic'] = None
                 result['trajectory'].append(observation)

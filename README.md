@@ -23,6 +23,12 @@ unloaded mechanics; learned policies and physical qualification remain open. The
 [Robot Simulation Lab](https://huggingface.co/spaces/Dvidia/robot-simulation-lab)
 publishes recorded evidence and local run instructions.
 
+The [asset-library roadmap](docs/robot-simulation-library.md#reusable-asset-library-planned-product-layer)
+extends this toward reusable objects, environments, grippers and sensor profiles,
+starting with a shoe-organization collection. Packages will distinguish measured,
+estimated and untested physical properties and link to compatible skill benchmarks.
+The object catalog and installation interface are planned work.
+
 The [PiPER grip-recovery candidate](docs/piper-grip-recovery.md) adds a short
 test lift before carrying, one supported recovery attempt, and a paired
 benchmark against the original controller. It uses current simulator state;
@@ -44,6 +50,15 @@ Two resumed placements finish 2.44–2.64 simulated seconds sooner, and four fai
 grasps are refused 2.88–2.90 seconds sooner. No completion is gained or lost.
 Eight failures per mode remain visible, including two held blocks that never
 satisfy the unchanged resume gate.
+
+The [reliability v0.5 study](docs/piper-reliability-v05.md) adds a bounded second
+lift and a fixed alternate-grasp planner. Three frozen fresh cohorts complete
+**15/36 placements with v0.4, 18/36 with second-lift recovery, and 23/36 with the
+revised grasp**, with no lost baseline successes and all 144 negative controls
+failing. All 252 attempts are retained in the [complete evidence](benchmarks/piper-reliability-v05-20261012/README.md).
+The revised grasp takes about 0.77 simulated seconds longer on shared successes;
+thirteen failures remain. Loaded-host computation delays are reported, with no
+physical real-time claim. This remains authored simulation, not a learned skill.
 
 Train a small visual model from Skillspace footage on your own computer or server. The pipeline checks actual videos and source groups, fixes training/development/test splits, fits weights on a CPU, and exports a result with held-out measurements and integrity hashes.
 

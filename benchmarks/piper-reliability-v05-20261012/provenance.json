@@ -1,0 +1,41 @@
+{
+  "schema": "dvidia.piper-reliability-publication/v0.5",
+  "complete_bundles": true,
+  "source_commit": "e76b2e41256604d5b4314e45ca45959cab9aa571",
+  "cohorts": [
+    832847,
+    227037,
+    862186
+  ],
+  "confirmation_attempts": 252,
+  "analysis_sha256": "3c00cd84876f8fe2f2d54a639ebcb12430468675379674859b11cb8f3bdef21c",
+  "installed_runtime_sha256": "52c9deee54df85fd96cb2b0e14963555701e594aa3ab8dcc12e17a35cfc93b7f",
+  "development_appendix": "https://github.com/Dvidia-Inference/dvidia-training/tree/e76b2e41256604d5b4314e45ca45959cab9aa571/benchmarks/piper-reliability-development-20261011",
+  "cohort_evidence": [
+    {
+      "seed": 832847,
+      "report_sha256": "fada95d16e09c7458c7ef96b1edeb9075c360716c08007b9d5ce558a44d0216f",
+      "seal_sha256": "585fa82bd4f77401d1278cf3698d0f4a6f4157051d961c378094f83fa99c378d",
+      "execution_sha256": "f17a605c0d71c7b637cb3cc65c609737a5fcd5e210ec6049b6cdb93fc02d545c",
+      "stored_bytes_including_seal": 59469572
+    },
+    {
+      "seed": 227037,
+      "report_sha256": "525ec1f9b87fae472463df58e6b9c7d1976dba73e4ba729f02c53dd73ef0df18",
+      "seal_sha256": "c74db518aa5fb718facd31ce31922ea9eb4427d339d4719a1d88d46bf2205154",
+      "execution_sha256": "e8c171d8de736ce221f37cc1b04baa4c402a39bf6c0baf14c3252e988d817bd5",
+      "stored_bytes_including_seal": 59893039
+    },
+    {
+      "seed": 862186,
+      "report_sha256": "665b11c4cb35fa200823ad97052bd768b0a72bdc5e2fa05321265a852b80a1f7",
+      "seal_sha256": "0bbee894ea762b10b37072d44e0cd82eccc93cad887d7004f88c8cff72de2e4f",
+      "execution_sha256": "d77254eb98825a8a484ce020019e4259c958bca03816ffb054a19cfa4fc1a1ac",
+      "stored_bytes_including_seal": 59573010
+    }
+  ],
+  "huggingface_publication": "huggingface-publication.json",
+  "publication_source_commit": "0545ac47aedcd7c197341986533aa3e74c263ac6",
+  "huggingface_commit": "d10b2c8a3b2484600585c16f897befc1ff0374b0",
+  "huggingface_verified_files": 563
+}

@@ -1,0 +1,1114 @@
+{
+  "scope": "Development only, including failed orientation/IK alternatives. r6 selected on already-published seed941827 scenes; r7 frozen-parameter regression on historical813407. Not independent fresh confirmation. No parameters tuned after r7. Prior scenes may not be called unseen.",
+  "rounds": [
+    {
+      "round": "r0",
+      "attempts": 12,
+      "valid": 12,
+      "successes": 2,
+      "prohibited_contact_attempts": 0,
+      "warning_attempts": 0,
+      "planned_attempts": 12
+    },
+    {
+      "round": "r1",
+      "attempts": 8,
+      "valid": 8,
+      "successes": 0,
+      "prohibited_contact_attempts": 0,
+      "warning_attempts": 0,
+      "planned_attempts": 12
+    },
+    {
+      "round": "r2",
+      "attempts": 8,
+      "valid": 8,
+      "successes": 0,
+      "prohibited_contact_attempts": 8,
+      "warning_attempts": 0,
+      "planned_attempts": 8
+    },
+    {
+      "round": "r3",
+      "attempts": 8,
+      "valid": 8,
+      "successes": 0,
+      "prohibited_contact_attempts": 6,
+      "warning_attempts": 0,
+      "planned_attempts": 8
+    },
+    {
+      "round": "r4",
+      "attempts": 8,
+      "valid": 8,
+      "successes": 5,
+      "prohibited_contact_attempts": 0,
+      "warning_attempts": 0,
+      "planned_attempts": 8
+    },
+    {
+      "round": "r5",
+      "attempts": 8,
+      "valid": 8,
+      "successes": 2,
+      "prohibited_contact_attempts": 0,
+      "warning_attempts": 0,
+      "planned_attempts": 8
+    },
+    {
+      "round": "r6",
+      "attempts": 12,
+      "valid": 12,
+      "successes": 7,
+      "prohibited_contact_attempts": 0,
+      "warning_attempts": 0,
+      "planned_attempts": 12
+    },
+    {
+      "round": "r7",
+      "attempts": 12,
+      "valid": 12,
+      "successes": 8,
+      "prohibited_contact_attempts": 0,
+      "warning_attempts": 0,
+      "planned_attempts": 12
+    }
+  ],
+  "attempts": 76,
+  "valid": 76,
+  "successes": 24,
+  "comparisons": [
+    {
+      "round": "r6",
+      "scenes": [
+        {
+          "scene_id": "friction080-mass040-layout00",
+          "baseline_success": true,
+          "candidate_success": true,
+          "gained": false,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": 15.650999999996765,
+          "candidate_completion_s": 16.65999999999738,
+          "paired_success_completion_delta_s": 1.0090000000006132,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": null,
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.359999999999143,
+              "mean_single_jaw_position_m": 0.019661239016155508,
+              "mean_sum_pad_normal_force_n": 0.6805720586542587,
+              "mean_min_pad_normal_force_n": 0.305148863789504
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.5199999999985,
+              "mean_single_jaw_position_m": 0.027673369006370206,
+              "mean_sum_pad_normal_force_n": 1.0010625632692798,
+              "mean_min_pad_normal_force_n": 0.486043365701325
+            }
+          ]
+        },
+        {
+          "scene_id": "friction080-mass040-layout01",
+          "baseline_success": true,
+          "candidate_success": true,
+          "gained": false,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": 15.472999999996864,
+          "candidate_completion_s": 16.541999999997234,
+          "paired_success_completion_delta_s": 1.0690000000003703,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": null,
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.139999999999265,
+              "mean_single_jaw_position_m": 0.01966661800560246,
+              "mean_sum_pad_normal_force_n": 0.6801440152668079,
+              "mean_min_pad_normal_force_n": 0.2936512457766828
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.379999999998578,
+              "mean_single_jaw_position_m": 0.027667912760522384,
+              "mean_sum_pad_normal_force_n": 1.001242384088762,
+              "mean_min_pad_normal_force_n": 0.47968042601237765
+            }
+          ]
+        },
+        {
+          "scene_id": "friction080-mass060-layout00",
+          "baseline_success": false,
+          "candidate_success": true,
+          "gained": true,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": null,
+          "candidate_completion_s": 16.681999999997405,
+          "paired_success_completion_delta_s": null,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": null,
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.359999999999143,
+              "mean_single_jaw_position_m": 0.01968525310505425,
+              "mean_sum_pad_normal_force_n": 0.68184351783524,
+              "mean_min_pad_normal_force_n": 0.30232648015826635
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.5199999999985,
+              "mean_single_jaw_position_m": 0.027728856078399818,
+              "mean_sum_pad_normal_force_n": 1.0042885222516345,
+              "mean_min_pad_normal_force_n": 0.48174436105452634
+            }
+          ]
+        },
+        {
+          "scene_id": "friction080-mass060-layout01",
+          "baseline_success": false,
+          "candidate_success": true,
+          "gained": true,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": null,
+          "candidate_completion_s": 16.56199999999726,
+          "paired_success_completion_delta_s": null,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": null,
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.139999999999265,
+              "mean_single_jaw_position_m": 0.019683537359435035,
+              "mean_sum_pad_normal_force_n": 0.6823165952367103,
+              "mean_min_pad_normal_force_n": 0.2930721416642478
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.379999999998578,
+              "mean_single_jaw_position_m": 0.027723687160590507,
+              "mean_sum_pad_normal_force_n": 1.0042137516850276,
+              "mean_min_pad_normal_force_n": 0.49857232801935775
+            }
+          ]
+        },
+        {
+          "scene_id": "friction055-mass040-layout00",
+          "baseline_success": true,
+          "candidate_success": true,
+          "gained": false,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": 16.027999999996606,
+          "candidate_completion_s": 16.658999999997377,
+          "paired_success_completion_delta_s": 0.6310000000007712,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": null,
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.359999999999143,
+              "mean_single_jaw_position_m": 0.01966320760711112,
+              "mean_sum_pad_normal_force_n": 0.683573798106805,
+              "mean_min_pad_normal_force_n": 0.3110530320370986
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.5199999999985,
+              "mean_single_jaw_position_m": 0.027665247232467004,
+              "mean_sum_pad_normal_force_n": 1.0022611657092797,
+              "mean_min_pad_normal_force_n": 0.46212651414009237
+            }
+          ]
+        },
+        {
+          "scene_id": "friction055-mass040-layout01",
+          "baseline_success": true,
+          "candidate_success": true,
+          "gained": false,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": 15.885999999996635,
+          "candidate_completion_s": 16.540999999997233,
+          "paired_success_completion_delta_s": 0.655000000000598,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": null,
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.139999999999265,
+              "mean_single_jaw_position_m": 0.019666825848691886,
+              "mean_sum_pad_normal_force_n": 0.6832345877149293,
+              "mean_min_pad_normal_force_n": 0.30854339233258904
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.379999999998578,
+              "mean_single_jaw_position_m": 0.027664257093928748,
+              "mean_sum_pad_normal_force_n": 1.0023746508835174,
+              "mean_min_pad_normal_force_n": 0.46092786342587677
+            }
+          ]
+        },
+        {
+          "scene_id": "friction055-mass060-layout00",
+          "baseline_success": false,
+          "candidate_success": true,
+          "gained": true,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": null,
+          "candidate_completion_s": 17.162999999997993,
+          "paired_success_completion_delta_s": null,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": null,
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.359999999999143,
+              "mean_single_jaw_position_m": 0.019675002552813133,
+              "mean_sum_pad_normal_force_n": 0.6836041787255314,
+              "mean_min_pad_normal_force_n": 0.31104422040732776
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.5199999999985,
+              "mean_single_jaw_position_m": 0.027721502944546526,
+              "mean_sum_pad_normal_force_n": 1.0039560876880056,
+              "mean_min_pad_normal_force_n": 0.4778103878837336
+            }
+          ]
+        },
+        {
+          "scene_id": "friction055-mass060-layout01",
+          "baseline_success": false,
+          "candidate_success": false,
+          "gained": false,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": null,
+          "candidate_completion_s": null,
+          "paired_success_completion_delta_s": null,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": "reassessment_timeout_unsettled_or_unknown",
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.139999999999265,
+              "mean_single_jaw_position_m": 0.019679672121601096,
+              "mean_sum_pad_normal_force_n": 0.6840083260185361,
+              "mean_min_pad_normal_force_n": 0.301360082460112
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.379999999998578,
+              "mean_single_jaw_position_m": 0.027718089111131182,
+              "mean_sum_pad_normal_force_n": 1.0038247594948595,
+              "mean_min_pad_normal_force_n": 0.4723189557869534
+            }
+          ]
+        },
+        {
+          "scene_id": "friction015-mass040-layout00",
+          "baseline_success": false,
+          "candidate_success": false,
+          "gained": false,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": null,
+          "candidate_completion_s": null,
+          "paired_success_completion_delta_s": null,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": "unchanged_grasp_not_following",
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.359999999999143,
+              "mean_single_jaw_position_m": 0.01965666920474573,
+              "mean_sum_pad_normal_force_n": 0.6826714979368552,
+              "mean_min_pad_normal_force_n": 0.3306617667333569
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.5199999999985,
+              "mean_single_jaw_position_m": 0.02767837459709828,
+              "mean_sum_pad_normal_force_n": 1.0029421788181563,
+              "mean_min_pad_normal_force_n": 0.48615571976018107
+            }
+          ]
+        },
+        {
+          "scene_id": "friction015-mass040-layout01",
+          "baseline_success": false,
+          "candidate_success": false,
+          "gained": false,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": null,
+          "candidate_completion_s": null,
+          "paired_success_completion_delta_s": null,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": "unchanged_grasp_not_following",
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.139999999999265,
+              "mean_single_jaw_position_m": 0.019656533720455567,
+              "mean_sum_pad_normal_force_n": 0.6826732641605688,
+              "mean_min_pad_normal_force_n": 0.33091406081195057
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.379999999998578,
+              "mean_single_jaw_position_m": 0.027675098848959155,
+              "mean_sum_pad_normal_force_n": 1.0050095784313604,
+              "mean_min_pad_normal_force_n": 0.4895383274356353
+            }
+          ]
+        },
+        {
+          "scene_id": "friction015-mass060-layout00",
+          "baseline_success": false,
+          "candidate_success": false,
+          "gained": false,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": null,
+          "candidate_completion_s": null,
+          "paired_success_completion_delta_s": null,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": "unchanged_grasp_not_following",
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.359999999999143,
+              "mean_single_jaw_position_m": 0.019678070476779202,
+              "mean_sum_pad_normal_force_n": 0.6834381194122373,
+              "mean_min_pad_normal_force_n": 0.32139929681395196
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.5199999999985,
+              "mean_single_jaw_position_m": 0.02772020388952971,
+              "mean_sum_pad_normal_force_n": 1.0050879828393535,
+              "mean_min_pad_normal_force_n": 0.4764482321043954
+            }
+          ]
+        },
+        {
+          "scene_id": "friction015-mass060-layout01",
+          "baseline_success": false,
+          "candidate_success": false,
+          "gained": false,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": null,
+          "candidate_completion_s": null,
+          "paired_success_completion_delta_s": null,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": "unchanged_grasp_not_following",
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.139999999999265,
+              "mean_single_jaw_position_m": 0.019677942648099203,
+              "mean_sum_pad_normal_force_n": 0.6834336594258204,
+              "mean_min_pad_normal_force_n": 0.32169520915494143
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.379999999998578,
+              "mean_single_jaw_position_m": 0.027719219327790857,
+              "mean_sum_pad_normal_force_n": 1.0049699515479351,
+              "mean_min_pad_normal_force_n": 0.4752116289442487
+            }
+          ]
+        }
+      ],
+      "baseline_successes": 4,
+      "candidate_successes": 7,
+      "gains": 3,
+      "losses": 0,
+      "all_world_and_initial_state_fields_equal": true,
+      "mean_common_success_delta_s": 0.8410000000005882
+    },
+    {
+      "round": "r7",
+      "scenes": [
+        {
+          "scene_id": "friction080-mass040-layout00",
+          "baseline_success": true,
+          "candidate_success": true,
+          "gained": false,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": 15.470999999996865,
+          "candidate_completion_s": 16.500999999997184,
+          "paired_success_completion_delta_s": 1.030000000000319,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": null,
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.179999999999243,
+              "mean_single_jaw_position_m": 0.01966562253300229,
+              "mean_sum_pad_normal_force_n": 0.6796220989549179,
+              "mean_min_pad_normal_force_n": 0.29654594439307763
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.399999999998567,
+              "mean_single_jaw_position_m": 0.027665246734167613,
+              "mean_sum_pad_normal_force_n": 1.001826437410754,
+              "mean_min_pad_normal_force_n": 0.46419174323525864
+            }
+          ]
+        },
+        {
+          "scene_id": "friction080-mass040-layout01",
+          "baseline_success": true,
+          "candidate_success": true,
+          "gained": false,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": 15.450999999996876,
+          "candidate_completion_s": 16.500999999997184,
+          "paired_success_completion_delta_s": 1.050000000000308,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": null,
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.159999999999254,
+              "mean_single_jaw_position_m": 0.01966607707639294,
+              "mean_sum_pad_normal_force_n": 0.680171898484762,
+              "mean_min_pad_normal_force_n": 0.2947729239946109
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.399999999998567,
+              "mean_single_jaw_position_m": 0.027663147596358406,
+              "mean_sum_pad_normal_force_n": 1.00181285201922,
+              "mean_min_pad_normal_force_n": 0.4596149758015027
+            }
+          ]
+        },
+        {
+          "scene_id": "friction080-mass060-layout00",
+          "baseline_success": true,
+          "candidate_success": true,
+          "gained": false,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": 15.849999999996655,
+          "candidate_completion_s": 16.52199999999721,
+          "paired_success_completion_delta_s": 0.6720000000005548,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": null,
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.179999999999243,
+              "mean_single_jaw_position_m": 0.019683571527757238,
+              "mean_sum_pad_normal_force_n": 0.6823034414907521,
+              "mean_min_pad_normal_force_n": 0.29460039192137794
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.399999999998567,
+              "mean_single_jaw_position_m": 0.027720797053323053,
+              "mean_sum_pad_normal_force_n": 1.0047273513628503,
+              "mean_min_pad_normal_force_n": 0.49942129417942394
+            }
+          ]
+        },
+        {
+          "scene_id": "friction080-mass060-layout01",
+          "baseline_success": true,
+          "candidate_success": true,
+          "gained": false,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": 16.232999999996856,
+          "candidate_completion_s": 16.56199999999726,
+          "paired_success_completion_delta_s": 0.3290000000004021,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": null,
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.159999999999254,
+              "mean_single_jaw_position_m": 0.01968360232287438,
+              "mean_sum_pad_normal_force_n": 0.6823120740171236,
+              "mean_min_pad_normal_force_n": 0.2939036232807245
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.399999999998567,
+              "mean_single_jaw_position_m": 0.02772055223240684,
+              "mean_sum_pad_normal_force_n": 1.0047540811512012,
+              "mean_min_pad_normal_force_n": 0.4994467722276926
+            }
+          ]
+        },
+        {
+          "scene_id": "friction055-mass040-layout00",
+          "baseline_success": true,
+          "candidate_success": true,
+          "gained": false,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": 15.847999999996656,
+          "candidate_completion_s": 16.500999999997184,
+          "paired_success_completion_delta_s": 0.653000000000528,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": null,
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.179999999999243,
+              "mean_single_jaw_position_m": 0.01966609032702917,
+              "mean_sum_pad_normal_force_n": 0.6832829394000095,
+              "mean_min_pad_normal_force_n": 0.309191443781619
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.399999999998567,
+              "mean_single_jaw_position_m": 0.02766435855628713,
+              "mean_sum_pad_normal_force_n": 1.0021344656257738,
+              "mean_min_pad_normal_force_n": 0.459637046858594
+            }
+          ]
+        },
+        {
+          "scene_id": "friction055-mass040-layout01",
+          "baseline_success": true,
+          "candidate_success": true,
+          "gained": false,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": 15.833999999996664,
+          "candidate_completion_s": 16.500999999997184,
+          "paired_success_completion_delta_s": 0.6670000000005203,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": null,
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.159999999999254,
+              "mean_single_jaw_position_m": 0.019666397633386543,
+              "mean_sum_pad_normal_force_n": 0.6832717771053008,
+              "mean_min_pad_normal_force_n": 0.3088337796648581
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.399999999998567,
+              "mean_single_jaw_position_m": 0.027664386482755404,
+              "mean_sum_pad_normal_force_n": 1.0023602336707178,
+              "mean_min_pad_normal_force_n": 0.4608025691534998
+            }
+          ]
+        },
+        {
+          "scene_id": "friction055-mass060-layout00",
+          "baseline_success": false,
+          "candidate_success": true,
+          "gained": true,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": null,
+          "candidate_completion_s": 17.089999999997904,
+          "paired_success_completion_delta_s": null,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": null,
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.179999999999243,
+              "mean_single_jaw_position_m": 0.019678615415346146,
+              "mean_sum_pad_normal_force_n": 0.6840792442550392,
+              "mean_min_pad_normal_force_n": 0.30280745874042475
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.399999999998567,
+              "mean_single_jaw_position_m": 0.027717260793096016,
+              "mean_sum_pad_normal_force_n": 1.0041146654172433,
+              "mean_min_pad_normal_force_n": 0.4668669035864939
+            }
+          ]
+        },
+        {
+          "scene_id": "friction055-mass060-layout01",
+          "baseline_success": false,
+          "candidate_success": true,
+          "gained": true,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": null,
+          "candidate_completion_s": 17.04599999999785,
+          "paired_success_completion_delta_s": null,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": null,
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.159999999999254,
+              "mean_single_jaw_position_m": 0.019679123143500277,
+              "mean_sum_pad_normal_force_n": 0.6840553391342612,
+              "mean_min_pad_normal_force_n": 0.3021085161877157
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.399999999998567,
+              "mean_single_jaw_position_m": 0.027717130604596543,
+              "mean_sum_pad_normal_force_n": 1.0041161083943797,
+              "mean_min_pad_normal_force_n": 0.4666089220050432
+            }
+          ]
+        },
+        {
+          "scene_id": "friction015-mass040-layout00",
+          "baseline_success": false,
+          "candidate_success": false,
+          "gained": false,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": null,
+          "candidate_completion_s": null,
+          "paired_success_completion_delta_s": null,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": "unchanged_grasp_not_following",
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.179999999999243,
+              "mean_single_jaw_position_m": 0.019656537228277544,
+              "mean_sum_pad_normal_force_n": 0.6826817089451566,
+              "mean_min_pad_normal_force_n": 0.33089081985987157
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.399999999998567,
+              "mean_single_jaw_position_m": 0.027676805434870548,
+              "mean_sum_pad_normal_force_n": 1.0020028233451255,
+              "mean_min_pad_normal_force_n": 0.48367856724794817
+            }
+          ]
+        },
+        {
+          "scene_id": "friction015-mass040-layout01",
+          "baseline_success": false,
+          "candidate_success": false,
+          "gained": false,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": null,
+          "candidate_completion_s": null,
+          "paired_success_completion_delta_s": null,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": "unchanged_grasp_not_following",
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.159999999999254,
+              "mean_single_jaw_position_m": 0.019656540873361113,
+              "mean_sum_pad_normal_force_n": 0.6826733310207208,
+              "mean_min_pad_normal_force_n": 0.330887852770538
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.399999999998567,
+              "mean_single_jaw_position_m": 0.027675661820253675,
+              "mean_sum_pad_normal_force_n": 1.0035000270569756,
+              "mean_min_pad_normal_force_n": 0.4866547472439339
+            }
+          ]
+        },
+        {
+          "scene_id": "friction015-mass060-layout00",
+          "baseline_success": false,
+          "candidate_success": false,
+          "gained": false,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": null,
+          "candidate_completion_s": null,
+          "paired_success_completion_delta_s": null,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": "unchanged_grasp_not_following",
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.179999999999243,
+              "mean_single_jaw_position_m": 0.019677958110364366,
+              "mean_sum_pad_normal_force_n": 0.6834322168005431,
+              "mean_min_pad_normal_force_n": 0.32169058045228444
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.399999999998567,
+              "mean_single_jaw_position_m": 0.027719603275819994,
+              "mean_sum_pad_normal_force_n": 1.0051716057576459,
+              "mean_min_pad_normal_force_n": 0.47553376717578966
+            }
+          ]
+        },
+        {
+          "scene_id": "friction015-mass060-layout01",
+          "baseline_success": false,
+          "candidate_success": false,
+          "gained": false,
+          "lost": false,
+          "equal_world_and_start": {
+            "config": true,
+            "compiled_model_sha256": true,
+            "native_servo_gains": true,
+            "native_servo_bias": true,
+            "native_force_limits": true,
+            "native_control_limits": true,
+            "native_model_settings": true,
+            "initial_object_position_m": true,
+            "initial_qpos": true,
+            "initial_qvel": true
+          },
+          "candidate_prohibited_native_ticks": 0,
+          "candidate_warning_count": 0,
+          "baseline_completion_s": null,
+          "candidate_completion_s": null,
+          "paired_success_completion_delta_s": null,
+          "candidate_second_probe_count": 0,
+          "candidate_abort_reason": "unchanged_grasp_not_following",
+          "probe_force_windows": [
+            {
+              "mode": "baseline",
+              "first_probe_time_s": 11.159999999999254,
+              "mean_single_jaw_position_m": 0.01967795533150191,
+              "mean_sum_pad_normal_force_n": 0.6834337406370301,
+              "mean_min_pad_normal_force_n": 0.32166695559684805
+            },
+            {
+              "mode": "candidate",
+              "first_probe_time_s": 12.399999999998567,
+              "mean_single_jaw_position_m": 0.027719447371617707,
+              "mean_sum_pad_normal_force_n": 1.0052216171507184,
+              "mean_min_pad_normal_force_n": 0.47542005054496517
+            }
+          ]
+        }
+      ],
+      "baseline_successes": 6,
+      "candidate_successes": 8,
+      "gains": 2,
+      "losses": 0,
+      "all_world_and_initial_state_fields_equal": true,
+      "mean_common_success_delta_s": 0.7335000000004387
+    }
+  ],
+  "source_hash_mismatches": [],
+  "r1_plan_count_correction": "r1 declared2candidates x4scenes=8 before any attempt but its planned_attempts formula incorrectly retained12; see r1/plan-count-correction.json. No rows omitted."
+}

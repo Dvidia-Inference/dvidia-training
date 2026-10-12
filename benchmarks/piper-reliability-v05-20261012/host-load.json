@@ -1,0 +1,16 @@
+{
+  "schema": "dvidia.host-load-context/v1",
+  "observed_utc": "2026-10-12T04:03:52.011109+00:00",
+  "during_cohort": 832847,
+  "logical_cpu_count": 10,
+  "load_average_1_5_15_min": [
+    23.3,
+    15.61,
+    11.05
+  ],
+  "swap_total_mib": 10240.0,
+  "swap_used_mib": 9409.38,
+  "swap_free_mib": 830.62,
+  "method": "Read-only macOS sysctl vm.loadavg and vm.swapusage snapshot; values sampled once, before this record timestamp. No other host processes were stopped or modified.",
+  "scope": "Host contention context, not a causal attribution of each delay or measured simulator minimum RAM."
+}

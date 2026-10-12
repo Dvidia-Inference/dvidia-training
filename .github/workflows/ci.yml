@@ -74,6 +74,7 @@ jobs:
           dvidia-piper-grip --help
           dvidia-piper-contact --help
           dvidia-piper-recovery --help
+          dvidia-piper-reliability --help
           dvidia-training-doctor --json
       - name: Test footage, visual training and loopback studio
         run: python -m unittest tests.test_footage_data tests.test_footage_train tests.test_footage_pipeline tests.test_footage_benchmark tests.test_training_studio tests.test_doctor tests.test_coverage tests.test_episode_tape tests.test_reaction tests.test_reaction_metrics tests.test_reaction_convergence tests.test_reaction_benchmark tests.test_motor_memory tests.test_motor_metrics tests.test_motor_benchmark tests.test_observations tests.test_observation_models tests.test_motion tests.test_motion_benchmark tests.test_transition_model tests.test_transition_pilot tests.test_transition_cli tests.test_embodiment_calibration tests.test_embodiment_cli tests.test_reference_sim -v
@@ -154,14 +155,6 @@ jobs:
           python -m pip install -r publishing/huggingface/requirements.txt
           python -m unittest discover -s publishing/huggingface -p 'test_publish_robot_sim.py' -v
           python -m unittest discover -s publishing/huggingface/robot-simulation-lab -p 'test_*.py' -v
-      - name: Retain contact history, slowdown and recovery comparison
-        run: |
-          dvidia-piper-contact benchmark --assets runs/robot-profile-assets-ci --output runs/piper-contact-ci
-          dvidia-piper-contact inspect runs/piper-contact-ci
-      - name: Retain v0.4 recovery speed and refusal comparison
-        run: |
-          dvidia-piper-recovery benchmark --assets runs/robot-profile-assets-ci --output runs/piper-recovery-ci
-          dvidia-piper-recovery inspect runs/piper-recovery-ci
       - name: Preserve additional profile evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
@@ -170,10 +163,51 @@ jobs:
           path: |
             runs/piper-task-ci
             runs/piper-grip-ci
-            runs/piper-contact-ci
-            runs/piper-recovery-ci
             runs/piper-smoke-ci
             runs/so101-smoke-ci
+          if-no-files-found: ignore
+
+  piper-comparisons:
+    name: PiPER ${{ matrix.cli }} / Linux / Python 3.12
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - cli: contact
+            inspection: ""
+          - cli: recovery
+            inspection: ""
+          - cli: reliability
+            inspection: "--assets runs/piper-assets-ci"
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: "3.12"
+      - name: Provision unchanged native PiPER assets
+        run: |
+          python -m pip install ".[arm]"
+          dvidia-robot-sim fetch piper --output runs/piper-assets-ci
+          dvidia-robot-sim audit piper runs/piper-assets-ci
+      - name: Test new reliability decisions and receipt integrity
+        if: matrix.cli == 'reliability'
+        env:
+          DVIDIA_ROBOT_PROFILE_ASSETS: runs/piper-assets-ci
+        run: python -m unittest tests.test_piper_reacquisition tests.test_piper_grasp_strategy tests.test_piper_reliability_benchmark -v
+      - name: Run every planned placement and matched negative control
+        run: |
+          dvidia-piper-${{ matrix.cli }} benchmark --assets runs/piper-assets-ci --output runs/piper-comparison-ci
+          dvidia-piper-${{ matrix.cli }} inspect runs/piper-comparison-ci ${{ matrix.inspection }}
+      - name: Preserve complete comparison including failed attempts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: piper-${{ matrix.cli }}-comparison
+          path: runs/piper-comparison-ci
           if-no-files-found: ignore
 
   motion:
