@@ -215,6 +215,8 @@ def piper_contact_fixture(root):
                 'grip_guard':{'schema':'dvidia.piper-grip-guard/v1' if mode=='baseline' else 'dvidia.piper-contact-memory/v0.3',
                               'mode':mode,'active':control=='placement' and mode!='baseline'},
                 'contact_evaluation':{'following':following,'interventions':[],
+                    'resume_decisions':0,'loaded_settling_observed_at_resume':0,
+                    'low_tcp_motion_observed_at_resume':0,'unresolved_resume_windows':0,
                     'resumed_completed':False,'resumed_not_completed':False}}
             name='attempts/'+identity+'.json.gz'
             payload[name]=gzip.compress(bench._json_bytes(raw),mtime=0)
@@ -627,13 +629,15 @@ class RobotSimulationPreparationTests(unittest.TestCase):
 
     def test_v03_scope_full_grid_denominator_decoded_hashes_and_snapshots_are_rechecked(self):
         from dvidia_training import piper_contact_benchmark as contact
-        for variant in ('scope','count','mass','summary','drop','decoded_hash','changed','private','header_private','unlisted','symlink'):
+        for variant in ('scope','count','mass','summary','missing_summary','drop','decoded_hash','changed','private','header_private','unlisted','symlink'):
             with self.subTest(variant=variant),tempfile.TemporaryDirectory() as folder:
                 root=Path(folder).resolve();source=root/'contact';report,payload=piper_contact_fixture(source)
                 if variant=='scope': report['physical_robot_ready']=True
                 elif variant=='count': report['attempted']=83
                 elif variant=='mass': report['scenes'][0]['mass_kg']=.06
                 elif variant=='summary': report['summary'][0]['success']=1
+                elif variant=='missing_summary':
+                    report['summary']=[row for row in report['summary'] if row['variant']!='probe_only_placement']
                 elif variant=='drop':
                     name=report['attempts'].pop()['result_file'];payload.pop(name);(source/name).unlink()
                 elif variant=='private':
