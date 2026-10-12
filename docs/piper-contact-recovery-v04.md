@@ -21,12 +21,27 @@ and runtime below describe one host, not universal minimum requirements.
 ```sh
 git clone --branch feat/piper-contact-recovery-v04 https://github.com/Dvidia-Inference/dvidia-training.git
 cd dvidia-training
+git checkout d5c1cc6adbf6566947aef6defb1bbc04207a96c4
 python3.12 -m venv .venv
 .venv/bin/python -m pip install '.[arm]'
 .venv/bin/dvidia-robot-sim fetch piper --output runs/robot-assets
 .venv/bin/dvidia-piper-recovery benchmark --assets runs/robot-assets --output runs/piper-recovery
 .venv/bin/dvidia-piper-recovery inspect runs/piper-recovery
 ```
+
+The command above runs the default development layouts. To rerun the published
+confirmation layouts with the frozen implementation, use a fresh output directory:
+
+```sh
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/dvidia-piper-recovery benchmark --assets runs/robot-assets --seed 941827 --cohort confirmation --output runs/piper-recovery-941827
+.venv/bin/dvidia-piper-recovery inspect runs/piper-recovery-941827
+```
+
+The environment-variable prefix is for POSIX shells. In PowerShell, set
+`$env:OPENBLAS_NUM_THREADS='1'` and `$env:OMP_NUM_THREADS='1'` before running the
+command. This is a reproduction of already published scenes, not a fresh unseen
+confirmation. Runtime source hashes match the original freeze; timing and
+serialized receipt hashes can vary by host and installed dependency versions.
 
 On Windows use `py -3.12 -m venv .venv` and executables in `.venv\Scripts\`.
 Use a fresh output directory for each run. Downloading software and assets is
@@ -66,7 +81,7 @@ The acquisition qualification, independent success scorer, native servo gains,
 force limits, scene geometry and free-object dynamics remain unchanged. A
 refusal remains a failed placement. A resume event alone is not successful
 recovery. Holding the measured arm targets still permits physical motion under
-the native dynamics. Every attempt remains20 simulated seconds, including
+the native dynamics. Every attempt remains 20 simulated seconds, including
 completed placements, controls and refusals.
 
 ## Paired comparison
