@@ -50,3 +50,5 @@ The original benchmark was **not rerun**. Only the browser bundle and its previe
 [Final browser acceptance](browser-acceptance.json): all three arms passed at 1440, 390 and 320 pixels, with rendered geometry, scene downloads, controls and stale-animation-timestamp regression checks. No JavaScript errors, unexpected remote imports or horizontal overflow were observed.
 
 The final packaging and clarified setup guide use [`45bef6315c9632b33915e1ce993babd2926b8f7d`](https://github.com/Dvidia-Inference/dvidia-training/tree/45bef6315c9632b33915e1ce993babd2926b8f7d). Viewer code and all native evidence remain unchanged from the revisions above.
+
+Static-host navigation was corrected in [`d291ee11f28b0d3c7a0b9ed062174e46fe764d15`](https://github.com/Dvidia-Inference/dvidia-training/tree/d291ee11f28b0d3c7a0b9ed062174e46fe764d15): robot and overview links use explicit `index.html` paths for Hugging Face. [Navigation proof](navigation-build.json) preserves the prior viewer receipt and binds only changed HTML and seals; all native and JavaScript bytes are unchanged.
