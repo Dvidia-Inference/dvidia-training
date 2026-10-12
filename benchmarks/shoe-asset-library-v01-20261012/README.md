@@ -48,3 +48,5 @@ The installable viewer and publication tooling use [`17a7c81784362697f09757712ef
 The original benchmark was **not rerun**. Only the browser bundle and its preview seals changed; all native geometry, motion, scene descriptors and model notices are byte-identical to the frozen exports. [Installed corrected wheel and preservation proof](viewer-build.json). The library records both benchmark and publication source revisions.
 
 [Final browser acceptance](browser-acceptance.json): all three arms passed at 1440, 390 and 320 pixels, with rendered geometry, scene downloads, controls and stale-animation-timestamp regression checks. No JavaScript errors, unexpected remote imports or horizontal overflow were observed.
+
+The final packaging and clarified setup guide use [`45bef6315c9632b33915e1ce993babd2926b8f7d`](https://github.com/Dvidia-Inference/dvidia-training/tree/45bef6315c9632b33915e1ce993babd2926b8f7d). Viewer code and all native evidence remain unchanged from the revisions above.
