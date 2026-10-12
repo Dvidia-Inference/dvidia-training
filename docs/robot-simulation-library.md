@@ -32,7 +32,7 @@ use the verified local files.
 
 | Profile | Arm axes, excluding gripper | Source model | Current scope |
 | --- | --- | --- | --- |
-| `piper` | 6 | [PiPER Menagerie model](https://github.com/google-deepmind/mujoco_menagerie/tree/0059d4335f8156206f63a35662313385f7ad6d74/agilex_piper), MIT | Model audit, unloaded motion, an [authored contact pilot](piper-contact-pilot.md), and a separate [test-lift/recovery candidate](piper-grip-recovery.md). |
+| `piper` | 6 | [PiPER Menagerie model](https://github.com/google-deepmind/mujoco_menagerie/tree/0059d4335f8156206f63a35662313385f7ad6d74/agilex_piper), MIT | Model audit, unloaded motion, an [authored contact pilot](piper-contact-pilot.md), [test-lift/recovery candidate](piper-grip-recovery.md), and [contact-history v0.3 comparison](piper-contact-memory-v03.md). |
 | `so101` | 5 | [SO-101 Menagerie model](https://github.com/google-deepmind/mujoco_menagerie/tree/0059d4335f8156206f63a35662313385f7ad6d74/robotstudio_so101), Apache-2.0 | Model audit and bounded unloaded native motion. |
 
 The native PiPER gripper command is one finger's sliding-joint target in meters,

@@ -403,9 +403,10 @@ def run_episode(assets, config=None, *, seed=0, control='placement', arm_tape=No
     config = _config(config)
     if control not in ('placement', 'replay_open_jaw', 'hold'):
         raise ValueError('Unknown PiPER task control')
-    if policy_mode not in ('baseline', 'guarded'):
-        raise ValueError('PiPER policy mode must be baseline or guarded')
+    if policy_mode not in ('baseline', 'guarded', 'probe_only', 'history'):
+        raise ValueError('PiPER policy mode must be baseline, guarded, probe_only or history')
     from . import piper_grip_guard as grip_guard
+    from . import piper_contact_memory as contact_memory
     started, latencies, environment, phase = time.perf_counter(), [], None, 'validation'
     result = {'schema': SCHEMA, 'profile': PROFILE, 'scope': SCOPE, 'physical_robot_ready': False,
               'seed': seed, 'control': control, 'policy_mode': policy_mode, 'config': asdict(config), 'timestep_seconds': config.timestep,
@@ -416,7 +417,10 @@ def run_episode(assets, config=None, *, seed=0, control='placement', arm_tape=No
     result['implementation_sha256'] = {name: sha256((source/name).read_bytes()).hexdigest()
                                        for name in ('piper_task.py', 'robot_profiles.py', 'robot_profiles.lock.json', 'reference_task.py', 'reference_sim.py')}
     result['policy_implementation_sha256'] = {'piper_grip_guard.py': sha256((source/'piper_grip_guard.py').read_bytes()).hexdigest()}
-    result['grip_guard'] = grip_guard.inactive_summary(policy_mode)
+    memory_mode = policy_mode in ('probe_only', 'history')
+    if memory_mode:
+        result['policy_implementation_sha256']['piper_contact_memory.py'] = sha256((source/'piper_contact_memory.py').read_bytes()).hexdigest()
+    result['grip_guard'] = (contact_memory.inactive_summary(policy_mode) if memory_mode else grip_guard.inactive_summary(policy_mode))
     policy = None
     try:
         if control == 'replay_open_jaw':
@@ -442,7 +446,8 @@ def run_episode(assets, config=None, *, seed=0, control='placement', arm_tape=No
                                       'geom_body_names': [mj.mj_id2name(environment.model, mj.mjtObj.mjOBJ_BODY, int(body)) for body in environment.model.geom_bodyid]}
         result['trajectory'].append(observation)
         result['timing']['setup_seconds'] = time.perf_counter()-started
-        policy = (grip_guard.GuardedPiperTaskPolicy(environment) if policy_mode == 'guarded' and control == 'placement'
+        policy = (contact_memory.ContactMemoryPiperTaskPolicy(environment, policy_mode) if memory_mode and control == 'placement'
+                  else grip_guard.GuardedPiperTaskPolicy(environment) if policy_mode == 'guarded' and control == 'placement'
                   else PiperTaskPolicy(environment))
         hold, phase = observation['joint_position_rad'], 'rollout'
         for index in range(round(config.timeout_s/config.control_dt)):

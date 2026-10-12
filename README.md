@@ -28,6 +28,14 @@ test lift before carrying, one supported recovery attempt, and a paired
 benchmark against the original controller. It uses current simulator state;
 task completion, grip qualification, retries and aborts are recorded separately.
 
+The [contact-history v0.3 candidate](docs/piper-contact-memory-v03.md) compares
+the original controller, test lift alone, and bounded slowdown/closed-hold
+reassessment. Its complete paired benchmark varies object mass and friction;
+resuming a movement and recovering a completed placement are separate outcomes.
+The [84-attempt confirmation](benchmarks/piper-contact-v03-20261011/README.md) completes
+6/12 history placements versus 4/12 for each paired alternative, with all 48
+negative controls failing. These are synthetic, privileged-state results.
+
 Train a small visual model from Skillspace footage on your own computer or server. The pipeline checks actual videos and source groups, fixes training/development/test splits, fits weights on a CPU, and exports a result with held-out measurements and integrity hashes.
 
 The base install needs **Python 3.12+, NumPy and FFmpeg**. It needs no GPU, CUDA, account or API key. Training is offline by default; downloading software or public footage is a separate, explicit step.

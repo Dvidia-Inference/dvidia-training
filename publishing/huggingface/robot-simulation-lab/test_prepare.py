@@ -186,6 +186,65 @@ def piper_grip_reseal(root,report,payload):
         target=root/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(data)
 
 
+def piper_contact_fixture(root):
+    """Invented data-only full inventory; semantic/native loader is patched."""
+    from dvidia_training import piper_contact_benchmark as benchmark
+    root.mkdir()
+    scenes = [{'id':f'friction{round(f*100):03}-mass{round(m*1000):03}-layout{i:02}',
+        'friction':f,'mass_kg':m,'stratum':stratum,'layout_index':i,'config':{'friction':f,'mass_kg':m}}
+        for f,stratum in zip(benchmark.FRICTIONS,benchmark.STRATA) for m in benchmark.MASSES for i in (0,1)]
+    protocol = {'schema':benchmark.PROTOCOL_SCHEMA,'profile':benchmark.task.PROFILE,'scope':benchmark.SCOPE,
+        'physical_robot_ready':False,'learned_policy':False,'simulation_asset_license':'MIT',
+        'cohort':'development','scenes':scenes,'variants':list(benchmark.VARIANTS),'planned_attempts':84,
+        'native_command_units':['rad']*6+['m']}
+    payload = {'protocol.json':bench._json_bytes(protocol),'report.html':b'All eighty-four canonical attempts are linked',
+        'licenses/agilex_piper/LICENSE':b'Original MIT model fixture\n',
+        'licenses/agilex_piper/README.md':b'Original model notice fixture\n'}
+    attempts = []
+    for scene in scenes:
+        for variant in benchmark.VARIANTS:
+            identity=scene['id']+'--'+variant
+            control,mode=benchmark._variant(variant)
+            valid=not (scene['friction']==.15 and scene['mass_kg']==.06 and scene['layout_index']==1 and variant=='hold')
+            following={'qualification_decisions':[],'alarms':[],'following_opportunity':False if valid else None,
+                       'sampled_drop_events':0,'aborted':False,'retry_count':0}
+            raw={'schema':benchmark.task.SCHEMA,'profile':benchmark.task.PROFILE,'scope':benchmark.task.SCOPE,
+                'id':identity,'scene_id':scene['id'],'variant':variant,'physical_robot_ready':False,'learned_policy':False,
+                'valid':valid,'success':False,'config':scene['config'],'control':control,'policy_mode':mode,
+                'trajectory':[{'fixture':0}],'actions':[{'fixture':0}],'arm_tape':[[0]*6],
+                'grip_guard':{'schema':'dvidia.piper-grip-guard/v1' if mode=='baseline' else 'dvidia.piper-contact-memory/v0.3',
+                              'mode':mode,'active':control=='placement' and mode!='baseline'},
+                'contact_evaluation':{'following':following,'interventions':[],
+                    'resume_decisions':0,'loaded_settling_observed_at_resume':0,
+                    'low_tcp_motion_observed_at_resume':0,'unresolved_resume_windows':0,
+                    'resumed_completed':False,'resumed_not_completed':False}}
+            name='attempts/'+identity+'.json.gz'
+            payload[name]=gzip.compress(bench._json_bytes(raw),mtime=0)
+            attempts.append({**benchmark._summary(raw),'result_file':name})
+    report={'schema':benchmark.SCHEMA,'profile':benchmark.task.PROFILE,'scope':benchmark.SCOPE,
+        'physical_robot_ready':False,'learned_policy':False,'simulation_asset_license':'MIT','cohort':'development',
+        'protocol':protocol,'protocol_sha256':sha256(payload['protocol.json']).hexdigest(),
+        'scenes':scenes,'attempted':84,'valid_attempts':83,'attempts':attempts,
+        'summary':benchmark.aggregate(attempts,scenes)}
+    piper_contact_reseal(root,report,payload)
+    return report,payload
+
+
+def piper_contact_reseal(root,report,payload):
+    from dvidia_training import piper_contact_benchmark as benchmark
+    payload['report.json']=bench._json_bytes(report)
+    records={}
+    for name,data in payload.items():
+        if name=='integrity.json': continue
+        records[name]=record(data)
+        if name.endswith('.json.gz'):
+            decoded=benchmark.decode_attempt(data)
+            records[name].update(encoding='gzip',decoded_bytes=len(decoded),decoded_sha256=sha256(decoded).hexdigest())
+    payload['integrity.json']=bench._json_bytes({'schema':benchmark.INTEGRITY_SCHEMA,'files':records})
+    for name,data in payload.items():
+        target=root/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(data)
+
+
 class RobotSimulationPreparationTests(unittest.TestCase):
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory()
@@ -513,6 +572,110 @@ class RobotSimulationPreparationTests(unittest.TestCase):
         plan=prepare.stage(self.replay,self.output,source_commit='a'*40)
         self.assertFalse(any(row['path'].startswith('tasks/piper-grip/') for row in plan['repository']['files']))
         self.assertNotIn('PiPER guarded grip comparison',(self.output/'space/index.html').read_text())
+
+    def test_v03_retains_all_eighty_four_attempts_and_exact_prior_evidence(self):
+        from dvidia_training import piper_contact_benchmark as contact,piper_grip_benchmark as grip,piper_task_benchmark as pilot
+        source=self.root/'contact';report,payload=piper_contact_fixture(source)
+        old_grip=self.root/'grip';grip_report,grip_files=piper_grip_fixture(old_grip)
+        old_pilot=self.root/'pilot';pilot_report,pilot_files=piper_task_fixture(old_pilot)
+        with patch.object(contact,'load_contact_bundle',return_value=(report,payload)), \
+                patch.object(grip,'load_grip_bundle',return_value=(grip_report,grip_files)), \
+                patch.object(pilot,'load_task_bundle',return_value=(pilot_report,pilot_files)):
+            plan=prepare.stage(self.replay,self.output,source_commit='a'*40,piper_task_benchmark=old_pilot,
+                piper_grip_benchmark=old_grip,piper_contact_benchmark=source)
+        self.assertEqual(publisher.checked_plan(self.output/'publication-plan.json'),plan)
+        for prefix,files in (('tasks/piper-contact-v03',payload),('tasks/piper-grip',grip_files),
+                             ('tasks/piper',pilot_files),('replay',self.original)):
+            for name,data in files.items():
+                self.assertEqual((self.output/'space'/prefix/name).read_bytes(),data)
+        self.assertEqual(len(payload),90)
+        landing=(self.output/'space/index.html').read_text()
+        comparison='Placement completion: baseline 0/12, probe-only 0/12, history 0/12.'
+        self.assertIn('<strong>'+comparison+'</strong>',landing)
+        self.assertIn('84 planned attempts across twelve synthetic scenes',landing)
+        self.assertIn('μ=0.15, mass=0.06 kg / hold: 0/2 completed, 1 numerically valid',landing)
+        self.assertIn('/blob/'+'a'*40+'/docs/piper-contact-memory-v03.md',landing)
+        self.assertIn('Retries, resumes and release refusals do not imply successful placement or recovery.',landing)
+        self.assertLess(landing.index(comparison),landing.index('Three authored controllers'))
+        provenance=json.loads((self.output/'space/provenance.json').read_bytes())
+        compared=provenance['contact_task_benchmarks']['piper-contact-v03']
+        self.assertEqual((compared['attempted'],compared['valid_attempts']),(84,83))
+        self.assertEqual(len(compared['attempt_ids']),84)
+        self.assertEqual(compared['source_integrity'],record(payload['integrity.json']))
+        self.assertGreater(compared['decoded_bytes'],compared['stored_bytes'])
+        self.assertFalse(compared['learned_policy'])
+        self.assertEqual(provenance['publication_byte_bounds']['stored_payload_bytes'],256*1024*1024)
+        self.assertEqual(provenance['publication_byte_bounds']['per_file_bytes'],32*1024*1024)
+        readme=(self.output/'space/README.md').read_text()
+        self.assertIn(comparison,readme)
+        self.assertIn('256 MiB of stored files',readme)
+
+    def test_v03_summary_derives_all_three_completion_totals_without_claiming_improvement(self):
+        report,_=piper_contact_fixture(self.root/'summary')
+        for outcome in ((0,0,0),(5,1,2),(1,4,8)):
+            with self.subTest(outcome=outcome):
+                candidate=deepcopy(report)
+                for variant,count in zip(('baseline_placement','probe_only_placement','history_placement'),outcome):
+                    for row in candidate['summary']:
+                        if row['variant']==variant:
+                            row['success']=min(count,row['attempted']);count-=row['success']
+                    self.assertEqual(count,0)
+                expected=f'Placement completion: baseline {outcome[0]}/12, probe-only {outcome[1]}/12, history {outcome[2]}/12.'
+                self.assertTrue(prepare._contact_summary(candidate).startswith(expected))
+                card=prepare._piper_contact_card(candidate,'a'*40)
+                self.assertIn('<strong>'+expected+'</strong>',card)
+                self.assertNotIn('improved',card)
+                self.assertIn('do not imply successful placement or recovery',card)
+
+    def test_v03_scope_full_grid_denominator_decoded_hashes_and_snapshots_are_rechecked(self):
+        from dvidia_training import piper_contact_benchmark as contact
+        for variant in ('scope','count','mass','summary','missing_summary','drop','decoded_hash','changed','private','header_private','unlisted','symlink'):
+            with self.subTest(variant=variant),tempfile.TemporaryDirectory() as folder:
+                root=Path(folder).resolve();source=root/'contact';report,payload=piper_contact_fixture(source)
+                if variant=='scope': report['physical_robot_ready']=True
+                elif variant=='count': report['attempted']=83
+                elif variant=='mass': report['scenes'][0]['mass_kg']=.06
+                elif variant=='summary': report['summary'][0]['success']=1
+                elif variant=='missing_summary':
+                    report['summary']=[row for row in report['summary'] if row['variant']!='probe_only_placement']
+                elif variant=='drop':
+                    name=report['attempts'].pop()['result_file'];payload.pop(name);(source/name).unlink()
+                elif variant=='private':
+                    name=report['attempts'][0]['result_file'];raw=json.loads(contact.decode_attempt(payload[name]))
+                    raw['note']='/Users/roguedev/private';payload[name]=gzip.compress(bench._json_bytes(raw),mtime=0)
+                    report['attempts'][0]={**contact._summary(raw),'result_file':name}
+                elif variant=='header_private':
+                    name=report['attempts'][0]['result_file'];data=payload[name]
+                    header=bytearray(data[:10]);header[3]|=8
+                    payload[name]=bytes(header)+b'/Users/roguedev/private\0'+data[10:]
+                piper_contact_reseal(source,report,payload)
+                if variant=='decoded_hash':
+                    seal=json.loads(payload['integrity.json']);name=report['attempts'][0]['result_file']
+                    seal['files'][name]['decoded_sha256']='0'*64
+                    payload['integrity.json']=bench._json_bytes(seal);(source/'integrity.json').write_bytes(payload['integrity.json'])
+                elif variant=='changed': (source/'report.html').write_bytes(b'changed after inspection')
+                elif variant=='unlisted': (source/'unlisted.json').write_bytes(b'{}')
+                elif variant=='symlink': (source/'linked.json').symlink_to(source/'report.json')
+                output=root/'publication'
+                with patch.object(contact,'load_contact_bundle',return_value=(report,payload)),self.assertRaises(ValueError):
+                    prepare.stage(self.replay,output,source_commit='a'*40,piper_contact_benchmark=source)
+                self.assertFalse(output.exists())
+
+    def test_v03_optional_flag_preserves_byte_caps_and_decoding_bounds(self):
+        from dvidia_training import piper_contact_benchmark as contact
+        source=self.root/'contact';report,payload=piper_contact_fixture(source)
+        cap=sum(len(raw) for raw in self.original.values())+sum(len(raw) for raw in payload.values())-1
+        for variant in ('stored','decoded','file'):
+            with self.subTest(variant=variant),patch.object(contact,'load_contact_bundle',return_value=(report,payload)), \
+                    patch.object(publisher,'MAX_TOTAL_BYTES',cap if variant=='stored' else publisher.MAX_TOTAL_BYTES), \
+                    patch.object(publisher,'MAX_FILE_BYTES',1 if variant=='file' else publisher.MAX_FILE_BYTES), \
+                    patch.object(contact,'MAX_DECODED_BYTES',1 if variant=='decoded' else contact.MAX_DECODED_BYTES), \
+                    self.assertRaises(ValueError):
+                prepare.stage(self.replay,self.output,source_commit='a'*40,piper_contact_benchmark=source)
+            self.assertFalse(self.output.exists())
+        plan=prepare.stage(self.replay,self.output,source_commit='a'*40)
+        self.assertFalse(any(row['path'].startswith('tasks/piper-contact-v03/') for row in plan['repository']['files']))
+        self.assertNotIn('PiPER contact memory v0.3',(self.output/'space/index.html').read_text())
 
 
 if __name__=='__main__':
