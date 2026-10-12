@@ -23,11 +23,13 @@ unloaded mechanics; learned policies and physical qualification remain open. The
 [Robot Simulation Lab](https://huggingface.co/spaces/Dvidia/robot-simulation-lab)
 publishes recorded evidence and local run instructions.
 
-The [asset-library roadmap](docs/robot-simulation-library.md#reusable-asset-library-planned-product-layer)
-extends this toward reusable objects, environments, grippers and sensor profiles,
-starting with a shoe-organization collection. Packages will distinguish measured,
-estimated and untested physical properties and link to compatible skill benchmarks.
-The object catalog and installation interface are planned work.
+The [shoe asset library v0.1](docs/asset-library.md) adds six original rigid shoe
+proxies, versioned scene descriptors and a `dvidia-assets` loader for UR5e/Robotiq,
+PiPER and SO-101. Local 3D previews expose the native geometry; CPU benchmarks
+check gravity and support contact with matched controls. Properties are labelled
+as synthetic assumptions. Shoe grasping, deformation and hardware transfer still
+need their own evidence. The [broader asset roadmap](docs/robot-simulation-library.md#reusable-asset-library-planned-product-layer)
+extends this foundation toward measured objects, fixtures, grippers and sensors.
 
 The [PiPER grip-recovery candidate](docs/piper-grip-recovery.md) adds a short
 test lift before carrying, one supported recovery attempt, and a paired

@@ -1,6 +1,6 @@
 # Execution map: footage to installable skills
 
-Working map, updated 11 October 2026. This is the team's sequence of builds and evidence
+Working map, updated 12 October 2026. This is the team's sequence of builds and evidence
 gates. A completed software component does not establish robot competence.
 
 ## The product loop
@@ -26,6 +26,13 @@ that suite becomes regression evidence for later changes. Further qualification
 needs fresh confirmation scenarios; it cannot silently reuse a known test set.
 
 ## Current foundation and next builds
+
+The [shoe asset library v0.1](asset-library.md) now supplies original rigid trainer,
+ankle-boot and slipper pairs; versioned scene descriptors; UR5e/Robotiq, PiPER
+and SO-101 loading; and native 3D previews. Its gravity/support benchmark has
+matched table-disabled controls. Next: reachable shoe grasps on one selected
+arm, measured shoe/pad contact, then shoe placement and orientation scoring.
+Scene-loading compatibility does not imply that every arm can lift every shoe.
 
 The [hardware reference foundation](hardware-reference.md) now separates the
 authored box arm from a pinned UR5e/coupled-gripper assembly. Its mechanical
@@ -77,12 +84,12 @@ No new task policy is trained by adding these components.
 
 ## Reusable assets beneath every Skillspace
 
-The planned [asset-library layer](robot-simulation-library.md#reusable-asset-library-planned-product-layer)
-will provide reusable arm/gripper profiles, object families, environments and
-replaceable camera/sensor packages that people can download and compose in their simulator. Current pinned
-robot profiles and rigid-block task receipts are the starting point. A broad
-object catalog, calibrated shoe physics, asset registry and compatibility UI
-remain to be built. This layer supports the existing footage-to-skill loop;
+The [asset-library layer](robot-simulation-library.md#reusable-asset-library-planned-product-layer)
+now starts with six synthetic rigid shoe instances, three pinned arm/gripper
+profiles, a support plane, downloadable scene descriptors and local previews.
+The broader roadmap adds measured object families, fixtures and replaceable
+camera/sensor packages. Calibrated shoe physics, a package registry and
+interaction-based compatibility remain to be built. This layer supports the existing footage-to-skill loop;
 assets alone do not train or qualify a skill.
 
 | Sequence | Deliverable | Acceptance evidence |
