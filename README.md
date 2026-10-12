@@ -36,6 +36,15 @@ The [84-attempt confirmation](benchmarks/piper-contact-v03-20261011/README.md) c
 6/12 history placements versus 4/12 for each paired alternative, with all 48
 negative controls failing. These are synthetic, privileged-state results.
 
+The [contact-recovery v0.4 study](docs/piper-contact-recovery-v04.md) separates
+a faster carry response from avoiding the same ineffective supported grasp.
+The [fresh 84-attempt confirmation](benchmarks/piper-recovery-v04-20261011/README.md)
+completes 4/12 placements in every mode, with 0/48 negative-control successes.
+Two resumed placements finish 2.44–2.64 simulated seconds sooner, and four failed
+grasps are refused 2.88–2.90 seconds sooner. No completion is gained or lost.
+Eight failures per mode remain visible, including two held blocks that never
+satisfy the unchanged resume gate.
+
 Train a small visual model from Skillspace footage on your own computer or server. The pipeline checks actual videos and source groups, fixes training/development/test splits, fits weights on a CPU, and exports a result with held-out measurements and integrity hashes.
 
 The base install needs **Python 3.12+, NumPy and FFmpeg**. It needs no GPU, CUDA, account or API key. Training is offline by default; downloading software or public footage is a separate, explicit step.

@@ -259,6 +259,36 @@ class RobotSimulationPublicationTests(unittest.TestCase):
             api.whoami.assert_not_called()
             api.create_commit.assert_not_called()
 
+    def test_v04_compressed_namespace_keeps_raw_and_decoded_privacy_scope_and_bounds(self):
+        target,valid=self.compressed_episode(folder='piper-recovery-v04')
+        publisher.checked_plan(self.path)
+        self.assertEqual(json.loads(publisher._artifact_plaintext(target.relative_to(self.space).as_posix(),valid))['profile'],
+                         'piper-rigid-block-task-v0.1')
+        for name in ('tasks/piper-recovery-v04/attempt.json.gz','tasks/piper-recovery-v05/attempts/attempt.json.gz',
+                     'tasks/piper-recovery-v04/attempts/.hidden.json.gz','tasks/piper-recovery-v04/attempts/weights.bin.gz'):
+            with self.subTest(name=name),self.assertRaises(PublicationError): publisher._artifact_name(name)
+        for extra,comment in [({'note':'/Users/roguedev/private'},None),({},b'hf_'+b'a'*32),
+                              ({'physical_robot_ready':True},None),({'learned_policy':True},None)]:
+            self.compressed_episode(extra,comment,folder='piper-recovery-v04')
+            with self.subTest(extra=extra,comment=comment),self.assertRaises(PublicationError):
+                publisher.publish_robot_sim(self.path)
+        for data in (b'not gzip',valid+valid,gzip.compress(b'not JSON',mtime=0)):
+            target.write_bytes(data);self.refresh()
+            with self.subTest(data=data[:10]),self.assertRaises(PublicationError): publisher.publish_robot_sim(self.path)
+        self.compressed_episode({'large':'x'*2000},folder='piper-recovery-v04')
+        from dvidia_training import piper_grip_benchmark as benchmark
+        with patch.object(benchmark,'MAX_FILE_BYTES',512),self.assertRaises(PublicationError):
+            publisher.publish_robot_sim(self.path)
+
+    def test_v04_exact_credential_is_checked_in_gzip_header_and_decoded_payload_before_remote_calls(self):
+        for extra,comment in [({'note':'fixture-token'},None),({},b'fixture-token')]:
+            self.compressed_episode(extra,comment,folder='piper-recovery-v04')
+            api=self.api()
+            with self.subTest(extra=extra,comment=comment),patch.object(publisher,'client',return_value=(api,'fixture-token')), \
+                    self.assertRaises(PublicationError): publisher.publish_robot_sim(self.path)
+            api.whoami.assert_not_called()
+            api.create_commit.assert_not_called()
+
     def escaped_episode(self,folder,value):
         target,_=self.compressed_episode({'note':'escape-fixture'},folder=folder)
         raw=gzip.decompress(target.read_bytes()).replace(b'escape-fixture',
@@ -269,7 +299,7 @@ class RobotSimulationPublicationTests(unittest.TestCase):
         return target,data
 
     def test_escaped_json_private_paths_and_token_patterns_are_rejected_without_rewriting_evidence(self):
-        for folder in ('piper-grip','piper-contact-v03'):
+        for folder in ('piper-grip','piper-contact-v03','piper-recovery-v04'):
             for value in ('/Users/roguedev/private','hf_'+'a'*32):
                 with self.subTest(folder=folder,value=value):
                     target,data=self.escaped_episode(folder,value)
@@ -278,7 +308,7 @@ class RobotSimulationPublicationTests(unittest.TestCase):
                     target.unlink();self.refresh()
 
     def test_escaped_exact_in_memory_credential_is_rejected_before_remote_identity(self):
-        for folder in ('piper-grip','piper-contact-v03'):
+        for folder in ('piper-grip','piper-contact-v03','piper-recovery-v04'):
             target,data=self.escaped_episode(folder,'fixture-token')
             api=self.api()
             with self.subTest(folder=folder),patch.object(publisher,'client',return_value=(api,'fixture-token')), \

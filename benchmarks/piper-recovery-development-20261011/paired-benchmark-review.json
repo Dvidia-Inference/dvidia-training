@@ -1,0 +1,20 @@
+{
+  "cohort": "development",
+  "seed": 813407,
+  "attempts": 84,
+  "valid_attempts": 84,
+  "initial_command_exit_code": 2,
+  "initial_inspection_error": "Scenes differ from seeded fixed benchmark plan",
+  "cause": "Generated tuple coordinates were compared directly with JSON list coordinates; all84nativeattempts and complete90file seal were already written.",
+  "repair": "JSON-normalize the seeded plan before comparison; preserve every original simulation/output byte, then independently inspect the existing bundle.",
+  "post_repair_inspection_exit_code": 0,
+  "post_repair_inspector_sha256": "081ec18d90c91fe910c957ab3485444cfe2376ef7277be92823806c7c0e290bd",
+  "additional_inspection_checks": [
+    "Restoration event diagnostic equals issued decision",
+    "Bounded native first completion timestamp with sampled preceding release dwell",
+    "All raw computation samples and their summary fit whole episode wall clock"
+  ],
+  "runtime_source_snapshots": "paired-benchmark-sources/",
+  "original_integrity_sha256": "84118dd9bdc5b661206d29eb262a20b3c8a7096062047484b9db3107e40492aa",
+  "note": "Historicalseeddev integration exercise, excluded fromfreshconfirmation and from44controllerdevelopmentattempt count."
+}

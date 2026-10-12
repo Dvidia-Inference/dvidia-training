@@ -1,0 +1,577 @@
+{
+  "revision": "r2",
+  "cohort": "development",
+  "known_layout_seed": 813407,
+  "source_sha256": {
+    "piper_contact_recovery.py": "3bb57b9e083f3f2219190de8ccaec68138f71202712936ebeb29cc84d03b8701",
+    "piper_contact_memory.py": "f608d6647046f6fa02d8ad5e87fad10853837520a6a0fae2043c7ad260a06c4c",
+    "piper_grip_guard.py": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb",
+    "piper_task.py": "589d6e4a4466bbda92ec6617508b3e06b635c237d0229399e44e301300cdeef5"
+  },
+  "attempts": [
+    {
+      "file": "friction080-mass040-layout00--recovery.json.gz",
+      "valid": true,
+      "success": true,
+      "completion": 15.470999999996865,
+      "reason": "success",
+      "abort": null,
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.179999999999243,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "acquisition_qualified",
+          "t_seconds": 11.77999999999891,
+          "reason": "sustained_table_free_probe"
+        }
+      ],
+      "sha256": "4d94e346940e300c6231aa31532ada7ea7b3fef90673f3b9f658023c258c9e34"
+    },
+    {
+      "file": "friction080-mass040-layout01--recovery.json.gz",
+      "valid": true,
+      "success": true,
+      "completion": 15.450999999996876,
+      "reason": "success",
+      "abort": null,
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.159999999999254,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "acquisition_qualified",
+          "t_seconds": 11.759999999998922,
+          "reason": "sustained_table_free_probe"
+        }
+      ],
+      "sha256": "8ffb082e6a4eb1b176b209649dd62b7bccc22328dfd2c4c9ce2b1e6b23f2c8d6"
+    },
+    {
+      "file": "friction080-mass060-layout00--recovery.json.gz",
+      "valid": true,
+      "success": true,
+      "completion": 15.849999999996655,
+      "reason": "success",
+      "abort": null,
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.179999999999243,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "acquisition_qualified",
+          "t_seconds": 11.7999999999989,
+          "reason": "sustained_table_free_probe"
+        },
+        {
+          "type": "slowdown_started",
+          "t_seconds": 11.919999999998833,
+          "reason": "persistent_local_offset_trend"
+        },
+        {
+          "type": "reassessment_started",
+          "t_seconds": 11.999999999998789,
+          "reason": "persistent_bilateral_contact_loss"
+        },
+        {
+          "type": "carry_resumed",
+          "t_seconds": 12.239999999998656,
+          "reason": "sustained_loaded_relative_settling"
+        },
+        {
+          "type": "speed_restoration_started",
+          "t_seconds": 12.359999999998589,
+          "reason": "sustained_loaded_relative_stability_after_resume"
+        },
+        {
+          "type": "full_speed_restored",
+          "t_seconds": 12.659999999998423,
+          "reason": "bounded_stable_time_ramp_complete"
+        }
+      ],
+      "sha256": "557931ac70463d17ca696104e412a337a11c69dda1370f9b47a03acf08fe05b4"
+    },
+    {
+      "file": "friction080-mass060-layout01--recovery.json.gz",
+      "valid": true,
+      "success": true,
+      "completion": 16.232999999996856,
+      "reason": "success",
+      "abort": null,
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.159999999999254,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "acquisition_qualified",
+          "t_seconds": 11.77999999999891,
+          "reason": "sustained_table_free_probe"
+        },
+        {
+          "type": "slowdown_started",
+          "t_seconds": 11.899999999998844,
+          "reason": "persistent_local_offset_trend"
+        },
+        {
+          "type": "reassessment_started",
+          "t_seconds": 11.919999999998833,
+          "reason": "persistent_bilateral_contact_loss"
+        },
+        {
+          "type": "carry_resumed",
+          "t_seconds": 12.1599999999987,
+          "reason": "sustained_loaded_relative_settling"
+        },
+        {
+          "type": "slowdown_started",
+          "t_seconds": 12.3399999999986,
+          "reason": "persistent_local_offset_trend"
+        },
+        {
+          "type": "reassessment_started",
+          "t_seconds": 12.459999999998534,
+          "reason": "bounded_slowdown_complete"
+        },
+        {
+          "type": "carry_resumed",
+          "t_seconds": 12.679999999998412,
+          "reason": "sustained_loaded_relative_settling"
+        },
+        {
+          "type": "speed_restoration_started",
+          "t_seconds": 12.799999999998345,
+          "reason": "sustained_loaded_relative_stability_after_resume"
+        },
+        {
+          "type": "full_speed_restored",
+          "t_seconds": 13.139999999998157,
+          "reason": "bounded_stable_time_ramp_complete"
+        }
+      ],
+      "sha256": "6e42f0dc798832771078f16d8e8f5c971f0c0ecae8e85504674dd46f3560c1a1"
+    },
+    {
+      "file": "friction055-mass040-layout00--recovery.json.gz",
+      "valid": true,
+      "success": true,
+      "completion": 15.847999999996656,
+      "reason": "success",
+      "abort": null,
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.179999999999243,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "acquisition_qualified",
+          "t_seconds": 11.77999999999891,
+          "reason": "sustained_table_free_probe"
+        },
+        {
+          "type": "slowdown_started",
+          "t_seconds": 11.919999999998833,
+          "reason": "persistent_local_offset_trend"
+        },
+        {
+          "type": "reassessment_started",
+          "t_seconds": 12.039999999998766,
+          "reason": "bounded_slowdown_complete"
+        },
+        {
+          "type": "carry_resumed",
+          "t_seconds": 12.259999999998644,
+          "reason": "sustained_loaded_relative_settling"
+        },
+        {
+          "type": "speed_restoration_started",
+          "t_seconds": 12.379999999998578,
+          "reason": "sustained_loaded_relative_stability_after_resume"
+        },
+        {
+          "type": "full_speed_restored",
+          "t_seconds": 12.679999999998412,
+          "reason": "bounded_stable_time_ramp_complete"
+        }
+      ],
+      "sha256": "cfe61284b12e2f95a7a27aa807e6f09fafddcd7009ee3f095560e2e4f4f4682d"
+    },
+    {
+      "file": "friction055-mass040-layout01--recovery.json.gz",
+      "valid": true,
+      "success": true,
+      "completion": 15.833999999996664,
+      "reason": "success",
+      "abort": null,
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.159999999999254,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "acquisition_qualified",
+          "t_seconds": 11.759999999998922,
+          "reason": "sustained_table_free_probe"
+        },
+        {
+          "type": "slowdown_started",
+          "t_seconds": 11.879999999998855,
+          "reason": "persistent_local_offset_trend"
+        },
+        {
+          "type": "reassessment_started",
+          "t_seconds": 11.999999999998789,
+          "reason": "bounded_slowdown_complete"
+        },
+        {
+          "type": "carry_resumed",
+          "t_seconds": 12.219999999998667,
+          "reason": "sustained_loaded_relative_settling"
+        },
+        {
+          "type": "speed_restoration_started",
+          "t_seconds": 12.3399999999986,
+          "reason": "sustained_loaded_relative_stability_after_resume"
+        },
+        {
+          "type": "full_speed_restored",
+          "t_seconds": 12.639999999998434,
+          "reason": "bounded_stable_time_ramp_complete"
+        }
+      ],
+      "sha256": "5328e2917ef7131778b37eb462f8a8f08be901bf1344778624f11bc85c2bd6cd"
+    },
+    {
+      "file": "friction055-mass060-layout00--recovery.json.gz",
+      "valid": true,
+      "success": false,
+      "completion": null,
+      "reason": "timeout",
+      "abort": "retry_budget_exhausted:object_not_following",
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.179999999999243,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "alarm",
+          "t_seconds": 11.559999999999032,
+          "reason": "object_not_following"
+        },
+        {
+          "type": "retry_started",
+          "t_seconds": 11.559999999999032,
+          "reason": "supported_object_only"
+        },
+        {
+          "type": "retry_completed",
+          "t_seconds": 13.219999999998112,
+          "reason": "open_recenter_complete"
+        },
+        {
+          "type": "probe_started",
+          "t_seconds": 14.099999999997625,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "alarm",
+          "t_seconds": 14.479999999997414,
+          "reason": "object_not_following"
+        },
+        {
+          "type": "abort",
+          "t_seconds": 14.479999999997414,
+          "reason": "retry_budget_exhausted:object_not_following"
+        }
+      ],
+      "sha256": "bfda3c927f25bef8baa80d5bf1cb65baa656c0960f044c85e2309463c49c55ba"
+    },
+    {
+      "file": "friction055-mass060-layout01--recovery.json.gz",
+      "valid": true,
+      "success": false,
+      "completion": null,
+      "reason": "timeout",
+      "abort": "retry_budget_exhausted:relative_slip",
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.159999999999254,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "alarm",
+          "t_seconds": 11.539999999999043,
+          "reason": "object_not_following"
+        },
+        {
+          "type": "retry_started",
+          "t_seconds": 11.539999999999043,
+          "reason": "supported_object_only"
+        },
+        {
+          "type": "retry_completed",
+          "t_seconds": 13.199999999998123,
+          "reason": "open_recenter_complete"
+        },
+        {
+          "type": "probe_started",
+          "t_seconds": 14.079999999997636,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "alarm",
+          "t_seconds": 14.459999999997425,
+          "reason": "relative_slip"
+        },
+        {
+          "type": "abort",
+          "t_seconds": 14.459999999997425,
+          "reason": "retry_budget_exhausted:relative_slip"
+        }
+      ],
+      "sha256": "4f41dceda43815ba131363689d3594d4b0bcdf95ceecaed549174c1808b1dd17"
+    },
+    {
+      "file": "friction015-mass040-layout00--recovery.json.gz",
+      "valid": true,
+      "success": false,
+      "completion": null,
+      "reason": "timeout",
+      "abort": "retry_budget_exhausted:object_not_following",
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.179999999999243,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "alarm",
+          "t_seconds": 11.519999999999055,
+          "reason": "object_not_following"
+        },
+        {
+          "type": "retry_started",
+          "t_seconds": 11.519999999999055,
+          "reason": "supported_object_only"
+        },
+        {
+          "type": "retry_completed",
+          "t_seconds": 13.179999999998135,
+          "reason": "open_recenter_complete"
+        },
+        {
+          "type": "probe_started",
+          "t_seconds": 14.059999999997647,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "alarm",
+          "t_seconds": 14.419999999997447,
+          "reason": "object_not_following"
+        },
+        {
+          "type": "abort",
+          "t_seconds": 14.419999999997447,
+          "reason": "retry_budget_exhausted:object_not_following"
+        }
+      ],
+      "sha256": "bcc037799872a290e1cb8fceec0411aa5b69966b9070c22a20589db4444b14a4"
+    },
+    {
+      "file": "friction015-mass040-layout00--recovery_carry.json.gz",
+      "valid": true,
+      "success": false,
+      "completion": null,
+      "reason": "timeout",
+      "abort": "retry_budget_exhausted:object_not_following",
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.179999999999243,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "alarm",
+          "t_seconds": 11.519999999999055,
+          "reason": "object_not_following"
+        },
+        {
+          "type": "retry_started",
+          "t_seconds": 11.519999999999055,
+          "reason": "supported_object_only"
+        },
+        {
+          "type": "retry_completed",
+          "t_seconds": 13.179999999998135,
+          "reason": "open_recenter_complete"
+        },
+        {
+          "type": "probe_started",
+          "t_seconds": 14.059999999997647,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "alarm",
+          "t_seconds": 14.419999999997447,
+          "reason": "object_not_following"
+        },
+        {
+          "type": "abort",
+          "t_seconds": 14.419999999997447,
+          "reason": "retry_budget_exhausted:object_not_following"
+        }
+      ],
+      "sha256": "53934ac1484c87c3369e883e2b4237f917500f8d91e9122a0fbc71d918c20850"
+    },
+    {
+      "file": "friction015-mass040-layout01--recovery.json.gz",
+      "valid": true,
+      "success": false,
+      "completion": null,
+      "reason": "timeout",
+      "abort": "unchanged_grasp_not_following",
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.159999999999254,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "alarm",
+          "t_seconds": 11.499999999999066,
+          "reason": "object_not_following"
+        },
+        {
+          "type": "unchanged_retry_refused",
+          "t_seconds": 11.499999999999066,
+          "reason": "stable_closed_supported_grasp_did_not_follow"
+        },
+        {
+          "type": "abort",
+          "t_seconds": 11.499999999999066,
+          "reason": "unchanged_grasp_not_following"
+        }
+      ],
+      "sha256": "935c44b9344a55223531de3751d3c56750ff0bd4ce5f0b619fd62dbbf650de0b"
+    },
+    {
+      "file": "friction015-mass060-layout00--recovery.json.gz",
+      "valid": true,
+      "success": false,
+      "completion": null,
+      "reason": "timeout",
+      "abort": "unchanged_grasp_not_following",
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.179999999999243,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "alarm",
+          "t_seconds": 11.539999999999043,
+          "reason": "object_not_following"
+        },
+        {
+          "type": "unchanged_retry_refused",
+          "t_seconds": 11.539999999999043,
+          "reason": "stable_closed_supported_grasp_did_not_follow"
+        },
+        {
+          "type": "abort",
+          "t_seconds": 11.539999999999043,
+          "reason": "unchanged_grasp_not_following"
+        }
+      ],
+      "sha256": "88fafa4d88baccc2771c8899710b40e193d19cad121f74bb88e6ab6b643a64db"
+    },
+    {
+      "file": "friction015-mass060-layout00--recovery_carry.json.gz",
+      "valid": true,
+      "success": false,
+      "completion": null,
+      "reason": "timeout",
+      "abort": "retry_budget_exhausted:object_not_following",
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.179999999999243,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "alarm",
+          "t_seconds": 11.539999999999043,
+          "reason": "object_not_following"
+        },
+        {
+          "type": "retry_started",
+          "t_seconds": 11.539999999999043,
+          "reason": "supported_object_only"
+        },
+        {
+          "type": "retry_completed",
+          "t_seconds": 13.199999999998123,
+          "reason": "open_recenter_complete"
+        },
+        {
+          "type": "probe_started",
+          "t_seconds": 14.079999999997636,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "alarm",
+          "t_seconds": 14.439999999997436,
+          "reason": "object_not_following"
+        },
+        {
+          "type": "abort",
+          "t_seconds": 14.439999999997436,
+          "reason": "retry_budget_exhausted:object_not_following"
+        }
+      ],
+      "sha256": "89ecb65f3d848182195bf0f5fdf16b12fa8dc2dbf0c30dee6087b45c081c0d95"
+    },
+    {
+      "file": "friction015-mass060-layout01--recovery.json.gz",
+      "valid": true,
+      "success": false,
+      "completion": null,
+      "reason": "timeout",
+      "abort": "unchanged_grasp_not_following",
+      "events": [
+        {
+          "type": "probe_started",
+          "t_seconds": 11.159999999999254,
+          "reason": "slow_load_bearing_check"
+        },
+        {
+          "type": "alarm",
+          "t_seconds": 11.499999999999066,
+          "reason": "object_not_following"
+        },
+        {
+          "type": "unchanged_retry_refused",
+          "t_seconds": 11.499999999999066,
+          "reason": "stable_closed_supported_grasp_did_not_follow"
+        },
+        {
+          "type": "abort",
+          "t_seconds": 11.499999999999066,
+          "reason": "unchanged_grasp_not_following"
+        }
+      ],
+      "sha256": "5398daa7f069a013f4596d112e2c360f631876611c83e413f77b669f0a5cd023"
+    }
+  ]
+}

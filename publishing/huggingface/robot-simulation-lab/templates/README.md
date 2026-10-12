@@ -65,10 +65,12 @@ Space entry sends commands to a physical robot.
 
 {{PIPER_GRIP_SUMMARY}}
 
+{{PIPER_RECOVERY_SUMMARY}}
+
 {{PIPER_CONTACT_SUMMARY}}
 
-The reviewed publication now permits at most **256 MiB of stored files**, so the v0.3
-comparison can retain all previous evidence alongside its 84 new full attempts.
+The reviewed publication now permits at most **256 MiB of stored files**, to retain prior
+evidence alongside complete new comparisons and their failed attempts.
 The **32 MiB per-file limit** and bounded single-member gzip decoding remain in place.
 This is a packaging limit, not a hardware or training memory requirement.
 

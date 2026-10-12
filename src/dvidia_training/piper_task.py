@@ -399,14 +399,17 @@ class PiperTaskPolicy:
         return self.env.pose_action(goal.tolist(), orientation, jaw)
 
 
-def run_episode(assets, config=None, *, seed=0, control='placement', arm_tape=None, policy_mode='baseline'):
+def run_episode(assets, config=None, *, seed=0, control='placement', arm_tape=None, policy_mode='baseline', record_step_timings=False):
     config = _config(config)
+    if type(record_step_timings) is not bool:
+        raise ValueError('record_step_timings must be a boolean')
     if control not in ('placement', 'replay_open_jaw', 'hold'):
         raise ValueError('Unknown PiPER task control')
-    if policy_mode not in ('baseline', 'guarded', 'probe_only', 'history'):
-        raise ValueError('PiPER policy mode must be baseline, guarded, probe_only or history')
+    if policy_mode not in ('baseline', 'guarded', 'probe_only', 'history', 'recovery_carry', 'recovery'):
+        raise ValueError('Unknown PiPER policy mode')
     from . import piper_grip_guard as grip_guard
     from . import piper_contact_memory as contact_memory
+    from . import piper_contact_recovery as contact_recovery
     started, latencies, environment, phase = time.perf_counter(), [], None, 'validation'
     result = {'schema': SCHEMA, 'profile': PROFILE, 'scope': SCOPE, 'physical_robot_ready': False,
               'seed': seed, 'control': control, 'policy_mode': policy_mode, 'config': asdict(config), 'timestep_seconds': config.timestep,
@@ -417,10 +420,14 @@ def run_episode(assets, config=None, *, seed=0, control='placement', arm_tape=No
     result['implementation_sha256'] = {name: sha256((source/name).read_bytes()).hexdigest()
                                        for name in ('piper_task.py', 'robot_profiles.py', 'robot_profiles.lock.json', 'reference_task.py', 'reference_sim.py')}
     result['policy_implementation_sha256'] = {'piper_grip_guard.py': sha256((source/'piper_grip_guard.py').read_bytes()).hexdigest()}
-    memory_mode = policy_mode in ('probe_only', 'history')
+    recovery_mode = policy_mode in contact_recovery.MODES
+    memory_mode = policy_mode in ('probe_only', 'history') or recovery_mode
     if memory_mode:
         result['policy_implementation_sha256']['piper_contact_memory.py'] = sha256((source/'piper_contact_memory.py').read_bytes()).hexdigest()
-    result['grip_guard'] = (contact_memory.inactive_summary(policy_mode) if memory_mode else grip_guard.inactive_summary(policy_mode))
+    if recovery_mode:
+        result['policy_implementation_sha256']['piper_contact_recovery.py'] = sha256((source/'piper_contact_recovery.py').read_bytes()).hexdigest()
+    result['grip_guard'] = (contact_recovery.inactive_summary(policy_mode) if recovery_mode else
+                           contact_memory.inactive_summary(policy_mode) if memory_mode else grip_guard.inactive_summary(policy_mode))
     policy = None
     try:
         if control == 'replay_open_jaw':
@@ -446,7 +453,8 @@ def run_episode(assets, config=None, *, seed=0, control='placement', arm_tape=No
                                       'geom_body_names': [mj.mj_id2name(environment.model, mj.mjtObj.mjOBJ_BODY, int(body)) for body in environment.model.geom_bodyid]}
         result['trajectory'].append(observation)
         result['timing']['setup_seconds'] = time.perf_counter()-started
-        policy = (contact_memory.ContactMemoryPiperTaskPolicy(environment, policy_mode) if memory_mode and control == 'placement'
+        policy = (contact_recovery.ContactRecoveryPiperTaskPolicy(environment, policy_mode) if recovery_mode and control == 'placement'
+                  else contact_memory.ContactMemoryPiperTaskPolicy(environment, policy_mode) if memory_mode and control == 'placement'
                   else grip_guard.GuardedPiperTaskPolicy(environment) if policy_mode == 'guarded' and control == 'placement'
                   else PiperTaskPolicy(environment))
         hold, phase = observation['joint_position_rad'], 'rollout'
@@ -481,6 +489,8 @@ def run_episode(assets, config=None, *, seed=0, control='placement', arm_tape=No
                             control_boundaries=len(latencies), missed_control_boundaries=sum(x > config.control_dt for x in latencies),
                             simulated_seconds_per_wall_second=result['simulated_seconds']/elapsed,
                             scope='Wall computation including setup/IK/contact/state snapshots; not real-time sensor-to-actuator latency')
+    if record_step_timings:
+        result['timing']['control_step_samples_seconds'] = list(latencies)
     return result
 
 
