@@ -255,7 +255,7 @@ async function main() {
     assert(probe.latest.metrics.samples_retained <= 2048, 'Worker timing retention must remain bounded');
     assert(probe.states.length <= 15000 && probe.commands.length <= 2000, 'Harness retention must remain bounded');
     const downloadPending = page.waitForEvent('download');
-    await page.getByRole('button', {name: 'Download session receipt', exact: true}).click();
+    await page.getByRole('button', {name: 'Download session data', exact: true}).click();
     const download = await downloadPending;
     const receiptPath = path.join(output, 'session-receipt.json'); await download.saveAs(receiptPath);
     const receipt = JSON.parse(await fs.readFile(receiptPath, 'utf8'));
