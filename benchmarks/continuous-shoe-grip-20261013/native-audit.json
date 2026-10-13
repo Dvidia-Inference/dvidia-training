@@ -1,0 +1,725 @@
+{
+  "schema": "dvidia.continuous-shoe-grip-native-audit/v1",
+  "source_commit": "af8933994b4626e28a0554abc782ae9d22cff06c",
+  "input_root": "runs/grip-v02/frozen/lab",
+  "protocol_sha256": "0593b55a937a4157477e4d3e1c911b6958687ef67b23492465a9d0c39e2429e6",
+  "integrity_sha256": "827cd21905080fb6e60a93484d76df095ff74342c09b399136d6906709bd5998",
+  "fresh_fixture_sha256": "41ab821fa79596d57228b93c2b42c17f6df4b4bc42e0f25818cb472cb221e6e7",
+  "fresh_simulations_executed_during_audit": 0,
+  "compiled_model_checks_without_physics_steps": 10,
+  "implementation_files_verified": {
+    "continuous_grip.py": "c9a3e2ed8f0beb9974e346899ca36ce3c7a0957a09dc234c47ba97a6d6e097da",
+    "grip_protocol.py": "762c5011cb242ded7355dd3d9b97dd465c0e14e7ef3977ed12e0037017fd0532",
+    "grip_protocol_v02.json": "41ab821fa79596d57228b93c2b42c17f6df4b4bc42e0f25818cb472cb221e6e7",
+    "grip_benchmark.py": "236ebcd0df1547bf0146675289d57c535d67a3aa2c051456bc9e8b4542bf59ac",
+    "tool_reach.py": "812072388b518fb11999dafddd15655f3c750fa84fe09047c55a78c2b509e68f",
+    "workstation.py": "2a6aa6686b5b273efcfb21156952df8ceca88d991674cd17df92f2dccc11b701",
+    "asset_library.py": "12520ca13b7806004be37a0d7e0d1e023c90410c1eba899296fdcd5b28fdc7f7",
+    "asset_catalog.json": "592f363389a96fef7f9223737aa72a2f1a74f400238924bf6790ec5bfd3302b7",
+    "robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d",
+    "prerequisite_benchmark.py": "c78efb24263300c56f50413aa65333e4fbf1b99403aa816de9bf4cb5656a3811",
+    "asset_preview.py": "12f4806162504a3c8773b10b516d6b7abb05f670a1f5817be144ea98fc1d25d8",
+    "grip_lab.html": "01dfbe1e687ef53b095d74b0ced1364243e69c501eafca552c485afba5954c7a",
+    "grip_lab.js": "74292368822cb58e0b073e9085fdcd96979fd3421eec95c3cfee4e8fab20380f",
+    "grip_lab.bundle.js": "fb344678075ba0ddba43f2b62519ada05dfd3ae6b2f2b3878a3b7bc5f0b33a72"
+  },
+  "export_files_verified": 86,
+  "binary_payloads_verified": 17,
+  "native_trace_ticks_verified": 148610,
+  "replay_frames_verified": 14861,
+  "valid_attempts": 20,
+  "total_attempts": 20,
+  "strict_successes": {
+    "baseline": 2,
+    "recovery": 2
+  },
+  "successful_cases": {
+    "baseline": [
+      "fresh-05",
+      "fresh-08"
+    ],
+    "recovery": [
+      "fresh-05",
+      "fresh-08"
+    ]
+  },
+  "paired_gains": 0,
+  "paired_losses": 0,
+  "appropriate_deferrals": {
+    "baseline": 2,
+    "recovery": 2
+  },
+  "bilateral_loss_to_detector_ms": {
+    "count": 9,
+    "min": 20.0,
+    "median": 30.0,
+    "max": 52.0
+  },
+  "bilateral_loss_to_packet_ms": {
+    "count": 9,
+    "min": 20.0,
+    "median": 30.0,
+    "max": 52.0
+  },
+  "detector_to_packet_ms": {
+    "count": 9,
+    "min": 0.0,
+    "median": 0.0,
+    "max": 0.0
+  },
+  "recovery_requests_by_reason": {
+    "bilateral_contact_lost": 9,
+    "bilateral_acquisition_failed": 3
+  },
+  "issued_recovery_packets": 12,
+  "completed_after_recovery": 0,
+  "latency_scope": "Nine contact-loss observations use the latest uninterrupted bilateral-contact gap before a sampled alarm. Three failed 20 ms decision samples can include unobserved native recoveries between samples. Same-timestamp command issue means a pre-step control packet, not zero physical response time. No camera/transport/hardware latency is modeled. Acquisition failures have no prior acquired-loss origin and are excluded.",
+  "baseline_timing_scope": "The four paired intervals share identical native trajectories through the v0.2 intervention. Baseline intervals end at a scheduled terminal task check, not a contact-loss detector. These intervals are not a physical stopping, recovery-speed or sensor-latency comparison.",
+  "comparison_scope": "Ten deterministic declared parameter cases, one execution per policy. The same two cases pass both policies; no observed completion improvement. Rigid synthetic shoes and privileged contact/state observations; no hardware safety or learned-policy evidence.",
+  "attempts": [
+    {
+      "id": "fresh-01-baseline",
+      "valid": true,
+      "strict_success": false,
+      "trace_ticks": 6300,
+      "final_strict_ticks": 0,
+      "appropriate_deferral": false,
+      "strict_condition_losses": [],
+      "controller_loss_events": 0,
+      "compiled_model_sha256": "f5d1a4e3a9de41df23fecb0b18a57bd5bf3b8204d8da536d67b320267e646c28"
+    },
+    {
+      "id": "fresh-01-recovery",
+      "valid": true,
+      "strict_success": false,
+      "trace_ticks": 9220,
+      "final_strict_ticks": 0,
+      "appropriate_deferral": false,
+      "strict_condition_losses": [],
+      "controller_loss_events": 2,
+      "compiled_model_sha256": "f5d1a4e3a9de41df23fecb0b18a57bd5bf3b8204d8da536d67b320267e646c28"
+    },
+    {
+      "id": "fresh-02-baseline",
+      "valid": true,
+      "strict_success": false,
+      "trace_ticks": 6300,
+      "final_strict_ticks": 0,
+      "appropriate_deferral": false,
+      "strict_condition_losses": [],
+      "controller_loss_events": 0,
+      "compiled_model_sha256": "318c16463436972f46a2108918a93766774844cdb984a4d183a913c51f98e735"
+    },
+    {
+      "id": "fresh-02-recovery",
+      "valid": true,
+      "strict_success": false,
+      "trace_ticks": 9280,
+      "final_strict_ticks": 0,
+      "appropriate_deferral": false,
+      "strict_condition_losses": [],
+      "controller_loss_events": 2,
+      "compiled_model_sha256": "318c16463436972f46a2108918a93766774844cdb984a4d183a913c51f98e735"
+    },
+    {
+      "id": "fresh-03-baseline",
+      "valid": true,
+      "strict_success": false,
+      "trace_ticks": 6300,
+      "final_strict_ticks": 0,
+      "appropriate_deferral": false,
+      "strict_condition_losses": [],
+      "controller_loss_events": 0,
+      "compiled_model_sha256": "a9f10046797c9d012f80dc379ad3430d6f981cbe9971bcc2004182a593df392a"
+    },
+    {
+      "id": "fresh-03-recovery",
+      "valid": true,
+      "strict_success": false,
+      "trace_ticks": 8800,
+      "final_strict_ticks": 0,
+      "appropriate_deferral": false,
+      "strict_condition_losses": [],
+      "controller_loss_events": 2,
+      "compiled_model_sha256": "a9f10046797c9d012f80dc379ad3430d6f981cbe9971bcc2004182a593df392a"
+    },
+    {
+      "id": "fresh-04-baseline",
+      "valid": true,
+      "strict_success": false,
+      "trace_ticks": 9900,
+      "final_strict_ticks": 0,
+      "appropriate_deferral": false,
+      "strict_condition_losses": [],
+      "controller_loss_events": 0,
+      "compiled_model_sha256": "3a1fcc03bf3dce1cb868bdf6c2a3e2d7b0da68e544e5cd8b9f04ef128afd5256"
+    },
+    {
+      "id": "fresh-04-recovery",
+      "valid": true,
+      "strict_success": false,
+      "trace_ticks": 12840,
+      "final_strict_ticks": 0,
+      "appropriate_deferral": false,
+      "strict_condition_losses": [],
+      "controller_loss_events": 2,
+      "compiled_model_sha256": "3a1fcc03bf3dce1cb868bdf6c2a3e2d7b0da68e544e5cd8b9f04ef128afd5256"
+    },
+    {
+      "id": "fresh-05-baseline",
+      "valid": true,
+      "strict_success": true,
+      "trace_ticks": 9900,
+      "final_strict_ticks": 250,
+      "appropriate_deferral": false,
+      "strict_condition_losses": [
+        {
+          "onset_s": 19.076,
+          "requalified_s": 19.338,
+          "max_failed_ticks": 82,
+          "sustained": true,
+          "detected_s": null,
+          "recovery_request_s": null,
+          "issued_command_s": null,
+          "detection_latency_s": null,
+          "request_latency_s": null,
+          "command_issue_latency_s": null
+        }
+      ],
+      "controller_loss_events": 0,
+      "compiled_model_sha256": "6b7eb681f79bf91b5d18fbb2179ca4a377059ecfe3c970352ce0bdde9d2f8d25"
+    },
+    {
+      "id": "fresh-05-recovery",
+      "valid": true,
+      "strict_success": true,
+      "trace_ticks": 9900,
+      "final_strict_ticks": 250,
+      "appropriate_deferral": false,
+      "strict_condition_losses": [
+        {
+          "onset_s": 19.076,
+          "requalified_s": 19.338,
+          "max_failed_ticks": 82,
+          "sustained": true,
+          "detected_s": null,
+          "recovery_request_s": null,
+          "issued_command_s": null,
+          "detection_latency_s": null,
+          "request_latency_s": null,
+          "command_issue_latency_s": null
+        }
+      ],
+      "controller_loss_events": 0,
+      "compiled_model_sha256": "6b7eb681f79bf91b5d18fbb2179ca4a377059ecfe3c970352ce0bdde9d2f8d25"
+    },
+    {
+      "id": "fresh-06-baseline",
+      "valid": true,
+      "strict_success": false,
+      "trace_ticks": 9900,
+      "final_strict_ticks": 0,
+      "appropriate_deferral": false,
+      "strict_condition_losses": [],
+      "controller_loss_events": 0,
+      "compiled_model_sha256": "b1ff8da22d0d7e5caca4cfe0a2731ed3d32eb9ce9424482ccba6d05c236d3b1b"
+    },
+    {
+      "id": "fresh-06-recovery",
+      "valid": true,
+      "strict_success": false,
+      "trace_ticks": 12850,
+      "final_strict_ticks": 0,
+      "appropriate_deferral": false,
+      "strict_condition_losses": [],
+      "controller_loss_events": 2,
+      "compiled_model_sha256": "b1ff8da22d0d7e5caca4cfe0a2731ed3d32eb9ce9424482ccba6d05c236d3b1b"
+    },
+    {
+      "id": "fresh-07-baseline",
+      "valid": true,
+      "strict_success": false,
+      "trace_ticks": 6300,
+      "final_strict_ticks": 0,
+      "appropriate_deferral": false,
+      "strict_condition_losses": [],
+      "controller_loss_events": 0,
+      "compiled_model_sha256": "a226396c8554634fb2f2f338a191883d8d9751a6b21e395b08acfb9571f7224a"
+    },
+    {
+      "id": "fresh-07-recovery",
+      "valid": true,
+      "strict_success": false,
+      "trace_ticks": 9020,
+      "final_strict_ticks": 0,
+      "appropriate_deferral": false,
+      "strict_condition_losses": [],
+      "controller_loss_events": 2,
+      "compiled_model_sha256": "a226396c8554634fb2f2f338a191883d8d9751a6b21e395b08acfb9571f7224a"
+    },
+    {
+      "id": "fresh-08-baseline",
+      "valid": true,
+      "strict_success": true,
+      "trace_ticks": 9900,
+      "final_strict_ticks": 250,
+      "appropriate_deferral": false,
+      "strict_condition_losses": [],
+      "controller_loss_events": 0,
+      "compiled_model_sha256": "ba0bf0302d7e3df567f7a2f39fb9548abf13063ff509b2c03a6e4027779c97e1"
+    },
+    {
+      "id": "fresh-08-recovery",
+      "valid": true,
+      "strict_success": true,
+      "trace_ticks": 9900,
+      "final_strict_ticks": 250,
+      "appropriate_deferral": false,
+      "strict_condition_losses": [],
+      "controller_loss_events": 0,
+      "compiled_model_sha256": "ba0bf0302d7e3df567f7a2f39fb9548abf13063ff509b2c03a6e4027779c97e1"
+    },
+    {
+      "id": "fresh-09-baseline",
+      "valid": true,
+      "strict_success": false,
+      "trace_ticks": 500,
+      "final_strict_ticks": 0,
+      "appropriate_deferral": true,
+      "strict_condition_losses": [],
+      "controller_loss_events": 0,
+      "compiled_model_sha256": "e3b5f8396853c503c1e72f4421aae96470e0644c319d57973456144c419f3b32"
+    },
+    {
+      "id": "fresh-09-recovery",
+      "valid": true,
+      "strict_success": false,
+      "trace_ticks": 500,
+      "final_strict_ticks": 0,
+      "appropriate_deferral": true,
+      "strict_condition_losses": [],
+      "controller_loss_events": 0,
+      "compiled_model_sha256": "e3b5f8396853c503c1e72f4421aae96470e0644c319d57973456144c419f3b32"
+    },
+    {
+      "id": "fresh-10-baseline",
+      "valid": true,
+      "strict_success": false,
+      "trace_ticks": 500,
+      "final_strict_ticks": 0,
+      "appropriate_deferral": true,
+      "strict_condition_losses": [],
+      "controller_loss_events": 0,
+      "compiled_model_sha256": "2efcfecbebbf668e9c355ab186f1fa48aa7404bb92ad11cdf1f7c78d91a7da78"
+    },
+    {
+      "id": "fresh-10-recovery",
+      "valid": true,
+      "strict_success": false,
+      "trace_ticks": 500,
+      "final_strict_ticks": 0,
+      "appropriate_deferral": true,
+      "strict_condition_losses": [],
+      "controller_loss_events": 0,
+      "compiled_model_sha256": "2efcfecbebbf668e9c355ab186f1fa48aa7404bb92ad11cdf1f7c78d91a7da78"
+    }
+  ],
+  "pairs": [
+    {
+      "case_id": "fresh-01",
+      "identical_exported_model": true,
+      "compiled_model_verified": true,
+      "baseline_success": false,
+      "recovery_success": false,
+      "first_trace_divergence_s": 11.022,
+      "first_recovery_request_s": 11.02,
+      "shared_preintervention_native_trace": true
+    },
+    {
+      "case_id": "fresh-02",
+      "identical_exported_model": true,
+      "compiled_model_verified": true,
+      "baseline_success": false,
+      "recovery_success": false,
+      "first_trace_divergence_s": 11.438,
+      "first_recovery_request_s": 11.18,
+      "shared_preintervention_native_trace": true
+    },
+    {
+      "case_id": "fresh-03",
+      "identical_exported_model": true,
+      "compiled_model_verified": true,
+      "baseline_success": false,
+      "recovery_success": false,
+      "first_trace_divergence_s": 10.606,
+      "first_recovery_request_s": 10.6,
+      "shared_preintervention_native_trace": true
+    },
+    {
+      "case_id": "fresh-04",
+      "identical_exported_model": true,
+      "compiled_model_verified": true,
+      "baseline_success": false,
+      "recovery_success": false,
+      "first_trace_divergence_s": 18.228,
+      "first_recovery_request_s": 18.22,
+      "shared_preintervention_native_trace": true
+    },
+    {
+      "case_id": "fresh-05",
+      "identical_exported_model": true,
+      "compiled_model_verified": true,
+      "baseline_success": true,
+      "recovery_success": true,
+      "first_trace_divergence_s": null,
+      "first_recovery_request_s": null,
+      "shared_preintervention_native_trace": true
+    },
+    {
+      "case_id": "fresh-06",
+      "identical_exported_model": true,
+      "compiled_model_verified": true,
+      "baseline_success": false,
+      "recovery_success": false,
+      "first_trace_divergence_s": 18.444,
+      "first_recovery_request_s": 18.3,
+      "shared_preintervention_native_trace": true
+    },
+    {
+      "case_id": "fresh-07",
+      "identical_exported_model": true,
+      "compiled_model_verified": true,
+      "baseline_success": false,
+      "recovery_success": false,
+      "first_trace_divergence_s": 10.606,
+      "first_recovery_request_s": 10.6,
+      "shared_preintervention_native_trace": true
+    },
+    {
+      "case_id": "fresh-08",
+      "identical_exported_model": true,
+      "compiled_model_verified": true,
+      "baseline_success": true,
+      "recovery_success": true,
+      "first_trace_divergence_s": null,
+      "first_recovery_request_s": null,
+      "shared_preintervention_native_trace": true
+    },
+    {
+      "case_id": "fresh-09",
+      "identical_exported_model": true,
+      "compiled_model_verified": true,
+      "baseline_success": false,
+      "recovery_success": false,
+      "first_trace_divergence_s": null,
+      "first_recovery_request_s": null,
+      "shared_preintervention_native_trace": true
+    },
+    {
+      "case_id": "fresh-10",
+      "identical_exported_model": true,
+      "compiled_model_verified": true,
+      "baseline_success": false,
+      "recovery_success": false,
+      "first_trace_divergence_s": null,
+      "first_recovery_request_s": null,
+      "shared_preintervention_native_trace": true
+    }
+  ],
+  "contact_loss_events": [
+    {
+      "attempt": "fresh-01-recovery",
+      "reason": "bilateral_contact_lost",
+      "latest_native_loss_s": 10.994,
+      "detector_s": 11.02,
+      "request_s": 11.02,
+      "packet_s": 11.02,
+      "native_loss_to_detector_ms": 26.0,
+      "native_loss_to_packet_ms": 26.0,
+      "detector_to_packet_ms": 0.0,
+      "trace_verified": true,
+      "three_failed_decision_samples_verified": true
+    },
+    {
+      "attempt": "fresh-01-recovery",
+      "reason": "bilateral_contact_lost",
+      "latest_native_loss_s": 16.306,
+      "detector_s": 16.34,
+      "request_s": 16.34,
+      "packet_s": 16.34,
+      "native_loss_to_detector_ms": 34.0,
+      "native_loss_to_packet_ms": 34.0,
+      "detector_to_packet_ms": 0.0,
+      "trace_verified": true,
+      "three_failed_decision_samples_verified": true
+    },
+    {
+      "attempt": "fresh-02-recovery",
+      "reason": "bilateral_contact_lost",
+      "latest_native_loss_s": 11.14,
+      "detector_s": 11.18,
+      "request_s": 11.18,
+      "packet_s": 11.18,
+      "native_loss_to_detector_ms": 40.0,
+      "native_loss_to_packet_ms": 40.0,
+      "detector_to_packet_ms": 0.0,
+      "trace_verified": true,
+      "three_failed_decision_samples_verified": true
+    },
+    {
+      "attempt": "fresh-02-recovery",
+      "reason": "bilateral_contact_lost",
+      "latest_native_loss_s": 16.43,
+      "detector_s": 16.46,
+      "request_s": 16.46,
+      "packet_s": 16.46,
+      "native_loss_to_detector_ms": 30.0,
+      "native_loss_to_packet_ms": 30.0,
+      "detector_to_packet_ms": 0.0,
+      "trace_verified": true,
+      "three_failed_decision_samples_verified": true
+    },
+    {
+      "attempt": "fresh-04-recovery",
+      "reason": "bilateral_contact_lost",
+      "latest_native_loss_s": 18.19,
+      "detector_s": 18.22,
+      "request_s": 18.22,
+      "packet_s": 18.22,
+      "native_loss_to_detector_ms": 30.0,
+      "native_loss_to_packet_ms": 30.0,
+      "detector_to_packet_ms": 0.0,
+      "trace_verified": true,
+      "three_failed_decision_samples_verified": true
+    },
+    {
+      "attempt": "fresh-04-recovery",
+      "reason": "bilateral_contact_lost",
+      "latest_native_loss_s": 23.528,
+      "detector_s": 23.58,
+      "request_s": 23.58,
+      "packet_s": 23.58,
+      "native_loss_to_detector_ms": 52.0,
+      "native_loss_to_packet_ms": 52.0,
+      "detector_to_packet_ms": 0.0,
+      "trace_verified": true,
+      "three_failed_decision_samples_verified": true
+    },
+    {
+      "attempt": "fresh-06-recovery",
+      "reason": "bilateral_contact_lost",
+      "latest_native_loss_s": 18.252,
+      "detector_s": 18.3,
+      "request_s": 18.3,
+      "packet_s": 18.3,
+      "native_loss_to_detector_ms": 48.0,
+      "native_loss_to_packet_ms": 48.0,
+      "detector_to_packet_ms": 0.0,
+      "trace_verified": true,
+      "three_failed_decision_samples_verified": true
+    },
+    {
+      "attempt": "fresh-06-recovery",
+      "reason": "bilateral_contact_lost",
+      "latest_native_loss_s": 23.58,
+      "detector_s": 23.6,
+      "request_s": 23.6,
+      "packet_s": 23.6,
+      "native_loss_to_detector_ms": 20.0,
+      "native_loss_to_packet_ms": 20.0,
+      "detector_to_packet_ms": 0.0,
+      "trace_verified": true,
+      "three_failed_decision_samples_verified": true
+    },
+    {
+      "attempt": "fresh-07-recovery",
+      "reason": "bilateral_contact_lost",
+      "latest_native_loss_s": 15.92,
+      "detector_s": 15.94,
+      "request_s": 15.94,
+      "packet_s": 15.94,
+      "native_loss_to_detector_ms": 20.0,
+      "native_loss_to_packet_ms": 20.0,
+      "detector_to_packet_ms": 0.0,
+      "trace_verified": true,
+      "three_failed_decision_samples_verified": true
+    }
+  ],
+  "recovery_packets": [
+    {
+      "attempt": "fresh-01-recovery",
+      "reason": "bilateral_contact_lost",
+      "request_s": 11.02,
+      "packet_s": 11.02,
+      "recorded_controls_match_native_ramp": true,
+      "open_on_support_s": 11.97,
+      "world_support_at_open_n": 8.70607165180734,
+      "strict_recovered_completion": false
+    },
+    {
+      "attempt": "fresh-01-recovery",
+      "reason": "bilateral_contact_lost",
+      "request_s": 16.34,
+      "packet_s": 16.34,
+      "recorded_controls_match_native_ramp": true,
+      "open_on_support_s": 17.29,
+      "world_support_at_open_n": 9.980279570129358,
+      "strict_recovered_completion": false
+    },
+    {
+      "attempt": "fresh-02-recovery",
+      "reason": "bilateral_contact_lost",
+      "request_s": 11.18,
+      "packet_s": 11.18,
+      "recorded_controls_match_native_ramp": true,
+      "open_on_support_s": 12.13,
+      "world_support_at_open_n": 28.16700175370886,
+      "strict_recovered_completion": false
+    },
+    {
+      "attempt": "fresh-02-recovery",
+      "reason": "bilateral_contact_lost",
+      "request_s": 16.46,
+      "packet_s": 16.46,
+      "recorded_controls_match_native_ramp": true,
+      "open_on_support_s": 17.41,
+      "world_support_at_open_n": 21.240162337473397,
+      "strict_recovered_completion": false
+    },
+    {
+      "attempt": "fresh-03-recovery",
+      "reason": "bilateral_acquisition_failed",
+      "request_s": 10.6,
+      "packet_s": 10.6,
+      "recorded_controls_match_native_ramp": true,
+      "open_on_support_s": 11.55,
+      "world_support_at_open_n": 24.815439149498463,
+      "strict_recovered_completion": false
+    },
+    {
+      "attempt": "fresh-03-recovery",
+      "reason": "bilateral_acquisition_failed",
+      "request_s": 15.5,
+      "packet_s": 15.5,
+      "recorded_controls_match_native_ramp": true,
+      "open_on_support_s": 16.45,
+      "world_support_at_open_n": 23.5994938015775,
+      "strict_recovered_completion": false
+    },
+    {
+      "attempt": "fresh-04-recovery",
+      "reason": "bilateral_contact_lost",
+      "request_s": 18.22,
+      "packet_s": 18.22,
+      "recorded_controls_match_native_ramp": true,
+      "open_on_support_s": 19.17,
+      "world_support_at_open_n": 10.993501132064678,
+      "strict_recovered_completion": false
+    },
+    {
+      "attempt": "fresh-04-recovery",
+      "reason": "bilateral_contact_lost",
+      "request_s": 23.58,
+      "packet_s": 23.58,
+      "recorded_controls_match_native_ramp": true,
+      "open_on_support_s": 24.53,
+      "world_support_at_open_n": 21.10333024508588,
+      "strict_recovered_completion": false
+    },
+    {
+      "attempt": "fresh-06-recovery",
+      "reason": "bilateral_contact_lost",
+      "request_s": 18.3,
+      "packet_s": 18.3,
+      "recorded_controls_match_native_ramp": true,
+      "open_on_support_s": 19.25,
+      "world_support_at_open_n": 26.44914642942415,
+      "strict_recovered_completion": false
+    },
+    {
+      "attempt": "fresh-06-recovery",
+      "reason": "bilateral_contact_lost",
+      "request_s": 23.6,
+      "packet_s": 23.6,
+      "recorded_controls_match_native_ramp": true,
+      "open_on_support_s": 24.55,
+      "world_support_at_open_n": 23.337121897731222,
+      "strict_recovered_completion": false
+    },
+    {
+      "attempt": "fresh-07-recovery",
+      "reason": "bilateral_acquisition_failed",
+      "request_s": 10.6,
+      "packet_s": 10.6,
+      "recorded_controls_match_native_ramp": true,
+      "open_on_support_s": 11.55,
+      "world_support_at_open_n": 10.676056927243726,
+      "strict_recovered_completion": false
+    },
+    {
+      "attempt": "fresh-07-recovery",
+      "reason": "bilateral_contact_lost",
+      "request_s": 15.94,
+      "packet_s": 15.94,
+      "recorded_controls_match_native_ramp": true,
+      "open_on_support_s": 16.89,
+      "world_support_at_open_n": 11.514849043056689,
+      "strict_recovered_completion": false
+    }
+  ],
+  "strict_condition_gaps": [
+    {
+      "case_id": "fresh-05",
+      "onset_s": 19.076,
+      "requalified_s": 19.338,
+      "failed_ticks_by_condition": {
+        "height": 0,
+        "left_finger": 0,
+        "right_finger": 0,
+        "world_support": 0,
+        "rake_support": 0,
+        "other_robot_support": 82
+      },
+      "detected": false,
+      "scope": "Scoring-condition gap, not automatically a bilateral-slip event or missed safety alarm."
+    }
+  ],
+  "paired_scheduled_check_intervals": [
+    {
+      "case_id": "fresh-01",
+      "shared_preintervention_loss_origin_s": 10.994,
+      "v02_detector_s": 11.02,
+      "v01_scheduled_terminal_check_s": 12.6,
+      "loss_to_v02_detector_ms": 26.0,
+      "loss_to_v01_scheduled_check_ms": 1606.0,
+      "not_baseline_detector_or_physical_response_latency": true
+    },
+    {
+      "case_id": "fresh-02",
+      "shared_preintervention_loss_origin_s": 11.14,
+      "v02_detector_s": 11.18,
+      "v01_scheduled_terminal_check_s": 12.6,
+      "loss_to_v02_detector_ms": 40.0,
+      "loss_to_v01_scheduled_check_ms": 1460.0,
+      "not_baseline_detector_or_physical_response_latency": true
+    },
+    {
+      "case_id": "fresh-04",
+      "shared_preintervention_loss_origin_s": 18.19,
+      "v02_detector_s": 18.22,
+      "v01_scheduled_terminal_check_s": 19.8,
+      "loss_to_v02_detector_ms": 30.0,
+      "loss_to_v01_scheduled_check_ms": 1610.0,
+      "not_baseline_detector_or_physical_response_latency": true
+    },
+    {
+      "case_id": "fresh-06",
+      "shared_preintervention_loss_origin_s": 18.252,
+      "v02_detector_s": 18.3,
+      "v01_scheduled_terminal_check_s": 19.8,
+      "loss_to_v02_detector_ms": 48.0,
+      "loss_to_v01_scheduled_check_ms": 1548.0,
+      "not_baseline_detector_or_physical_response_latency": true
+    }
+  ]
+}

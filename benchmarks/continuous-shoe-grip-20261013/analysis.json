@@ -1,0 +1,73 @@
+{
+  "schema": "dvidia.continuous-shoe-grip-analysis/v2",
+  "source_commit": "af8933994b4626e28a0554abc782ae9d22cff06c",
+  "benchmark_sha256": "cf909bdf80bd29af7627b312756e0aaba9c77283e353ff300747c28d86bc4431",
+  "regression_benchmark_sha256": "fd3a6ca2fb8d58c8faf32a553862ad70029f39d5adf33b76096b32ccb56c619b",
+  "host_supplement": {
+    "cpu": "Apple M5",
+    "logical_cpus": 10,
+    "memory_bytes": 25769803776,
+    "source": "Root host inventory; shared-host measurements, not minimum requirements."
+  },
+  "policies": {
+    "baseline": {
+      "attempts": 10,
+      "completed": 2,
+      "retrieval_evidenced": 8,
+      "appropriate_deferrals": 2,
+      "simulated_seconds": 131.60000000000312,
+      "native_wall_seconds": 4.960062542697415,
+      "simulated_to_native_wall_ratio": 26.53192351248771,
+      "audit_export_wall_seconds": 8.947619959013537,
+      "target_solver_calls": 6580,
+      "target_solver_p50_ms": 0.02208305522799492,
+      "target_solver_p95_ms": 0.030502211302518813,
+      "target_solver_max_ms": 0.5634580738842487,
+      "target_solver_calls_over20ms": 0,
+      "recovery_requests": 0,
+      "issued_recovery_packets": 0,
+      "sustained_condition_losses": 1,
+      "condition_losses_without_detection": 1,
+      "unmatched_detection_count": 0
+    },
+    "recovery": {
+      "attempts": 10,
+      "completed": 2,
+      "retrieval_evidenced": 8,
+      "appropriate_deferrals": 2,
+      "simulated_seconds": 165.61999999999634,
+      "native_wall_seconds": 5.77158858301118,
+      "simulated_to_native_wall_ratio": 28.695739070436012,
+      "audit_export_wall_seconds": 8.745075207436457,
+      "target_solver_calls": 8281,
+      "target_solver_p50_ms": 0.022500054910779,
+      "target_solver_p95_ms": 0.031624920666217804,
+      "target_solver_max_ms": 0.3752908669412136,
+      "target_solver_calls_over20ms": 0,
+      "recovery_requests": 12,
+      "issued_recovery_packets": 12,
+      "sustained_condition_losses": 1,
+      "condition_losses_without_detection": 1,
+      "unmatched_detection_count": 12
+    }
+  },
+  "timing_scope": "Native outer timer includes setup, control, physics and recording; separate audit/export excludes startup and final report write. Target-solver samples exclude sensing, most monitoring, physics and hardware latency. No hard-real-time claim.",
+  "paired_gains": 0,
+  "paired_losses": 0,
+  "same_compiled_models": 10,
+  "additional_simulated_seconds": 34.01999999999322,
+  "fresh05_condition_gap": {
+    "policies": [
+      "baseline",
+      "recovery"
+    ],
+    "onset_s": 19.076,
+    "last_failed_tick_s": 19.238,
+    "failed_ticks": 82,
+    "failed_tick_duration_s": 0.164,
+    "requalified_s": 19.338,
+    "cause": "non-finger robot support >=0.01 N; other final-retention predicates remain valid throughout this interval",
+    "detected": false,
+    "scope": "Support contamination, not demonstrated physical slipping; final window succeeds after support clears."
+  }
+}

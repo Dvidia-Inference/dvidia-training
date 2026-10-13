@@ -8,6 +8,16 @@
 
 **Research alpha.** The recorded demo covers the original one-scene simulation pilot; the frozen benchmark is a separate experiment. Training runs locally. No human-video action bridge or hardware skill is established.
 
+**[Continuous shoe grip v0.2](https://research.dvidia.org/papers/continuous-shoe-grip-v02/).**
+The mounted-rake experiment now checks grip throughout motion, tests a small
+lift and lowers onto support before a bounded regrasp. The fresh comparison
+completes **2/10 lifts under both controllers**, on the same cases. Twelve
+lowering responses across six failed grasp cases add time without recovering a
+completed lift. All twenty attempts, including failures, are available in the
+[recorded comparison](https://dvidia-robot-simulation-lab.static.hf.space/prerequisites/v02/index.html).
+[Run locally](docs/continuous-shoe-grip.md) ·
+[Frozen results and independent audit](benchmarks/continuous-shoe-grip-20261013/README.md).
+
 **[Explore the two skill-prerequisite experiments](https://research.dvidia.org/papers/skill-prerequisites-v01/).**
 The hinged shoe box and out-of-reach shoe now have runnable native MuJoCo scenes,
 recorded 3D replays and all sixteen held-out attempts. A lid guard avoids two
