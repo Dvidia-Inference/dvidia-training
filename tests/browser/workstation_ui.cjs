@@ -24,8 +24,10 @@ async function state(page){return page.evaluate(()=>window.__workstationState);}
  const errors=[],responses=[];page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400)responses.push([r.url(),r.status()])});
  await page.addInitScript(()=>{const Native=window.Worker;window.Worker=class extends Native{constructor(...args){super(...args);this.addEventListener('message',e=>{if(e.data?.state)window.__workstationState=e.data.state;});}};});
  try {
- await page.goto(url,{waitUntil:'domcontentloaded'});
- await page.waitForFunction(()=>document.querySelector('#stage')?.dataset.ready==='true',{},{timeout:120000});
+ const navigation=await page.goto(url,{waitUntil:'domcontentloaded'});
+ assert(navigation?.ok(),'Workstation document must load successfully.');
+ await page.waitForFunction(()=>['true','error'].includes(document.querySelector('#stage')?.dataset.ready),{},{timeout:120000});
+ assert.equal(await page.locator('#stage').getAttribute('data-ready'),'true',await page.locator('#loading-message').textContent());
  await page.waitForFunction(()=>window.__workstationState?.sim_time>.3);
  const before=await state(page);
  await page.locator('#pause').click();await page.waitForFunction(()=>window.__workstationState?.paused===true);
