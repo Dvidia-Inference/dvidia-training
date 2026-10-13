@@ -1,4 +1,4 @@
-"""Stage a transport-only workstation update while retaining original evidence."""
+"""Stage workstation delivery/branding fixes while retaining original evidence."""
 from __future__ import annotations
 
 import argparse
@@ -13,7 +13,7 @@ import publish_robot_sim as publisher
 
 NAMESPACE = original.NAMESPACE
 EVIDENCE_NAMESPACE = 'workstation-delivery/v01'
-MUTABLE = {'workstation.json', 'workstation-integrity.json', 'workstation_worker.bundle.js',
+MUTABLE = {'index.html', 'workstation.json', 'workstation-integrity.json', 'workstation_worker.bundle.js',
            'workstation.bundle.js', 'README.md'}
 ADDED = {'native-assets.bin.gz'}
 

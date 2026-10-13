@@ -117,6 +117,9 @@ hardware GPU measurements.
 DVIDIA code, original shoe shapes and procedural visual details are MIT. PiPER
 assets retain their pinned upstream MIT notices. Three.js is MIT. MuJoCo is
 Apache-2.0 with dependency notices retained in `workstation.third-party.txt`.
+The header uses DVIDIA's existing mark and wordmark. The embedded IBM Plex Sans
+wordmark font retains its SIL Open Font License 1.1 notice in the HTML; the
+software license does not grant rights to DVIDIA trademarks.
 Visual shoelaces and surface details are cosmetic; they do not simulate cloth or
 change collision geometry. Shoe mass, friction and contact parameters remain
 authored assumptions. Retained shoe lifting and real-world transfer are open.

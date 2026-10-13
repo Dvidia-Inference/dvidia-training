@@ -19,6 +19,7 @@ class DeliveryTests(unittest.TestCase):
             original.stage(self.plan, self.workstation, self.root/'first', 'c'*40, 'd'*40, evidence=self.evidence)
         self.base = self.root/'first/publication-plan.json'
         self.updated = {**self.native_files,
+            'index.html': b'Live simulator with the official DVIDIA wordmark',
             'workstation.json': original.encoded({'native_asset_bundle': {'path':'native-assets.bin.gz'}}),
             'workstation-integrity.json': b'{"updated":true}',
             'native-assets.bin.gz': b'bounded gzip fixture'}
