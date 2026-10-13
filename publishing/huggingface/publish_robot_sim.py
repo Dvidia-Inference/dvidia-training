@@ -19,10 +19,10 @@ from publish import PublicationError, checked_remote, client, verified_downloads
 REPO_ID = 'Dvidia/robot-simulation-lab'
 KIND = 'dvidia.robot-simulation-lab-publication'
 MAX_FILE_BYTES = 32*1024*1024
-# v0.5 retains every prior receipt and adds at most three complete cohorts.
-# Only the stored payload cap increases; decoded/per-file bounds stay fixed.
-MAX_TOTAL_BYTES = 512*1024*1024
-MAX_FILES = 700  # Prior receipts plus the bounded three-arm shoe asset library.
+# Retain the existing 627-file lab, then add the bounded live export and evidence.
+# Per-file and decoded-data bounds stay fixed; this only raises complete storage.
+MAX_TOTAL_BYTES = 768*1024*1024
+MAX_FILES = 900  # Prior evidence plus up to128 export and128 evidence files.
 MAX_RELIABILITY_COHORTS = 3
 ALLOWED_SUFFIXES = {'.md', '.html', '.js', '.json', '.txt', '.png', '.bin', '.gz'}
 SHA = re.compile(r'(?:[a-f0-9]{40}|[a-f0-9]{64})')

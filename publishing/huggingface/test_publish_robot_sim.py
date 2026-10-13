@@ -117,7 +117,7 @@ class RobotSimulationPublicationTests(unittest.TestCase):
             with self.subTest(card=card),self.assertRaises(PublicationError): publisher.checked_plan(self.path)
 
     def test_byte_bounds_are_checked_without_credential_access(self):
-        self.assertEqual(publisher.MAX_TOTAL_BYTES,512*1024*1024)
+        self.assertEqual(publisher.MAX_TOTAL_BYTES,768*1024*1024)
         self.assertEqual(publisher.MAX_FILE_BYTES,32*1024*1024)
         with patch.object(publisher,'MAX_TOTAL_BYTES',self.plan['total_bytes']):
             self.assertEqual(publisher.checked_plan(self.path),self.plan)
