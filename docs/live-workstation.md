@@ -78,6 +78,19 @@ PYTHONPATH=src python scripts/workstation-parity-fixture.py --scene ./live-works
 node tests/browser/workstation_parity.mjs ./live-workstation ./native-parity.json ./wasm-parity.json
 ```
 
+The actual-browser tests use the same exported folder served over HTTP:
+
+```sh
+npm ci --prefix viewer
+viewer/node_modules/.bin/playwright install chromium
+node tests/browser/workstation_ui.cjs http://localhost:8000/ ./ui-evidence
+DVIDIA_BENCH_SECONDS=600 DVIDIA_BENCH_RENDERER=device DVIDIA_BROWSER_CHANNEL=chromium node tests/browser/workstation_live.cjs http://localhost:8000/ ./browser-evidence
+```
+
+The device renderer is requested, then identified in the receipt. Default tests
+use SwiftShader software rendering. Neither render-call counts nor worker state
+updates measure GPU presentation completion or hardware actuator latency.
+
 The parity runner requires `npm ci --prefix viewer`. It retains numerical,
 loaded-contact and strict raw contact-count comparisons separately. A strict
 contact-count mismatch exits nonzero even when state tolerances agree; inspect

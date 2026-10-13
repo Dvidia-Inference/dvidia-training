@@ -57,6 +57,15 @@ class RobotSimulationPublicationTests(unittest.TestCase):
     def test_accepts_complete_named_static_space_and_native_binaries(self):
         self.assertEqual(publisher.checked_plan(self.path),self.plan)
 
+    def test_live_workstation_native_files_are_scoped(self):
+        for name in ['workstation/v01/mujoco.wasm', 'workstation/v01/scene.xml',
+                     'workstation/v01/assets/link1.stl', 'workstation/v01/assets/link2.obj']:
+            self.assertEqual(publisher._artifact_name(name).as_posix(), name)
+        for name in ['mujoco.wasm', 'workstation/v02/mujoco.wasm', 'workstation/v01/plugin.wasm',
+                     'workstation/v01/assets/../../secret.xml', 'workstation/v01/assets/model.xml']:
+            with self.subTest(name=name), self.assertRaises(PublicationError):
+                publisher._artifact_name(name)
+
     def test_rejects_unrelated_destination_private_sdk_and_path_escape(self):
         for field,value in [('repo_id','Dvidia/observation-lab'),('repo_type','model'),
                             ('space_sdk','docker'),('directory','../outside')]:

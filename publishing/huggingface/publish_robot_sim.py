@@ -33,6 +33,7 @@ CONTACT_ATTEMPT_PATH = re.compile(r'tasks/(?:piper-contact-v03|piper-recovery-v0
 
 RELIABILITY_COHORT_PATH = re.compile(r'(?:development|confirmation)-(?:0|[1-9][0-9]{0,5})')
 RELIABILITY_ATTEMPT_PATH = re.compile(r'tasks/piper-reliability-v05/(?:development|confirmation)-(?:0|[1-9][0-9]{0,5})/attempts/[a-z0-9][a-z0-9_.-]{0,159}\.json\.gz')
+WORKSTATION_NATIVE_PATH = re.compile(r'workstation/v01/(?:mujoco\.wasm|scene\.xml|assets/[A-Za-z0-9_.-]+\.(?:stl|obj|msh))')
 
 def _compressed_attempt(name):
     return GRIP_ATTEMPT_PATH.fullmatch(name) or CONTACT_ATTEMPT_PATH.fullmatch(name) or RELIABILITY_ATTEMPT_PATH.fullmatch(name)
@@ -64,7 +65,8 @@ def _artifact_name(name):
                 or int(relative.parts[2].rsplit('-',1)[1])>999988):
             raise PublicationError('Reliability evidence requires a bounded cohort and seed namespace.')
     if (any(p.startswith('.') for p in relative.parts)
-            or (relative.suffix not in ALLOWED_SUFFIXES and relative.name != 'LICENSE')):
+            or (relative.suffix not in ALLOWED_SUFFIXES and relative.name != 'LICENSE'
+                and WORKSTATION_NATIVE_PATH.fullmatch(relative.as_posix()) is None)):
         raise PublicationError('Unexpected Robot Simulation Lab artifact type.')
     if relative.suffix in ('.bin', '.gz') and relative.name not in (
             'geometry.bin', 'motion.bin', 'geometry.bin.gz', 'motion.bin.gz'):
@@ -294,7 +296,9 @@ def publish_robot_sim(path):
     verified_downloads(row,revision,False)
     result = {'repo_id':REPO_ID,'repo_type':'space','commit':revision,
               'url':'https://huggingface.co/spaces/'+REPO_ID,'verified_files':len(row['files']),
-              'scope':'Recorded native simulation evidence; no live physics, learned policy or physical robot qualification',
+              'scope':('Native simulation evidence and a live browser workstation; no learned policy or physical robot qualification'
+                       if 'workstation/v01/workstation.json' in payload else
+                       'Recorded native simulation evidence; no live physics, learned policy or physical robot qualification'),
               'plan_sha256':plan_digest,'removed_files':removals}
     _plain(target)
     target.write_text(json.dumps(result,indent=2)+'\n')
