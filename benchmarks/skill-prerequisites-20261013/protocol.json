@@ -1,0 +1,248 @@
+{
+  "schema": "dvidia.skill-prerequisites/v1",
+  "scope": "Authored PiPER policies in native MuJoCo with synthetic rigid objects and privileged simulator observations. Browser replay uses recorded poses; no learned policy, hardware safety qualification or real-world transfer result.",
+  "split": "heldout",
+  "attempts": [
+    {
+      "id": "hinged-box-open-medium-baseline",
+      "task": "hinged-box",
+      "policy": "baseline",
+      "case": {
+        "id": "open-medium",
+        "lid_angle_deg": 105.0,
+        "lid_velocity_rad_s": 0.0,
+        "lid_mass_kg": 0.18,
+        "hinge_damping": 0.04,
+        "split": "heldout"
+      }
+    },
+    {
+      "id": "hinged-box-open-medium-recovery",
+      "task": "hinged-box",
+      "policy": "recovery",
+      "case": {
+        "id": "open-medium",
+        "lid_angle_deg": 105.0,
+        "lid_velocity_rad_s": 0.0,
+        "lid_mass_kg": 0.18,
+        "hinge_damping": 0.04,
+        "split": "heldout"
+      }
+    },
+    {
+      "id": "hinged-box-falling-medium-baseline",
+      "task": "hinged-box",
+      "policy": "baseline",
+      "case": {
+        "id": "falling-medium",
+        "lid_angle_deg": 78.0,
+        "lid_velocity_rad_s": -0.15,
+        "lid_mass_kg": 0.18,
+        "hinge_damping": 0.04,
+        "split": "heldout"
+      }
+    },
+    {
+      "id": "hinged-box-falling-medium-recovery",
+      "task": "hinged-box",
+      "policy": "recovery",
+      "case": {
+        "id": "falling-medium",
+        "lid_angle_deg": 78.0,
+        "lid_velocity_rad_s": -0.15,
+        "lid_mass_kg": 0.18,
+        "hinge_damping": 0.04,
+        "split": "heldout"
+      }
+    },
+    {
+      "id": "hinged-box-falling-low-baseline",
+      "task": "hinged-box",
+      "policy": "baseline",
+      "case": {
+        "id": "falling-low",
+        "lid_angle_deg": 58.0,
+        "lid_velocity_rad_s": -0.25,
+        "lid_mass_kg": 0.1,
+        "hinge_damping": 0.02,
+        "split": "heldout"
+      }
+    },
+    {
+      "id": "hinged-box-falling-low-recovery",
+      "task": "hinged-box",
+      "policy": "recovery",
+      "case": {
+        "id": "falling-low",
+        "lid_angle_deg": 58.0,
+        "lid_velocity_rad_s": -0.25,
+        "lid_mass_kg": 0.1,
+        "hinge_damping": 0.02,
+        "split": "heldout"
+      }
+    },
+    {
+      "id": "hinged-box-transient-damped-baseline",
+      "task": "hinged-box",
+      "policy": "baseline",
+      "case": {
+        "id": "transient-damped",
+        "lid_angle_deg": 110.0,
+        "lid_velocity_rad_s": -0.35,
+        "lid_mass_kg": 0.2,
+        "hinge_damping": 0.06,
+        "split": "heldout"
+      }
+    },
+    {
+      "id": "hinged-box-transient-damped-recovery",
+      "task": "hinged-box",
+      "policy": "recovery",
+      "case": {
+        "id": "transient-damped",
+        "lid_angle_deg": 110.0,
+        "lid_velocity_rad_s": -0.35,
+        "lid_mass_kg": 0.2,
+        "hinge_damping": 0.06,
+        "split": "heldout"
+      }
+    },
+    {
+      "id": "tool-reach-reach-heldout-light-baseline",
+      "task": "tool-reach",
+      "policy": "baseline",
+      "case": {
+        "id": "reach-heldout-light",
+        "shoe_x": 0.705,
+        "shoe_y": -0.09,
+        "mass": 0.22,
+        "friction": 0.45,
+        "tool_length": 0.34,
+        "lateral_error": 0.025,
+        "split": "heldout"
+      }
+    },
+    {
+      "id": "tool-reach-reach-heldout-light-recovery",
+      "task": "tool-reach",
+      "policy": "recovery",
+      "case": {
+        "id": "reach-heldout-light",
+        "shoe_x": 0.705,
+        "shoe_y": -0.09,
+        "mass": 0.22,
+        "friction": 0.45,
+        "tool_length": 0.34,
+        "lateral_error": 0.025,
+        "split": "heldout"
+      }
+    },
+    {
+      "id": "tool-reach-reach-heldout-offset-baseline",
+      "task": "tool-reach",
+      "policy": "baseline",
+      "case": {
+        "id": "reach-heldout-offset",
+        "shoe_x": 0.725,
+        "shoe_y": -0.115,
+        "mass": 0.38,
+        "friction": 0.8,
+        "tool_length": 0.36,
+        "lateral_error": -0.075,
+        "split": "heldout"
+      }
+    },
+    {
+      "id": "tool-reach-reach-heldout-offset-recovery",
+      "task": "tool-reach",
+      "policy": "recovery",
+      "case": {
+        "id": "reach-heldout-offset",
+        "shoe_x": 0.725,
+        "shoe_y": -0.115,
+        "mass": 0.38,
+        "friction": 0.8,
+        "tool_length": 0.36,
+        "lateral_error": -0.075,
+        "split": "heldout"
+      }
+    },
+    {
+      "id": "tool-reach-reach-heldout-heavy-baseline",
+      "task": "tool-reach",
+      "policy": "baseline",
+      "case": {
+        "id": "reach-heldout-heavy",
+        "shoe_x": 0.735,
+        "shoe_y": -0.075,
+        "mass": 0.55,
+        "friction": 1.05,
+        "tool_length": 0.37,
+        "lateral_error": 0.035,
+        "split": "heldout"
+      }
+    },
+    {
+      "id": "tool-reach-reach-heldout-heavy-recovery",
+      "task": "tool-reach",
+      "policy": "recovery",
+      "case": {
+        "id": "reach-heldout-heavy",
+        "shoe_x": 0.735,
+        "shoe_y": -0.075,
+        "mass": 0.55,
+        "friction": 1.05,
+        "tool_length": 0.37,
+        "lateral_error": 0.035,
+        "split": "heldout"
+      }
+    },
+    {
+      "id": "tool-reach-reach-heldout-short-baseline",
+      "task": "tool-reach",
+      "policy": "baseline",
+      "case": {
+        "id": "reach-heldout-short",
+        "shoe_x": 0.72,
+        "shoe_y": -0.105,
+        "mass": 0.27,
+        "friction": 0.55,
+        "tool_length": 0.18,
+        "lateral_error": 0.015,
+        "split": "heldout"
+      }
+    },
+    {
+      "id": "tool-reach-reach-heldout-short-recovery",
+      "task": "tool-reach",
+      "policy": "recovery",
+      "case": {
+        "id": "reach-heldout-short",
+        "shoe_x": 0.72,
+        "shoe_y": -0.105,
+        "mass": 0.27,
+        "friction": 0.55,
+        "tool_length": 0.18,
+        "lateral_error": 0.015,
+        "split": "heldout"
+      }
+    }
+  ],
+  "comparison": "Matched declared scene conditions. Tool baseline is a no-tool capability control; it is not a policy-only ablation.",
+  "split_scope": "Explicit parameter holdouts, not independent real-world reliability trials. No held-out tuning.",
+  "success_scope": "Task-specific completion. Safe abort, retrieval, and retained lift are reported separately.",
+  "timing_scope": "CPU wall time for native execution including initialization and recording; rendering, downloads and real sensor latency excluded.",
+  "source_commit": "756306a2beda60ac54567971626080a56227e781",
+  "implementation_sha256": {
+    "prerequisite_benchmark.py": "c78efb24263300c56f50413aa65333e4fbf1b99403aa816de9bf4cb5656a3811",
+    "hinged_shoebox.py": "9e9189b28bb0f97d699039168e8c5022df3afb34aadb0d9f8a04dc4592aaf2e9",
+    "tool_reach.py": "812072388b518fb11999dafddd15655f3c750fa84fe09047c55a78c2b509e68f",
+    "workstation.py": "2a6aa6686b5b273efcfb21156952df8ceca88d991674cd17df92f2dccc11b701",
+    "asset_library.py": "12520ca13b7806004be37a0d7e0d1e023c90410c1eba899296fdcd5b28fdc7f7",
+    "asset_catalog.json": "592f363389a96fef7f9223737aa72a2f1a74f400238924bf6790ec5bfd3302b7",
+    "robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d",
+    "prerequisite_lab.html": "7161523a9e3a1388dedf59d2a31344b8a6ae34f3fa5947365ea5b88bb6b56ee0",
+    "prerequisite_lab.js": "154eaaf2d938e2e24b660b674cb3fcc6b0b72c0ded3abd78d4c3393534eefb32",
+    "prerequisite_lab.bundle.js": "de099a1a2b9bf93564d28de4c6bd0511e86ca2ff58dc08c385a9b0c0a86f27e8"
+  }
+}
