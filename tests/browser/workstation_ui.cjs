@@ -6,7 +6,7 @@
 const assert=require('node:assert/strict');
 const fs=require('node:fs/promises');
 const path=require('node:path');
-const {chromium}=require(process.env.DVIDIA_PLAYWRIGHT_MODULE||'playwright');
+const {chromium}=require(process.env.DVIDIA_PLAYWRIGHT_MODULE||path.join(__dirname,'../../viewer/node_modules/playwright'));
 async function pixels(page){
  await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
  const image=await page.locator('#canvas').screenshot();

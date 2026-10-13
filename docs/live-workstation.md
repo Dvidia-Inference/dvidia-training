@@ -87,8 +87,8 @@ node tests/browser/workstation_ui.cjs http://localhost:8000/ ./ui-evidence
 DVIDIA_BENCH_SECONDS=600 DVIDIA_BENCH_RENDERER=device DVIDIA_BROWSER_CHANNEL=chromium node tests/browser/workstation_live.cjs http://localhost:8000/ ./browser-evidence
 ```
 
-The device renderer is requested, then identified in the receipt. Default tests
-use SwiftShader software rendering. Neither render-call counts nor worker state
+The device renderer is requested, then identified in the receipt. The live benchmark defaults to
+SwiftShader software rendering. Neither render-call counts nor worker state
 updates measure GPU presentation completion or hardware actuator latency.
 
 The parity runner requires `npm ci --prefix viewer`. It retains numerical,
