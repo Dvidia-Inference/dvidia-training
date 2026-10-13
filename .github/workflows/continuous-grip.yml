@@ -1,0 +1,89 @@
+name: Continuous shoe grip
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: continuous-grip-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  native-development:
+    name: CPU development cases / Linux / Python 3.12
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: "22"
+      - name: Reproduce the pinned replay viewer
+        run: |
+          npm ci --ignore-scripts --prefix viewer
+          npm run --prefix viewer build:grip
+          git diff --exit-code -- src/dvidia_training/grip_lab.bundle.js
+      - name: Provision pinned native PiPER mechanics
+        run: |
+          python -m pip install '.[arm]'
+          python -m pip check
+          dvidia-grip-benchmark --help
+          dvidia-robot-sim fetch piper --output runs/prerequisite-assets-ci
+          dvidia-robot-sim audit piper runs/prerequisite-assets-ci
+      - name: Check native development cases and evidence contracts
+        env:
+          DVIDIA_ROBOT_PROFILE_ASSETS: runs/prerequisite-assets-ci
+        run: python -m unittest tests.test_continuous_grip tests.test_grip_protocol tests.test_grip_monitor_evidence tests.test_grip_benchmark -v
+      - name: Retain every development attempt and its replay
+        run: >-
+          dvidia-grip-benchmark --assets runs/prerequisite-assets-ci
+          --output runs/grip-development-ci --split development
+          --source-commit "$GITHUB_SHA"
+      - name: Verify exported receipts and checksums
+        run: |
+          python - <<'PY'
+          from hashlib import sha256
+          import json
+          from pathlib import Path
+          root = Path('runs/grip-development-ci')
+          protocol = json.loads((root / 'protocol.json').read_text())
+          report = json.loads((root / 'benchmark.json').read_text())
+          assert protocol['split'] == report['split'] == 'development'
+          expected = {row['id'] for row in protocol['attempts']}
+          assert expected == {row['id'] for row in report['attempts']}
+          assert len(report['attempts']) == len(expected)
+          assert all(row['same_compiled_model'] for row in report['paired_comparisons'])
+          assert all(row['valid'] for row in report['attempts']), 'A native or export error is not an expected task failure'
+          assert (root / 'benchmark.json').stat().st_size <= 8 * 1024 * 1024, 'Viewer index exceeds its fetch limit'
+          for row in report['attempts']:
+              receipt = json.loads((root / 'trials' / (row['id'] + '.json')).read_text())
+              assert receipt['case']['split'] == 'development'
+              assert receipt['success'] == row['success'] and receipt['valid'] == row['valid']
+              assert receipt['native_trace'] and receipt['native_trace_columns']
+              times = [sample[0] for sample in receipt['native_trace']]
+              assert all(abs((b - a) - .002) < 1e-8 for a, b in zip(times, times[1:])), 'Dense trace lost a native step'
+              assert all((root / value).is_file() for value in row['replay'].values())
+          integrity = json.loads((root / 'integrity.json').read_text())
+          for name, expected_file in integrity['files'].items():
+              content = (root / name).read_bytes()
+              assert len(content) == expected_file['bytes']
+              assert sha256(content).hexdigest() == expected_file['sha256'], name
+          print(json.dumps({'attempts_retained': len(expected), 'groups': report['groups'],
+                            'scope': 'Development regression only; no heldout run or hardware qualification.'}))
+          PY
+      - name: Retain evidence even when a check fails
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: continuous-grip-development
+          path: runs/grip-development-ci
+          if-no-files-found: ignore

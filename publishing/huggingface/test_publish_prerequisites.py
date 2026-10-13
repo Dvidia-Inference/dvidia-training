@@ -175,6 +175,112 @@ class PrerequisitesPublicationTests(unittest.TestCase):
             with self.assertRaises(publisher.PublicationError):
                 publisher.verify_tree(self.tree, after, payload, original, attributes)
 
+    def prepare_v02(self):
+        first = publisher.stage(self.export, self.parent, self.root / 'v01-release', 'b' * 40)
+        _, prior_payload = publisher.check(first['plan'])
+        self.tree.update({name: {'blob': publisher.git_blob(raw), 'size': len(raw), 'lfs_sha256': None}
+                          for name, raw in prior_payload.items()})
+        for name in publisher.ROOT_FILES:
+            self.original[name] = prior_payload[name]
+            (self.parent / name).write_bytes(prior_payload[name])
+        self.save_snapshot()
+        snapshot = json.loads((self.parent / 'snapshot.json').read_bytes())
+        snapshot['namespace'] = 'prerequisites/v02'
+        (self.parent / 'snapshot.json').write_bytes(publisher.encoded(snapshot))
+        protocol = json.loads(self.release['protocol.json'])
+        protocol['schema'] = 'dvidia.continuous-shoe-grip/v2'
+        self.release['protocol.json'] = publisher.encoded(protocol)
+        benchmark = json.loads(self.release['benchmark.json'])
+        benchmark['schema'] = protocol['schema']
+        benchmark['source']['protocol_sha256'] = publisher.record(self.release['protocol.json'])['sha256']
+        measured = benchmark['attempts'][0]
+        measured['native_trace_columns'] = ['time_s', 'normal_force_n']
+        measured['independent_score'] = {'schema': 'dvidia.continuous-shoe-grip-score/v2',
+            'task_success': False, 'valid': True, 'compiled_model_sha256': 'c' * 64}
+        self.release['benchmark.json'] = publisher.encoded(benchmark)
+        self.release['trials/hinge-one.json'] = publisher.encoded({**measured, 'native_trace': [[0., .1], [.002, .2]]})
+        self.save_release()
+        return prior_payload
+
+    def test_v02_appends_new_version_without_changing_v01_provenance_or_files(self):
+        old = self.prepare_v02()
+        result = publisher.stage(self.export, self.parent, self.root / 'staged', 'b' * 40, 'prerequisites/v02')
+        plan, payload = publisher.check(result['plan'])
+        self.assertEqual(plan['namespace'], 'prerequisites/v02')
+        self.assertEqual(set(payload) & set(self.tree), publisher.ROOT_FILES)
+        before = json.loads(old['provenance.json'])
+        after = json.loads(payload['provenance.json'])
+        self.assertEqual(after['prerequisites'], before['prerequisites'])
+        self.assertEqual(after['continuous_shoe_grip']['path'], 'prerequisites/v02')
+        self.assertIn(old['README.md'], payload['README.md'])
+        self.assertIn(b'prerequisites/v01/index.html', payload['index.html'])
+        self.assertIn(b'prerequisites/v02/index.html', payload['index.html'])
+        gate = {'source_commit': 'b' * 40, 'tests_passed': True, 'browser_qa_passed': True,
+            'benchmark_reviewed': True,
+            'benchmark_sha256': plan['files']['prerequisites/v02/benchmark.json']['sha256'],
+            'integrity_sha256': plan['files']['prerequisites/v02/integrity.json']['sha256']}
+        publisher.check_gate(gate, plan)
+
+    def test_v02_requires_its_schema_and_matching_parent_target(self):
+        self.prepare_v02()
+        with self.assertRaisesRegex(publisher.PublicationError, 'Unexpected parent snapshot'):
+            self.stage()
+        with self.assertRaisesRegex(publisher.PublicationError, 'Source, protocol'):
+            publisher.check_export(self.export, 'b' * 40, 'prerequisites/v01')
+        with self.assertRaisesRegex(publisher.PublicationError, 'Unsupported explicit'):
+            publisher.check_export(self.export, 'b' * 40, 'prerequisites/v03')
+
+    def test_v02_rejects_missing_independent_score_or_trace_on_valid_attempt(self):
+        self.prepare_v02()
+        receipt = json.loads(self.release['trials/hinge-one.json'])
+        for trace in (None, [], [[0., .1, .2]]):
+            with self.subTest(trace=trace):
+                self.release['trials/hinge-one.json'] = publisher.encoded({**receipt, 'native_trace': trace})
+                self.save_release()
+                with self.assertRaisesRegex(publisher.PublicationError, 'independent score'):
+                    publisher.check_export(self.export, 'b' * 40, 'prerequisites/v02')
+        benchmark = json.loads(self.release['benchmark.json'])
+        del benchmark['attempts'][0]['independent_score']
+        del receipt['independent_score']
+        self.release['benchmark.json'] = publisher.encoded(benchmark)
+        self.release['trials/hinge-one.json'] = publisher.encoded(receipt)
+        self.save_release()
+        with self.assertRaisesRegex(publisher.PublicationError, 'independent score'):
+            publisher.check_export(self.export, 'b' * 40, 'prerequisites/v02')
+
+    def test_v02_cannot_reseal_a_replacement_of_a_v01_artifact(self):
+        self.prepare_v02()
+        result = publisher.stage(self.export, self.parent, self.root / 'staged', 'b' * 40, 'prerequisites/v02')
+        plan_path = Path(result['plan'])
+        plan = json.loads(plan_path.read_bytes())
+        replacement = plan_path.parent / 'payload/prerequisites/v01/benchmark.json'
+        replacement.parent.mkdir(parents=True)
+        replacement.write_bytes(b'{}')
+        plan['files']['prerequisites/v01/benchmark.json'] = publisher.record(b'{}')
+        plan_path.write_bytes(publisher.encoded(plan))
+        with self.assertRaisesRegex(publisher.PublicationError, 'only append'):
+            publisher.check(plan_path)
+
+    def test_v02_cannot_publish_success_when_its_independent_score_fails(self):
+        self.prepare_v02()
+        benchmark = json.loads(self.release['benchmark.json'])
+        receipt = json.loads(self.release['trials/hinge-one.json'])
+        benchmark['attempts'][0]['success'] = receipt['success'] = True
+        self.release['benchmark.json'] = publisher.encoded(benchmark)
+        self.release['trials/hinge-one.json'] = publisher.encoded(receipt)
+        self.save_release()
+        with self.assertRaisesRegex(publisher.PublicationError, 'independent score'):
+            publisher.check_export(self.export, 'b' * 40, 'prerequisites/v02')
+
+    def test_v02_refuses_an_existing_version_even_when_export_is_valid(self):
+        self.prepare_v02()
+        snapshot_path = self.parent / 'snapshot.json'
+        snapshot = json.loads(snapshot_path.read_bytes())
+        snapshot['tree']['prerequisites/v02/old.json'] = {'blob': 'c' * 40, 'size': 2, 'lfs_sha256': None}
+        snapshot_path.write_bytes(publisher.encoded(snapshot))
+        with self.assertRaisesRegex(publisher.PublicationError, 'must be new'):
+            publisher.stage(self.export, self.parent, self.root / 'staged', 'b' * 40, 'prerequisites/v02')
+
 
 if __name__ == '__main__':
     unittest.main()

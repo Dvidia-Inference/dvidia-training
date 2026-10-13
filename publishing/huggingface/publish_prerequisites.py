@@ -18,12 +18,24 @@ from publish import PublicationError, checked_remote, client, verified_downloads
 
 REPO_ID = 'Dvidia/robot-simulation-lab'
 NAMESPACE = 'prerequisites/v01'
+RELEASES = {
+    NAMESPACE: {'schema': 'dvidia.skill-prerequisites/v1', 'provenance_key': 'prerequisites',
+        'commit_message': 'Publish two native skill-prerequisite simulations and complete benchmark evidence'},
+    'prerequisites/v02': {'schema': 'dvidia.continuous-shoe-grip/v2', 'provenance_key': 'continuous_shoe_grip',
+        'commit_message': 'Publish continuous shoe grip comparison and complete benchmark evidence'},
+}
 ROOT_FILES = {'index.html', 'README.md', 'provenance.json'}
 SHA = re.compile(r'[a-f0-9]{40}')
 MAX_FILE = 32 * 1024 * 1024
 MAX_TOTAL = 192 * 1024 * 1024
 MAX_DECODED = 128 * 1024 * 1024
 MAX_FILES = 256
+
+
+def release_config(namespace):
+    if type(namespace) is not str or namespace not in RELEASES:
+        raise PublicationError('Unsupported explicit release namespace.')
+    return RELEASES[namespace]
 
 
 def encoded(value):
@@ -108,7 +120,8 @@ def inventory(root):
     return payload
 
 
-def check_export(root, source_commit=None):
+def check_export(root, source_commit=None, namespace=NAMESPACE):
+    config = release_config(namespace)
     payload = inventory(root)
     if not {'index.html', 'benchmark.json', 'protocol.json', 'integrity.json'} <= payload.keys():
         raise PublicationError('Missing benchmark, protocol, viewer or integrity seal.')
@@ -117,7 +130,7 @@ def check_export(root, source_commit=None):
         raise PublicationError('Release inventory or bytes differ from the integrity seal.')
     protocol, benchmark = (json.loads(payload[name]) for name in ('protocol.json', 'benchmark.json'))
     source = benchmark.get('source', {})
-    if (protocol.get('schema') != 'dvidia.skill-prerequisites/v1'
+    if (protocol.get('schema') != config['schema']
             or benchmark.get('schema') != protocol['schema']
             or SHA.fullmatch(protocol.get('source_commit', '') or '') is None
             or source.get('commit') != protocol['source_commit']
@@ -140,6 +153,17 @@ def check_export(root, source_commit=None):
         if type(receipt) is not dict:
             raise PublicationError('Complete attempt receipts must match the benchmark.')
         trace = receipt.pop('native_trace', None)
+        if namespace == 'prerequisites/v02' and actual['valid']:
+            columns = actual.get('native_trace_columns')
+            score = actual.get('independent_score')
+            if (type(score) is not dict or score.get('schema') != 'dvidia.continuous-shoe-grip-score/v2'
+                    or score.get('valid') is not True or type(score.get('task_success')) is not bool
+                    or score['task_success'] != actual['success']
+                    or re.fullmatch(r'[a-f0-9]{64}', score.get('compiled_model_sha256', '') or '') is None
+                    or type(trace) is not list or not trace
+                    or type(columns) is not list or not columns
+                    or any(type(row) is not list or len(row) != len(columns) for row in trace)):
+                raise PublicationError('Valid grip attempts require an independent score and complete native trace columns.')
         if trace is not None:
             if (type(trace) is not list or len(trace) > 100000
                     or any(type(row) is not list or not 1 <= len(row) <= 64
@@ -182,7 +206,8 @@ def matches_tree(raw, entry):
     return len(raw) == entry['size'] and (sha256(raw).hexdigest() == digest if digest else git_blob(raw) == entry['blob'])
 
 
-def snapshot(output, parent_commit):
+def snapshot(output, parent_commit, namespace=NAMESPACE):
+    release_config(namespace)
     if SHA.fullmatch(parent_commit) is None:
         raise PublicationError('Snapshot requires the exact reviewed parent commit.')
     destination = plain(output)
@@ -195,7 +220,7 @@ def snapshot(output, parent_commit):
     if info.sha != parent_commit:
         raise PublicationError('Space moved; review its new parent before staging.')
     previous = tree(api, parent_commit)
-    if any(name == NAMESPACE or name.startswith(NAMESPACE + '/') for name in previous):
+    if any(name == namespace or name.startswith(namespace + '/') for name in previous):
         raise PublicationError('This release namespace already exists.')
     if not (ROOT_FILES | {'.gitattributes'}) <= previous.keys():
         raise PublicationError('Existing Space root files are incomplete.')
@@ -205,11 +230,12 @@ def snapshot(output, parent_commit):
             raise PublicationError('Public root file differs from its pinned Git/LFS entry.')
         (destination / name).write_bytes(raw)
     (destination / 'snapshot.json').write_bytes(encoded({'schema': 'dvidia.prerequisites-parent/v1',
-        'repo_id': REPO_ID, 'parent_commit': parent_commit, 'tree': previous}))
+        'repo_id': REPO_ID, 'namespace': namespace, 'parent_commit': parent_commit, 'tree': previous}))
     return {'parent_commit': parent_commit, 'retained_tree_entries': len(previous)}
 
 
-def updated_roots(parent, source_commit, seal):
+def updated_roots(parent, source_commit, seal, namespace=NAMESPACE):
+    config = release_config(namespace)
     index = parent['index.html'].decode()
     marker = '<section aria-labelledby="replay-title">'
     if index.count(marker) != 1:
@@ -227,16 +253,38 @@ def updated_roots(parent, source_commit, seal):
         'not shoe extraction. Failures and full benchmark evidence remain visible.\n\n'
         f'[Pinned source](https://github.com/Dvidia-Inference/dvidia-training/tree/{source_commit}) · '
         '[Research](https://research.dvidia.org/papers/skill-prerequisites-v01/)\n').encode()
+    if namespace == 'prerequisites/v02':
+        index = parent['index.html'].decode()
+        marker = '<section aria-labelledby="prerequisites-title">'
+        if index.count(marker) != 1:
+            raise PublicationError('Expected one prior prerequisites section in the existing landing page.')
+        card = ('<section aria-labelledby="continuous-grip-title"><h2 id="continuous-grip-title">'
+            'From reaching a shoe to keeping hold.</h2><p>Compare a fixed grasp sequence with continuous '
+            'acquisition checks, a measured lift checkpoint and bounded grip-loss recovery. Recorded native MuJoCo '
+            'attempts preserve the full comparison, failures and independent scoring. '
+            'Authored policies; synthetic contact; no physical robot qualification.</p>'
+            '<a href="prerequisites/v02/index.html">Inspect the grip comparison and every result →</a></section>')
+        index = index.replace(marker, card + marker)
+        readme = parent['README.md'] + ('\n\n## Continuous shoe grip v0.2\n\n'
+            '[Explore the grip comparison](prerequisites/v02/index.html). Recorded replays of native '
+            'MuJoCo runs compare the previous mounted-rake controller with continuous acquisition and '
+            'grip-loss checks on matched scenes. Run the open-source Python benchmark locally for fresh '
+            'physics. All planned attempts and independent outcome scores remain visible. '
+            'Policies use privileged simulator observations; contact is synthetic and hardware transfer remains open.\n\n'
+            f'[Pinned source](https://github.com/Dvidia-Inference/dvidia-training/tree/{source_commit}) · '
+            '[Research](https://research.dvidia.org/papers/continuous-shoe-grip-v02/)\n').encode()
     provenance = json.loads(parent['provenance.json'])
-    if 'prerequisites' in provenance:
-        raise PublicationError('Prerequisites provenance already exists.')
-    provenance['prerequisites'] = {'path': NAMESPACE, 'source_commit': source_commit,
+    key = config['provenance_key']
+    if key in provenance:
+        raise PublicationError('Release provenance already exists.')
+    provenance[key] = {'path': namespace, 'source_commit': source_commit,
         'integrity': record(seal), 'browser_mode': 'recorded-native-replay',
         'learned_policy': False, 'physical_robot_ready': False}
     return {'index.html': index.encode(), 'README.md': readme, 'provenance.json': encoded(provenance)}
 
 
-def stage(export, parent, output, source_commit):
+def stage(export, parent, output, source_commit, namespace=NAMESPACE):
+    release_config(namespace)
     if SHA.fullmatch(source_commit) is None:
         raise PublicationError('An exact source commit is required.')
     parent, destination, export = plain(parent), plain(output), plain(export)
@@ -244,18 +292,19 @@ def stage(export, parent, output, source_commit):
            for source in (parent, export)):
         raise PublicationError('Staging output must be outside both input trees.')
     baseline = json.loads(read(parent / 'snapshot.json', 2 * 1024 * 1024))
-    if baseline.get('repo_id') != REPO_ID or SHA.fullmatch(baseline.get('parent_commit', '')) is None:
+    if (baseline.get('repo_id') != REPO_ID or SHA.fullmatch(baseline.get('parent_commit', '')) is None
+            or baseline.get('namespace', NAMESPACE) != namespace):
         raise PublicationError('Unexpected parent snapshot.')
     previous = baseline['tree']
-    if any(name.startswith(NAMESPACE + '/') for name in previous):
+    if any(name == namespace or name.startswith(namespace + '/') for name in previous):
         raise PublicationError('Prerequisites namespace must be new.')
     parent_files = {name: read(parent / name) for name in ROOT_FILES}
     attributes = read(parent / '.gitattributes', 65536)
     if any(not matches_tree(raw, previous[name]) for name, raw in {**parent_files, '.gitattributes': attributes}.items()):
         raise PublicationError('Pinned parent root bytes changed.')
-    release = check_export(export, source_commit)
-    payload = {NAMESPACE + '/' + name: raw for name, raw in release.items()}
-    payload.update(updated_roots(parent_files, source_commit, release['integrity.json']))
+    release = check_export(export, source_commit, namespace)
+    payload = {namespace + '/' + name: raw for name, raw in release.items()}
+    payload.update(updated_roots(parent_files, source_commit, release['integrity.json'], namespace))
     if set(payload) & set(previous) != ROOT_FILES:
         raise PublicationError('Only the three root pointers may replace existing files.')
     for name, raw in payload.items():
@@ -267,7 +316,7 @@ def stage(export, parent, output, source_commit):
         path.write_bytes(raw)
     (destination / 'parent-gitattributes.txt').write_bytes(attributes)
     plan = {'schema': 'dvidia.prerequisites-publication/v1', 'repo_id': REPO_ID,
-        'namespace': NAMESPACE, 'source_commit': source_commit, 'parent_commit': baseline['parent_commit'],
+        'namespace': namespace, 'source_commit': source_commit, 'parent_commit': baseline['parent_commit'],
         'parent_tree': previous, 'parent_roots': {name: record(raw) for name, raw in parent_files.items()},
         'parent_attributes': record(attributes), 'files': {name: record(raw) for name, raw in sorted(payload.items())}}
     (destination / 'plan.json').write_bytes(encoded(plan))
@@ -278,29 +327,32 @@ def stage(export, parent, output, source_commit):
 def check(path):
     path = plain(path)
     plan = json.loads(read(path, 2 * 1024 * 1024))
+    namespace = plan.get('namespace')
+    release_config(namespace)
     if (plan.get('schema') != 'dvidia.prerequisites-publication/v1' or plan.get('repo_id') != REPO_ID
-            or plan.get('namespace') != NAMESPACE
             or any(SHA.fullmatch(plan.get(name, '')) is None for name in ('source_commit', 'parent_commit'))):
         raise PublicationError('Unexpected prerequisites publication plan.')
     payload = inventory(path.parent / 'payload')
     if plan.get('files') != {name: record(raw) for name, raw in payload.items()}:
         raise PublicationError('Payload changed after staging.')
     if (set(payload) & set(plan['parent_tree']) != ROOT_FILES
-            or any(name not in ROOT_FILES and not name.startswith(NAMESPACE + '/') for name in payload)
-            or any(name.startswith(NAMESPACE + '/') for name in plan['parent_tree'])):
+            or any(name not in ROOT_FILES and not name.startswith(namespace + '/') for name in payload)
+            or any(name == namespace or name.startswith(namespace + '/') for name in plan['parent_tree'])):
         raise PublicationError('Publication may only append the fresh namespace and change its three root pointers.')
     attributes = read(path.parent / 'parent-gitattributes.txt', 65536)
     if record(attributes) != plan['parent_attributes'] or not matches_tree(attributes, plan['parent_tree']['.gitattributes']):
         raise PublicationError('Parent metadata changed.')
-    check_export(path.parent / 'payload' / NAMESPACE, plan['source_commit'])
+    check_export(path.parent / 'payload' / namespace, plan['source_commit'], namespace)
     return plan, payload
 
 
 def check_gate(gate, plan):
+    namespace = plan['namespace']
+    release_config(namespace)
     if (gate.get('source_commit') != plan['source_commit']
             or any(gate.get(name) is not True for name in ('tests_passed', 'browser_qa_passed', 'benchmark_reviewed'))
-            or gate.get('benchmark_sha256') != plan['files'][NAMESPACE + '/benchmark.json']['sha256']
-            or gate.get('integrity_sha256') != plan['files'][NAMESPACE + '/integrity.json']['sha256']):
+            or gate.get('benchmark_sha256') != plan['files'][namespace + '/benchmark.json']['sha256']
+            or gate.get('integrity_sha256') != plan['files'][namespace + '/integrity.json']['sha256']):
         raise PublicationError('Publication requires source-bound benchmark, tests and browser acceptance.')
 
 
@@ -344,7 +396,7 @@ def publish(path, gate_path):
         from huggingface_hub import CommitOperationAdd
         result = api.create_commit(REPO_ID, repo_type='space', parent_commit=plan['parent_commit'],
             operations=[CommitOperationAdd(path_in_repo=name, path_or_fileobj=raw) for name, raw in payload.items()],
-            commit_message='Publish two native skill-prerequisite simulations and complete benchmark evidence')
+            commit_message=release_config(plan['namespace'])['commit_message'])
         revision = result.oid
         pending_path.write_bytes(encoded({'commit': revision, 'plan_sha256': plan_hash}))
     after = tree(api, revision)
@@ -354,7 +406,7 @@ def publish(path, gate_path):
     row = {'repo_id': REPO_ID, 'repo_type': 'space', 'files': [
         {'path': name, **expected} for name, expected in plan['files'].items()]}
     verified_downloads(row, revision, False)
-    receipt = {'repo_id': REPO_ID, 'commit': revision, 'parent_commit': plan['parent_commit'],
+    receipt = {'repo_id': REPO_ID, 'namespace': plan['namespace'], 'commit': revision, 'parent_commit': plan['parent_commit'],
         'source_commit': plan['source_commit'], 'plan_sha256': plan_hash,
         'verified_public_files': len(payload), 'unchanged_historical_tree_entries': unchanged,
         'files': plan['files'], 'gate': gate}
@@ -369,10 +421,12 @@ def main():
     command = commands.add_parser('snapshot')
     command.add_argument('--output', required=True, type=Path)
     command.add_argument('--parent-commit', required=True)
+    command.add_argument('--namespace', choices=RELEASES, default=NAMESPACE)
     command = commands.add_parser('stage')
     for name in ('export', 'parent', 'output'):
         command.add_argument('--' + name, required=True, type=Path)
     command.add_argument('--source-commit', required=True)
+    command.add_argument('--namespace', choices=RELEASES, default=NAMESPACE)
     for name in ('check', 'publish'):
         command = commands.add_parser(name)
         command.add_argument('plan', type=Path)
@@ -381,9 +435,9 @@ def main():
     args = parser.parse_args()
     try:
         if args.command == 'snapshot':
-            result = snapshot(args.output, args.parent_commit)
+            result = snapshot(args.output, args.parent_commit, args.namespace)
         elif args.command == 'stage':
-            result = stage(args.export, args.parent, args.output, args.source_commit)
+            result = stage(args.export, args.parent, args.output, args.source_commit, args.namespace)
         elif args.command == 'check':
             plan, payload = check(args.plan)
             result = {'files': len(payload), 'source_commit': plan['source_commit']}
