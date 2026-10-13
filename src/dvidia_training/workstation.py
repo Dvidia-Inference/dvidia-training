@@ -278,7 +278,8 @@ def export(assets,output,*,runtime_directory=None):
                     'compiled_model_sha256':manifest['compiled_model_sha256'],'scope':SCOPE})
     scene.update(schema='dvidia.live-workstation-model/v1',scope=SCOPE)
     packed=gzip.compress(geometry,mtime=0)
-    scene['geometry_binary']={'href':'geometry.bin.gz','compression':'gzip','bytes':len(geometry),'compressed_bytes':len(packed),'sha256':sha256(geometry).hexdigest()}
+    scene['geometry_binary']={'href':'geometry.bin.gz','compression':'gzip','bytes':len(geometry),
+        'compressed_bytes':len(packed),'compressed_sha256':sha256(packed).hexdigest(),'sha256':sha256(geometry).hexdigest()}
     files={'scene.xml':native_xml,'model.json':_json(scene),'geometry.bin.gz':packed,
            'catalog.json':_json(asset_library.catalog()),'LICENSE':asset_preview.replay.MIT_LICENSE.encode(),
            'licenses/agilex_piper/LICENSE':blobs[item['folder']+'/LICENSE'],
@@ -316,6 +317,9 @@ def export(assets,output,*,runtime_directory=None):
         "The physics engine also downloads compressed, with its decoded SHA-256 verified. "
         "Interrupted downloads make up to three attempts with a 30-second idle timeout and "
         "a 120-second total deadline per resource. Progress and a reload button expose recovery.\n\n"
+        "The official Hugging Face workstation uses a DVIDIA-hosted mirror for three pinned "
+        "compressed assets, with size and SHA-256 checks and bounded Hugging Face fallback. "
+        "Local exports load their own files and work offline after initial provisioning.\n\n"
         "Native PiPER meshes and MIT notices are pinned to the upstream commit in workstation.json. "
         "The rigid procedural shoe is MIT, with assumed untested physical properties in catalog.json. "
         "The controller is authored differential IK, not a learned policy. The jaw can make physical "
@@ -496,7 +500,11 @@ def inspect_export(directory):
             'compiled_model_sha256':manifest['compiled_model_sha256'],'scope':SCOPE}
     expected_scene,geometry=asset_preview._scene(model,source)
     expected_scene.update(schema='dvidia.live-workstation-model/v1',scope=SCOPE)
-    unpacked=asset_preview._unpack(scene.get('geometry_binary'),payload,'geometry.bin.gz')
+    geometry_meta=scene.get('geometry_binary',{})
+    if 'compressed_sha256' in geometry_meta and geometry_meta['compressed_sha256']!=sha256(payload['geometry.bin.gz']).hexdigest():
+        raise ValueError('Workstation compressed geometry checksum mismatch')
+    unpacked=asset_preview._unpack({key:value for key,value in geometry_meta.items()
+        if key!='compressed_sha256'},payload,'geometry.bin.gz')
     if unpacked!=geometry or {key:value for key,value in scene.items() if key!='geometry_binary'}!=expected_scene:
         raise ValueError('Workstation renderer differs from its compiled native geometry')
     return {'schema':SCHEMA,'robot':'piper','files':records,'file_count':len(payload)+1,

@@ -219,6 +219,22 @@ class NativeWorkstationTests(unittest.TestCase):
         (directory/'workstation-integrity.json').write_bytes(ws._json(seal))
         self.assertEqual(ws.inspect_export(directory)['compiled_model_sha256'],sim.model_digest(self.model))
 
+    def test_compressed_geometry_digest_is_verified_and_legacy_metadata_remains_readable(self):
+        import shutil
+        directory=self.root/'geometry-digest'
+        shutil.copytree(self.output,directory)
+        scene=json.loads((directory/'model.json').read_text())
+        self.assertEqual(scene['geometry_binary']['compressed_sha256'],
+                         sha256((directory/'geometry.bin.gz').read_bytes()).hexdigest())
+        for incorrect in ('0'*64,None):
+            scene['geometry_binary']['compressed_sha256']=incorrect
+            self._reseal(directory,'model.json',ws._json(scene))
+            with self.assertRaisesRegex(ValueError,'compressed geometry checksum'):
+                ws.inspect_export(directory)
+        del scene['geometry_binary']['compressed_sha256']
+        self._reseal(directory,'model.json',ws._json(scene))
+        self.assertEqual(ws.inspect_export(directory)['compiled_model_sha256'],sim.model_digest(self.model))
+
     def test_resealed_wasm_bundle_must_decode_to_original_engine(self):
         import shutil
         directory=self.root/'bad-wasm-bundle'

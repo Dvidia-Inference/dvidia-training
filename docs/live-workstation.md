@@ -48,6 +48,14 @@ failures and selected temporary HTTP errors retry; invalid sizes, checksums or
 destinations fail immediately. Loading progress names retries; a terminal
 failure exposes **Reload and retry**. Reload starts a new session.
 
+The official Hugging Face Space downloads three known compressed assets from
+content-addressed URLs on `research.dvidia.org`. The requested size and SHA-256
+must match the published mirror inventory, and the received bytes are checked
+before use. A temporary mirror failure falls back to Hugging Face within the
+same retry and time budget; a checksum, size or redirect-policy failure stops.
+This routing applies only to the exact official Space and asset paths. Local
+exports and other deployments use their own included files.
+
 On 2026-10-13 the earlier Hugging Face startup failure could not be reproduced
 as a deterministic CORS, gzip or corrupt-asset defect. Fresh diagnostics verified
 all three old binary assets. The exact historical network event was not captured;

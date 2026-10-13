@@ -230,6 +230,90 @@ test('only the exact public Space may follow its observed HTTPS CDN origin', asy
   }
 });
 
+const mirrorAssets = [
+  {name: 'geometry.bin.gz', bytes: 3574720, sha256: '51365a5a661d8062e28c66abc6bdb843ee410811f84b49d62c5878c265b3631f'},
+  {name: 'native-assets.bin.gz', bytes: 7318481, sha256: '9c960598f9b2c0c7459a8bdfc8a544513b4c6ffaff2c8787fa49f728774eb9e7'},
+  {name: 'mujoco.wasm.gz', bytes: 2543112, sha256: 'ad01772e00939bf6300a953b396d38aa9ec03c05fcda46c3c8d940d56f772b3b'},
+];
+const spaceAsset = item => 'https://dvidia-robot-simulation-lab.static.hf.space/workstation/v01/' + item.name;
+const mirrorAsset = item => 'https://research.dvidia.org/runtime/workstation/' + item.sha256 + '/' + item.name;
+
+test('three exact approved hosted assets use their content-addressed mirror first', async () => {
+  for (const item of mirrorAssets) {
+    const calls = [];
+    await usingFetch(async (url, options) => {
+      calls.push(String(url));
+      assert.equal(options.credentials, 'omit'); assert.equal(options.referrerPolicy, 'no-referrer');
+      assert.equal(options.redirect, 'manual');
+      return response('Denied', url, {status: 403});
+    }, async () => await assert.rejects(resourceBytes(spaceAsset(item), item, fast), /HTTP 403/));
+    assert.deepEqual(calls, [mirrorAsset(item)]);
+  }
+});
+
+test('mirror routing requires exact origin, path, bytes and digest; other exports stay local', async () => {
+  const item = mirrorAssets[0];
+  for (const [url, expected] of [
+    [spaceAsset(item), undefined],
+    [spaceAsset(item), {...item, bytes: item.bytes + 1}],
+    [spaceAsset(item), {...item, sha256: '0'.repeat(64)}],
+    [spaceAsset(item) + '?revision=future', item],
+    [spaceAsset(item).replace('/v01/', '/v02/'), item],
+    [spaceAsset(item).replace('https:', 'http:'), item],
+    [spaceAsset(item).replace('.static.hf.space', '.static.hf.space.evil.example'), item],
+    [spaceAsset(item).replace('dvidia-robot-simulation-lab.static.hf.space', 'research.dvidia.org'), item],
+    ['http://127.0.0.1:8295/' + item.name, item],
+  ]) {
+    const calls = [];
+    await usingFetch(async requested => {
+      calls.push(String(requested)); return response('Missing', requested, {status: 404});
+    }, async () => await assert.rejects(resourceBytes(url, expected, fast), /HTTP 404/));
+    assert.deepEqual(calls, [url]);
+  }
+});
+
+test('mirror network or availability errors fall back to the original within the same attempt budget', async () => {
+  const item = mirrorAssets[2];
+  for (const failure of ['network', 'body', 404, 410, 503]) {
+    const calls = [];
+    await usingFetch(async url => {
+      calls.push(String(url));
+      if (calls.length === 1) {
+        if (failure === 'network') throw new TypeError('Failed to fetch');
+        if (failure === 'body') return response(new ReadableStream({start(controller) {
+          controller.error(new TypeError('network error'));
+        }}), url);
+        return response('Unavailable', url, {status: failure});
+      }
+      // The origin's own permanent failure must remain terminal after fallback.
+      return response('Missing', url, {status: 404});
+    }, async () => await assert.rejects(resourceBytes(spaceAsset(item), item, fast), /attempt 2\/3.*HTTP 404/));
+    assert.deepEqual(calls, [mirrorAsset(item), spaceAsset(item)], String(failure));
+  }
+  const calls = [];
+  await usingFetch(async url => { calls.push(String(url)); throw new TypeError('Failed to fetch'); },
+    async () => await assert.rejects(resourceBytes(spaceAsset(item), item, fast), /attempt 3\/3/));
+  assert.deepEqual(calls, [mirrorAsset(item), spaceAsset(item), spaceAsset(item)]);
+});
+
+test('mirror integrity, size and redirect failures never fall back or relax verification', async () => {
+  const item = mirrorAssets[2];
+  for (const [makeResponse, message] of [
+    [url => response(new Uint8Array(item.bytes), url), /checksum mismatch/],
+    [url => response(new Uint8Array(1), url), /size mismatch/],
+    [url => response(new Uint8Array(item.bytes + 1), url), /too large/],
+    [url => response('Redirect', url, {status: 302}), /may not redirect/],
+    [url => { const value = response(null, url); Object.defineProperty(value, 'type', {value: 'opaqueredirect'}); return value; }, /may not redirect/],
+    [() => response(null, 'https://untrusted.example/geometry.bin.gz'), /permitted workstation host/],
+    [url => response(null, String(url) + '?changed=1'), /permitted workstation host/],
+  ]) {
+    const calls = [];
+    await usingFetch(async url => { calls.push(String(url)); return makeResponse(url); },
+      async () => await assert.rejects(resourceBytes(spaceAsset(item), item, fast), message));
+    assert.deepEqual(calls, [mirrorAsset(item)]);
+  }
+});
+
 const wasm = new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0]);
 const wasmManifest = () => {
   const packed = gzipSync(wasm);

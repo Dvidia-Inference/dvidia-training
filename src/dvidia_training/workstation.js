@@ -72,9 +72,9 @@ async function bounded(stream, limit) {
   for (const chunk of chunks) { output.set(chunk, offset); offset += chunk.length; }
   return output.buffer;
 }
-async function fetchBytes(path, limit) {
+async function fetchBytes(path, limit, expected) {
   const url = new URL(relative(path), location.href);
-  return (await resourceBytes(url, undefined, {maxBytes: limit, onProgress: downloadProgress})).buffer;
+  return (await resourceBytes(url, expected, {maxBytes: limit, onProgress: downloadProgress})).buffer;
 }
 async function digest(bytes) {
   if (!globalThis.crypto?.subtle) return null;
@@ -88,7 +88,9 @@ async function loadGeometry(meta) {
     && [meta.bytes, meta.compressed_bytes].every(x => Number.isInteger(x) && x > 0 && x <= MAX_BYTES),
   'Invalid compiled geometry descriptor.');
   assert(typeof DecompressionStream === 'function', 'This browser needs gzip stream support.');
-  const packed = await fetchBytes(meta.href, meta.compressed_bytes);
+  const expected = meta.compressed_sha256 === undefined ? undefined
+    : {bytes: meta.compressed_bytes, sha256: meta.compressed_sha256};
+  const packed = await fetchBytes(meta.href, meta.compressed_bytes, expected);
   assert(packed.byteLength === meta.compressed_bytes, 'The geometry download is incomplete.');
   const bytes = await bounded(new Blob([packed]).stream().pipeThrough(new DecompressionStream('gzip')), meta.bytes);
   assert(bytes.byteLength === meta.bytes, 'The decoded geometry has an unexpected size.');
