@@ -8,6 +8,16 @@
 
 **Research alpha.** The recorded demo covers the original one-scene simulation pilot; the frozen benchmark is a separate experiment. Training runs locally. No human-video action bridge or hardware skill is established.
 
+**[Explore the two skill-prerequisite experiments](https://research.dvidia.org/papers/skill-prerequisites-v01/).**
+The hinged shoe box and out-of-reach shoe now have runnable native MuJoCo scenes,
+recorded 3D replays and all sixteen held-out attempts. A lid guard avoids two
+simulated collisions while completion stays at 2/4. A mounted rake brings 3/4
+shoes into an intermediate reach checkpoint, but all subsequent retained lifts
+fail. These authored policies make failures measurable; they are not learned or
+hardware-qualified skills. [Run locally](docs/prerequisite-simulations.md) ·
+[Frozen results](benchmarks/skill-prerequisites-20261013/README.md) ·
+[Hugging Face](https://huggingface.co/spaces/Dvidia/robot-simulation-lab).
+
 **[Open the live PiPER shoe workstation](https://dvidia-robot-simulation-lab.static.hf.space/workstation/v01/index.html).**
 Drag the tool target, move the native gripper, nudge a free shoe and inspect the
 resulting contacts. MuJoCo 3.15.0 runs locally in a browser worker; a warm 3D
