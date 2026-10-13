@@ -1,0 +1,363 @@
+{
+  "schema": "dvidia.continuous-shoe-grip/v2",
+  "split": "heldout",
+  "cohort": "fresh-parameter-holdouts-v02",
+  "fixture_sha256": "41ab821fa79596d57228b93c2b42c17f6df4b4bc42e0f25818cb472cb221e6e7",
+  "criteria": {
+    "native_dt_s": 0.002,
+    "policy_dt_s": 0.02,
+    "final_retention_s": 0.5,
+    "final_retention_ticks": 250,
+    "shoe_origin_height_min_m": 0.035,
+    "finger_force_min_n": 0.01,
+    "support_force_max_n": 0.01,
+    "acquisition_dwell_s": 0.1,
+    "sustained_loss_s": 0.02,
+    "support_scope": "Normal force from world, rake, or non-finger robot geometry each must remain below 0.01 N. Thresholds are synthetic scoring conventions, not calibrated safety limits.",
+    "height_scope": "Height is the synthetic shoe body origin at its sole-bottom reference, not its orientation-dependent lowest surface."
+  },
+  "attempts": [
+    {
+      "id": "fresh-01-baseline",
+      "task": "tool-reach",
+      "policy": "baseline",
+      "case": {
+        "id": "fresh-01",
+        "shoe_x": 0.698,
+        "shoe_y": -0.067,
+        "mass": 0.16,
+        "friction": 0.38,
+        "tool_length": 0.335,
+        "lateral_error": 0.012,
+        "split": "heldout",
+        "rationale": "Light, low-friction shoe with a small alignment offset."
+      }
+    },
+    {
+      "id": "fresh-01-recovery",
+      "task": "tool-reach",
+      "policy": "recovery",
+      "case": {
+        "id": "fresh-01",
+        "shoe_x": 0.698,
+        "shoe_y": -0.067,
+        "mass": 0.16,
+        "friction": 0.38,
+        "tool_length": 0.335,
+        "lateral_error": 0.012,
+        "split": "heldout",
+        "rationale": "Light, low-friction shoe with a small alignment offset."
+      }
+    },
+    {
+      "id": "fresh-02-baseline",
+      "task": "tool-reach",
+      "policy": "baseline",
+      "case": {
+        "id": "fresh-02",
+        "shoe_x": 0.712,
+        "shoe_y": -0.137,
+        "mass": 0.44,
+        "friction": 0.88,
+        "tool_length": 0.359,
+        "lateral_error": -0.042,
+        "split": "heldout",
+        "rationale": "Heavier shoe near the lateral workspace edge."
+      }
+    },
+    {
+      "id": "fresh-02-recovery",
+      "task": "tool-reach",
+      "policy": "recovery",
+      "case": {
+        "id": "fresh-02",
+        "shoe_x": 0.712,
+        "shoe_y": -0.137,
+        "mass": 0.44,
+        "friction": 0.88,
+        "tool_length": 0.359,
+        "lateral_error": -0.042,
+        "split": "heldout",
+        "rationale": "Heavier shoe near the lateral workspace edge."
+      }
+    },
+    {
+      "id": "fresh-03-baseline",
+      "task": "tool-reach",
+      "policy": "baseline",
+      "case": {
+        "id": "fresh-03",
+        "shoe_x": 0.742,
+        "shoe_y": -0.094,
+        "mass": 0.62,
+        "friction": 1.18,
+        "tool_length": 0.382,
+        "lateral_error": 0.049,
+        "split": "heldout",
+        "rationale": "Farther heavy shoe with high assumed friction."
+      }
+    },
+    {
+      "id": "fresh-03-recovery",
+      "task": "tool-reach",
+      "policy": "recovery",
+      "case": {
+        "id": "fresh-03",
+        "shoe_x": 0.742,
+        "shoe_y": -0.094,
+        "mass": 0.62,
+        "friction": 1.18,
+        "tool_length": 0.382,
+        "lateral_error": 0.049,
+        "split": "heldout",
+        "rationale": "Farther heavy shoe with high assumed friction."
+      }
+    },
+    {
+      "id": "fresh-04-baseline",
+      "task": "tool-reach",
+      "policy": "baseline",
+      "case": {
+        "id": "fresh-04",
+        "shoe_x": 0.731,
+        "shoe_y": -0.126,
+        "mass": 0.26,
+        "friction": 0.52,
+        "tool_length": 0.376,
+        "lateral_error": -0.094,
+        "split": "heldout",
+        "rationale": "Large initial lateral error requires a bounded correction."
+      }
+    },
+    {
+      "id": "fresh-04-recovery",
+      "task": "tool-reach",
+      "policy": "recovery",
+      "case": {
+        "id": "fresh-04",
+        "shoe_x": 0.731,
+        "shoe_y": -0.126,
+        "mass": 0.26,
+        "friction": 0.52,
+        "tool_length": 0.376,
+        "lateral_error": -0.094,
+        "split": "heldout",
+        "rationale": "Large initial lateral error requires a bounded correction."
+      }
+    },
+    {
+      "id": "fresh-05-baseline",
+      "task": "tool-reach",
+      "policy": "baseline",
+      "case": {
+        "id": "fresh-05",
+        "shoe_x": 0.704,
+        "shoe_y": -0.081,
+        "mass": 0.34,
+        "friction": 1.12,
+        "tool_length": 0.348,
+        "lateral_error": 0.083,
+        "split": "heldout",
+        "rationale": "Nearer object with high friction and offset approach."
+      }
+    },
+    {
+      "id": "fresh-05-recovery",
+      "task": "tool-reach",
+      "policy": "recovery",
+      "case": {
+        "id": "fresh-05",
+        "shoe_x": 0.704,
+        "shoe_y": -0.081,
+        "mass": 0.34,
+        "friction": 1.12,
+        "tool_length": 0.348,
+        "lateral_error": 0.083,
+        "split": "heldout",
+        "rationale": "Nearer object with high friction and offset approach."
+      }
+    },
+    {
+      "id": "fresh-06-baseline",
+      "task": "tool-reach",
+      "policy": "baseline",
+      "case": {
+        "id": "fresh-06",
+        "shoe_x": 0.748,
+        "shoe_y": -0.146,
+        "mass": 0.72,
+        "friction": 0.76,
+        "tool_length": 0.394,
+        "lateral_error": -0.018,
+        "split": "heldout",
+        "rationale": "Heavy object near the declared far/lateral limits."
+      }
+    },
+    {
+      "id": "fresh-06-recovery",
+      "task": "tool-reach",
+      "policy": "recovery",
+      "case": {
+        "id": "fresh-06",
+        "shoe_x": 0.748,
+        "shoe_y": -0.146,
+        "mass": 0.72,
+        "friction": 0.76,
+        "tool_length": 0.394,
+        "lateral_error": -0.018,
+        "split": "heldout",
+        "rationale": "Heavy object near the declared far/lateral limits."
+      }
+    },
+    {
+      "id": "fresh-07-baseline",
+      "task": "tool-reach",
+      "policy": "baseline",
+      "case": {
+        "id": "fresh-07",
+        "shoe_x": 0.719,
+        "shoe_y": -0.058,
+        "mass": 0.19,
+        "friction": 0.29,
+        "tool_length": 0.362,
+        "lateral_error": -0.062,
+        "split": "heldout",
+        "rationale": "Low-friction light shoe at a different lateral location."
+      }
+    },
+    {
+      "id": "fresh-07-recovery",
+      "task": "tool-reach",
+      "policy": "recovery",
+      "case": {
+        "id": "fresh-07",
+        "shoe_x": 0.719,
+        "shoe_y": -0.058,
+        "mass": 0.19,
+        "friction": 0.29,
+        "tool_length": 0.362,
+        "lateral_error": -0.062,
+        "split": "heldout",
+        "rationale": "Low-friction light shoe at a different lateral location."
+      }
+    },
+    {
+      "id": "fresh-08-baseline",
+      "task": "tool-reach",
+      "policy": "baseline",
+      "case": {
+        "id": "fresh-08",
+        "shoe_x": 0.736,
+        "shoe_y": -0.109,
+        "mass": 0.48,
+        "friction": 0.96,
+        "tool_length": 0.371,
+        "lateral_error": 0.106,
+        "split": "heldout",
+        "rationale": "Marginal tool reach plus large initial alignment error."
+      }
+    },
+    {
+      "id": "fresh-08-recovery",
+      "task": "tool-reach",
+      "policy": "recovery",
+      "case": {
+        "id": "fresh-08",
+        "shoe_x": 0.736,
+        "shoe_y": -0.109,
+        "mass": 0.48,
+        "friction": 0.96,
+        "tool_length": 0.371,
+        "lateral_error": 0.106,
+        "split": "heldout",
+        "rationale": "Marginal tool reach plus large initial alignment error."
+      }
+    },
+    {
+      "id": "fresh-09-baseline",
+      "task": "tool-reach",
+      "policy": "baseline",
+      "case": {
+        "id": "fresh-09",
+        "shoe_x": 0.707,
+        "shoe_y": -0.119,
+        "mass": 0.31,
+        "friction": 0.64,
+        "tool_length": 0.205,
+        "lateral_error": 0.038,
+        "split": "heldout",
+        "rationale": "Tool cannot get behind the far edge; deferral is appropriate."
+      }
+    },
+    {
+      "id": "fresh-09-recovery",
+      "task": "tool-reach",
+      "policy": "recovery",
+      "case": {
+        "id": "fresh-09",
+        "shoe_x": 0.707,
+        "shoe_y": -0.119,
+        "mass": 0.31,
+        "friction": 0.64,
+        "tool_length": 0.205,
+        "lateral_error": 0.038,
+        "split": "heldout",
+        "rationale": "Tool cannot get behind the far edge; deferral is appropriate."
+      }
+    },
+    {
+      "id": "fresh-10-baseline",
+      "task": "tool-reach",
+      "policy": "baseline",
+      "case": {
+        "id": "fresh-10",
+        "shoe_x": 0.744,
+        "shoe_y": -0.072,
+        "mass": 0.58,
+        "friction": 1.02,
+        "tool_length": 0.255,
+        "lateral_error": -0.047,
+        "split": "heldout",
+        "rationale": "Farther shoe with insufficient tool length; deferral control."
+      }
+    },
+    {
+      "id": "fresh-10-recovery",
+      "task": "tool-reach",
+      "policy": "recovery",
+      "case": {
+        "id": "fresh-10",
+        "shoe_x": 0.744,
+        "shoe_y": -0.072,
+        "mass": 0.58,
+        "friction": 1.02,
+        "tool_length": 0.255,
+        "lateral_error": -0.047,
+        "split": "heldout",
+        "rationale": "Farther shoe with insufficient tool length; deferral control."
+      }
+    }
+  ],
+  "comparison": "Paired unchanged v01 mounted-rake recovery versus v02 continuous-grip recovery; same native geometry and case parameters.",
+  "design": "Ten deterministic joint parameter holdouts authored and sealed before v02 controller freeze. Not a random sample, confidence interval, or real-world generalization estimate.",
+  "previous_data": "All v01 development and v01 heldout cases are now regression data; none count as unseen evaluation.",
+  "cohort_access": "Controller development must not read or execute this fresh cohort before root records source freeze. No fresh-case outcomes used to tune the controller.",
+  "scope": "Authored controller comparison, privileged native observations and synthetic objects; no hardware safety or transfer claim.",
+  "source_commit": "af8933994b4626e28a0554abc782ae9d22cff06c",
+  "implementation_sha256": {
+    "continuous_grip.py": "c9a3e2ed8f0beb9974e346899ca36ce3c7a0957a09dc234c47ba97a6d6e097da",
+    "grip_protocol.py": "762c5011cb242ded7355dd3d9b97dd465c0e14e7ef3977ed12e0037017fd0532",
+    "grip_protocol_v02.json": "41ab821fa79596d57228b93c2b42c17f6df4b4bc42e0f25818cb472cb221e6e7",
+    "grip_benchmark.py": "236ebcd0df1547bf0146675289d57c535d67a3aa2c051456bc9e8b4542bf59ac",
+    "tool_reach.py": "812072388b518fb11999dafddd15655f3c750fa84fe09047c55a78c2b509e68f",
+    "workstation.py": "2a6aa6686b5b273efcfb21156952df8ceca88d991674cd17df92f2dccc11b701",
+    "asset_library.py": "12520ca13b7806004be37a0d7e0d1e023c90410c1eba899296fdcd5b28fdc7f7",
+    "asset_catalog.json": "592f363389a96fef7f9223737aa72a2f1a74f400238924bf6790ec5bfd3302b7",
+    "robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d",
+    "prerequisite_benchmark.py": "c78efb24263300c56f50413aa65333e4fbf1b99403aa816de9bf4cb5656a3811",
+    "asset_preview.py": "12f4806162504a3c8773b10b516d6b7abb05f670a1f5817be144ea98fc1d25d8",
+    "grip_lab.html": "01dfbe1e687ef53b095d74b0ced1364243e69c501eafca552c485afba5954c7a",
+    "grip_lab.js": "74292368822cb58e0b073e9085fdcd96979fd3421eec95c3cfee4e8fab20380f",
+    "grip_lab.bundle.js": "fb344678075ba0ddba43f2b62519ada05dfd3ae6b2f2b3878a3b7bc5f0b33a72"
+  }
+}

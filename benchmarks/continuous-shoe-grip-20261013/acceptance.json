@@ -1,0 +1,39 @@
+{
+  "schema": "dvidia.continuous-grip-publication-acceptance/v1",
+  "source_commit": "af8933994b4626e28a0554abc782ae9d22cff06c",
+  "tests_passed": true,
+  "browser_qa_passed": true,
+  "benchmark_reviewed": true,
+  "benchmark_sha256": "cf909bdf80bd29af7627b312756e0aaba9c77283e353ff300747c28d86bc4431",
+  "integrity_sha256": "827cd21905080fb6e60a93484d76df095ff74342c09b399136d6906709bd5998",
+  "native_audit_sha256": "51114b4adc79db7ff8c095d42fd32ccc6c5c71adea402ea2e073e363df1e5cfc",
+  "test_evidence": {
+    "native_and_reporting_tests": 45,
+    "publisher_tests": 19,
+    "log": "runs/grip-v02-dev/final-tests.log"
+  },
+  "browser_checks": {
+    "frozen_export_native_3d_render": true,
+    "completed_fresh08_both_policies": true,
+    "failed_fresh01_recovery_event_seek": true,
+    "short_tool_fresh09_both_policies_defer": true,
+    "completed_playback_restarts_and_pauses": true,
+    "keyboard_timeline_end": true,
+    "collision_toggle_and_reset_on_case_change": true,
+    "event_phase_filter": true,
+    "responsive_preflight_320px_no_horizontal_overflow": true,
+    "responsive_preflight_390px_no_horizontal_overflow": true,
+    "responsive_scope": "UI preview of same layout before source freeze; frozen desktop release then rechecked.",
+    "screenshot": "frozen-viewer.jpg"
+  },
+  "result_review": {
+    "valid_attempts": 20,
+    "baseline_completed": 2,
+    "continuous_grip_completed": 2,
+    "paired_gains": 0,
+    "paired_losses": 0,
+    "completed_after_recovery": 0,
+    "limitations_acknowledged": true
+  },
+  "publication_scope": "Gate for exact frozen lab export. Public deployment behavior is checked separately after release."
+}

@@ -1,0 +1,134 @@
+{
+  "schema": "dvidia.continuous-shoe-grip-protocol/v2",
+  "cohort": "fresh-parameter-holdouts-v02",
+  "design": "Ten deterministic joint parameter holdouts authored and sealed before v02 controller freeze. Not a random sample, confidence interval, or real-world generalization estimate.",
+  "previous_data": "All v01 development and v01 heldout cases are now regression data; none count as unseen evaluation.",
+  "comparison": "Paired unchanged v01 mounted-rake recovery versus v02 continuous-grip recovery; same native geometry and case parameters.",
+  "cohort_access": "Controller development must not read or execute this fresh cohort before root records source freeze. No fresh-case outcomes used to tune the controller.",
+  "rationale": "Eight reachable-tool conditions span mass, friction, position and initial alignment; two insufficient-tool controls test deferral. Parameters intentionally differ jointly, so individual-factor causal effects are not isolated.",
+  "criteria": {
+    "native_dt_s": 0.002,
+    "policy_dt_s": 0.02,
+    "final_retention_s": 0.5,
+    "final_retention_ticks": 250,
+    "shoe_origin_height_min_m": 0.035,
+    "finger_force_min_n": 0.01,
+    "support_force_max_n": 0.01,
+    "acquisition_dwell_s": 0.1,
+    "sustained_loss_s": 0.02,
+    "support_scope": "Normal force from world, rake, or non-finger robot geometry each must remain below 0.01 N. Thresholds are synthetic scoring conventions, not calibrated safety limits.",
+    "height_scope": "Height is the synthetic shoe body origin at its sole-bottom reference, not its orientation-dependent lowest surface."
+  },
+  "cases": [
+    {
+      "id": "fresh-01",
+      "shoe_x": 0.698,
+      "shoe_y": -0.067,
+      "mass": 0.16,
+      "friction": 0.38,
+      "tool_length": 0.335,
+      "lateral_error": 0.012,
+      "split": "heldout",
+      "rationale": "Light, low-friction shoe with a small alignment offset."
+    },
+    {
+      "id": "fresh-02",
+      "shoe_x": 0.712,
+      "shoe_y": -0.137,
+      "mass": 0.44,
+      "friction": 0.88,
+      "tool_length": 0.359,
+      "lateral_error": -0.042,
+      "split": "heldout",
+      "rationale": "Heavier shoe near the lateral workspace edge."
+    },
+    {
+      "id": "fresh-03",
+      "shoe_x": 0.742,
+      "shoe_y": -0.094,
+      "mass": 0.62,
+      "friction": 1.18,
+      "tool_length": 0.382,
+      "lateral_error": 0.049,
+      "split": "heldout",
+      "rationale": "Farther heavy shoe with high assumed friction."
+    },
+    {
+      "id": "fresh-04",
+      "shoe_x": 0.731,
+      "shoe_y": -0.126,
+      "mass": 0.26,
+      "friction": 0.52,
+      "tool_length": 0.376,
+      "lateral_error": -0.094,
+      "split": "heldout",
+      "rationale": "Large initial lateral error requires a bounded correction."
+    },
+    {
+      "id": "fresh-05",
+      "shoe_x": 0.704,
+      "shoe_y": -0.081,
+      "mass": 0.34,
+      "friction": 1.12,
+      "tool_length": 0.348,
+      "lateral_error": 0.083,
+      "split": "heldout",
+      "rationale": "Nearer object with high friction and offset approach."
+    },
+    {
+      "id": "fresh-06",
+      "shoe_x": 0.748,
+      "shoe_y": -0.146,
+      "mass": 0.72,
+      "friction": 0.76,
+      "tool_length": 0.394,
+      "lateral_error": -0.018,
+      "split": "heldout",
+      "rationale": "Heavy object near the declared far/lateral limits."
+    },
+    {
+      "id": "fresh-07",
+      "shoe_x": 0.719,
+      "shoe_y": -0.058,
+      "mass": 0.19,
+      "friction": 0.29,
+      "tool_length": 0.362,
+      "lateral_error": -0.062,
+      "split": "heldout",
+      "rationale": "Low-friction light shoe at a different lateral location."
+    },
+    {
+      "id": "fresh-08",
+      "shoe_x": 0.736,
+      "shoe_y": -0.109,
+      "mass": 0.48,
+      "friction": 0.96,
+      "tool_length": 0.371,
+      "lateral_error": 0.106,
+      "split": "heldout",
+      "rationale": "Marginal tool reach plus large initial alignment error."
+    },
+    {
+      "id": "fresh-09",
+      "shoe_x": 0.707,
+      "shoe_y": -0.119,
+      "mass": 0.31,
+      "friction": 0.64,
+      "tool_length": 0.205,
+      "lateral_error": 0.038,
+      "split": "heldout",
+      "rationale": "Tool cannot get behind the far edge; deferral is appropriate."
+    },
+    {
+      "id": "fresh-10",
+      "shoe_x": 0.744,
+      "shoe_y": -0.072,
+      "mass": 0.58,
+      "friction": 1.02,
+      "tool_length": 0.255,
+      "lateral_error": -0.047,
+      "split": "heldout",
+      "rationale": "Farther shoe with insufficient tool length; deferral control."
+    }
+  ]
+}

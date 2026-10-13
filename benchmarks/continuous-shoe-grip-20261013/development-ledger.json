@@ -1,0 +1,704 @@
+{
+  "scope": "Development and previously published v01 regression only; no fresh v02 cohort used. First5iterations did not capture sourcehash; lateriterations did. Firstiteration peak_lift included initialization height and should not be interpreted as an earned lift. Simulated physics remained pinned; all failures retained. Separate geometry probes are not release-controller experiments.",
+  "iterations": [
+    {
+      "iteration": 1,
+      "artifact": "iteration01.json",
+      "artifact_sha256": "068f157e00bcdb3720087e13cc2204de5c8fc4cdd901ae705b8a5f12cd036b20",
+      "source_sha256": null,
+      "source_hash_scope": "captured from iteration06 onward; no retroactive source hash claimed",
+      "parameters": null,
+      "note": "Yaw-aware heel/toe at150 degrees: no retained lift.",
+      "attempts": 5,
+      "valid": 5,
+      "retrieved": 4,
+      "retained": 0,
+      "per_case": [
+        {
+          "id": "reach-dev-standard",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "test_lift_not_following_or_supported",
+          "seconds": 18.22000000000078,
+          "recovery_count": 2,
+          "peak_lift_m": 0.01196076
+        },
+        {
+          "id": "reach-dev-offset",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_contact_lost",
+          "seconds": 17.920000000000947,
+          "recovery_count": 2,
+          "peak_lift_m": 0.01196076
+        },
+        {
+          "id": "reach-dev-heavy",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_contact_lost",
+          "seconds": 17.940000000000936,
+          "recovery_count": 2,
+          "peak_lift_m": 0.01196076
+        },
+        {
+          "id": "reach-dev-miss-retry",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bounded_episode_budget",
+          "seconds": 20.139999999999716,
+          "recovery_count": 1,
+          "peak_lift_m": 0.01196076
+        },
+        {
+          "id": "reach-dev-short",
+          "valid": true,
+          "retrieved": false,
+          "retained": false,
+          "outcome": "tool_cannot_reach_far_edge",
+          "seconds": 1.0000000000000007,
+          "recovery_count": 0,
+          "peak_lift_m": 0.01196076
+        }
+      ]
+    },
+    {
+      "iteration": 2,
+      "artifact": "iteration02-narrow-heel.json",
+      "artifact_sha256": "b956e49d1a1070c8955175d8ad053b900e7ee3893907162aa74dbefc42696d64",
+      "source_sha256": null,
+      "source_hash_scope": "captured from iteration06 onward; no retroactive source hash claimed",
+      "parameters": null,
+      "note": "Narrower heel and lower approach: no retained lift.",
+      "attempts": 5,
+      "valid": 5,
+      "retrieved": 4,
+      "retained": 0,
+      "per_case": [
+        {
+          "id": "reach-dev-standard",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "test_lift_not_following_or_supported",
+          "seconds": 18.02000000000089,
+          "recovery_count": 2,
+          "peak_lift_m": 0.018734990695522213
+        },
+        {
+          "id": "reach-dev-offset",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_contact_lost",
+          "seconds": 17.820000000001002,
+          "recovery_count": 2,
+          "peak_lift_m": 1.22692883716971e-05
+        },
+        {
+          "id": "reach-dev-heavy",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "test_lift_not_following_or_supported",
+          "seconds": 18.04000000000088,
+          "recovery_count": 2,
+          "peak_lift_m": 0.016900721044702582
+        },
+        {
+          "id": "reach-dev-miss-retry",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bounded_episode_budget",
+          "seconds": 20.019999999999783,
+          "recovery_count": 1,
+          "peak_lift_m": 0.0
+        },
+        {
+          "id": "reach-dev-short",
+          "valid": true,
+          "retrieved": false,
+          "retained": false,
+          "outcome": "tool_cannot_reach_far_edge",
+          "seconds": 1.0000000000000007,
+          "recovery_count": 0,
+          "peak_lift_m": 0.0
+        }
+      ]
+    },
+    {
+      "iteration": 3,
+      "artifact": "iteration03-testlift-load-reduction.json",
+      "artifact_sha256": "3723a37cbc4adcf9f157394a574ffb8dae6b91be5bf7ce8ce1c57fe1cd11694e",
+      "source_sha256": null,
+      "source_hash_scope": "captured from iteration06 onward; no retroactive source hash claimed",
+      "parameters": null,
+      "note": "Partial-unloading test-lift gate: incipient transfer improved but no retained lift.",
+      "attempts": 5,
+      "valid": 5,
+      "retrieved": 4,
+      "retained": 0,
+      "per_case": [
+        {
+          "id": "reach-dev-standard",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_contact_lost",
+          "seconds": 18.62000000000056,
+          "recovery_count": 2,
+          "peak_lift_m": 0.038526312455965724
+        },
+        {
+          "id": "reach-dev-offset",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_contact_lost",
+          "seconds": 17.820000000001002,
+          "recovery_count": 2,
+          "peak_lift_m": 1.22692883716971e-05
+        },
+        {
+          "id": "reach-dev-heavy",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_contact_lost",
+          "seconds": 18.660000000000537,
+          "recovery_count": 2,
+          "peak_lift_m": 0.034410528265701894
+        },
+        {
+          "id": "reach-dev-miss-retry",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bounded_episode_budget",
+          "seconds": 20.019999999999783,
+          "recovery_count": 1,
+          "peak_lift_m": 0.0
+        },
+        {
+          "id": "reach-dev-short",
+          "valid": true,
+          "retrieved": false,
+          "retained": false,
+          "outcome": "tool_cannot_reach_far_edge",
+          "seconds": 1.0000000000000007,
+          "recovery_count": 0,
+          "peak_lift_m": 0.0
+        }
+      ]
+    },
+    {
+      "iteration": 4,
+      "artifact": "iteration04-original-first-safe-upward-pitch-fallback.json",
+      "artifact_sha256": "903dc59d149b0a4a6e6c1459b6bf492e43c556482aaa8069b7d85d54f2e98977",
+      "source_sha256": null,
+      "source_hash_scope": "captured from iteration06 onward; no retroactive source hash claimed",
+      "parameters": null,
+      "note": "Original first grasp; pitch120 fallback: no retained lift because original retrieval/clearance still differed.",
+      "attempts": 5,
+      "valid": 5,
+      "retrieved": 4,
+      "retained": 0,
+      "per_case": [
+        {
+          "id": "reach-dev-standard",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_contact_lost",
+          "seconds": 18.500000000000625,
+          "recovery_count": 2,
+          "peak_lift_m": 0.0138783191671263
+        },
+        {
+          "id": "reach-dev-offset",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_contact_lost",
+          "seconds": 19.000000000000348,
+          "recovery_count": 2,
+          "peak_lift_m": 0.025420572475108386
+        },
+        {
+          "id": "reach-dev-heavy",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "grasp_pose_outside_margin",
+          "seconds": 14.820000000001619,
+          "recovery_count": 1,
+          "peak_lift_m": 0.1346805799168656
+        },
+        {
+          "id": "reach-dev-miss-retry",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bounded_episode_budget",
+          "seconds": 20.81999999999934,
+          "recovery_count": 1,
+          "peak_lift_m": 0.014757631742732188
+        },
+        {
+          "id": "reach-dev-short",
+          "valid": true,
+          "retrieved": false,
+          "retained": false,
+          "outcome": "tool_cannot_reach_far_edge",
+          "seconds": 1.0000000000000007,
+          "recovery_count": 0,
+          "peak_lift_m": 0.0
+        }
+      ]
+    },
+    {
+      "iteration": 5,
+      "artifact": "iteration05-toe-grasp-retrieval-margin.json",
+      "artifact_sha256": "a0c387a85a16b0a0027ce9342b67a0a1bfeea3f6974d0395b7ebe831c1aed8d9",
+      "source_sha256": null,
+      "source_hash_scope": "captured from iteration06 onward; no retroactive source hash claimed",
+      "parameters": null,
+      "note": "Toe/pitch120 plus deeper retrieval: tracking failures; rejected.",
+      "attempts": 5,
+      "valid": 5,
+      "retrieved": 4,
+      "retained": 0,
+      "per_case": [
+        {
+          "id": "reach-dev-standard",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_contact_lost",
+          "seconds": 17.580000000001135,
+          "recovery_count": 2,
+          "peak_lift_m": 0.0
+        },
+        {
+          "id": "reach-dev-offset",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_contact_lost",
+          "seconds": 17.68000000000108,
+          "recovery_count": 2,
+          "peak_lift_m": 0.0
+        },
+        {
+          "id": "reach-dev-heavy",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_contact_lost",
+          "seconds": 17.620000000001113,
+          "recovery_count": 2,
+          "peak_lift_m": 0.0
+        },
+        {
+          "id": "reach-dev-miss-retry",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bounded_episode_budget",
+          "seconds": 19.799999999999905,
+          "recovery_count": 1,
+          "peak_lift_m": 0.0
+        },
+        {
+          "id": "reach-dev-short",
+          "valid": true,
+          "retrieved": false,
+          "retained": false,
+          "outcome": "tool_cannot_reach_far_edge",
+          "seconds": 1.0000000000000007,
+          "recovery_count": 0,
+          "peak_lift_m": 0.0
+        }
+      ]
+    },
+    {
+      "iteration": 6,
+      "artifact": "iteration06-legacy-continuous-checkpoint.json",
+      "artifact_sha256": "c01e86d637acaf2e9c88e2d91c50a76b5a472af46c40fc9e7e1beb4c204fcef7",
+      "source_sha256": "154ce038a7ec4fe01b190256b1d4406c3f2d8d109292b24ee112c7269b3041fa",
+      "source_hash_scope": "captured from iteration06 onward; no retroactive source hash claimed",
+      "parameters": {
+        "source_sha256": "154ce038a7ec4fe01b190256b1d4406c3f2d8d109292b24ee112c7269b3041fa",
+        "candidates": [
+          [
+            -0.045,
+            0.06,
+            150,
+            false
+          ],
+          [
+            -0.085,
+            0.055,
+            140,
+            true
+          ]
+        ]
+      },
+      "note": "Exact original first trajectory restored; continuous40mm checkpoint; retained known heavy success.",
+      "attempts": 5,
+      "valid": 5,
+      "retrieved": 4,
+      "retained": 1,
+      "per_case": [
+        {
+          "id": "reach-dev-standard",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_contact_lost",
+          "seconds": 18.640000000000548,
+          "recovery_count": 2,
+          "peak_lift_m": 0.027614840549018544
+        },
+        {
+          "id": "reach-dev-offset",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_contact_lost",
+          "seconds": 18.02000000000089,
+          "recovery_count": 2,
+          "peak_lift_m": 0.00016102493810838506
+        },
+        {
+          "id": "reach-dev-heavy",
+          "valid": true,
+          "retrieved": true,
+          "retained": true,
+          "outcome": "completed",
+          "seconds": 12.600000000000877,
+          "recovery_count": 0,
+          "peak_lift_m": 0.16781048262183798
+        },
+        {
+          "id": "reach-dev-miss-retry",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bounded_episode_budget",
+          "seconds": 20.579999999999472,
+          "recovery_count": 1,
+          "peak_lift_m": 0.03225486470154305
+        },
+        {
+          "id": "reach-dev-short",
+          "valid": true,
+          "retrieved": false,
+          "retained": false,
+          "outcome": "tool_cannot_reach_far_edge",
+          "seconds": 1.0000000000000007,
+          "recovery_count": 0,
+          "peak_lift_m": 0.0
+        }
+      ]
+    },
+    {
+      "iteration": 7,
+      "artifact": "iteration07-side-pinch55.json",
+      "artifact_sha256": "fbb2783422f26291d75a2c63fc090048a66a514792f1210aba0a485712aa7749",
+      "source_sha256": "7c7bc2a01d4e33a81e6da7854dd336df33746ff576f8dc5430cbbde834009fda",
+      "source_hash_scope": "captured from iteration06 onward; no retroactive source hash claimed",
+      "parameters": {
+        "source_sha256": "7c7bc2a01d4e33a81e6da7854dd336df33746ff576f8dc5430cbbde834009fda",
+        "candidates": [
+          [
+            -0.045,
+            0.06,
+            150,
+            false,
+            0.0
+          ],
+          [
+            -0.06,
+            0.055,
+            150,
+            true,
+            55.0
+          ]
+        ],
+        "budget_s": 30.0
+      },
+      "note": "Side-roll55 fallback: failed acquisition; retained original heavy success.",
+      "attempts": 5,
+      "valid": 5,
+      "retrieved": 4,
+      "retained": 1,
+      "per_case": [
+        {
+          "id": "reach-dev-standard",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_acquisition_failed",
+          "seconds": 18.160000000000814,
+          "recovery_count": 2,
+          "peak_lift_m": 0.027614840549018544
+        },
+        {
+          "id": "reach-dev-offset",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_acquisition_failed",
+          "seconds": 17.600000000001124,
+          "recovery_count": 2,
+          "peak_lift_m": 0.0
+        },
+        {
+          "id": "reach-dev-heavy",
+          "valid": true,
+          "retrieved": true,
+          "retained": true,
+          "outcome": "completed",
+          "seconds": 12.600000000000877,
+          "recovery_count": 0,
+          "peak_lift_m": 0.16781048262183798
+        },
+        {
+          "id": "reach-dev-miss-retry",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_acquisition_failed",
+          "seconds": 25.379999999996812,
+          "recovery_count": 2,
+          "peak_lift_m": 0.03225486470154305
+        },
+        {
+          "id": "reach-dev-short",
+          "valid": true,
+          "retrieved": false,
+          "retained": false,
+          "outcome": "tool_cannot_reach_far_edge",
+          "seconds": 1.0000000000000007,
+          "recovery_count": 0,
+          "peak_lift_m": 0.0
+        }
+      ]
+    },
+    {
+      "iteration": 8,
+      "artifact": "iteration08-recenter-original-grasp.json",
+      "artifact_sha256": "1b21d6b12792483d8d76c08c15e45dc468fd6342d00448857ba9b5c1449cbbda",
+      "source_sha256": "55722c1e3d884dff2960278f79785445a4b23acab8c267373d16d57eff886666",
+      "source_hash_scope": "captured from iteration06 onward; no retroactive source hash claimed",
+      "parameters": {
+        "source_sha256": "55722c1e3d884dff2960278f79785445a4b23acab8c267373d16d57eff886666",
+        "candidates": [
+          [
+            -0.045,
+            0.06,
+            150,
+            false,
+            0.0
+          ],
+          [
+            -0.045,
+            0.06,
+            150,
+            false,
+            0.0
+          ]
+        ],
+        "budget_s": 30.0
+      },
+      "note": "Recentered original grasp fallback and30s budget: retained heavy success; no new completions.",
+      "attempts": 5,
+      "valid": 5,
+      "retrieved": 4,
+      "retained": 1,
+      "per_case": [
+        {
+          "id": "reach-dev-standard",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_contact_lost",
+          "seconds": 18.820000000000448,
+          "recovery_count": 2,
+          "peak_lift_m": 0.027614840549018544
+        },
+        {
+          "id": "reach-dev-offset",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_contact_lost",
+          "seconds": 17.800000000001013,
+          "recovery_count": 2,
+          "peak_lift_m": 0.0
+        },
+        {
+          "id": "reach-dev-heavy",
+          "valid": true,
+          "retrieved": true,
+          "retained": true,
+          "outcome": "completed",
+          "seconds": 12.600000000000877,
+          "recovery_count": 0,
+          "peak_lift_m": 0.16781048262183798
+        },
+        {
+          "id": "reach-dev-miss-retry",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_contact_lost",
+          "seconds": 25.919999999996513,
+          "recovery_count": 2,
+          "peak_lift_m": 0.03225486470154305
+        },
+        {
+          "id": "reach-dev-short",
+          "valid": true,
+          "retrieved": false,
+          "retained": false,
+          "outcome": "tool_cannot_reach_far_edge",
+          "seconds": 1.0000000000000007,
+          "recovery_count": 0,
+          "peak_lift_m": 0.0
+        }
+      ]
+    },
+    {
+      "iteration": 9,
+      "artifact": "iteration09-adaptive-endpoint.json",
+      "artifact_sha256": "28c4920db7c100d7e2c9a93a63c61f01e05edd14940189e6fd74edb952e25d84",
+      "source_sha256": "823e1337c81e759f628549c6c1e5143d79c811ede5cd59e97a8fbeb0e226a018",
+      "source_hash_scope": "captured from iteration06 onward; no retroactive source hash claimed",
+      "parameters": {
+        "source_sha256": "823e1337c81e759f628549c6c1e5143d79c811ede5cd59e97a8fbeb0e226a018",
+        "candidates": [
+          [
+            -0.045,
+            0.06,
+            150,
+            false,
+            0.0
+          ],
+          [
+            -0.045,
+            0.06,
+            150,
+            false,
+            0.0
+          ]
+        ],
+        "budget_s": 30.0,
+        "adaptive_lift_endpoint": true
+      },
+      "note": "Stop at100ms unsupported bilateral: caused known heavy to lose retention; rejected.",
+      "attempts": 9,
+      "valid": 9,
+      "retrieved": 7,
+      "retained": 0,
+      "per_case": [
+        {
+          "id": "reach-dev-standard",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_contact_lost",
+          "seconds": 18.820000000000448,
+          "recovery_count": 2,
+          "peak_lift_m": 0.027614840549018544
+        },
+        {
+          "id": "reach-dev-offset",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_contact_lost",
+          "seconds": 17.800000000001013,
+          "recovery_count": 2,
+          "peak_lift_m": 0.0
+        },
+        {
+          "id": "reach-dev-heavy",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "test_lift_target_not_reached",
+          "seconds": 20.859999999999317,
+          "recovery_count": 2,
+          "peak_lift_m": 0.16566848145473612
+        },
+        {
+          "id": "reach-dev-miss-retry",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_contact_lost",
+          "seconds": 25.919999999996513,
+          "recovery_count": 2,
+          "peak_lift_m": 0.03225486470154305
+        },
+        {
+          "id": "reach-dev-short",
+          "valid": true,
+          "retrieved": false,
+          "retained": false,
+          "outcome": "tool_cannot_reach_far_edge",
+          "seconds": 1.0000000000000007,
+          "recovery_count": 0,
+          "peak_lift_m": 0.0
+        },
+        {
+          "id": "reach-heldout-light",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_contact_lost",
+          "seconds": 18.42000000000067,
+          "recovery_count": 2,
+          "peak_lift_m": 3.796706346135401e-06
+        },
+        {
+          "id": "reach-heldout-offset",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "bilateral_acquisition_failed",
+          "seconds": 17.600000000001124,
+          "recovery_count": 2,
+          "peak_lift_m": 0.0
+        },
+        {
+          "id": "reach-heldout-heavy",
+          "valid": true,
+          "retrieved": true,
+          "retained": false,
+          "outcome": "test_lift_target_not_reached",
+          "seconds": 20.899999999999295,
+          "recovery_count": 2,
+          "peak_lift_m": 0.15835161454791793
+        },
+        {
+          "id": "reach-heldout-short",
+          "valid": true,
+          "retrieved": false,
+          "retained": false,
+          "outcome": "tool_cannot_reach_far_edge",
+          "seconds": 1.0000000000000007,
+          "recovery_count": 0,
+          "peak_lift_m": 0.0
+        }
+      ]
+    }
+  ]
+}
