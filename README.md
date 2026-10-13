@@ -8,6 +8,14 @@
 
 **Research alpha.** The recorded demo covers the original one-scene simulation pilot; the frozen benchmark is a separate experiment. Training runs locally. No human-video action bridge or hardware skill is established.
 
+**[Open the live PiPER shoe workstation](https://dvidia-robot-simulation-lab.static.hf.space/workstation/v01/index.html).**
+Drag the tool target, move the native gripper, nudge a free shoe and inspect the
+resulting contacts. MuJoCo 3.15.0 runs locally in a browser worker; a warm 3D
+workstation makes the native mechanics directly interactive. The shoe remains a
+rigid synthetic asset and the controller is authored. Read the
+[local setup and benchmark guide](docs/live-workstation.md) and
+[research results](https://research.dvidia.org/papers/live-piper-shoe-workstation-v01/).
+
 The new [native grasp task benchmark](docs/native-task-benchmark.md) connects the
 pinned six-axis arm and coupled gripper to free-object grasp, carry and release
 attempts. It retains matched open-jaw/hold controls, frozen protocols and local

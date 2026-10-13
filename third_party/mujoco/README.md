@@ -1,0 +1,1 @@
+MuJoCo 3.15.0 is distributed under Apache-2.0. License and dependency notices are retained from the matching official Python distribution, including a conservative superset of native dependencies. The browser binary comes from the pinned official @mujoco/mujoco npm distribution. DVIDIA does not modify that binary.
