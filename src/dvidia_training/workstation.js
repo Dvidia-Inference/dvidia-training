@@ -2,6 +2,7 @@
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {TransformControls} from 'three/addons/controls/TransformControls.js';
+import {resourceBytes} from './workstation_assets.js';
 
 const $ = id => document.getElementById(id);
 const assert = (condition, message) => { if (!condition) throw new Error(message); };
@@ -19,6 +20,29 @@ let manipulating = false, settingTarget = false, awaitingPause = false, lastPaus
 let manifestDigest = null, sceneBounds, jawRange, renderedPoses = 0;
 let trackingErrorSince = null, reportedTarget = null, trackingLimited = false;
 let targetDraftDirty = false;
+const downloads = new Map();
+let lastDownloadPaint = -Infinity;
+
+function downloadProgress(info) {
+  if (failed || ready) return;
+  const name = info.path?.split('/').pop();
+  const names = {'geometry.bin.gz': 'Scene geometry', 'native-assets.bin.gz': 'Robot meshes',
+    'mujoco.wasm.gz': 'Physics engine', 'mujoco.wasm': 'Physics engine'};
+  if (!names[name]) return;
+  downloads.set(name, info);
+  if (info.phase === 'retrying') {
+    $('loading-message').textContent = `${names[name]}: download interrupted. Retrying (${info.attempt + 1}/3)…`;
+    lastDownloadPaint = performance.now();
+    return;
+  }
+  if (performance.now() - lastDownloadPaint < 250) return;
+  lastDownloadPaint = performance.now();
+  const records = [...downloads.values()];
+  const received = records.reduce((n, row) => n + row.receivedBytes, 0);
+  const total = records.reduce((n, row) => n + (row.totalBytes || 0), 0);
+  $('loading-message').textContent = `Downloading simulator files · ${(received / 1e6).toFixed(1)}`
+    + (total ? ` / ${(total / 1e6).toFixed(1)}` : '') + ' MB';
+}
 
 function vec(value, count) {
   assert((Array.isArray(value) || ArrayBuffer.isView(value)) && value.length === count
@@ -50,13 +74,7 @@ async function bounded(stream, limit) {
 }
 async function fetchBytes(path, limit) {
   const url = new URL(relative(path), location.href);
-  const hosted = location.protocol === 'https:' && location.host === 'dvidia-robot-simulation-lab.static.hf.space';
-  const response = await fetch(url, {credentials: 'omit', referrerPolicy: 'no-referrer', redirect: hosted ? 'follow' : 'error'});
-  const final = new URL(response.url);
-  assert(final.origin === location.origin || (hosted && final.protocol === 'https:' && final.host === 'us.aws.cdn.hf.co'),
-    'A resource redirected outside the workstation host.');
-  assert(response.ok, 'Could not load ' + path + ' (HTTP ' + response.status + ').');
-  return bounded(response.body, limit);
+  return (await resourceBytes(url, undefined, {maxBytes: limit, onProgress: downloadProgress})).buffer;
 }
 async function digest(bytes) {
   if (!globalThis.crypto?.subtle) return null;
@@ -679,6 +697,7 @@ function fail(error) {
   $('stage').dataset.ready = 'error';
   $('live-status').textContent = 'Physics stopped';
   document.querySelectorAll('button,input').forEach(element => { element.disabled = true; });
+  $('retry-download').hidden = false; $('retry-download').disabled = false;
   // Preserve the session's evidence if an engine or renderer failure occurs.
   if (receipt.samples.length) $('receipt').disabled = false;
   $('announcer').textContent = $('loading-message').textContent;
@@ -719,7 +738,8 @@ async function main() {
         if (ready) applyState(latest); else becomeReady();
         worker.postMessage({type: 'ack'});
       } else if (message.type === 'progress') {
-        $('loading-message').textContent = String(message.message || 'Preparing the native physics engine.');
+        if (message.download) downloadProgress(message.download);
+        else if (!failed) $('loading-message').textContent = String(message.message || 'Preparing the native physics engine.');
       }
     } catch (error) { fail(error); }
   });
@@ -741,4 +761,5 @@ async function main() {
     }
   }, 1000);
 }
+$('retry-download').addEventListener('click', () => location.reload());
 main().catch(fail);

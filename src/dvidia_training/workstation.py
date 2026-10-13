@@ -298,6 +298,12 @@ def export(assets,output,*,runtime_directory=None):
         raise ValueError('Runtime directory must be a plain directory')
     for name,source in RUNTIME_FILES.items():
         files[name]=asset_preview.replay._read(runtime/source,MAX_FILE_BYTES)
+    manifest['native_wasm']={'path':'mujoco.wasm','bytes':len(files['mujoco.wasm']),
+                             'sha256':sha256(files['mujoco.wasm']).hexdigest()}
+    files['mujoco.wasm.gz']=gzip.compress(files['mujoco.wasm'],mtime=0)
+    manifest['wasm_bundle']={'path':'mujoco.wasm.gz','compression':'gzip',
+        'bytes':len(files['mujoco.wasm.gz']),'sha256':sha256(files['mujoco.wasm.gz']).hexdigest(),
+        'uncompressed_bytes':len(files['mujoco.wasm'])}
     files['README.md']=("# DVIDIA live shoe workstation v0.1\n\n"+SCOPE+"\n\n"
         "Serve this folder with `python -m http.server 8000` and open http://localhost:8000. "
         "It runs MuJoCo physics in a browser worker. JavaScript, WebAssembly, WebGL2 and "
@@ -307,6 +313,9 @@ def export(assets,output,*,runtime_directory=None):
         "For faster startup, native-assets.bin.gz delivers the original mesh bytes in one "
         "compressed request. Each unpacked mesh is checked against its original SHA-256. "
         "The raw assets remain included for independent reproduction.\n\n"
+        "The physics engine also downloads compressed, with its decoded SHA-256 verified. "
+        "Interrupted downloads make up to three attempts with a 30-second idle timeout and "
+        "a 120-second total deadline per resource. Progress and a reload button expose recovery.\n\n"
         "Native PiPER meshes and MIT notices are pinned to the upstream commit in workstation.json. "
         "The rigid procedural shoe is MIT, with assumed untested physical properties in catalog.json. "
         "The controller is authored differential IK, not a learned policy. The jaw can make physical "
@@ -361,6 +370,26 @@ def _unpack_native_assets(bundle,assets,payload):
     return unpacked
 
 
+def _unpack_wasm(manifest,payload):
+    """Require compressed delivery to reproduce the original native engine exactly."""
+    native=manifest.get('native_wasm')
+    raw=payload['mujoco.wasm']
+    if native!={'path':'mujoco.wasm','bytes':len(raw),'sha256':sha256(raw).hexdigest()}:
+        raise ValueError('Workstation native WASM descriptor mismatch')
+    bundle=manifest.get('wasm_bundle')
+    packed=payload.get('mujoco.wasm.gz')
+    if (packed is None or bundle!={'path':'mujoco.wasm.gz','compression':'gzip',
+            'bytes':len(packed),'sha256':sha256(packed).hexdigest(),'uncompressed_bytes':len(raw)}):
+        raise ValueError('Workstation compressed WASM descriptor mismatch')
+    try:
+        with gzip.GzipFile(fileobj=io.BytesIO(packed),mode='rb') as stream:
+            unpacked=stream.read(len(raw)+1)
+    except (OSError,EOFError,zlib.error) as exc:
+        raise ValueError('Invalid compressed WASM') from exc
+    if unpacked!=raw:raise ValueError('Workstation compressed WASM differs from the original engine')
+    return unpacked
+
+
 def inspect_export(directory):
     """Verify a bounded, self-contained native scene and its renderer geometry.
 
@@ -412,6 +441,7 @@ def inspect_export(directory):
     manifest=decode(payload['workstation.json'])
     if type(manifest) is not dict or manifest.get('schema')!=SCHEMA:raise ValueError('Workstation schema mismatch')
     if 'native_asset_bundle' in manifest:expected.add('native-assets.bin.gz')
+    if 'wasm_bundle' in manifest:expected.add('mujoco.wasm.gz')
     if set(payload)!=expected:raise ValueError('Workstation portable file allowlist mismatch')
     if payload['LICENSE']!=asset_preview.replay.MIT_LICENSE.encode():raise ValueError('Workstation MIT notice mismatch')
     if not payload['mujoco.wasm'].startswith(b'\0asm\x01\0\0\0'):raise ValueError('Invalid WebAssembly header')
@@ -422,6 +452,8 @@ def inspect_export(directory):
         raise ValueError('Workstation native asset manifest mismatch')
     if 'native_asset_bundle' in manifest:
         _unpack_native_assets(manifest['native_asset_bundle'],expected_assets,payload)
+    if 'wasm_bundle' in manifest or 'native_wasm' in manifest:
+        _unpack_wasm(manifest,payload)
     lock=robot_profiles._lock()
     provenance={'profile':'piper','repository':lock['repository'],'commit':lock['commit'],
                 'files_verified':len(profile['files']),'bytes_verified':sum(item['bytes'] for item in profile['files']),
@@ -455,6 +487,7 @@ def inspect_export(directory):
     native_meta=metadata(model,data)
     expected_metadata=set(native_meta)|{'assets','native_scene','provenance'}
     if 'native_asset_bundle' in manifest:expected_metadata.add('native_asset_bundle')
+    if 'wasm_bundle' in manifest:expected_metadata.update(('native_wasm','wasm_bundle'))
     if set(manifest)!=expected_metadata:
         raise ValueError('Workstation metadata inventory mismatch')
     if any(manifest.get(key)!=value for key,value in native_meta.items()):

@@ -1,7 +1,7 @@
 /* DVIDIA live PiPER workstation. MIT. MuJoCo 3.15.0 runs entirely in this worker. */
 import loadMujoco from '@mujoco/mujoco';
 import {boundedTarget, clamp, dampedTargets, finiteVector, RollingSamples} from './workstation_control.js';
-import {localResource, resourceBytes, loadNativeAssets} from './workstation_assets.js';
+import {localResource, resourceBytes, loadNativeAssets, loadWasmBytes} from './workstation_assets.js';
 
 const ENGINE_VERSION = '3.15.0';
 const MAX_ASSETS = 256;
@@ -289,19 +289,21 @@ async function initialize(message) {
   try {
     const base = new URL(message.manifest_url, self.location.href);
     if (base.origin !== self.location.origin || !['http:', 'https:'].includes(base.protocol)) throw new Error('Manifest must be same-origin');
-    const manifestBytes = await resourceBytes(base);
+    const manifestBytes = await resourceBytes(base, undefined, {maxBytes: 2 * 1024 * 1024});
     if (manifestBytes.length > 2 * 1024 * 1024) throw new Error('Manifest is too large');
     const manifest = validateManifest(JSON.parse(new TextDecoder().decode(manifestBytes)));
     if (!manifest.native_scene || manifest.native_scene.path !== manifest.scene_url) throw new Error('Scene checksum descriptor is missing');
     self.postMessage({type: 'progress', message: manifest.native_asset_bundle
       ? 'Loading the physics engine and one compressed native mesh bundle.'
       : 'Loading the physics engine and original native meshes.'});
-    const [mujoco, assets, scene] = await Promise.all([
-      loadMujoco({locateFile: file => new URL(file, self.location.href).href,
-        printErr: text => { if (engine && engine.warnings.length < 20) engine.warnings.push(String(text).slice(0, 300)); }}),
-      loadNativeAssets(manifest, base),
-      resourceBytes(localResource(manifest.scene_url, base), manifest.native_scene),
+    const transport = {onProgress: download => self.postMessage({type: 'progress', download})};
+    const [wasmBinary, assets, scene] = await Promise.all([
+      loadWasmBytes(manifest, base, transport),
+      loadNativeAssets(manifest, base, transport),
+      resourceBytes(localResource(manifest.scene_url, base), manifest.native_scene, transport),
     ]);
+    const mujoco = await loadMujoco({wasmBinary,
+      printErr: text => { if (engine && engine.warnings.length < 20) engine.warnings.push(String(text).slice(0, 300)); }});
     if (mujoco.mj_versionString() !== ENGINE_VERSION) throw new Error('Unexpected MuJoCo WASM version');
     self.postMessage({type: 'progress', message: 'Native mesh checksums verified. Compiling the local physics scene.'});
     vfs = new mujoco.MjVFS();

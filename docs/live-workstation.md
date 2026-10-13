@@ -38,6 +38,27 @@ only; the scene, controller, contacts and engine binary are unchanged. First-loa
 time still depends on the connection and device; it is measured separately from
 steady-state simulation speed.
 
+The WASM engine downloads as `mujoco.wasm.gz` (2.54 MB instead of 10.37 MB),
+then decompresses to the exact original engine bytes verified by SHA-256.
+The original uncompressed engine remains in the export. Geometry, engine and
+mesh downloads share a bounded downloader: at most three total attempts,
+30 seconds without incoming data before an attempt is stopped, and a
+120-second total deadline per resource. Only transient network/body-stream
+failures and selected temporary HTTP errors retry; invalid sizes, checksums or
+destinations fail immediately. Loading progress names retries; a terminal
+failure exposes **Reload and retry**. Reload starts a new session.
+
+On 2026-10-13 the earlier Hugging Face startup failure could not be reproduced
+as a deterministic CORS, gzip or corrupt-asset defect. Fresh diagnostics verified
+all three old binary assets. The exact historical network event was not captured;
+the confirmed defect was the absence of bounded transfer recovery. The download
+regression test deliberately interrupts each large download and verifies native
+control after recovery, then exhausts retries and tests a manual reload:
+
+```sh
+node tests/browser/workstation_download.cjs http://localhost:8000/ ./download-recovery-evidence
+```
+
 The export includes an integrity inventory and hashed upstream assets. To inspect:
 
 ```sh

@@ -203,6 +203,35 @@ class NativeWorkstationTests(unittest.TestCase):
         (directory/'workstation-integrity.json').write_bytes(ws._json(seal))
         self.assertEqual(ws.inspect_export(directory)['compiled_model_sha256'],sim.model_digest(self.model))
 
+    def test_compressed_wasm_matches_original_and_old_exports_remain_readable(self):
+        import shutil
+        manifest=json.loads((self.output/'workstation.json').read_text())
+        raw=(self.output/'mujoco.wasm').read_bytes()
+        self.assertEqual(gzip.decompress((self.output/'mujoco.wasm.gz').read_bytes()),raw)
+        self.assertEqual(manifest['native_wasm']['sha256'],sha256(raw).hexdigest())
+        directory=self.root/'legacy-wasm'
+        shutil.copytree(self.output,directory)
+        del manifest['native_wasm'];del manifest['wasm_bundle']
+        self._reseal(directory,'workstation.json',ws._json(manifest))
+        (directory/'mujoco.wasm.gz').unlink()
+        seal=json.loads((directory/'workstation-integrity.json').read_text())
+        del seal['files']['mujoco.wasm.gz']
+        (directory/'workstation-integrity.json').write_bytes(ws._json(seal))
+        self.assertEqual(ws.inspect_export(directory)['compiled_model_sha256'],sim.model_digest(self.model))
+
+    def test_resealed_wasm_bundle_must_decode_to_original_engine(self):
+        import shutil
+        directory=self.root/'bad-wasm-bundle'
+        shutil.copytree(self.output,directory)
+        original=(directory/'mujoco.wasm').read_bytes()
+        packed=gzip.compress(b'x'*len(original),mtime=0)
+        self._reseal(directory,'mujoco.wasm.gz',packed)
+        manifest=json.loads((directory/'workstation.json').read_text())
+        manifest['wasm_bundle'].update(bytes=len(packed),sha256=sha256(packed).hexdigest())
+        self._reseal(directory,'workstation.json',ws._json(manifest))
+        with self.assertRaisesRegex(ValueError,'original engine'):
+            ws.inspect_export(directory)
+
     def test_inspection_rejects_bundle_corruption_even_after_resealing(self):
         import shutil
         directory=self.root/'bad-bundle'

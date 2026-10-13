@@ -56,6 +56,7 @@ jobs:
           server_pid=$!
           trap 'kill "$server_pid"' EXIT
           DVIDIA_PLAYWRIGHT_MODULE="$GITHUB_WORKSPACE/viewer/node_modules/playwright" DVIDIA_BENCH_SECONDS=20 node tests/browser/workstation_live.cjs http://127.0.0.1:8295/ runs/workstation-browser
+          node tests/browser/workstation_download.cjs http://127.0.0.1:8295/ runs/workstation-download-recovery
       - name: Retain all results including failed attempts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -64,6 +65,7 @@ jobs:
           path: |
             runs/workstation-benchmark
             runs/workstation-browser
+            runs/workstation-download-recovery
             runs/native-parity.json
             runs/wasm-parity.json
           if-no-files-found: ignore

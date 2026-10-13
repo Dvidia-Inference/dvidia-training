@@ -70,7 +70,7 @@ def _artifact_name(name):
         raise PublicationError('Unexpected Robot Simulation Lab artifact type.')
     if relative.suffix in ('.bin', '.gz') and relative.name not in (
             'geometry.bin', 'motion.bin', 'geometry.bin.gz', 'motion.bin.gz'):
-        if relative.as_posix() == 'workstation/v01/native-assets.bin.gz':
+        if relative.as_posix() in ('workstation/v01/native-assets.bin.gz', 'workstation/v01/mujoco.wasm.gz'):
             return relative
         if _compressed_attempt(relative.as_posix()) is None:
             raise PublicationError('Only native geometry, recorded motion and scoped PiPER attempt JSON may be published.')
