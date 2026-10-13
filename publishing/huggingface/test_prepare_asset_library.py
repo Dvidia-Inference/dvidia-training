@@ -73,7 +73,7 @@ class AssetLibraryPublicationTests(unittest.TestCase):
         with self.assertRaises(publisher.PublicationError):prepare.read_payload(self.library)
 
     def test_reader_and_publisher_enforce_file_and_byte_budgets(self):
-        self.assertEqual(publisher.MAX_FILES,700)
+        self.assertEqual(publisher.MAX_FILES,900)
         with patch.object(prepare,'MAX_LIBRARY_FILES',1),self.assertRaises(ValueError):prepare.read_payload(self.library)
         with patch.object(prepare,'MAX_LIBRARY_BYTES',1),self.assertRaises(ValueError):prepare.read_payload(self.library)
         with patch.object(publisher,'MAX_FILES',5),self.assertRaises(publisher.PublicationError):publisher.checked_plan(self.plan)

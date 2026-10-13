@@ -412,7 +412,7 @@ class RobotSimulationPreparationTests(unittest.TestCase):
         entries=[v for k,v in provenance['contact_task_benchmarks'].items() if k.startswith('piper-reliability-v05/')]
         self.assertEqual(len(entries),3)
         self.assertTrue(all(r['attempted']==12*len(reliability.VARIANTS) for r in entries))
-        self.assertEqual(provenance['publication_byte_bounds']['stored_payload_bytes'],512*1024*1024)
+        self.assertEqual(provenance['publication_byte_bounds']['stored_payload_bytes'],768*1024*1024)
         self.assertEqual(provenance['publication_byte_bounds']['per_file_bytes'],32*1024*1024)
         self.assertIn('PiPER reliability v0.5',(self.output/'space/README.md').read_text())
 
@@ -813,7 +813,7 @@ class RobotSimulationPreparationTests(unittest.TestCase):
         self.assertEqual(compared['source_integrity'],record(payload['integrity.json']))
         self.assertGreater(compared['decoded_bytes'],compared['stored_bytes'])
         self.assertFalse(compared['learned_policy'])
-        self.assertEqual(provenance['publication_byte_bounds']['stored_payload_bytes'],512*1024*1024)
+        self.assertEqual(provenance['publication_byte_bounds']['stored_payload_bytes'],768*1024*1024)
         self.assertEqual(provenance['publication_byte_bounds']['per_file_bytes'],32*1024*1024)
         readme=(self.output/'space/README.md').read_text()
         self.assertIn(comparison,readme)
@@ -917,7 +917,7 @@ class RobotSimulationPreparationTests(unittest.TestCase):
         self.assertEqual(compared['source_integrity'],record(payload['integrity.json']))
         self.assertGreater(compared['decoded_bytes'],compared['stored_bytes'])
         self.assertFalse(compared['learned_policy'])
-        self.assertEqual(provenance['publication_byte_bounds']['stored_payload_bytes'],512*1024*1024)
+        self.assertEqual(provenance['publication_byte_bounds']['stored_payload_bytes'],768*1024*1024)
         self.assertEqual(provenance['publication_byte_bounds']['per_file_bytes'],32*1024*1024)
         readme=(self.output/'space/README.md').read_text()
         self.assertIn(comparison,readme)

@@ -19,10 +19,10 @@ from publish import PublicationError, checked_remote, client, verified_downloads
 REPO_ID = 'Dvidia/robot-simulation-lab'
 KIND = 'dvidia.robot-simulation-lab-publication'
 MAX_FILE_BYTES = 32*1024*1024
-# v0.5 retains every prior receipt and adds at most three complete cohorts.
-# Only the stored payload cap increases; decoded/per-file bounds stay fixed.
-MAX_TOTAL_BYTES = 512*1024*1024
-MAX_FILES = 700  # Prior receipts plus the bounded three-arm shoe asset library.
+# Retain the existing 627-file lab, then add the bounded live export and evidence.
+# Per-file and decoded-data bounds stay fixed; this only raises complete storage.
+MAX_TOTAL_BYTES = 768*1024*1024
+MAX_FILES = 900  # Prior evidence plus up to128 export and128 evidence files.
 MAX_RELIABILITY_COHORTS = 3
 ALLOWED_SUFFIXES = {'.md', '.html', '.js', '.json', '.txt', '.png', '.bin', '.gz'}
 SHA = re.compile(r'(?:[a-f0-9]{40}|[a-f0-9]{64})')
@@ -33,6 +33,7 @@ CONTACT_ATTEMPT_PATH = re.compile(r'tasks/(?:piper-contact-v03|piper-recovery-v0
 
 RELIABILITY_COHORT_PATH = re.compile(r'(?:development|confirmation)-(?:0|[1-9][0-9]{0,5})')
 RELIABILITY_ATTEMPT_PATH = re.compile(r'tasks/piper-reliability-v05/(?:development|confirmation)-(?:0|[1-9][0-9]{0,5})/attempts/[a-z0-9][a-z0-9_.-]{0,159}\.json\.gz')
+WORKSTATION_NATIVE_PATH = re.compile(r'workstation/v01/(?:mujoco\.wasm|scene\.xml|assets/[A-Za-z0-9_.-]+\.(?:stl|obj|msh))')
 
 def _compressed_attempt(name):
     return GRIP_ATTEMPT_PATH.fullmatch(name) or CONTACT_ATTEMPT_PATH.fullmatch(name) or RELIABILITY_ATTEMPT_PATH.fullmatch(name)
@@ -64,10 +65,13 @@ def _artifact_name(name):
                 or int(relative.parts[2].rsplit('-',1)[1])>999988):
             raise PublicationError('Reliability evidence requires a bounded cohort and seed namespace.')
     if (any(p.startswith('.') for p in relative.parts)
-            or (relative.suffix not in ALLOWED_SUFFIXES and relative.name != 'LICENSE')):
+            or (relative.suffix not in ALLOWED_SUFFIXES and relative.name != 'LICENSE'
+                and WORKSTATION_NATIVE_PATH.fullmatch(relative.as_posix()) is None)):
         raise PublicationError('Unexpected Robot Simulation Lab artifact type.')
     if relative.suffix in ('.bin', '.gz') and relative.name not in (
             'geometry.bin', 'motion.bin', 'geometry.bin.gz', 'motion.bin.gz'):
+        if relative.as_posix() in ('workstation/v01/native-assets.bin.gz', 'workstation/v01/mujoco.wasm.gz'):
+            return relative
         if _compressed_attempt(relative.as_posix()) is None:
             raise PublicationError('Only native geometry, recorded motion and scoped PiPER attempt JSON may be published.')
     return relative
@@ -294,7 +298,9 @@ def publish_robot_sim(path):
     verified_downloads(row,revision,False)
     result = {'repo_id':REPO_ID,'repo_type':'space','commit':revision,
               'url':'https://huggingface.co/spaces/'+REPO_ID,'verified_files':len(row['files']),
-              'scope':'Recorded native simulation evidence; no live physics, learned policy or physical robot qualification',
+              'scope':('Native simulation evidence and a live browser workstation; no learned policy or physical robot qualification'
+                       if 'workstation/v01/workstation.json' in payload else
+                       'Recorded native simulation evidence; no live physics, learned policy or physical robot qualification'),
               'plan_sha256':plan_digest,'removed_files':removals}
     _plain(target)
     target.write_text(json.dumps(result,indent=2)+'\n')

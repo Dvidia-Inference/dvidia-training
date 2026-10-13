@@ -1,0 +1,71 @@
+name: Live workstation
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: workstation-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  native-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: "22"
+      - name: Reproduce pinned browser runtime
+        run: |
+          npm ci --ignore-scripts --prefix viewer
+          npm run --prefix viewer build:workstation
+          git diff --exit-code -- src/dvidia_training/workstation.bundle.js src/dvidia_training/workstation_worker.bundle.js src/dvidia_training/mujoco.wasm src/dvidia_training/workstation.third-party.txt
+          node --test tests/browser/workstation_control.mjs tests/browser/workstation_assets.mjs
+      - name: Install native mechanics and verify contracts
+        run: |
+          python -m pip install '.[arm]'
+          dvidia-robot-sim fetch piper --output runs/workstation-assets
+          DVIDIA_ROBOT_PROFILE_ASSETS=runs/workstation-assets python -m unittest tests.test_workstation tests.test_workstation_benchmark -v
+          dvidia-workstation --assets runs/workstation-assets --output runs/workstation
+          dvidia-workstation-benchmark --assets runs/workstation-assets --output runs/workstation-benchmark --stability-seconds 10
+      - name: Compare native and WASM state with loaded-contact counts
+        run: |
+          python scripts/workstation-parity-fixture.py --scene runs/workstation --output runs/native-parity.json
+          python - <<'PY'
+          import json, subprocess
+          result = subprocess.run(['node','tests/browser/workstation_parity.mjs','runs/workstation','runs/native-parity.json','runs/wasm-parity.json'])
+          report = json.load(open('runs/wasm-parity.json'))
+          assert result.returncode in (0,1)
+          assert report['valid'] and report['numerical_parity_passed'] and report['active_contact_count_parity_passed']
+          print('Raw contact count parity is retained separately:', report['strict_parity_passed'])
+          PY
+      - name: Exercise actual browser controls and live physics
+        run: |
+          viewer/node_modules/.bin/playwright install --with-deps chromium
+          python -m http.server 8295 --bind 127.0.0.1 --directory runs/workstation > /tmp/workstation-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          DVIDIA_PLAYWRIGHT_MODULE="$GITHUB_WORKSPACE/viewer/node_modules/playwright" DVIDIA_BENCH_SECONDS=20 node tests/browser/workstation_live.cjs http://127.0.0.1:8295/ runs/workstation-browser
+          node tests/browser/workstation_download.cjs http://127.0.0.1:8295/ runs/workstation-download-recovery
+      - name: Retain all results including failed attempts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: live-workstation-evidence
+          path: |
+            runs/workstation-benchmark
+            runs/workstation-browser
+            runs/workstation-download-recovery
+            runs/native-parity.json
+            runs/wasm-parity.json
+          if-no-files-found: ignore

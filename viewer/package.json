@@ -5,6 +5,15 @@
   "description": "Pinned build dependencies for the self-hosted DVIDIA reference replay",
   "license": "MIT",
   "type": "module",
-  "scripts": {"build": "node ../scripts/build-reference-viewer.mjs", "build:assets": "node build-assets.mjs"},
-  "devDependencies": {"esbuild": "0.25.10", "three": "0.180.0"}
+  "scripts": {
+    "build": "node ../scripts/build-reference-viewer.mjs",
+    "build:assets": "node build-assets.mjs",
+    "build:workstation": "node build-workstation.mjs"
+  },
+  "devDependencies": {
+    "@mujoco/mujoco": "3.15.0",
+    "esbuild": "0.25.10",
+    "playwright": "1.62.1",
+    "three": "0.180.0"
+  }
 }

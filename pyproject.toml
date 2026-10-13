@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "Local CPU training from Skillspace footage, with optional simulation movement candidates"
 readme = "README.md"
 license = "MIT AND Apache-2.0"
-license-files = ["LICENSE", "third_party/observation-models/*LICENSE.txt"]
+license-files = ["LICENSE", "third_party/observation-models/*LICENSE.txt", "third_party/mujoco/*.txt"]
 requires-python = ">=3.12"
 dependencies = ["numpy==2.5.3"]
 classifiers = [
@@ -49,9 +49,11 @@ dvidia-piper-contact = "dvidia_training.piper_contact_benchmark:main"
 dvidia-piper-recovery = "dvidia_training.piper_recovery_benchmark:main"
 dvidia-piper-reliability = "dvidia_training.piper_reliability_benchmark:main"
 dvidia-assets = "dvidia_training.asset_cli:main"
+dvidia-workstation = "dvidia_training.workstation:main"
+dvidia-workstation-benchmark = "dvidia_training.workstation_benchmark:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
-dvidia_training = ["*.html", "*.json", "*.js", "*.txt", "LICENSE", "requirements.lock.txt"]
+dvidia_training = ["*.html", "*.json", "*.js", "*.txt", "*.wasm", "LICENSE", "requirements.lock.txt"]
