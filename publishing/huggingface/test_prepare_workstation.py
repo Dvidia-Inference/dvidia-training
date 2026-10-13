@@ -124,6 +124,16 @@ class WorkstationPublicationTests(unittest.TestCase):
             self.stage()
         self.assertEqual((self.root/'output/keep.md').read_text(), 'keep')
 
+    def test_prior_artifact_mutation_during_staging_is_rejected(self):
+        def inspect_and_mutate(directory):
+            result = self.inspect_native(directory)
+            (self.space/'tasks/prior/report.json').write_bytes(b'changed after prior verification')
+            return result
+        with patch('dvidia_training.workstation.inspect_export', side_effect=inspect_and_mutate):
+            with self.assertRaisesRegex(ValueError, 'Prior artifact changed'):
+                prepare.stage(self.plan, self.workstation, self.root/'output', 'c'*40, 'd'*40, evidence=self.evidence)
+        self.assertFalse((self.root/'output').exists())
+
     def test_rejects_replacement_of_either_prior_release_namespace(self):
         for prefix in (prepare.NAMESPACE, prepare.EVIDENCE_NAMESPACE):
             name = prefix+'/prior.json'

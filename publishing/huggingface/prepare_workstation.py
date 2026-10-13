@@ -151,8 +151,12 @@ def stage(base_plan, workstation, output, source_commit, expected_remote_commit,
     evidence_files = read_evidence(evidence_root)
     from dvidia_training.workstation import inspect_export
     inspect_export(root)
-    payload = {f['path']: publisher._bytes(base_plan.parent/'space'/f['path'], publisher.MAX_FILE_BYTES)
-               for f in base['repository']['files']}
+    payload = {}
+    for item in base['repository']['files']:
+        raw = publisher._bytes(base_plan.parent/'space'/item['path'], publisher.MAX_FILE_BYTES)
+        if record(raw) != {'bytes':item['bytes'], 'sha256':item['sha256']}:
+            raise ValueError('Prior artifact changed while freezing the additive publication')
+        payload[item['path']] = raw
     if any(name.startswith(namespace+'/') for name in payload for namespace in (NAMESPACE, EVIDENCE_NAMESPACE)):
         raise ValueError('First workstation release must not replace an existing workstation or evidence namespace')
     added = {}
