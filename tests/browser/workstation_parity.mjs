@@ -7,6 +7,7 @@ import path from 'node:path';
 import {fileURLToPath, pathToFileURL} from 'node:url';
 import {build} from '../../viewer/node_modules/esbuild/lib/main.js';
 import loadMujoco from '../../viewer/node_modules/@mujoco/mujoco/mujoco.js';
+import {unpackNativeAssets} from '../../src/dvidia_training/workstation_assets.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const [sceneArg, fixtureArg, outputArg] = process.argv.slice(2);
@@ -31,11 +32,15 @@ try {
   const vfs = new mj.MjVFS();
   let model;
   try {
-    for (const asset of manifest.assets) {
-      const bytes = await readFile(path.join(scene, asset.path));
-      assert.equal(bytes.length, asset.bytes); assert.equal(digest(bytes), asset.sha256);
-      vfs.addBuffer(asset.path, new Uint8Array(bytes));
-    }
+    if (manifest.native_asset_bundle) {
+      const assets = await unpackNativeAssets(await readFile(path.join(scene, manifest.native_asset_bundle.path)),
+        manifest.native_asset_bundle, manifest.assets);
+      for (const asset of assets) vfs.addBuffer(asset.path, asset.bytes);
+    } else for (const asset of manifest.assets) {
+        const bytes = await readFile(path.join(scene, asset.path));
+        assert.equal(bytes.length, asset.bytes); assert.equal(digest(bytes), asset.sha256);
+        vfs.addBuffer(asset.path, new Uint8Array(bytes));
+      }
     model = mj.MjModel.from_xml_string(xml.toString('utf8'), vfs);
   } finally { vfs.delete(); }
   engine = new WorkstationEngine(mj, model, manifest);

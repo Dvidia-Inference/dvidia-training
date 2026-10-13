@@ -30,6 +30,14 @@ JavaScript, WASM, geometry, catalog and license notices are local. Later session
 work offline. On Windows use `py -3.12 -m venv .venv` and the corresponding
 executables under `.venv\Scripts`; activation is optional.
 
+The browser fetches one gzip bundle for all 84 native robot meshes, concurrently
+with the physics engine and scene. It verifies the bundle, bounds decompression,
+and checks every original mesh hash before compiling the model. The original
+individual meshes remain in the export for reproduction. This changes delivery
+only; the scene, controller, contacts and engine binary are unchanged. First-load
+time still depends on the connection and device; it is measured separately from
+steady-state simulation speed.
+
 The export includes an integrity inventory and hashed upstream assets. To inspect:
 
 ```sh

@@ -1,5 +1,6 @@
 """Native motion and portable browser-physics artifact contracts."""
 from hashlib import sha256
+import gzip
 import json
 import os
 from pathlib import Path
@@ -10,6 +11,29 @@ from dvidia_training import workstation as ws, reference_sim as sim, robot_profi
 
 
 class WorkstationInputs(unittest.TestCase):
+    def test_native_asset_bundle_preserves_exact_bytes_and_rejects_corruption(self):
+        raw=b'exact pinned mesh bytes\n'
+        asset={'path':'assets/example.obj','bytes':len(raw),'sha256':sha256(raw).hexdigest()}
+        def fixture(value):
+            packed=gzip.compress(value,mtime=0)
+            bundle={'path':'native-assets.bin.gz','compression':'gzip','bytes':len(packed),
+                    'sha256':sha256(packed).hexdigest(),'uncompressed_bytes':len(raw)}
+            return bundle,{asset['path']:raw,bundle['path']:packed}
+        bundle,payload=fixture(raw)
+        self.assertEqual(ws._unpack_native_assets(bundle,[asset],payload),raw)
+        for value in (raw[:-1],raw+b'excess',b'x'*len(raw)):
+            damaged,blobs=fixture(value)
+            with self.subTest(value=value),self.assertRaises(ValueError):
+                ws._unpack_native_assets(damaged,[asset],blobs)
+        with self.assertRaises(ValueError):
+            ws._unpack_native_assets({**bundle,'sha256':'0'*64},[asset],payload)
+        with self.assertRaises(ValueError):
+            ws._unpack_native_assets({**bundle,'uncompressed_bytes':ws.MAX_TOTAL_BYTES+1},[asset],payload)
+        truncated=payload[bundle['path']][:-8]
+        with self.assertRaises(ValueError):
+            ws._unpack_native_assets({**bundle,'bytes':len(truncated),'sha256':sha256(truncated).hexdigest()},
+                [asset],{**payload,bundle['path']:truncated})
+
     def test_vectors_reject_nonfinite_and_ambiguous_values(self):
         for value in (None, '1,2,3', [True, 0, 0], [float('nan'), 0, 0], [0, 0], [100, 0, 0], [10**1000, 0, 0]):
             with self.subTest(value=value), self.assertRaises(ValueError):
@@ -165,6 +189,30 @@ class NativeWorkstationTests(unittest.TestCase):
         self.assertFalse((self.output/'workstation.html').exists())
         with self.assertRaises(ValueError):
             ws.export(self.assets, self.output, runtime_directory=self.runtime)
+
+    def test_legacy_export_without_delivery_bundle_remains_inspectable(self):
+        import shutil
+        directory=self.root/'legacy-export'
+        shutil.copytree(self.output,directory)
+        manifest=json.loads((directory/'workstation.json').read_text())
+        del manifest['native_asset_bundle']
+        self._reseal(directory,'workstation.json',ws._json(manifest))
+        (directory/'native-assets.bin.gz').unlink()
+        seal=json.loads((directory/'workstation-integrity.json').read_text())
+        del seal['files']['native-assets.bin.gz']
+        (directory/'workstation-integrity.json').write_bytes(ws._json(seal))
+        self.assertEqual(ws.inspect_export(directory)['compiled_model_sha256'],sim.model_digest(self.model))
+
+    def test_inspection_rejects_bundle_corruption_even_after_resealing(self):
+        import shutil
+        directory=self.root/'bad-bundle'
+        shutil.copytree(self.output,directory)
+        packed=gzip.compress(b'incorrect native mesh bytes',mtime=0)
+        self._reseal(directory,'native-assets.bin.gz',packed)
+        manifest=json.loads((directory/'workstation.json').read_text())
+        manifest['native_asset_bundle'].update(bytes=len(packed),sha256=sha256(packed).hexdigest())
+        self._reseal(directory,'workstation.json',ws._json(manifest))
+        with self.assertRaises(ValueError):ws.inspect_export(directory)
 
     def _reseal(self, path, name, raw):
         (path/name).write_bytes(raw)

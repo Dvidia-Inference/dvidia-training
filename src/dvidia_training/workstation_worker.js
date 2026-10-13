@@ -1,61 +1,15 @@
 /* DVIDIA live PiPER workstation. MIT. MuJoCo 3.15.0 runs entirely in this worker. */
 import loadMujoco from '@mujoco/mujoco';
 import {boundedTarget, clamp, dampedTargets, finiteVector, RollingSamples} from './workstation_control.js';
+import {localResource, resourceBytes, loadNativeAssets} from './workstation_assets.js';
 
 const ENGINE_VERSION = '3.15.0';
 const MAX_ASSETS = 256;
-const MAX_RESOURCE_BYTES = 64 * 1024 * 1024;
-const MAX_TOTAL_BYTES = 192 * 1024 * 1024;
 const MAX_CATCHUP_SECONDS = 0.1;
 const MAX_STEPS_PER_TICK = 50;
 // The event loop may deliver fewer states than requested. Backpressure retains
 // at most one queued state while physics continues independently at 500 Hz.
 const STATE_INTERVAL_MS = 1000 / 60;
-
-function localResource(path, base) {
-  if (typeof path !== 'string' || path.length > 1024 || path.startsWith('/')
-      || path.split('/').some(part => part === '..') || path.includes('\\')) {
-    throw new Error('Invalid local asset path');
-  }
-  const url = new URL(path, base);
-  if (url.origin !== base.origin || !['http:', 'https:'].includes(url.protocol)) {
-    throw new Error('Workstation resources must be same-origin HTTP assets');
-  }
-  return url;
-}
-
-async function resourceBytes(url, expected) {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`Resource fetch failed (${response.status}): ${url.pathname}`);
-  const advertised = Number(response.headers.get('content-length'));
-  if (advertised > MAX_RESOURCE_BYTES) throw new Error('Resource is too large');
-  if (!response.body) throw new Error('Streaming resource responses are required');
-  const reader = response.body.getReader();
-  const chunks = []; let received = 0;
-  try {
-    while (true) {
-      const {done, value} = await reader.read();
-      if (done) break;
-      received += value.byteLength;
-      if (received > MAX_RESOURCE_BYTES) {
-        await reader.cancel();
-        throw new Error('Resource is too large');
-      }
-      chunks.push(value);
-    }
-  } finally { reader.releaseLock(); }
-  const bytes = new Uint8Array(received); let offset = 0;
-  for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
-  if (expected) {
-    if (!Number.isInteger(expected.bytes) || bytes.length !== expected.bytes || !/^[a-f0-9]{64}$/.test(expected.sha256)) {
-      throw new Error(`Asset size or digest descriptor mismatch: ${url.pathname}`);
-    }
-    const digest = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)),
-      value => value.toString(16).padStart(2, '0')).join('');
-    if (digest !== expected.sha256) throw new Error(`Asset checksum mismatch: ${url.pathname}`);
-  }
-  return bytes;
-}
 
 function validateManifest(manifest) {
   if (!manifest || manifest.schema !== 'dvidia.live-workstation/v1') throw new Error('Unsupported workstation schema');
@@ -338,19 +292,20 @@ async function initialize(message) {
     const manifestBytes = await resourceBytes(base);
     if (manifestBytes.length > 2 * 1024 * 1024) throw new Error('Manifest is too large');
     const manifest = validateManifest(JSON.parse(new TextDecoder().decode(manifestBytes)));
-    const mujoco = await loadMujoco({locateFile: file => new URL(file, self.location.href).href,
-      printErr: text => { if (engine && engine.warnings.length < 20) engine.warnings.push(String(text).slice(0, 300)); }});
-    if (mujoco.mj_versionString() !== ENGINE_VERSION) throw new Error('Unexpected MuJoCo WASM version');
-    vfs = new mujoco.MjVFS();
-    let totalBytes = 0;
-    for (const asset of manifest.assets) {
-      const bytes = await resourceBytes(localResource(asset.path, base), asset);
-      totalBytes += bytes.length;
-      if (totalBytes > MAX_TOTAL_BYTES) throw new Error('Scene assets exceed worker memory budget');
-      vfs.addBuffer(asset.path, bytes);
-    }
     if (!manifest.native_scene || manifest.native_scene.path !== manifest.scene_url) throw new Error('Scene checksum descriptor is missing');
-    const scene = await resourceBytes(localResource(manifest.scene_url, base), manifest.native_scene);
+    self.postMessage({type: 'progress', message: manifest.native_asset_bundle
+      ? 'Loading the physics engine and one compressed native mesh bundle.'
+      : 'Loading the physics engine and original native meshes.'});
+    const [mujoco, assets, scene] = await Promise.all([
+      loadMujoco({locateFile: file => new URL(file, self.location.href).href,
+        printErr: text => { if (engine && engine.warnings.length < 20) engine.warnings.push(String(text).slice(0, 300)); }}),
+      loadNativeAssets(manifest, base),
+      resourceBytes(localResource(manifest.scene_url, base), manifest.native_scene),
+    ]);
+    if (mujoco.mj_versionString() !== ENGINE_VERSION) throw new Error('Unexpected MuJoCo WASM version');
+    self.postMessage({type: 'progress', message: 'Native mesh checksums verified. Compiling the local physics scene.'});
+    vfs = new mujoco.MjVFS();
+    for (const asset of assets) vfs.addBuffer(asset.path, asset.bytes);
     model = mujoco.MjModel.from_xml_string(new TextDecoder().decode(scene), vfs);
     engine = new WorkstationEngine(mujoco, model, manifest, data => self.postMessage(data));
     model = null;

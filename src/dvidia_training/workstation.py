@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 from hashlib import sha256
 import gzip
+import io
 import json
 import math
 from pathlib import Path
@@ -17,6 +18,7 @@ import re
 import tempfile
 import shutil
 import xml.etree.ElementTree as ET
+import zlib
 
 from . import asset_library, asset_preview, reference_sim as sim, robot_profiles
 
@@ -285,6 +287,11 @@ def export(assets,output,*,runtime_directory=None):
         local=path.removeprefix(item['folder']+'/')
         if local.startswith('assets/'):files[local]=raw
     manifest['assets']=[{'path':name,'bytes':len(raw),'sha256':sha256(raw).hexdigest()} for name,raw in sorted(files.items()) if name.startswith('assets/')]
+    native_assets=b''.join(files[asset['path']] for asset in manifest['assets'])
+    files['native-assets.bin.gz']=gzip.compress(native_assets,mtime=0)
+    manifest['native_asset_bundle']={'path':'native-assets.bin.gz','compression':'gzip',
+        'bytes':len(files['native-assets.bin.gz']),'sha256':sha256(files['native-assets.bin.gz']).hexdigest(),
+        'uncompressed_bytes':len(native_assets)}
     manifest['native_scene']={'path':'scene.xml','bytes':len(files['scene.xml']),'sha256':sha256(files['scene.xml']).hexdigest()}
     runtime=Path(runtime_directory) if runtime_directory is not None else Path(__file__).parent
     if runtime.is_symlink() or not runtime.is_dir():
@@ -297,6 +304,9 @@ def export(assets,output,*,runtime_directory=None):
         "DecompressionStream are required. No model download, remote inference or GPU training "
         "is needed; physics runs locally on the CPU and rendering uses WebGL. Browser performance "
         "depends on the machine. All assets and runtime files are included.\n\n"
+        "For faster startup, native-assets.bin.gz delivers the original mesh bytes in one "
+        "compressed request. Each unpacked mesh is checked against its original SHA-256. "
+        "The raw assets remain included for independent reproduction.\n\n"
         "Native PiPER meshes and MIT notices are pinned to the upstream commit in workstation.json. "
         "The rigid procedural shoe is MIT, with assumed untested physical properties in catalog.json. "
         "The controller is authored differential IK, not a learned policy. The jaw can make physical "
@@ -321,6 +331,34 @@ def export(assets,output,*,runtime_directory=None):
     finally:
         if staging.exists():shutil.rmtree(staging)
     return {**inspected,'initial':state(model,data,HOME_TARGET)}
+
+
+def _unpack_native_assets(bundle,assets,payload):
+    """Validate optional delivery compression without changing native inputs."""
+    expected_keys={'path','compression','bytes','sha256','uncompressed_bytes'}
+    total=sum(asset['bytes'] for asset in assets)
+    if (type(bundle) is not dict or set(bundle)!=expected_keys
+            or bundle['path']!='native-assets.bin.gz' or bundle['compression']!='gzip'
+            or type(bundle['bytes']) is not int or not 0<=bundle['bytes']<=MAX_FILE_BYTES
+            or type(bundle['sha256']) is not str or re.fullmatch('[a-f0-9]{64}',bundle['sha256']) is None
+            or type(bundle['uncompressed_bytes']) is not int or bundle['uncompressed_bytes']!=total
+            or not 0<=total<=MAX_TOTAL_BYTES):
+        raise ValueError('Workstation native asset bundle descriptor mismatch')
+    packed=payload.get(bundle['path'])
+    if packed is None or len(packed)!=bundle['bytes'] or sha256(packed).hexdigest()!=bundle['sha256']:
+        raise ValueError('Workstation native asset bundle checksum mismatch')
+    try:
+        with gzip.GzipFile(fileobj=io.BytesIO(packed),mode='rb') as stream:
+            unpacked=stream.read(total+1)
+    except (OSError,EOFError,zlib.error) as exc:
+        raise ValueError('Invalid compressed native asset bundle') from exc
+    if len(unpacked)!=total:raise ValueError('Workstation native asset bundle size mismatch')
+    offset=0
+    for asset in assets:
+        raw=unpacked[offset:offset+asset['bytes']];offset+=asset['bytes']
+        if raw!=payload[asset['path']] or sha256(raw).hexdigest()!=asset['sha256']:
+            raise ValueError('Workstation bundled mesh differs from its pinned original')
+    return unpacked
 
 
 def inspect_export(directory):
@@ -371,15 +409,19 @@ def inspect_export(directory):
         if raw is None or len(raw)!=record['bytes'] or sha256(raw).hexdigest()!=record['sha256']:
             raise ValueError('Workstation differs from pinned upstream mesh or notice: '+name)
     expected=set(RUNTIME_FILES)|asset_names|notice_names|{'scene.xml','model.json','geometry.bin.gz','catalog.json','LICENSE','README.md','workstation.json'}
+    manifest=decode(payload['workstation.json'])
+    if type(manifest) is not dict or manifest.get('schema')!=SCHEMA:raise ValueError('Workstation schema mismatch')
+    if 'native_asset_bundle' in manifest:expected.add('native-assets.bin.gz')
     if set(payload)!=expected:raise ValueError('Workstation portable file allowlist mismatch')
     if payload['LICENSE']!=asset_preview.replay.MIT_LICENSE.encode():raise ValueError('Workstation MIT notice mismatch')
     if not payload['mujoco.wasm'].startswith(b'\0asm\x01\0\0\0'):raise ValueError('Invalid WebAssembly header')
-    manifest=decode(payload['workstation.json']);scene=decode(payload['model.json'])
-    if type(manifest) is not dict or manifest.get('schema')!=SCHEMA:raise ValueError('Workstation schema mismatch')
+    scene=decode(payload['model.json'])
     if decode(payload['catalog.json'])!=asset_library.catalog():raise ValueError('Workstation catalog differs from the immutable catalog')
     expected_assets=[{'path':name,**records[name]} for name in sorted(asset_names)]
     if manifest.get('assets')!=expected_assets or manifest.get('native_scene')!={'path':'scene.xml',**records['scene.xml']}:
         raise ValueError('Workstation native asset manifest mismatch')
+    if 'native_asset_bundle' in manifest:
+        _unpack_native_assets(manifest['native_asset_bundle'],expected_assets,payload)
     lock=robot_profiles._lock()
     provenance={'profile':'piper','repository':lock['repository'],'commit':lock['commit'],
                 'files_verified':len(profile['files']),'bytes_verified':sum(item['bytes'] for item in profile['files']),
@@ -411,7 +453,9 @@ def inspect_export(directory):
         data=initialize(model)
     if warnings or any(item.number for item in data.warning):raise ValueError('Workstation native load emitted a warning')
     native_meta=metadata(model,data)
-    if set(manifest)!=set(native_meta)|{'assets','native_scene','provenance'}:
+    expected_metadata=set(native_meta)|{'assets','native_scene','provenance'}
+    if 'native_asset_bundle' in manifest:expected_metadata.add('native_asset_bundle')
+    if set(manifest)!=expected_metadata:
         raise ValueError('Workstation metadata inventory mismatch')
     if any(manifest.get(key)!=value for key,value in native_meta.items()):
         raise ValueError('Workstation metadata differs from the compiled native scene')
