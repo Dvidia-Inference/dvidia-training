@@ -228,7 +228,7 @@ class PrerequisitesPublicationTests(unittest.TestCase):
         with self.assertRaisesRegex(publisher.PublicationError, 'Source, protocol'):
             publisher.check_export(self.export, 'b' * 40, 'prerequisites/v01')
         with self.assertRaisesRegex(publisher.PublicationError, 'Unsupported explicit'):
-            publisher.check_export(self.export, 'b' * 40, 'prerequisites/v03')
+            publisher.check_export(self.export, 'b' * 40, 'prerequisites/v99')
 
     def test_v02_rejects_missing_independent_score_or_trace_on_valid_attempt(self):
         self.prepare_v02()
@@ -280,6 +280,138 @@ class PrerequisitesPublicationTests(unittest.TestCase):
         snapshot_path.write_bytes(publisher.encoded(snapshot))
         with self.assertRaisesRegex(publisher.PublicationError, 'must be new'):
             publisher.stage(self.export, self.parent, self.root / 'staged', 'b' * 40, 'prerequisites/v02')
+
+    def prepare_v03(self):
+        self.prepare_v02()
+        release = publisher.stage(self.export, self.parent, self.root / 'v02-release', 'b' * 40, 'prerequisites/v02')
+        _, prior_payload = publisher.check(release['plan'])
+        self.tree.update({name: {'blob': publisher.git_blob(raw), 'size': len(raw), 'lfs_sha256': None}
+                          for name, raw in prior_payload.items()})
+        for name in publisher.ROOT_FILES:
+            self.original[name] = prior_payload[name]
+            (self.parent / name).write_bytes(prior_payload[name])
+        self.save_snapshot()
+        snapshot = json.loads((self.parent / 'snapshot.json').read_bytes())
+        snapshot['namespace'] = 'prerequisites/v03'
+        (self.parent / 'snapshot.json').write_bytes(publisher.encoded(snapshot))
+        protocol = json.loads(self.release['protocol.json'])
+        protocol['schema'] = 'dvidia.graspability/v3'
+        expected = protocol['attempts'][0]
+        expected.update(task='in-reach-graspability', policy='shared-v03',
+            case={'id': 'one', 'object_shape': 'easy-block', 'tool_condition': 'mounted'})
+        self.release['protocol.json'] = publisher.encoded(protocol)
+        measured = {**expected, 'valid': True, 'success': False, 'robot_actuator_sha256': 'e' * 64,
+            'metrics': {'native_steps': 450, 'simulation_seconds': .9},
+            'events': [{'type': 'settled_reference', 't': .4}],
+            'native_trace_columns': ['t_s', 'tool_object_force_n', 'object_robot_force_n',
+                'left_finger_force_n', 'right_finger_force_n', 'object_x_m', 'object_y_m',
+                'object_z_m', 'world_object_force_n']}
+        trace = [[i * .002, 0., 0., 0., 0., .4, -.1, .001, .3] for i in range(451)]
+        measured['independent_score'] = {**publisher.graspability_scorer()({**measured, 'native_trace': trace}),
+            'compiled_model_sha256': 'd' * 64}
+        benchmark = json.loads(self.release['benchmark.json'])
+        benchmark.update(schema=protocol['schema'], attempts=[measured])
+        benchmark['source']['protocol_sha256'] = publisher.record(self.release['protocol.json'])['sha256']
+        self.release['benchmark.json'] = publisher.encoded(benchmark)
+        self.release['trials/hinge-one.json'] = publisher.encoded({**measured, 'native_trace': trace})
+        self.save_release()
+        return prior_payload
+
+    def update_v03_row(self, change):
+        benchmark = json.loads(self.release['benchmark.json'])
+        receipt = json.loads(self.release['trials/hinge-one.json'])
+        change(benchmark['attempts'][0])
+        trace = receipt['native_trace']
+        self.release['benchmark.json'] = publisher.encoded(benchmark)
+        self.release['trials/hinge-one.json'] = publisher.encoded({**benchmark['attempts'][0], 'native_trace': trace})
+        self.save_release()
+
+    def test_v03_is_additive_and_does_not_describe_tool_removal_or_retrieval_as_completed(self):
+        old = self.prepare_v03()
+        result = publisher.stage(self.export, self.parent, self.root / 'staged', 'b' * 40, 'prerequisites/v03')
+        plan, payload = publisher.check(result['plan'])
+        self.assertEqual(set(payload) & set(self.tree), publisher.ROOT_FILES)
+        before, after = json.loads(old['provenance.json']), json.loads(payload['provenance.json'])
+        for key, value in before.items():
+            self.assertEqual(after[key], value)
+        self.assertEqual(after['shoe_graspability']['path'], 'prerequisites/v03')
+        for version in ('v01', 'v02', 'v03'):
+            self.assertIn(f'prerequisites/{version}/index.html'.encode(), payload['index.html'])
+        self.assertIn(old['README.md'], payload['README.md'])
+        self.assertIn(b'does not demonstrate autonomous tool removal', payload['README.md'])
+        self.assertEqual(plan['namespace'], 'prerequisites/v03')
+
+    def test_v03_rejects_missing_force_columns_and_non_dense_native_trace(self):
+        self.prepare_v03()
+        receipt = json.loads(self.release['trials/hinge-one.json'])
+        receipt['native_trace'][1][0] = .003
+        self.release['trials/hinge-one.json'] = publisher.encoded(receipt)
+        self.save_release()
+        with self.assertRaisesRegex(publisher.PublicationError, 'every native 2 ms'):
+            publisher.check_export(self.export, 'b' * 40, 'prerequisites/v03')
+        receipt['native_trace'][1][0] = .002
+        self.release['trials/hinge-one.json'] = publisher.encoded(receipt)
+        self.update_v03_row(lambda r: r['native_trace_columns'].__setitem__(8, 'unmeasured_world_force'))
+        with self.assertRaisesRegex(publisher.PublicationError, 'direct-lift evidence'):
+            publisher.check_export(self.export, 'b' * 40, 'prerequisites/v03')
+
+    def test_v03_success_cannot_omit_initial_reference_or_retention(self):
+        self.prepare_v03()
+        self.update_v03_row(lambda r: (r.update(success=True), r['independent_score'].update(task_success=True)))
+        with self.assertRaisesRegex(publisher.PublicationError, 'initial settled reference'):
+            publisher.check_export(self.export, 'b' * 40, 'prerequisites/v03')
+
+    def test_v03_rejects_v02_score_and_resealed_tool_condition_change(self):
+        self.prepare_v03()
+        self.update_v03_row(lambda r: r['independent_score'].update(schema='dvidia.continuous-shoe-grip-score/v2'))
+        with self.assertRaisesRegex(publisher.PublicationError, 'independent score'):
+            publisher.check_export(self.export, 'b' * 40, 'prerequisites/v03')
+        self.update_v03_row(lambda r: (r['independent_score'].update(schema='dvidia.graspability-score/v3'),
+            r['case'].update(tool_condition='absent')))
+        with self.assertRaisesRegex(publisher.PublicationError, 'differ from the frozen protocol'):
+            publisher.check_export(self.export, 'b' * 40, 'prerequisites/v03')
+
+    def test_v03_rejects_changed_actuator_fingerprint_across_matched_scenes(self):
+        self.prepare_v03()
+        protocol = json.loads(self.release['protocol.json'])
+        benchmark = json.loads(self.release['benchmark.json'])
+        second = json.loads(self.release['trials/hinge-one.json'])
+        second['id'] = 'hinge-two'
+        second['robot_actuator_sha256'] = 'f' * 64
+        second['case']['tool_condition'] = 'absent'
+        protocol['attempts'].append({k: second[k] for k in ('id', 'task', 'policy', 'case')})
+        benchmark['attempts'].append({k: v for k, v in second.items() if k != 'native_trace'})
+        self.release['protocol.json'] = publisher.encoded(protocol)
+        benchmark['source']['protocol_sha256'] = publisher.record(self.release['protocol.json'])['sha256']
+        self.release['benchmark.json'] = publisher.encoded(benchmark)
+        self.release['trials/hinge-two.json'] = publisher.encoded(second)
+        self.save_release()
+        with self.assertRaisesRegex(publisher.PublicationError, 'shared robot actuator fingerprint'):
+            publisher.check_export(self.export, 'b' * 40, 'prerequisites/v03')
+
+    def test_v03_rejects_resealed_truncated_tail_and_force_or_reference_forgery(self):
+        self.prepare_v03()
+        original = self.release['trials/hinge-one.json']
+        for mutation in ('tail', 'force', 'reference'):
+            with self.subTest(mutation=mutation):
+                receipt = json.loads(original)
+                if mutation == 'tail':
+                    receipt['native_trace'].pop()
+                elif mutation == 'force':
+                    receipt['native_trace'][-1][8] = 0.
+                else:
+                    receipt['native_trace'][200][7] += .002
+                self.release['trials/hinge-one.json'] = publisher.encoded(receipt)
+                self.save_release()
+                with self.assertRaisesRegex(publisher.PublicationError, 'independent'):
+                    publisher.check_export(self.export, 'b' * 40, 'prerequisites/v03')
+
+    def test_v03_rejects_forged_success_even_with_plausible_reference_and_window(self):
+        self.prepare_v03()
+        self.update_v03_row(lambda r: (r.update(success=True), r['independent_score'].update(
+            task_success=True, strict_retention_pass=True, strict_passing_ticks=250)))
+        with self.assertRaisesRegex(publisher.PublicationError, 'independently recomputed'):
+            publisher.check_export(self.export, 'b' * 40, 'prerequisites/v03')
 
 
 if __name__ == '__main__':

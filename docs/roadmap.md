@@ -1,6 +1,6 @@
 # Execution map: footage to installable skills
 
-Working map, updated 12 October 2026. This is the team's sequence of builds and evidence
+Working map, updated 14 October 2026. This is the team's sequence of builds and evidence
 gates. A completed software component does not establish robot competence.
 
 ## The product loop
@@ -33,6 +33,22 @@ and SO-101 loading; and native 3D previews. Its gravity/support benchmark has
 matched table-disabled controls. Next: reachable shoe grasps on one selected
 arm, measured shoe/pad contact, then shoe placement and orientation scoring.
 Scene-loading compatibility does not imply that every arm can lift every shoe.
+
+The [graspability diagnostic v0.3](shoe-graspability.md) now isolates direct pickup
+across shape, explicit load and mounted-tool conditions. Its fresh 300 g controls
+all fail, including the small block. The immediate simulation priorities are:
+
+1. Measure grip force versus aperture/command on a named physical gripper and
+   fit the drive and pad-contact model; do not substitute its force cap for
+   actual force delivered.
+2. Add a shoe with a hollow collar and accessible rim, then measured compliance.
+   Keep the current solid rigid proxy as a regression control.
+3. Compare geometry-aware grasp candidates on new frozen layouts, using the
+   same independent settled-reference and unsupported-retention checks.
+4. Only then rejoin retrieval, test lift and recovery into the full shoe task.
+
+The current study is a diagnostic improvement, not a learned skill or an
+end-to-end success-rate improvement over the earlier retrieval benchmark.
 
 The [hardware reference foundation](hardware-reference.md) now separates the
 authored box arm from a pinned UR5e/coupled-gripper assembly. Its mechanical

@@ -1,0 +1,1209 @@
+{
+  "schema": "dvidia.graspability-independent-audit/v3",
+  "scope": "Recomputed all recorded scores and compiled all declared models; no native simulation steps or controller tuning.",
+  "source_commit": "73057dc259c6a19344906f4a43a283553e17ade0",
+  "protocol_sha256": "27a4d1dfc4fe49b96311d8e5fea7f0d1897526a37aed824ba8405939c169d3f5",
+  "benchmark_sha256": "b17a057e8f9aebe8335b2ef7ee683f38bd1a1ebd284f551254c9c2625604b7a7",
+  "integrity_sha256": "329284b83d15364b61113fafe5daf05f163f0d62ecc66ebb145ce28ee229e935",
+  "fixture_sha256": "c33ef6991379fda77d6084931d2b4b3665830ffa448f9ea403a65d2c37b757a3",
+  "native_steps_executed_by_audit": 0,
+  "compiled_models_verified": 24,
+  "attempts_verified": 24,
+  "valid_attempts": 24,
+  "files_verified": 106,
+  "implementation_files_bound_to_frozen_commit": 15,
+  "robot_link_mass_inertia_unchanged": true,
+  "robot_actuator_sha256": "f648770aa6b4014b37288e14ca66a18fb0d272a227290ba654967743de714a26",
+  "groups": [
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "absent",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 1,
+      "outcomes": {
+        "lift_not_retained": 1,
+        "completed": 1
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.8524755409453064
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "mounted",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 1,
+      "outcomes": {
+        "lift_not_retained": 1,
+        "completed": 1
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.7190215003211051
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "absent",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 0,
+      "outcomes": {
+        "lift_not_retained": 2
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.6634467490948737
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "mounted",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 0,
+      "outcomes": {
+        "lift_not_retained": 2
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.6968085840344429
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "easy-block",
+      "mass_kg": 0.03,
+      "tool_condition": "absent",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 1,
+      "outcomes": {
+        "lift_not_retained": 1,
+        "completed": 1
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.6847902501467615
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "easy-block",
+      "mass_kg": 0.03,
+      "tool_condition": "mounted",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 2,
+      "outcomes": {
+        "completed": 2
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.9523207088932395
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "easy-block",
+      "mass_kg": 0.3,
+      "tool_condition": "absent",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 0,
+      "outcomes": {
+        "lift_not_retained": 2
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.6063288331497461
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "easy-block",
+      "mass_kg": 0.3,
+      "tool_condition": "mounted",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 0,
+      "outcomes": {
+        "lift_not_retained": 2
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.6478457078337669
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "absent",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 2,
+      "outcomes": {
+        "completed": 2
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.7174647499341518
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "mounted",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 1,
+      "outcomes": {
+        "lift_not_retained": 1,
+        "completed": 1
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.6380515417549759
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "absent",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 0,
+      "outcomes": {
+        "lift_not_retained": 2
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.5986854590009898
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "mounted",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 0,
+      "outcomes": {
+        "lift_not_retained": 2
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.6270182910375297
+    }
+  ],
+  "paired_comparisons": [
+    {
+      "task": "in-reach-graspability",
+      "case_id": "grasp-fresh-01-light",
+      "object_shape": "easy-block",
+      "mass_kg": 0.03,
+      "mounted_id": "grasp-fresh-01-light-easy-block-mounted",
+      "absent_id": "grasp-fresh-01-light-easy-block-absent",
+      "valid_pair": true,
+      "mounted_success": true,
+      "absent_success": false,
+      "same_robot_actuators": true,
+      "absent_gain": false,
+      "absent_loss": true,
+      "comparison_scope": "Same declared object, load, pose and controller. Tool is present or absent from reset; its collision geometry and loading differ."
+    },
+    {
+      "task": "in-reach-graspability",
+      "case_id": "grasp-fresh-01-light",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.03,
+      "mounted_id": "grasp-fresh-01-light-simplified-shoe-mounted",
+      "absent_id": "grasp-fresh-01-light-simplified-shoe-absent",
+      "valid_pair": true,
+      "mounted_success": false,
+      "absent_success": true,
+      "same_robot_actuators": true,
+      "absent_gain": true,
+      "absent_loss": false,
+      "comparison_scope": "Same declared object, load, pose and controller. Tool is present or absent from reset; its collision geometry and loading differ."
+    },
+    {
+      "task": "in-reach-graspability",
+      "case_id": "grasp-fresh-01-light",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.03,
+      "mounted_id": "grasp-fresh-01-light-current-shoe-mounted",
+      "absent_id": "grasp-fresh-01-light-current-shoe-absent",
+      "valid_pair": true,
+      "mounted_success": false,
+      "absent_success": false,
+      "same_robot_actuators": true,
+      "absent_gain": false,
+      "absent_loss": false,
+      "comparison_scope": "Same declared object, load, pose and controller. Tool is present or absent from reset; its collision geometry and loading differ."
+    },
+    {
+      "task": "in-reach-graspability",
+      "case_id": "grasp-fresh-01-reference",
+      "object_shape": "easy-block",
+      "mass_kg": 0.3,
+      "mounted_id": "grasp-fresh-01-reference-easy-block-mounted",
+      "absent_id": "grasp-fresh-01-reference-easy-block-absent",
+      "valid_pair": true,
+      "mounted_success": false,
+      "absent_success": false,
+      "same_robot_actuators": true,
+      "absent_gain": false,
+      "absent_loss": false,
+      "comparison_scope": "Same declared object, load, pose and controller. Tool is present or absent from reset; its collision geometry and loading differ."
+    },
+    {
+      "task": "in-reach-graspability",
+      "case_id": "grasp-fresh-01-reference",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.3,
+      "mounted_id": "grasp-fresh-01-reference-simplified-shoe-mounted",
+      "absent_id": "grasp-fresh-01-reference-simplified-shoe-absent",
+      "valid_pair": true,
+      "mounted_success": false,
+      "absent_success": false,
+      "same_robot_actuators": true,
+      "absent_gain": false,
+      "absent_loss": false,
+      "comparison_scope": "Same declared object, load, pose and controller. Tool is present or absent from reset; its collision geometry and loading differ."
+    },
+    {
+      "task": "in-reach-graspability",
+      "case_id": "grasp-fresh-01-reference",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.3,
+      "mounted_id": "grasp-fresh-01-reference-current-shoe-mounted",
+      "absent_id": "grasp-fresh-01-reference-current-shoe-absent",
+      "valid_pair": true,
+      "mounted_success": false,
+      "absent_success": false,
+      "same_robot_actuators": true,
+      "absent_gain": false,
+      "absent_loss": false,
+      "comparison_scope": "Same declared object, load, pose and controller. Tool is present or absent from reset; its collision geometry and loading differ."
+    },
+    {
+      "task": "in-reach-graspability",
+      "case_id": "grasp-fresh-02-light",
+      "object_shape": "easy-block",
+      "mass_kg": 0.03,
+      "mounted_id": "grasp-fresh-02-light-easy-block-mounted",
+      "absent_id": "grasp-fresh-02-light-easy-block-absent",
+      "valid_pair": true,
+      "mounted_success": true,
+      "absent_success": true,
+      "same_robot_actuators": true,
+      "absent_gain": false,
+      "absent_loss": false,
+      "comparison_scope": "Same declared object, load, pose and controller. Tool is present or absent from reset; its collision geometry and loading differ."
+    },
+    {
+      "task": "in-reach-graspability",
+      "case_id": "grasp-fresh-02-light",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.03,
+      "mounted_id": "grasp-fresh-02-light-simplified-shoe-mounted",
+      "absent_id": "grasp-fresh-02-light-simplified-shoe-absent",
+      "valid_pair": true,
+      "mounted_success": true,
+      "absent_success": true,
+      "same_robot_actuators": true,
+      "absent_gain": false,
+      "absent_loss": false,
+      "comparison_scope": "Same declared object, load, pose and controller. Tool is present or absent from reset; its collision geometry and loading differ."
+    },
+    {
+      "task": "in-reach-graspability",
+      "case_id": "grasp-fresh-02-light",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.03,
+      "mounted_id": "grasp-fresh-02-light-current-shoe-mounted",
+      "absent_id": "grasp-fresh-02-light-current-shoe-absent",
+      "valid_pair": true,
+      "mounted_success": true,
+      "absent_success": true,
+      "same_robot_actuators": true,
+      "absent_gain": false,
+      "absent_loss": false,
+      "comparison_scope": "Same declared object, load, pose and controller. Tool is present or absent from reset; its collision geometry and loading differ."
+    },
+    {
+      "task": "in-reach-graspability",
+      "case_id": "grasp-fresh-02-reference",
+      "object_shape": "easy-block",
+      "mass_kg": 0.3,
+      "mounted_id": "grasp-fresh-02-reference-easy-block-mounted",
+      "absent_id": "grasp-fresh-02-reference-easy-block-absent",
+      "valid_pair": true,
+      "mounted_success": false,
+      "absent_success": false,
+      "same_robot_actuators": true,
+      "absent_gain": false,
+      "absent_loss": false,
+      "comparison_scope": "Same declared object, load, pose and controller. Tool is present or absent from reset; its collision geometry and loading differ."
+    },
+    {
+      "task": "in-reach-graspability",
+      "case_id": "grasp-fresh-02-reference",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.3,
+      "mounted_id": "grasp-fresh-02-reference-simplified-shoe-mounted",
+      "absent_id": "grasp-fresh-02-reference-simplified-shoe-absent",
+      "valid_pair": true,
+      "mounted_success": false,
+      "absent_success": false,
+      "same_robot_actuators": true,
+      "absent_gain": false,
+      "absent_loss": false,
+      "comparison_scope": "Same declared object, load, pose and controller. Tool is present or absent from reset; its collision geometry and loading differ."
+    },
+    {
+      "task": "in-reach-graspability",
+      "case_id": "grasp-fresh-02-reference",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.3,
+      "mounted_id": "grasp-fresh-02-reference-current-shoe-mounted",
+      "absent_id": "grasp-fresh-02-reference-current-shoe-absent",
+      "valid_pair": true,
+      "mounted_success": false,
+      "absent_success": false,
+      "same_robot_actuators": true,
+      "absent_gain": false,
+      "absent_loss": false,
+      "comparison_scope": "Same declared object, load, pose and controller. Tool is present or absent from reset; its collision geometry and loading differ."
+    }
+  ],
+  "timing": {
+    "simulated_seconds": 158.39999999998787,
+    "native_wall_seconds": 8.40425791614689,
+    "simulated_to_native_wall_ratio": 18.84758911261611,
+    "audit_export_wall_seconds": 20.031671040458605,
+    "scope": "Native wall time includes model setup and recording. Export and independent auditing are separate. Rendering, downloads and hardware sensing/actuation are excluded."
+  },
+  "load_context": {
+    "lightweight_control_weight_n": 0.2943,
+    "reference_load_weight_n": 2.943,
+    "gripper_position_gain_n_per_m": 40.0,
+    "scope": "Assumed model loads and pinned simulator gain. Contact normals can include table pressure; signed actuator force is not directly measured pinch capacity. These runs do not identify physical PiPER payload or isolate a calibrated friction limit."
+  },
+  "rows": [
+    {
+      "id": "grasp-fresh-01-light-easy-block-mounted",
+      "object_shape": "easy-block",
+      "mass_kg": 0.03,
+      "tool_condition": "mounted",
+      "replicate_id": "grasp-fresh-layout-01",
+      "friction": 0.54,
+      "valid": true,
+      "success": true,
+      "compiled_model_sha256": "5e64effef1ba5138ca4cd60945d7dc131a0632b1c2f5368bc065cfb142d2d726",
+      "failed_criteria": [],
+      "terminal_relative_lift_m": 0.21802545516888996,
+      "minimum_final_collision_surface_z_m": 0.21464964456186214,
+      "final_bilateral_missing_ticks": 0,
+      "final_world_supported_ticks": 0,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 0.7880999779589581,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          0.28184588866069815,
+          0.4869884424647821
+        ],
+        "world_support_n": 0.6251021748231735,
+        "actuator_force_n": -0.7664057786486548,
+        "jaw_opening_m": 0.03911216478233269
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.5897014169022441,
+      "audit_export_seconds": 0.8939502080902457
+    },
+    {
+      "id": "grasp-fresh-01-light-easy-block-absent",
+      "object_shape": "easy-block",
+      "mass_kg": 0.03,
+      "tool_condition": "absent",
+      "replicate_id": "grasp-fresh-layout-01",
+      "friction": 0.54,
+      "valid": true,
+      "success": false,
+      "compiled_model_sha256": "c2d0428151ddbaa295910a8b3e95ff1d467ba358be8ffdd1f3f5048e30e7861c",
+      "failed_criteria": [
+        "world_support",
+        "bilateral_contact",
+        "relative_lift"
+      ],
+      "terminal_relative_lift_m": 0.020000030997091998,
+      "minimum_final_collision_surface_z_m": -0.0024934956013727035,
+      "final_bilateral_missing_ticks": 250,
+      "final_world_supported_ticks": 250,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 0.8279041188406606,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          0.3532047294984325,
+          0.4214003719210142
+        ],
+        "world_support_n": 0.14952881417797267,
+        "actuator_force_n": -0.7766044644516528,
+        "jaw_opening_m": 0.03953216930701619
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.34633345901966095,
+      "audit_export_seconds": 0.820534290978685
+    },
+    {
+      "id": "grasp-fresh-01-light-simplified-shoe-mounted",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "mounted",
+      "replicate_id": "grasp-fresh-layout-01",
+      "friction": 0.54,
+      "valid": true,
+      "success": false,
+      "compiled_model_sha256": "f2408e79a9e2459c09822b6064db1ef317ca279658afce546e66736cd0d9dba8",
+      "failed_criteria": [
+        "world_support",
+        "bilateral_contact",
+        "relative_lift"
+      ],
+      "terminal_relative_lift_m": 0.025000031025949207,
+      "minimum_final_collision_surface_z_m": -0.00010775542138802621,
+      "final_bilateral_missing_ticks": 250,
+      "final_world_supported_ticks": 250,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 1.5771891853422535,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          2.181246683420468,
+          0.6982000057287798
+        ],
+        "world_support_n": 2.822790769797666,
+        "actuator_force_n": -1.5771891853422535,
+        "jaw_opening_m": 0.06613460694307906
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.30948191694915295,
+      "audit_export_seconds": 0.8235835419036448
+    },
+    {
+      "id": "grasp-fresh-01-light-simplified-shoe-absent",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "absent",
+      "replicate_id": "grasp-fresh-layout-01",
+      "friction": 0.54,
+      "valid": true,
+      "success": true,
+      "compiled_model_sha256": "4f7a5f983a189d5e4389da1ff055ca21738bebc5c67ee32245edadf6add9c7f7",
+      "failed_criteria": [],
+      "terminal_relative_lift_m": 0.22535013233192,
+      "minimum_final_collision_surface_z_m": 0.22135270204112892,
+      "final_bilateral_missing_ticks": 0,
+      "final_world_supported_ticks": 0,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 1.001816051771072,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          0.7150370043911345,
+          0.2735518401223763
+        ],
+        "world_support_n": 0.8313709486476036,
+        "actuator_force_n": -0.9828011633925535,
+        "jaw_opening_m": 0.04985183410610135
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.3639570421073586,
+      "audit_export_seconds": 0.8256862498819828
+    },
+    {
+      "id": "grasp-fresh-01-light-current-shoe-mounted",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "mounted",
+      "replicate_id": "grasp-fresh-layout-01",
+      "friction": 0.54,
+      "valid": true,
+      "success": false,
+      "compiled_model_sha256": "04161d214e9256699fa7125d19eced18c6a7649a6c14cbb0ed1767c4f327643d",
+      "failed_criteria": [
+        "world_support",
+        "bilateral_contact",
+        "relative_lift"
+      ],
+      "terminal_relative_lift_m": 3.108125435084992e-08,
+      "minimum_final_collision_surface_z_m": -0.00011688123077504067,
+      "final_bilateral_missing_ticks": 250,
+      "final_world_supported_ticks": 250,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 1.7023603196120416,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          1.4813111117073152,
+          1.7760371084831708
+        ],
+        "world_support_n": 1.1893551845912984,
+        "actuator_force_n": -1.4176914120569473,
+        "jaw_opening_m": 0.07149098842555507
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.36792225018143654,
+      "audit_export_seconds": 0.8437092087697238
+    },
+    {
+      "id": "grasp-fresh-01-light-current-shoe-absent",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "absent",
+      "replicate_id": "grasp-fresh-layout-01",
+      "friction": 0.54,
+      "valid": true,
+      "success": false,
+      "compiled_model_sha256": "83db413b0d8ec5d33b3d97f5d49c527632dd236e9a00f60cf8c6e95314fc015a",
+      "failed_criteria": [
+        "world_support",
+        "bilateral_contact",
+        "relative_lift"
+      ],
+      "terminal_relative_lift_m": 3.1081217808655954e-08,
+      "minimum_final_collision_surface_z_m": -0.00011688123048427153,
+      "final_bilateral_missing_ticks": 250,
+      "final_world_supported_ticks": 250,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 1.4776671906316092,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          2.811163056299122,
+          4.104499196722824
+        ],
+        "world_support_n": 4.551042121185688,
+        "actuator_force_n": -1.4408008908405283,
+        "jaw_opening_m": 0.07276860764323631
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.4004291659221053,
+      "audit_export_seconds": 0.8242422500625253
+    },
+    {
+      "id": "grasp-fresh-01-reference-easy-block-mounted",
+      "object_shape": "easy-block",
+      "mass_kg": 0.3,
+      "tool_condition": "mounted",
+      "replicate_id": "grasp-fresh-layout-01",
+      "friction": 0.54,
+      "valid": true,
+      "success": false,
+      "compiled_model_sha256": "ce77503d7836700a62cb5cd69e289083232109860641abc4b796098b978c26ac",
+      "failed_criteria": [
+        "world_support",
+        "bilateral_contact",
+        "relative_lift"
+      ],
+      "terminal_relative_lift_m": 3.102697288636768e-08,
+      "minimum_final_collision_surface_z_m": -0.00010775542145679065,
+      "final_bilateral_missing_ticks": 250,
+      "final_world_supported_ticks": 250,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 0.9833137309880983,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          0.8788628523458197,
+          0.0
+        ],
+        "world_support_n": 3.210922343726204,
+        "actuator_force_n": -0.8753068271240442,
+        "jaw_opening_m": 0.04472779187781091
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.31780158285982907,
+      "audit_export_seconds": 0.8518624589778483
+    },
+    {
+      "id": "grasp-fresh-01-reference-easy-block-absent",
+      "object_shape": "easy-block",
+      "mass_kg": 0.3,
+      "tool_condition": "absent",
+      "replicate_id": "grasp-fresh-layout-01",
+      "friction": 0.54,
+      "valid": true,
+      "success": false,
+      "compiled_model_sha256": "618332b4f9457031001000a9328726db95fdc259c85b88205db1ea82ab3aa0e1",
+      "failed_criteria": [
+        "world_support",
+        "bilateral_contact",
+        "relative_lift"
+      ],
+      "terminal_relative_lift_m": 3.1026972882938894e-08,
+      "minimum_final_collision_surface_z_m": -0.00010775542148576053,
+      "final_bilateral_missing_ticks": 250,
+      "final_world_supported_ticks": 250,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 0.9253050995666772,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          0.7712900809001034,
+          0.0
+        ],
+        "world_support_n": 2.856785080667112,
+        "actuator_force_n": -0.774946553024335,
+        "jaw_opening_m": 0.040118776898121836
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.29277720814570785,
+      "audit_export_seconds": 0.8148556668311357
+    },
+    {
+      "id": "grasp-fresh-01-reference-simplified-shoe-mounted",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "mounted",
+      "replicate_id": "grasp-fresh-layout-01",
+      "friction": 0.54,
+      "valid": true,
+      "success": false,
+      "compiled_model_sha256": "aeda49bfec0f8d0947e300d779d7d3e0e4272752da9a15bceba9097ceb2ee63d",
+      "failed_criteria": [
+        "world_support",
+        "bilateral_contact",
+        "relative_lift"
+      ],
+      "terminal_relative_lift_m": 3.102697287509198e-08,
+      "minimum_final_collision_surface_z_m": -0.00010775542134360688,
+      "final_bilateral_missing_ticks": 250,
+      "final_world_supported_ticks": 250,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 0.8760694684669582,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          12.412945317891948,
+          0.8705084463956954
+        ],
+        "world_support_n": 15.525592773834294,
+        "actuator_force_n": -0.8546718463703092,
+        "jaw_opening_m": 0.04402333420237038
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.3040260002017021,
+      "audit_export_seconds": 0.814579457975924
+    },
+    {
+      "id": "grasp-fresh-01-reference-simplified-shoe-absent",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "absent",
+      "replicate_id": "grasp-fresh-layout-01",
+      "friction": 0.54,
+      "valid": true,
+      "success": false,
+      "compiled_model_sha256": "7f103065c3e07e56fbd566d24ad8b87eb430b735a0ad7431a0702f2a7a1989e8",
+      "failed_criteria": [
+        "world_support",
+        "bilateral_contact",
+        "relative_lift"
+      ],
+      "terminal_relative_lift_m": 3.102697287133793e-08,
+      "minimum_final_collision_surface_z_m": -0.0001077554213460355,
+      "final_bilateral_missing_ticks": 250,
+      "final_world_supported_ticks": 250,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 0.9333913516308172,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          0.5594404431328802,
+          8.978427857789352
+        ],
+        "world_support_n": 12.023937508006973,
+        "actuator_force_n": -0.8908087715567158,
+        "jaw_opening_m": 0.04539729729715703
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.302430999930948,
+      "audit_export_seconds": 0.8340604170225561
+    },
+    {
+      "id": "grasp-fresh-01-reference-current-shoe-mounted",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "mounted",
+      "replicate_id": "grasp-fresh-layout-01",
+      "friction": 0.54,
+      "valid": true,
+      "success": false,
+      "compiled_model_sha256": "4a1d7158d95c7d5297b1f93a1708008babaa68153e706d749a53f63e7197c43c",
+      "failed_criteria": [
+        "world_support",
+        "bilateral_contact",
+        "relative_lift"
+      ],
+      "terminal_relative_lift_m": 3.108121765240887e-08,
+      "minimum_final_collision_surface_z_m": -0.00011688122904813386,
+      "final_bilateral_missing_ticks": 250,
+      "final_world_supported_ticks": 250,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 1.4964972707428446,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          4.938496785349013,
+          4.74407224790012
+        ],
+        "world_support_n": 10.015226769501323,
+        "actuator_force_n": -1.4738441474233412,
+        "jaw_opening_m": 0.07382207279840552
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.3349277500528842,
+      "audit_export_seconds": 0.8197355410084128
+    },
+    {
+      "id": "grasp-fresh-01-reference-current-shoe-absent",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "absent",
+      "replicate_id": "grasp-fresh-layout-01",
+      "friction": 0.54,
+      "valid": true,
+      "success": false,
+      "compiled_model_sha256": "1a0b217513b99117c339d1e4b02510e66641b1885a49920bd5e3dc554882555d",
+      "failed_criteria": [
+        "world_support",
+        "bilateral_contact",
+        "relative_lift"
+      ],
+      "terminal_relative_lift_m": 3.1081220291614454e-08,
+      "minimum_final_collision_surface_z_m": -0.00011688122904759436,
+      "final_bilateral_missing_ticks": 250,
+      "final_world_supported_ticks": 250,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 1.5172542186044038,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          4.98931887691069,
+          6.2452308349337065
+        ],
+        "world_support_n": 11.092837992502036,
+        "actuator_force_n": -1.467075747738918,
+        "jaw_opening_m": 0.07404834899617901
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.33368179108947515,
+      "audit_export_seconds": 0.8445473748724908
+    },
+    {
+      "id": "grasp-fresh-02-light-easy-block-mounted",
+      "object_shape": "easy-block",
+      "mass_kg": 0.03,
+      "tool_condition": "mounted",
+      "replicate_id": "grasp-fresh-layout-02",
+      "friction": 0.91,
+      "valid": true,
+      "success": true,
+      "compiled_model_sha256": "84b4e97ceec2793b8936a5af41097ddd74e79a52d83961dfd6308d6900fb9af4",
+      "failed_criteria": [],
+      "terminal_relative_lift_m": 0.21869597258184706,
+      "minimum_final_collision_surface_z_m": 0.2148169140052359,
+      "final_bilateral_missing_ticks": 0,
+      "final_world_supported_ticks": 0,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 0.7880926450262563,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          0.39256927758119997,
+          0.38758928659454467
+        ],
+        "world_support_n": 0.833967034778164,
+        "actuator_force_n": -0.7726042269082146,
+        "jaw_opening_m": 0.03939168279702773
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.3626192919909954,
+      "audit_export_seconds": 0.8673414580989629
+    },
+    {
+      "id": "grasp-fresh-02-light-easy-block-absent",
+      "object_shape": "easy-block",
+      "mass_kg": 0.03,
+      "tool_condition": "absent",
+      "replicate_id": "grasp-fresh-layout-02",
+      "friction": 0.91,
+      "valid": true,
+      "success": true,
+      "compiled_model_sha256": "8311bf5b9ad96045e828430e763f72392f9ed9e4ba573ba2a90009a32c810104",
+      "failed_criteria": [],
+      "terminal_relative_lift_m": 0.23138714682608114,
+      "minimum_final_collision_surface_z_m": 0.22715837993251287,
+      "final_bilateral_missing_ticks": 0,
+      "final_world_supported_ticks": 0,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 0.7868692421549802,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          0.26309687706545676,
+          0.5178340721480839
+        ],
+        "world_support_n": 0.7901802887625577,
+        "actuator_force_n": -0.7799426256974338,
+        "jaw_opening_m": 0.039683484005422015
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.3384567911271006,
+      "audit_export_seconds": 0.8232225419487804
+    },
+    {
+      "id": "grasp-fresh-02-light-simplified-shoe-mounted",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "mounted",
+      "replicate_id": "grasp-fresh-layout-02",
+      "friction": 0.91,
+      "valid": true,
+      "success": true,
+      "compiled_model_sha256": "715817442f06e6e207fac67e1b54689dd200d09c69eba017c66389cbfe2eac84",
+      "failed_criteria": [],
+      "terminal_relative_lift_m": 0.21910132725620907,
+      "minimum_final_collision_surface_z_m": 0.21539539820116874,
+      "final_bilateral_missing_ticks": 0,
+      "final_world_supported_ticks": 0,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 0.993520169502267,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          0.43530801077208053,
+          0.5358320243676746
+        ],
+        "world_support_n": 0.8351667978415414,
+        "actuator_force_n": -0.9706806548370431,
+        "jaw_opening_m": 0.049360319443559286
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.32856962480582297,
+      "audit_export_seconds": 0.8183259160723537
+    },
+    {
+      "id": "grasp-fresh-02-light-simplified-shoe-absent",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "absent",
+      "replicate_id": "grasp-fresh-layout-02",
+      "friction": 0.91,
+      "valid": true,
+      "success": true,
+      "compiled_model_sha256": "3edccf6675e946f09ae4d22e29e8c122f6fe462aaa7c62a7fd7011fe092f1360",
+      "failed_criteria": [],
+      "terminal_relative_lift_m": 0.23264082040360595,
+      "minimum_final_collision_surface_z_m": 0.2294474252843387,
+      "final_bilateral_missing_ticks": 0,
+      "final_world_supported_ticks": 0,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 0.9834552067676077,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          0.48806767415837615,
+          0.486618176227241
+        ],
+        "world_support_n": 0.0,
+        "actuator_force_n": -0.9758126598433315,
+        "jaw_opening_m": 0.04952245233507971
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.3535077078267932,
+      "audit_export_seconds": 0.8265237500891089
+    },
+    {
+      "id": "grasp-fresh-02-light-current-shoe-mounted",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "mounted",
+      "replicate_id": "grasp-fresh-layout-02",
+      "friction": 0.91,
+      "valid": true,
+      "success": true,
+      "compiled_model_sha256": "90e4a0e3c5bb8623301bbafe54a28feb798f71e184bf3b62ee515ce97e0240e4",
+      "failed_criteria": [],
+      "terminal_relative_lift_m": 0.1702592718771153,
+      "minimum_final_collision_surface_z_m": 0.04336347942978,
+      "final_bilateral_missing_ticks": 0,
+      "final_world_supported_ticks": 0,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 1.4596521542174017,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          2.5198290583238316,
+          2.753987349701366
+        ],
+        "world_support_n": 2.3087211372287895,
+        "actuator_force_n": -1.4362738204511178,
+        "jaw_opening_m": 0.07242486709838902
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.3510992501396686,
+      "audit_export_seconds": 0.8318221250083297
+    },
+    {
+      "id": "grasp-fresh-02-light-current-shoe-absent",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "absent",
+      "replicate_id": "grasp-fresh-layout-02",
+      "friction": 0.91,
+      "valid": true,
+      "success": true,
+      "compiled_model_sha256": "e7da140d5535bd511307b8e48b9aba8953e80eafc90f9e674ed66ff7019835f1",
+      "failed_criteria": [],
+      "terminal_relative_lift_m": 0.17860182042928108,
+      "minimum_final_collision_surface_z_m": 0.04641855777339529,
+      "final_bilateral_missing_ticks": 0,
+      "final_world_supported_ticks": 0,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 1.4596483925282682,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          3.0526137152187545,
+          3.6634155007425284
+        ],
+        "world_support_n": 4.827517727105476,
+        "actuator_force_n": -1.4396199713609614,
+        "jaw_opening_m": 0.07252001331117273
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.4520463750232011,
+      "audit_export_seconds": 0.8755235408898443
+    },
+    {
+      "id": "grasp-fresh-02-reference-easy-block-mounted",
+      "object_shape": "easy-block",
+      "mass_kg": 0.3,
+      "tool_condition": "mounted",
+      "replicate_id": "grasp-fresh-layout-02",
+      "friction": 0.91,
+      "valid": true,
+      "success": false,
+      "compiled_model_sha256": "320cdae5b49f6460856a2a9deee090d05966017bf75651a3f372952ab05ce6c3",
+      "failed_criteria": [
+        "world_support",
+        "bilateral_contact",
+        "relative_lift"
+      ],
+      "terminal_relative_lift_m": 3.102697289069094e-08,
+      "minimum_final_collision_surface_z_m": -0.00010775542168068447,
+      "final_bilateral_missing_ticks": 250,
+      "final_world_supported_ticks": 250,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 0.8593155783566627,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          0.4160775428190705,
+          0.37319557322242364
+        ],
+        "world_support_n": 3.286964058252209,
+        "actuator_force_n": -0.7847193337394375,
+        "jaw_opening_m": 0.04000226402115033
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.33004412497393787,
+      "audit_export_seconds": 0.8245186249259859
+    },
+    {
+      "id": "grasp-fresh-02-reference-easy-block-absent",
+      "object_shape": "easy-block",
+      "mass_kg": 0.3,
+      "tool_condition": "absent",
+      "replicate_id": "grasp-fresh-layout-02",
+      "friction": 0.91,
+      "valid": true,
+      "success": false,
+      "compiled_model_sha256": "dbf415121ba7b68b23dc6994c082309c51c25e21804ea0e9af189738150c6101",
+      "failed_criteria": [
+        "world_support",
+        "bilateral_contact",
+        "relative_lift"
+      ],
+      "terminal_relative_lift_m": 3.102697290752318e-08,
+      "minimum_final_collision_surface_z_m": -0.00010775542188381365,
+      "final_bilateral_missing_ticks": 250,
+      "final_world_supported_ticks": 250,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 0.8569754817845138,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          0.5951707549069207,
+          0.18881670703688846
+        ],
+        "world_support_n": 2.912400327527096,
+        "actuator_force_n": -0.7878694131773433,
+        "jaw_opening_m": 0.04006047310046802
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.3135516250040382,
+      "audit_export_seconds": 0.8267283749300987
+    },
+    {
+      "id": "grasp-fresh-02-reference-simplified-shoe-mounted",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "mounted",
+      "replicate_id": "grasp-fresh-layout-02",
+      "friction": 0.91,
+      "valid": true,
+      "success": false,
+      "compiled_model_sha256": "b1fe82c98110f624d9203e45f37e50890ac8a26afd1ed17adc86bf56b6b021e0",
+      "failed_criteria": [
+        "world_support",
+        "bilateral_contact",
+        "relative_lift"
+      ],
+      "terminal_relative_lift_m": 3.102697294458934e-08,
+      "minimum_final_collision_surface_z_m": -0.00010775542133561675,
+      "final_bilateral_missing_ticks": 250,
+      "final_world_supported_ticks": 250,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 1.135354825282992,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          0.47847520726643533,
+          0.5073379939617388
+        ],
+        "world_support_n": 3.358541579121619,
+        "actuator_force_n": -0.9856786923014955,
+        "jaw_opening_m": 0.05014511460977162
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.3229922908358276,
+      "audit_export_seconds": 0.837696542032063
+    },
+    {
+      "id": "grasp-fresh-02-reference-simplified-shoe-absent",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "absent",
+      "replicate_id": "grasp-fresh-layout-02",
+      "friction": 0.91,
+      "valid": true,
+      "success": false,
+      "compiled_model_sha256": "a739d6d4207f52b1c13b4df6e3e4913e6b5690f93eef6212b9995273e73141e8",
+      "failed_criteria": [
+        "world_support",
+        "bilateral_contact",
+        "relative_lift"
+      ],
+      "terminal_relative_lift_m": 3.1026972937853734e-08,
+      "minimum_final_collision_surface_z_m": -0.00010775542133814597,
+      "final_bilateral_missing_ticks": 250,
+      "final_world_supported_ticks": 250,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 1.124338066798712,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          0.7114507361494824,
+          0.27624809856439403
+        ],
+        "world_support_n": 2.883347261598204,
+        "actuator_force_n": -0.9910128516186524,
+        "jaw_opening_m": 0.050184403754873194
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.2962544590700418,
+      "audit_export_seconds": 0.8369824578985572
+    },
+    {
+      "id": "grasp-fresh-02-reference-current-shoe-mounted",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "mounted",
+      "replicate_id": "grasp-fresh-layout-02",
+      "friction": 0.91,
+      "valid": true,
+      "success": false,
+      "compiled_model_sha256": "64bd03ebee73d4e0de9279002f88c18ca9777c7b7eef29f4f1623f5bea4ffdf4",
+      "failed_criteria": [
+        "world_support",
+        "bilateral_contact",
+        "relative_lift"
+      ],
+      "terminal_relative_lift_m": 3.1081219249357354e-08,
+      "minimum_final_collision_surface_z_m": -0.00011688122905101003,
+      "final_bilateral_missing_ticks": 250,
+      "final_world_supported_ticks": 250,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 1.507930979389687,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          5.412257418849861,
+          5.210080566449552
+        ],
+        "world_support_n": 12.494959287515666,
+        "actuator_force_n": -1.4739889926966565,
+        "jaw_opening_m": 0.07398688878161085
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.3618808339815587,
+      "audit_export_seconds": 0.8339941250160336
+    },
+    {
+      "id": "grasp-fresh-02-reference-current-shoe-absent",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "absent",
+      "replicate_id": "grasp-fresh-layout-02",
+      "friction": 0.91,
+      "valid": true,
+      "success": false,
+      "compiled_model_sha256": "eef23a9aab93aac2a3c4aeccf5f5ff2ca07f57666d133302072cf1be1fe5f5b2",
+      "failed_criteria": [
+        "world_support",
+        "bilateral_contact",
+        "relative_lift"
+      ],
+      "terminal_relative_lift_m": 3.108121725400523e-08,
+      "minimum_final_collision_surface_z_m": -0.00011688122905487153,
+      "final_bilateral_missing_ticks": 250,
+      "final_world_supported_ticks": 250,
+      "final_tool_supported_ticks": 0,
+      "final_other_robot_supported_ticks": 0,
+      "max_abs_native_gripper_actuator_force_n": 1.5045021954886133,
+      "closure_observation": {
+        "finger_normal_forces_n": [
+          5.396845574972049,
+          5.41847320025592
+        ],
+        "world_support_n": 11.791883336454235,
+        "actuator_force_n": -1.456451205580864,
+        "jaw_opening_m": 0.07323032004820021
+      },
+      "simulation_seconds": 6.599999999999495,
+      "native_wall_seconds": 0.3297649580053985,
+      "audit_export_seconds": 0.8176449171733111
+    }
+  ],
+  "audit_wall_seconds": 4.675478833029047
+}

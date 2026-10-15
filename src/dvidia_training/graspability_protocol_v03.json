@@ -1,0 +1,87 @@
+{
+  "schema": "dvidia.graspability-protocol/v3",
+  "cohorts": {
+    "development": "known-layout-explicit-load-controls-v03",
+    "heldout": "fresh-layout-factorial-v03"
+  },
+  "design": "Direct in-reach pickup, crossing three object shapes, two explicit loads, two tool states and two fresh layout/friction replicates: 24 confirmation attempts. A single fixed authored controller uses a declared geometry-aware grasp-position rule. Layout and friction vary jointly between the two deterministic replicates; these are not random population samples or confidence-interval estimates. Development uses one separate known layout crossed with the same two loads, three shapes and two tool states.",
+  "comparison": "Within each layout and load, object mass, friction, spawn position, robot actuators and control settings are matched across all six shape/tool cells. Load pairs share the same layout and friction. Changing shape necessarily changes contact geometry and inertia; removing the mounted rake changes wrist mass/inertia as well as clearance. Tool absence is a morphology ablation, not successful tool detachment. Report shape × load × tool results separately; never present easy-object lifts as shoe-skill success.",
+  "cohort_access": "The independent evaluator seals the fresh parameter cases before the final controller is frozen. Controller tuning may use development only. Do not inspect or execute fresh cases until a source freeze is recorded. After the first evaluation these cases are known regressions; rerunning them does not create new confirmation evidence.",
+  "scope": "Authored direct-pickup diagnostic with privileged native observations, assumed rigid-object contact properties and pinned simulation actuators. No retrieval, learned policy, tool acquisition, deformable shoe, physical grip-capacity measurement or hardware-transfer claim. Frozen v02 retrieval results remain separate regressions and are not pooled into this study.",
+  "criteria": {
+    "native_dt_s": 0.002,
+    "policy_dt_s": 0.02,
+    "initial_settle_s": 0.4,
+    "reference_window_s": 0.1,
+    "reference_axis_range_max_m": 0.001,
+    "reference_scope": "At the fixed 0.4 s native timestamp, the previous 50 ticks must each show world normal force >0.01 N and aggregate robot/tool normal force <0.01 N, with range <=1 mm on each position axis. The reference height is read from the native trace, never trusted from an event coordinate.",
+    "final_retention_s": 0.5,
+    "final_retention_ticks": 250,
+    "relative_origin_lift_min_m": 0.035,
+    "finger_force_min_n": 0.01,
+    "support_force_max_n": 0.01,
+    "height_scope": "Object body-origin rise >=35 mm from the verified settled reference, on every final native tick. Actual lowest collision-surface height is an additional diagnostic and does not replace the fixed criterion.",
+    "support_scope": "Both finger normal forces >0.01 N; world, tool and other-robot normal forces each <0.01 N during the final 500 ms. Synthetic evidence thresholds, not calibrated hardware limits.",
+    "abort_scope": "All planned attempts remain in the denominator. A recorded physical abort, short run or unsettled initialization cannot pass. Corrupt or incomplete native evidence is invalid and also cannot pass. No outcome-dependent exclusion or private retry."
+  },
+  "cases": {
+    "development": [
+      {
+        "id": "grasp-dev-light",
+        "replicate_id": "grasp-dev-layout",
+        "load_band": "lightweight-control",
+        "mass": 0.03,
+        "object_x": 0.4,
+        "object_y": -0.1,
+        "friction": 0.6
+      },
+      {
+        "id": "grasp-dev-reference",
+        "replicate_id": "grasp-dev-layout",
+        "load_band": "reference-load",
+        "mass": 0.3,
+        "object_x": 0.4,
+        "object_y": -0.1,
+        "friction": 0.6
+      }
+    ],
+    "heldout": [
+      {
+        "id": "grasp-fresh-01-light",
+        "replicate_id": "grasp-fresh-layout-01",
+        "load_band": "lightweight-control",
+        "mass": 0.03,
+        "object_x": 0.391,
+        "object_y": -0.113,
+        "friction": 0.54
+      },
+      {
+        "id": "grasp-fresh-01-reference",
+        "replicate_id": "grasp-fresh-layout-01",
+        "load_band": "reference-load",
+        "mass": 0.3,
+        "object_x": 0.391,
+        "object_y": -0.113,
+        "friction": 0.54
+      },
+      {
+        "id": "grasp-fresh-02-light",
+        "replicate_id": "grasp-fresh-layout-02",
+        "load_band": "lightweight-control",
+        "mass": 0.03,
+        "object_x": 0.429,
+        "object_y": -0.071,
+        "friction": 0.91
+      },
+      {
+        "id": "grasp-fresh-02-reference",
+        "replicate_id": "grasp-fresh-layout-02",
+        "load_band": "reference-load",
+        "mass": 0.3,
+        "object_x": 0.429,
+        "object_y": -0.071,
+        "friction": 0.91
+      }
+    ]
+  }
+}

@@ -1,0 +1,813 @@
+{
+  "schema": "dvidia.graspability-jaw-limit-diagnostic/v3",
+  "source_commit": "73057dc259c6a19344906f4a43a283553e17ade0",
+  "benchmark_sha256": "b17a057e8f9aebe8335b2ef7ee683f38bd1a1ebd284f551254c9c2625604b7a7",
+  "scope": "Post-freeze diagnostic on recorded data only. Native jaw-span observations are every2ms; individual joint-position observations are sampled every20ms. No rescoring, controller tuning or simulation steps.",
+  "native_steps_executed_by_audit": 0,
+  "nominal_slide_coordinate_span_m": 0.07,
+  "pinned_robot_joint_ranges_rad_m": [
+    [
+      -2.618,
+      2.618
+    ],
+    [
+      0.0,
+      3.14
+    ],
+    [
+      -2.697,
+      0.0
+    ],
+    [
+      -1.832,
+      1.832
+    ],
+    [
+      -1.22,
+      1.22
+    ],
+    [
+      -3.14,
+      3.14
+    ],
+    [
+      0.0,
+      0.035
+    ],
+    [
+      -0.035,
+      0.0
+    ]
+  ],
+  "interpretation": "MuJoCo joint limits are compliant constraints, while actuator command limits bound issued targets. Recorded jaw coordinates can exceed nominal travel under contact. Existing retention criteria did not include a joint-limit tolerance, so scores stay unchanged. Observed overtravel does not establish real hardware aperture or prove that the same lift works with hard travel stops.",
+  "rows": [
+    {
+      "id": "grasp-fresh-01-light-easy-block-mounted",
+      "object_shape": "easy-block",
+      "mass_kg": 0.03,
+      "tool_condition": "mounted",
+      "retention_success_under_frozen_criteria": true,
+      "maximum_native_jaw_span_m": 0.07000031536744251,
+      "minimum_final_native_jaw_span_m": 0.03952489958246806,
+      "maximum_final_native_jaw_span_m": 0.03952506123032771,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.000502971053248702,
+        0.0,
+        2.7290363609211443e-07,
+        4.268525652134647e-06
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.000502971053248702,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-01-light-easy-block-absent",
+      "object_shape": "easy-block",
+      "mass_kg": 0.03,
+      "tool_condition": "absent",
+      "retention_success_under_frozen_criteria": false,
+      "maximum_native_jaw_span_m": 0.07000098608228439,
+      "minimum_final_native_jaw_span_m": 1.0960107490090686e-05,
+      "maximum_final_native_jaw_span_m": 0.0008682448084138219,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        6.425857883990416e-08,
+        1.8977403089120992e-06
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-01-light-simplified-shoe-mounted",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "mounted",
+      "retention_success_under_frozen_criteria": false,
+      "maximum_native_jaw_span_m": 0.07309435525177865,
+      "minimum_final_native_jaw_span_m": 3.822971751787736e-07,
+      "maximum_final_native_jaw_span_m": 1.02236741069683e-06,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0002951569125253517,
+        0.0,
+        0.0018175488785626623,
+        0.0012613639341217606
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0002951569125253517,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-01-light-simplified-shoe-absent",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "absent",
+      "retention_success_under_frozen_criteria": true,
+      "maximum_native_jaw_span_m": 0.07167573425498851,
+      "minimum_final_native_jaw_span_m": 0.04954728903600125,
+      "maximum_final_native_jaw_span_m": 0.049547569233624064,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0009737405573645719,
+        0.0006894177937458862
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-01-light-current-shoe-mounted",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "mounted",
+      "retention_success_under_frozen_criteria": false,
+      "maximum_native_jaw_span_m": 0.07371885411856491,
+      "minimum_final_native_jaw_span_m": 1.2055189136034936e-06,
+      "maximum_final_native_jaw_span_m": 2.238323446059601e-05,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0019927414110966837,
+        0.0017233319976545716
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-01-light-current-shoe-absent",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "absent",
+      "retention_success_under_frozen_criteria": false,
+      "maximum_native_jaw_span_m": 0.0733126015894416,
+      "minimum_final_native_jaw_span_m": 2.067776178011127e-06,
+      "maximum_final_native_jaw_span_m": 5.952877340832642e-06,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0016456276235031417,
+        0.001916618322038266
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-01-reference-easy-block-mounted",
+      "object_shape": "easy-block",
+      "mass_kg": 0.3,
+      "tool_condition": "mounted",
+      "retention_success_under_frozen_criteria": false,
+      "maximum_native_jaw_span_m": 0.07000031536746332,
+      "minimum_final_native_jaw_span_m": 4.519293225887012e-07,
+      "maximum_final_native_jaw_span_m": 6.489144814951081e-07,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.000155903956310377,
+        0.0,
+        2.7290363609211443e-07,
+        4.2679783417709505e-06
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.000155903956310377,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-01-reference-easy-block-absent",
+      "object_shape": "easy-block",
+      "mass_kg": 0.3,
+      "tool_condition": "absent",
+      "retention_success_under_frozen_criteria": false,
+      "maximum_native_jaw_span_m": 0.07000098609436832,
+      "minimum_final_native_jaw_span_m": 1.3068203865345205e-06,
+      "maximum_final_native_jaw_span_m": 3.784184751125389e-06,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        4.585832882826491e-06,
+        9.303513160068773e-06
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-01-reference-simplified-shoe-mounted",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "mounted",
+      "retention_success_under_frozen_criteria": false,
+      "maximum_native_jaw_span_m": 0.07000031536742504,
+      "minimum_final_native_jaw_span_m": 4.7496257039299747e-07,
+      "maximum_final_native_jaw_span_m": 9.251995924442034e-07,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.00034184302552242585,
+        0.0,
+        2.7290363609211443e-07,
+        4.268054710120095e-06
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.00034184302552242585,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-01-reference-simplified-shoe-absent",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "absent",
+      "retention_success_under_frozen_criteria": false,
+      "maximum_native_jaw_span_m": 0.07000098607818911,
+      "minimum_final_native_jaw_span_m": 1.2863121976489953e-06,
+      "maximum_final_native_jaw_span_m": 3.689352473038013e-06,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        4.411782305461316e-06,
+        7.911999269689118e-06
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-01-reference-current-shoe-mounted",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "mounted",
+      "retention_success_under_frozen_criteria": false,
+      "maximum_native_jaw_span_m": 0.07413629899305804,
+      "minimum_final_native_jaw_span_m": 7.61909265280046e-07,
+      "maximum_final_native_jaw_span_m": 1.4011056759751867e-06,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0019176029505835052,
+        0.002258981700334513
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-01-reference-current-shoe-absent",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "absent",
+      "retention_success_under_frozen_criteria": false,
+      "maximum_native_jaw_span_m": 0.0747350448089489,
+      "minimum_final_native_jaw_span_m": 1.8171016323768343e-06,
+      "maximum_final_native_jaw_span_m": 3.831574145306089e-06,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0021961832907661655,
+        0.002734766184612644
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-02-light-easy-block-mounted",
+      "object_shape": "easy-block",
+      "mass_kg": 0.03,
+      "tool_condition": "mounted",
+      "retention_success_under_frozen_criteria": true,
+      "maximum_native_jaw_span_m": 0.07000031222672297,
+      "minimum_final_native_jaw_span_m": 0.03952464384394409,
+      "maximum_final_native_jaw_span_m": 0.03952469771344107,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0005401876792692217,
+        0.0,
+        2.7290363609211443e-07,
+        3.845045421606297e-06
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0005401876792692217,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-02-light-easy-block-absent",
+      "object_shape": "easy-block",
+      "mass_kg": 0.03,
+      "tool_condition": "absent",
+      "retention_success_under_frozen_criteria": true,
+      "maximum_native_jaw_span_m": 0.07000006105566822,
+      "minimum_final_native_jaw_span_m": 0.03963242082591525,
+      "maximum_final_native_jaw_span_m": 0.03963301844156459,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        9.718557605065126e-07
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-02-light-simplified-shoe-mounted",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "mounted",
+      "retention_success_under_frozen_criteria": true,
+      "maximum_native_jaw_span_m": 0.07000031222675154,
+      "minimum_final_native_jaw_span_m": 0.04954851057560533,
+      "maximum_final_native_jaw_span_m": 0.04954862072874213,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.00054107446970586,
+        0.0,
+        2.7290363609211443e-07,
+        3.844934537561295e-06
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.00054107446970586,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-02-light-simplified-shoe-absent",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "absent",
+      "retention_success_under_frozen_criteria": true,
+      "maximum_native_jaw_span_m": 0.0700000610816222,
+      "minimum_final_native_jaw_span_m": 0.049761845049206416,
+      "maximum_final_native_jaw_span_m": 0.04976194934690764,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        9.715845907046217e-07
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-02-light-current-shoe-mounted",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "mounted",
+      "retention_success_under_frozen_criteria": true,
+      "maximum_native_jaw_span_m": 0.07302317594064106,
+      "minimum_final_native_jaw_span_m": 0.0710033968143379,
+      "maximum_final_native_jaw_span_m": 0.07113497703881623,
+      "final_native_ticks_above_nominal_span": 250,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0015698021623711395,
+        0.0015497599255372072
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.000316299022193052,
+        0.0008135609131939142
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-02-light-current-shoe-absent",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "absent",
+      "retention_success_under_frozen_criteria": true,
+      "maximum_native_jaw_span_m": 0.07305273948918366,
+      "minimum_final_native_jaw_span_m": 0.07159656335558073,
+      "maximum_final_native_jaw_span_m": 0.07176825758391142,
+      "final_native_ticks_above_nominal_span": 250,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0014332830051812934,
+        0.0018402779914071382
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.00063973854159078,
+        0.0011216011503534795
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-02-reference-easy-block-mounted",
+      "object_shape": "easy-block",
+      "mass_kg": 0.3,
+      "tool_condition": "mounted",
+      "retention_success_under_frozen_criteria": false,
+      "maximum_native_jaw_span_m": 0.0700003122267453,
+      "minimum_final_native_jaw_span_m": 1.3431052107333992e-07,
+      "maximum_final_native_jaw_span_m": 4.861604139213501e-07,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0004808866306467152,
+        0.0,
+        2.7290363609211443e-07,
+        3.845068327137935e-06
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0004808866306467152,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-02-reference-easy-block-absent",
+      "object_shape": "easy-block",
+      "mass_kg": 0.3,
+      "tool_condition": "absent",
+      "retention_success_under_frozen_criteria": false,
+      "maximum_native_jaw_span_m": 0.07000006106850842,
+      "minimum_final_native_jaw_span_m": 6.504989448831019e-07,
+      "maximum_final_native_jaw_span_m": 2.91500126399e-06,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.2172333959038073e-06,
+        3.892037345559073e-06
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-02-reference-simplified-shoe-mounted",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "mounted",
+      "retention_success_under_frozen_criteria": false,
+      "maximum_native_jaw_span_m": 0.07000031222674133,
+      "minimum_final_native_jaw_span_m": 1.3172827310772566e-07,
+      "maximum_final_native_jaw_span_m": 4.878433927999401e-07,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0004810022226793276,
+        0.0,
+        2.7290363609211443e-07,
+        3.845072213293221e-06
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0004810022226793276,
+        0.0,
+        1.91560281738322e-09,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-02-reference-simplified-shoe-absent",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "absent",
+      "retention_success_under_frozen_criteria": false,
+      "maximum_native_jaw_span_m": 0.07000006106983972,
+      "minimum_final_native_jaw_span_m": 6.504301715783141e-07,
+      "maximum_final_native_jaw_span_m": 2.914642086707572e-06,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.210569084659949e-06,
+        3.893082110420206e-06
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-02-reference-current-shoe-mounted",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "mounted",
+      "retention_success_under_frozen_criteria": false,
+      "maximum_native_jaw_span_m": 0.07467470626024744,
+      "minimum_final_native_jaw_span_m": 3.1077251705801375e-09,
+      "maximum_final_native_jaw_span_m": 4.659117022794678e-07,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0021663027631598844,
+        0.0025982853264115285
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        6.400739648128823e-10,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    },
+    {
+      "id": "grasp-fresh-02-reference-current-shoe-absent",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "absent",
+      "retention_success_under_frozen_criteria": false,
+      "maximum_native_jaw_span_m": 0.0741437021802293,
+      "minimum_final_native_jaw_span_m": 8.403481367804005e-07,
+      "maximum_final_native_jaw_span_m": 1.152589122524326e-06,
+      "final_native_ticks_above_nominal_span": 0,
+      "max_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0017915528751921359,
+        0.002416009946424512
+      ],
+      "max_final_joint_limit_violation_on_20ms_frames_rad_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "issued_commands_within_declared_control_limits_on_all_exported_frames": true
+    }
+  ]
+}
