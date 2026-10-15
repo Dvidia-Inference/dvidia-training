@@ -8,6 +8,15 @@
 
 **Research alpha.** The recorded demo covers the original one-scene simulation pilot; the frozen benchmark is a separate experiment. Training runs locally. No human-video action bridge or hardware skill is established.
 
+**[Shoe graspability v0.3](https://research.dvidia.org/papers/shoe-graspability-v03/).**
+A controlled direct-pickup lab separates rigid object shape, 30 g versus 300 g
+load, and mounted versus absent wrist tool. All 24 fresh simulations are valid;
+lightweight lifts vary by condition, while all 12 reference-load attempts fail.
+This exposes model and grip limitations before adding more retries.
+[Explore the 3D comparisons](https://dvidia-robot-simulation-lab.static.hf.space/prerequisites/v03/index.html) ·
+[Run locally](docs/shoe-graspability.md) ·
+[Complete results](benchmarks/shoe-graspability-20261014/README.md).
+
 **[Continuous shoe grip v0.2](https://research.dvidia.org/papers/continuous-shoe-grip-v02/).**
 The mounted-rake experiment now checks grip throughout motion, tests a small
 lift and lowers onto support before a bounded regrasp. The fresh comparison

@@ -69,6 +69,13 @@ coupling. See the [MuJoCo position-actuator definition](https://mujoco.readthedo
 The viewer reports actual simulated drive force and finger contact forces
 separately; neither is a validated measurement of physical PiPER hardware.
 
+The fresh trace audit also found soft joint-limit overtravel: both successful
+30 g full-shoe cases used a slide-coordinate span above 70 mm throughout the
+final half-second (71.003–71.135 mm mounted; 71.597–71.768 mm absent). Issued
+commands stayed within their limits. The frozen score did not include hard-stop
+qualification, so those scores remain unchanged and are explicitly limited to
+this model. Physical aperture and hard-stop behavior still need validation.
+
 The next fidelity work is to measure the actual gripper's force-versus-command
 response, fit a named hardware profile, and add shoe geometry with a real collar
 and measured material behavior. Keep this diagnostic as a regression test when

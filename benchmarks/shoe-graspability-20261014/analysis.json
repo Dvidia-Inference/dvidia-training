@@ -1,0 +1,212 @@
+{
+  "schema": "dvidia.graspability-analysis/v3",
+  "source_commit": "73057dc259c6a19344906f4a43a283553e17ade0",
+  "benchmark_sha256": "b17a057e8f9aebe8335b2ef7ee683f38bd1a1ebd284f551254c9c2625604b7a7",
+  "integrity_sha256": "329284b83d15364b61113fafe5daf05f163f0d62ecc66ebb145ce28ee229e935",
+  "attempts": 24,
+  "valid": 24,
+  "diagnostic_lifts": 8,
+  "groups": [
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "absent",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 1,
+      "outcomes": {
+        "lift_not_retained": 1,
+        "completed": 1
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.8524755409453064
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "mounted",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 1,
+      "outcomes": {
+        "lift_not_retained": 1,
+        "completed": 1
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.7190215003211051
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "absent",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 0,
+      "outcomes": {
+        "lift_not_retained": 2
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.6634467490948737
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "current-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "mounted",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 0,
+      "outcomes": {
+        "lift_not_retained": 2
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.6968085840344429
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "easy-block",
+      "mass_kg": 0.03,
+      "tool_condition": "absent",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 1,
+      "outcomes": {
+        "lift_not_retained": 1,
+        "completed": 1
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.6847902501467615
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "easy-block",
+      "mass_kg": 0.03,
+      "tool_condition": "mounted",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 2,
+      "outcomes": {
+        "completed": 2
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.9523207088932395
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "easy-block",
+      "mass_kg": 0.3,
+      "tool_condition": "absent",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 0,
+      "outcomes": {
+        "lift_not_retained": 2
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.6063288331497461
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "easy-block",
+      "mass_kg": 0.3,
+      "tool_condition": "mounted",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 0,
+      "outcomes": {
+        "lift_not_retained": 2
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.6478457078337669
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "absent",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 2,
+      "outcomes": {
+        "completed": 2
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.7174647499341518
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.03,
+      "tool_condition": "mounted",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 1,
+      "outcomes": {
+        "lift_not_retained": 1,
+        "completed": 1
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.6380515417549759
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "absent",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 0,
+      "outcomes": {
+        "lift_not_retained": 2
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.5986854590009898
+    },
+    {
+      "task": "in-reach-graspability",
+      "policy": "shared-v03",
+      "object_shape": "simplified-shoe",
+      "mass_kg": 0.3,
+      "tool_condition": "mounted",
+      "attempts": 2,
+      "valid": 2,
+      "successes": 0,
+      "outcomes": {
+        "lift_not_retained": 2
+      },
+      "simulation_seconds": 13.19999999999899,
+      "wall_seconds": 0.6270182910375297
+    }
+  ],
+  "tool_absent_paired_gains": 1,
+  "tool_absent_paired_losses": 1,
+  "all_paired_robot_actuators_match": true,
+  "simulated_seconds": 158.39999999998787,
+  "native_wall_seconds": 8.40425791614689,
+  "audit_export_wall_seconds": 20.031671040458605,
+  "target_solver_calls": 7920,
+  "target_solver_p50_ms": 0.0238749198615551,
+  "target_solver_p95_ms": 0.044250162318348885,
+  "target_solver_max_ms": 4.200750030577183,
+  "target_solver_over_20ms": 0,
+  "percentile_method": "Nearest-rank p95 over all recorded target-solver calls; p50 median. Not a whole-loop latency measure.",
+  "export_files": 107,
+  "export_bytes": 55750637,
+  "native_ticks": 79200,
+  "max_gripper_actuator_force_abs_n": 1.7023603196120416,
+  "scope": "One frozen factorial confirmation run; direct in-reach pickup under authored policy and synthetic contacts. The 8/24 aggregate mixes shape/load/tool diagnostic cells and is not a shoe reliability rate."
+}
