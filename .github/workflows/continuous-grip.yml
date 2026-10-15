@@ -1,4 +1,4 @@
-name: Continuous shoe grip
+name: Continuous grip and graspability
 on:
   push:
   pull_request:
@@ -31,18 +31,22 @@ jobs:
         run: |
           npm ci --ignore-scripts --prefix viewer
           npm run --prefix viewer build:grip
-          git diff --exit-code -- src/dvidia_training/grip_lab.bundle.js
+          npm run --prefix viewer build:graspability
+          git diff --exit-code -- src/dvidia_training/grip_lab.bundle.js src/dvidia_training/graspability_lab.bundle.js
       - name: Provision pinned native PiPER mechanics
         run: |
           python -m pip install '.[arm]'
           python -m pip check
           dvidia-grip-benchmark --help
+          dvidia-graspability-benchmark --help
           dvidia-robot-sim fetch piper --output runs/prerequisite-assets-ci
           dvidia-robot-sim audit piper runs/prerequisite-assets-ci
       - name: Check native development cases and evidence contracts
         env:
           DVIDIA_ROBOT_PROFILE_ASSETS: runs/prerequisite-assets-ci
-        run: python -m unittest tests.test_continuous_grip tests.test_grip_protocol tests.test_grip_monitor_evidence tests.test_grip_benchmark -v
+        run: |
+          python -m unittest tests.test_continuous_grip tests.test_grip_protocol tests.test_grip_monitor_evidence tests.test_grip_benchmark tests.test_graspability tests.test_graspability_protocol tests.test_graspability_benchmark -v
+          python -m unittest discover -s publishing/huggingface -p 'test_publish_prerequisites.py' -v
       - name: Retain every development attempt and its replay
         run: >-
           dvidia-grip-benchmark --assets runs/prerequisite-assets-ci
@@ -80,10 +84,56 @@ jobs:
           print(json.dumps({'attempts_retained': len(expected), 'groups': report['groups'],
                             'scope': 'Development regression only; no heldout run or hardware qualification.'}))
           PY
+      - name: Retain the direct-pickup development factorial
+        run: >-
+          dvidia-graspability-benchmark --assets runs/prerequisite-assets-ci
+          --output runs/graspability-development-ci --split development
+          --source-commit "$GITHUB_SHA"
+      - name: Independently verify every direct-pickup receipt
+        run: |
+          python - <<'PY'
+          from hashlib import sha256
+          import json
+          from pathlib import Path
+          from dvidia_training.graspability_protocol import score_result
+          root = Path('runs/graspability-development-ci')
+          protocol = json.loads((root / 'protocol.json').read_text())
+          report = json.loads((root / 'benchmark.json').read_text())
+          assert protocol['split'] == report['split'] == 'development'
+          expected = {row['id']: row for row in protocol['attempts']}
+          assert len(expected) == len(report['attempts']) == 12
+          assert set(expected) == {row['id'] for row in report['attempts']}
+          assert all(row['valid'] for row in report['attempts']), 'Task failures remain valid; native/export errors do not'
+          fingerprints = {row['robot_actuator_sha256'] for row in report['attempts']}
+          assert len(fingerprints) == 1, 'The factorial changed robot actuator settings'
+          assert (root / 'benchmark.json').stat().st_size <= 8 * 1024 * 1024
+          for row in report['attempts']:
+              receipt = json.loads((root / 'trials' / (row['id'] + '.json')).read_text())
+              assert {k: row[k] for k in ('id', 'task', 'policy', 'case')} == expected[row['id']]
+              assert {k: v for k, v in receipt.items() if k != 'native_trace'} == row
+              independently_scored = score_result(receipt)
+              assert independently_scored['task_success'] == row['success']
+              assert all(row['independent_score'][k] == value for k, value in independently_scored.items())
+              assert all((root / value).is_file() for value in row['replay'].values())
+          integrity = json.loads((root / 'integrity.json').read_text())
+          for name, entry in integrity['files'].items():
+              content = (root / name).read_bytes()
+              assert len(content) == entry['bytes']
+              assert sha256(content).hexdigest() == entry['sha256'], name
+          print(json.dumps({'attempts_retained': len(expected), 'groups': report['groups'],
+                            'scope': 'Known development factorial only; no fresh cohort executed.'}))
+          PY
       - name: Retain evidence even when a check fails
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: continuous-grip-development
           path: runs/grip-development-ci
+          if-no-files-found: ignore
+      - name: Retain direct-pickup evidence even when a check fails
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: graspability-development
+          path: runs/graspability-development-ci
           if-no-files-found: ignore

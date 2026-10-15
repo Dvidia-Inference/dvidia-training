@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 from hashlib import sha1, sha256
+import importlib.util
 import json
 from pathlib import Path, PurePosixPath
 import re
@@ -23,6 +24,8 @@ RELEASES = {
         'commit_message': 'Publish two native skill-prerequisite simulations and complete benchmark evidence'},
     'prerequisites/v02': {'schema': 'dvidia.continuous-shoe-grip/v2', 'provenance_key': 'continuous_shoe_grip',
         'commit_message': 'Publish continuous shoe grip comparison and complete benchmark evidence'},
+    'prerequisites/v03': {'schema': 'dvidia.graspability/v3', 'provenance_key': 'shoe_graspability',
+        'commit_message': 'Publish shoe graspability diagnostics and complete benchmark evidence'},
 }
 ROOT_FILES = {'index.html', 'README.md', 'provenance.json'}
 SHA = re.compile(r'[a-f0-9]{40}')
@@ -120,6 +123,17 @@ def inventory(root):
     return payload
 
 
+def graspability_scorer():
+    """Load the repository's independent stdlib scorer, never uploaded code."""
+    path = Path(__file__).resolve().parents[2] / 'src/dvidia_training/graspability_protocol.py'
+    spec = importlib.util.spec_from_file_location('_dvidia_publication_graspability_score', path)
+    if spec is None or spec.loader is None:
+        raise PublicationError('Independent graspability scorer is unavailable.')
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.score_result
+
+
 def check_export(root, source_commit=None, namespace=NAMESPACE):
     config = release_config(namespace)
     payload = inventory(root)
@@ -143,6 +157,7 @@ def check_export(root, source_commit=None, namespace=NAMESPACE):
     if (type(planned) is not list or type(measured) is not list or not 1 <= len(planned) <= 100
             or len(measured) != len(planned) or len({row['id'] for row in planned}) != len(planned)):
         raise PublicationError('Every planned attempt must occur exactly once.')
+    score_graspability = graspability_scorer() if namespace == 'prerequisites/v03' else None
     for expected, actual in zip(planned, measured):
         if (any(actual.get(name) != expected.get(name) for name in ('id', 'task', 'policy', 'case'))
                 or type(actual.get('valid')) is not bool or type(actual.get('success')) is not bool
@@ -153,10 +168,12 @@ def check_export(root, source_commit=None, namespace=NAMESPACE):
         if type(receipt) is not dict:
             raise PublicationError('Complete attempt receipts must match the benchmark.')
         trace = receipt.pop('native_trace', None)
-        if namespace == 'prerequisites/v02' and actual['valid']:
+        if namespace in ('prerequisites/v02', 'prerequisites/v03') and actual['valid']:
             columns = actual.get('native_trace_columns')
             score = actual.get('independent_score')
-            if (type(score) is not dict or score.get('schema') != 'dvidia.continuous-shoe-grip-score/v2'
+            score_schema = ('dvidia.graspability-score/v3' if namespace == 'prerequisites/v03'
+                            else 'dvidia.continuous-shoe-grip-score/v2')
+            if (type(score) is not dict or score.get('schema') != score_schema
                     or score.get('valid') is not True or type(score.get('task_success')) is not bool
                     or score['task_success'] != actual['success']
                     or re.fullmatch(r'[a-f0-9]{64}', score.get('compiled_model_sha256', '') or '') is None
@@ -164,14 +181,54 @@ def check_export(root, source_commit=None, namespace=NAMESPACE):
                     or type(columns) is not list or not columns
                     or any(type(row) is not list or len(row) != len(columns) for row in trace)):
                 raise PublicationError('Valid grip attempts require an independent score and complete native trace columns.')
+            if namespace == 'prerequisites/v03':
+                required_columns = {'t_s', 'tool_object_force_n', 'object_robot_force_n',
+                    'left_finger_force_n', 'right_finger_force_n', 'object_x_m',
+                    'object_y_m', 'object_z_m', 'world_object_force_n'}
+                reference = score.get('reference')
+                if (not required_columns <= set(columns) or len(set(columns)) != len(columns)
+                        or re.fullmatch(r'[a-f0-9]{64}', actual.get('robot_actuator_sha256', '') or '') is None
+                        or type(score.get('strict_retention_pass')) is not bool
+                        or type(score.get('final_window_complete')) is not bool
+                        or type(score.get('final_window_ticks')) is not int
+                        or score.get('relative_lift_min_m') != .035
+                        or score.get('required_final_window_s') != .5
+                        or actual.get('policy') != 'shared-v03'
+                        or actual.get('task') != 'in-reach-graspability'
+                        or actual['case'].get('object_shape') not in ('easy-block', 'simplified-shoe', 'current-shoe')
+                        or actual['case'].get('tool_condition') not in ('mounted', 'absent')):
+                    raise PublicationError('Graspability attempts require the declared direct-lift evidence and shared policy.')
+                if actual['success'] and (score['strict_retention_pass'] is not True
+                        or score['final_window_complete'] is not True or score['final_window_ticks'] != 250
+                        or type(reference) is not dict or reference.get('valid') is not True
+                        or reference.get('window_ticks') != 50
+                        or type(reference.get('t_s')) not in (int, float) or abs(reference['t_s'] - .4) > 1e-8
+                        or any(reference.get(k) is not True for k in (
+                            'world_supported', 'robot_clear', 'position_stable', 'at_declared_initial_time'))):
+                    raise PublicationError('A successful graspability attempt needs an initial settled reference and full retention window.')
         if trace is not None:
             if (type(trace) is not list or len(trace) > 100000
                     or any(type(row) is not list or not 1 <= len(row) <= 64
                            or any(type(value) not in (int, float) for value in row) for row in trace)
                     or any(b[0] <= a[0] for a, b in zip(trace, trace[1:]))):
                 raise PublicationError('Native trace must contain bounded numeric observations in time order.')
+            if namespace == 'prerequisites/v03' and actual['valid']:
+                times = [row[columns.index('t_s')] for row in trace]
+                if (min(abs(times[0]), abs(times[0] - .002)) > 1e-8
+                        or any(abs(b - a - .002) > 1e-8 for a, b in zip(times, times[1:]))):
+                    raise PublicationError('Graspability evidence must retain every native 2 ms observation.')
+                try:
+                    independently_derived = score_graspability({**actual, 'native_trace': trace})
+                except (ValueError, TypeError, KeyError, IndexError) as exc:
+                    raise PublicationError('Graspability trace cannot independently establish its declared evidence.') from exc
+                if any(score.get(name) != value for name, value in independently_derived.items()):
+                    raise PublicationError('Graspability score differs from independently recomputed native evidence.')
         if receipt != actual:
             raise PublicationError('Complete attempt receipts must match the benchmark.')
+    if namespace == 'prerequisites/v03':
+        fingerprints = {row['robot_actuator_sha256'] for row in measured if row['valid']}
+        if len(fingerprints) > 1:
+            raise PublicationError('Graspability contrasts must retain one shared robot actuator fingerprint.')
     return payload
 
 
@@ -273,6 +330,27 @@ def updated_roots(parent, source_commit, seal, namespace=NAMESPACE):
             'Policies use privileged simulator observations; contact is synthetic and hardware transfer remains open.\n\n'
             f'[Pinned source](https://github.com/Dvidia-Inference/dvidia-training/tree/{source_commit}) · '
             '[Research](https://research.dvidia.org/papers/continuous-shoe-grip-v02/)\n').encode()
+    if namespace == 'prerequisites/v03':
+        index = parent['index.html'].decode()
+        marker = '<section aria-labelledby="continuous-grip-title">'
+        if index.count(marker) != 1:
+            raise PublicationError('Expected one prior continuous-grip section in the existing landing page.')
+        card = ('<section aria-labelledby="graspability-title"><h2 id="graspability-title">'
+            'Give the gripper a fair test.</h2><p>Compare a small block, a simplified shoe and the current '
+            'shoe across light and heavy loads, with the rake mounted or absent. One shared authored '
+            'policy and independent retention checks expose how the setup affects the lift. '
+            'Recorded native physics; rigid synthetic objects; no physical robot qualification.</p>'
+            '<a href="prerequisites/v03/index.html">Explore the graspability comparison →</a></section>')
+        index = index.replace(marker, card + marker)
+        readme = parent['README.md'] + ('\n\n## Shoe graspability v0.3\n\n'
+            '[Explore the graspability comparison](prerequisites/v03/index.html). Recorded native '
+            'MuJoCo trials isolate shape, load and mounted-tool condition with one shared policy. '
+            'The absent-tool condition starts without the rake; it does not demonstrate autonomous '
+            'tool removal or a complete retrieval task. Every planned attempt and independent '
+            'retention score remains visible. Run the Python benchmark locally for fresh physics. '
+            'Objects are rigid, contact is synthetic and observations are privileged simulator state.\n\n'
+            f'[Pinned source](https://github.com/Dvidia-Inference/dvidia-training/tree/{source_commit}) · '
+            '[Research](https://research.dvidia.org/papers/shoe-graspability-v03/)\n').encode()
     provenance = json.loads(parent['provenance.json'])
     key = config['provenance_key']
     if key in provenance:
