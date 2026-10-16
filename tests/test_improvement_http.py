@@ -193,6 +193,29 @@ class ImprovementHTTPTests(unittest.TestCase):
             with self.subTest(route=route):
                 self.assertEqual(self.request(route)[0], 409)
 
+    def test_recovery_exports_preserve_qualification_and_revalidate(self):
+        root = FIXTURE.parent
+        self.server.evaluation = root / 'improvement-20261015/benchmark'
+        original = json.loads(self.request()[2])
+        target = self.directory / 'recovery'
+        shutil.copytree(root / 'controlled-recovery-20261015/phase-one', target)
+        self.server.recovery = (target,)
+        status, _, raw = self.request()
+        dashboard = json.loads(raw)
+        self.assertEqual(status, 200)
+        self.assertEqual(dashboard['recovery']['completed_native_episodes'], 68)
+        self.assertEqual(dashboard['summary'], original['summary'])
+        self.assertEqual(dashboard['comparisons'], original['comparisons'])
+        endpoint = '/api/improvement/brief?id=' + dashboard['next_hypothesis_id']
+        status, _, raw = self.request(endpoint)
+        self.assertEqual(status, 200)
+        self.assertIn(dashboard['recovery']['report_sha256'].encode(), raw)
+        path = target / 'protocol.json'
+        path.write_bytes(path.read_bytes() + b' ')
+        for route in ('/api/improvement', '/api/improvement/report', endpoint):
+            with self.subTest(route=route):
+                self.assertEqual(self.request(route)[0], 409)
+
 
 if __name__ == '__main__':
     unittest.main()

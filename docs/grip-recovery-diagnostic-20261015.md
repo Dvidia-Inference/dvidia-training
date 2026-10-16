@@ -1,5 +1,9 @@
 # Grip and recovery diagnostic — 15 October 2026
 
+Follow-up: [controlled lowering and release](controlled-recovery-experiment-20261015.md)
+have now been tested at the original limits and deadline. This earlier experiment
+and its results remain unchanged.
+
 **The remaining failure combines weak retention, a recovery that opens the
 jaws, and a tight task deadline. More arm torque did nothing.** A tested higher
 jaw capability removed the retention problem; the unchanged student then

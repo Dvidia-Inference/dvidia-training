@@ -29,6 +29,8 @@ PYTHONPATH=src .venv/bin/python -m dvidia_training.improvement_studio \
   --evaluation benchmarks/improvement-20261015/benchmark \
   --diagnostic benchmarks/grip-recovery-20261015/phase-one \
   --diagnostic benchmarks/grip-recovery-20261015/phase-two \
+  --recovery benchmarks/controlled-recovery-20261015/phase-one \
+  --recovery benchmarks/controlled-recovery-20261015/phase-two \
   --port 8391
 ```
 
@@ -66,8 +68,12 @@ The [executed diagnostic](grip-recovery-diagnostic-20261015.md) now narrows that
 investigation: the controller opens its jaws after detecting relative object
 drift, while contacts still exist. More torque or time alone did not repair the
 case. A higher simulated jaw capability and longer deadline did. This does not
-change the original failed qualification. The current brief proposes controlled
-lowering before release as the next untested software intervention.
+change the original failed qualification. The subsequent
+[controlled-recovery experiment](controlled-recovery-experiment-20261015.md)
+tested lowering before release, then holding through measured jaw clearance.
+The release handoff improved in sampled evidence; full-task completion stayed
+15/16, with no paired completion regressions. The current brief calls for
+investigating earlier retention while preserving the original limits and deadline.
 
 Repeat `--diagnostic` in chronological order to include both measured studies.
 Omit these arguments to inspect the earlier result alone. The diagnostic panel
@@ -75,6 +81,11 @@ shows the latest conditions, total attempts, controls and source hashes;
 previous studies remain available in the evidence export. The
 [training requirements](video-to-robot-skill-requirements.md) explain the
 separate path from video evidence to robot actions and physical validation.
+
+Repeat `--recovery` for its two chronological studies. The latest recovery panel
+separates full task completion from clearance before withdrawal. Earlier opening
+evidence, repeated study counts and hashes remain in disclosures. These 136
+episodes reuse 16 inspected scenes; they are not 136 independent conditions.
 
 ## Evidence contract
 
@@ -131,6 +142,8 @@ that task contract.
 PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -p 'test_improvement*.py'
 PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -p 'test_footage_benchmark.py'
 PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -p 'test_grip*.py'
+PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -p 'test_controlled_recovery*.py'
+PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -p 'test_recovery_view.py'
 ```
 
 The browser suite `tests/browser/improvement_studio.cjs` checks narrow layouts,

@@ -118,6 +118,13 @@ keeps these diagnostic outcomes separate from qualification. The
 action capture, simulation calibration, coverage and physical validation needed
 to turn a Skillspace's recordings into a tested robot-specific skill.
 
+The [controlled-recovery experiment](docs/controlled-recovery-experiment-20261015.md)
+then tested lowering to support and holding through actual jaw clearance at the
+original force limits and 18-second deadline. Two frozen revisions completed
+136 episodes. The sampled release handoff improved; completion stayed 15/16
+with no paired completion regressions. Both revisions and their limits are
+visible in the local improvement viewer; no controller was promoted.
+
 ## Review what is visible in a video
 
 The new [local observation lab](docs/observations.md) uses optional CPU object and

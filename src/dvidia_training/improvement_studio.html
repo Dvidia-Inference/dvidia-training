@@ -101,6 +101,16 @@
     .conclusion h3 { font-size:15px; margin-bottom:5px; }
     .conclusion p { font-size:13px; color:var(--muted); }
     .conclusion .next-step { margin-top:9px; color:#435273; }
+    .recovery-section { border:1px solid #cbd8e9; border-radius:17px; padding:22px 24px 5px; background:linear-gradient(135deg,#f2f6fe,#fffefa 80%); margin:0 0 26px; }
+    .recovery-section h2 { font-size:18px; letter-spacing:-.3px; }
+    .recovery-section .diagnostic-top { margin-bottom:12px; }
+    .recovery-section .outcome-heading { font-size:14px; font-weight:550; margin:19px 0 4px; }
+    .recovery-condition { color:#52657c; font:11px/1.5 ui-monospace,monospace; padding:8px 10px; border:1px solid #dce3ee; background:#f0f4fb; border-radius:7px; }
+    .recovery-paired { display:flex; flex-wrap:wrap; gap:6px 13px; font-size:12px; margin:13px 0 0; color:#58687c; }
+    .recovery-paired strong { color:var(--ink); font-weight:600; }
+    .recovery-table .metric { font-size:13px; }
+    .recovery-table .metric small { display:inline; font-size:11px; }
+    #earlier-grip > .diagnostic-section { margin:0 0 12px; }
     .diagnostic-section { margin:0 0 26px; border:1px solid #ccd7e6; border-radius:17px; padding:22px 24px 5px; background:linear-gradient(125deg,#f5f7fc,#fffefa); }
     .diagnostic-top { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
     .diagnostic-top h2 { font-size:18px; letter-spacing:-.3px; }
@@ -116,6 +126,7 @@
     .trial-state { display:inline-block; max-width:100%; font-size:12px; overflow-wrap:anywhere; color:#69706b; }
     .trial-state::before { content:'−'; font-size:13px; margin-right:4px; }
     .trial-state[data-outcome=passed] { color:#2d624b; } .trial-state[data-outcome=passed]::before { content:'✓'; }
+    .trial-state[data-outcome=unknown]::before { content:none; }
     .trial-state[data-outcome=failed] { color:#964737; } .trial-state[data-outcome=failed]::before { content:'×'; }
     .diagnostic-note { color:var(--muted); font-size:12px; line-height:1.5; padding:13px 0; }
     .diagnostic-warning { margin:0 0 13px; padding:10px 12px; border-radius:8px; color:#803e31; background:#f8e9e3; font-size:13px; }
@@ -159,8 +170,17 @@
       #content.has-diagnostic .brief { padding:23px 22px 8px; }
       #content.has-diagnostic .brief h2 { font-size:23px; }
     }
+    @media (min-width:900px) {
+      #content.has-recovery { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; align-items:start; }
+      #content.has-recovery > .recovery-section { grid-column:1; grid-row:1; margin:0; }
+      #content.has-recovery > section[aria-labelledby="next-section-title"] { grid-column:2; grid-row:1; }
+      #content.has-recovery > .snapshot { grid-column:1/-1; grid-row:2; margin:0; }
+      #content.has-recovery > .comparison-section,#content.has-recovery > details { grid-column:1/-1; margin:0; }
+      #content.has-recovery .brief { padding:23px 22px 8px; }
+      #content.has-recovery .brief h2 { font-size:23px; }
+    }
     @media (max-width:600px) {
-      #content { display:flex; flex-direction:column; } #content > section:not(.snapshot):not(.comparison-section):not(.diagnostic-section) { order:1; } .diagnostic-section { order:2; margin-top:24px; margin-bottom:0; } .snapshot { order:3; margin-top:24px; margin-bottom:0!important; } .comparison-section { order:4; } .history { order:5; } .learning-path { order:6; } .methodology { order:7; }
+      #content { display:flex; flex-direction:column; } #content > section:not(.snapshot):not(.comparison-section):not(.diagnostic-section):not(.recovery-section) { order:1; } .recovery-section { order:2; margin-top:24px; margin-bottom:0; padding:19px 17px 3px; } .diagnostic-section { order:2; margin-top:24px; margin-bottom:0; } .snapshot { order:3; margin-top:24px; margin-bottom:0!important; } .comparison-section { order:4; } .history { order:5; } .learning-path { order:6; } .methodology { order:7; }
       .shell { padding:0 20px; } .topbar { min-height:72px; } .brand-name { font-size:18px; } .brand-name small { font-size:10px; } .scope { font-size:11px; }
       .heading { padding:27px 0 23px; } .heading p { font-size:16px; } h1 { letter-spacing:-.9px; }
       .snapshot { padding:17px; margin-bottom:24px; border-radius:14px; } .snapshot-head { margin-bottom:17px; } .snapshot-head h2 { font-size:14px; }
@@ -189,6 +209,18 @@
       <section id="loading" class="state" role="status"><h2>Reading the experiment</h2><p>Loading the saved benchmark and its evidence.</p><div class="loading-bar" aria-hidden="true"></div></section>
       <section id="error" class="state" role="alert" hidden><h2>We couldn’t load this experiment.</h2><p id="error-message">The local report is unavailable. Your source data has not changed.</p><button id="retry" type="button">Try again</button></section>
       <div id="content" hidden>
+        <section class="recovery-section" id="recovery" aria-labelledby="recovery-title" hidden>
+          <div class="diagnostic-top"><h2 id="recovery-title">Did controlled lowering help?</h2><span class="pill">Original limits</span></div>
+          <p class="diagnostic-detail" id="recovery-detail"></p><p class="recovery-condition" id="recovery-condition"></p>
+          <p class="diagnostic-warning" id="recovery-warning" role="status" hidden></p>
+          <h3 class="outcome-heading" id="recovery-target-title">The previously failed scene</h3>
+          <table class="diagnostic-table recovery-table"><caption class="sr-only" id="recovery-target-caption">Full task completion and support before the first opening are separate outcomes on the previously inspected failed scene.</caption><thead><tr><th scope="col">Controller</th><th scope="col">Full task</th><th scope="col" id="recovery-check-heading">Support before first opening</th></tr></thead><tbody id="recovery-target-rows"></tbody></table>
+          <p class="diagnostic-note" id="recovery-check-note">Support before the first opening does not establish a controlled set-down, support for later commands, or full task completion.</p>
+          <h3 class="outcome-heading" id="recovery-regression-title">Completion on the original scenes</h3>
+          <table class="diagnostic-table recovery-table"><caption class="sr-only">Original controller compared with controlled lowering on the same inspected regression scenes.</caption><thead><tr><th scope="col">Scene group</th><th scope="col">Original</th><th scope="col">Lowering</th></tr></thead><tbody id="recovery-regression-rows"></tbody></table>
+          <div class="recovery-paired" id="recovery-paired"></div><p class="diagnostic-note" id="recovery-regression-note"></p>
+          <details id="recovery-evidence"><summary>Controls, release checks &amp; limits</summary><div class="detail-copy"><p id="recovery-runtime"></p><div id="recovery-trials"></div><div id="recovery-paired-details"></div><div id="recovery-history"></div><h3>What this can establish</h3><ul id="recovery-limits"></ul><p id="recovery-next"></p></div><div class="diagnostic-provenance" id="recovery-provenance"></div></details>
+        </section>
         <section class="diagnostic-section" id="diagnostic" aria-labelledby="diagnostic-title" hidden>
           <div class="diagnostic-top"><h2 id="diagnostic-title">What changed the grip?</h2><span class="pill">Diagnostic replay</span></div>
           <p class="diagnostic-detail" id="diagnostic-detail"></p>
@@ -213,6 +245,7 @@
           <details id="hypotheses-details" class="hypotheses" hidden><summary><span>Other hypotheses</span><span id="hypothesis-count" class="pill"></span></summary><div id="hypotheses" class="row-list"></div></details>
         </section>
         <section class="comparison-section" aria-labelledby="comparison-title"><div class="section-band"><span>02</span><h2 id="comparison-title">Did the new examples help?</h2></div><div id="no-comparisons" class="empty" hidden><strong>The comparison is still to come.</strong>The next experiment will compare the baseline with additional general and targeted examples. No improvement is claimed yet.</div><div id="comparison" hidden><div class="comparison-head" aria-hidden="true"><span>Training version</span><span>Nominal</span><span>Stress</span></div><div id="comparison-rows" role="list"></div><p class="snapshot-note">Qualified cases / total cases. Full trial counts and errors are below.</p></div><div id="conclusion" class="conclusion" hidden><h3 id="conclusion-headline"></h3><p id="conclusion-detail"></p><p id="conclusion-next" class="next-step"></p></div></section>
+        <details class="history" id="earlier-grip" hidden><summary>Earlier grip investigation</summary></details>
         <details class="history" id="hypothesis-history" hidden><summary><span>Previous hypotheses</span><span id="history-count" class="pill"></span></summary><p class="history-note">Earlier proposals are kept for context. Use the current investigation above for the next step.</p><div id="history-rows"></div></details>
         <details class="learning-path" id="learning-path"><summary>From video to a robot skill</summary><p class="path-note">The development path: a video supplies evidence. Action data, a calibrated environment and tests turn that evidence into a bounded robot capability.</p><ol>
           <li><h3>Understand the demonstration</h3><p>Review timed actions, objects and state changes. Retain uncertainty, failures and recovery.</p></li>
@@ -303,17 +336,63 @@
       $('diagnostic-next').textContent=text(diagnostic.next_step);
       for(const [key,label] of [['report_sha256','Diagnostic report'],['protocol_sha256','Diagnostic protocol']])$('diagnostic-provenance').append(el('p',label+': '+(text(diagnostic[key])||'not supplied')));
     }
+    function recoveryTrialDetail(item){
+      const detail=el('article',undefined,'diagnostic-case');detail.append(el('h3',text(item.label)||text(item.policy)),el('p',(item.variant==='controlled_lowering'?'Controlled lowering':'Original controller')+' · '+count(item.recovery_count)+' recovery attempts · '+(number(item.simulated_seconds)===null?'time unavailable':item.simulated_seconds.toFixed(1)+' simulated seconds')+'.'),el('p','Unsupported opening commands (sampled): '+count(item.unsupported_release_actions)+'. These are commands, not physical release events.'),el('p','Full task: '+result(item.success)+'. Support before first opening: '+result(item.support_confirmed_before_open)+'.'));
+      if(Object.hasOwn(item,'release_clearance_confirmed'))detail.append(el('p','Jaw clearance before withdrawal: '+result(item.release_clearance_confirmed)+'.'));
+      return detail;
+    }
+    function renderRecovery(value){
+      const recovery=value&&typeof value==='object'&&!Array.isArray(value)?value:null;
+      $('content').classList.toggle('has-recovery',Boolean(recovery));$('recovery').hidden=!recovery;$('recovery-evidence').open=false;$('earlier-grip').open=false;
+      $('recovery-history').replaceChildren();$('recovery-target-rows').replaceChildren();$('recovery-regression-rows').replaceChildren();$('recovery-trials').replaceChildren();$('recovery-paired-details').replaceChildren();$('recovery-provenance').replaceChildren();$('recovery-paired').replaceChildren();
+      $('earlier-grip').hidden=!recovery||$('diagnostic').hidden;
+      if(recovery){$('earlier-grip').append($('diagnostic'));}else{$('content').insertBefore($('diagnostic'),$('content').querySelector('.snapshot'));}
+      if(!recovery)return;
+      $('recovery-detail').textContent=text(recovery.detail);
+      const previous=list(recovery.previous_studies).filter(study=>study&&typeof study==='object'),target=recovery.target||{},targetRows=list(target.rows).filter(row=>row&&typeof row==='object'),regression=recovery.regression||{},groups=[['nominal','Nominal'],['actuator_stress','Actuator stress']],paired={improved:0,regressed:0,unchanged:0,incomplete:0};
+      const showClearance=recovery.recovery_revision==='supported-release-v2'||targetRows.some(row=>row.variant==='controlled_lowering'&&typeof row.release_clearance_confirmed==='boolean'),checkKey=showClearance?'release_clearance_confirmed':'support_confirmed_before_open',checkLabel=showClearance?'Clearance before withdrawal':'Support before first opening';
+      $('recovery-check-heading').textContent=checkLabel;
+      $('recovery-target-caption').textContent='Full task completion and '+checkLabel.toLowerCase()+' are separate outcomes on the previously inspected failed scene.';
+      $('recovery-check-note').textContent=(showClearance?'Jaw clearance before withdrawal is a separate recovery check. It does not establish a controlled set-down or full task completion.':'Support before the first opening does not establish a controlled set-down, support for later commands, or full task completion.')+' A dash means unassessed.';
+      $('recovery-condition').textContent=(text(target.case_id)||'Target scene')+' · '+(text(target.condition)||'Original limits; details not supplied');
+      $('recovery-target-title').textContent='Previously failed scene · '+(text(target.case_id)||'not supplied');
+      for(const item of targetRows){
+        const row=el('tr'),copy=el('td');copy.append(el('strong',text(item.label)||(item.policy==='teacher'?'Reference':'Learned')),el('small',item.variant==='controlled_lowering'?'Controlled lowering':item.variant==='baseline'?'Original controller':'Variant not supplied'));row.append(copy);
+        for(const [key,label] of [['success','Full task'],[checkKey,checkLabel]]){const cell=el('td'),outcome=el('span',typeof item[key]==='boolean'?result(item[key]):'—','trial-state');outcome.dataset.outcome=item[key]===true?'passed':item[key]===false?'failed':'unknown';cell.setAttribute('aria-label',label+': '+result(item[key]));cell.append(outcome);row.append(cell);}$('recovery-target-rows').append(row);
+        $('recovery-trials').append(recoveryTrialDetail(item));
+      }
+      if(!targetRows.length)$('recovery-detail').textContent='No measured recovery outcomes are available yet.';
+      for(const [key,label] of groups){const metrics=regression[key]||{},row=el('tr'),copy=el('td');copy.append(el('strong',label),el('small',count(metrics.cases)+' original scenes'));row.append(copy);for(const field of ['baseline_successes','candidate_successes']){const cell=el('td',undefined,'metric');ratio(cell,{qualified:metrics[field],total:metrics.cases});row.append(cell);}$('recovery-regression-rows').append(row);for(const field of Object.keys(paired))paired[field]+=number(metrics[field])||0;$('recovery-paired-details').append(el('h3',label+' paired completion'),el('p',count(metrics.improved)+' improved · '+count(metrics.regressed)+' regressed · '+count(metrics.unchanged)+' unchanged · '+count(metrics.incomplete)+' incomplete.'));}
+      const pairedComplete=groups.every(([key])=>Object.keys(paired).every(field=>number(regression[key]?.[field])!==null));
+      for(const field of Object.keys(paired)){const item=el('span');item.append(el('strong',pairedComplete?count(paired[field]):'—'),document.createTextNode(' '+field));$('recovery-paired').append(item);}
+      $('recovery-regression-title').textContent='Completion on '+count(regression.scenes)+' original scenes';
+      $('recovery-regression-note').textContent=(previous.length?'Latest of '+count(previous.length+1)+' studies, reusing the same '+count(regression.scenes)+' original scenes. ':'')+'These inspected scenes retain their own original force limits and '+count(recovery.deadline_seconds)+' s deadline. This regression check does not replace fresh qualification.';
+      const errors=number(recovery.episode_errors)||0,controls=number(recovery.control_successes)||0;
+      $('recovery-warning').hidden=errors===0&&controls===0&&paired.incomplete===0&&pairedComplete;
+      $('recovery-warning').textContent=(errors?count(errors)+' recovery experiment errors. ':'')+(controls?count(controls)+' open-jaw control successes. ':'')+(paired.incomplete?count(paired.incomplete)+' incomplete scene comparisons. ':'')+(!pairedComplete?'Paired outcomes are not fully reported. ':'')+'Resolve these before interpreting the result.';
+      $('recovery-runtime').textContent=(previous.length?'Total across '+count(previous.length+1)+' recovery studies: ':'Wall time: ')+(number(recovery.elapsed_seconds)===null?'not supplied':recovery.elapsed_seconds.toFixed(1)+' s')+' · '+count(recovery.completed_native_episodes)+' completed episodes. These include repeat replays, reference controllers and controls; they are not independent scenarios. Open-jaw control successes: '+count(recovery.control_successes)+' · Errors: '+count(recovery.episode_errors)+'.';
+      for(const [index,study] of previous.entries()){
+        const details=el('details'),summary=el('summary','Earlier recovery study '+(index+1)),body=el('div',undefined,'detail-copy');details.append(summary,body);
+        body.append(el('p',count(study.regression?.scenes)+' reused scenes · '+count(study.completed_native_episodes)+' episodes · '+(number(study.elapsed_seconds)===null?'time unavailable':study.elapsed_seconds.toFixed(1)+' s')+'. Open-jaw control successes: '+count(study.control_successes)+' · Errors: '+count(study.episode_errors)+'.'));
+        for(const item of list(study.target?.rows).filter(row=>row&&typeof row==='object'))body.append(recoveryTrialDetail(item));
+        for(const [key,label] of groups){const metrics=study.regression?.[key]||{};body.append(el('h3',label+' completion'),el('p','Original '+count(metrics.baseline_successes)+' / '+count(metrics.cases)+' · Lowering '+count(metrics.candidate_successes)+' / '+count(metrics.cases)+'. '+count(metrics.improved)+' improved · '+count(metrics.regressed)+' regressed · '+count(metrics.unchanged)+' unchanged · '+count(metrics.incomplete)+' incomplete.'));}
+        for(const [key,label] of [['report_sha256','Recovery report'],['protocol_sha256','Recovery protocol']])body.append(el('p',label+': '+(text(study[key])||'not supplied'),'diagnostic-provenance'));
+        $('recovery-history').append(details);
+      }
+      $('recovery-limits').replaceChildren(...list(recovery.limits).map(value=>el('li',text(value))));$('recovery-next').textContent=text(recovery.next_step);
+      for(const [key,label] of [['report_sha256','Recovery report'],['protocol_sha256','Recovery protocol']])$('recovery-provenance').append(el('p',label+': '+(text(recovery[key])||'not supplied')));
+    }
     function render(data){
       if(!data||data.format!=='dvidia.skillspace-improvement.v1'||!data.summary||!Array.isArray(data.hypotheses)||!Array.isArray(data.comparisons))throw new Error('The experiment report has an unsupported format.');
       report=data;
       $('page-title').textContent=text(data.title)||'The next useful example.';
       document.title=($('page-title').textContent)+' · Skillspace improvement · DVIDIA';
       const complete=text(data.stage)==='Experiment complete';
-      $('page-eyebrow').textContent=data.diagnostic?'Grip investigation · simulation only':complete?'Measured comparison · simulation only':'Observe · test · improve';
-      $('page-intro').textContent=text(data.diagnostic?.headline)||(complete?(text(data.conclusion?.headline)||'A measured comparison, and what to investigate next.'):'Let measured failures guide what to collect next.');
-      renderDiagnostic(data.diagnostic);
+      $('page-eyebrow').textContent=data.recovery?'Controlled recovery · simulation only':data.diagnostic?'Grip investigation · simulation only':complete?'Measured comparison · simulation only':'Observe · test · improve';
+      $('page-intro').textContent=text(data.recovery?.headline)||text(data.diagnostic?.headline)||(complete?(text(data.conclusion?.headline)||'A measured comparison, and what to investigate next.'):'Let measured failures guide what to collect next.');
+      renderDiagnostic(data.diagnostic);renderRecovery(data.recovery);
       $('learning-path').open=false;
-      $('comparison-title').textContent=data.diagnostic?'Earlier training comparison':complete?'What the experiment showed':'Did the new examples help?';
+      $('comparison-title').textContent=data.recovery||data.diagnostic?'Earlier training comparison':complete?'What the experiment showed':'Did the new examples help?';
       $('next-section-title').textContent='The next useful contribution';
       ratio($('nominal-value'),data.summary.nominal);ratio($('stress-value'),data.summary.stress);$('group-value').textContent=count(data.summary.training_groups);
       const errors=(number(data.summary.nominal?.errors)||0)+(number(data.summary.stress?.errors)||0),comparisonErrors=data.comparisons.reduce((total,row)=>total+(number(row?.nominal?.errors)||0)+(number(row?.stress?.errors)||0),0);$('error-summary').hidden=errors===0&&comparisonErrors===0;$('error-summary').textContent=(errors?count(errors)+' benchmark errors':'')+(errors&&comparisonErrors?' · ':'')+(comparisonErrors?count(comparisonErrors)+' comparison errors':'')+' — resolve these before interpreting performance.';
