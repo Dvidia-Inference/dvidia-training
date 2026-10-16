@@ -73,6 +73,12 @@ def _recovery(value, measured, case, *, clearance_expected=False):
             raise ValueError('Confirmed support violates the frozen settled-state conditions.')
     if measured['recovery_count'] == 0 and (opens or confirmation is not None or counts['lower_control_samples']):
         raise ValueError('Recovery observations exist without a recovery.')
+    start = value.get('first_recovery_observation')
+    if start is not None:
+        if (type(start) is not dict or measured['recovery_count'] == 0 or
+                not 0 <= _number(start.get('time'), 'recovery start') <= measured['simulated_seconds'] + 1e-8 or
+                (first is not None and start['time'] > first['time'])):
+            raise ValueError('Recovery start contradicts the measured episode.')
     release = value.get('actual_release_confirmation')
     if release is not None:
         start = value.get('first_recovery_observation')
@@ -95,7 +101,24 @@ def _recovery(value, measured, case, *, clearance_expected=False):
         if (abs(pos[2] - case['scene']['object_position'][2]) >= .008 or
                 sum(v*v for v in velocity) >= .035**2 or sum(v*v for v in angular) >= .3**2):
             raise ValueError('Release clearance lacks settled support.')
-    return {'support_confirmed_before_open': None if measured['recovery_count'] == 0 else
+    events = []
+    if start is not None:
+        events.append({'kind': 'recovery_start', 'label': 'Recovery triggered',
+                       'time_seconds': start['time'], 'state': 'observed'})
+    if first is not None:
+        events.append({'kind': 'first_open_command',
+                       'label': 'Open commanded after settled support' if confirmation is not None else
+                                'Open commanded without table contact' if not first['supported_by_contact_sample'] else
+                                'Open commanded with table contact',
+                       'time_seconds': first['time'], 'state': 'observed'})
+    if release is not None:
+        events.append({'kind': 'jaw_clearance', 'label': 'Clearance confirmed',
+                       'time_seconds': release['time'], 'state': 'observed'})
+    events.append({'kind': 'episode_end', 'label': 'Task completed' if measured['success'] else 'Task incomplete',
+                   'time_seconds': measured['simulated_seconds'],
+                   'state': 'observed' if measured['success'] else 'failed'})
+    return {'events': events,
+            'support_confirmed_before_open': None if measured['recovery_count'] == 0 else
                 confirmation is not None,
             'release_clearance_confirmed': release is not None if clearance_expected and measured['recovery_count'] else None,
             'unsupported_release_actions': counts['unsupported_open_command_samples'],

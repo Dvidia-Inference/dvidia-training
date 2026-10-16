@@ -13,13 +13,14 @@ from .improvement import brief, build_dashboard, capture_plan, load_benchmark
 class ImprovementServer(ThreadingHTTPServer):
     daemon_threads = True
 
-    def __init__(self, address, development, *, evaluation=None, baseline='groups-004', diagnostics=(), recovery=None):
+    def __init__(self, address, development, *, evaluation=None, baseline='groups-004', diagnostics=(), recovery=None, retention=()):
         if address[0] != '127.0.0.1':
             raise ValueError('The research viewer binds only to 127.0.0.1.')
         self.development, self.evaluation, self.baseline = development, evaluation, baseline
         self.diagnostics = tuple(diagnostics)
         self.recovery = tuple(recovery or ())
-        if (self.diagnostics or self.recovery) and not evaluation:
+        self.retention = tuple(retention)
+        if (self.diagnostics or self.recovery or self.retention) and not evaluation:
             raise ValueError('Experiments require the evaluated benchmark.')
         self.dashboard()  # Fail before binding if evidence is incomplete.
         super().__init__(address, ImprovementHandler)
@@ -33,6 +34,9 @@ class ImprovementServer(ThreadingHTTPServer):
         if self.recovery:
             from .recovery_view import attach_recovery, load_recovery
             view = attach_recovery(view, [load_recovery(path, evaluation) for path in self.recovery])
+        if self.retention:
+            from .retention_view import attach_retention, load_retention
+            view = attach_retention(view, [load_retention(path, evaluation) for path in self.retention])
         return view
 
 
@@ -104,12 +108,14 @@ def main():
                         help='Measured diagnostics in chronological order; repeat for a follow-up.')
     parser.add_argument('--recovery', type=Path, action='append', default=[],
                         help='Original-limit recovery comparisons in chronological order; repeat for a follow-up.')
+    parser.add_argument('--retention', type=Path, action='append', default=[],
+                        help='Frozen retention comparisons in chronological order.')
     parser.add_argument('--baseline', default='groups-004')
     parser.add_argument('--port', type=int, default=8391)
     args = parser.parse_args()
     with ImprovementServer(('127.0.0.1', args.port), args.development,
                            evaluation=args.evaluation, baseline=args.baseline, diagnostics=args.diagnostic,
-                           recovery=args.recovery) as server:
+                           recovery=args.recovery, retention=args.retention) as server:
         print(f'DVIDIA Skillspace improvement: http://127.0.0.1:{server.server_address[1]}/', flush=True)
         try:
             server.serve_forever()

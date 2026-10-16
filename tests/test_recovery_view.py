@@ -163,6 +163,26 @@ class RecoveryViewTests(unittest.TestCase):
             with self.subTest(count=len(studies)), self.assertRaises(ValueError):
                 attach_recovery(self.view, studies)
 
+    def test_timeline_contains_measured_events_without_inventing_baseline_clearance(self):
+        study = load_recovery(ARCHIVE / 'phase-two', self.evaluation)
+        original, candidate = study['target']['rows'][:2]
+        self.assertEqual([e['kind'] for e in original['events']],
+                         ['recovery_start', 'first_open_command', 'episode_end'])
+        self.assertIn('without table contact', original['events'][1]['label'])
+        self.assertEqual([e['kind'] for e in candidate['events']],
+                         ['recovery_start', 'first_open_command', 'jaw_clearance', 'episode_end'])
+        for event, expected in zip(candidate['events'], (13.2, 15.6, 15.98, 18.0)):
+            self.assertAlmostEqual(event['time_seconds'], expected)
+        self.assertEqual(candidate['events'][-1]['state'], 'failed')
+        self.assertIn('settled support', candidate['events'][1]['label'])
+
+    def test_timeline_rejects_out_of_episode_or_reversed_recovery_start(self):
+        for value in (-1, True, 19, float('inf')):
+            self.reset()
+            self.report(lambda r: r['results'][2]['measurement']['recovery']['first_recovery_observation'].update(time=value))
+            with self.assertRaises(ValueError):
+                load_recovery(self.path, self.evaluation)
+
     def test_actual_clearance_requires_open_jaws_no_contacts_and_shared_budget(self):
         for change in (
             lambda c: c.update(gripper_width=.04),

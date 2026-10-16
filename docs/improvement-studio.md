@@ -31,6 +31,8 @@ PYTHONPATH=src .venv/bin/python -m dvidia_training.improvement_studio \
   --diagnostic benchmarks/grip-recovery-20261015/phase-two \
   --recovery benchmarks/controlled-recovery-20261015/phase-one \
   --recovery benchmarks/controlled-recovery-20261015/phase-two \
+  --retention benchmarks/retention-20261016/phase-one \
+  --retention benchmarks/retention-20261016/phase-two \
   --port 8391
 ```
 
@@ -41,10 +43,13 @@ the [compact measured receipts](../benchmarks/improvement-20261015/README.md)
 needed by the viewer. Raw training data and replay artifacts are not bundled
 with the Python package; follow the experiment's source-data setup to rerun it.
 
-The mobile layout puts the next supported action first, with a large download
-button. The result remains visible near the title. Benchmark counts, full
-instructions, evidence and previous hypotheses sit below or in disclosures.
-There is no polling, automatic training or account mutation.
+The mobile layout leads with the measured result, followed by one next test and
+a large brief-download button. The retention view plots measured object-to-hand
+drift and distinguishes a sustained lift from completed placement. Recovery
+checkpoints use recorded timestamps; missing checks remain unassessed. These
+replace the illustrative recovery SVGs. Original benchmark counts, full
+instructions, receipts and earlier investigations remain in disclosures. There
+is no polling, automatic training or account mutation.
 
 ## What changes after an experiment
 
@@ -72,8 +77,15 @@ change the original failed qualification. The subsequent
 [controlled-recovery experiment](controlled-recovery-experiment-20261015.md)
 tested lowering before release, then holding through measured jaw clearance.
 The release handoff improved in sampled evidence; full-task completion stayed
-15/16, with no paired completion regressions. The current brief calls for
-investigating earlier retention while preserving the original limits and deadline.
+15/16, with no paired completion regressions.
+
+The next [two retention experiments](retention-experiment-20261016.md) tested
+increment smoothing and vertical compliance before recovery. The latter achieved
+the learned controller's native sustained-lift check and delayed recovery from
+13.20 to 14.30 seconds, but placement still failed. Completion remained 15/16,
+with zero completion gains or regressions. Neither candidate is promoted. The
+current brief investigates contact during loaded transfer, with original force
+limits and the 18-second deadline preserved.
 
 Repeat `--diagnostic` in chronological order to include both measured studies.
 Omit these arguments to inspect the earlier result alone. The diagnostic panel
@@ -86,6 +98,15 @@ Repeat `--recovery` for its two chronological studies. The latest recovery panel
 separates full task completion from clearance before withdrawal. Earlier opening
 evidence, repeated study counts and hashes remain in disclosures. These 136
 episodes reuse 16 inspected scenes; they are not 136 independent conditions.
+
+Repeat `--retention` in chronological order for both retention studies. Their
+136 native episodes include 68 open-jaw controls, all of which failed as required.
+The new mechanisms activate only on the known low-force case: the other 15
+student scenes reproduce unchanged trajectories. This checks completion
+regressions but does not qualify the change across 16 active conditions. The
+reader verifies parent lineage, unchanged controls, measured events and native
+success checks. Requested motion bounds are distinct from observed servo motion;
+the receipt records the small observed descent overshoot.
 
 ## Evidence contract
 
@@ -124,9 +145,19 @@ evidence or a payment entitlement.
 
 ## Bridge to the product
 
-The application can later consume this read model under an authenticated
-Skillspace. Keep the video review, source identities, data rights and dataset
-revision connected to each experiment. A background worker should run only
+The app now has a Task progress entry on Skillspace overviews, separating
+demonstrations, demonstration review, simulation and robot validation. Its
+counts use existing evidence belonging to the exact Skillspace and task brief;
+unknown evidence stays unknown. Human and AI-assisted demonstration assessments
+remain separate and do not imply independently verified dense labels. Personal
+folders without a canonical task explain that missing definition.
+
+This synthetic placement pilot remains explicitly unlinked to an account
+Skillspace. Importing these reports into production requires server-authorized
+Skillspace, brief, task and dataset-revision bindings, receipt validation and
+separate physical-validation evidence. No caller-supplied title or ID can confer
+ownership or mastery. Keep video review, source identities and data rights
+connected to each experiment. A background worker should run only
 supported, budgeted adapters and preserve all attempts. The account UI should
 show one next action and the measured outcome, with detailed receipts available
 on demand. Production queueing, entitlements, authentication and a validated
@@ -144,6 +175,7 @@ PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -p 'test_footage_b
 PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -p 'test_grip*.py'
 PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -p 'test_controlled_recovery*.py'
 PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -p 'test_recovery_view.py'
+PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -p 'test_retention*.py'
 ```
 
 The browser suite `tests/browser/improvement_studio.cjs` checks narrow layouts,

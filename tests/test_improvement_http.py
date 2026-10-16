@@ -216,6 +216,60 @@ class ImprovementHTTPTests(unittest.TestCase):
             with self.subTest(route=route):
                 self.assertEqual(self.request(route)[0], 409)
 
+    def test_retention_exports_preserve_qualification_and_revalidate_both_receipts(self):
+        root = FIXTURE.parent
+        self.server.evaluation = root / 'improvement-20261015/benchmark'
+        status, _, raw = self.request()
+        self.assertEqual(status, 200)
+        original = json.loads(raw)
+        phases = []
+        for name in ('phase-one', 'phase-two'):
+            target = self.directory / name
+            shutil.copytree(root / 'retention-20261016' / name, target)
+            phases.append(target)
+        self.server.retention = tuple(phases)
+        status, _, raw = self.request()
+        self.assertEqual(status, 200)
+        dashboard = json.loads(raw)
+        retention = dashboard['retention']
+        self.assertEqual(retention['study_count'], 2)
+        self.assertEqual(retention['completed_native_episodes'], 68)
+        self.assertEqual(retention['total_completed_native_episodes'], 136)
+        self.assertEqual(retention['promotion'], 'not-promoted')
+        self.assertEqual(dashboard['task']['qualification'], original['task']['qualification'])
+        self.assertEqual(dashboard['summary'], original['summary'])
+        self.assertEqual(dashboard['comparisons'], original['comparisons'])
+        status, _, raw = self.request('/api/improvement/report')
+        self.assertEqual(status, 200)
+        self.assertEqual(json.loads(raw), dashboard)
+        endpoint = '/api/improvement/brief?id=' + dashboard['next_hypothesis_id']
+        status, _, raw = self.request(endpoint)
+        self.assertEqual(status, 200)
+        self.assertIn(retention['report_sha256'].encode(), raw)
+        # A diagnostic intervention does not establish a video collection plan.
+        self.assertEqual(self.request('/api/improvement/coverage')[0], 409)
+        # Revalidate both the parent receipt and latest receipt on every export.
+        for phase in phases:
+            for name in ('protocol.json', 'report.json'):
+                with self.subTest(phase=phase.name, receipt=name):
+                    path = phase / name
+                    saved = path.read_bytes()
+                    if name == 'protocol.json':
+                        path.write_bytes(saved + b' ')
+                    else:
+                        report = json.loads(saved)
+                        report['completed_native_episodes'] = 67
+                        path.write_text(json.dumps(report))
+                    try:
+                        for route in ('/api/improvement', '/api/improvement/report', endpoint):
+                            with self.subTest(route=route):
+                                status, _, raw = self.request(route)
+                                self.assertEqual(status, 409)
+                                self.assertNotIn(str(self.directory).encode(), raw)
+                    finally:
+                        path.write_bytes(saved)
+                    self.assertEqual(self.request()[0], 200)
+
 
 if __name__ == '__main__':
     unittest.main()

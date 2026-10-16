@@ -471,7 +471,16 @@ def build_dashboard(development, baseline_id='groups-004', evaluation=None):
                       'detail': f"Across paired nominal cases: {paired['improved']} improved, {paired['regressed']} regressed, {paired['unchanged']} unchanged and {paired['errors']} incomplete. Stress cases: {stress['improved']} improved, {stress['regressed']} regressed, {stress['unchanged']} unchanged and {stress['errors']} incomplete. These are shared cases, not independent repeated studies. Compare the general addition before crediting the selection rule.",
                       'next_step': 'Keep the current model until a predeclared improvement passes regression checks. Use these inspected cases for development; a further claim needs fresh confirmation.'}
         wall = evaluation['report']['benchmark_wall_seconds']
+    nominal, stress = (_counts(shown['outcomes'], group) for group in ('nominal', 'actuator_stress'))
+    task_hash = diagnosis_source['protocol']['input_files_sha256'].get('task.skill.json')
     return {'format': FORMAT, 'title': 'Place a block', 'scope': 'Simulation pilot',
+            'task': {'id': 'task-' + task_hash[:16], 'name': 'Place a block',
+                     'definition_sha256': task_hash, 'scope': 'simulation-only',
+                     'skillspace_binding': 'unlinked',
+                     'qualification': {'passed': nominal['qualified'] + stress['qualified'],
+                                       'total': nominal['total'] + stress['total'],
+                                       'status': 'development', 'physical_validation': 'not_tested'},
+                     'binding_note': 'This synthetic research task is not linked to an account Skillspace. Evidence must match the exact Skillspace, brief, task and dataset revision before it can appear there.'},
             'stage': 'Experiment complete' if evaluation else 'Hypotheses ready',
             'baseline': {'id': shown_id, 'label': 'Current dataset'},
             'summary': {'training_groups': shown['training_group_count'],
