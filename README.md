@@ -102,6 +102,14 @@ Open [the collection planner](http://127.0.0.1:8270/coverage) in the same local 
 
 The [episode tape recorder](docs/episode-tape.md) preserves the existing simulated arm's measured state, requested/applied commands, contacts and sensor ages. Recording needs the optional arm extra; validation and inspection need only Python's standard library. These tools are available from the current checkout and do not train a new policy or change the older Hugging Face pilot.
 
+The [Skillspace improvement pilot](docs/improvement-studio.md) now connects a
+measured failure to a frozen training-data experiment and the next investigation.
+Its [first executed comparison](docs/skillspace-improvement-pilot-20261015.md)
+found no task-completion gain from the targeted addition. The local mobile-ready
+viewer keeps that negative result visible and distinguishes a recording request
+from a controller investigation. This is a simulation research tool, not a
+production account feature or a human-video-to-robot training bridge.
+
 ## Review what is visible in a video
 
 The new [local observation lab](docs/observations.md) uses optional CPU object and

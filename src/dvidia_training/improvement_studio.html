@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f8f7f3">
+  <title>Skillspace improvement · DVIDIA</title>
+  <style>
+    :root { color-scheme:light; --paper:#f8f7f3; --card:#fffefa; --ink:#20231f; --muted:#646960; --line:#dddfd6; --blue:#2859e7; --blue-soft:#edf1ff; --green:#2d624b; --red:#964737; --dur-press:.12s; --dur-hover:.15s; --dur-ui:.22s; --ease-out:cubic-bezier(.23,1,.32,1); }
+    * { box-sizing:border-box; }
+    [hidden] { display:none!important; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; -webkit-font-smoothing:antialiased; }
+    button,a,summary { -webkit-tap-highlight-color:transparent; }
+    button { font:inherit; cursor:pointer; }
+    a { color:var(--blue); text-underline-offset:4px; }
+    :where(a,button,summary):focus-visible { outline:3px solid var(--blue); outline-offset:4px; }
+    h1,h2,h3,p { margin:0; overflow-wrap:anywhere; }
+    h1 { font-size:clamp(30px,5vw,44px); font-weight:580; line-height:1.13; letter-spacing:-1.4px; }
+    h2 { font-size:22px; font-weight:580; line-height:1.3; letter-spacing:-.55px; }
+    h3 { font-size:16px; font-weight:600; }
+    .shell { max-width:1024px; padding:0 32px; margin:auto; }
+    .topbar { min-height:86px; display:flex; justify-content:space-between; align-items:center; gap:12px; border-bottom:1px solid var(--line); }
+    .brand { display:flex; align-items:center; gap:10px; }
+    .brand svg { flex:none; filter:drop-shadow(0 5px 9px #2859e72b); }
+    .brand-name { font-size:20px; font-weight:700; letter-spacing:-.7px; line-height:1.15; }
+    .brand-name small { display:block; font-weight:400; font-size:11px; letter-spacing:.3px; color:var(--muted); margin-top:3px; }
+    .scope { display:flex; gap:7px; align-items:center; font-size:12px; color:var(--muted); }
+    .scope::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--blue); }
+    .heading { padding:34px 0 26px; }
+    .eyebrow { font:11px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace; text-transform:uppercase; letter-spacing:1.4px; color:var(--muted); margin-bottom:10px; }
+    .heading p { color:var(--muted); max-width:580px; margin-top:12px; }
+    .snapshot { border:1px solid var(--line); border-radius:17px; background:var(--card); padding:20px 24px; margin-bottom:28px; }
+    .snapshot-head { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px 14px; margin-bottom:18px; }
+    .snapshot-head h2 { font-size:16px; letter-spacing:0; }
+    .pill { display:inline-flex; align-items:center; gap:6px; border-radius:5px; padding:3px 7px; font:11px/1.6 ui-monospace,monospace; background:#eeefe8; color:#596154; }
+    .pill svg { width:13px; height:13px; flex:none; }
+    .stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+    .stat + .stat { border-left:1px solid var(--line); padding-left:22px; }
+    .stat-value { display:block; font-size:28px; line-height:1.1; font-weight:550; letter-spacing:-.8px; font-variant-numeric:tabular-nums; }
+    .stat-value small { font-size:15px; color:var(--muted); font-weight:400; letter-spacing:0; }
+    .stat-label { display:block; margin-top:7px; font-size:13px; color:var(--muted); }
+    .error-summary { margin-top:13px; padding:10px 12px; background:#f8e9e3; color:#803e31; border-radius:8px; font-size:13px; }
+    .snapshot-note { font-size:12px; color:var(--muted); margin-top:17px; border-top:1px solid var(--line); padding-top:13px; }
+    .section-band { display:flex; gap:11px; align-items:baseline; padding-bottom:13px; }
+    .section-band > span { color:var(--blue); font:11px/1.5 ui-monospace,monospace; }
+    .section-band h2 { font-size:16px; font-weight:550; letter-spacing:0; }
+    .section-band .count { margin-left:auto; color:var(--muted); }
+    .brief { position:relative; border:1px solid #cfd8ec; border-radius:20px; background:linear-gradient(145deg,#f2f5ff 0%,#fcfcf9 75%); padding:28px; overflow:hidden; }
+    .brief-main { position:relative; }
+    .brief-status { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-bottom:14px; color:var(--muted); font-size:12px; }
+    .brief-status .pill { color:#3d5f95; background:#e5ecfc; }
+    .brief h2 { max-width:660px; font-size:25px; letter-spacing:-.7px; }
+    .brief-instruction { margin-top:12px; color:#4f5b60; max-width:650px; }
+    .brief-art { height:54px; width:152px; margin-bottom:17px; color:#5a7dd4; }
+    .why { display:flex; gap:10px; margin-top:21px; padding:13px 0 0; border-top:1px solid #dbe1ec; font-size:13px; color:#566372; }
+    .why svg { flex:none; width:18px; height:18px; margin-top:2px; }
+    .primary { position:relative; isolation:isolate; display:flex; align-items:center; justify-content:center; gap:12px; min-height:54px; border:1px solid #5476ea; background:linear-gradient(175deg,#4b75fc 0%,#2855da 55%,#2044bc 100%); border-radius:28px; color:#fff; text-decoration:none; font-weight:550; box-shadow:inset 0 2px 1px #ffffff4d,0 6px 15px #284bbb1c; overflow:hidden; transition:transform var(--dur-press) var(--ease-out); }
+    .primary::before { content:''; position:absolute; z-index:-1; inset:-85% -15% 30%; border-radius:50%; background:linear-gradient(transparent,#ffffff12); transform:rotate(-8deg); }
+    .primary:active { transform:scale(.98); }
+    .primary svg { width:19px; height:19px; }
+    .brief-action { margin-top:24px; max-width:390px; }
+    .brief-action p { font-size:11px; color:#64718a; text-align:center; margin-top:7px; }
+    details { border-top:1px solid var(--line); }
+    summary { display:flex; align-items:center; gap:12px; cursor:pointer; min-height:52px; padding:12px 0; font-size:14px; font-weight:500; list-style:none; }
+    summary::-webkit-details-marker { display:none; }
+    summary::after { content:'+'; margin-left:auto; color:var(--muted); font:20px/1 ui-monospace,monospace; }
+    details[open] > summary::after { content:'−'; }
+    .brief details { margin-top:21px; border-color:#dbe1ec; }
+    .brief summary { color:#536276; font-size:13px; }
+    .detail-copy { color:var(--muted); font-size:14px; }
+    .detail-copy p { margin-bottom:13px; }
+    .detail-copy h3 { font-size:13px; color:var(--ink); margin:17px 0 6px; }
+    .detail-copy ul { margin:0 0 15px; padding-left:20px; }
+    .detail-copy li { margin:5px 0; }
+    .evidence-row { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:start; gap:3px 16px; border-top:1px solid #dfe4ec; padding:11px 0; font-size:13px; }
+    .evidence-row strong { font-weight:550; overflow-wrap:anywhere; }
+    .evidence-row p { grid-column:1/-1; color:var(--muted); }
+    .evidence-row span { color:var(--red); font-size:12px; }
+    .hypotheses { margin-top:16px; }
+    .row-list { display:grid; }
+    .hypothesis-row { display:flex; align-items:center; gap:13px; width:100%; min-height:64px; padding:13px 0; background:transparent; border:0; border-top:1px solid var(--line); text-align:left; color:var(--ink); transition:opacity var(--dur-hover) var(--ease-out),transform var(--dur-press) var(--ease-out); }
+    .hypothesis-row:active { transform:scale(.98); }
+    .hypothesis-row:first-child { border-top:0; }
+    .row-mark { flex:none; display:grid; place-items:center; width:27px; height:27px; border:1px solid #d2d9e6; border-radius:8px; color:#61759c; font:11px ui-monospace,monospace; }
+    .hypothesis-row[aria-pressed=true] .row-mark { border-color:#7b98e7; background:var(--blue-soft); color:var(--blue); }
+    .row-copy { flex:1; min-width:0; }
+    .row-copy strong { display:block; font-size:14px; font-weight:550; }
+    .row-copy small { display:block; color:var(--muted); font-size:12px; margin-top:3px; }
+    .row-arrow { color:var(--muted); }
+    .comparison-section { margin-top:29px; padding-top:23px; border-top:1px dashed #ccd0c5; }
+    .comparison-head { display:grid; grid-template-columns:minmax(0,1fr) 90px 90px; gap:12px; padding:10px 0; color:var(--muted); font-size:11px; border-bottom:1px solid var(--line); }
+    .comparison-head span:not(:first-child) { text-align:right; }
+    .comparison-row { display:grid; grid-template-columns:minmax(0,1fr) 90px 90px; gap:12px; padding:17px 0; border-bottom:1px solid var(--line); align-items:center; }
+    .comparison-row strong { font-size:14px; font-weight:550; }
+    .comparison-row .small { display:block; font-size:12px; color:var(--muted); margin-top:3px; }
+    .metric { font:15px/1.4 ui-monospace,monospace; text-align:right; font-variant-numeric:tabular-nums; }
+    .metric small { color:var(--muted); font-size:11px; }
+    .comparison-row.highlight .metric { color:var(--blue); }
+    .conclusion { margin-top:18px; padding:17px 20px; border-left:3px solid #93a3c4; background:#efefe8; border-radius:0 9px 9px 0; }
+    .conclusion h3 { font-size:15px; margin-bottom:5px; }
+    .conclusion p { font-size:13px; color:var(--muted); }
+    .conclusion .next-step { margin-top:9px; color:#435273; }
+    .history,.methodology { margin-top:20px; }
+    .history-row { padding:14px 0; border-top:1px solid var(--line); } .history-row:first-child { border-top:0; } .history-row h3 { font-size:15px; margin-bottom:5px; } .history-row p { color:var(--muted); font-size:14px; margin-top:5px; } .history-note { font-size:13px; color:var(--muted); margin:2px 0 10px; }
+    .methodology dl { display:grid; grid-template-columns:155px minmax(0,1fr); gap:10px 16px; margin:0 0 18px; font-size:12px; }
+    .methodology dt { color:var(--muted); }
+    .methodology dd { margin:0; overflow-wrap:anywhere; }
+    .links { display:flex; flex-wrap:wrap; gap:0 24px; padding-bottom:8px; }
+    .links a { display:inline-flex; align-items:center; gap:8px; min-height:48px; font-size:13px; }
+    .footer { padding:21px 0 30px; margin-top:26px; color:var(--muted); font-size:11px; border-top:1px solid var(--line); }
+    .empty { padding:21px; color:var(--muted); background:#f0f1e9; border:1px dashed #cbd0c4; border-radius:12px; font-size:14px; }
+    .empty strong { display:block; color:var(--ink); font-size:16px; margin-bottom:7px; }
+    .state { padding:30px 0 70px; }
+    .state h2 { margin-bottom:12px; }
+    .state p { max-width:520px; color:var(--muted); }
+    .state button { min-height:52px; padding:10px 23px; margin-top:19px; border:1px solid var(--line); border-radius:10px; background:var(--card); color:var(--blue); }
+    .loading-bar { width:160px; height:3px; border-radius:3px; background:#dbe3f6; margin-top:24px; overflow:hidden; }
+    .loading-bar::after { content:''; display:block; width:45%; height:100%; background:var(--blue); animation:loading 1.5s ease-in-out infinite alternate; }
+    @keyframes loading { from { transform:translateX(-50%); } to { transform:translateX(180%); } }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    @media (hover:hover) and (pointer:fine) { .row-list:hover > * { opacity:.5; } .row-list:hover > :hover { opacity:1; } .hypothesis-row:hover .row-copy strong { text-decoration:underline; text-underline-offset:4px; } .primary:hover { box-shadow:inset 0 2px 1px #ffffff4d,0 8px 20px #284bbb30; } }
+    @media (max-width:600px) {
+      #content { display:flex; flex-direction:column; } #content > section:not(.snapshot):not(.comparison-section) { order:1; } .snapshot { order:2; margin-top:24px; margin-bottom:0!important; } .comparison-section { order:3; } .history { order:4; } .methodology { order:5; }
+      .shell { padding:0 20px; } .topbar { min-height:72px; } .brand-name { font-size:18px; } .brand-name small { font-size:10px; } .scope { font-size:11px; }
+      .heading { padding:27px 0 23px; } .heading p { font-size:16px; } h1 { letter-spacing:-.9px; }
+      .snapshot { padding:17px; margin-bottom:24px; border-radius:14px; } .snapshot-head { margin-bottom:17px; } .snapshot-head h2 { font-size:14px; }
+      .stats { gap:10px; } .stat + .stat { padding-left:11px; } .stat-value { font-size:24px; } .stat-label { font-size:11px; line-height:1.45; } .snapshot-note { font-size:11px; margin-top:12px; padding-top:10px; }
+      .brief { padding:22px 20px 8px; border-radius:18px; } .brief h2 { font-size:23px; } .brief-instruction { font-size:16px; }
+      .brief-art { height:37px; width:105px; margin-bottom:13px; } .brief-action { max-width:none; } .primary { font-size:16px; min-height:56px; } .why { font-size:14px; } .brief summary { font-size:14px; }
+      .detail-copy { font-size:16px; } .detail-copy h3 { font-size:15px; } .evidence-row { font-size:14px; } .evidence-row span { font-size:11px; }
+      summary { font-size:16px; min-height:56px; } .hypothesis-row { min-height:72px; } .row-copy strong { font-size:16px; } .row-copy small { font-size:12px; }
+      .comparison-head,.comparison-row { grid-template-columns:minmax(0,1fr) 61px 61px; gap:10px; } .comparison-row strong { font-size:16px; } .comparison-row .small { font-size:11px; } .metric { font-size:14px; }
+      .conclusion { padding:16px; } .conclusion h3 { font-size:16px; } .conclusion p { font-size:15px; }
+      .methodology dl { grid-template-columns:1fr; gap:3px; font-size:13px; } .methodology dd { margin-bottom:8px; } .links a { font-size:15px; } .empty { font-size:16px; }
+    }
+    @media (max-width:350px) { .shell { padding:0 15px; } .scope { max-width:80px; line-height:1.3; } .brief { padding:20px 16px 8px; } .snapshot { padding:15px; } .stat-value { font-size:21px; } .stat-value small { font-size:12px; } .comparison-head,.comparison-row { grid-template-columns:minmax(0,1fr) 53px 53px; gap:7px; } }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important; transition:none!important; } .loading-bar::after { width:100%; opacity:.5; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand"><svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true"><defs><linearGradient id="logo" x2="1" y2="1"><stop stop-color="#7392ff"/><stop offset=".55" stop-color="#3e62ff"/><stop offset="1" stop-color="#2545cc"/></linearGradient></defs><rect width="34" height="34" rx="9" fill="url(#logo)"/><path d="M8 11v12m3-12v12m2-12v12m3-12v12m2-12v12m3-12v12m2-12v12m3-12v12" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M1 15C9 9 23 18 33 8" stroke="white" stroke-opacity=".15" stroke-width="8"/></svg><div class="brand-name">DVIDIA<small>Skillspace improvement</small></div></div>
+      <span class="scope">Local research pilot</span>
+    </header>
+    <main id="main" aria-busy="true">
+      <section class="heading"><div class="eyebrow" id="page-eyebrow">Observe · test · improve</div><h1 id="page-title">The next useful example.</h1><p id="page-intro">Let measured failures guide what to collect next.</p></section>
+      <section id="loading" class="state" role="status"><h2>Reading the experiment</h2><p>Loading the saved benchmark and its evidence.</p><div class="loading-bar" aria-hidden="true"></div></section>
+      <section id="error" class="state" role="alert" hidden><h2>We couldn’t load this experiment.</h2><p id="error-message">The local report is unavailable. Your source data has not changed.</p><button id="retry" type="button">Try again</button></section>
+      <div id="content" hidden>
+        <section class="snapshot" aria-labelledby="snapshot-title"><div class="snapshot-head"><h2 id="snapshot-title">Current benchmark</h2><span class="pill"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m8 1 6 3.5v7L8 15l-6-3.5v-7L8 1Z M2 4.5 8 8l6-3.5M8 8v7" stroke="currentColor"/></svg>Simulation only</span></div><div class="stats"><div class="stat"><span class="stat-value" id="nominal-value">—</span><span class="stat-label">Nominal cases qualified</span></div><div class="stat"><span class="stat-value" id="stress-value">—</span><span class="stat-label">Stress cases qualified</span></div><div class="stat"><span class="stat-value" id="group-value">—</span><span class="stat-label">Training groups</span></div></div><p id="error-summary" class="error-summary" hidden></p><p class="snapshot-note" id="snapshot-note">Measured in simulation. Physical robot performance is not established.</p></section>
+        <section aria-labelledby="next-section-title"><div class="section-band"><span>01</span><h2 id="next-section-title">The next useful contribution</h2></div>
+          <article id="brief" class="brief" hidden>
+            <div class="brief-main">
+              <svg class="brief-art" viewBox="0 0 152 54" fill="none" aria-hidden="true"><rect x="1" y="1" width="42" height="50" rx="10" fill="#f7f9ff" stroke="#c8d5ef"/><rect x="11" y="27" width="17" height="15" rx="3" transform="rotate(-16 11 27)" fill="#bdd0fb" stroke="#7b9cdd"/><path d="m47 22 7 4-7 4v-8Z" fill="#b4c1d7"/><rect x="58" y="1" width="40" height="50" rx="10" fill="#f7f9ff" stroke="#c8d5ef"/><path d="M67 15v11m20-11v11M67 15h20M72 15v-5m10 5v-5" stroke="#6c8cc5" stroke-width="1.6" stroke-linecap="round"/><rect x="71" y="24" width="14" height="15" rx="3" fill="#91b0f1" stroke="#6a8ed8"/><path d="m102 22 7 4-7 4v-8Z" fill="#b4c1d7"/><rect x="113" y="1" width="38" height="50" rx="10" fill="#eaf0ff" stroke="#acc0ec"/><path d="M120 41h24" stroke="#6d8ac0" stroke-width="1.5" stroke-linecap="round"/><rect x="125" y="23" width="14" height="16" rx="3" fill="#6b91eb" stroke="#527ad5"/><path d="m126 12 4 4 7-7" stroke="#5d7fbd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div class="brief-status"><span class="pill">Provisional hypothesis</span><span id="brief-kind"></span></div>
+              <h2 id="brief-title"></h2><p class="brief-instruction" id="brief-instruction"></p>
+              <div class="brief-action"><a id="download-brief" class="primary" download><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2v10m-4-4 4 4 4-4M3 13v4h14v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="brief-cta-label">Download capture brief</span></a><p id="brief-action-note">A practical brief, backed by the saved experiment.</p></div>
+              <div class="why"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M10 9v5m0-8v.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><p id="brief-why"></p></div>
+            </div>
+            <details id="brief-evidence"><summary>Why this example?</summary><div class="detail-copy"><h3>Full instruction</h3><p id="full-instruction"></p><p id="hypothesis-explanation"></p><h3 id="acceptance-heading">What a useful contribution includes</h3><ul id="acceptance"></ul><h3>Evidence from the benchmark</h3><div id="evidence-rows"></div><p id="hypothesis-next"></p></div></details>
+          </article>
+          <div id="no-hypotheses" class="empty" hidden><strong>No new investigation yet.</strong>A next step will appear when the benchmark supports a specific, testable hypothesis.</div>
+          <details id="hypotheses-details" class="hypotheses" hidden><summary><span>Other hypotheses</span><span id="hypothesis-count" class="pill"></span></summary><div id="hypotheses" class="row-list"></div></details>
+        </section>
+        <section class="comparison-section" aria-labelledby="comparison-title"><div class="section-band"><span>02</span><h2 id="comparison-title">Did the new examples help?</h2></div><div id="no-comparisons" class="empty" hidden><strong>The comparison is still to come.</strong>The next experiment will compare the baseline with additional general and targeted examples. No improvement is claimed yet.</div><div id="comparison" hidden><div class="comparison-head" aria-hidden="true"><span>Training version</span><span>Nominal</span><span>Stress</span></div><div id="comparison-rows" role="list"></div><p class="snapshot-note">Qualified cases / total cases. Full trial counts and errors are below.</p></div><div id="conclusion" class="conclusion" hidden><h3 id="conclusion-headline"></h3><p id="conclusion-detail"></p><p id="conclusion-next" class="next-step"></p></div></section>
+        <details class="history" id="hypothesis-history" hidden><summary><span>Previous hypotheses</span><span id="history-count" class="pill"></span></summary><p class="history-note">Earlier proposals are kept for context. Use the current investigation above for the next step.</p><div id="history-rows"></div></details>
+        <details class="methodology" id="methodology"><summary>Experiment details &amp; limits</summary><div class="detail-copy"><p id="baseline-detail"></p><div id="trial-details"></div><h3>What this experiment can establish</h3><ul id="limitations"></ul></div><dl id="provenance"></dl><div class="links"><a href="/api/improvement/report" download>Download experiment report <span aria-hidden="true">↗</span></a></div></details>
+      </div>
+    </main>
+    <footer class="footer">A collection request is a hypothesis. Improvement needs a controlled comparison.</footer>
+  </div>
+  <script>
+  (()=>{
+    'use strict';
+    const $=id=>document.getElementById(id);
+    const list=value=>Array.isArray(value)?value:[];
+    const text=value=>typeof value==='string'?value:'';
+    const number=value=>Number.isFinite(value)&&value>=0?value:null;
+    const count=value=>number(value)===null?'—':new Intl.NumberFormat().format(value);
+    const el=(tag,value,className)=>{const node=document.createElement(tag);if(value!==undefined)node.textContent=String(value);if(className)node.className=className;return node;};
+    let report=null,selected=null,loading=false;
+    function ratio(node,metrics){node.replaceChildren(document.createTextNode(count(metrics?.qualified)+' '),el('small','/ '+count(metrics?.total)));}
+    function metricLabel(metrics){return count(metrics?.qualified)+' of '+count(metrics?.total)+' qualified';}
+    function result(value){return value===true?'Passed':value===false?'Failed':'Unassessed';}
+    function setHypothesis(item,moveFocus=false){
+      selected=item.id;$('brief').hidden=false;$('brief-evidence').open=false;
+      const request=item.request||{},isCapture=request.capture_mode==='aligned_simulation';
+      $('next-section-title').textContent=isCapture?'The next useful contribution':'Investigate the next weakness';
+      $('acceptance-heading').textContent=isCapture?'What a useful contribution includes':'What the investigation should check';
+      $('brief-title').textContent=text(request.title)||text(item.title)||'Investigate this failure';
+      $('brief-instruction').textContent=request.capture_mode==='aligned_simulation'?'Collect '+(number(request.required_groups)!==null?count(request.required_groups)+' ':'')+'independent simulated examples. Keep video, state and commands aligned through the result.':'Investigate the failure before collecting more examples.';
+      $('full-instruction').textContent=text(request.instruction);
+      $('brief-why').textContent=text(request.why)||text(item.explanation);
+      $('brief-kind').textContent=request.capture_mode==='aligned_simulation'?'Simulation-aligned examples':'Diagnostic evidence';
+      $('brief-evidence').querySelector('summary').textContent=request.capture_mode==='aligned_simulation'?'Why this example?':'Why investigate this?';
+      $('brief-action-note').textContent=isCapture&&number(request.required_groups)!==null?count(request.required_groups)+' groups requested · collection does not start automatically.':'An investigation brief, with the supporting evidence.';
+      $('download-brief').href='/api/improvement/brief?id='+encodeURIComponent(item.id);
+      $('brief-cta-label').textContent=request.capture_mode==='aligned_simulation'?'Download capture brief':'Download investigation brief';
+      $('hypothesis-explanation').textContent=text(item.explanation);
+      $('hypothesis-next').textContent=text(item.next_action);
+      $('acceptance').replaceChildren(...list(request.acceptance).map(value=>el('li',text(value))));
+      if(!list(request.acceptance).length)$('acceptance').append(el('li','Review the capture brief for requirements.'));
+      $('evidence-rows').replaceChildren();
+      for(const evidence of list(item.evidence)){
+        const row=el('div',undefined,'evidence-row');
+        row.append(el('strong',text(evidence.case_id)||text(evidence.group)||'Benchmark case'),el('span',result(evidence.student_success)),el('p',text(evidence.reason)));
+        const support=el('p','Reference: '+result(evidence.teacher_success)+' · Control: '+result(evidence.control_success));row.append(support);$('evidence-rows').append(row);
+      }
+      if(!list(item.evidence).length)$('evidence-rows').append(el('p','No individual case evidence was supplied.'));
+      document.querySelectorAll('.hypothesis-row').forEach(node=>node.setAttribute('aria-pressed',String(node.dataset.id===selected)));
+      if(moveFocus){$('hypotheses-details').open=false;$('brief-title').tabIndex=-1;$('brief-title').focus({preventScroll:true});$('brief').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}
+    }
+    function renderTrials(parent,label,metrics){
+      const block=el('div');block.append(el('h3',label));const rows=el('ul');
+      for(const [name,value] of [['Qualified cases',metrics?.qualified],['Cases',metrics?.total],['Successful trials',metrics?.successes],['Errors',metrics?.errors]])rows.append(el('li',name+': '+count(value)));
+      block.append(rows);parent.append(block);
+    }
+    function render(data){
+      if(!data||data.format!=='dvidia.skillspace-improvement.v1'||!data.summary||!Array.isArray(data.hypotheses)||!Array.isArray(data.comparisons))throw new Error('The experiment report has an unsupported format.');
+      report=data;
+      $('page-title').textContent=text(data.title)||'The next useful example.';
+      document.title=($('page-title').textContent)+' · Skillspace improvement · DVIDIA';
+      const complete=text(data.stage)==='Experiment complete';
+      $('page-eyebrow').textContent=complete?'Measured comparison · simulation only':'Observe · test · improve';
+      $('page-intro').textContent=complete?(text(data.conclusion?.headline)||'A measured comparison, and what to investigate next.'):'Let measured failures guide what to collect next.';
+      $('comparison-title').textContent=complete?'What the experiment showed':'Did the new examples help?';
+      $('next-section-title').textContent='The next useful contribution';
+      ratio($('nominal-value'),data.summary.nominal);ratio($('stress-value'),data.summary.stress);$('group-value').textContent=count(data.summary.training_groups);
+      const errors=(number(data.summary.nominal?.errors)||0)+(number(data.summary.stress?.errors)||0),comparisonErrors=data.comparisons.reduce((total,row)=>total+(number(row?.nominal?.errors)||0)+(number(row?.stress?.errors)||0),0);$('error-summary').hidden=errors===0&&comparisonErrors===0;$('error-summary').textContent=(errors?count(errors)+' benchmark errors':'')+(errors&&comparisonErrors?' · ':'')+(comparisonErrors?count(comparisonErrors)+' comparison errors':'')+' — resolve these before interpreting performance.';
+      $('snapshot-note').textContent='Physical robot performance is not established.';
+      const hypotheses=data.hypotheses.filter(item=>item&&typeof item.id==='string'&&item.id.length>0);
+      $('brief').hidden=!hypotheses.length;$('no-hypotheses').hidden=Boolean(hypotheses.length);$('hypotheses-details').hidden=hypotheses.length<2;$('hypothesis-count').textContent=count(hypotheses.length);
+      $('hypotheses').replaceChildren();
+      for(const [index,item] of hypotheses.entries()){
+        const row=el('button',undefined,'hypothesis-row');row.type='button';row.dataset.id=item.id;row.setAttribute('aria-pressed','false');
+        const copy=el('span',undefined,'row-copy');copy.append(el('strong',text(item.title)||'Hypothesis '+(index+1)),el('small','Provisional · '+count(list(item.evidence).length)+' evidence cases'));
+        const arrow=el('span','↗','row-arrow');arrow.setAttribute('aria-hidden','true');row.append(el('span',String(index+1).padStart(2,'0'),'row-mark'),copy,arrow);row.addEventListener('click',()=>setHypothesis(item,true));$('hypotheses').append(row);
+      }
+      if(hypotheses.length)setHypothesis(hypotheses.find(item=>item.id===data.next_hypothesis_id)||hypotheses[0]);
+      const history=list(data.previous_hypotheses).filter(item=>item&&typeof item.id==='string');
+      $('hypothesis-history').hidden=history.length===0;$('hypothesis-history').open=false;$('history-count').textContent=count(history.length);$('history-rows').replaceChildren();
+      for(const item of history){const row=el('article',undefined,'history-row');row.append(el('h3',text(item.title)||'Earlier hypothesis'),el('span','Earlier development evidence · '+count(list(item.evidence).length)+' cases','pill'),el('p',text(item.explanation)));if(text(item.request?.instruction))row.append(el('p',text(item.request.instruction)));$('history-rows').append(row);}
+      $('comparison').hidden=!data.comparisons.length;$('no-comparisons').hidden=Boolean(data.comparisons.length);$('comparison-rows').replaceChildren();$('trial-details').replaceChildren();
+      for(const comparison of data.comparisons){
+        const row=el('div',undefined,'comparison-row');row.setAttribute('role','listitem');
+        const copy=el('div');copy.append(el('strong',text(comparison.label)||text(comparison.id)),el('span',count(comparison.train_groups)+' groups · '+count(comparison.train_samples)+' samples','small'));
+        const nominal=el('div',undefined,'metric'),stress=el('div',undefined,'metric');ratio(nominal,comparison.nominal);ratio(stress,comparison.stress);nominal.setAttribute('aria-label','Nominal: '+metricLabel(comparison.nominal));stress.setAttribute('aria-label','Stress: '+metricLabel(comparison.stress));row.append(copy,nominal,stress);$('comparison-rows').append(row);
+        renderTrials($('trial-details'),(text(comparison.label)||'Version')+' · nominal',comparison.nominal);renderTrials($('trial-details'),(text(comparison.label)||'Version')+' · stress',comparison.stress);
+        const paired=comparison.paired||{};$('trial-details').append(el('p','Nominal paired result: '+count(paired.improved)+' improved · '+count(paired.regressed)+' regressed · '+count(paired.unchanged)+' unchanged · '+count(paired.errors)+' errors. Training: '+(number(comparison.training_seconds)===null?'unavailable':comparison.training_seconds.toFixed(1)+' s')+'.'));
+        if(comparison.paired_stress){const stressPair=comparison.paired_stress;$('trial-details').append(el('p','Stress paired result: '+count(stressPair.improved)+' improved · '+count(stressPair.regressed)+' regressed · '+count(stressPair.unchanged)+' unchanged · '+count(stressPair.errors)+' errors.'));}
+      }
+      if(!data.comparisons.length){renderTrials($('trial-details'),'Baseline · nominal',data.summary.nominal);renderTrials($('trial-details'),'Baseline · stress',data.summary.stress);}
+      const conclusion=data.conclusion||{};$('conclusion').hidden=!text(conclusion.headline);$('conclusion-headline').textContent=text(conclusion.headline);$('conclusion-detail').textContent=text(conclusion.detail);$('conclusion-next').textContent=text(conclusion.next_step);
+      $('baseline-detail').textContent='Baseline '+(text(data.baseline?.id)||'unavailable')+' · '+(text(data.baseline?.label)||'saved benchmark')+'. Runtime: '+(number(data.summary.wall_seconds)===null?'unavailable':data.summary.wall_seconds.toFixed(1)+' s')+'.';
+      $('limitations').replaceChildren(...list(data.limitations).map(value=>el('li',text(value))));
+      if(!list(data.limitations).length)$('limitations').append(el('li','This is a development simulation experiment. No physical robot qualification or video-to-action transfer is established.'));
+      $('provenance').replaceChildren();const evidence=data.evidence||{};
+      for(const [key,label] of [['diagnosis_report_sha256','Current diagnosis report'],['diagnosis_protocol_sha256','Current diagnosis protocol'],['development_report_sha256','Development report'],['development_protocol_sha256','Development protocol'],['evaluation_report_sha256','Evaluation report'],['evaluation_protocol_sha256','Evaluation protocol']]){$('provenance').append(el('dt',label),el('dd',text(evidence[key])||'Not available'));}
+      $('content').hidden=false;
+    }
+    async function load(){
+      if(loading)return;loading=true;$('main').setAttribute('aria-busy','true');$('error').hidden=true;$('content').hidden=true;$('loading').hidden=false;$('retry').disabled=true;
+      const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),15000);
+      try{const response=await fetch('/api/improvement',{headers:{Accept:'application/json'},cache:'no-store',signal:controller.signal});if(!response.ok)throw new Error('The local experiment report is unavailable (HTTP '+response.status+').');render(await response.json());}
+      catch(error){$('error-message').textContent=error.name==='AbortError'?'The local report took too long to respond. You can try again.':error instanceof SyntaxError?'The local server returned an unreadable experiment report.':error.message||'The local report is unavailable.';$('error').hidden=false;}
+      finally{clearTimeout(timeout);loading=false;$('loading').hidden=true;$('retry').disabled=false;$('main').setAttribute('aria-busy','false');}
+    }
+    $('retry').addEventListener('click',load);load();
+  })();
+  </script>
+</body>
+</html>
