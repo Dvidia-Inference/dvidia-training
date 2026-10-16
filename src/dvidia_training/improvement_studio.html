@@ -195,6 +195,89 @@
       .methodology dl { grid-template-columns:1fr; gap:3px; font-size:13px; } .methodology dd { margin-bottom:8px; } .links a { font-size:15px; } .empty { font-size:16px; }
     }
     @media (max-width:350px) { .shell { padding:0 15px; } .scope { max-width:80px; line-height:1.3; } .brief { padding:20px 16px 8px; } .snapshot { padding:15px; } .stat-value { font-size:21px; } .stat-value small { font-size:12px; } .comparison-head,.comparison-row { grid-template-columns:minmax(0,1fr) 53px 53px; gap:7px; } }
+    #main.has-recovery .heading { padding:24px 0 22px; }
+    #main.has-recovery #page-intro { display:none; }
+    #main.has-recovery #content { display:flex; flex-direction:column; gap:0; align-items:stretch; }
+    #main.has-recovery #recovery { order:1; padding:20px 24px 0; margin:0; border-radius:18px; background:linear-gradient(135deg,#f5f7fc,#fffefa 75%); }
+    .recovery-summary-heading { margin-bottom:15px; }
+    .recovery-summary-kicker { display:flex; align-items:center; flex-wrap:wrap; gap:9px; font-size:11px; color:var(--muted); margin-bottom:9px; }
+    #recovery-status { background:#f1e9d9; color:#7a5f31; font-family:inherit; font-size:11px; font-weight:550; }
+    #recovery-title { font-size:24px; line-height:1.25; letter-spacing:-.6px; }
+    .recovery-outcomes { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; margin-bottom:15px; }
+    .recovery-outcome { min-width:0; padding:0 16px; border-left:1px solid #dce2e8; }
+    .recovery-outcome:first-child { border-left:0; padding-left:0; }
+    .recovery-outcome:last-child { padding-right:0; }
+    .recovery-outcome .outcome-label { display:block; color:var(--muted); font-size:12px; margin-bottom:4px; }
+    .recovery-outcome strong { display:block; font-size:21px; line-height:1.25; font-weight:570; letter-spacing:-.4px; overflow-wrap:anywhere; }
+    .recovery-outcome .outcome-context { display:block; color:var(--muted); font-size:11px; margin-top:5px; line-height:1.4; }
+    .recovery-outcome[data-state=confirmed] strong { color:#32634e; }
+    .recovery-outcome[data-state=incomplete] strong,.recovery-outcome[data-state=review] strong { color:#8a602d; }
+    .recovery-behavior { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:22px; padding:14px 16px; border-radius:12px; background:#f0f3f8; border:1px solid #e0e5ed; margin-bottom:10px; }
+    .recovery-behavior:has(.recovery-sequence[hidden]) { display:block; }
+    .recovery-sequence { margin:0; min-width:0; }
+    .recovery-sequence figcaption { font-size:10px; color:#66758a; margin-bottom:7px; }
+    .recovery-steps { display:grid; grid-template-columns:1fr 13px 1fr 13px 1fr; gap:3px; align-items:start; }
+    .recovery-step { min-width:0; text-align:center; }
+    .recovery-step svg { width:100%; height:43px; display:block; }
+    .recovery-step strong { display:block; font-size:12px; font-weight:550; color:#34537e; }
+    .recovery-step span { display:block; font-size:10px; color:#66758a; line-height:1.35; }
+    .sequence-arrow { padding-top:13px; color:#93a6c3; font-size:14px; }
+    .recovery-readouts { display:grid; grid-template-columns:1fr; gap:10px; align-content:center; min-width:0; }
+    .recovery-readout-scope { grid-column:1/-1; color:#66758a; font-size:10px; margin:0 0 -4px; }
+    .recovery-readout { min-width:0; }
+    .recovery-readout-label { display:block; font-size:11px; color:#66758a; line-height:1.35; }
+    .recovery-readout-value { display:flex; align-items:baseline; flex-wrap:wrap; gap:7px; font-size:20px; font-weight:550; font-variant-numeric:tabular-nums; line-height:1.3; color:#315994; }
+    .recovery-readout-value .before { color:#77818e; font-size:17px; font-weight:400; }
+    .recovery-readout-value .change-arrow { color:#9caabd; font-size:14px; }
+    .recovery-readout-value small { font-size:11px; color:#66758a; font-weight:400; }
+    #recovery-comparison { margin-top:0; border-color:#dce2e8; }
+    #recovery-comparison > summary { min-height:50px; font-size:14px; color:#4c627d; }
+    #recovery-comparison[open] { padding-bottom:10px; }
+    #main.has-recovery #content > section[aria-labelledby="next-section-title"] { order:2; margin:0; padding:19px 4px 12px; }
+    #main.has-recovery .section-band { padding-bottom:6px; }
+    #main.has-recovery .section-band > span { display:none; }
+    #main.has-recovery #next-section-title { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+    #main.has-recovery .brief { padding:0!important; background:none; border:0; border-radius:0; overflow:visible; }
+    #main.has-recovery .brief-main { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px 24px; align-items:center; }
+    #main.has-recovery .brief-art,#main.has-recovery .brief-status,#main.has-recovery .brief-instruction,#main.has-recovery .brief .why,#main.has-recovery .brief-action p { display:none; }
+    #main.has-recovery .brief h2 { font-size:20px; line-height:1.3; letter-spacing:-.35px; }
+    #main.has-recovery .brief-action { margin:0; max-width:none; }
+    #main.has-recovery .brief .primary { min-height:48px; font-size:14px; padding:0 19px; gap:8px; }
+    #main.has-recovery .brief .primary svg { width:16px; height:16px; }
+    #main.has-recovery #brief-evidence { margin-top:8px; border:0; }
+    #main.has-recovery #brief-evidence > summary { min-height:48px; padding:8px 0; font-size:13px; }
+    #main.has-recovery #historical-benchmark { order:3; margin:0; }
+    #historical-benchmark .snapshot { margin:0 0 18px!important; }
+    #main.has-recovery .comparison-section { order:4; margin-top:10px; }
+    #main.has-recovery #earlier-grip { order:5; }
+    #main.has-recovery #hypothesis-history { order:6; }
+    #main.has-recovery #learning-path { order:7; }
+    #main.has-recovery #methodology { order:8; }
+    @media (max-width:600px) {
+      #main.has-recovery .heading { padding:21px 0 18px; }
+      #main.has-recovery #recovery { padding:18px 17px 0; margin:0; }
+      #recovery-title { font-size:22px; }
+      .recovery-outcomes { grid-template-columns:1fr 1fr; gap:12px 0; }
+      .recovery-outcome { padding:0 12px; }
+      .recovery-outcome:nth-child(2) { padding-right:0; }
+      .recovery-outcome:last-child { grid-column:1/-1; border:0; border-top:1px solid #dce2e8; padding:10px 0 0; display:grid; grid-template-columns:1fr auto; gap:0 10px; align-items:baseline; }
+      .recovery-outcome:last-child .outcome-label { margin:0; }
+      .recovery-outcome:last-child .outcome-context { grid-column:1/-1; margin-top:2px; }
+      .recovery-outcome strong { font-size:18px; }
+      .recovery-outcome .outcome-label { font-size:12px; }
+      .recovery-outcome .outcome-context { font-size:11px; }
+      .recovery-behavior { grid-template-columns:1fr; gap:12px; padding:12px; }
+      .recovery-step svg { height:37px; }
+      .recovery-readouts { grid-template-columns:1fr 1fr; gap:15px; padding-top:10px; border-top:1px solid #dae1ec; }
+      .recovery-behavior:has(.recovery-sequence[hidden]) .recovery-readouts { border:0; padding:0; }
+      .recovery-readout-label { font-size:10px; }
+      .recovery-readout-value { font-size:19px; gap:5px; }
+      #recovery-comparison > summary { min-height:52px; font-size:16px; }
+      #main.has-recovery .brief-main { grid-template-columns:1fr; gap:12px; }
+      #main.has-recovery .brief h2 { font-size:20px; }
+      #main.has-recovery .brief .primary { min-height:52px; font-size:16px; }
+      #main.has-recovery #brief-evidence > summary { font-size:15px; }
+    }
     @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important; transition:none!important; } .loading-bar::after { width:100%; opacity:.5; } }
   </style>
 </head>
@@ -210,9 +293,20 @@
       <section id="error" class="state" role="alert" hidden><h2>We couldn’t load this experiment.</h2><p id="error-message">The local report is unavailable. Your source data has not changed.</p><button id="retry" type="button">Try again</button></section>
       <div id="content" hidden>
         <section class="recovery-section" id="recovery" aria-labelledby="recovery-title" hidden>
-          <div class="diagnostic-top"><h2 id="recovery-title">Did controlled lowering help?</h2><span class="pill">Original limits</span></div>
-          <p class="diagnostic-detail" id="recovery-detail"></p><p class="recovery-condition" id="recovery-condition"></p>
+          <div class="recovery-summary-heading"><div class="recovery-summary-kicker"><span class="pill" id="recovery-status">Measured result</span><span id="recovery-scope">Simulation · inspected scene</span></div><h2 id="recovery-title">What changed in recovery?</h2></div>
           <p class="diagnostic-warning" id="recovery-warning" role="status" hidden></p>
+          <div class="recovery-outcomes" id="recovery-outcomes" aria-label="Recovery outcomes"></div>
+          <div class="recovery-behavior" id="recovery-behavior">
+            <figure class="recovery-sequence" id="recovery-sequence" hidden><figcaption>Control sequence · schematic, not replay</figcaption><div class="recovery-steps">
+              <div class="recovery-step"><svg viewBox="0 0 88 52" fill="none" aria-hidden="true"><path d="M9 46h70" stroke="#b5c1cf" stroke-width="2"/><rect x="34" y="33" width="20" height="12" rx="3" fill="#c8d7fa" stroke="#7495d3"/><path d="M26 16v17m36-17v17M26 16h36M44 6v10" stroke="#5274b5" stroke-width="2.5" stroke-linecap="round"/><path d="M73 9v18m-5-5 5 5 5-5" stroke="#2859e7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><strong>Lower</strong><span>toward support</span></div>
+              <span class="sequence-arrow" aria-hidden="true">→</span>
+              <div class="recovery-step"><svg viewBox="0 0 88 52" fill="none" aria-hidden="true"><path d="M9 46h70" stroke="#b5c1cf" stroke-width="2"/><rect x="34" y="33" width="20" height="12" rx="3" fill="#c8d7fa" stroke="#7495d3"/><path d="M22 23v17m44-17v17M22 23h44M44 10v13" stroke="#5274b5" stroke-width="2.5" stroke-linecap="round"/><path d="M17 31H7m4-4-4 4 4 4m60-4h10m-4-4 4 4-4 4" stroke="#2859e7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><strong>Open</strong><span>after support</span></div>
+              <span class="sequence-arrow" aria-hidden="true">→</span>
+              <div class="recovery-step"><svg viewBox="0 0 88 52" fill="none" aria-hidden="true"><path d="M9 46h70" stroke="#b5c1cf" stroke-width="2"/><rect x="34" y="33" width="20" height="12" rx="3" fill="#c8d7fa" stroke="#7495d3"/><path d="M22 12v15m44-15v15M22 12h44M44 3v9" stroke="#5274b5" stroke-width="2.5" stroke-linecap="round"/><path d="M76 30V13m-5 5 5-5 5 5" stroke="#2859e7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><strong>Clear</strong><span>then withdraw</span></div>
+            </div></figure>
+            <div class="recovery-readouts" id="recovery-readouts" aria-label="Measured learned controller changes"></div>
+          </div>
+          <details id="recovery-comparison"><summary>Compare all results</summary><p class="diagnostic-detail" id="recovery-detail"></p><p class="recovery-condition" id="recovery-condition"></p>
           <h3 class="outcome-heading" id="recovery-target-title">The previously failed scene</h3>
           <table class="diagnostic-table recovery-table"><caption class="sr-only" id="recovery-target-caption">Full task completion and support before the first opening are separate outcomes on the previously inspected failed scene.</caption><thead><tr><th scope="col">Controller</th><th scope="col">Full task</th><th scope="col" id="recovery-check-heading">Support before first opening</th></tr></thead><tbody id="recovery-target-rows"></tbody></table>
           <p class="diagnostic-note" id="recovery-check-note">Support before the first opening does not establish a controlled set-down, support for later commands, or full task completion.</p>
@@ -220,6 +314,7 @@
           <table class="diagnostic-table recovery-table"><caption class="sr-only">Original controller compared with controlled lowering on the same inspected regression scenes.</caption><thead><tr><th scope="col">Scene group</th><th scope="col">Original</th><th scope="col">Lowering</th></tr></thead><tbody id="recovery-regression-rows"></tbody></table>
           <div class="recovery-paired" id="recovery-paired"></div><p class="diagnostic-note" id="recovery-regression-note"></p>
           <details id="recovery-evidence"><summary>Controls, release checks &amp; limits</summary><div class="detail-copy"><p id="recovery-runtime"></p><div id="recovery-trials"></div><div id="recovery-paired-details"></div><div id="recovery-history"></div><h3>What this can establish</h3><ul id="recovery-limits"></ul><p id="recovery-next"></p></div><div class="diagnostic-provenance" id="recovery-provenance"></div></details>
+          </details>
         </section>
         <section class="diagnostic-section" id="diagnostic" aria-labelledby="diagnostic-title" hidden>
           <div class="diagnostic-top"><h2 id="diagnostic-title">What changed the grip?</h2><span class="pill">Diagnostic replay</span></div>
@@ -245,6 +340,7 @@
           <details id="hypotheses-details" class="hypotheses" hidden><summary><span>Other hypotheses</span><span id="hypothesis-count" class="pill"></span></summary><div id="hypotheses" class="row-list"></div></details>
         </section>
         <section class="comparison-section" aria-labelledby="comparison-title"><div class="section-band"><span>02</span><h2 id="comparison-title">Did the new examples help?</h2></div><div id="no-comparisons" class="empty" hidden><strong>The comparison is still to come.</strong>The next experiment will compare the baseline with additional general and targeted examples. No improvement is claimed yet.</div><div id="comparison" hidden><div class="comparison-head" aria-hidden="true"><span>Training version</span><span>Nominal</span><span>Stress</span></div><div id="comparison-rows" role="list"></div><p class="snapshot-note">Qualified cases / total cases. Full trial counts and errors are below.</p></div><div id="conclusion" class="conclusion" hidden><h3 id="conclusion-headline"></h3><p id="conclusion-detail"></p><p id="conclusion-next" class="next-step"></p></div></section>
+        <details class="history" id="historical-benchmark" hidden><summary>Original benchmark qualification</summary></details>
         <details class="history" id="earlier-grip" hidden><summary>Earlier grip investigation</summary></details>
         <details class="history" id="hypothesis-history" hidden><summary><span>Previous hypotheses</span><span id="history-count" class="pill"></span></summary><p class="history-note">Earlier proposals are kept for context. Use the current investigation above for the next step.</p><div id="history-rows"></div></details>
         <details class="learning-path" id="learning-path"><summary>From video to a robot skill</summary><p class="path-note">The development path: a video supplies evidence. Action data, a calibrated environment and tests turn that evidence into a bounded robot capability.</p><ol>
@@ -275,17 +371,17 @@
     function setHypothesis(item,moveFocus=false){
       selected=item.id;$('brief').hidden=false;$('brief-evidence').open=false;
       const request=item.request||{},isCapture=request.capture_mode==='aligned_simulation';
-      $('next-section-title').textContent=isCapture?'The next useful contribution':'Investigate the next weakness';
+      $('next-section-title').textContent=report?.recovery?'Next test':isCapture?'The next useful contribution':'Investigate the next weakness';
       $('acceptance-heading').textContent=isCapture?'What a useful contribution includes':'What the investigation should check';
       $('brief-title').textContent=text(request.title)||text(item.title)||'Investigate this failure';
       $('brief-instruction').textContent=request.capture_mode==='aligned_simulation'?'Collect '+(number(request.required_groups)!==null?count(request.required_groups)+' ':'')+'independent simulated examples. Keep video, state and commands aligned through the result.':'Investigate the failure before collecting more examples.';
       $('full-instruction').textContent=text(request.instruction);
       $('brief-why').textContent=text(request.why)||text(item.explanation);
       $('brief-kind').textContent=request.capture_mode==='aligned_simulation'?'Simulation-aligned examples':'Diagnostic evidence';
-      $('brief-evidence').querySelector('summary').textContent=request.capture_mode==='aligned_simulation'?'Why this example?':'Why investigate this?';
+      $('brief-evidence').querySelector('summary').textContent=report?.recovery?'What the next test will check':request.capture_mode==='aligned_simulation'?'Why this example?':'Why investigate this?';
       $('brief-action-note').textContent=isCapture&&number(request.required_groups)!==null?count(request.required_groups)+' groups requested · collection does not start automatically.':'An investigation brief, with the supporting evidence.';
       $('download-brief').href='/api/improvement/brief?id='+encodeURIComponent(item.id);
-      $('brief-cta-label').textContent=request.capture_mode==='aligned_simulation'?'Download capture brief':'Download investigation brief';
+      $('brief-cta-label').textContent=report?.recovery?'Download test brief':request.capture_mode==='aligned_simulation'?'Download capture brief':'Download investigation brief';
       $('hypothesis-explanation').textContent=text(item.explanation);
       $('hypothesis-next').textContent=text(item.next_action);
       $('acceptance').replaceChildren(...list(request.acceptance).map(value=>el('li',text(value))));
@@ -341,12 +437,42 @@
       if(Object.hasOwn(item,'release_clearance_confirmed'))detail.append(el('p','Jaw clearance before withdrawal: '+result(item.release_clearance_confirmed)+'.'));
       return detail;
     }
+    function renderRecoverySummary(recovery,rows,paired,pairedComplete){
+      const groups=[recovery.regression?.nominal,recovery.regression?.actuator_stress],scene=text(recovery.target?.case_id)||'inspected scene',deadline=number(recovery.deadline_seconds),candidates=rows.filter(row=>row.variant==='controlled_lowering'&&(row.policy==='student'||row.policy==='teacher'));
+      const expectedPair=candidates.length===2&&new Set(candidates.map(row=>row.policy)).size===2;
+      const knownControls=number(recovery.episode_errors)!==null&&number(recovery.control_successes)!==null;
+      const needsReview=(number(recovery.episode_errors)||0)>0||(number(recovery.control_successes)||0)>0||paired.incomplete>0;
+      const ready=knownControls&&pairedComplete&&!needsReview;
+      const clearanceKnown=expectedPair&&candidates.every(row=>typeof row.release_clearance_confirmed==='boolean'),clearancePassed=candidates.filter(row=>row.release_clearance_confirmed===true).length;
+      const taskKnown=expectedPair&&candidates.every(row=>typeof row.success==='boolean'),taskPassed=candidates.filter(row=>row.success===true).length;
+      const regressionKnown=groups.every(group=>group&&['cases','baseline_successes','candidate_successes'].every(key=>number(group[key])!==null))&&number(recovery.regression?.scenes)!==null;
+      const successes=regressionKnown?groups.reduce((sum,group)=>sum+group.candidate_successes,0):null,total=number(recovery.regression?.scenes);
+      const observedPartial=ready&&clearanceKnown&&clearancePassed===2&&taskKnown&&taskPassed===0;
+      $('recovery-status').textContent=needsReview?'Needs review':observedPartial?'Partial result':ready&&taskKnown?'Measured result':'Unassessed';
+      $('recovery-title').textContent=needsReview?'Evidence needs review.':observedPartial?'Release check confirmed. Task unfinished.':!ready||!taskKnown?'Recovery is not fully assessed.':text(recovery.headline)||'What changed in recovery?';
+      $('recovery-scope').textContent='Simulation · '+(deadline===null?'deadline unreported':'original '+count(deadline)+' s limit');
+      const releaseValue=needsReview?'Needs review':!ready||!clearanceKnown?'Unassessed':clearancePassed===2?'Confirmed':clearancePassed===0?'Not confirmed':'Partial';
+      const taskValue=needsReview?'Needs review':!ready||!taskKnown?'Unassessed':taskPassed===0?'Incomplete':taskPassed===2?'Completed':'Mixed result';
+      const regressionValue=needsReview?'Needs review':!ready||!regressionKnown?'Unassessed':count(successes)+' / '+count(total);
+      const unchanged=ready&&paired.improved===0&&paired.regressed===0;
+      const summaries=[{label:'Release check',value:releaseValue,context:clearanceKnown?count(clearancePassed)+'/2 controllers · '+scene:'Clearance before withdrawal',state:ready&&clearanceKnown&&clearancePassed===2?'confirmed':'neutral'},{label:'Full task',value:taskValue,context:scene+' · '+(deadline===null?'deadline unreported':count(deadline)+' s deadline'),state:ready&&taskKnown&&taskPassed===0?'incomplete':'neutral'},{label:'Original cases',value:regressionValue,context:ready&&regressionKnown?(unchanged?'Unchanged · ':'')+count(paired.regressed)+' completion regressions':'Paired evidence incomplete',state:'neutral'}];
+      $('recovery-outcomes').replaceChildren(...summaries.map(item=>{const card=el('div',undefined,'recovery-outcome');card.dataset.state=needsReview?'review':item.state;card.append(el('span',item.label,'outcome-label'),el('strong',item.value),el('span',item.context,'outcome-context'));return card;}));
+      $('recovery-sequence').hidden=!(ready&&expectedPair&&candidates.every(row=>row.support_confirmed_before_open===true&&row.release_clearance_confirmed===true&&(number(row.lower_control_samples)||0)>0));
+      const before=rows.find(row=>row.policy==='student'&&row.variant==='baseline'),after=rows.find(row=>row.policy==='student'&&row.variant==='controlled_lowering');
+      $('recovery-readouts').replaceChildren(el('p','Learned controller · original → candidate','recovery-readout-scope'));
+      for(const [key,label,unit,precision] of [['unsupported_release_actions','Unsupported opening commands · sampled','',0],['sampled_peak_descent_speed_before_support_m_s','Peak descent before support · sampled','m/s',2]]){
+        const a=number(before?.[key]),b=number(after?.[key]),format=value=>value===null?'—':precision?value.toFixed(precision):count(value),readout=el('div',undefined,'recovery-readout'),values=el('div',undefined,'recovery-readout-value');
+        values.append(el('span',format(a),'before'),el('span','→','change-arrow'),el('span',format(b)));if(unit)values.append(el('small',unit));readout.append(el('span',label,'recovery-readout-label'),values);readout.setAttribute('aria-label','Learned controller '+label+': '+format(a)+' to '+format(b)+(unit?' '+unit:''));$('recovery-readouts').append(readout);
+      }
+      $('recovery-readouts').title='Learned controller · '+scene+' · original versus controlled lowering. These sampled measurements are not physical release events or a complete safety assessment.';
+    }
     function renderRecovery(value){
       const recovery=value&&typeof value==='object'&&!Array.isArray(value)?value:null;
-      $('content').classList.toggle('has-recovery',Boolean(recovery));$('recovery').hidden=!recovery;$('recovery-evidence').open=false;$('earlier-grip').open=false;
+      $('main').classList.toggle('has-recovery',Boolean(recovery));$('content').classList.toggle('has-recovery',Boolean(recovery));$('recovery-comparison').open=false;$('historical-benchmark').hidden=!recovery;$('historical-benchmark').open=false;$('recovery').hidden=!recovery;$('recovery-evidence').open=false;$('earlier-grip').open=false;
       $('recovery-history').replaceChildren();$('recovery-target-rows').replaceChildren();$('recovery-regression-rows').replaceChildren();$('recovery-trials').replaceChildren();$('recovery-paired-details').replaceChildren();$('recovery-provenance').replaceChildren();$('recovery-paired').replaceChildren();
       $('earlier-grip').hidden=!recovery||$('diagnostic').hidden;
-      if(recovery){$('earlier-grip').append($('diagnostic'));}else{$('content').insertBefore($('diagnostic'),$('content').querySelector('.snapshot'));}
+      const snapshot=document.querySelector('.snapshot');
+      if(recovery){$('earlier-grip').append($('diagnostic'));$('historical-benchmark').append(snapshot);}else{$('content').insertBefore(snapshot,$('content').querySelector('section[aria-labelledby="next-section-title"]'));$('content').insertBefore($('diagnostic'),snapshot);}
       if(!recovery)return;
       $('recovery-detail').textContent=text(recovery.detail);
       const previous=list(recovery.previous_studies).filter(study=>study&&typeof study==='object'),target=recovery.target||{},targetRows=list(target.rows).filter(row=>row&&typeof row==='object'),regression=recovery.regression||{},groups=[['nominal','Nominal'],['actuator_stress','Actuator stress']],paired={improved:0,regressed:0,unchanged:0,incomplete:0};
@@ -367,9 +493,10 @@
       for(const field of Object.keys(paired)){const item=el('span');item.append(el('strong',pairedComplete?count(paired[field]):'—'),document.createTextNode(' '+field));$('recovery-paired').append(item);}
       $('recovery-regression-title').textContent='Completion on '+count(regression.scenes)+' original scenes';
       $('recovery-regression-note').textContent=(previous.length?'Latest of '+count(previous.length+1)+' studies, reusing the same '+count(regression.scenes)+' original scenes. ':'')+'These inspected scenes retain their own original force limits and '+count(recovery.deadline_seconds)+' s deadline. This regression check does not replace fresh qualification.';
-      const errors=number(recovery.episode_errors)||0,controls=number(recovery.control_successes)||0;
-      $('recovery-warning').hidden=errors===0&&controls===0&&paired.incomplete===0&&pairedComplete;
-      $('recovery-warning').textContent=(errors?count(errors)+' recovery experiment errors. ':'')+(controls?count(controls)+' open-jaw control successes. ':'')+(paired.incomplete?count(paired.incomplete)+' incomplete scene comparisons. ':'')+(!pairedComplete?'Paired outcomes are not fully reported. ':'')+'Resolve these before interpreting the result.';
+      const errors=number(recovery.episode_errors)||0,controls=number(recovery.control_successes)||0,checksReported=number(recovery.episode_errors)!==null&&number(recovery.control_successes)!==null;
+      $('recovery-warning').hidden=checksReported&&errors===0&&controls===0&&paired.incomplete===0&&pairedComplete;
+      $('recovery-warning').textContent=(errors?count(errors)+' recovery experiment errors. ':'')+(controls?count(controls)+' open-jaw control successes. ':'')+(paired.incomplete?count(paired.incomplete)+' incomplete scene comparisons. ':'')+(!checksReported?'Error and control counts are not fully reported. ':'')+(!pairedComplete?'Paired outcomes are not fully reported. ':'')+'Resolve these before interpreting the result.';
+      renderRecoverySummary(recovery,targetRows,paired,pairedComplete);
       $('recovery-runtime').textContent=(previous.length?'Total across '+count(previous.length+1)+' recovery studies: ':'Wall time: ')+(number(recovery.elapsed_seconds)===null?'not supplied':recovery.elapsed_seconds.toFixed(1)+' s')+' · '+count(recovery.completed_native_episodes)+' completed episodes. These include repeat replays, reference controllers and controls; they are not independent scenarios. Open-jaw control successes: '+count(recovery.control_successes)+' · Errors: '+count(recovery.episode_errors)+'.';
       for(const [index,study] of previous.entries()){
         const details=el('details'),summary=el('summary','Earlier recovery study '+(index+1)),body=el('div',undefined,'detail-copy');details.append(summary,body);
@@ -396,6 +523,7 @@
       $('next-section-title').textContent='The next useful contribution';
       ratio($('nominal-value'),data.summary.nominal);ratio($('stress-value'),data.summary.stress);$('group-value').textContent=count(data.summary.training_groups);
       const errors=(number(data.summary.nominal?.errors)||0)+(number(data.summary.stress?.errors)||0),comparisonErrors=data.comparisons.reduce((total,row)=>total+(number(row?.nominal?.errors)||0)+(number(row?.stress?.errors)||0),0);$('error-summary').hidden=errors===0&&comparisonErrors===0;$('error-summary').textContent=(errors?count(errors)+' benchmark errors':'')+(errors&&comparisonErrors?' · ':'')+(comparisonErrors?count(comparisonErrors)+' comparison errors':'')+' — resolve these before interpreting performance.';
+      if(data.recovery&&(errors||comparisonErrors))$('historical-benchmark').open=true;
       $('snapshot-note').textContent='Physical robot performance is not established.';
       const hypotheses=data.hypotheses.filter(item=>item&&typeof item.id==='string'&&item.id.length>0);
       $('brief').hidden=!hypotheses.length;$('no-hypotheses').hidden=Boolean(hypotheses.length);$('hypotheses-details').hidden=hypotheses.length<2;$('hypothesis-count').textContent=count(hypotheses.length);
