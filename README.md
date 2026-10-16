@@ -110,6 +110,14 @@ viewer keeps that negative result visible and distinguishes a recording request
 from a controller investigation. This is a simulation research tool, not a
 production account feature or a human-video-to-robot training bridge.
 
+The [grip/recovery follow-up](docs/grip-recovery-diagnostic-20261015.md) ran 48
+native episodes on the shared failure. Increased jaw capability plus a longer
+deadline completed the case; the original conditions still fail. The viewer
+keeps these diagnostic outcomes separate from qualification. The
+[video-to-robot requirements](docs/video-to-robot-skill-requirements.md) describe
+action capture, simulation calibration, coverage and physical validation needed
+to turn a Skillspace's recordings into a tested robot-specific skill.
+
 ## Review what is visible in a video
 
 The new [local observation lab](docs/observations.md) uses optional CPU object and

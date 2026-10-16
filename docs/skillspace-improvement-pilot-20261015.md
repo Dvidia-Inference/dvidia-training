@@ -112,6 +112,11 @@ human video, running a large world model, or training a production robot policy.
 
 ## The remaining failure points to a control diagnostic
 
+Follow-up: the [48-episode grip diagnostic](grip-recovery-diagnostic-20261015.md)
+has now tested this hypothesis with pre-action instrumentation. The account below
+preserves what could be inferred from this earlier experiment's saved traces;
+its benchmark outcomes are unchanged.
+
 Stress `scene-15` used seed 381542, a 0.06 kg box with friction 1.2, a 0.3 N jaw
 force limit and a 5 N·m arm-joint torque limit, with an 18-second horizon. Nominal
 limits are 15 N and 40 N·m. The authored teacher also failed, so the evidence
@@ -123,24 +128,48 @@ The baseline trace shows the following observed progression:
 | ---: | --- |
 | 9.04 s | First lift begins with bilateral jaw contact. |
 | 11.02 s | Transfer begins; box centre is approximately 0.421 m high. |
-| 13.22 s | Recovery begins; left contact count is zero, right count is one. |
+| 13.22 s | First recovery action has opened the jaws; the resulting observation has zero left contacts and one right contact. |
 | 13.54 s | Box has resettled on the table and recovery moves the hand upward. |
 | 16.08 s | A second lift begins after the single allowed recovery. |
 | 18.00 s | Horizon reached while still lifting; final target error is 0.249375 m. |
 
 The controller records `lost_bilateral_contact_or_relative_pose` as its recovery
-reason. Its requested normal grip force was 0.8 N, capped at 0.3 N, with both jaw
-actuators reaching that cap. Native 1 ms measurements show the baseline's largest
-arm torque peak was 3.068862 N·m, below its 5 N·m limit. Teacher and targeted also
-lost contact, recovered once and ran out of time; their final errors were
-0.149773 m and 0.174343 m respectively. Baseline's transient maximum lift does
-not imply that the required sustained lift/placement checks passed.
+reason, which combines two different conditions. **The baseline trace does not
+show that missing jaw contact initiated recovery.** At 13.20 s, the last saved
+observation before the recovery command, both jaws still had four native
+contacts. All 306 saved observations during loaded motion had bilateral contact.
+The recovery procedure then commanded the jaws open while the object was above
+the table. The contact loss visible at 13.22 s follows that command and must not
+be presented as evidence of the trigger.
+
+Reconstructing the supervisor's held object/TCP offset from the observation
+consumed by its final initial `close` call gives approximately **12.34 mm of
+offset drift at 13.20 s**. The preceding five observations exceeded the
+controller's 12 mm threshold, consistent with its five-sample retention gate.
+The analogous last pre-recovery observations for teacher and targeted also had
+four contacts on each jaw, with approximately 12.24 mm and 12.31 mm offset drift.
+These are calculations from saved 50 Hz observations and the frozen controller
+logic, not recorded pre-action trigger telemetry. Native contact interruptions
+between those samples remain possible. The next diagnostic must record each
+trigger's input contacts, held-offset error and controller transition directly.
+
+Requested normal grip force was 0.8 N, capped at 0.3 N, with both jaw actuators
+reaching that cap. Native 1 ms measurements show the baseline's largest arm
+torque peak was 3.068862 N·m, below its 5 N·m limit. Teacher and targeted also
+performed one recovery and ran out of time; their final errors were 0.149773 m
+and 0.174343 m respectively. Baseline's `lift_seen` remained false despite its
+transient maximum lift: the native success predicate requires continuous
+bilateral-contact lift dwell, which a 50 Hz trace cannot establish by itself.
 
 The next diagnostic should freeze this scene and the existing models, then
 change one factor per arm: jaw force alone; arm torque alone as a control;
 loaded-motion speed/acceleration alone; and a separately labelled longer-horizon
-diagnostic. Measure first contact loss, object/hand relative pose, native force
-peaks, recovery duration, and placement dwell. Keep the original 18-second
+diagnostic. Measure the pre-action reason for recovery separately from the
+contact loss after opening, object/hand relative pose, native force peaks,
+recovery duration, and lift/placement dwell. Raising the jaw cap also changes
+the existing supervisor's force target and loaded-motion response; report that
+intervention as increased actuator capability with controller adaptation, not
+an isolated controller improvement. Keep the original 18-second
 result as a failure. A longer time budget must not retroactively count as the
 same benchmark pass.
 

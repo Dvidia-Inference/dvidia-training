@@ -27,6 +27,8 @@ benchmark directory alongside the historical development result:
 PYTHONPATH=src .venv/bin/python -m dvidia_training.improvement_studio \
   benchmarks/sample-count-19047 \
   --evaluation benchmarks/improvement-20261015/benchmark \
+  --diagnostic benchmarks/grip-recovery-20261015/phase-one \
+  --diagnostic benchmarks/grip-recovery-20261015/phase-two \
   --port 8391
 ```
 
@@ -60,6 +62,20 @@ baseline: targeted data tied it, while the chosen general addition regressed.
 The remaining failure was shared with the reference controller, so the next
 action is a grip/recovery investigation, not a request for more videos.
 
+The [executed diagnostic](grip-recovery-diagnostic-20261015.md) now narrows that
+investigation: the controller opens its jaws after detecting relative object
+drift, while contacts still exist. More torque or time alone did not repair the
+case. A higher simulated jaw capability and longer deadline did. This does not
+change the original failed qualification. The current brief proposes controlled
+lowering before release as the next untested software intervention.
+
+Repeat `--diagnostic` in chronological order to include both measured studies.
+Omit these arguments to inspect the earlier result alone. The diagnostic panel
+shows the latest conditions, total attempts, controls and source hashes;
+previous studies remain available in the evidence export. The
+[training requirements](video-to-robot-skill-requirements.md) explain the
+separate path from video evidence to robot actions and physical validation.
+
 ## Evidence contract
 
 `load_benchmark` checks bounded local receipts, frozen scene hashes, candidate
@@ -73,6 +89,14 @@ These consistency checks do not independently attest real-world capture history
 or prove that a generated scene was never seen outside the declared artifacts.
 The coordinator uses explicit rules; its diagnoses are provisional hypotheses,
 not a model's calibrated causal conclusions.
+
+Diagnostic receipts additionally bind the source benchmark, candidate, runtime,
+case and parent study. Every planned condition must account for the student,
+teacher and paired open-jaw controls. The original-condition trajectory must
+reproduce exactly. Missing attempts, contradictory success metrics and duplicate
+studies are rejected; execution errors or successful controls block a positive
+interpretation. The viewer never replaces historical benchmark counts with
+diagnostic successes.
 
 Read-only routes:
 
@@ -106,6 +130,7 @@ that task contract.
 ```sh
 PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -p 'test_improvement*.py'
 PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -p 'test_footage_benchmark.py'
+PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -p 'test_grip*.py'
 ```
 
 The browser suite `tests/browser/improvement_studio.cjs` checks narrow layouts,

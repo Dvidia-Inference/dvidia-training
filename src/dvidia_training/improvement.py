@@ -521,5 +521,7 @@ def brief(dashboard, identity):
                       item['explanation'], '', request['instruction'], '', request['why'], '',
                       *['- ' + s for s in request['acceptance']], '',
                       'Diagnosis report: ' + dashboard['evidence']['diagnosis_report_sha256'],
+                      *(['Diagnostic report: ' + item['diagnostic_report_sha256']]
+                        if item.get('diagnostic_report_sha256') else []),
                       'Evidence cases: ' + ', '.join(e['case_id'] for e in item['evidence']),
                       'No reward, model improvement or physical robot qualification is promised.', ''])

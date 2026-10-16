@@ -161,6 +161,38 @@ class ImprovementHTTPTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, '127.0.0.1'):
             ImprovementServer(('0.0.0.0', 0), self.directory)
 
+    def test_diagnostic_exports_keep_benchmark_and_revalidate_receipts(self):
+        root = FIXTURE.parent
+        self.server.evaluation = root / 'improvement-20261015/benchmark'
+        phases = []
+        for name in ('phase-one', 'phase-two'):
+            target = self.directory / name
+            shutil.copytree(root / 'grip-recovery-20261015' / name, target)
+            phases.append(target)
+        self.server.diagnostics = tuple(phases)
+        status, _, raw = self.request()
+        dashboard = json.loads(raw)
+        self.assertEqual(status, 200)
+        self.assertEqual(dashboard['diagnostic']['completed_native_episodes'], 48)
+        status, _, raw = self.request('/api/improvement/report')
+        self.assertEqual(status, 200)
+        self.assertEqual(json.loads(raw), dashboard)
+        endpoint = '/api/improvement/brief?id=' + dashboard['next_hypothesis_id']
+        status, _, raw = self.request(endpoint)
+        self.assertEqual(status, 200)
+        self.assertIn(dashboard['diagnostic']['report_sha256'].encode(), raw)
+        self.server.diagnostics = ()
+        original = json.loads(self.request()[2])
+        self.assertEqual(dashboard['summary'], original['summary'])
+        self.assertEqual(dashboard['comparisons'], original['comparisons'])
+        self.server.diagnostics = tuple(phases)
+        # A receipt changed after the page loaded must invalidate every export.
+        path = phases[-1] / 'protocol.json'
+        path.write_bytes(path.read_bytes() + b' ')
+        for route in ('/api/improvement', '/api/improvement/report', endpoint):
+            with self.subTest(route=route):
+                self.assertEqual(self.request(route)[0], 409)
+
 
 if __name__ == '__main__':
     unittest.main()
