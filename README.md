@@ -125,6 +125,16 @@ original force limits and 18-second deadline. Two frozen revisions completed
 with no paired completion regressions. Both revisions and their limits are
 visible in the local improvement viewer; no controller was promoted.
 
+The [goal-image research direction](docs/goal-images-to-actuators.md) connects
+visual goals to action-conditioned prediction, robot-specific joint commands
+and independent contact feedback. It evaluates where TypeSafe's new Jev image
+interface could fit, without adding an API dependency. The companion
+[native contact audit](docs/native-contact-audit.md) replays
+the existing retention tapes at the simulator's 1 kHz cadence and checks exact
+agreement with all original, nominally 50 Hz physical observations. It diagnoses the
+simplified rigid-box profile; it does not add a visual planner or qualify PiPER
+shoe manipulation.
+
 ## Review what is visible in a video
 
 The new [local observation lab](docs/observations.md) uses optional CPU object and

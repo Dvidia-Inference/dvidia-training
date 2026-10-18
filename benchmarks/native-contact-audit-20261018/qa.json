@@ -1,0 +1,276 @@
+{
+  "schema": "dvidia.native-contact-audit-qa/v1",
+  "source_commit": "ff40985ec076eaed8421821b1244217d8502777e",
+  "execution": {
+    "output": "runs/native-contact-audit-20261018",
+    "status": "verified",
+    "verified_native_episodes": 14,
+    "total_native_ticks": 249502,
+    "wall_seconds": 54.184668250149116,
+    "protocol_sha256": "f5ded43bc66dd512e223ffea76ad51897ffea15bb016fa2c29dcd1b4fb6601e2",
+    "report_sha256": "e1c8ad0fafd2aa040d215601dcdc235a9fd010dd212400a43a450bb3bf7eec63",
+    "integrity_sha256": "dc7b6091b1c680b9479ea65157c7d553043af688e159463db6174696ad5949fa"
+  },
+  "environment": {
+    "python": "3.12.9 (main, Feb  4 2025, 14:38:38) [Clang 16.0.0 (clang-1600.0.26.6)]",
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "machine": "arm64",
+    "processor": "arm",
+    "mujoco": "3.15.0",
+    "numpy": "2.5.3"
+  },
+  "pre_freeze_tests": {
+    "command": "PYTHONPATH=src python -m unittest discover -s tests -p test_native_contact_audit.py -v",
+    "passed": 10,
+    "failed": 0,
+    "elapsed_seconds": 0.114,
+    "scope": "focused tests including exact80-native-tick moving-target/closing-jaw probe",
+    "source_sha256": {
+      "src/dvidia_training/native_contact_audit.py": "4d5866a34503fcccfc224c9583e6aabdc9f63754d56af777c164dafb122304f6",
+      "tests/test_native_contact_audit.py": "cfd8b84f88c84e60cd55ae9f52d50c2c9e5b0ca618ba37ae875849ffa2d99bb4"
+    }
+  },
+  "portable_reproduction": {
+    "status": "verified",
+    "scope": "repeat of frozen recorded tapes, not additional policy trials",
+    "command": "python -m dvidia_training.native_contact_audit --from-audit native-contact-audit-evidence --output native-contact-audit-reproduction",
+    "verified_native_episodes": 14,
+    "total_native_ticks": 249502,
+    "wall_seconds": 204.60040175006725,
+    "protocol_sha256": "842703a069813f8381c2cf02e1b26f11ba755f1ce6deedfe2293263f1cefdd76",
+    "report_sha256": "2a185324a81ba6d5d4ed51743852d234deb9610f0bb999d5a9c027d656a98f99",
+    "comparison": {
+      "all14_physical_summaries_exact": true,
+      "all14_compressed_native_traces_byte_identical": true,
+      "all14_raw_and_compressed_input_hashes_exact": true,
+      "source_hashes_exact": true,
+      "parent_protocol_binding_verified": true,
+      "expected_differences": [
+        "protocol parent hash",
+        "wall times",
+        "protocol/report/receipt hashes binding this reproduction run"
+      ],
+      "episodes": [
+        {
+          "id": "baseline-student-scene15",
+          "exact_physical_summary": true,
+          "exact_reproduction_fields": true,
+          "identical_compressed_native_trace_sha256": "876091112d9856f3265cdf12bee634cd1986be8f5ed20bbe025be733c433f729"
+        },
+        {
+          "id": "baseline-student-scene15-open-jaw",
+          "exact_physical_summary": true,
+          "exact_reproduction_fields": true,
+          "identical_compressed_native_trace_sha256": "51919fd04ad242fed6b0a3a08b445149175a7d9a3f72b58298f340d6a4de0cfb"
+        },
+        {
+          "id": "baseline-teacher-scene15",
+          "exact_physical_summary": true,
+          "exact_reproduction_fields": true,
+          "identical_compressed_native_trace_sha256": "4872a7e6409c973eef87adb87999d8304b7943c3ffa53aecd5fb0a07c8ce5505"
+        },
+        {
+          "id": "baseline-teacher-scene15-open-jaw",
+          "exact_physical_summary": true,
+          "exact_reproduction_fields": true,
+          "identical_compressed_native_trace_sha256": "643621794fdde305f09b189c0750554987eaf69fadd540f285d617ef08bfc2ac"
+        },
+        {
+          "id": "smoothing-student-scene15",
+          "exact_physical_summary": true,
+          "exact_reproduction_fields": true,
+          "identical_compressed_native_trace_sha256": "9b8295880444754d233daebb139e7a8658f3320f5a8d59a9794e014f2e9f3e99"
+        },
+        {
+          "id": "smoothing-student-scene15-open-jaw",
+          "exact_physical_summary": true,
+          "exact_reproduction_fields": true,
+          "identical_compressed_native_trace_sha256": "e636a3cb754c4ff4bfbf3940c8fcb48fef4e634fb21119001d04560bb803cb45"
+        },
+        {
+          "id": "smoothing-teacher-scene15",
+          "exact_physical_summary": true,
+          "exact_reproduction_fields": true,
+          "identical_compressed_native_trace_sha256": "0f208abdf75f1562926a6812b205b72731900fd4c5daf30ea017a75f2b7a284c"
+        },
+        {
+          "id": "smoothing-teacher-scene15-open-jaw",
+          "exact_physical_summary": true,
+          "exact_reproduction_fields": true,
+          "identical_compressed_native_trace_sha256": "42a13eaabfdc202019ca051dc820195ab76053a124c8f871377ef11978fabd01"
+        },
+        {
+          "id": "compliance-student-scene15",
+          "exact_physical_summary": true,
+          "exact_reproduction_fields": true,
+          "identical_compressed_native_trace_sha256": "11f443b778d42c7b98036b4f30a1cbe5d5b9d8cfdd3f618619e1a37de2efaf6d"
+        },
+        {
+          "id": "compliance-student-scene15-open-jaw",
+          "exact_physical_summary": true,
+          "exact_reproduction_fields": true,
+          "identical_compressed_native_trace_sha256": "61568fb20da90b0cf46292c5d7fa81f7ad5c154bcf421c26a84a13b7b47715a0"
+        },
+        {
+          "id": "compliance-teacher-scene15",
+          "exact_physical_summary": true,
+          "exact_reproduction_fields": true,
+          "identical_compressed_native_trace_sha256": "220f41a3d8516906231ea4417268fe6e93c6dd703655e6a234a92f04efaf6f74"
+        },
+        {
+          "id": "compliance-teacher-scene15-open-jaw",
+          "exact_physical_summary": true,
+          "exact_reproduction_fields": true,
+          "identical_compressed_native_trace_sha256": "9f42f3b16f0580665abec2a208824953765449344abea8124ca58af5c3d1a64a"
+        },
+        {
+          "id": "baseline-student-scene14",
+          "exact_physical_summary": true,
+          "exact_reproduction_fields": true,
+          "identical_compressed_native_trace_sha256": "ce562f5ba1902fde53080894b02b647da2a5ecf48a14335e780110967bdd6f40"
+        },
+        {
+          "id": "baseline-student-scene14-open-jaw",
+          "exact_physical_summary": true,
+          "exact_reproduction_fields": true,
+          "identical_compressed_native_trace_sha256": "4658d2a0cea8d3eb23a51db78d28623ba38a4a4b69cc3cdf397a3981d15a296c"
+        }
+      ]
+    }
+  },
+  "artifact": {
+    "file_count": 59,
+    "total_bytes": 151876079,
+    "largest_files": [
+      {
+        "path": "episodes/baseline-teacher-scene15/native-trace.jsonl.gz",
+        "bytes": 11453597
+      },
+      {
+        "path": "episodes/smoothing-teacher-scene15/native-trace.jsonl.gz",
+        "bytes": 11378112
+      },
+      {
+        "path": "episodes/compliance-teacher-scene15/native-trace.jsonl.gz",
+        "bytes": 11367554
+      }
+    ]
+  },
+  "derived_first_attempt_summary": [
+    {
+      "id": "baseline-student-scene15",
+      "scope": "first attempt through first recovery command; successful comparator through termination",
+      "first_recovery_command_seconds": 13.199999999998123,
+      "loaded_dropout_spans": 157,
+      "loaded_dropout_ticks": 173,
+      "max_loaded_dropout_seconds": 0.002,
+      "max_completed_retained_lift_streak_seconds": 0.075,
+      "first_native_retained_lift_time": null,
+      "native_task_success": false,
+      "first_recovery_deadline_remaining_seconds": 4.8000000000018765
+    },
+    {
+      "id": "baseline-teacher-scene15",
+      "scope": "first attempt through first recovery command; successful comparator through termination",
+      "first_recovery_command_seconds": 12.319999999998611,
+      "loaded_dropout_spans": 155,
+      "loaded_dropout_ticks": 180,
+      "max_loaded_dropout_seconds": 0.003,
+      "max_completed_retained_lift_streak_seconds": 0.898,
+      "first_native_retained_lift_time": 9.612000000000112,
+      "native_task_success": false,
+      "first_recovery_deadline_remaining_seconds": 5.680000000001389
+    },
+    {
+      "id": "smoothing-student-scene15",
+      "scope": "first attempt through first recovery command; successful comparator through termination",
+      "first_recovery_command_seconds": 13.61999999999789,
+      "loaded_dropout_spans": 158,
+      "loaded_dropout_ticks": 170,
+      "max_loaded_dropout_seconds": 0.002,
+      "max_completed_retained_lift_streak_seconds": 0.089,
+      "first_native_retained_lift_time": null,
+      "native_task_success": false,
+      "first_recovery_deadline_remaining_seconds": 4.380000000002109
+    },
+    {
+      "id": "smoothing-teacher-scene15",
+      "scope": "first attempt through first recovery command; successful comparator through termination",
+      "first_recovery_command_seconds": 12.379999999998578,
+      "loaded_dropout_spans": 153,
+      "loaded_dropout_ticks": 167,
+      "max_loaded_dropout_seconds": 0.002,
+      "max_completed_retained_lift_streak_seconds": 0.962,
+      "first_native_retained_lift_time": 9.748000000000037,
+      "native_task_success": false,
+      "first_recovery_deadline_remaining_seconds": 5.620000000001422
+    },
+    {
+      "id": "compliance-student-scene15",
+      "scope": "first attempt through first recovery command; successful comparator through termination",
+      "first_recovery_command_seconds": 14.299999999997514,
+      "loaded_dropout_spans": 143,
+      "loaded_dropout_ticks": 159,
+      "max_loaded_dropout_seconds": 0.002,
+      "max_completed_retained_lift_streak_seconds": 0.9470000000000001,
+      "first_native_retained_lift_time": 11.104999999999285,
+      "native_task_success": false,
+      "first_recovery_deadline_remaining_seconds": 3.700000000002486
+    },
+    {
+      "id": "compliance-teacher-scene15",
+      "scope": "first attempt through first recovery command; successful comparator through termination",
+      "first_recovery_command_seconds": 12.319999999998611,
+      "loaded_dropout_spans": 154,
+      "loaded_dropout_ticks": 175,
+      "max_loaded_dropout_seconds": 0.003,
+      "max_completed_retained_lift_streak_seconds": 0.9510000000000001,
+      "first_native_retained_lift_time": 9.639000000000097,
+      "native_task_success": false,
+      "first_recovery_deadline_remaining_seconds": 5.680000000001389
+    },
+    {
+      "id": "baseline-student-scene14",
+      "scope": "first attempt through first recovery command; successful comparator through termination",
+      "first_recovery_command_seconds": null,
+      "loaded_dropout_spans": 9,
+      "loaded_dropout_ticks": 23,
+      "max_loaded_dropout_seconds": 0.005,
+      "max_completed_retained_lift_streak_seconds": 1.618,
+      "first_native_retained_lift_time": 9.736000000000043,
+      "native_task_success": true,
+      "first_recovery_deadline_remaining_seconds": null
+    }
+  ],
+  "interpretation": {
+    "supported": [
+      "Native sampling resolves brief1\u20136ms geometric contact separations in the existing model that50Hz boundary observations miss.",
+      "All scored loaded contact loss ticks in the seven controller tapes have positive geometric separation and no positive-force-below-threshold classification.",
+      "Smoothing lengthens longest student retained-lift streak from75ms to89ms, below required100ms; compliance exceeds100ms, yet task failure and slip guard remain.",
+      "The successful scene14 also has contact interruptions, so interruption existence alone is not sufficient for task failure."
+    ],
+    "limits": [
+      "Numerical separation in an uncalibrated rigid-contact model is not measured physical fingertip separation.",
+      "Scene14 differs in geometry, friction and path; it is an observational comparator, not a one-factor causal control.",
+      "Reported loaded summaries include retries unless explicitly labelled first-attempt; all outcomes are reproduced old trials.",
+      "Forcecaps, action tapes, scoring, phase budgets and18s deadline are unchanged."
+    ]
+  },
+  "integrity_verification": [
+    {
+      "root": "runs/native-contact-audit-20261018",
+      "verified_manifest_files": 58,
+      "integrity_sha256": "dc7b6091b1c680b9479ea65157c7d553043af688e159463db6174696ad5949fa"
+    },
+    {
+      "root": "runs/native-contact-audit-20261018-portable-reproduction",
+      "verified_manifest_files": 58,
+      "integrity_sha256": "ef09c643a05b317a09505da31d93c494867a0be64d093729601ce3044a046868"
+    }
+  ],
+  "publication_notes": {
+    "private_execution_paths_omitted": true,
+    "original_qa_sha256": "3eae5f17972ca8b84641f133ac39074f28604c0c2fb60c1df83fa22d59846ea4",
+    "measurements_and_comparisons_unchanged": true
+  }
+}
