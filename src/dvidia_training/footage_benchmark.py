@@ -10,13 +10,15 @@ from copy import deepcopy
 from hashlib import sha256
 import json
 import math
+import re
 from pathlib import Path
 import time
 
 from .footage_pipeline import _canonical, _fresh, _json, _prepare, _prepared_copy
 
 DEFAULT_COUNTS = (2, 4, 7)
-SOURCE_FILES = ('footage_benchmark.py', 'footage_pipeline.py', 'footage_data.py', 'footage_train.py')
+SOURCE_FILES = ('footage_benchmark.py', 'footage_pipeline.py', 'footage_data.py', 'footage_train.py',
+                'improvement_experiment.py')
 EVIDENCE_FILE_MAX_BYTES = 8 * 1024 * 1024
 EVIDENCE_TOTAL_MAX_BYTES = 128 * 1024 * 1024
 
@@ -88,6 +90,49 @@ def nested_subsets(dataset, counts=None, seed=17):
                                              if row['split'] == 'train' and row['group_id'] in selected],
                        'dev_episode_ids': fixed['dev'], 'test_episode_ids': fixed['test']})
     return result
+
+
+def explicit_subsets(dataset, cohorts):
+    """Validate named whole-group variants against unchanged source splits.
+
+    Variants may intentionally share their baseline groups. A group cannot be
+    repeated within a variant, split across source partitions, or selected from
+    development/test. Only a cohort's identity and train group IDs are supplied;
+    episode membership is derived, never accepted from a caller.
+    """
+    # Reuse the connected-lineage and split-receipt checks before selecting IDs.
+    nested_subsets(dataset, counts=[1], seed=0)
+    if type(cohorts) is not list or not 1 <= len(cohorts) <= 8:
+        raise ValueError('Supply one to eight explicit cohorts.')
+    episodes = dataset['episodes']
+    training = {row['group_id'] for row in episodes if row['split'] == 'train'}
+    fixed = {name: [row['id'] for row in episodes if row['split'] == name]
+             for name in ('dev', 'test')}
+    result, names = [], set()
+    for cohort in cohorts:
+        if type(cohort) is not dict or set(cohort) != {'cohort_id', 'train_group_ids'}:
+            raise ValueError('Each cohort needs only cohort_id and train_group_ids.')
+        name = cohort['cohort_id']
+        if (type(name) is not str or not re.fullmatch(r'[a-z][a-z0-9-]{0,47}', name)
+                or name in {'con', 'prn', 'aux', 'nul'}
+                or re.fullmatch(r'(?:com|lpt)[1-9]', name) or name in names):
+            raise ValueError('Cohort IDs must be unique safe lowercase names.')
+        names.add(name)
+        selected = cohort['train_group_ids']
+        if (type(selected) is not list or not 1 <= len(selected) <= 64
+                or any(type(group) is not str or group not in training for group in selected)
+                or len(set(selected)) != len(selected)):
+            raise ValueError('Each cohort must select distinct whole training groups only.')
+        result.append({'cohort_id': name, 'training_group_count': len(selected),
+                       'train_group_ids': list(selected),
+                       'train_episode_ids': [row['id'] for row in episodes
+                                             if row['split'] == 'train' and row['group_id'] in selected],
+                       'dev_episode_ids': list(fixed['dev']), 'test_episode_ids': list(fixed['test'])})
+    return result
+
+
+def _cohort_name(spec):
+    return spec.get('cohort_id', f"groups-{spec['training_group_count']:03}")
 
 
 def _layout_digest(scene):
@@ -220,7 +265,7 @@ def _materialize_subset(snapshot, spec, output):
     dataset['actual_media_episodes'] = len(dataset['episodes'])
     dataset['independent_groups'] = len(dataset['groups'])
     dataset['benchmark_parent_dataset_sha256'] = sha256(snapshot.read_bytes()).hexdigest()
-    temporary = snapshot.parent / f"subset-{spec['training_group_count']:03}.json"
+    temporary = snapshot.parent / f"subset-{_cohort_name(spec)}.json"
     with temporary.open('xb') as handle:
         handle.write(_canonical(dataset) + b'\n')
     try:
@@ -301,7 +346,8 @@ def _paired_outcomes(teachers, rows):
 
 
 def benchmark(dataset_path, output, *, counts=None, seed=19043, nominal=8, stress=4,
-              task_source=None, grounding=None, source_evidence=None):
+              task_source=None, grounding=None, source_evidence=None, cohorts=None,
+              excluded_scenes=(), experiment=None, training_seed=None):
     """Fit every frozen count before evaluating any of its scene outcomes."""
     started = time.perf_counter()
     from .arm_entrypoints import require_arm
@@ -312,13 +358,25 @@ def benchmark(dataset_path, output, *, counts=None, seed=19043, nominal=8, stres
     from .footage_train import _load_dataset, RIDGE_GRID
     from .skillspace import load_skillspace
     _integer(seed, 0, 999900, 'Benchmark seed')
+    training_seed = seed if training_seed is None else _integer(training_seed, 0, 999999, 'Training seed')
     dataset_path = Path(dataset_path)
     dataset, original_dataset_hash, _, sidecars = _load_dataset(dataset_path)
     if set(sidecars) != {row['id'] for row in dataset['episodes']}:
         raise ValueError('Every benchmark episode needs validated aligned movement supervision.')
-    subsets = nested_subsets(dataset, counts, seed)
+    if cohorts is not None and counts is not None:
+        raise ValueError('Choose explicit cohorts or nested counts, not both.')
+    subsets = (explicit_subsets(dataset, cohorts) if cohorts is not None
+               else nested_subsets(dataset, counts, seed))
     original_scenes, exclusion = _source_scenes(dataset, sidecars, source_evidence)
-    cases = make_scenes(seed, nominal, stress, original_scenes)
+    from .arm_runner import validate_scene
+    if not isinstance(excluded_scenes, (list, tuple)) or len(excluded_scenes) > 1200:
+        raise ValueError('Use at most 1200 additional excluded scene declarations.')
+    excluded_scenes = [validate_scene(deepcopy(scene)) for scene in excluded_scenes]
+    if experiment is not None:
+        if type(experiment) is not dict or len(_canonical(experiment)) > 1024 * 1024:
+            raise ValueError('Experiment provenance must be a JSON object of at most 1 MiB.')
+        experiment = json.loads(_canonical(experiment))
+    cases = make_scenes(seed, nominal, stress, [*original_scenes, *excluded_scenes])
     task_source = Path(task_source) if task_source is not None else Path(__file__).with_name('place_cup.skill.json')
     task = _json(task_source, limit=128 * 1024)
     raw = task_source.read_bytes()
@@ -337,7 +395,7 @@ def benchmark(dataset_path, output, *, counts=None, seed=19043, nominal=8, stres
         _write(output / 'grounding.json', resolved_grounding)
         input_hashes['grounding.json'] = sha256((output / 'grounding.json').read_bytes()).hexdigest()
     for spec in subsets:
-        relative = f"subsets/groups-{spec['training_group_count']:03}"
+        relative = f"subsets/{_cohort_name(spec)}"
         destination = output / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
         _materialize_subset(snapshot, spec, destination)
@@ -349,10 +407,12 @@ def benchmark(dataset_path, output, *, counts=None, seed=19043, nominal=8, stres
                 'runtime': capsule_runtime(), 'benchmark_source_sha256': _source_hashes(),
                 'input_files_sha256': input_hashes, 'seed': seed, 'subsets': subsets,
                 'scenes': cases, 'source_scene_exclusion': exclusion,
-                'training': {'frames_per_clip': 12, 'resolution': 16, 'latent_dim': 8,
+                'additional_excluded_scenes': excluded_scenes, 'experiment': experiment,
+                'training': {'seed': training_seed, 'frames_per_clip': 12, 'resolution': 16, 'latent_dim': 8,
                              'movement_centers': 8, 'regularization_grid': list(RIDGE_GRID),
                              'selection': 'The same fixed development episodes select regularization for each count.'},
-                'rules': {'counts': 'Nested whole connected training groups; development and test episodes never change.',
+                'rules': {'counts': ('Explicit whole connected training-group cohorts; development and test episodes never change.'
+                                     if cohorts is not None else 'Nested whole connected training groups; development and test episodes never change.'),
                           'freeze': 'Freeze this protocol before fitting; freeze all candidates before any scene evaluation.',
                           'teacher': 'One authored baseline per exact scene, shared by all candidates.',
                           'control': 'Each candidate uses identical recorded joint targets with jaws forced open.',
@@ -362,8 +422,8 @@ def benchmark(dataset_path, output, *, counts=None, seed=19043, nominal=8, stres
     candidates = []
     for spec in subsets:
         _assert_inputs(output, protocol)
-        directory = f"candidates/groups-{spec['training_group_count']:03}"
-        result = run(output / spec['dataset_path'], output / directory, seed=seed,
+        directory = f"candidates/{_cohort_name(spec)}"
+        result = run(output / spec['dataset_path'], output / directory, seed=training_seed,
                      task_source=output / 'task.skill.json',
                      grounding=output / 'grounding.json' if resolved_grounding is not None else None)
         inspect_run(output / directory)
@@ -373,7 +433,7 @@ def benchmark(dataset_path, output, *, counts=None, seed=19043, nominal=8, stres
             raise ValueError('Training changed the frozen source-group assignments.')
         capsule_path = output / directory / 'candidate.skill-capsule.json'
         installation = install_capsule(capsule_path.read_bytes(), output / 'installs')
-        candidates.append({'training_group_count': spec['training_group_count'],
+        candidates.append({'cohort_id': _cohort_name(spec), 'training_group_count': spec['training_group_count'],
                            'training_episode_count': len(spec['train_episode_ids']),
                            'training_action_samples': result['movement']['training']['sample_count'],
                            'training_pipeline_seconds': result['elapsed_seconds'],
@@ -413,7 +473,7 @@ def benchmark(dataset_path, output, *, counts=None, seed=19043, nominal=8, stres
         rows = []
         for case in cases:
             verify()
-            relative = f"qualification/groups-{candidate['training_group_count']:03}/{case['id']}"
+            relative = f"qualification/{candidate['cohort_id']}/{case['id']}"
             record = {'case_id': case['id'], 'group': case['group'], 'scene_sha256': case['scene_sha256'],
                       'status': 'completed', 'qualified': False, 'run_path': f'{relative}/run.json',
                       'controls_path': f'{relative}/controls.json', 'qualification_path': f'{relative}/qualification.json'}
@@ -444,8 +504,11 @@ def benchmark(dataset_path, output, *, counts=None, seed=19043, nominal=8, stres
               'protocol_sha256': protocol_hash, 'models_frozen_sha256': models_hash,
               'source_scene_exclusion': exclusion['status'],
               'declared_source_exact_layout_exclusion_established': exclusion['status'] == 'excluded_hash_bound_native_declarations',
-              'analysis_scope': {'composition': 'Single composition-order pilot: count is confounded with which training groups are added.',
-                                 'scene_independence': 'The same distinct benchmark scenes are reused for every count; condition-by-scene runs are not independent scenes.',
+              'additional_excluded_layout_count': len({_layout_digest(scene) for scene in excluded_scenes}),
+              'experiment': experiment,
+              'analysis_scope': {'composition': ('Explicit cohort pilot: one composition per variant; equal group counts need not mean equal rows, duration or information.'
+                                                 if cohorts is not None else 'Single composition-order pilot: count is confounded with which training groups are added.'),
+                                 'scene_independence': 'The same distinct benchmark scenes are reused for every candidate; condition-by-scene runs are not independent scenes.',
                                  'stratification': 'Nominal and actuator-stress outcomes are reported separately. Combined counts and clocks are execution totals, not a pooled performance estimate.',
                                  'novelty': 'Only exact source object/target layout exclusion is checked relative to supplied hash-bound native declarations; no out-of-distribution or human-transfer claim.',
                                  'modality': 'The movement candidate learns aligned numerical actions; the RGB predictor does not control the arm.'},
@@ -463,7 +526,7 @@ def benchmark(dataset_path, output, *, counts=None, seed=19043, nominal=8, stres
               'comparisons': comparisons, 'benchmark_wall_seconds': time.perf_counter() - started,
               'timing_scope': 'Benchmark function wall time includes arm dependency imports, source validation, scene planning, input copies, frozen plans, fits, installation, native evaluations and artifact output before the final report. Process startup, top-level module imports and final report writing are excluded. Pipeline and native episode clocks retain their own narrower scopes.',
               'limitations': ['Training group counts and numerical action sample counts are different evidence units.',
-                              'The same frozen source dev/test episodes and benchmark scenes are shared across counts; they are not independent repeated studies.',
+                              'The same frozen source dev/test episodes and benchmark scenes are shared across candidates; they are not independent repeated studies.',
                               'Scene exclusion is relative to hash-bound supplier declarations when supplied; otherwise source-scene disjointness is unestablished.',
                               'Actuator-stress failures can be shared physical/controller limits, not a demonstrated need for more labels.',
                               'Privileged native simulator state and authored phases, gripper/contact logic and recovery remain in use.',

@@ -125,6 +125,58 @@ class GroupSelectionTests(unittest.TestCase):
             benchmark.nested_subsets(dataset, [2], seed=391)
 
 
+class ExplicitCohortTests(unittest.TestCase):
+    def setUp(self):
+        self.dataset = grouped_dataset()
+        self.train = [row['id'] for row in self.dataset['groups'] if row['split'] == 'train']
+
+    def test_same_size_variants_keep_whole_groups_fixed_splits_and_unique_paths(self):
+        original = deepcopy(self.dataset)
+        cohorts = [{'cohort_id': 'generic5', 'train_group_ids': self.train[:5]},
+                   {'cohort_id': 'targeted5', 'train_group_ids': [*self.train[:4], self.train[5]]}]
+        result = benchmark.explicit_subsets(self.dataset, cohorts)
+        self.assertEqual(self.dataset, original)
+        self.assertEqual([row['training_group_count'] for row in result], [5, 5])
+        self.assertEqual([benchmark._cohort_name(row) for row in result], ['generic5', 'targeted5'])
+        for spec in result:
+            self.assertEqual(spec['dev_episode_ids'], self.dataset['splits']['dev'])
+            self.assertEqual(spec['test_episode_ids'], self.dataset['splits']['test'])
+            expected = [row['id'] for row in self.dataset['episodes']
+                        if row['group_id'] in spec['train_group_ids']]
+            self.assertEqual(spec['train_episode_ids'], expected)
+        result[0]['train_group_ids'].clear()
+        self.assertEqual(len(cohorts[0]['train_group_ids']), 5)
+
+    def test_duplicate_or_nontraining_or_partial_groups_are_rejected(self):
+        for groups in ([self.train[0], self.train[0]], ['unknown'],
+                       [self.dataset['groups'][-1]['id']], [],
+                       [self.dataset['episodes'][0]['id']]):
+            with self.subTest(groups=groups), self.assertRaises(ValueError):
+                benchmark.explicit_subsets(self.dataset, [{'cohort_id': 'candidate', 'train_group_ids': groups}])
+
+    def test_safe_unique_directory_names_are_required(self):
+        for name in ('../escape', '/absolute', 'a/b', '.', '', 'Upper', 'con', 'lpt1', 'x' * 49):
+            with self.subTest(name=name), self.assertRaises(ValueError):
+                benchmark.explicit_subsets(self.dataset, [{'cohort_id': name, 'train_group_ids': self.train[:1]}])
+        row = {'cohort_id': 'same', 'train_group_ids': self.train[:1]}
+        with self.assertRaises(ValueError):
+            benchmark.explicit_subsets(self.dataset, [row, row])
+
+    def test_caller_cannot_override_derived_episode_or_evaluation_membership(self):
+        for extra in ('train_episode_ids', 'dev_episode_ids', 'test_episode_ids'):
+            with self.subTest(extra=extra), self.assertRaises(ValueError):
+                benchmark.explicit_subsets(self.dataset, [{'cohort_id': 'candidate',
+                    'train_group_ids': self.train[:1], extra: []}])
+
+    def test_connected_lineage_checks_apply_before_explicit_selection(self):
+        self.dataset['episodes'][0]['group_id'] = 'invented-independent-group'
+        with self.assertRaisesRegex(ValueError, 'connected recording lineage'):
+            benchmark.explicit_subsets(self.dataset, [{'cohort_id': 'candidate', 'train_group_ids': self.train[:1]}])
+
+    def test_legacy_count_paths_remain_unchanged(self):
+        self.assertEqual(benchmark._cohort_name({'training_group_count': 2}), 'groups-002')
+
+
 class QualificationSummaryTests(unittest.TestCase):
     def test_control_success_and_errors_remain_visible_without_qualification(self):
         rows = [

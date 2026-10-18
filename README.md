@@ -102,6 +102,29 @@ Open [the collection planner](http://127.0.0.1:8270/coverage) in the same local 
 
 The [episode tape recorder](docs/episode-tape.md) preserves the existing simulated arm's measured state, requested/applied commands, contacts and sensor ages. Recording needs the optional arm extra; validation and inspection need only Python's standard library. These tools are available from the current checkout and do not train a new policy or change the older Hugging Face pilot.
 
+The [Skillspace improvement pilot](docs/improvement-studio.md) now connects a
+measured failure to a frozen training-data experiment and the next investigation.
+Its [first executed comparison](docs/skillspace-improvement-pilot-20261015.md)
+found no task-completion gain from the targeted addition. The local mobile-ready
+viewer keeps that negative result visible and distinguishes a recording request
+from a controller investigation. This is a simulation research tool, not a
+production account feature or a human-video-to-robot training bridge.
+
+The [grip/recovery follow-up](docs/grip-recovery-diagnostic-20261015.md) ran 48
+native episodes on the shared failure. Increased jaw capability plus a longer
+deadline completed the case; the original conditions still fail. The viewer
+keeps these diagnostic outcomes separate from qualification. The
+[video-to-robot requirements](docs/video-to-robot-skill-requirements.md) describe
+action capture, simulation calibration, coverage and physical validation needed
+to turn a Skillspace's recordings into a tested robot-specific skill.
+
+The [controlled-recovery experiment](docs/controlled-recovery-experiment-20261015.md)
+then tested lowering to support and holding through actual jaw clearance at the
+original force limits and 18-second deadline. Two frozen revisions completed
+136 episodes. The sampled release handoff improved; completion stayed 15/16
+with no paired completion regressions. Both revisions and their limits are
+visible in the local improvement viewer; no controller was promoted.
+
 ## Review what is visible in a video
 
 The new [local observation lab](docs/observations.md) uses optional CPU object and

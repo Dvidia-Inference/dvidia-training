@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f8f7f3">
+  <title>Skillspace improvement · DVIDIA</title>
+  <style>
+    :root { color-scheme:light; --paper:#f8f7f3; --card:#fffefa; --ink:#20231f; --muted:#646960; --line:#dddfd6; --blue:#2859e7; --blue-soft:#edf1ff; --green:#2d624b; --red:#964737; --dur-press:.12s; --dur-hover:.15s; --dur-ui:.22s; --ease-out:cubic-bezier(.23,1,.32,1); }
+    * { box-sizing:border-box; }
+    [hidden] { display:none!important; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; -webkit-font-smoothing:antialiased; }
+    button,a,summary { -webkit-tap-highlight-color:transparent; }
+    button { font:inherit; cursor:pointer; }
+    a { color:var(--blue); text-underline-offset:4px; }
+    :where(a,button,summary):focus-visible { outline:3px solid var(--blue); outline-offset:4px; }
+    h1,h2,h3,p { margin:0; overflow-wrap:anywhere; }
+    h1 { font-size:clamp(30px,5vw,44px); font-weight:580; line-height:1.13; letter-spacing:-1.4px; }
+    h2 { font-size:22px; font-weight:580; line-height:1.3; letter-spacing:-.55px; }
+    h3 { font-size:16px; font-weight:600; }
+    .shell { max-width:1024px; padding:0 32px; margin:auto; }
+    .topbar { min-height:86px; display:flex; justify-content:space-between; align-items:center; gap:12px; border-bottom:1px solid var(--line); }
+    .brand { display:flex; align-items:center; gap:10px; }
+    .brand svg { flex:none; filter:drop-shadow(0 5px 9px #2859e72b); }
+    .brand-name { font-size:20px; font-weight:700; letter-spacing:-.7px; line-height:1.15; }
+    .brand-name small { display:block; font-weight:400; font-size:11px; letter-spacing:.3px; color:var(--muted); margin-top:3px; }
+    .scope { display:flex; gap:7px; align-items:center; font-size:12px; color:var(--muted); }
+    .scope::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--blue); }
+    .heading { padding:34px 0 26px; }
+    .eyebrow { font:11px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace; text-transform:uppercase; letter-spacing:1.4px; color:var(--muted); margin-bottom:10px; }
+    .heading p { color:var(--muted); max-width:580px; margin-top:12px; }
+    .snapshot { border:1px solid var(--line); border-radius:17px; background:var(--card); padding:20px 24px; margin-bottom:28px; }
+    .snapshot-head { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px 14px; margin-bottom:18px; }
+    .snapshot-head h2 { font-size:16px; letter-spacing:0; }
+    .pill { display:inline-flex; align-items:center; gap:6px; border-radius:5px; padding:3px 7px; font:11px/1.6 ui-monospace,monospace; background:#eeefe8; color:#596154; }
+    .pill svg { width:13px; height:13px; flex:none; }
+    .stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+    .stat + .stat { border-left:1px solid var(--line); padding-left:22px; }
+    .stat-value { display:block; font-size:28px; line-height:1.1; font-weight:550; letter-spacing:-.8px; font-variant-numeric:tabular-nums; }
+    .stat-value small { font-size:15px; color:var(--muted); font-weight:400; letter-spacing:0; }
+    .stat-label { display:block; margin-top:7px; font-size:13px; color:var(--muted); }
+    .error-summary { margin-top:13px; padding:10px 12px; background:#f8e9e3; color:#803e31; border-radius:8px; font-size:13px; }
+    .snapshot-note { font-size:12px; color:var(--muted); margin-top:17px; border-top:1px solid var(--line); padding-top:13px; }
+    .section-band { display:flex; gap:11px; align-items:baseline; padding-bottom:13px; }
+    .section-band > span { color:var(--blue); font:11px/1.5 ui-monospace,monospace; }
+    .section-band h2 { font-size:16px; font-weight:550; letter-spacing:0; }
+    .section-band .count { margin-left:auto; color:var(--muted); }
+    .brief { position:relative; border:1px solid #cfd8ec; border-radius:20px; background:linear-gradient(145deg,#f2f5ff 0%,#fcfcf9 75%); padding:28px; overflow:hidden; }
+    .brief-main { position:relative; }
+    .brief-status { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-bottom:14px; color:var(--muted); font-size:12px; }
+    .brief-status .pill { color:#3d5f95; background:#e5ecfc; }
+    .brief h2 { max-width:660px; font-size:25px; letter-spacing:-.7px; }
+    .brief-instruction { margin-top:12px; color:#4f5b60; max-width:650px; }
+    .brief-art { height:54px; width:152px; margin-bottom:17px; color:#5a7dd4; }
+    .why { display:flex; gap:10px; margin-top:21px; padding:13px 0 0; border-top:1px solid #dbe1ec; font-size:13px; color:#566372; }
+    .why svg { flex:none; width:18px; height:18px; margin-top:2px; }
+    .primary { position:relative; isolation:isolate; display:flex; align-items:center; justify-content:center; gap:12px; min-height:54px; border:1px solid #5476ea; background:linear-gradient(175deg,#4b75fc 0%,#2855da 55%,#2044bc 100%); border-radius:28px; color:#fff; text-decoration:none; font-weight:550; box-shadow:inset 0 2px 1px #ffffff4d,0 6px 15px #284bbb1c; overflow:hidden; transition:transform var(--dur-press) var(--ease-out); }
+    .primary::before { content:''; position:absolute; z-index:-1; inset:-85% -15% 30%; border-radius:50%; background:linear-gradient(transparent,#ffffff12); transform:rotate(-8deg); }
+    .primary:active { transform:scale(.98); }
+    .primary svg { width:19px; height:19px; }
+    .brief-action { margin-top:24px; max-width:390px; }
+    .brief-action p { font-size:11px; color:#64718a; text-align:center; margin-top:7px; }
+    details { border-top:1px solid var(--line); }
+    summary { display:flex; align-items:center; gap:12px; cursor:pointer; min-height:52px; padding:12px 0; font-size:14px; font-weight:500; list-style:none; }
+    summary::-webkit-details-marker { display:none; }
+    summary::after { content:'+'; margin-left:auto; color:var(--muted); font:20px/1 ui-monospace,monospace; }
+    details[open] > summary::after { content:'−'; }
+    .brief details { margin-top:21px; border-color:#dbe1ec; }
+    .brief summary { color:#536276; font-size:13px; }
+    .detail-copy { color:var(--muted); font-size:14px; }
+    .detail-copy p { margin-bottom:13px; }
+    .detail-copy h3 { font-size:13px; color:var(--ink); margin:17px 0 6px; }
+    .detail-copy ul { margin:0 0 15px; padding-left:20px; }
+    .detail-copy li { margin:5px 0; }
+    .evidence-row { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:start; gap:3px 16px; border-top:1px solid #dfe4ec; padding:11px 0; font-size:13px; }
+    .evidence-row strong { font-weight:550; overflow-wrap:anywhere; }
+    .evidence-row p { grid-column:1/-1; color:var(--muted); }
+    .evidence-row span { color:var(--red); font-size:12px; }
+    .hypotheses { margin-top:16px; }
+    .row-list { display:grid; }
+    .hypothesis-row { display:flex; align-items:center; gap:13px; width:100%; min-height:64px; padding:13px 0; background:transparent; border:0; border-top:1px solid var(--line); text-align:left; color:var(--ink); transition:opacity var(--dur-hover) var(--ease-out),transform var(--dur-press) var(--ease-out); }
+    .hypothesis-row:active { transform:scale(.98); }
+    .hypothesis-row:first-child { border-top:0; }
+    .row-mark { flex:none; display:grid; place-items:center; width:27px; height:27px; border:1px solid #d2d9e6; border-radius:8px; color:#61759c; font:11px ui-monospace,monospace; }
+    .hypothesis-row[aria-pressed=true] .row-mark { border-color:#7b98e7; background:var(--blue-soft); color:var(--blue); }
+    .row-copy { flex:1; min-width:0; }
+    .row-copy strong { display:block; font-size:14px; font-weight:550; }
+    .row-copy small { display:block; color:var(--muted); font-size:12px; margin-top:3px; }
+    .row-arrow { color:var(--muted); }
+    .comparison-section { margin-top:29px; padding-top:23px; border-top:1px dashed #ccd0c5; }
+    .comparison-head { display:grid; grid-template-columns:minmax(0,1fr) 90px 90px; gap:12px; padding:10px 0; color:var(--muted); font-size:11px; border-bottom:1px solid var(--line); }
+    .comparison-head span:not(:first-child) { text-align:right; }
+    .comparison-row { display:grid; grid-template-columns:minmax(0,1fr) 90px 90px; gap:12px; padding:17px 0; border-bottom:1px solid var(--line); align-items:center; }
+    .comparison-row strong { font-size:14px; font-weight:550; }
+    .comparison-row .small { display:block; font-size:12px; color:var(--muted); margin-top:3px; }
+    .metric { font:15px/1.4 ui-monospace,monospace; text-align:right; font-variant-numeric:tabular-nums; }
+    .metric small { color:var(--muted); font-size:11px; }
+    .comparison-row.highlight .metric { color:var(--blue); }
+    .conclusion { margin-top:18px; padding:17px 20px; border-left:3px solid #93a3c4; background:#efefe8; border-radius:0 9px 9px 0; }
+    .conclusion h3 { font-size:15px; margin-bottom:5px; }
+    .conclusion p { font-size:13px; color:var(--muted); }
+    .conclusion .next-step { margin-top:9px; color:#435273; }
+    .recovery-section { border:1px solid #cbd8e9; border-radius:17px; padding:22px 24px 5px; background:linear-gradient(135deg,#f2f6fe,#fffefa 80%); margin:0 0 26px; }
+    .recovery-section h2 { font-size:18px; letter-spacing:-.3px; }
+    .recovery-section .diagnostic-top { margin-bottom:12px; }
+    .recovery-section .outcome-heading { font-size:14px; font-weight:550; margin:19px 0 4px; }
+    .recovery-condition { color:#52657c; font:11px/1.5 ui-monospace,monospace; padding:8px 10px; border:1px solid #dce3ee; background:#f0f4fb; border-radius:7px; }
+    .recovery-paired { display:flex; flex-wrap:wrap; gap:6px 13px; font-size:12px; margin:13px 0 0; color:#58687c; }
+    .recovery-paired strong { color:var(--ink); font-weight:600; }
+    .recovery-table .metric { font-size:13px; }
+    .recovery-table .metric small { display:inline; font-size:11px; }
+    #earlier-grip > .diagnostic-section { margin:0 0 12px; }
+    .diagnostic-section { margin:0 0 26px; border:1px solid #ccd7e6; border-radius:17px; padding:22px 24px 5px; background:linear-gradient(125deg,#f5f7fc,#fffefa); }
+    .diagnostic-top { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+    .diagnostic-top h2 { font-size:18px; letter-spacing:-.3px; }
+    .diagnostic-detail { color:#536171; font-size:14px; margin-bottom:16px; }
+    .diagnostic-table { width:100%; border-collapse:collapse; table-layout:fixed; font-size:14px; }
+    .diagnostic-table th { text-align:left; padding:9px 0; color:var(--muted); font-size:11px; font-weight:500; }
+    .diagnostic-table th:first-child { width:56%; }
+    .diagnostic-table th:not(:first-child),.diagnostic-table td:not(:first-child) { text-align:right; }
+    .diagnostic-table td { padding:12px 0; border-top:1px solid #dbe1e9; vertical-align:middle; }
+    .diagnostic-table td:first-child { padding-right:12px; }
+    .diagnostic-table strong { display:block; font-size:14px; font-weight:550; }
+    .diagnostic-table small { display:block; color:var(--muted); font-size:12px; line-height:1.45; margin-top:3px; }
+    .trial-state { display:inline-block; max-width:100%; font-size:12px; overflow-wrap:anywhere; color:#69706b; }
+    .trial-state::before { content:'−'; font-size:13px; margin-right:4px; }
+    .trial-state[data-outcome=passed] { color:#2d624b; } .trial-state[data-outcome=passed]::before { content:'✓'; }
+    .trial-state[data-outcome=unknown]::before { content:none; }
+    .trial-state[data-outcome=failed] { color:#964737; } .trial-state[data-outcome=failed]::before { content:'×'; }
+    .diagnostic-note { color:var(--muted); font-size:12px; line-height:1.5; padding:13px 0; }
+    .diagnostic-warning { margin:0 0 13px; padding:10px 12px; border-radius:8px; color:#803e31; background:#f8e9e3; font-size:13px; }
+    .diagnostic-case { padding:13px 0; border-top:1px solid var(--line); } .diagnostic-case:first-child { border-top:0; }
+    .diagnostic-case h3 { margin:0 0 6px; } .diagnostic-case p { margin:4px 0; }
+    .diagnostic-provenance { font-size:11px; overflow-wrap:anywhere; padding-bottom:10px; color:var(--muted); }
+    .learning-path { margin-top:20px; }
+    .learning-path > summary { gap:8px; }
+    .learning-path .path-note { color:var(--muted); font-size:14px; margin:0 0 19px; }
+    .learning-path ol { margin:0; padding:0; list-style:none; counter-reset:path; }
+    .learning-path li { counter-increment:path; position:relative; padding:0 0 19px 39px; }
+    .learning-path li::before { content:counter(path); position:absolute; left:0; top:0; width:24px; height:24px; display:grid; place-items:center; border:1px solid #ccd6ec; background:#eef2fc; color:#486aa9; border-radius:7px; font:11px/1 ui-monospace,monospace; }
+    .learning-path li:not(:last-child)::after { content:''; position:absolute; left:12px; top:30px; bottom:6px; border-left:1px solid #dde1e8; }
+    .learning-path h3 { font-size:15px; font-weight:550; margin-bottom:4px; }
+    .learning-path li p { color:var(--muted); font-size:14px; }
+    .history,.methodology { margin-top:20px; }
+    .history-row { padding:14px 0; border-top:1px solid var(--line); } .history-row:first-child { border-top:0; } .history-row h3 { font-size:15px; margin-bottom:5px; } .history-row p { color:var(--muted); font-size:14px; margin-top:5px; } .history-note { font-size:13px; color:var(--muted); margin:2px 0 10px; }
+    .methodology dl { display:grid; grid-template-columns:155px minmax(0,1fr); gap:10px 16px; margin:0 0 18px; font-size:12px; }
+    .methodology dt { color:var(--muted); }
+    .methodology dd { margin:0; overflow-wrap:anywhere; }
+    .links { display:flex; flex-wrap:wrap; gap:0 24px; padding-bottom:8px; }
+    .links a { display:inline-flex; align-items:center; gap:8px; min-height:48px; font-size:13px; }
+    .footer { padding:21px 0 30px; margin-top:26px; color:var(--muted); font-size:11px; border-top:1px solid var(--line); }
+    .empty { padding:21px; color:var(--muted); background:#f0f1e9; border:1px dashed #cbd0c4; border-radius:12px; font-size:14px; }
+    .empty strong { display:block; color:var(--ink); font-size:16px; margin-bottom:7px; }
+    .state { padding:30px 0 70px; }
+    .state h2 { margin-bottom:12px; }
+    .state p { max-width:520px; color:var(--muted); }
+    .state button { min-height:52px; padding:10px 23px; margin-top:19px; border:1px solid var(--line); border-radius:10px; background:var(--card); color:var(--blue); }
+    .loading-bar { width:160px; height:3px; border-radius:3px; background:#dbe3f6; margin-top:24px; overflow:hidden; }
+    .loading-bar::after { content:''; display:block; width:45%; height:100%; background:var(--blue); animation:loading 1.5s ease-in-out infinite alternate; }
+    @keyframes loading { from { transform:translateX(-50%); } to { transform:translateX(180%); } }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    @media (hover:hover) and (pointer:fine) { .row-list:hover > * { opacity:.5; } .row-list:hover > :hover { opacity:1; } .hypothesis-row:hover .row-copy strong { text-decoration:underline; text-underline-offset:4px; } .primary:hover { box-shadow:inset 0 2px 1px #ffffff4d,0 8px 20px #284bbb30; } }
+    @media (min-width:900px) {
+      #content.has-diagnostic { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; align-items:start; }
+      #content.has-diagnostic > .diagnostic-section { grid-column:1; grid-row:1; margin:0; }
+      #content.has-diagnostic > section[aria-labelledby="next-section-title"] { grid-column:2; grid-row:1; }
+      #content.has-diagnostic > .snapshot { grid-column:1/-1; grid-row:2; margin:0; }
+      #content.has-diagnostic > .comparison-section,#content.has-diagnostic > details { grid-column:1/-1; margin:0; }
+      #content.has-diagnostic .brief { padding:23px 22px 8px; }
+      #content.has-diagnostic .brief h2 { font-size:23px; }
+    }
+    @media (min-width:900px) {
+      #content.has-recovery { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; align-items:start; }
+      #content.has-recovery > .recovery-section { grid-column:1; grid-row:1; margin:0; }
+      #content.has-recovery > section[aria-labelledby="next-section-title"] { grid-column:2; grid-row:1; }
+      #content.has-recovery > .snapshot { grid-column:1/-1; grid-row:2; margin:0; }
+      #content.has-recovery > .comparison-section,#content.has-recovery > details { grid-column:1/-1; margin:0; }
+      #content.has-recovery .brief { padding:23px 22px 8px; }
+      #content.has-recovery .brief h2 { font-size:23px; }
+    }
+    @media (max-width:600px) {
+      #content { display:flex; flex-direction:column; } #content > section:not(.snapshot):not(.comparison-section):not(.diagnostic-section):not(.recovery-section) { order:1; } .recovery-section { order:2; margin-top:24px; margin-bottom:0; padding:19px 17px 3px; } .diagnostic-section { order:2; margin-top:24px; margin-bottom:0; } .snapshot { order:3; margin-top:24px; margin-bottom:0!important; } .comparison-section { order:4; } .history { order:5; } .learning-path { order:6; } .methodology { order:7; }
+      .shell { padding:0 20px; } .topbar { min-height:72px; } .brand-name { font-size:18px; } .brand-name small { font-size:10px; } .scope { font-size:11px; }
+      .heading { padding:27px 0 23px; } .heading p { font-size:16px; } h1 { letter-spacing:-.9px; }
+      .snapshot { padding:17px; margin-bottom:24px; border-radius:14px; } .snapshot-head { margin-bottom:17px; } .snapshot-head h2 { font-size:14px; }
+      .stats { gap:10px; } .stat + .stat { padding-left:11px; } .stat-value { font-size:24px; } .stat-label { font-size:11px; line-height:1.45; } .snapshot-note { font-size:11px; margin-top:12px; padding-top:10px; }
+      .brief { padding:22px 20px 8px; border-radius:18px; } .brief h2 { font-size:23px; } .brief-instruction { font-size:16px; }
+      .brief-art { height:37px; width:105px; margin-bottom:13px; } .brief-action { max-width:none; } .primary { font-size:16px; min-height:56px; } .why { font-size:14px; } .brief summary { font-size:14px; }
+      .detail-copy { font-size:16px; } .detail-copy h3 { font-size:15px; } .evidence-row { font-size:14px; } .evidence-row span { font-size:11px; }
+      summary { font-size:16px; min-height:56px; } .hypothesis-row { min-height:72px; } .row-copy strong { font-size:16px; } .row-copy small { font-size:12px; }
+      .comparison-head,.comparison-row { grid-template-columns:minmax(0,1fr) 61px 61px; gap:10px; } .comparison-row strong { font-size:16px; } .comparison-row .small { font-size:11px; } .metric { font-size:14px; }
+      .conclusion { padding:16px; } .conclusion h3 { font-size:16px; } .conclusion p { font-size:15px; }
+      .diagnostic-section { padding:19px 17px 3px; } .diagnostic-top h2 { font-size:17px; } .diagnostic-detail { font-size:16px; } .diagnostic-table th { font-size:10px; } .diagnostic-table strong { font-size:14px; } .diagnostic-table small { font-size:11px; } .trial-state { font-size:11px; gap:3px; } .diagnostic-note { font-size:12px; } .diagnostic-warning { font-size:14px; } .learning-path .path-note,.learning-path li p { font-size:16px; } .learning-path h3 { font-size:16px; }
+      .methodology dl { grid-template-columns:1fr; gap:3px; font-size:13px; } .methodology dd { margin-bottom:8px; } .links a { font-size:15px; } .empty { font-size:16px; }
+    }
+    @media (max-width:350px) { .shell { padding:0 15px; } .scope { max-width:80px; line-height:1.3; } .brief { padding:20px 16px 8px; } .snapshot { padding:15px; } .stat-value { font-size:21px; } .stat-value small { font-size:12px; } .comparison-head,.comparison-row { grid-template-columns:minmax(0,1fr) 53px 53px; gap:7px; } }
+    #main:is(.has-recovery,.has-retention) .heading { padding:24px 0 22px; }
+    #main:is(.has-recovery,.has-retention) #page-intro { display:none; }
+    #main:is(.has-recovery,.has-retention) #content { display:flex; flex-direction:column; gap:0; align-items:stretch; }
+    #main:is(.has-recovery,.has-retention) #recovery { order:1; padding:20px 24px 0; margin:0; border-radius:18px; background:linear-gradient(135deg,#f5f7fc,#fffefa 75%); }
+    .recovery-summary-heading { margin-bottom:15px; }
+    .recovery-summary-kicker { display:flex; align-items:center; flex-wrap:wrap; gap:9px; font-size:11px; color:var(--muted); margin-bottom:9px; }
+    #recovery-status { background:#f1e9d9; color:#7a5f31; font-family:inherit; font-size:11px; font-weight:550; }
+    #recovery-title { font-size:24px; line-height:1.25; letter-spacing:-.6px; }
+    .recovery-outcomes { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; margin-bottom:15px; }
+    .recovery-outcome { min-width:0; padding:0 16px; border-left:1px solid #dce2e8; }
+    .recovery-outcome:first-child { border-left:0; padding-left:0; }
+    .recovery-outcome:last-child { padding-right:0; }
+    .recovery-outcome .outcome-label { display:block; color:var(--muted); font-size:12px; margin-bottom:4px; }
+    .recovery-outcome strong { display:block; font-size:21px; line-height:1.25; font-weight:570; letter-spacing:-.4px; overflow-wrap:anywhere; }
+    .recovery-outcome .outcome-context { display:block; color:var(--muted); font-size:11px; margin-top:5px; line-height:1.4; }
+    .recovery-outcome[data-state=confirmed] strong { color:#32634e; }
+    .recovery-outcome[data-state=incomplete] strong,.recovery-outcome[data-state=review] strong { color:#8a602d; }
+    .recovery-behavior { padding:15px 16px; border-radius:12px; background:#f0f3f8; border:1px solid #e0e5ed; margin-bottom:10px; }
+    .recovery-sequence { min-width:0; }
+    .recovery-timeline-heading { display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:5px 16px; margin-bottom:12px; }
+    .recovery-timeline-heading h3 { font-size:14px; font-weight:550; letter-spacing:-.2px; }
+    .recovery-timeline-heading p { color:#63738a; font-size:11px; }
+    .recovery-lane { padding:11px 0; border-top:1px solid #dce3ed; }
+    .recovery-lane-head { display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:4px 14px; margin-bottom:9px; }
+    .recovery-lane-head strong { font-size:13px; font-weight:550; }
+    .recovery-lane-head span { font-size:11px; color:#63738a; }
+    .recovery-lane[data-variant=controlled_lowering] .recovery-lane-head strong { color:#2d55a0; }
+    .recovery-events { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:0; list-style:none; padding:0; margin:0; }
+    .recovery-event { position:relative; min-width:0; padding:9px 12px 0 0; border-top:1px solid #c3cddd; }
+    .recovery-event:last-child { padding-right:0; }
+    .recovery-event::before { content:''; width:6px; height:6px; border-radius:50%; background:#7d91ae; border:2px solid #f0f3f8; position:absolute; left:0; top:-5px; }
+    .recovery-event[data-state=confirmed]::before { background:#2b65c7; }
+    .recovery-event[data-state=incomplete]::before { background:#a87536; }
+    .recovery-event[data-state=unknown]::before { background:#f0f3f8; border:1px solid #aeb9ca; width:6px; height:6px; top:-4px; }
+    .recovery-event strong { display:block; font-size:15px; font-weight:550; font-variant-numeric:tabular-nums; color:#30496d; line-height:1.3; }
+    .recovery-event span { display:block; font-size:11px; line-height:1.35; color:#52647c; margin-top:3px; }
+    .recovery-event small { display:block; font-size:10px; line-height:1.35; color:#7c643f; margin-top:2px; }
+    .recovery-readouts { display:grid; grid-template-columns:1fr 1fr; gap:6px 22px; min-width:0; }
+    .recovery-sequence:not([hidden]) + .recovery-readouts { border-top:1px solid #dce3ed; padding-top:11px; margin-top:2px; }
+    .recovery-readout-scope { grid-column:1/-1; color:#63738a; font-size:10px; margin:0; }
+    .recovery-readout { min-width:0; }
+    .recovery-readout-label { display:block; font-size:11px; color:#63738a; line-height:1.35; }
+    .recovery-readout-value { display:flex; align-items:baseline; flex-wrap:wrap; gap:7px; font-size:20px; font-weight:550; font-variant-numeric:tabular-nums; line-height:1.3; color:#315994; }
+    .recovery-readout-value .before { color:#77818e; font-size:17px; font-weight:400; }
+    .recovery-readout-value .change-arrow { color:#9caabd; font-size:14px; }
+    .recovery-readout-value small { font-size:11px; color:#63738a; font-weight:400; }
+    #recovery-comparison { margin-top:0; border-color:#dce2e8; }
+    #recovery-comparison > summary { min-height:50px; font-size:14px; color:#4c627d; }
+    #recovery-comparison[open] { padding-bottom:10px; }
+    #main:is(.has-recovery,.has-retention) #content > section[aria-labelledby="next-section-title"] { order:2; margin:0; padding:19px 4px 12px; }
+    #main:is(.has-recovery,.has-retention) .section-band { padding-bottom:6px; }
+    #main:is(.has-recovery,.has-retention) .section-band > span { display:none; }
+    #main:is(.has-recovery,.has-retention) #next-section-title { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+    #main:is(.has-recovery,.has-retention) .brief { padding:0!important; background:none; border:0; border-radius:0; overflow:visible; }
+    #main:is(.has-recovery,.has-retention) .brief-main { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px 24px; align-items:center; }
+    #main:is(.has-recovery,.has-retention) .brief-art,#main:is(.has-recovery,.has-retention) .brief-status,#main:is(.has-recovery,.has-retention) .brief-instruction,#main:is(.has-recovery,.has-retention) .brief .why,#main:is(.has-recovery,.has-retention) .brief-action p { display:none; }
+    #main:is(.has-recovery,.has-retention) .brief h2 { font-size:20px; line-height:1.3; letter-spacing:-.35px; }
+    #main:is(.has-recovery,.has-retention) .brief-action { margin:0; max-width:none; }
+    #main:is(.has-recovery,.has-retention) .brief .primary { min-height:48px; font-size:14px; padding:0 19px; gap:8px; }
+    #main:is(.has-recovery,.has-retention) .brief .primary svg { width:16px; height:16px; }
+    #main:is(.has-recovery,.has-retention) #brief-evidence { margin-top:8px; border:0; }
+    #main:is(.has-recovery,.has-retention) #brief-evidence > summary { min-height:48px; padding:8px 0; font-size:13px; }
+    #main:is(.has-recovery,.has-retention) #historical-benchmark { order:3; margin:0; }
+    #historical-benchmark .snapshot { margin:0 0 18px!important; }
+    #main:is(.has-recovery,.has-retention) .comparison-section { order:4; margin-top:10px; }
+    #main:is(.has-recovery,.has-retention) #earlier-grip { order:5; }
+    #main:is(.has-recovery,.has-retention) #hypothesis-history { order:6; }
+    #main:is(.has-recovery,.has-retention) #learning-path { order:7; }
+    #main:is(.has-recovery,.has-retention) #methodology { order:8; }
+    @media (max-width:600px) {
+      #main:is(.has-recovery,.has-retention) .heading { padding:21px 0 18px; }
+      #main:is(.has-recovery,.has-retention) #recovery { padding:18px 17px 0; margin:0; }
+      #recovery-title { font-size:22px; }
+      .recovery-outcomes { grid-template-columns:1fr 1fr; gap:12px 0; }
+      .recovery-outcome { padding:0 12px; }
+      .recovery-outcome:nth-child(2) { padding-right:0; }
+      .recovery-outcome:last-child { grid-column:1/-1; border:0; border-top:1px solid #dce2e8; padding:10px 0 0; display:grid; grid-template-columns:1fr auto; gap:0 10px; align-items:baseline; }
+      .recovery-outcome:last-child .outcome-label { margin:0; }
+      .recovery-outcome:last-child .outcome-context { grid-column:1/-1; margin-top:2px; }
+      .recovery-outcome strong { font-size:18px; }
+      .recovery-outcome .outcome-label { font-size:12px; }
+      .recovery-outcome .outcome-context { font-size:11px; }
+      .recovery-behavior { padding:13px 12px; }
+      .recovery-timeline-heading { margin-bottom:10px; }
+      .recovery-timeline-heading h3 { font-size:16px; }
+      .recovery-timeline-heading p { font-size:11px; }
+      .recovery-lane-head strong { font-size:14px; }
+      .recovery-event { padding-right:8px; }
+      .recovery-event strong { font-size:15px; }
+      .recovery-event span { font-size:11px; }
+      .recovery-readouts { gap:7px 16px; }
+      .recovery-readout-label { font-size:11px; }
+      .recovery-readout-value { font-size:19px; gap:5px; }
+      #recovery-comparison > summary { min-height:52px; font-size:16px; }
+      #main:is(.has-recovery,.has-retention) .brief-main { grid-template-columns:1fr; gap:12px; }
+      #main:is(.has-recovery,.has-retention) .brief h2 { font-size:20px; }
+      #main:is(.has-recovery,.has-retention) .brief .primary { min-height:52px; font-size:16px; }
+      #main:is(.has-recovery,.has-retention) #brief-evidence > summary { font-size:15px; }
+    }
+    .task-context { margin-top:13px; display:flex; flex-wrap:wrap; align-items:center; gap:7px 12px; color:#63716c; font-size:12px; }
+    .task-context a { min-height:48px; display:inline-flex; align-items:center; gap:7px; color:#305cd3; text-decoration:none; }
+    .task-context .task-scope { border:1px solid #d4dddf; padding:4px 8px; border-radius:6px; color:#45605e; background:#eff3ef; }
+    .task-context .task-unlinked { color:#7b817b; }
+    .retention-section { order:0; padding:21px 24px 0; border:1px solid #cbd8e9; border-radius:18px; background:linear-gradient(135deg,#f5f7fc,#fffefa 75%); }
+    .retention-topline { display:flex; flex-wrap:wrap; align-items:center; gap:8px; color:var(--muted); font-size:11px; margin-bottom:9px; }
+    .retention-topline .pill { font-family:inherit; font-size:11px; font-weight:550; background:#f1e9d9; color:#7a5f31; }
+    .retention-section h2 { font-size:24px; line-height:1.25; letter-spacing:-.6px; margin:0 0 15px; }
+    .retention-chart { margin:0; background:#f0f3f8; border:1px solid #dce4ef; border-radius:12px; padding:13px 14px 9px; }
+    .retention-chart-heading { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px 14px; }
+    .retention-chart-heading h3 { font-size:13px; font-weight:550; }
+    .retention-legend { display:flex; flex-wrap:wrap; gap:15px; color:#647086; font-size:11px; }
+    .retention-legend span::before { content:''; display:inline-block; width:13px; height:2px; vertical-align:middle; margin-right:5px; background:#8a929f; }
+    .retention-legend .candidate::before { background:#315fe5; }
+    #retention-chart { display:block; width:100%; height:174px; }
+    .retention-chart figcaption { margin-top:2px; color:#65748b; font-size:10px; line-height:1.4; }
+    .retention-curve-empty { padding:25px 8px; color:#687588; font-size:14px; }
+    .retention-result { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; margin:14px 0 10px; }
+    .retention-result > div { min-width:0; }
+    .retention-result > div + div { border-left:1px solid #dce2e8; padding-left:20px; }
+    .retention-result span { display:block; font-size:11px; color:#66726b; }
+    .retention-result strong { display:block; font-size:20px; font-weight:550; letter-spacing:-.3px; margin:3px 0; }
+    .retention-result small { display:block; font-size:11px; color:#66726b; line-height:1.4; }
+    #retention-evidence { margin-top:0; }
+    #retention-evidence > summary { min-height:50px; font-size:14px; color:#4c627d; }
+    #main.has-retention #earlier-recovery { order:5; margin-top:12px; }
+    #earlier-recovery > .recovery-section { margin-bottom:14px!important; }
+    #main.has-retention #earlier-grip { order:6; }
+    #main.has-retention .comparison-section { order:7; }
+    #main.has-retention #hypothesis-history { order:8; }
+    #main.has-retention #learning-path { order:9; }
+    #main.has-retention #methodology { order:10; }
+    @media (max-width:600px) {
+      .task-context { font-size:11px; gap:6px 9px; }
+      .retention-section { padding:18px 17px 0; }
+      .retention-section h2 { font-size:22px; }
+      .retention-chart { padding:12px 10px 9px; }
+      .retention-chart-heading h3 { font-size:14px; }
+      .retention-result { grid-template-columns:1fr 1fr; gap:12px; }
+      .retention-result > div:last-child { grid-column:1/-1; border:0; border-top:1px solid #dce2e8; padding:9px 0 0; display:grid; grid-template-columns:1fr auto; align-items:baseline; gap:0 10px; }
+      .retention-result > div:last-child small { grid-column:1/-1; }
+      .retention-result > div + div { padding-left:12px; }
+      .retention-result strong { font-size:18px; }
+      #retention-evidence > summary { min-height:52px; font-size:16px; }
+    }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important; transition:none!important; } .loading-bar::after { width:100%; opacity:.5; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand"><svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true"><defs><linearGradient id="logo" x2="1" y2="1"><stop stop-color="#7392ff"/><stop offset=".55" stop-color="#3e62ff"/><stop offset="1" stop-color="#2545cc"/></linearGradient></defs><rect width="34" height="34" rx="9" fill="url(#logo)"/><path d="M8 11v12m3-12v12m2-12v12m3-12v12m2-12v12m3-12v12m2-12v12m3-12v12" stroke="white" stroke-opacity=".8" stroke-width="1.2"/><path d="M1 15C9 9 23 18 33 8" stroke="white" stroke-opacity=".15" stroke-width="8"/></svg><div class="brand-name">DVIDIA<small>Skillspace improvement</small></div></div>
+      <span class="scope">Local research pilot</span>
+    </header>
+    <main id="main" aria-busy="true">
+      <section class="heading"><div class="eyebrow" id="page-eyebrow">Observe · test · improve</div><h1 id="page-title">The next useful example.</h1><p id="page-intro">Let measured failures guide what to collect next.</p><nav id="task-context" class="task-context" aria-label="Task evidence context" hidden></nav></section>
+      <section id="loading" class="state" role="status"><h2>Reading the experiment</h2><p>Loading the saved benchmark and its evidence.</p><div class="loading-bar" aria-hidden="true"></div></section>
+      <section id="error" class="state" role="alert" hidden><h2>We couldn’t load this experiment.</h2><p id="error-message">The local report is unavailable. Your source data has not changed.</p><button id="retry" type="button">Try again</button></section>
+      <div id="content" hidden>
+        <section id="retention" class="retention-section" aria-labelledby="retention-title" hidden>
+          <div class="retention-topline"><span class="pill" id="retention-status">Development result</span><span id="retention-scope">Original simulation conditions</span></div>
+          <h2 id="retention-title">What happened during carry?</h2>
+          <p class="diagnostic-warning" id="retention-warning" role="status" hidden></p>
+          <figure class="retention-chart"><div class="retention-chart-heading"><h3>Object-to-hand drift <span aria-hidden="true">· mm</span></h3><div class="retention-legend"><span>Original</span><span class="candidate">Candidate</span></div></div><canvas id="retention-chart" role="img" aria-label="Measured object-to-hand drift over simulation time"></canvas><p id="retention-curve-empty" class="retention-curve-empty" hidden>Drift samples are not available for this comparison.</p><figcaption id="retention-curve-scope">Sampled simulation evidence. Gaps remain where no loaded-motion samples were recorded.</figcaption></figure>
+          <div class="retention-result" id="retention-results"></div>
+          <details id="retention-evidence"><summary>Results, conditions &amp; evidence</summary><div class="detail-copy"><p id="retention-detail"></p><p id="retention-condition"></p><div id="retention-trials"></div><div id="retention-regression"></div><p id="retention-runtime"></p><div id="retention-history"></div><h3>Scope of this result</h3><ul id="retention-limits"></ul><p id="retention-next"></p></div><div class="diagnostic-provenance" id="retention-provenance"></div></details>
+        </section>
+        <section class="recovery-section" id="recovery" aria-labelledby="recovery-title" hidden>
+          <div class="recovery-summary-heading"><div class="recovery-summary-kicker"><span class="pill" id="recovery-status">Measured result</span><span id="recovery-scope">Simulation · inspected scene</span></div><h2 id="recovery-title">What changed in recovery?</h2></div>
+          <p class="diagnostic-warning" id="recovery-warning" role="status" hidden></p>
+          <div class="recovery-outcomes" id="recovery-outcomes" aria-label="Recovery outcomes"></div>
+          <div class="recovery-behavior" id="recovery-behavior">
+            <section class="recovery-sequence" id="recovery-sequence" aria-label="Measured recovery checkpoints" hidden></section>
+            <div class="recovery-readouts" id="recovery-readouts" aria-label="Measured learned controller changes"></div>
+          </div>
+          <details id="recovery-comparison"><summary>Compare all results</summary><p class="diagnostic-detail" id="recovery-detail"></p><p class="recovery-condition" id="recovery-condition"></p>
+          <h3 class="outcome-heading" id="recovery-target-title">The previously failed scene</h3>
+          <table class="diagnostic-table recovery-table"><caption class="sr-only" id="recovery-target-caption">Full task completion and support before the first opening are separate outcomes on the previously inspected failed scene.</caption><thead><tr><th scope="col">Controller</th><th scope="col">Full task</th><th scope="col" id="recovery-check-heading">Support before first opening</th></tr></thead><tbody id="recovery-target-rows"></tbody></table>
+          <p class="diagnostic-note" id="recovery-check-note">Support before the first opening does not establish a controlled set-down, support for later commands, or full task completion.</p>
+          <h3 class="outcome-heading" id="recovery-regression-title">Completion on the original scenes</h3>
+          <table class="diagnostic-table recovery-table"><caption class="sr-only">Original controller compared with controlled lowering on the same inspected regression scenes.</caption><thead><tr><th scope="col">Scene group</th><th scope="col">Original</th><th scope="col">Lowering</th></tr></thead><tbody id="recovery-regression-rows"></tbody></table>
+          <div class="recovery-paired" id="recovery-paired"></div><p class="diagnostic-note" id="recovery-regression-note"></p>
+          <details id="recovery-evidence"><summary>Controls, release checks &amp; limits</summary><div class="detail-copy"><p id="recovery-runtime"></p><div id="recovery-trials"></div><div id="recovery-paired-details"></div><div id="recovery-history"></div><h3>What this can establish</h3><ul id="recovery-limits"></ul><p id="recovery-next"></p></div><div class="diagnostic-provenance" id="recovery-provenance"></div></details>
+          </details>
+        </section>
+        <section class="diagnostic-section" id="diagnostic" aria-labelledby="diagnostic-title" hidden>
+          <div class="diagnostic-top"><h2 id="diagnostic-title">What changed the grip?</h2><span class="pill">Diagnostic replay</span></div>
+          <p class="diagnostic-detail" id="diagnostic-detail"></p>
+          <p class="diagnostic-warning" id="diagnostic-warning" role="status" hidden></p>
+          <table class="diagnostic-table"><caption class="sr-only">Results for planned conditions on the same inspected scene. These are diagnostic outcomes, not benchmark qualifications.</caption><thead><tr><th scope="col">Condition</th><th scope="col">Learned</th><th scope="col">Reference</th></tr></thead><tbody id="diagnostic-rows"></tbody></table>
+          <p class="diagnostic-note" id="diagnostic-note">Same inspected scene. These results do not change the benchmark qualification below.</p>
+          <details id="diagnostic-evidence"><summary>Controls, recovery &amp; limits</summary><div class="detail-copy"><p id="diagnostic-runtime"></p><div id="diagnostic-trials"></div><div id="diagnostic-history"></div><h3>What this can establish</h3><ul id="diagnostic-limits"></ul><p id="diagnostic-next"></p></div><div class="diagnostic-provenance" id="diagnostic-provenance"></div></details>
+        </section>
+        <section class="snapshot" aria-labelledby="snapshot-title"><div class="snapshot-head"><h2 id="snapshot-title">Current benchmark</h2><span class="pill"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m8 1 6 3.5v7L8 15l-6-3.5v-7L8 1Z M2 4.5 8 8l6-3.5M8 8v7" stroke="currentColor"/></svg>Simulation only</span></div><div class="stats"><div class="stat"><span class="stat-value" id="nominal-value">—</span><span class="stat-label">Nominal cases qualified</span></div><div class="stat"><span class="stat-value" id="stress-value">—</span><span class="stat-label">Stress cases qualified</span></div><div class="stat"><span class="stat-value" id="group-value">—</span><span class="stat-label">Training groups</span></div></div><p id="error-summary" class="error-summary" hidden></p><p class="snapshot-note" id="snapshot-note">Measured in simulation. Physical robot performance is not established.</p></section>
+        <section aria-labelledby="next-section-title"><div class="section-band"><span>01</span><h2 id="next-section-title">The next useful contribution</h2></div>
+          <article id="brief" class="brief" hidden>
+            <div class="brief-main">
+              <svg class="brief-art" viewBox="0 0 152 54" fill="none" aria-hidden="true"><rect x="1" y="1" width="42" height="50" rx="10" fill="#f7f9ff" stroke="#c8d5ef"/><rect x="11" y="27" width="17" height="15" rx="3" transform="rotate(-16 11 27)" fill="#bdd0fb" stroke="#7b9cdd"/><path d="m47 22 7 4-7 4v-8Z" fill="#b4c1d7"/><rect x="58" y="1" width="40" height="50" rx="10" fill="#f7f9ff" stroke="#c8d5ef"/><path d="M67 15v11m20-11v11M67 15h20M72 15v-5m10 5v-5" stroke="#6c8cc5" stroke-width="1.6" stroke-linecap="round"/><rect x="71" y="24" width="14" height="15" rx="3" fill="#91b0f1" stroke="#6a8ed8"/><path d="m102 22 7 4-7 4v-8Z" fill="#b4c1d7"/><rect x="113" y="1" width="38" height="50" rx="10" fill="#eaf0ff" stroke="#acc0ec"/><path d="M120 41h24" stroke="#6d8ac0" stroke-width="1.5" stroke-linecap="round"/><rect x="125" y="23" width="14" height="16" rx="3" fill="#6b91eb" stroke="#527ad5"/><path d="m126 12 4 4 7-7" stroke="#5d7fbd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div class="brief-status"><span class="pill">Provisional hypothesis</span><span id="brief-kind"></span></div>
+              <h2 id="brief-title"></h2><p class="brief-instruction" id="brief-instruction"></p>
+              <div class="brief-action"><a id="download-brief" class="primary" download><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2v10m-4-4 4 4 4-4M3 13v4h14v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="brief-cta-label">Download capture brief</span></a><p id="brief-action-note">A practical brief, backed by the saved experiment.</p></div>
+              <div class="why"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.4"/><path d="M10 9v5m0-8v.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><p id="brief-why"></p></div>
+            </div>
+            <details id="brief-evidence"><summary>Why this example?</summary><div class="detail-copy"><h3>Full instruction</h3><p id="full-instruction"></p><p id="hypothesis-explanation"></p><h3 id="acceptance-heading">What a useful contribution includes</h3><ul id="acceptance"></ul><h3>Evidence from the benchmark</h3><div id="evidence-rows"></div><p id="hypothesis-next"></p></div></details>
+          </article>
+          <div id="no-hypotheses" class="empty" hidden><strong>No new investigation yet.</strong>A next step will appear when the benchmark supports a specific, testable hypothesis.</div>
+          <details id="hypotheses-details" class="hypotheses" hidden><summary><span>Other hypotheses</span><span id="hypothesis-count" class="pill"></span></summary><div id="hypotheses" class="row-list"></div></details>
+        </section>
+        <section class="comparison-section" aria-labelledby="comparison-title"><div class="section-band"><span>02</span><h2 id="comparison-title">Did the new examples help?</h2></div><div id="no-comparisons" class="empty" hidden><strong>The comparison is still to come.</strong>The next experiment will compare the baseline with additional general and targeted examples. No improvement is claimed yet.</div><div id="comparison" hidden><div class="comparison-head" aria-hidden="true"><span>Training version</span><span>Nominal</span><span>Stress</span></div><div id="comparison-rows" role="list"></div><p class="snapshot-note">Qualified cases / total cases. Full trial counts and errors are below.</p></div><div id="conclusion" class="conclusion" hidden><h3 id="conclusion-headline"></h3><p id="conclusion-detail"></p><p id="conclusion-next" class="next-step"></p></div></section>
+        <details class="history" id="historical-benchmark" hidden><summary>Original benchmark qualification</summary></details>
+        <details class="history" id="earlier-recovery" hidden><summary>Earlier: supported release</summary></details>
+        <details class="history" id="earlier-grip" hidden><summary>Earlier grip investigation</summary></details>
+        <details class="history" id="hypothesis-history" hidden><summary><span>Previous hypotheses</span><span id="history-count" class="pill"></span></summary><p class="history-note">Earlier proposals are kept for context. Use the current investigation above for the next step.</p><div id="history-rows"></div></details>
+        <details class="learning-path" id="learning-path"><summary>From video to a robot skill</summary><p class="path-note">The development path: a video supplies evidence. Action data, a calibrated environment and tests turn that evidence into a bounded robot capability.</p><ol>
+          <li><h3>Understand the demonstration</h3><p>Review timed actions, objects and state changes. Retain uncertainty, failures and recovery.</p></li>
+          <li><h3>Connect observations to actions</h3><p>Synchronize camera observations with measured robot or instrumented-gripper commands. Ordinary phone video does not supply these commands.</p></li>
+          <li><h3>Build the task in simulation</h3><p>Calibrate the robot, objects, contacts and sensors. Define the goal, limits and independent success checks.</p></li>
+          <li><h3>Test beyond the training examples</h3><p>Use held-out conditions, recovery and fault tests. Cover a declared operating range; unseen situations remain unknown.</p></li>
+          <li><h3>Validate on the physical robot</h3><p>Check the specific hardware under supervision before releasing a skill with supported conditions and known limits.</p></li>
+          </ol><p class="path-note">No finite simulator covers every possibility. More videos help only when they supply useful missing evidence.</p><div class="links"><a href="https://umi-gripper.github.io/" target="_blank" rel="noopener noreferrer">Instrumented capture · UMI <span aria-hidden="true">↗</span></a><a href="https://mujoco.readthedocs.io/en/stable/overview.html" target="_blank" rel="noopener noreferrer">Simulation · MuJoCo <span aria-hidden="true">↗</span></a></div></details>
+        <details class="methodology" id="methodology"><summary>Experiment details &amp; limits</summary><div class="detail-copy"><p id="baseline-detail"></p><div id="trial-details"></div><h3>What this experiment can establish</h3><ul id="limitations"></ul></div><dl id="provenance"></dl><div class="links"><a href="/api/improvement/report" download>Download experiment report <span aria-hidden="true">↗</span></a></div></details>
+      </div>
+    </main>
+    <footer class="footer">A collection request is a hypothesis. Improvement needs a controlled comparison.</footer>
+  </div>
+  <script>
+  (()=>{
+    'use strict';
+    const $=id=>document.getElementById(id);
+    const list=value=>Array.isArray(value)?value:[];
+    const text=value=>typeof value==='string'?value:'';
+    const number=value=>Number.isFinite(value)&&value>=0?value:null;
+    const count=value=>number(value)===null?'—':new Intl.NumberFormat().format(value);
+    const el=(tag,value,className)=>{const node=document.createElement(tag);if(value!==undefined)node.textContent=String(value);if(className)node.className=className;return node;};
+    let report=null,selected=null,loading=false,retentionSeries=null;
+    function ratio(node,metrics){node.replaceChildren(document.createTextNode(count(metrics?.qualified)+' '),el('small','/ '+count(metrics?.total)));}
+    function metricLabel(metrics){return count(metrics?.qualified)+' of '+count(metrics?.total)+' qualified';}
+    function result(value){return value===true?'Passed':value===false?'Failed':'Unassessed';}
+    function setHypothesis(item,moveFocus=false){
+      selected=item.id;$('brief').hidden=false;$('brief-evidence').open=false;
+      const request=item.request||{},isCapture=request.capture_mode==='aligned_simulation';
+      $('next-section-title').textContent=(report?.recovery||report?.retention)?'Next test':isCapture?'The next useful contribution':'Investigate the next weakness';
+      $('acceptance-heading').textContent=isCapture?'What a useful contribution includes':'What the investigation should check';
+      $('brief-title').textContent=text(request.title)||text(item.title)||'Investigate this failure';
+      $('brief-instruction').textContent=request.capture_mode==='aligned_simulation'?'Collect '+(number(request.required_groups)!==null?count(request.required_groups)+' ':'')+'independent simulated examples. Keep video, state and commands aligned through the result.':'Investigate the failure before collecting more examples.';
+      $('full-instruction').textContent=text(request.instruction);
+      $('brief-why').textContent=text(request.why)||text(item.explanation);
+      $('brief-kind').textContent=request.capture_mode==='aligned_simulation'?'Simulation-aligned examples':'Diagnostic evidence';
+      $('brief-evidence').querySelector('summary').textContent=(report?.recovery||report?.retention)?'What the next test will check':request.capture_mode==='aligned_simulation'?'Why this example?':'Why investigate this?';
+      $('brief-action-note').textContent=isCapture&&number(request.required_groups)!==null?count(request.required_groups)+' groups requested · collection does not start automatically.':'An investigation brief, with the supporting evidence.';
+      $('download-brief').href='/api/improvement/brief?id='+encodeURIComponent(item.id);
+      $('brief-cta-label').textContent=(report?.recovery||report?.retention)?'Download test brief':request.capture_mode==='aligned_simulation'?'Download capture brief':'Download investigation brief';
+      $('hypothesis-explanation').textContent=text(item.explanation);
+      $('hypothesis-next').textContent=text(item.next_action);
+      $('acceptance').replaceChildren(...list(request.acceptance).map(value=>el('li',text(value))));
+      if(!list(request.acceptance).length)$('acceptance').append(el('li','Review the capture brief for requirements.'));
+      $('evidence-rows').replaceChildren();
+      for(const evidence of list(item.evidence)){
+        const row=el('div',undefined,'evidence-row');
+        row.append(el('strong',text(evidence.case_id)||text(evidence.group)||'Benchmark case'),el('span',result(evidence.student_success)),el('p',text(evidence.reason)));
+        const support=el('p','Reference: '+result(evidence.teacher_success)+' · Control: '+result(evidence.control_success));row.append(support);$('evidence-rows').append(row);
+      }
+      if(!list(item.evidence).length)$('evidence-rows').append(el('p','No individual case evidence was supplied.'));
+      document.querySelectorAll('.hypothesis-row').forEach(node=>node.setAttribute('aria-pressed',String(node.dataset.id===selected)));
+      if(moveFocus){$('hypotheses-details').open=false;$('brief-title').tabIndex=-1;$('brief-title').focus({preventScroll:true});$('brief').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}
+    }
+    function renderTrials(parent,label,metrics){
+      const block=el('div');block.append(el('h3',label));const rows=el('ul');
+      for(const [name,value] of [['Qualified cases',metrics?.qualified],['Cases',metrics?.total],['Successful trials',metrics?.successes],['Errors',metrics?.errors]])rows.append(el('li',name+': '+count(value)));
+      block.append(rows);parent.append(block);
+    }
+    function renderDiagnostic(value){
+      const diagnostic=value&&typeof value==='object'&&!Array.isArray(value)?value:null;
+      $('content').classList.toggle('has-diagnostic',Boolean(diagnostic));$('diagnostic').hidden=!diagnostic;$('diagnostic-evidence').open=false;
+      $('diagnostic-rows').replaceChildren();$('diagnostic-trials').replaceChildren();$('diagnostic-provenance').replaceChildren();$('diagnostic-history').replaceChildren();
+      if(!diagnostic)return;
+      const rows=list(diagnostic.rows).filter(row=>row&&typeof row==='object'),previous=list(diagnostic.previous_studies).filter(study=>study&&typeof study==='object');
+      $('diagnostic-note').textContent=(previous.length?'Latest '+count(rows.length)+' conditions from '+count(previous.length+1)+' diagnostic studies. ':'')+'Same inspected scene. These results do not change the benchmark qualification below.';
+      $('diagnostic-detail').textContent=text(diagnostic.detail);
+      let errors=0,controls=0;
+      for(const item of rows){
+        const row=el('tr'),condition=el('td');condition.append(el('strong',text(item.label)||text(item.id)),el('small',text(item.change)));row.append(condition);
+        for(const [key,label] of [['student','Learned'],['teacher','Reference']]){const trial=item[key]||{},cell=el('td'),outcome=el('span',result(trial.success),'trial-state');outcome.dataset.outcome=trial.success===true?'passed':trial.success===false?'failed':'unknown';cell.append(outcome);cell.setAttribute('aria-label',label+': '+result(trial.success));row.append(cell);}
+        $('diagnostic-rows').append(row);
+        const detail=el('article',undefined,'diagnostic-case');detail.append(el('h3',text(item.label)||text(item.id)));
+        for(const [key,label] of [['student','Learned'],['teacher','Reference']]){const trial=item[key]||{};detail.append(el('p',label+': '+result(trial.success)+' · '+count(trial.recovery_count)+' recovery attempts · '+(number(trial.simulated_seconds)===null?'time unavailable':trial.simulated_seconds.toFixed(1)+' simulated seconds')+'. '+text(trial.reason)));}
+        detail.append(el('p','Open-jaw control successes: '+count(item.control_successes)+' · Errors: '+count(item.errors)+'.'));
+        $('diagnostic-trials').append(detail);errors+=number(item.errors)||0;controls+=number(item.control_successes)||0;
+      }
+      for(const [index,study] of previous.entries()){
+        const priorRows=list(study.rows);errors+=priorRows.reduce((sum,row)=>sum+(number(row?.errors)||0),0);controls+=priorRows.reduce((sum,row)=>sum+(number(row?.control_successes)||0),0);
+        const prior=el('article',undefined,'diagnostic-case');prior.append(el('h3','Earlier diagnostic '+(index+1)),el('p',count(priorRows.length)+' conditions · '+count(study.completed_native_episodes)+' episodes · '+(number(study.elapsed_seconds)===null?'time unavailable':study.elapsed_seconds.toFixed(1)+' s')+'. The complete earlier outcomes remain in the downloadable experiment report.'),el('p','Report: '+(text(study.report_sha256)||'not supplied'),'diagnostic-provenance'));$('diagnostic-history').append(prior);
+      }
+      errors=Math.max(errors,number(diagnostic.episode_errors)||0);controls=Math.max(controls,number(diagnostic.control_successes)||0);
+      if(!rows.length)$('diagnostic-detail').textContent='No measured diagnostic outcomes are available yet.';
+      $('diagnostic-warning').hidden=errors===0&&controls===0;
+      $('diagnostic-warning').textContent=(errors?count(errors)+' diagnostic errors. ':'')+(controls?count(controls)+' open-jaw control successes. ':'')+'Resolve these before interpreting the apparent result.';
+      $('diagnostic-runtime').textContent='Inspected scene: '+(text(diagnostic.case_id)||'not supplied')+' · '+(previous.length?'Total across '+count(previous.length+1)+' studies: ':'Wall time: ')+(number(diagnostic.elapsed_seconds)===null?'not supplied':diagnostic.elapsed_seconds.toFixed(1)+' s')+(number(diagnostic.completed_native_episodes)===null?'':' · '+count(diagnostic.completed_native_episodes)+' completed episodes')+'. These episodes replay the same scene; they are not independent scenarios.';
+      $('diagnostic-limits').replaceChildren(...list(diagnostic.limits).map(value=>el('li',text(value))));
+      $('diagnostic-next').textContent=text(diagnostic.next_step);
+      for(const [key,label] of [['report_sha256','Diagnostic report'],['protocol_sha256','Diagnostic protocol']])$('diagnostic-provenance').append(el('p',label+': '+(text(diagnostic[key])||'not supplied')));
+    }
+    function recoveryTrialDetail(item){
+      const detail=el('article',undefined,'diagnostic-case');detail.append(el('h3',text(item.label)||text(item.policy)),el('p',(item.variant==='controlled_lowering'?'Controlled lowering':'Original controller')+' · '+count(item.recovery_count)+' recovery attempts · '+(number(item.simulated_seconds)===null?'time unavailable':item.simulated_seconds.toFixed(1)+' simulated seconds')+'.'),el('p','Unsupported opening commands (sampled): '+count(item.unsupported_release_actions)+'. These are commands, not physical release events.'),el('p','Full task: '+result(item.success)+'. Support before first opening: '+result(item.support_confirmed_before_open)+'.'));
+      if(Object.hasOwn(item,'release_clearance_confirmed'))detail.append(el('p','Jaw clearance before withdrawal: '+result(item.release_clearance_confirmed)+'.'));
+      return detail;
+    }
+    function renderTaskContext(task,skillspace){
+      const parent=$('task-context');parent.replaceChildren();parent.hidden=!task||typeof task!=='object';if(parent.hidden)return;
+      const validLink=value=>{if(typeof value!=='string'||!value.trim())return null;try{const url=new URL(value,location.href);return !url.username&&!url.password&&/^https?:$/.test(url.protocol)&&(url.origin===location.origin||url.hostname==='dvidia.org')?url.href:null;}catch{return null;}};
+      if(task.skillspace_binding==='linked'&&skillspace&&text(skillspace.name)&&validLink(skillspace.url)){const link=el('a',text(skillspace.name)+' / '+(text(task.name)||'Task'));link.href=validLink(skillspace.url);parent.append(link);}else if(text(task.name)&&text(task.name)!==$('page-title').textContent)parent.append(el('span',text(task.name)));
+      parent.append(el('span',task.scope==='simulation-only'?'Simulation development':'Research evidence','task-scope'));
+      const q=task.qualification||{},passed=number(q.passed),total=number(q.total);if(passed!==null&&total!==null&&passed<=total)parent.append(el('span',count(passed)+' / '+count(total)+' original simulation cases'));
+      parent.append(el('span',q.physical_validation==='not_tested'?'Physical robot: untested':'Physical validation: '+(q.physical_validation==='tested'?'recorded':'unassessed')));
+      if(task.skillspace_binding==='unlinked')parent.append(el('span','Not linked to a Skillspace','task-unlinked'));
+    }
+    function drawRetentionCurve(){
+      const canvas=$('retention-chart');if(!retentionSeries||canvas.hidden||!canvas.clientWidth)return;
+      const width=canvas.clientWidth,height=174,dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(width*dpr);canvas.height=height*dpr;const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);ctx.clearRect(0,0,width,height);
+      const left=38,right=12,top=17,bottom=29,pw=width-left-right,ph=height-top-bottom,all=retentionSeries.rows.flatMap(row=>row.points),duration=retentionSeries.duration,max=Math.max(1,(retentionSeries.guard||0)*1000,...all.map(point=>point.value*1000)),ceiling=Math.ceil(max/5)*5;
+      const x=value=>left+value/duration*pw,y=value=>top+ph-value/ceiling*ph;ctx.font='10px system-ui';ctx.lineWidth=1;ctx.textAlign='right';
+      for(let tick=0;tick<=2;tick++){const value=ceiling*tick/2,py=y(value);ctx.strokeStyle='#dbe2ec';ctx.beginPath();ctx.moveTo(left,py);ctx.lineTo(width-right,py);ctx.stroke();ctx.fillStyle='#67768b';ctx.fillText(Number(value.toFixed(1)).toString(),left-7,py+3);}
+      ctx.textAlign='center';for(let tick=0;tick<=3;tick++){const value=duration*tick/3;ctx.fillStyle='#67768b';ctx.fillText(Number(value.toFixed(1)).toString()+' s',x(value),height-9);}
+      if(retentionSeries.guard!==null){const guard=retentionSeries.guard*1000,py=y(guard);ctx.save();ctx.strokeStyle='#a17b46';ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(left,py);ctx.lineTo(width-right,py);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#886539';ctx.textAlign='right';ctx.fillText(Number(guard.toFixed(1))+' mm guard',width-right,py-5);ctx.restore();}
+      for(const row of retentionSeries.rows){ctx.strokeStyle=row.color;ctx.lineWidth=2;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();let prior=null;for(const point of row.points){if(!prior||point.time-prior.time>row.cadence*1.6||point.stage!==prior.stage)ctx.moveTo(x(point.time),y(point.value*1000));else ctx.lineTo(x(point.time),y(point.value*1000));prior=point;}ctx.stroke();for(const point of row.points){ctx.beginPath();ctx.arc(x(point.time),y(point.value*1000),1.3,0,Math.PI*2);ctx.fillStyle=row.color;ctx.fill();}}
+    }
+    function renderRetention(value){
+      const data=value&&typeof value==='object'&&!Array.isArray(value)?value:null;$('retention').hidden=!data;$('main').classList.toggle('has-retention',Boolean(data));$('retention-evidence').open=false;$('earlier-recovery').open=false;$('earlier-recovery').hidden=!data||$('recovery').hidden;
+      if(data)$('earlier-recovery').append($('recovery'));else $('content').insertBefore($('recovery'),$('retention').nextSibling);
+      retentionSeries=null;if(!data)return;$('historical-benchmark').hidden=false;$('historical-benchmark').append(document.querySelector('.snapshot'));
+      const groups=[data.regression?.nominal,data.regression?.actuator_stress],countKeys=['cases','baseline_successes','candidate_successes','improved','regressed','unchanged','incomplete'],known=groups.every(group=>group&&countKeys.every(key=>number(group[key])!==null)),checks=number(data.episode_errors)!==null&&number(data.control_successes)!==null,incomplete=known?groups.reduce((n,g)=>n+g.incomplete,0):null,issue=(number(data.episode_errors)||0)>0||(number(data.control_successes)||0)>0||(incomplete||0)>0,ready=known&&checks&&!issue;
+      $('retention-status').textContent=issue?'Needs review':!ready?'Unassessed':data.promotion==='not-promoted'?'Not promoted':'Development result';$('retention-title').textContent=issue?'This experiment needs review.':!ready?'The result is not fully assessed.':text(data.headline)||'What happened during carry?';$('retention-scope').textContent='Simulation · '+(number(data.deadline_seconds)===null?'deadline unreported':count(data.deadline_seconds)+' s limit');
+      $('retention-warning').hidden=ready;$('retention-warning').textContent=(number(data.episode_errors)>0?count(data.episode_errors)+' experiment errors. ':'')+(number(data.control_successes)>0?count(data.control_successes)+' open-jaw control successes. ':'')+(incomplete>0?count(incomplete)+' incomplete comparisons. ':'')+(!known||!checks?'Results or control checks are not fully reported. ':'')+'Resolve these before interpreting performance.';
+      const rows=list(data.target?.rows).filter(row=>row&&typeof row==='object'),before=rows.find(row=>row.policy==='student'&&row.variant==='baseline'),candidates=rows.filter(row=>row.policy==='student'&&row.variant!=='baseline'),after=text(data.candidate_variant)?candidates.find(row=>row.variant===data.candidate_variant):candidates.length===1?candidates[0]:undefined,plotRows=[];
+      for(const [row,color] of [[before,'#8a929f'],[after,'#315fe5']]){const source=row?.retention||{},points=list(source.curve).slice(0,5000).filter(point=>point&&number(point.time)!==null&&number(point.relative_offset_error_m)!==null).map(point=>({time:point.time,value:point.relative_offset_error_m,stage:text(point.stage)})).sort((a,b)=>a.time-b.time);if(points.length)plotRows.push({points,color,cadence:number(source.curve_cadence_seconds)||.1});}
+      const maxTime=Math.max(0,...plotRows.flatMap(row=>row.points.map(point=>point.time))),duration=number(data.deadline_seconds)||maxTime,boundedRows=plotRows.map(row=>({...row,points:row.points.filter(point=>point.time<=duration)})).filter(row=>row.points.length);retentionSeries=duration>0&&boundedRows.length?{rows:boundedRows,duration,guard:number(data.retention_guard?.offset_m)}:null;
+      $('retention-chart').hidden=!retentionSeries;$('retention-curve-empty').hidden=Boolean(retentionSeries);$('retention-curve-scope').textContent='Learned controller · loaded-motion samples'+(number(after?.retention?.curve_cadence_seconds)?' every '+after.retention.curve_cadence_seconds+' s':'')+'. World-frame offset change. Gaps and stage changes stay separate.'+(number(data.retention_guard?.offset_m)!==null?' Dashed line: original '+(data.retention_guard.offset_m*1000).toFixed(0)+' mm recovery guard.':'');
+      const formatDrift=row=>number(row?.retention?.maximum_pre_recovery_loaded_offset_m)===null?'—':(row.retention.maximum_pre_recovery_loaded_offset_m*1000).toFixed(1),successes=ready?groups.reduce((n,g)=>n+g.candidate_successes,0):null,total=number(data.regression?.scenes),regressed=ready?groups.reduce((n,g)=>n+g.regressed,0):null;
+      const lift=row=>row?.lift_seen===true?'Yes':row?.lift_seen===false?'No':'—',recoveryAt=row=>{const times=list(row?.retention?.events).filter(event=>event?.id==='phase:recover_wait'&&number(event.time)!==null).map(event=>event.time);return times.length?Math.min(...times).toFixed(2):'—';};
+      $('retention-results').replaceChildren();for(const [label,resultText,context] of [['Sustained lift',lift(before)+' → '+lift(after),'Original → candidate · native check'],['Recovery triggered',recoveryAt(before)+' → '+recoveryAt(after)+' s','Learned controller · actual event time'],['Original simulation cases',ready&&total!==null?count(successes)+' / '+count(total):'Unassessed',ready?count(regressed)+' completion regressions':'Evidence needs review']]){const item=el('div');item.append(el('span',label),el('strong',resultText),el('small',context));$('retention-results').append(item);}
+      $('retention-chart').setAttribute('aria-label','Measured object-to-hand drift. Peak before recovery: original '+formatDrift(before)+' millimetres; candidate '+formatDrift(after)+' millimetres. Separate sampled segments are not continuous tracking.');
+      $('retention-detail').textContent=text(data.detail)+' Peak drift before recovery: '+formatDrift(before)+' → '+formatDrift(after)+' mm (original → candidate, learned controller).';$('retention-condition').textContent=(text(data.target?.case_id)||'Target case')+' · '+text(data.target?.condition);$('retention-trials').replaceChildren();for(const row of rows){const item=el('article',undefined,'diagnostic-case');item.append(el('h3',text(row.label)||text(row.policy)),el('p','Full task: '+result(row.success)+' · '+(number(row.simulated_seconds)===null?'time unassessed':row.simulated_seconds.toFixed(2)+' simulated seconds')+' · Native sustained lift: '+result(row.lift_seen)+'.'));for(const event of list(row.retention?.events).filter(event=>event&&typeof event==='object'))item.append(el('p',(number(event.time)===null?'—':event.time.toFixed(2)+' s')+' · '+(text(event.basis)||text(event.id))));$('retention-trials').append(item);}
+      $('retention-regression').replaceChildren();for(const [index,label] of ['Nominal','Actuator stress'].entries()){const g=groups[index]||{};$('retention-regression').append(el('h3',label+' original scenes'),el('p',count(g.baseline_successes)+' / '+count(g.cases)+' original → '+count(g.candidate_successes)+' / '+count(g.cases)+' candidate. '+count(g.improved)+' improved · '+count(g.regressed)+' regressed · '+count(g.unchanged)+' unchanged · '+count(g.incomplete)+' incomplete.'));}
+      const previous=list(data.previous_studies).filter(study=>study&&typeof study==='object');
+      $('retention-runtime').textContent='Latest study: '+count(data.completed_native_episodes)+' completed simulation episodes · '+(number(data.elapsed_seconds)===null?'runtime unreported':data.elapsed_seconds.toFixed(1)+' s wall time')+'. '+(previous.length?'Across '+count(number(data.study_count)||previous.length+1)+' studies: '+count(data.total_completed_native_episodes)+' episodes · '+(number(data.total_elapsed_seconds)===null?'runtime unreported':data.total_elapsed_seconds.toFixed(1)+' s')+'. ':'')+'Episodes include repeated controllers and controls; they are not independent scenes. Aggregate checks: '+count(data.episode_errors)+' errors · '+count(data.control_successes)+' open-jaw control successes.';
+      $('retention-history').replaceChildren();for(const [index,study] of previous.entries()){const details=el('details'),summary=el('summary','Earlier retention study '+(index+1)),body=el('div',undefined,'detail-copy');details.append(summary,body);body.append(el('p',text(study.headline)),el('p',count(study.completed_native_episodes)+' episodes · '+(number(study.elapsed_seconds)===null?'runtime unreported':study.elapsed_seconds.toFixed(1)+' s')+'. Reuses the same original scenes.'));for(const row of list(study.target?.rows).filter(row=>row&&typeof row==='object'))body.append(el('h3',text(row.label)||text(row.policy)),el('p','Full task: '+result(row.success)+' · Native sustained lift: '+lift(row)+'.'));for(const [key,label] of [['nominal','Nominal'],['actuator_stress','Actuator stress']]){const g=study.regression?.[key]||{};body.append(el('p',label+': '+count(g.baseline_successes)+' / '+count(g.cases)+' original → '+count(g.candidate_successes)+' / '+count(g.cases)+' candidate. '+count(g.improved)+' improved · '+count(g.regressed)+' regressed · '+count(g.incomplete)+' incomplete.'));}for(const [key,label] of [['report_sha256','Report'],['protocol_sha256','Protocol']])body.append(el('p',label+': '+(text(study[key])||'not supplied'),'diagnostic-provenance'));$('retention-history').append(details);}
+      $('retention-limits').replaceChildren(...list(data.limits).map(value=>el('li',text(value))));$('retention-next').textContent=text(data.next_step);$('retention-provenance').replaceChildren();for(const [key,label] of [['report_sha256','Experiment report'],['protocol_sha256','Frozen protocol']])$('retention-provenance').append(el('p',label+': '+(text(data[key])||'not supplied')));
+      requestAnimationFrame(drawRetentionCurve);
+    }
+    new ResizeObserver(()=>requestAnimationFrame(drawRetentionCurve)).observe($('retention-chart'));
+    function renderRecoveryCheckpoints(before,after){
+      const parent=$('recovery-sequence'),rows=[before,after].filter(Boolean),hasEvents=rows.some(row=>list(row.events).some(event=>event&&number(event.time_seconds)!==null));
+      parent.replaceChildren();parent.hidden=!hasEvents;if(!hasEvents)return;
+      const heading=el('div',undefined,'recovery-timeline-heading');heading.append(el('h3','Recovery checkpoints'),el('p','Learned controller · times in seconds'));parent.append(heading);
+      for(const row of rows){
+        const lane=el('div',undefined,'recovery-lane'),head=el('div',undefined,'recovery-lane-head'),events=el('ol',undefined,'recovery-events'),source=list(row.events).filter(event=>event&&typeof event==='object'),candidate=row.variant==='controlled_lowering',end=number(row.simulated_seconds);
+        lane.dataset.variant=row.variant;head.append(el('strong',candidate?'Candidate':'Original'),el('span',row.success===false?'Task incomplete':row.success===true?'Task completed':'Task unassessed'));lane.append(head,events);
+        for(const [kind,label] of [['recovery_start','Recovery starts'],['first_open_command','Open command'],['jaw_clearance','Jaws clear'],['episode_end','Episode ends']]){
+          const point=source.find(event=>event.kind===kind),item=el('li',undefined,'recovery-event'),value=number(point?.time_seconds),valid=value!==null&&(end===null||value<=end+.001);
+          item.dataset.state=!valid?'unknown':point.state==='failed'?'incomplete':kind==='jaw_clearance'?'confirmed':'observed';
+          item.append(el('strong',valid?value.toFixed(2)+' s':'—'),el('span',kind==='episode_end'&&row.reason==='horizon'?'Deadline reached':label));
+          const note=!valid?'Unassessed':kind==='first_open_command'?text(point.label).replace(/^Open commanded /,''):kind==='jaw_clearance'?'Before withdrawal':kind==='episode_end'?text(point.label):'';
+          if(note)item.append(el('small',note));if(point)item.title=text(point.label)+' · '+(valid?value.toFixed(2)+' seconds':'unassessed');events.append(item);
+        }
+        parent.append(lane);
+      }
+    }
+    function renderRecoverySummary(recovery,rows,paired,pairedComplete){
+      const groups=[recovery.regression?.nominal,recovery.regression?.actuator_stress],scene=text(recovery.target?.case_id)||'inspected scene',deadline=number(recovery.deadline_seconds),candidates=rows.filter(row=>row.variant==='controlled_lowering'&&(row.policy==='student'||row.policy==='teacher'));
+      const expectedPair=candidates.length===2&&new Set(candidates.map(row=>row.policy)).size===2;
+      const knownControls=number(recovery.episode_errors)!==null&&number(recovery.control_successes)!==null;
+      const needsReview=(number(recovery.episode_errors)||0)>0||(number(recovery.control_successes)||0)>0||paired.incomplete>0;
+      const ready=knownControls&&pairedComplete&&!needsReview;
+      const clearanceKnown=expectedPair&&candidates.every(row=>typeof row.release_clearance_confirmed==='boolean'),clearancePassed=candidates.filter(row=>row.release_clearance_confirmed===true).length;
+      const taskKnown=expectedPair&&candidates.every(row=>typeof row.success==='boolean'),taskPassed=candidates.filter(row=>row.success===true).length;
+      const regressionKnown=groups.every(group=>group&&['cases','baseline_successes','candidate_successes'].every(key=>number(group[key])!==null))&&number(recovery.regression?.scenes)!==null;
+      const successes=regressionKnown?groups.reduce((sum,group)=>sum+group.candidate_successes,0):null,total=number(recovery.regression?.scenes);
+      const observedPartial=ready&&clearanceKnown&&clearancePassed===2&&taskKnown&&taskPassed===0;
+      $('recovery-status').textContent=needsReview?'Needs review':observedPartial?'Partial result':ready&&taskKnown?'Measured result':'Unassessed';
+      $('recovery-title').textContent=needsReview?'Evidence needs review.':observedPartial?'Release check confirmed. Task unfinished.':!ready||!taskKnown?'Recovery is not fully assessed.':text(recovery.headline)||'What changed in recovery?';
+      $('recovery-scope').textContent='Simulation · '+(deadline===null?'deadline unreported':'original '+count(deadline)+' s limit');
+      const releaseValue=needsReview?'Needs review':!ready||!clearanceKnown?'Unassessed':clearancePassed===2?'Confirmed':clearancePassed===0?'Not confirmed':'Partial';
+      const taskValue=needsReview?'Needs review':!ready||!taskKnown?'Unassessed':taskPassed===0?'Incomplete':taskPassed===2?'Completed':'Mixed result';
+      const regressionValue=needsReview?'Needs review':!ready||!regressionKnown?'Unassessed':count(successes)+' / '+count(total);
+      const unchanged=ready&&paired.improved===0&&paired.regressed===0;
+      const summaries=[{label:'Release check',value:releaseValue,context:clearanceKnown?count(clearancePassed)+'/2 controllers · '+scene:'Clearance before withdrawal',state:ready&&clearanceKnown&&clearancePassed===2?'confirmed':'neutral'},{label:'Full task',value:taskValue,context:scene+' · '+(deadline===null?'deadline unreported':count(deadline)+' s deadline'),state:ready&&taskKnown&&taskPassed===0?'incomplete':'neutral'},{label:'Original cases',value:regressionValue,context:ready&&regressionKnown?(unchanged?'Unchanged · ':'')+count(paired.regressed)+' completion regressions':'Paired evidence incomplete',state:'neutral'}];
+      $('recovery-outcomes').replaceChildren(...summaries.map(item=>{const card=el('div',undefined,'recovery-outcome');card.dataset.state=needsReview?'review':item.state;card.append(el('span',item.label,'outcome-label'),el('strong',item.value),el('span',item.context,'outcome-context'));return card;}));
+      const before=rows.find(row=>row.policy==='student'&&row.variant==='baseline'),after=rows.find(row=>row.policy==='student'&&row.variant==='controlled_lowering');
+      renderRecoveryCheckpoints(before,after);
+      $('recovery-readouts').replaceChildren(el('p','Learned controller · original → candidate','recovery-readout-scope'));
+      for(const [key,label,unit,precision] of [['unsupported_release_actions','Unsupported opening commands · sampled','',0],['sampled_peak_descent_speed_before_support_m_s','Peak descent before support · sampled','m/s',2]]){
+        const a=number(before?.[key]),b=number(after?.[key]),format=value=>value===null?'—':precision?value.toFixed(precision):count(value),readout=el('div',undefined,'recovery-readout'),values=el('div',undefined,'recovery-readout-value');
+        values.append(el('span',format(a),'before'),el('span','→','change-arrow'),el('span',format(b)));if(unit)values.append(el('small',unit));readout.append(el('span',label,'recovery-readout-label'),values);readout.setAttribute('aria-label','Learned controller '+label+': '+format(a)+' to '+format(b)+(unit?' '+unit:''));$('recovery-readouts').append(readout);
+      }
+      $('recovery-readouts').title='Learned controller · '+scene+' · original versus controlled lowering. These sampled measurements are not physical release events or a complete safety assessment.';
+    }
+    function renderRecovery(value){
+      const recovery=value&&typeof value==='object'&&!Array.isArray(value)?value:null;
+      $('main').classList.toggle('has-recovery',Boolean(recovery));$('content').classList.toggle('has-recovery',Boolean(recovery));$('recovery-comparison').open=false;$('historical-benchmark').hidden=!recovery;$('historical-benchmark').open=false;$('recovery').hidden=!recovery;$('recovery-evidence').open=false;$('earlier-grip').open=false;
+      $('recovery-history').replaceChildren();$('recovery-target-rows').replaceChildren();$('recovery-regression-rows').replaceChildren();$('recovery-trials').replaceChildren();$('recovery-paired-details').replaceChildren();$('recovery-provenance').replaceChildren();$('recovery-paired').replaceChildren();
+      $('earlier-grip').hidden=!recovery||$('diagnostic').hidden;
+      const snapshot=document.querySelector('.snapshot');
+      if(recovery){$('earlier-grip').append($('diagnostic'));$('historical-benchmark').append(snapshot);}else{$('content').insertBefore(snapshot,$('content').querySelector('section[aria-labelledby="next-section-title"]'));$('content').insertBefore($('diagnostic'),snapshot);}
+      if(!recovery)return;
+      $('recovery-detail').textContent=text(recovery.detail);
+      const previous=list(recovery.previous_studies).filter(study=>study&&typeof study==='object'),target=recovery.target||{},targetRows=list(target.rows).filter(row=>row&&typeof row==='object'),regression=recovery.regression||{},groups=[['nominal','Nominal'],['actuator_stress','Actuator stress']],paired={improved:0,regressed:0,unchanged:0,incomplete:0};
+      const showClearance=recovery.recovery_revision==='supported-release-v2'||targetRows.some(row=>row.variant==='controlled_lowering'&&typeof row.release_clearance_confirmed==='boolean'),checkKey=showClearance?'release_clearance_confirmed':'support_confirmed_before_open',checkLabel=showClearance?'Clearance before withdrawal':'Support before first opening';
+      $('recovery-check-heading').textContent=checkLabel;
+      $('recovery-target-caption').textContent='Full task completion and '+checkLabel.toLowerCase()+' are separate outcomes on the previously inspected failed scene.';
+      $('recovery-check-note').textContent=(showClearance?'Jaw clearance before withdrawal is a separate recovery check. It does not establish a controlled set-down or full task completion.':'Support before the first opening does not establish a controlled set-down, support for later commands, or full task completion.')+' A dash means unassessed.';
+      $('recovery-condition').textContent=(text(target.case_id)||'Target scene')+' · '+(text(target.condition)||'Original limits; details not supplied');
+      $('recovery-target-title').textContent='Previously failed scene · '+(text(target.case_id)||'not supplied');
+      for(const item of targetRows){
+        const row=el('tr'),copy=el('td');copy.append(el('strong',text(item.label)||(item.policy==='teacher'?'Reference':'Learned')),el('small',item.variant==='controlled_lowering'?'Controlled lowering':item.variant==='baseline'?'Original controller':'Variant not supplied'));row.append(copy);
+        for(const [key,label] of [['success','Full task'],[checkKey,checkLabel]]){const cell=el('td'),outcome=el('span',typeof item[key]==='boolean'?result(item[key]):'—','trial-state');outcome.dataset.outcome=item[key]===true?'passed':item[key]===false?'failed':'unknown';cell.setAttribute('aria-label',label+': '+result(item[key]));cell.append(outcome);row.append(cell);}$('recovery-target-rows').append(row);
+        $('recovery-trials').append(recoveryTrialDetail(item));
+      }
+      if(!targetRows.length)$('recovery-detail').textContent='No measured recovery outcomes are available yet.';
+      for(const [key,label] of groups){const metrics=regression[key]||{},row=el('tr'),copy=el('td');copy.append(el('strong',label),el('small',count(metrics.cases)+' original scenes'));row.append(copy);for(const field of ['baseline_successes','candidate_successes']){const cell=el('td',undefined,'metric');ratio(cell,{qualified:metrics[field],total:metrics.cases});row.append(cell);}$('recovery-regression-rows').append(row);for(const field of Object.keys(paired))paired[field]+=number(metrics[field])||0;$('recovery-paired-details').append(el('h3',label+' paired completion'),el('p',count(metrics.improved)+' improved · '+count(metrics.regressed)+' regressed · '+count(metrics.unchanged)+' unchanged · '+count(metrics.incomplete)+' incomplete.'));}
+      const pairedComplete=groups.every(([key])=>Object.keys(paired).every(field=>number(regression[key]?.[field])!==null));
+      for(const field of Object.keys(paired)){const item=el('span');item.append(el('strong',pairedComplete?count(paired[field]):'—'),document.createTextNode(' '+field));$('recovery-paired').append(item);}
+      $('recovery-regression-title').textContent='Completion on '+count(regression.scenes)+' original scenes';
+      $('recovery-regression-note').textContent=(previous.length?'Latest of '+count(previous.length+1)+' studies, reusing the same '+count(regression.scenes)+' original scenes. ':'')+'These inspected scenes retain their own original force limits and '+count(recovery.deadline_seconds)+' s deadline. This regression check does not replace fresh qualification.';
+      const errors=number(recovery.episode_errors)||0,controls=number(recovery.control_successes)||0,checksReported=number(recovery.episode_errors)!==null&&number(recovery.control_successes)!==null;
+      $('recovery-warning').hidden=checksReported&&errors===0&&controls===0&&paired.incomplete===0&&pairedComplete;
+      $('recovery-warning').textContent=(errors?count(errors)+' recovery experiment errors. ':'')+(controls?count(controls)+' open-jaw control successes. ':'')+(paired.incomplete?count(paired.incomplete)+' incomplete scene comparisons. ':'')+(!checksReported?'Error and control counts are not fully reported. ':'')+(!pairedComplete?'Paired outcomes are not fully reported. ':'')+'Resolve these before interpreting the result.';
+      renderRecoverySummary(recovery,targetRows,paired,pairedComplete);
+      $('recovery-runtime').textContent=(previous.length?'Total across '+count(previous.length+1)+' recovery studies: ':'Wall time: ')+(number(recovery.elapsed_seconds)===null?'not supplied':recovery.elapsed_seconds.toFixed(1)+' s')+' · '+count(recovery.completed_native_episodes)+' completed episodes. These include repeat replays, reference controllers and controls; they are not independent scenarios. Open-jaw control successes: '+count(recovery.control_successes)+' · Errors: '+count(recovery.episode_errors)+'.';
+      for(const [index,study] of previous.entries()){
+        const details=el('details'),summary=el('summary','Earlier recovery study '+(index+1)),body=el('div',undefined,'detail-copy');details.append(summary,body);
+        body.append(el('p',count(study.regression?.scenes)+' reused scenes · '+count(study.completed_native_episodes)+' episodes · '+(number(study.elapsed_seconds)===null?'time unavailable':study.elapsed_seconds.toFixed(1)+' s')+'. Open-jaw control successes: '+count(study.control_successes)+' · Errors: '+count(study.episode_errors)+'.'));
+        for(const item of list(study.target?.rows).filter(row=>row&&typeof row==='object'))body.append(recoveryTrialDetail(item));
+        for(const [key,label] of groups){const metrics=study.regression?.[key]||{};body.append(el('h3',label+' completion'),el('p','Original '+count(metrics.baseline_successes)+' / '+count(metrics.cases)+' · Lowering '+count(metrics.candidate_successes)+' / '+count(metrics.cases)+'. '+count(metrics.improved)+' improved · '+count(metrics.regressed)+' regressed · '+count(metrics.unchanged)+' unchanged · '+count(metrics.incomplete)+' incomplete.'));}
+        for(const [key,label] of [['report_sha256','Recovery report'],['protocol_sha256','Recovery protocol']])body.append(el('p',label+': '+(text(study[key])||'not supplied'),'diagnostic-provenance'));
+        $('recovery-history').append(details);
+      }
+      $('recovery-limits').replaceChildren(...list(recovery.limits).map(value=>el('li',text(value))));$('recovery-next').textContent=text(recovery.next_step);
+      for(const [key,label] of [['report_sha256','Recovery report'],['protocol_sha256','Recovery protocol']])$('recovery-provenance').append(el('p',label+': '+(text(recovery[key])||'not supplied')));
+    }
+    function render(data){
+      if(!data||data.format!=='dvidia.skillspace-improvement.v1'||!data.summary||!Array.isArray(data.hypotheses)||!Array.isArray(data.comparisons))throw new Error('The experiment report has an unsupported format.');
+      report=data;
+      $('page-title').textContent=text(data.title)||'The next useful example.';
+      document.title=($('page-title').textContent)+' · Skillspace improvement · DVIDIA';
+      const complete=text(data.stage)==='Experiment complete';
+      $('page-eyebrow').textContent=data.retention?'Retention experiment · simulation only':data.recovery?'Controlled recovery · simulation only':data.diagnostic?'Grip investigation · simulation only':complete?'Measured comparison · simulation only':'Observe · test · improve';
+      $('page-intro').textContent=text(data.retention?.headline)||text(data.recovery?.headline)||text(data.diagnostic?.headline)||(complete?(text(data.conclusion?.headline)||'A measured comparison, and what to investigate next.'):'Let measured failures guide what to collect next.');
+      renderDiagnostic(data.diagnostic);renderRecovery(data.recovery);renderRetention(data.retention);renderTaskContext(data.task,data.skillspace);
+      $('learning-path').open=false;
+      $('comparison-title').textContent=data.recovery||data.diagnostic?'Earlier training comparison':complete?'What the experiment showed':'Did the new examples help?';
+      $('next-section-title').textContent='The next useful contribution';
+      ratio($('nominal-value'),data.summary.nominal);ratio($('stress-value'),data.summary.stress);$('group-value').textContent=count(data.summary.training_groups);
+      const errors=(number(data.summary.nominal?.errors)||0)+(number(data.summary.stress?.errors)||0),comparisonErrors=data.comparisons.reduce((total,row)=>total+(number(row?.nominal?.errors)||0)+(number(row?.stress?.errors)||0),0);$('error-summary').hidden=errors===0&&comparisonErrors===0;$('error-summary').textContent=(errors?count(errors)+' benchmark errors':'')+(errors&&comparisonErrors?' · ':'')+(comparisonErrors?count(comparisonErrors)+' comparison errors':'')+' — resolve these before interpreting performance.';
+      if(data.recovery&&(errors||comparisonErrors))$('historical-benchmark').open=true;
+      $('snapshot-note').textContent='Physical robot performance is not established.';
+      const hypotheses=data.hypotheses.filter(item=>item&&typeof item.id==='string'&&item.id.length>0);
+      $('brief').hidden=!hypotheses.length;$('no-hypotheses').hidden=Boolean(hypotheses.length);$('hypotheses-details').hidden=hypotheses.length<2;$('hypothesis-count').textContent=count(hypotheses.length);
+      $('hypotheses').replaceChildren();
+      for(const [index,item] of hypotheses.entries()){
+        const row=el('button',undefined,'hypothesis-row');row.type='button';row.dataset.id=item.id;row.setAttribute('aria-pressed','false');
+        const copy=el('span',undefined,'row-copy');copy.append(el('strong',text(item.title)||'Hypothesis '+(index+1)),el('small','Provisional · '+count(list(item.evidence).length)+' evidence cases'));
+        const arrow=el('span','↗','row-arrow');arrow.setAttribute('aria-hidden','true');row.append(el('span',String(index+1).padStart(2,'0'),'row-mark'),copy,arrow);row.addEventListener('click',()=>setHypothesis(item,true));$('hypotheses').append(row);
+      }
+      if(hypotheses.length)setHypothesis(hypotheses.find(item=>item.id===data.next_hypothesis_id)||hypotheses[0]);
+      const history=list(data.previous_hypotheses).filter(item=>item&&typeof item.id==='string');
+      $('hypothesis-history').hidden=history.length===0;$('hypothesis-history').open=false;$('history-count').textContent=count(history.length);$('history-rows').replaceChildren();
+      for(const item of history){const row=el('article',undefined,'history-row');row.append(el('h3',text(item.title)||'Earlier hypothesis'),el('span','Earlier development evidence · '+count(list(item.evidence).length)+' cases','pill'),el('p',text(item.explanation)));if(text(item.request?.instruction))row.append(el('p',text(item.request.instruction)));$('history-rows').append(row);}
+      $('comparison').hidden=!data.comparisons.length;$('no-comparisons').hidden=Boolean(data.comparisons.length);$('comparison-rows').replaceChildren();$('trial-details').replaceChildren();
+      for(const comparison of data.comparisons){
+        const row=el('div',undefined,'comparison-row');row.setAttribute('role','listitem');
+        const copy=el('div');copy.append(el('strong',text(comparison.label)||text(comparison.id)),el('span',count(comparison.train_groups)+' groups · '+count(comparison.train_samples)+' samples','small'));
+        const nominal=el('div',undefined,'metric'),stress=el('div',undefined,'metric');ratio(nominal,comparison.nominal);ratio(stress,comparison.stress);nominal.setAttribute('aria-label','Nominal: '+metricLabel(comparison.nominal));stress.setAttribute('aria-label','Stress: '+metricLabel(comparison.stress));row.append(copy,nominal,stress);$('comparison-rows').append(row);
+        renderTrials($('trial-details'),(text(comparison.label)||'Version')+' · nominal',comparison.nominal);renderTrials($('trial-details'),(text(comparison.label)||'Version')+' · stress',comparison.stress);
+        const paired=comparison.paired||{};$('trial-details').append(el('p','Nominal paired result: '+count(paired.improved)+' improved · '+count(paired.regressed)+' regressed · '+count(paired.unchanged)+' unchanged · '+count(paired.errors)+' errors. Training: '+(number(comparison.training_seconds)===null?'unavailable':comparison.training_seconds.toFixed(1)+' s')+'.'));
+        if(comparison.paired_stress){const stressPair=comparison.paired_stress;$('trial-details').append(el('p','Stress paired result: '+count(stressPair.improved)+' improved · '+count(stressPair.regressed)+' regressed · '+count(stressPair.unchanged)+' unchanged · '+count(stressPair.errors)+' errors.'));}
+      }
+      if(!data.comparisons.length){renderTrials($('trial-details'),'Baseline · nominal',data.summary.nominal);renderTrials($('trial-details'),'Baseline · stress',data.summary.stress);}
+      const conclusion=data.conclusion||{};$('conclusion').hidden=!text(conclusion.headline);$('conclusion-headline').textContent=text(conclusion.headline);$('conclusion-detail').textContent=text(conclusion.detail);$('conclusion-next').textContent=text(conclusion.next_step);
+      $('baseline-detail').textContent='Baseline '+(text(data.baseline?.id)||'unavailable')+' · '+(text(data.baseline?.label)||'saved benchmark')+'. Runtime: '+(number(data.summary.wall_seconds)===null?'unavailable':data.summary.wall_seconds.toFixed(1)+' s')+'.';
+      $('limitations').replaceChildren(...list(data.limitations).map(value=>el('li',text(value))));
+      if(!list(data.limitations).length)$('limitations').append(el('li','This is a development simulation experiment. No physical robot qualification or video-to-action transfer is established.'));
+      $('provenance').replaceChildren();const evidence=data.evidence||{};
+      for(const [key,label] of [['diagnosis_report_sha256','Current diagnosis report'],['diagnosis_protocol_sha256','Current diagnosis protocol'],['development_report_sha256','Development report'],['development_protocol_sha256','Development protocol'],['evaluation_report_sha256','Evaluation report'],['evaluation_protocol_sha256','Evaluation protocol']]){$('provenance').append(el('dt',label),el('dd',text(evidence[key])||'Not available'));}
+      $('content').hidden=false;
+    }
+    async function load(){
+      if(loading)return;loading=true;$('main').setAttribute('aria-busy','true');$('error').hidden=true;$('content').hidden=true;$('loading').hidden=false;$('retry').disabled=true;
+      const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),15000);
+      try{const response=await fetch('/api/improvement',{headers:{Accept:'application/json'},cache:'no-store',signal:controller.signal});if(!response.ok)throw new Error('The local experiment report is unavailable (HTTP '+response.status+').');render(await response.json());}
+      catch(error){$('error-message').textContent=error.name==='AbortError'?'The local report took too long to respond. You can try again.':error instanceof SyntaxError?'The local server returned an unreadable experiment report.':error.message||'The local report is unavailable.';$('error').hidden=false;}
+      finally{clearTimeout(timeout);loading=false;$('loading').hidden=true;$('retry').disabled=false;$('main').setAttribute('aria-busy','false');}
+    }
+    $('retry').addEventListener('click',load);load();
+  })();
+  </script>
+</body>
+</html>
