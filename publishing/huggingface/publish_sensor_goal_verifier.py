@@ -140,6 +140,9 @@ def prepare(run, report, output, publication_source_commit):
         "[case catalog](cases.json), [frozen protocol](protocol.json), and [integrity seal](integrity.json).\n\n"
         "Reproduce using the pinned source commit in `protocol.json` and the commands in the [repository guide](https://github.com/Dvidia-Inference/dvidia-training/blob/main/docs/sensor-goal-verifier.md).\n",
         encoding="utf-8")
+    # A source export may already have a seal for its earlier provenance pin.
+    # Rebuild rather than hash that stale seal into the new one.
+    (destination / "publication-integrity.json").unlink(missing_ok=True)
     files = inventory(destination)
     (destination / "publication-integrity.json").write_bytes(encoded({
         "schema": "dvidia.sensor-goal-v04-export-integrity/v1",
