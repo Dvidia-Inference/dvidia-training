@@ -1,0 +1,697 @@
+{
+  "analyzed_at": "2026-10-19T08:46:05.036623+00:00",
+  "checked_trial_count": 64,
+  "checks": {
+    "all_planned_requests_reconstructed_exactly": true,
+    "all_positive_telemetry_meets_declared_native_predicates": true,
+    "all_receipts_reparsed_with_frozen_parser": true,
+    "all_typed_output_and_usage_fields_match_receipts": true,
+    "attempt_ledger_equals_results": true,
+    "frozen_fixture_and_core_hashes_verified": true,
+    "same_telemetry_for_visible_and_occluded_control_within_each_layout": true
+  },
+  "completion_choice_instructions": {
+    "criteria": {
+      "complete": "Available evidence establishes every physical requirement in `task`.",
+      "incomplete": "Available evidence establishes that at least one physical requirement in `task` is not satisfied.",
+      "unknown": "No observed failure is established, but the available evidence cannot establish every physical requirement in `task`."
+    },
+    "instructions": "What conclusion about completion of `task` is justified by `current_image`, `goal_image` and any supplied `measured_state`? Assess only the supplied evidence. Do not invent unseen telemetry or assume that a single image establishes stability over time.",
+    "type": "choice"
+  },
+  "evaluation_plan_sha256": "5f02006190d97bdaca43f139f5bf221cece23bba868a5e9ee0f424618ea87d8f",
+  "fixture_cases_sha256": "f8b1b205b16e9833df7bd7063e0572355794dcede49a024f5d73ae6f65bbb1aa",
+  "frozen_core_source": "19acf0734d63ecebc07140c8d84302a54baee4c4",
+  "frozen_task": "Place the green shoe inside the outlined goal zone, matching the goal image's position and orientation. Completion requires the target shoe to have table support force greater than 0.01 N, robot contact force at most 0.01 N, XY position error at most 25 mm, yaw error at most 15 degrees, linear speed at most 0.01 m/s and angular speed at most 0.05 rad/s, all continuously for at least 200 ms. The goal picture is a visual reference, not proof that these physical conditions hold in the current picture. Answer unknown when the inputs cannot establish the required physical conditions. An orange shoe is a different object. The opaque inspection cover can hide the target.",
+  "interpretation": [
+    "The seven misses are genuine typed Jev responses under this frozen input contract, not missing telemetry, request substitution, a parser mismatch or a client completion cutoff.",
+    "The presence threshold of 0.8 does not control completion. The provider Choice decides complete/incomplete/unknown directly; the one successful completion has a separate Noul completion probability of 0.73.",
+    "All four covered targets have 0 visible target pixels and passing simulator measurements. Coverage explains why RGB is insufficient; it does not make the telemetry condition physically incomplete.",
+    "Visible complete controls returned unknown three times. Identical physical telemetry in the four occluded controls returned incomplete four times, consistent with inadequate use of supplied evidence in this diagnostic.",
+    "The frozen prompt explicitly permits measured_state, names the physical criteria and warns that a cover can hide the target. It is intentionally conservative when evidence is unavailable; no prompt variant was tested.",
+    "Provider outputs do not disclose their internal reasoning. Image weighting, training coverage, numerical handling, prompt interpretation and evidence trust remain untested hypotheses, not established causes.",
+    "The supplied simulator measurements already support a deterministic local predicate. Separating observation from verification avoids asking a learned model to re-judge an available numerical rule."
+  ],
+  "limits": [
+    "These are eight positive authored states within four correlated scene layouts, not eight independent real-world tasks.",
+    "The original simulator uses 100 recorded 2 ms samples and extrema over a declared 200 ms native window. This is discretized simulator evidence, not proof of continuous real-world contact or calibrated hardware sensors.",
+    "A local verifier can check what its evidence says; it cannot establish that fabricated, miscalibrated or untrusted measurements are physically true.",
+    "This analysis does not add a camera estimator, a learned policy, actuator control, deformable-shoe dynamics or real-robot transfer.",
+    "The new local-verifier benchmark must be a separately frozen protocol with fresh/adversarial cases; rescoring these known positives is a regression check, not held-out generalization."
+  ],
+  "missed_case_ids": [
+    "layout-01-complete",
+    "layout-01-occluded",
+    "layout-02-complete",
+    "layout-02-occluded",
+    "layout-03-complete",
+    "layout-03-occluded",
+    "layout-04-occluded"
+  ],
+  "original_results_sha256": "18c71ad02cd50763b04a90028b46740b98bd91ffa9d6071f5a179d4c22537ae4",
+  "physical_positives": [
+    {
+      "case_id": "layout-01-complete",
+      "category": "complete",
+      "current_png_sha256": "550516b315cb198407b0ef3be997af97805c11fcfe6b587b1091affd8060e8fb",
+      "expected_verdict": "complete",
+      "goal_png_sha256": "550516b315cb198407b0ef3be997af97805c11fcfe6b587b1091affd8060e8fb",
+      "measured_state": {
+        "angular_speed_rad_s": 2.7627744970784057e-09,
+        "linear_speed_m_s": 9.860075820885874e-10,
+        "native_observation_count": 100,
+        "native_timestep_s": 0.002,
+        "native_window_extrema": {
+          "angular_speed_rad_s": {
+            "max": 2.046823336044342e-06,
+            "min": 2.7627744970784057e-09
+          },
+          "linear_speed_m_s": {
+            "max": 1.0577925091606234e-06,
+            "min": 9.860075820885874e-10
+          },
+          "position_error_m": {
+            "max": 1.0856805225155038e-07,
+            "min": 1.0856741727623932e-07
+          },
+          "robot_contact_force_n": {
+            "max": 0.0,
+            "min": 0.0
+          },
+          "table_support_force_n": {
+            "max": 0.2942999990014351,
+            "min": 0.2942989247886606
+          },
+          "yaw_error_rad": {
+            "max": 2.1965561156353097e-09,
+            "min": 2.196340269667258e-09
+          }
+        },
+        "observation_window_s": 0.2,
+        "position_error_m": 1.0856805225155038e-07,
+        "robot_contact_force_n": 0.0,
+        "table_support_force_n": 0.2942999990014351,
+        "target_position_m": [
+          0.3999999772538078,
+          -0.10000010615852632,
+          -0.00010773874568926898
+        ],
+        "target_present": true,
+        "target_present_observation_count": 100,
+        "yaw_error_rad": 2.1965561156353097e-09
+      },
+      "measured_state_canonical_sha256": "5dda3cc790ab3160a640a7d0ffaf112f0925f16ba5f9fc0b2dac4417e6c566ba",
+      "p_complete_noul": 0.56,
+      "p_present_noul": 0.99,
+      "physical_reference": "complete",
+      "physical_requirement_checks": {
+        "angular_speed_all_samples_at_most_0_05rad_s": true,
+        "declared_native_interval_2ms": true,
+        "declared_window_200ms": true,
+        "linear_speed_all_samples_at_most_0_01m_s": true,
+        "position_all_samples_within_25mm": true,
+        "robot_contact_all_samples_at_most_0_01N": true,
+        "support_all_samples_above_0_01N": true,
+        "target_present": true,
+        "target_present_at_all_samples": true,
+        "yaw_all_samples_within_15deg": true
+      },
+      "presence_decision": "present",
+      "recognition": "miss",
+      "request_sha256": "22c765474ea8183e3002b7f92eb27d13136b75d5e1515a007133afc05d459ec9",
+      "telemetry_equal_to_visible_complete_control": true,
+      "verdict": "unknown",
+      "verdict_choice_probabilities": {
+        "complete": 0.31,
+        "incomplete": 0.06,
+        "unknown": 0.63
+      },
+      "verdict_confidence": 0.45,
+      "visible_target_pixels": 6192
+    },
+    {
+      "case_id": "layout-01-occluded",
+      "category": "occluded",
+      "current_png_sha256": "747b50dcdcb37d89c0a4a882fff12057e9062bd2c171154d1a6d408ef3e8af0d",
+      "expected_verdict": "complete",
+      "goal_png_sha256": "550516b315cb198407b0ef3be997af97805c11fcfe6b587b1091affd8060e8fb",
+      "measured_state": {
+        "angular_speed_rad_s": 2.7627744970784057e-09,
+        "linear_speed_m_s": 9.860075820885874e-10,
+        "native_observation_count": 100,
+        "native_timestep_s": 0.002,
+        "native_window_extrema": {
+          "angular_speed_rad_s": {
+            "max": 2.046823336044342e-06,
+            "min": 2.7627744970784057e-09
+          },
+          "linear_speed_m_s": {
+            "max": 1.0577925091606234e-06,
+            "min": 9.860075820885874e-10
+          },
+          "position_error_m": {
+            "max": 1.0856805225155038e-07,
+            "min": 1.0856741727623932e-07
+          },
+          "robot_contact_force_n": {
+            "max": 0.0,
+            "min": 0.0
+          },
+          "table_support_force_n": {
+            "max": 0.2942999990014351,
+            "min": 0.2942989247886606
+          },
+          "yaw_error_rad": {
+            "max": 2.1965561156353097e-09,
+            "min": 2.196340269667258e-09
+          }
+        },
+        "observation_window_s": 0.2,
+        "position_error_m": 1.0856805225155038e-07,
+        "robot_contact_force_n": 0.0,
+        "table_support_force_n": 0.2942999990014351,
+        "target_position_m": [
+          0.3999999772538078,
+          -0.10000010615852632,
+          -0.00010773874568926898
+        ],
+        "target_present": true,
+        "target_present_observation_count": 100,
+        "yaw_error_rad": 2.1965561156353097e-09
+      },
+      "measured_state_canonical_sha256": "5dda3cc790ab3160a640a7d0ffaf112f0925f16ba5f9fc0b2dac4417e6c566ba",
+      "p_complete_noul": 0.14,
+      "p_present_noul": 0.57,
+      "physical_reference": "complete",
+      "physical_requirement_checks": {
+        "angular_speed_all_samples_at_most_0_05rad_s": true,
+        "declared_native_interval_2ms": true,
+        "declared_window_200ms": true,
+        "linear_speed_all_samples_at_most_0_01m_s": true,
+        "position_all_samples_within_25mm": true,
+        "robot_contact_all_samples_at_most_0_01N": true,
+        "support_all_samples_above_0_01N": true,
+        "target_present": true,
+        "target_present_at_all_samples": true,
+        "yaw_all_samples_within_15deg": true
+      },
+      "presence_decision": "unknown",
+      "recognition": "miss",
+      "request_sha256": "207e6f5519077f996117540549c91f9b242b6811633219a3d98f3141966939c6",
+      "telemetry_equal_to_visible_complete_control": true,
+      "verdict": "incomplete",
+      "verdict_choice_probabilities": {
+        "complete": 0.02,
+        "incomplete": 0.6,
+        "unknown": 0.38
+      },
+      "verdict_confidence": 0.4,
+      "visible_target_pixels": 0
+    },
+    {
+      "case_id": "layout-02-complete",
+      "category": "complete",
+      "current_png_sha256": "a3221e451c24b164f0348f2cb6517d2bd2589a444c3d8d71a9942a98dee0bdf3",
+      "expected_verdict": "complete",
+      "goal_png_sha256": "a3221e451c24b164f0348f2cb6517d2bd2589a444c3d8d71a9942a98dee0bdf3",
+      "measured_state": {
+        "angular_speed_rad_s": 2.7627747344185066e-09,
+        "linear_speed_m_s": 9.86007602226177e-10,
+        "native_observation_count": 100,
+        "native_timestep_s": 0.002,
+        "native_window_extrema": {
+          "angular_speed_rad_s": {
+            "max": 2.0468233361619074e-06,
+            "min": 2.7627747344185066e-09
+          },
+          "linear_speed_m_s": {
+            "max": 1.0577925091174393e-06,
+            "min": 9.86007602226177e-10
+          },
+          "position_error_m": {
+            "max": 1.0856805243386722e-07,
+            "min": 1.0856741745389504e-07
+          },
+          "robot_contact_force_n": {
+            "max": 0.0,
+            "min": 0.0
+          },
+          "table_support_force_n": {
+            "max": 0.294299999001435,
+            "min": 0.29429892478866115
+          },
+          "yaw_error_rad": {
+            "max": 2.1965563118397924e-09,
+            "min": 2.1963403873392906e-09
+          }
+        },
+        "observation_window_s": 0.2,
+        "position_error_m": 1.0856805243386722e-07,
+        "robot_contact_force_n": 0.0,
+        "table_support_force_n": 0.294299999001435,
+        "target_position_m": [
+          0.4299999858101823,
+          -0.16000010763675526,
+          -0.00010773874568926887
+        ],
+        "target_present": true,
+        "target_present_observation_count": 100,
+        "yaw_error_rad": 2.1965563118397924e-09
+      },
+      "measured_state_canonical_sha256": "31383f77a7693d9a583e76a164d1057ee8389ceaf7314c140c8c6c6813681310",
+      "p_complete_noul": 0.51,
+      "p_present_noul": 0.97,
+      "physical_reference": "complete",
+      "physical_requirement_checks": {
+        "angular_speed_all_samples_at_most_0_05rad_s": true,
+        "declared_native_interval_2ms": true,
+        "declared_window_200ms": true,
+        "linear_speed_all_samples_at_most_0_01m_s": true,
+        "position_all_samples_within_25mm": true,
+        "robot_contact_all_samples_at_most_0_01N": true,
+        "support_all_samples_above_0_01N": true,
+        "target_present": true,
+        "target_present_at_all_samples": true,
+        "yaw_all_samples_within_15deg": true
+      },
+      "presence_decision": "present",
+      "recognition": "miss",
+      "request_sha256": "faa58fbc2678ab387f1f7f8b7c24aa781e0259cbf19a89a7459932ecb2a5d768",
+      "telemetry_equal_to_visible_complete_control": true,
+      "verdict": "unknown",
+      "verdict_choice_probabilities": {
+        "complete": 0.19,
+        "incomplete": 0.19,
+        "unknown": 0.62
+      },
+      "verdict_confidence": 0.43,
+      "visible_target_pixels": 6084
+    },
+    {
+      "case_id": "layout-02-occluded",
+      "category": "occluded",
+      "current_png_sha256": "3397103762d94870c515de9294b6999ad2c2b1cfc570daa1320b5724bf556fa8",
+      "expected_verdict": "complete",
+      "goal_png_sha256": "a3221e451c24b164f0348f2cb6517d2bd2589a444c3d8d71a9942a98dee0bdf3",
+      "measured_state": {
+        "angular_speed_rad_s": 2.7627747344185066e-09,
+        "linear_speed_m_s": 9.86007602226177e-10,
+        "native_observation_count": 100,
+        "native_timestep_s": 0.002,
+        "native_window_extrema": {
+          "angular_speed_rad_s": {
+            "max": 2.0468233361619074e-06,
+            "min": 2.7627747344185066e-09
+          },
+          "linear_speed_m_s": {
+            "max": 1.0577925091174393e-06,
+            "min": 9.86007602226177e-10
+          },
+          "position_error_m": {
+            "max": 1.0856805243386722e-07,
+            "min": 1.0856741745389504e-07
+          },
+          "robot_contact_force_n": {
+            "max": 0.0,
+            "min": 0.0
+          },
+          "table_support_force_n": {
+            "max": 0.294299999001435,
+            "min": 0.29429892478866115
+          },
+          "yaw_error_rad": {
+            "max": 2.1965563118397924e-09,
+            "min": 2.1963403873392906e-09
+          }
+        },
+        "observation_window_s": 0.2,
+        "position_error_m": 1.0856805243386722e-07,
+        "robot_contact_force_n": 0.0,
+        "table_support_force_n": 0.294299999001435,
+        "target_position_m": [
+          0.4299999858101823,
+          -0.16000010763675526,
+          -0.00010773874568926887
+        ],
+        "target_present": true,
+        "target_present_observation_count": 100,
+        "yaw_error_rad": 2.1965563118397924e-09
+      },
+      "measured_state_canonical_sha256": "31383f77a7693d9a583e76a164d1057ee8389ceaf7314c140c8c6c6813681310",
+      "p_complete_noul": 0.07,
+      "p_present_noul": 0.54,
+      "physical_reference": "complete",
+      "physical_requirement_checks": {
+        "angular_speed_all_samples_at_most_0_05rad_s": true,
+        "declared_native_interval_2ms": true,
+        "declared_window_200ms": true,
+        "linear_speed_all_samples_at_most_0_01m_s": true,
+        "position_all_samples_within_25mm": true,
+        "robot_contact_all_samples_at_most_0_01N": true,
+        "support_all_samples_above_0_01N": true,
+        "target_present": true,
+        "target_present_at_all_samples": true,
+        "yaw_all_samples_within_15deg": true
+      },
+      "presence_decision": "unknown",
+      "recognition": "miss",
+      "request_sha256": "f58a5417aaa6d0d5528b2c0c672e2fd6dfd9fb13080c382c080475529b938ca9",
+      "telemetry_equal_to_visible_complete_control": true,
+      "verdict": "incomplete",
+      "verdict_choice_probabilities": {
+        "complete": 0.01,
+        "incomplete": 0.74,
+        "unknown": 0.25
+      },
+      "verdict_confidence": 0.61,
+      "visible_target_pixels": 0
+    },
+    {
+      "case_id": "layout-03-complete",
+      "category": "complete",
+      "current_png_sha256": "9e077553701f0b54929386b69abc0d4a531f4dd8d0ef8c164dfbd4e11c2eec22",
+      "expected_verdict": "complete",
+      "goal_png_sha256": "9e077553701f0b54929386b69abc0d4a531f4dd8d0ef8c164dfbd4e11c2eec22",
+      "measured_state": {
+        "angular_speed_rad_s": 2.762774894432646e-09,
+        "linear_speed_m_s": 9.860076492373484e-10,
+        "native_observation_count": 100,
+        "native_timestep_s": 0.002,
+        "native_window_extrema": {
+          "angular_speed_rad_s": {
+            "max": 2.046823336032993e-06,
+            "min": 2.762774894432646e-09
+          },
+          "linear_speed_m_s": {
+            "max": 1.0577925090833765e-06,
+            "min": 9.860076492373484e-10
+          },
+          "position_error_m": {
+            "max": 1.0856805227409043e-07,
+            "min": 1.0856741726656525e-07
+          },
+          "robot_contact_force_n": {
+            "max": 0.0,
+            "min": 0.0
+          },
+          "table_support_force_n": {
+            "max": 0.2942999990014348,
+            "min": 0.2942989247886608
+          },
+          "yaw_error_rad": {
+            "max": 2.19655620081749e-09,
+            "min": 2.1963403318281394e-09
+          }
+        },
+        "observation_window_s": 0.2,
+        "position_error_m": 1.0856805227409043e-07,
+        "robot_contact_force_n": 0.0,
+        "table_support_force_n": 0.2942999990014348,
+        "target_position_m": [
+          0.3799999688429301,
+          -0.07000010400124504,
+          -0.00010773874568926843
+        ],
+        "target_present": true,
+        "target_present_observation_count": 100,
+        "yaw_error_rad": 2.19655620081749e-09
+      },
+      "measured_state_canonical_sha256": "768abe7ba6562b9fca3c790bad5cbe16fa33e4bb06537387b01c210f1547bf68",
+      "p_complete_noul": 0.62,
+      "p_present_noul": 0.98,
+      "physical_reference": "complete",
+      "physical_requirement_checks": {
+        "angular_speed_all_samples_at_most_0_05rad_s": true,
+        "declared_native_interval_2ms": true,
+        "declared_window_200ms": true,
+        "linear_speed_all_samples_at_most_0_01m_s": true,
+        "position_all_samples_within_25mm": true,
+        "robot_contact_all_samples_at_most_0_01N": true,
+        "support_all_samples_above_0_01N": true,
+        "target_present": true,
+        "target_present_at_all_samples": true,
+        "yaw_all_samples_within_15deg": true
+      },
+      "presence_decision": "present",
+      "recognition": "miss",
+      "request_sha256": "9cdeacbb6a7bfb89a52b1440577dc93a86581c29ac4a50445c64fbb9436a38cc",
+      "telemetry_equal_to_visible_complete_control": true,
+      "verdict": "unknown",
+      "verdict_choice_probabilities": {
+        "complete": 0.36,
+        "incomplete": 0.12,
+        "unknown": 0.52
+      },
+      "verdict_confidence": 0.28,
+      "visible_target_pixels": 6191
+    },
+    {
+      "case_id": "layout-03-occluded",
+      "category": "occluded",
+      "current_png_sha256": "0fd28594d7bee6d76cb13dd30e3bfe520918d470fa2bec53ecf84a493aed0556",
+      "expected_verdict": "complete",
+      "goal_png_sha256": "9e077553701f0b54929386b69abc0d4a531f4dd8d0ef8c164dfbd4e11c2eec22",
+      "measured_state": {
+        "angular_speed_rad_s": 2.762774894432646e-09,
+        "linear_speed_m_s": 9.860076492373484e-10,
+        "native_observation_count": 100,
+        "native_timestep_s": 0.002,
+        "native_window_extrema": {
+          "angular_speed_rad_s": {
+            "max": 2.046823336032993e-06,
+            "min": 2.762774894432646e-09
+          },
+          "linear_speed_m_s": {
+            "max": 1.0577925090833765e-06,
+            "min": 9.860076492373484e-10
+          },
+          "position_error_m": {
+            "max": 1.0856805227409043e-07,
+            "min": 1.0856741726656525e-07
+          },
+          "robot_contact_force_n": {
+            "max": 0.0,
+            "min": 0.0
+          },
+          "table_support_force_n": {
+            "max": 0.2942999990014348,
+            "min": 0.2942989247886608
+          },
+          "yaw_error_rad": {
+            "max": 2.19655620081749e-09,
+            "min": 2.1963403318281394e-09
+          }
+        },
+        "observation_window_s": 0.2,
+        "position_error_m": 1.0856805227409043e-07,
+        "robot_contact_force_n": 0.0,
+        "table_support_force_n": 0.2942999990014348,
+        "target_position_m": [
+          0.3799999688429301,
+          -0.07000010400124504,
+          -0.00010773874568926843
+        ],
+        "target_present": true,
+        "target_present_observation_count": 100,
+        "yaw_error_rad": 2.19655620081749e-09
+      },
+      "measured_state_canonical_sha256": "768abe7ba6562b9fca3c790bad5cbe16fa33e4bb06537387b01c210f1547bf68",
+      "p_complete_noul": 0.19,
+      "p_present_noul": 0.55,
+      "physical_reference": "complete",
+      "physical_requirement_checks": {
+        "angular_speed_all_samples_at_most_0_05rad_s": true,
+        "declared_native_interval_2ms": true,
+        "declared_window_200ms": true,
+        "linear_speed_all_samples_at_most_0_01m_s": true,
+        "position_all_samples_within_25mm": true,
+        "robot_contact_all_samples_at_most_0_01N": true,
+        "support_all_samples_above_0_01N": true,
+        "target_present": true,
+        "target_present_at_all_samples": true,
+        "yaw_all_samples_within_15deg": true
+      },
+      "presence_decision": "unknown",
+      "recognition": "miss",
+      "request_sha256": "0b9a08881ff8452447d301dc7e4379139afd0cda5b98a0ad7699e03a6e433c53",
+      "telemetry_equal_to_visible_complete_control": true,
+      "verdict": "incomplete",
+      "verdict_choice_probabilities": {
+        "complete": 0.04,
+        "incomplete": 0.68,
+        "unknown": 0.28
+      },
+      "verdict_confidence": 0.52,
+      "visible_target_pixels": 0
+    },
+    {
+      "case_id": "layout-04-complete",
+      "category": "complete",
+      "current_png_sha256": "76cba333e8bdf56f1b9e6011247095507ede97697ef99ada4b47ea7d1c71d3fa",
+      "expected_verdict": "complete",
+      "goal_png_sha256": "76cba333e8bdf56f1b9e6011247095507ede97697ef99ada4b47ea7d1c71d3fa",
+      "measured_state": {
+        "angular_speed_rad_s": 2.7627745907984584e-09,
+        "linear_speed_m_s": 9.860076016164131e-10,
+        "native_observation_count": 100,
+        "native_timestep_s": 0.002,
+        "native_window_extrema": {
+          "angular_speed_rad_s": {
+            "max": 2.046823336175752e-06,
+            "min": 2.7627745907984584e-09
+          },
+          "linear_speed_m_s": {
+            "max": 1.057792509081208e-06,
+            "min": 9.860076016164131e-10
+          },
+          "position_error_m": {
+            "max": 1.0856805211389336e-07,
+            "min": 1.085674170840469e-07
+          },
+          "robot_contact_force_n": {
+            "max": 0.0,
+            "min": 0.0
+          },
+          "table_support_force_n": {
+            "max": 0.294299999001435,
+            "min": 0.29429892478866077
+          },
+          "yaw_error_rad": {
+            "max": 2.1965565755177607e-09,
+            "min": 2.196340442850442e-09
+          }
+        },
+        "observation_window_s": 0.2,
+        "position_error_m": 1.0856805211389336e-07,
+        "robot_contact_force_n": 0.0,
+        "table_support_force_n": 0.294299999001435,
+        "target_position_m": [
+          0.4199999933733547,
+          -0.13000010836562884,
+          -0.00010773874568926879
+        ],
+        "target_present": true,
+        "target_present_observation_count": 100,
+        "yaw_error_rad": 2.1965565755177607e-09
+      },
+      "measured_state_canonical_sha256": "3d6bbfde2b8a5f42204c74f9b769faedabece74a205928559267d3afd6e9b5a0",
+      "p_complete_noul": 0.73,
+      "p_present_noul": 0.98,
+      "physical_reference": "complete",
+      "physical_requirement_checks": {
+        "angular_speed_all_samples_at_most_0_05rad_s": true,
+        "declared_native_interval_2ms": true,
+        "declared_window_200ms": true,
+        "linear_speed_all_samples_at_most_0_01m_s": true,
+        "position_all_samples_within_25mm": true,
+        "robot_contact_all_samples_at_most_0_01N": true,
+        "support_all_samples_above_0_01N": true,
+        "target_present": true,
+        "target_present_at_all_samples": true,
+        "yaw_all_samples_within_15deg": true
+      },
+      "presence_decision": "present",
+      "recognition": "correct",
+      "request_sha256": "63d8307d311a3bfd90ef515017c251ee82d3e4b714f7fd7bd716bf53b4d5974d",
+      "telemetry_equal_to_visible_complete_control": true,
+      "verdict": "complete",
+      "verdict_choice_probabilities": {
+        "complete": 0.53,
+        "incomplete": 0.07,
+        "unknown": 0.4
+      },
+      "verdict_confidence": 0.3,
+      "visible_target_pixels": 5693
+    },
+    {
+      "case_id": "layout-04-occluded",
+      "category": "occluded",
+      "current_png_sha256": "29772e10911231b9260ebe8b91a7c7f8f482324bd5002900affc445a0eeb8106",
+      "expected_verdict": "complete",
+      "goal_png_sha256": "76cba333e8bdf56f1b9e6011247095507ede97697ef99ada4b47ea7d1c71d3fa",
+      "measured_state": {
+        "angular_speed_rad_s": 2.7627745907984584e-09,
+        "linear_speed_m_s": 9.860076016164131e-10,
+        "native_observation_count": 100,
+        "native_timestep_s": 0.002,
+        "native_window_extrema": {
+          "angular_speed_rad_s": {
+            "max": 2.046823336175752e-06,
+            "min": 2.7627745907984584e-09
+          },
+          "linear_speed_m_s": {
+            "max": 1.057792509081208e-06,
+            "min": 9.860076016164131e-10
+          },
+          "position_error_m": {
+            "max": 1.0856805211389336e-07,
+            "min": 1.085674170840469e-07
+          },
+          "robot_contact_force_n": {
+            "max": 0.0,
+            "min": 0.0
+          },
+          "table_support_force_n": {
+            "max": 0.294299999001435,
+            "min": 0.29429892478866077
+          },
+          "yaw_error_rad": {
+            "max": 2.1965565755177607e-09,
+            "min": 2.196340442850442e-09
+          }
+        },
+        "observation_window_s": 0.2,
+        "position_error_m": 1.0856805211389336e-07,
+        "robot_contact_force_n": 0.0,
+        "table_support_force_n": 0.294299999001435,
+        "target_position_m": [
+          0.4199999933733547,
+          -0.13000010836562884,
+          -0.00010773874568926879
+        ],
+        "target_present": true,
+        "target_present_observation_count": 100,
+        "yaw_error_rad": 2.1965565755177607e-09
+      },
+      "measured_state_canonical_sha256": "3d6bbfde2b8a5f42204c74f9b769faedabece74a205928559267d3afd6e9b5a0",
+      "p_complete_noul": 0.11,
+      "p_present_noul": 0.49,
+      "physical_reference": "complete",
+      "physical_requirement_checks": {
+        "angular_speed_all_samples_at_most_0_05rad_s": true,
+        "declared_native_interval_2ms": true,
+        "declared_window_200ms": true,
+        "linear_speed_all_samples_at_most_0_01m_s": true,
+        "position_all_samples_within_25mm": true,
+        "robot_contact_all_samples_at_most_0_01N": true,
+        "support_all_samples_above_0_01N": true,
+        "target_present": true,
+        "target_present_at_all_samples": true,
+        "yaw_all_samples_within_15deg": true
+      },
+      "presence_decision": "unknown",
+      "recognition": "miss",
+      "request_sha256": "ec0eb371382c7fd7b35408483f2c9978fce56c17d2f6355bb4027ed68d4977af",
+      "telemetry_equal_to_visible_complete_control": true,
+      "verdict": "incomplete",
+      "verdict_choice_probabilities": {
+        "complete": 0.02,
+        "incomplete": 0.69,
+        "unknown": 0.29
+      },
+      "verdict_confidence": 0.53,
+      "visible_target_pixels": 0
+    }
+  ],
+  "positive_recall": {
+    "missed": 7,
+    "missed_occluded_incomplete": 4,
+    "missed_visible_unknown": 3,
+    "physical_positives": 8,
+    "recognized": 1
+  },
+  "provider_model": "jev-1.14.0",
+  "schema": "dvidia.local-verifier-forensics/v1",
+  "scope": "Offline forensic reanalysis only; no provider calls, prompt or threshold changes, model training, or changes to frozen results.",
+  "source_run": "2026-10-19 frozen Jev image-goal evaluation"
+}

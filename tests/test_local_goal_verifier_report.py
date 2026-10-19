@@ -130,6 +130,9 @@ class LocalGoalVerifierReportTests(unittest.TestCase):
         self.assertNotIn('</script><script>alert', html)
         self.assertIn('\\u003c/script\\u003e', html)
         self.assertNotIn('innerHTML', html)
+        self.assertIn('Reference completed placement for layout', html)
+        self.assertIn('?.focus()', html)
+        self.assertIn("le:'≤'", html)
 
     def test_fresh_output_and_checksums(self):
         manifest = build_report(self.root, self.out)

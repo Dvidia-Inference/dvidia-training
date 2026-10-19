@@ -1,0 +1,135 @@
+{
+  "benchmark_source_commit": "b4c76b13ccbdaff4f01726bee50fae5fcc1e4e4a",
+  "checks": {
+    "all_full_local_decisions_reproduced": 200,
+    "complete_two_hundred_case_inventory": true,
+    "exact_alias_pose_history_and_png_pairs": 8,
+    "exact_native_packet_history_mappings": 64,
+    "forged_streams_retain_physical_negative_truth": 8,
+    "independent_metric_and_quantile_recomputation": true,
+    "independently_checked_evidence_perturbations": 128,
+    "native_final_states_restored_and_measurements_reconstructed": 64,
+    "native_max_force_reconstruction_error_n": 3.087976365723222e-07,
+    "native_raw_history_predicates_recomputed": 64,
+    "publisher_tests_passed": 11,
+    "report_tests_passed": 9,
+    "twelve_frozen_source_files_match_working_tree_and_recorded_git_blobs": true,
+    "verifier_adversarial_tests_passed": 16,
+    "zero_generation_invalid": true
+  },
+  "independent_metrics": {
+    "blind_spot": {
+      "expected_matches": 8,
+      "latency_us": {
+        "max": 962.875,
+        "p50": 299.875,
+        "p95": 374.0794999999998,
+        "p99": 454.3614299999999,
+        "samples": 800
+      },
+      "physical_false_completion": [
+        8,
+        8
+      ],
+      "physical_true_completion": [
+        0,
+        0
+      ],
+      "planned": 8,
+      "verdicts": {
+        "complete": 8
+      }
+    },
+    "evidence_fault": {
+      "expected_matches": 128,
+      "latency_us": {
+        "max": 929.75,
+        "p50": 260.583,
+        "p95": 314.583,
+        "p99": 404.25333000000006,
+        "samples": 12800
+      },
+      "physical_false_completion": [
+        0,
+        0
+      ],
+      "physical_true_completion": [
+        0,
+        128
+      ],
+      "planned": 128,
+      "verdicts": {
+        "incomplete": 8,
+        "unknown": 120
+      }
+    },
+    "native": {
+      "expected_matches": 64,
+      "latency_us": {
+        "max": 799.084,
+        "p50": 295.083,
+        "p95": 317.46105,
+        "p99": 386.2583400000002,
+        "samples": 6400
+      },
+      "physical_false_completion": [
+        0,
+        48
+      ],
+      "physical_true_completion": [
+        16,
+        16
+      ],
+      "planned": 64,
+      "verdicts": {
+        "complete": 16,
+        "incomplete": 48
+      }
+    },
+    "overall": {
+      "expected_matches": 200,
+      "latency_us": {
+        "max": 962.875,
+        "p50": 266.583,
+        "p95": 318.16904999999997,
+        "p99": 398.29282999999987,
+        "samples": 20000
+      },
+      "physical_false_completion": [
+        8,
+        56
+      ],
+      "physical_true_completion": [
+        16,
+        144
+      ],
+      "planned": 200,
+      "verdicts": {
+        "complete": 24,
+        "incomplete": 56,
+        "unknown": 120
+      }
+    }
+  },
+  "input_integrity_sha256": "850abb8d4699713ae38665cefd9f45447ca2a3cb4c645c9d14a1f3ea4b4eb6b8",
+  "interpretation": [
+    "All 64 native cases meet the expected physical verdict with privileged native measurements; 16/16 positives are recognized and 0/48 native negatives are falsely completed.",
+    "All 128 evidence perturbations match the expected packet verdict : 120 unknown and 8 incomplete. Their underlying native scenes remain complete; this is not 128 new physical scenes.",
+    "All 8 consistent forgeries produce physical false completions. Overall physical false completion is 8/56; packet-contract agreement 200/200 is not physical or perception accuracy.",
+    "The 20,000 timing samples repeat 100 calls per case and exclude the required 200 ms observation history, acquisition, parsing, rendering, networking and actuators."
+  ],
+  "limitations": [
+    "This is artifact and implementation review plus restoration of final native states, not independent re-execution of each full trajectory or hardware validation.",
+    "Native observations use source-asserted zero uncertainty. The verifier neither authenticates those assertions nor estimates identity, pose, motion or contact from pixels.",
+    "The 8 layouts are correlated authored resets with development exposure documented in the protocol. Fresh does not mean wholly unseen or broadly representative.",
+    "The prior Jev run is a separate retrospective diagnostic. No new provider calls or matched-provider comparison were performed.",
+    "Two pre-freeze robustness findings were corrected: large JSON integers could raise, and per-step clock tolerance could accumulate. Current frozen version rejects both and reports actual aggregate history span."
+  ],
+  "original_core_intact": true,
+  "protocol_sha256": "453d671c9b2addcfb90eed095a9b39fea866f5089c432ed951de6a5717c00e6a",
+  "results_sha256": "2b3cfb91736bf6fc3c68826fc328878d65246cc8cebf15fe8278d3535f6126f9",
+  "reviewed_at": "2026-10-19T09:01:05.765334+00:00",
+  "schema": "dvidia.local-goal-independent-review/v1",
+  "sealed_input_files": 332,
+  "status": "passed"
+}
