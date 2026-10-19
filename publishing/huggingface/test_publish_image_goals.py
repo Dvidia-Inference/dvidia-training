@@ -76,6 +76,16 @@ class ImageGoalPublicationTests(unittest.TestCase):
         with self.assertRaisesRegex(publisher.PublicationError, 'SHA-256 digest'):
             self.stage()
 
+    def test_only_named_offline_verifier_may_be_python_source(self):
+        self.release['verify-image-goal-fixtures.py'] = b'print("offline verification")\n'
+        self.save()
+        result = self.stage()
+        publisher.check(result['plan'])
+        self.release['unrelated-script.py'] = b'print("outside publication scope")\n'
+        self.save()
+        with self.assertRaisesRegex(publisher.PublicationError, 'artifact type'):
+            publisher.check_export(self.export, 'b'*40)
+
     def test_omitted_unrun_trial_cannot_shrink_denominator(self):
         result = json.loads(self.release['results.json']); result['results'].pop()
         self.release['results.json'] = publisher.encoded(result); self.save()

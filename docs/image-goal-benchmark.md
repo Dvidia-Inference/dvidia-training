@@ -50,6 +50,8 @@ requirement for the simulator physics, but rendering support is required.
 Measured time on one host is not a minimum hardware specification.
 
 ```sh
+git clone --branch feat/image-goal-benchmark-v01 https://github.com/Dvidia-Inference/dvidia-training.git
+cd dvidia-training
 python -m pip install '.[arm]'
 dvidia-robot-sim fetch piper --output robot-assets
 dvidia-image-goal generate --assets robot-assets --output runs/image-goal-fixtures

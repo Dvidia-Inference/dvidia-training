@@ -44,6 +44,8 @@ def inventory(directory):
             if re.fullmatch(rb"[a-f0-9]{64}\n", raw) is None:
                 raise PublicationError("Expected exactly one newline-terminated SHA-256 digest.")
             inspect_bytes(name + ".txt", raw)
+        elif name in {"verify-image-goal-fixtures.py", NAMESPACE + "/verify-image-goal-fixtures.py"}:
+            inspect_bytes(name + ".txt", raw)
         else:
             inspect_bytes(name, raw)
         if name.endswith(".json"):
