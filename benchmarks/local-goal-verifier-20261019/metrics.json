@@ -1,0 +1,1094 @@
+{
+  "environment": {
+    "logical_cpus": 10,
+    "machine": "arm64",
+    "processor": "arm",
+    "python": "3.12.9",
+    "release": "25.5.0",
+    "system": "Darwin"
+  },
+  "evidence_links": {
+    "huggingface": "https://dvidia-robot-simulation-lab.static.hf.space/image-goals/v03/index.html",
+    "research": "https://research.dvidia.org/papers/local-goal-verifier-v03/"
+  },
+  "generation": {
+    "case_count": 200,
+    "invalid_cases": [],
+    "source": {
+      "commit": "b4c76b13ccbdaff4f01726bee50fae5fcc1e4e4a",
+      "files": {
+        "src/dvidia_training/asset_catalog.json": "592f363389a96fef7f9223737aa72a2f1a74f400238924bf6790ec5bfd3302b7",
+        "src/dvidia_training/asset_library.py": "12520ca13b7806004be37a0d7e0d1e023c90410c1eba899296fdcd5b28fdc7f7",
+        "src/dvidia_training/image_goal_benchmark.py": "38fa1de5da6ee9f8e0ab60bc77d2561e82de0dad17dcc1d067b5816d8633996a",
+        "src/dvidia_training/image_goal_scenes.py": "1fe41c3fe4d372b068681caf3f63766285b9238976043a9e15fe4dbadb40b79a",
+        "src/dvidia_training/jev_client.py": "f5dad86c692144a1cf85bfeecf68b99318ea8d9df08e0fe5d47d144f80a380ee",
+        "src/dvidia_training/local_goal_benchmark.py": "d1cf4990ba0239418855ea851416e37d3f3fd5c5e38bc0fb6183e432ba4e3ecf",
+        "src/dvidia_training/local_goal_scenes.py": "58e8a01aae646a4e9078ebb1b2e629a23c93ce42198b027696a6e77dea0858b0",
+        "src/dvidia_training/local_goal_verifier.py": "234d6374ae01cfdfd56fbfe1a4e1f27fc58baf8df88f47b02a30ca64bc238da5",
+        "src/dvidia_training/reference_sim.py": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8",
+        "src/dvidia_training/robot_profiles.lock.json": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+        "src/dvidia_training/robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d",
+        "src/dvidia_training/workstation.py": "2a6aa6686b5b273efcfb21156952df8ceca88d991674cd17df92f2dccc11b701"
+      }
+    },
+    "wall_seconds": 13.101423083106056
+  },
+  "input_integrity_sha256": "850abb8d4699713ae38665cefd9f45447ca2a3cb4c645c9d14a1f3ea4b4eb6b8",
+  "metrics": {
+    "by_cohort": {
+      "blind_spot": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 962.875,
+          "p50": 299.875,
+          "p95": 374.0794999999998,
+          "p99": 454.3614299999999,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "physical_true_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 8,
+          "incomplete": 0,
+          "unknown": 0
+        }
+      },
+      "evidence_fault": {
+        "abstention": {
+          "denominator": 128,
+          "numerator": 120,
+          "rate": 0.9375
+        },
+        "expected_verdict_matches": {
+          "denominator": 128,
+          "numerator": 128,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 929.75,
+          "p50": 260.583,
+          "p95": 314.583,
+          "p99": 404.25333000000006,
+          "samples": 12800
+        },
+        "physical_false_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_true_completion": {
+          "denominator": 128,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "planned": 128,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 8,
+          "unknown": 120
+        }
+      },
+      "native": {
+        "abstention": {
+          "denominator": 64,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 64,
+          "numerator": 64,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 799.084,
+          "p50": 295.083,
+          "p95": 317.46105,
+          "p99": 386.2583400000002,
+          "samples": 6400
+        },
+        "physical_false_completion": {
+          "denominator": 48,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_true_completion": {
+          "denominator": 16,
+          "numerator": 16,
+          "rate": 1.0
+        },
+        "planned": 64,
+        "verdict_counts": {
+          "complete": 16,
+          "incomplete": 48,
+          "unknown": 0
+        }
+      }
+    },
+    "by_scenario": {
+      "complete": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 415.625,
+          "p50": 299.0835,
+          "p95": 318.45805,
+          "p99": 383.33467,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 8,
+          "incomplete": 0,
+          "unknown": 0
+        }
+      },
+      "consistent_forgery": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 962.875,
+          "p50": 299.875,
+          "p95": 374.0794999999998,
+          "p99": 454.3614299999999,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "physical_true_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 8,
+          "incomplete": 0,
+          "unknown": 0
+        }
+      },
+      "duplicate": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 282.541,
+          "p50": 137.97899999999998,
+          "p95": 194.41664999999986,
+          "p99": 234.71925,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 0,
+          "unknown": 8
+        }
+      },
+      "future": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 655.292,
+          "p50": 266.666,
+          "p95": 325.30594999999994,
+          "p99": 455.34165999999993,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 0,
+          "unknown": 8
+        }
+      },
+      "gap": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 317.25,
+          "p50": 138.64600000000002,
+          "p95": 190.1152,
+          "p99": 228.03207999999998,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 0,
+          "unknown": 8
+        }
+      },
+      "inconsistent_presence": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 775.5,
+          "p50": 267.292,
+          "p95": 303.2583,
+          "p99": 432.98842,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 0,
+          "unknown": 8
+        }
+      },
+      "injected_label": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 13.833,
+          "p50": 3.042,
+          "p95": 3.33305,
+          "p99": 4.128329999999997,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 0,
+          "unknown": 8
+        }
+      },
+      "invalid_number": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 929.75,
+          "p50": 265.625,
+          "p95": 332.4704999999999,
+          "p99": 572.0838399999999,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 0,
+          "unknown": 8
+        }
+      },
+      "missing_measurement": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 756.208,
+          "p50": 267.89549999999997,
+          "p95": 307.11635,
+          "p99": 392.96933999999993,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 0,
+          "unknown": 8
+        }
+      },
+      "missing_target": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 356.917,
+          "p50": 168.167,
+          "p95": 179.83715,
+          "p99": 237.91783,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_true_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 8,
+          "unknown": 0
+        }
+      },
+      "missing_uncertainty": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 6.208,
+          "p50": 3.041,
+          "p95": 3.5,
+          "p99": 3.584,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 0,
+          "unknown": 8
+        }
+      },
+      "moving_alias": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 466.708,
+          "p50": 297.292,
+          "p95": 325.025,
+          "p99": 404.97266999999994,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_true_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 8,
+          "unknown": 0
+        }
+      },
+      "occluded": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 443.958,
+          "p50": 295.667,
+          "p95": 314.18989999999997,
+          "p99": 389.29374999999993,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 8,
+          "incomplete": 0,
+          "unknown": 0
+        }
+      },
+      "short_history": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 166.958,
+          "p50": 59.709,
+          "p95": 77.16905,
+          "p99": 89.45967,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 0,
+          "unknown": 8
+        }
+      },
+      "single_tick_contact_spike": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 683.875,
+          "p50": 297.312,
+          "p95": 348.7101,
+          "p99": 435.34608,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 8,
+          "unknown": 0
+        }
+      },
+      "stale": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 622.375,
+          "p50": 265.875,
+          "p95": 324.5997,
+          "p99": 388.80116,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 0,
+          "unknown": 8
+        }
+      },
+      "threshold_uncertainty": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 535.916,
+          "p50": 298.667,
+          "p95": 377.5972499999999,
+          "p99": 446.83732,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 0,
+          "unknown": 8
+        }
+      },
+      "unknown_presence": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 488.458,
+          "p50": 167.708,
+          "p95": 205.44939999999997,
+          "p99": 253.35991999999993,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 0,
+          "unknown": 8
+        }
+      },
+      "unreleased": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 466.458,
+          "p50": 298.166,
+          "p95": 328.7215,
+          "p99": 384.78957999999994,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_true_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 8,
+          "unknown": 0
+        }
+      },
+      "wrong_frame": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 871.25,
+          "p50": 265.8125,
+          "p95": 383.3083,
+          "p99": 466.8975,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 0,
+          "unknown": 8
+        }
+      },
+      "wrong_identity": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 525.417,
+          "p50": 267.167,
+          "p95": 329.2249999999999,
+          "p99": 409.66934,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 0,
+          "unknown": 8
+        }
+      },
+      "wrong_object": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 326.5,
+          "p50": 167.2295,
+          "p95": 180.55559999999997,
+          "p99": 247.27540999999997,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_true_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 8,
+          "unknown": 0
+        }
+      },
+      "wrong_orientation": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 734.042,
+          "p50": 300.542,
+          "p95": 320.87915,
+          "p99": 409.62625,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_true_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 8,
+          "unknown": 0
+        }
+      },
+      "wrong_position": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 799.084,
+          "p50": 297.7915,
+          "p95": 319.0872,
+          "p99": 392.63009,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_true_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 8,
+          "unknown": 0
+        }
+      },
+      "wrong_units": {
+        "abstention": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "expected_verdict_matches": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "generation_invalid": 0,
+        "latency_us": {
+          "max": 10.917,
+          "p50": 3.625,
+          "p95": 5.041,
+          "p99": 6.2549999999999955,
+          "samples": 800
+        },
+        "physical_false_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "planned": 8,
+        "verdict_counts": {
+          "complete": 0,
+          "incomplete": 0,
+          "unknown": 8
+        }
+      }
+    },
+    "overall": {
+      "abstention": {
+        "denominator": 200,
+        "numerator": 120,
+        "rate": 0.6
+      },
+      "expected_verdict_matches": {
+        "denominator": 200,
+        "numerator": 200,
+        "rate": 1.0
+      },
+      "generation_invalid": 0,
+      "latency_us": {
+        "max": 962.875,
+        "p50": 266.583,
+        "p95": 318.16904999999997,
+        "p99": 398.29282999999987,
+        "samples": 20000
+      },
+      "physical_false_completion": {
+        "denominator": 56,
+        "numerator": 8,
+        "rate": 0.14285714285714285
+      },
+      "physical_true_completion": {
+        "denominator": 144,
+        "numerator": 16,
+        "rate": 0.1111111111111111
+      },
+      "planned": 200,
+      "verdict_counts": {
+        "complete": 24,
+        "incomplete": 56,
+        "unknown": 120
+      }
+    }
+  },
+  "protocol_sha256": "453d671c9b2addcfb90eed095a9b39fea866f5089c432ed951de6a5717c00e6a",
+  "provider_calls": 0,
+  "results_sha256": "2b3cfb91736bf6fc3c68826fc328878d65246cc8cebf15fe8278d3535f6126f9",
+  "schema": "dvidia.local-goal-results/v1",
+  "source_commit": "b4c76b13ccbdaff4f01726bee50fae5fcc1e4e4a",
+  "status": "completed",
+  "timing_scope": "perf_counter_ns around verify_goal only, with parsed observations and trusted goal already in memory. Excludes acquisition, the required 200 ms history accumulation, serialization, I/O, rendering, networking and actuation. Repeated-call microbenchmark, not end-to-end robot latency."
+}

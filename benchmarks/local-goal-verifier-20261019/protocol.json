@@ -1,0 +1,218 @@
+{
+  "blind_spot": "Self-consistent fabricated complete-state observations on moving native states; count resulting physical false completions.",
+  "cohorts": [
+    "native",
+    "evidence_fault",
+    "blind_spot"
+  ],
+  "contract": {
+    "absence_semantics": "Absent is a positive observation that the named target is absent, not omitted sensor data. Absent/unknown observations require null pose, speed and force fields.",
+    "bounds": {
+      "angular_speed_rad_s": [
+        0.0,
+        100.0
+      ],
+      "clock_s": [
+        0.0,
+        1000000000.0
+      ],
+      "force_n": [
+        0.0,
+        1000.0
+      ],
+      "linear_speed_m_s": [
+        0.0,
+        20.0
+      ],
+      "position_m": [
+        -2.0,
+        2.0
+      ],
+      "yaw_rad": [
+        -3.141592653589793,
+        3.141592653589793
+      ]
+    },
+    "criteria": {
+      "angular_speed_max_rad_s": 0.05,
+      "continuous_dwell_s": 0.2,
+      "linear_speed_max_m_s": 0.01,
+      "position_tolerance_m": 0.025,
+      "robot_force_max_n": 0.01,
+      "support_force_min_n": 0.01,
+      "yaw_tolerance_rad": 0.2617993877991494
+    },
+    "decision_semantics": "Invalid, missing, stale, gapped or insufficient evidence returns unknown before physical scoring. Unknown presence in the scoring window returns unknown. A physical predicate fails only when its entire interval violates its threshold. Any definite failure returns incomplete; otherwise any threshold overlap returns unknown; all intervals passing returns complete.",
+    "history_semantics": "history_start_s is the beginning of the first sample interval. Each t_s ends one 2 ms interval. Validate the full packet; score only the latest 100 samples.",
+    "limitations": [
+      "Self-consistent fabricated sensor observations cannot be detected by this verifier; sensor provenance and integrity need an independent trusted channel.",
+      "A pass means the latest 100 samples satisfy the fixed contract at a declared 2 ms cadence; it is not continuous-time, hardware, identity-estimator or force-sensor certification.",
+      "The caller must provide a trusted goal and now_s on the same monotonic or simulation clock as the observations; the packet cannot authenticate its own clock.",
+      "Uncertainty bounds are asserted by the data source, not validated calibration. Explicit zero bounds represent an exact native-state assumption; they do not establish noiseless physical sensors."
+    ],
+    "max_age_s": 0.1,
+    "max_samples": 500,
+    "packet_fields": [
+      "history_start_s",
+      "sample_period_s",
+      "samples",
+      "schema",
+      "uncertainty_bounds",
+      "units"
+    ],
+    "required_samples": 100,
+    "sample_fields": [
+      "angular_speed_rad_s",
+      "frame_id",
+      "linear_speed_m_s",
+      "object_id",
+      "position_m",
+      "presence",
+      "robot_contact_force_n",
+      "t_s",
+      "table_support_force_n",
+      "yaw_rad"
+    ],
+    "sample_period_s": 0.002,
+    "schema": "dvidia.local-goal-observations/v1",
+    "timestamp_tolerance_s": 1e-06,
+    "uncertainty_maximum_bounds": {
+      "angular_speed_rad_s": 100.0,
+      "linear_speed_m_s": 20.0,
+      "position_m": 2.0,
+      "robot_contact_force_n": 1000.0,
+      "table_support_force_n": 1000.0,
+      "yaw_rad": 3.141592653589793
+    },
+    "uncertainty_semantics": "Mandatory symmetric absolute bounds in declared SI units. position_m bounds XY error norm, yaw_rad bounds wrapped yaw-distance error. Nonnegative metrics have lower bounds clamped at zero; yaw-distance upper is clamped at pi. All selected samples share these asserted bounds.",
+    "units": {
+      "angle": "rad",
+      "angular_speed": "rad/s",
+      "force": "N",
+      "linear_speed": "m/s",
+      "position": "m",
+      "time": "s"
+    }
+  },
+  "development_exposure": "One default-seed layout was inspected in an initial complete/moving-alias unit check; no thresholds or generation parameters were tuned. Full preflight uses separate seed20261018. Fresh layouts are not claimed to be fully unseen.",
+  "faults": [
+    "stale",
+    "future",
+    "gap",
+    "duplicate",
+    "wrong_units",
+    "wrong_frame",
+    "wrong_identity",
+    "short_history",
+    "missing_measurement",
+    "unknown_presence",
+    "threshold_uncertainty",
+    "single_tick_contact_spike",
+    "missing_uncertainty",
+    "invalid_number",
+    "inconsistent_presence",
+    "injected_label"
+  ],
+  "layout_count": 8,
+  "layouts": [
+    {
+      "azimuth_deg": 126.478,
+      "id": "fresh-01",
+      "xy_m": [
+        0.408556,
+        -0.08788
+      ],
+      "yaw_rad": 0.108745
+    },
+    {
+      "azimuth_deg": 123.511,
+      "id": "fresh-02",
+      "xy_m": [
+        0.406571,
+        -0.143655
+      ],
+      "yaw_rad": -0.113355
+    },
+    {
+      "azimuth_deg": 128.854,
+      "id": "fresh-03",
+      "xy_m": [
+        0.414032,
+        -0.141474
+      ],
+      "yaw_rad": 0.034271
+    },
+    {
+      "azimuth_deg": 127.189,
+      "id": "fresh-04",
+      "xy_m": [
+        0.397633,
+        -0.158694
+      ],
+      "yaw_rad": 0.034309
+    },
+    {
+      "azimuth_deg": 118.781,
+      "id": "fresh-05",
+      "xy_m": [
+        0.388213,
+        -0.132743
+      ],
+      "yaw_rad": 0.082825
+    },
+    {
+      "azimuth_deg": 150.595,
+      "id": "fresh-06",
+      "xy_m": [
+        0.407164,
+        -0.1118
+      ],
+      "yaw_rad": -0.039422
+    },
+    {
+      "azimuth_deg": 119.514,
+      "id": "fresh-07",
+      "xy_m": [
+        0.407948,
+        -0.092351
+      ],
+      "yaw_rad": -0.031739
+    },
+    {
+      "azimuth_deg": 152.644,
+      "id": "fresh-08",
+      "xy_m": [
+        0.408335,
+        -0.165
+      ],
+      "yaw_rad": 0.052421
+    }
+  ],
+  "oracle": "Frozen native _measure conditions across the latest 100 samples, independently of the new verifier. Perturbed observations retain original physical truth.",
+  "planned_cases": 200,
+  "provider_calls": 0,
+  "repeats": 100,
+  "schema": "dvidia.local-goal-protocol/v1",
+  "scope": "New native layouts, fixed narrow 30 g rigid shoe proxy and PiPER physics. Not learned perception, a controller, deformable shoe validation, or hardware transfer.",
+  "seed": 20261019,
+  "selection": "All seeded native cases are attempted. Hard construction failure seals a generation_failed manifest and aborts scoring; valid packets with category mismatches remain scored. No outcome-based filtering or retries.",
+  "source": {
+    "commit": "b4c76b13ccbdaff4f01726bee50fae5fcc1e4e4a",
+    "files": {
+      "src/dvidia_training/asset_catalog.json": "592f363389a96fef7f9223737aa72a2f1a74f400238924bf6790ec5bfd3302b7",
+      "src/dvidia_training/asset_library.py": "12520ca13b7806004be37a0d7e0d1e023c90410c1eba899296fdcd5b28fdc7f7",
+      "src/dvidia_training/image_goal_benchmark.py": "38fa1de5da6ee9f8e0ab60bc77d2561e82de0dad17dcc1d067b5816d8633996a",
+      "src/dvidia_training/image_goal_scenes.py": "1fe41c3fe4d372b068681caf3f63766285b9238976043a9e15fe4dbadb40b79a",
+      "src/dvidia_training/jev_client.py": "f5dad86c692144a1cf85bfeecf68b99318ea8d9df08e0fe5d47d144f80a380ee",
+      "src/dvidia_training/local_goal_benchmark.py": "d1cf4990ba0239418855ea851416e37d3f3fd5c5e38bc0fb6183e432ba4e3ecf",
+      "src/dvidia_training/local_goal_scenes.py": "58e8a01aae646a4e9078ebb1b2e629a23c93ce42198b027696a6e77dea0858b0",
+      "src/dvidia_training/local_goal_verifier.py": "234d6374ae01cfdfd56fbfe1a4e1f27fc58baf8df88f47b02a30ca64bc238da5",
+      "src/dvidia_training/reference_sim.py": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8",
+      "src/dvidia_training/robot_profiles.lock.json": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+      "src/dvidia_training/robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d",
+      "src/dvidia_training/workstation.py": "2a6aa6686b5b273efcfb21156952df8ceca88d991674cd17df92f2dccc11b701"
+    }
+  },
+  "timing_scope": "perf_counter_ns around verify_goal only, with parsed observations and trusted goal already in memory. Excludes acquisition, the required 200 ms history accumulation, serialization, I/O, rendering, networking and actuation. Repeated-call microbenchmark, not end-to-end robot latency.",
+  "warmups": 10
+}
