@@ -71,6 +71,17 @@ Without credentials, the runner makes no network requests and writes explicit
 unrun trials. Accuracy, latency and cost remain unmeasured. Use a fresh output
 directory for each evaluation; existing evidence cannot be overwritten.
 
+Build the static case viewer after the evaluation returns:
+
+```sh
+python -m dvidia_training.image_goal_report runs/image-goal-fixtures \
+  runs/image-goal-report --results runs/image-goal-evaluation/results.json
+python -m http.server 8080 --bind 127.0.0.1 --directory runs/image-goal-report
+```
+
+Open `http://127.0.0.1:8080/`. The viewer makes no provider requests. An active or
+interrupted request must be reconciled before its run can be exported.
+
 The evaluation seals images, labels, prompts, implementation hashes and the full
 paired trial inventory before calls. It prevalidates every request, executes
 at most 64 requests serially with no automatic retries, and retains all results
