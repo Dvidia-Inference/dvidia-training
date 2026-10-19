@@ -183,7 +183,7 @@ def verify_integrity(root):
     return seal
 
 
-def generate(assets,output,*,seed=2026102004,count=8,repeats=3,warmups=1):
+def generate(assets,output,*,seed=2026102006,count=8,repeats=3,warmups=1):
     from .sensor_goal_scenes import generate_native_cases
     from .local_goal_scenes import make_layouts
     output=Path(output)
@@ -195,7 +195,7 @@ def generate(assets,output,*,seed=2026102004,count=8,repeats=3,warmups=1):
         primary_contract=old.contract_description(),corroboration=specification(),timing_scope=TIMING_SCOPE,
         oracle='Frozen native _measure and observe across100ticks2ms; no observer features enter physical truth.',
         selection='All scheduled cases count; generation mismatches remain. Hard generation failure seals diagnostics and stops scoring.',
-        development_exposure='Development uses seed2026101904. Final seed2026102004 was not inspected before source/protocol freeze.',
+        development_exposure='Development uses seed2026101904. Final seed2026102006 was not inspected before source/protocol freeze.',
         scope='Synthetic 30g rigid shoe proxy, fixed PiPER and orthographic calibrated color observer. No learned detector, hardware validation, genuine sensor authentication or policy training.',provider_calls=0)
     write_json(output/'protocol.json',protocol); started=time.perf_counter()
     try:
@@ -283,7 +283,7 @@ def evaluate(root):
 def main(argv=None):
     p=argparse.ArgumentParser(description=__doc__); commands=p.add_subparsers(dest='command',required=True)
     g=commands.add_parser('generate');g.add_argument('--assets',required=True);g.add_argument('--output',required=True)
-    g.add_argument('--seed',type=int,default=2026102004);g.add_argument('--count',type=int,default=8)
+    g.add_argument('--seed',type=int,default=2026102006);g.add_argument('--count',type=int,default=8)
     g.add_argument('--repeats',type=int,default=3);g.add_argument('--warmups',type=int,default=1)
     e=commands.add_parser('evaluate');e.add_argument('--run',required=True)
     args=p.parse_args(argv)

@@ -46,7 +46,9 @@ can still pass. Completion remains conditional on the primary assertions.
 Use Python 3.12+, the project's pinned NumPy, and a CPU for evidence evaluation.
 Native scene generation additionally needs pinned MuJoCo/PiPER assets and a
 working graphics context. No API key, downloaded model weights or dedicated GPU
-is required for the observer. No measured minimum hardware specification is claimed.
+is required for the observer. Install the optional `observations` extra to use
+OpenCV's native CPU connected-component kernel; the NumPy-only fallback stays
+available. No measured minimum hardware specification is claimed.
 
 ```sh
 python -m venv .venv
@@ -55,7 +57,7 @@ python -m pip install -e '.[arm]'
 
 # Provision the pinned PiPER assets through docs/robot-simulation-library.md.
 dvidia-sensor-goal generate --assets /absolute/path/to/robot-profile-upstream/assets \
-  --output runs/sensor-goal-fresh --seed 2026102004 --count 8
+  --output runs/sensor-goal-fresh --seed 2026102006 --count 8
 dvidia-sensor-goal evaluate --run runs/sensor-goal-fresh
 python -m dvidia_training.sensor_goal_verifier_report --help
 ```

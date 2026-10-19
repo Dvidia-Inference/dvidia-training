@@ -26,7 +26,7 @@ def primary(complete=True):
     rows=[]
     for i in range(100):
         t=.402+i*.002
-        rows.append(dict(t_s=t,object_id='green-shoe',frame_id='workstation',presence='present',
+        rows.append(dict(t_s=t,object_id='green-shoe',frame_id='workstation_world',presence='present',
             position_m=[.44,-.12,0.],yaw_rad=0.,linear_speed_m_s=0.,angular_speed_rad_s=0.,
             table_support_force_n=.2943,robot_contact_force_n=0.))
     if not complete: rows[-1]['robot_contact_force_n']=.2
@@ -59,7 +59,7 @@ def drive_packet(*, open_jaw=True, bad_effort=False):
 
 class SensorGoalVerifierTests(unittest.TestCase):
     def setUp(self):
-        self.contract=GoalContract('green-shoe','workstation',(.44,-.12),0.)
+        self.contract=GoalContract('green-shoe','workstation_world',(.44,-.12),0.)
         self.rgb=[green_proxy() for _ in range(11)]
 
     def run_inputs(self, p=None, c=None, a=None, images=None):

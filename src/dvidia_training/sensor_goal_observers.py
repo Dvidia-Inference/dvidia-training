@@ -45,7 +45,7 @@ class CameraCalibration:
     """
     calibration_id: str = "dvidia-overhead-ortho-v04"
     # The frozen v0.3 primary contract uses this exact coordinate-frame ID.
-    frame_id: str = "workstation"
+    frame_id: str = "workstation_world"
     width: int = 640
     height: int = 480
     center_xy_m: tuple = (.44, -.12)
@@ -75,6 +75,19 @@ class CameraCalibration:
 def _components(mask):
     """Eight-connected color regions; no depth, native IDs or model geometry."""
     height, width = mask.shape
+    # OpenCV is already an optional, pinned `observations` extra. When present,
+    # use its native CPU connected-component kernel; retain the pure-Python
+    # implementation as a dependency-free fallback.
+    try:
+        import cv2
+    except ImportError:
+        cv2 = None
+    if cv2 is not None:
+        count, labels, stats, _ = cv2.connectedComponentsWithStats(
+            mask.astype(np.uint8), connectivity=8, ltype=cv2.CV_32S)
+        return [np.flatnonzero(labels.ravel() == label)
+                for label in range(1, count)
+                if int(stats[label, cv2.CC_STAT_AREA]) >= 60]
     remaining = set(map(int, np.flatnonzero(mask)))
     result = []
     while remaining:
