@@ -26,6 +26,12 @@ source snapshots and upstream experiment metadata: **151,876,079 bytes**.
 The separate `qa.json` records tests, execution environment and portable
 reproduction; it is not part of the sealed primary bundle.
 
+The [final publication receipt](release-receipt.json) records successful public
+retrieval of all 59 files with the published downloader and verification of
+68 total public files. The downloader identifies its client explicitly so
+Cloudflare can serve the requests. A transient incomplete transfer was rejected;
+a fresh complete run verified every byte. The original audit remains unchanged.
+
 | Artifact | SHA-256 |
 | --- | --- |
 | Protocol | `f5ded43bc66dd512e223ffea76ad51897ffea15bb016fa2c29dcd1b4fb6601e2` |
