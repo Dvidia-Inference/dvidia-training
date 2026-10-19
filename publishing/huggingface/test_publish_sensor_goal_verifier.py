@@ -22,6 +22,12 @@ class SensorGoalPublisherTests(unittest.TestCase):
             root=Path(directory).resolve();(root/'README.md').write_text('hf_'+'a'*40)
             with self.assertRaises(publisher.PublicationError): publisher.inventory(root)
 
+    def test_replay_comparison_tolerates_only_machine_rounding(self):
+        saved = {"status": "observed", "position": [0.42386426501580593, 0.0]}
+        rounded = {"status": "observed", "position": [0.4238642650158061, 0.0]}
+        self.assertTrue(publisher._same_replay(saved, rounded))
+        self.assertFalse(publisher._same_replay(saved, {"status": "unknown", "position": rounded["position"]}))
+        self.assertFalse(publisher._same_replay(saved, {"status": "observed", "position": [0.4239, 0.0]}))
     def test_root_updates_are_append_only_and_disclose_tradeoffs(self):
         parent={'index.html':b'<main><section aria-labelledby="local-goal-verifier-title">v03</section></main>',
             'README.md':b'Prior release', 'provenance.json':b'{"local_goal_verifier_v03":{"retained":true}}\n'}

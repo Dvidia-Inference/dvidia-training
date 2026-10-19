@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from hashlib import sha256
 from pathlib import Path
 import re
@@ -43,6 +44,19 @@ def _no_private(value):
             stack.extend(current.values())
         elif isinstance(current, list):
             stack.extend(current)
+
+
+def _same_replay(saved, replay):
+    """Compare exact decisions while allowing cross-runtime float rounding."""
+    if isinstance(saved, bool) or isinstance(replay, bool):
+        return saved is replay
+    if isinstance(saved, (int, float)) and isinstance(replay, (int, float)):
+        return math.isclose(saved, replay, rel_tol=1e-12, abs_tol=1e-12)
+    if isinstance(saved, dict) and isinstance(replay, dict):
+        return saved.keys() == replay.keys() and all(_same_replay(saved[key], replay[key]) for key in saved)
+    if isinstance(saved, list) and isinstance(replay, list):
+        return len(saved) == len(replay) and all(_same_replay(left, right) for left, right in zip(saved, replay))
+    return saved == replay
 
 
 def inventory(directory):
@@ -193,7 +207,7 @@ def check_export(export, publication_source_commit):
         if not isinstance(timing, list) or len(timing) != protocol.get("repeats"):
             raise PublicationError("Every case must retain all declared timing repetitions.")
         replay = evaluate_case(export, case, timings=False)
-        if any(row.get(key) != replay[key] for key in ("baseline", "camera", "actuator", "fused")):
+        if any(not _same_replay(row.get(key), replay[key]) for key in ("baseline", "camera", "actuator", "fused")):
             raise PublicationError("Saved decisions differ from independent replay of the exact inputs.")
     if result.get("metrics") != score(rows, catalog, repeats=protocol["repeats"]):
         raise PublicationError("Published metrics differ from all saved case results.")
