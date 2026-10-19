@@ -8,6 +8,19 @@
 
 **Research alpha.** The recorded demo covers the original one-scene simulation pilot; the frozen benchmark is a separate experiment. Training runs locally. No human-video action bridge or hardware skill is established.
 
+**[Image-goal verification: measured Jev results](benchmarks/image-goal-20261019/README.md).**
+32 native PiPER fixtures test missing targets, wrong arrangements, unreleased
+contact and moving shoes that render identically to settled shoes. The runnable
+Jev 1.14.0 protocol compares images alone with images plus simulator measurements.
+All 64 frozen requests returned valid responses. Neither condition falsely
+declared completion, but telemetry recognized only **1/8 physically complete
+states**. Overall median online latency was **1.776 seconds**; this is a
+supervisory diagnostic, not a demonstrated robot controller.
+[Inspect the measured cases](https://dvidia-robot-simulation-lab.static.hf.space/image-goals/v02/index.html) ·
+[Research follow-up](https://research.dvidia.org/papers/image-goal-jev-v02/) ·
+[Original protocol](benchmarks/image-goal-20261018/README.md) ·
+[Run locally](docs/image-goal-benchmark.md).
+
 **[Shoe graspability v0.3](https://research.dvidia.org/papers/shoe-graspability-v03/).**
 A controlled direct-pickup lab separates rigid object shape, 30 g versus 300 g
 load, and mounted versus absent wrist tool. All 24 fresh simulations are valid;

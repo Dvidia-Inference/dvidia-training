@@ -1,0 +1,993 @@
+{
+  "credential_check": {
+    "exact_credential_matches": 0,
+    "files_scanned": 1677
+  },
+  "date": "2026-10-19",
+  "environment": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.12.9"
+  },
+  "evaluation_plan_sha256": "5f02006190d97bdaca43f139f5bf221cece23bba868a5e9ee0f424618ea87d8f",
+  "frozen_core_source": "19acf0734d63ecebc07140c8d84302a54baee4c4",
+  "limitations": [
+    "Authored diagnostic fixtures; four scene layouts are correlated clusters, not 32 independent real-world tasks.",
+    "Preloaded image bytes + request construction + image upload + hosted response + parsing; excludes fixture file loading, prerecorded rendering, live camera, actuation and physical task duration.",
+    "Telemetry is privileged simulator state, not validated real sensor readings.",
+    "Jev is a hosted experimental image evaluator; no robot learning or local Jev inference is demonstrated."
+  ],
+  "metrics": {
+    "by_category": {
+      "complete": {
+        "ambiguous_abstention": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "completed_requests": 8,
+        "completion_coverage": {
+          "denominator": 8,
+          "numerator": 1,
+          "rate": 0.125
+        },
+        "known_usage_estimated_input_cost_usd": 0.000974694,
+        "known_verdict_accuracy": {
+          "denominator": 4,
+          "numerator": 1,
+          "rate": 0.25
+        },
+        "missing_object_false_presence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "observability_aware_accuracy": {
+          "denominator": 8,
+          "numerator": 5,
+          "rate": 0.625
+        },
+        "online_ms_all_attempts": {
+          "count": 8,
+          "max": 3371.058833086863,
+          "p50": 1879.4144374551252,
+          "p95": 3066.8494352488774,
+          "p99": 3310.216953519266
+        },
+        "online_ms_successful_requests": {
+          "count": 8,
+          "max": 3371.058833086863,
+          "p50": 1879.4144374551252,
+          "p95": 3066.8494352488774,
+          "p99": 3310.216953519266
+        },
+        "physical_completion_brier": {
+          "count": 8,
+          "mean": 0.2116
+        },
+        "physical_false_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_false_completion_valid_requests": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 1,
+          "rate": 0.125
+        },
+        "presence_accuracy": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "request_ms_successful_requests": {
+          "count": 8,
+          "max": 3370.0631661340594,
+          "p50": 1878.3488750923425,
+          "p95": 3065.9710914711463,
+          "p99": 3309.244751201477
+        },
+        "scheduled": 8,
+        "selective_physical_accuracy": {
+          "denominator": 1,
+          "numerator": 1,
+          "rate": 1.0
+        },
+        "statuses": {
+          "ok": 8
+        },
+        "unknown_cost_attempts": 0,
+        "verdicts": {
+          "complete": 1,
+          "unknown": 7
+        }
+      },
+      "missing_target": {
+        "ambiguous_abstention": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "completed_requests": 8,
+        "completion_coverage": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "known_usage_estimated_input_cost_usd": 0.0009149280000000001,
+        "known_verdict_accuracy": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "missing_object_false_presence": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "observability_aware_accuracy": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "online_ms_all_attempts": {
+          "count": 8,
+          "max": 3866.8453751597553,
+          "p50": 1950.4183124518022,
+          "p95": 3663.860964472405,
+          "p99": 3826.2484930222854
+        },
+        "online_ms_successful_requests": {
+          "count": 8,
+          "max": 3866.8453751597553,
+          "p50": 1950.4183124518022,
+          "p95": 3663.860964472405,
+          "p99": 3826.2484930222854
+        },
+        "physical_completion_brier": {
+          "count": 8,
+          "mean": 0.000975
+        },
+        "physical_false_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_false_completion_valid_requests": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_true_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "presence_accuracy": {
+          "denominator": 8,
+          "numerator": 3,
+          "rate": 0.375
+        },
+        "request_ms_successful_requests": {
+          "count": 8,
+          "max": 3864.315749844536,
+          "p50": 1949.5684374123812,
+          "p95": 3661.7615042487155,
+          "p99": 3823.804900725372
+        },
+        "scheduled": 8,
+        "selective_physical_accuracy": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "statuses": {
+          "ok": 8
+        },
+        "unknown_cost_attempts": 0,
+        "verdicts": {
+          "incomplete": 8
+        }
+      },
+      "moving_alias": {
+        "ambiguous_abstention": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "completed_requests": 8,
+        "completion_coverage": {
+          "denominator": 8,
+          "numerator": 4,
+          "rate": 0.5
+        },
+        "known_usage_estimated_input_cost_usd": 0.0009373140000000001,
+        "known_verdict_accuracy": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "missing_object_false_presence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "observability_aware_accuracy": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "online_ms_all_attempts": {
+          "count": 8,
+          "max": 2718.4088330250233,
+          "p50": 1152.382583473809,
+          "p95": 2596.373370871879,
+          "p99": 2694.0017405943945
+        },
+        "online_ms_successful_requests": {
+          "count": 8,
+          "max": 2718.4088330250233,
+          "p50": 1152.382583473809,
+          "p95": 2596.373370871879,
+          "p99": 2694.0017405943945
+        },
+        "physical_completion_brier": {
+          "count": 8,
+          "mean": 0.1247
+        },
+        "physical_false_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_false_completion_valid_requests": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_true_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "presence_accuracy": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "request_ms_successful_requests": {
+          "count": 8,
+          "max": 2717.451874865219,
+          "p50": 1151.4745620079339,
+          "p95": 2595.5285727162845,
+          "p99": 2693.067214435432
+        },
+        "scheduled": 8,
+        "selective_physical_accuracy": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "statuses": {
+          "ok": 8
+        },
+        "unknown_cost_attempts": 0,
+        "verdicts": {
+          "incomplete": 4,
+          "unknown": 4
+        }
+      },
+      "occluded": {
+        "ambiguous_abstention": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "completed_requests": 8,
+        "completion_coverage": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "known_usage_estimated_input_cost_usd": 0.0009746100000000001,
+        "known_verdict_accuracy": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "missing_object_false_presence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "observability_aware_accuracy": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "online_ms_all_attempts": {
+          "count": 8,
+          "max": 4091.2106670439243,
+          "p50": 2238.5471874149516,
+          "p95": 3809.8620876087803,
+          "p99": 4034.9409511568956
+        },
+        "online_ms_successful_requests": {
+          "count": 8,
+          "max": 4091.2106670439243,
+          "p50": 2238.5471874149516,
+          "p95": 3809.8620876087803,
+          "p99": 4034.9409511568956
+        },
+        "physical_completion_brier": {
+          "count": 8,
+          "mean": 0.8569125
+        },
+        "physical_false_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_false_completion_valid_requests": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "presence_accuracy": {
+          "denominator": 8,
+          "numerator": 4,
+          "rate": 0.5
+        },
+        "request_ms_successful_requests": {
+          "count": 8,
+          "max": 4090.230582980439,
+          "p50": 2237.0609584031627,
+          "p95": 3808.84302270133,
+          "p99": 4033.9530709246174
+        },
+        "scheduled": 8,
+        "selective_physical_accuracy": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "statuses": {
+          "ok": 8
+        },
+        "unknown_cost_attempts": 0,
+        "verdicts": {
+          "incomplete": 8
+        }
+      },
+      "unreleased": {
+        "ambiguous_abstention": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "completed_requests": 8,
+        "completion_coverage": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "known_usage_estimated_input_cost_usd": 0.000980532,
+        "known_verdict_accuracy": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "missing_object_false_presence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "observability_aware_accuracy": {
+          "denominator": 8,
+          "numerator": 4,
+          "rate": 0.5
+        },
+        "online_ms_all_attempts": {
+          "count": 8,
+          "max": 3029.5940418727696,
+          "p50": 1690.7629171619192,
+          "p95": 2836.7423937306735,
+          "p99": 2991.0237122443505
+        },
+        "online_ms_successful_requests": {
+          "count": 8,
+          "max": 3029.5940418727696,
+          "p50": 1690.7629171619192,
+          "p95": 2836.7423937306735,
+          "p99": 2991.0237122443505
+        },
+        "physical_completion_brier": {
+          "count": 8,
+          "mean": 0.0019125000000000001
+        },
+        "physical_false_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_false_completion_valid_requests": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_true_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "presence_accuracy": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "request_ms_successful_requests": {
+          "count": 8,
+          "max": 3027.2396670188755,
+          "p50": 1689.9886869359761,
+          "p95": 2834.6627688501026,
+          "p99": 2988.724287385121
+        },
+        "scheduled": 8,
+        "selective_physical_accuracy": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "statuses": {
+          "ok": 8
+        },
+        "unknown_cost_attempts": 0,
+        "verdicts": {
+          "incomplete": 8
+        }
+      },
+      "wrong_object": {
+        "ambiguous_abstention": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "completed_requests": 8,
+        "completion_coverage": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "known_usage_estimated_input_cost_usd": 0.0009154320000000001,
+        "known_verdict_accuracy": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "missing_object_false_presence": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "observability_aware_accuracy": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "online_ms_all_attempts": {
+          "count": 8,
+          "max": 2740.4377080965787,
+          "p50": 1985.6172084109858,
+          "p95": 2719.875879061874,
+          "p99": 2736.325342289638
+        },
+        "online_ms_successful_requests": {
+          "count": 8,
+          "max": 2740.4377080965787,
+          "p50": 1985.6172084109858,
+          "p95": 2719.875879061874,
+          "p99": 2736.325342289638
+        },
+        "physical_completion_brier": {
+          "count": 8,
+          "mean": 0.0001
+        },
+        "physical_false_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_false_completion_valid_requests": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_true_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "presence_accuracy": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "request_ms_successful_requests": {
+          "count": 8,
+          "max": 2739.7601660341024,
+          "p50": 1984.5179584808648,
+          "p95": 2718.8356057275087,
+          "p99": 2735.5752539727837
+        },
+        "scheduled": 8,
+        "selective_physical_accuracy": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "statuses": {
+          "ok": 8
+        },
+        "unknown_cost_attempts": 0,
+        "verdicts": {
+          "incomplete": 8
+        }
+      },
+      "wrong_orientation": {
+        "ambiguous_abstention": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "completed_requests": 8,
+        "completion_coverage": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "known_usage_estimated_input_cost_usd": 0.000973434,
+        "known_verdict_accuracy": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "missing_object_false_presence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "observability_aware_accuracy": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "online_ms_all_attempts": {
+          "count": 8,
+          "max": 2278.634167043492,
+          "p50": 1260.348187526688,
+          "p95": 2080.885917076375,
+          "p99": 2239.084517050069
+        },
+        "online_ms_successful_requests": {
+          "count": 8,
+          "max": 2278.634167043492,
+          "p50": 1260.348187526688,
+          "p95": 2080.885917076375,
+          "p99": 2239.084517050069
+        },
+        "physical_completion_brier": {
+          "count": 8,
+          "mean": 0.006187500000000001
+        },
+        "physical_false_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_false_completion_valid_requests": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_true_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "presence_accuracy": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "request_ms_successful_requests": {
+          "count": 8,
+          "max": 2278.104541124776,
+          "p50": 1259.3578124651685,
+          "p95": 2080.4035851964722,
+          "p99": 2238.5643499391153
+        },
+        "scheduled": 8,
+        "selective_physical_accuracy": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "statuses": {
+          "ok": 8
+        },
+        "unknown_cost_attempts": 0,
+        "verdicts": {
+          "incomplete": 8
+        }
+      },
+      "wrong_position": {
+        "ambiguous_abstention": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "completed_requests": 8,
+        "completion_coverage": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "known_usage_estimated_input_cost_usd": 0.0009738120000000001,
+        "known_verdict_accuracy": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "missing_object_false_presence": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "observability_aware_accuracy": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "online_ms_all_attempts": {
+          "count": 8,
+          "max": 3182.4908750131726,
+          "p50": 2037.1751248603687,
+          "p95": 2915.7822856912385,
+          "p99": 3129.149157148786
+        },
+        "online_ms_successful_requests": {
+          "count": 8,
+          "max": 3182.4908750131726,
+          "p50": 2037.1751248603687,
+          "p95": 2915.7822856912385,
+          "p99": 3129.149157148786
+        },
+        "physical_completion_brier": {
+          "count": 8,
+          "mean": 0.010450000000000001
+        },
+        "physical_false_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_false_completion_valid_requests": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_true_completion": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "presence_accuracy": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "request_ms_successful_requests": {
+          "count": 8,
+          "max": 3181.8517500068992,
+          "p50": 2036.0838960623369,
+          "p95": 2915.057687507942,
+          "p99": 3128.492937507108
+        },
+        "scheduled": 8,
+        "selective_physical_accuracy": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "statuses": {
+          "ok": 8
+        },
+        "unknown_cost_attempts": 0,
+        "verdicts": {
+          "incomplete": 8
+        }
+      }
+    },
+    "by_condition": {
+      "rgb": {
+        "ambiguous_abstention": {
+          "denominator": 16,
+          "numerator": 8,
+          "rate": 0.5
+        },
+        "completed_requests": 32,
+        "completion_coverage": {
+          "denominator": 32,
+          "numerator": 24,
+          "rate": 0.75
+        },
+        "known_usage_estimated_input_cost_usd": 0.0034789440000000003,
+        "known_verdict_accuracy": {
+          "denominator": 16,
+          "numerator": 16,
+          "rate": 1.0
+        },
+        "missing_object_false_presence": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "observability_aware_accuracy": {
+          "denominator": 32,
+          "numerator": 24,
+          "rate": 0.75
+        },
+        "online_ms_all_attempts": {
+          "count": 32,
+          "max": 4091.2106670439243,
+          "p50": 1585.2316045202315,
+          "p95": 3548.127089440822,
+          "p99": 4021.6574265598324
+        },
+        "online_ms_successful_requests": {
+          "count": 32,
+          "max": 4091.2106670439243,
+          "p50": 1585.2316045202315,
+          "p95": 3548.127089440822,
+          "p99": 4021.6574265598324
+        },
+        "physical_completion_brier": {
+          "count": 32,
+          "mean": 0.185771875
+        },
+        "physical_false_completion": {
+          "denominator": 24,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_false_completion_valid_requests": {
+          "denominator": 24,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "presence_accuracy": {
+          "denominator": 32,
+          "numerator": 28,
+          "rate": 0.875
+        },
+        "request_ms_successful_requests": {
+          "count": 32,
+          "max": 4090.230582980439,
+          "p50": 1584.1166249010712,
+          "p95": 3546.3884562021117,
+          "p99": 4020.1969847083096
+        },
+        "scheduled": 32,
+        "selective_physical_accuracy": {
+          "denominator": 24,
+          "numerator": 20,
+          "rate": 0.8333333333333334
+        },
+        "statuses": {
+          "ok": 32
+        },
+        "unknown_cost_attempts": 0,
+        "verdicts": {
+          "incomplete": 24,
+          "unknown": 8
+        }
+      },
+      "rgb_telemetry": {
+        "ambiguous_abstention": {
+          "denominator": 0,
+          "numerator": 0,
+          "rate": null
+        },
+        "completed_requests": 32,
+        "completion_coverage": {
+          "denominator": 32,
+          "numerator": 29,
+          "rate": 0.90625
+        },
+        "known_usage_estimated_input_cost_usd": 0.0041658120000000005,
+        "known_verdict_accuracy": {
+          "denominator": 32,
+          "numerator": 25,
+          "rate": 0.78125
+        },
+        "missing_object_false_presence": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "observability_aware_accuracy": {
+          "denominator": 32,
+          "numerator": 25,
+          "rate": 0.78125
+        },
+        "online_ms_all_attempts": {
+          "count": 32,
+          "max": 3371.058833086863,
+          "p50": 1913.8612295500934,
+          "p95": 3220.66000639461,
+          "p99": 3338.8970565912314
+        },
+        "online_ms_successful_requests": {
+          "count": 32,
+          "max": 3371.058833086863,
+          "p50": 1913.8612295500934,
+          "p95": 3220.66000639461,
+          "p99": 3338.8970565912314
+        },
+        "physical_completion_brier": {
+          "count": 32,
+          "mean": 0.1174375
+        },
+        "physical_false_completion": {
+          "denominator": 24,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_false_completion_valid_requests": {
+          "denominator": 24,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "physical_true_completion": {
+          "denominator": 8,
+          "numerator": 1,
+          "rate": 0.125
+        },
+        "presence_accuracy": {
+          "denominator": 32,
+          "numerator": 27,
+          "rate": 0.84375
+        },
+        "request_ms_successful_requests": {
+          "count": 32,
+          "max": 3370.0631661340594,
+          "p50": 1912.7987290266901,
+          "p95": 3219.8883001110516,
+          "p99": 3337.920583873056
+        },
+        "scheduled": 32,
+        "selective_physical_accuracy": {
+          "denominator": 29,
+          "numerator": 25,
+          "rate": 0.8620689655172413
+        },
+        "statuses": {
+          "ok": 32
+        },
+        "unknown_cost_attempts": 0,
+        "verdicts": {
+          "complete": 1,
+          "incomplete": 28,
+          "unknown": 3
+        }
+      }
+    },
+    "overall": {
+      "ambiguous_abstention": {
+        "denominator": 16,
+        "numerator": 8,
+        "rate": 0.5
+      },
+      "completed_requests": 64,
+      "completion_coverage": {
+        "denominator": 64,
+        "numerator": 53,
+        "rate": 0.828125
+      },
+      "known_usage_estimated_input_cost_usd": 0.007644756000000001,
+      "known_verdict_accuracy": {
+        "denominator": 48,
+        "numerator": 41,
+        "rate": 0.8541666666666666
+      },
+      "missing_object_false_presence": {
+        "denominator": 16,
+        "numerator": 0,
+        "rate": 0.0
+      },
+      "observability_aware_accuracy": {
+        "denominator": 64,
+        "numerator": 49,
+        "rate": 0.765625
+      },
+      "online_ms_all_attempts": {
+        "count": 64,
+        "max": 4091.2106670439243,
+        "p50": 1776.4145623659715,
+        "p95": 3287.287432909943,
+        "p99": 3949.8605331568974
+      },
+      "online_ms_successful_requests": {
+        "count": 64,
+        "max": 4091.2106670439243,
+        "p50": 1776.4145623659715,
+        "p95": 3287.287432909943,
+        "p99": 3949.8605331568974
+      },
+      "physical_completion_brier": {
+        "count": 64,
+        "mean": 0.1516046875
+      },
+      "physical_false_completion": {
+        "denominator": 48,
+        "numerator": 0,
+        "rate": 0.0
+      },
+      "physical_false_completion_valid_requests": {
+        "denominator": 48,
+        "numerator": 0,
+        "rate": 0.0
+      },
+      "physical_true_completion": {
+        "denominator": 16,
+        "numerator": 1,
+        "rate": 0.0625
+      },
+      "presence_accuracy": {
+        "denominator": 64,
+        "numerator": 55,
+        "rate": 0.859375
+      },
+      "request_ms_successful_requests": {
+        "count": 64,
+        "max": 4090.230582980439,
+        "p50": 1775.0753960572183,
+        "p95": 3286.1646063625813,
+        "p99": 3947.90423810482
+      },
+      "scheduled": 64,
+      "selective_physical_accuracy": {
+        "denominator": 53,
+        "numerator": 45,
+        "rate": 0.8490566037735849
+      },
+      "statuses": {
+        "ok": 64
+      },
+      "unknown_cost_attempts": 0,
+      "verdicts": {
+        "complete": 1,
+        "incomplete": 52,
+        "unknown": 11
+      }
+    }
+  },
+  "model": "jev-1.14.0",
+  "original_results_sha256": "18c71ad02cd50763b04a90028b46740b98bd91ffa9d6071f5a179d4c22537ae4",
+  "provider_requests": 64,
+  "schema": "dvidia.image-goal-measured-summary/v1"
+}
