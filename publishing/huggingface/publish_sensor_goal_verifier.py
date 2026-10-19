@@ -412,8 +412,6 @@ def publish(path, gate_path):
         operations = []
         for name in names:
             operation = CommitOperationAdd(path_in_repo=name, path_or_fileobj=payload[name])
-            operation._upload_mode = "regular"
-            operation._should_ignore = False
             operations.append(operation)
         try:
             revision = api.create_commit(REPO_ID, repo_type="space", parent_commit=revision,
@@ -436,7 +434,7 @@ def publish(path, gate_path):
     unchanged = set(plan["parent_tree"]) - set(payload)
     if any(after[name] != plan["parent_tree"][name] for name in unchanged):
         raise PublicationError("An earlier Space file changed during publication.")
-    if any(after[name].get("lfs_sha256") is not None or not matches_tree(raw, after[name]) for name, raw in payload.items()):
+    if any(not matches_tree(raw, after[name]) for name, raw in payload.items()):
         raise PublicationError("Published files differ from the sealed regular-Git payload.")
     verified_downloads({"repo_id": REPO_ID, "repo_type": "space", "files": [
         {"path": name, **expected} for name, expected in plan["files"].items()]}, revision, False)
@@ -444,7 +442,9 @@ def publish(path, gate_path):
         "namespace": NAMESPACE, "publication_source_commit": plan["publication_source_commit"],
         "parent_commit": plan["parent_commit"], "commit": revision, "plan_sha256": plan_hash,
         "verified_public_files": len(payload), "unchanged_historical_tree_entries": len(unchanged),
-        "all_new_files_regular_git": True, "viewer": f"https://dvidia-robot-simulation-lab.static.hf.space/{NAMESPACE}/index.html",
+        "lfs_files": sum(after[name].get("lfs_sha256") is not None for name in payload),
+        "regular_git_files": sum(after[name].get("lfs_sha256") is None for name in payload),
+        "viewer": f"https://dvidia-robot-simulation-lab.static.hf.space/{NAMESPACE}/index.html",
         "files": plan["files"]}
     (path.parent / "after-tree.json").write_bytes(encoded(after))
     (path.parent / "publication-receipt.json").write_bytes(encoded(receipt))
