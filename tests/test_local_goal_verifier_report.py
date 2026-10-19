@@ -75,12 +75,12 @@ class LocalGoalVerifierReportTests(unittest.TestCase):
         write_json(self.root / "cases.json", self.cases)
         write_json(self.root / "results.json", self.results)
         report = self.build()
-        self.assertNotIn("private-marker", (self.out / "index.html").read_text())
+        self.assertNotIn("private-marker", (self.out / "index.html").read_text(encoding="utf-8"))
         positive = report["cases"][0]["decision"]
         self.assertIn("interval", positive["predicates"]["xy_position"])
         self.assertIn("stale_observation", report["cases"][2]["decision"]["reasons"])
         self.assertEqual(positive["window"]["evaluated_sample_count"], 100)
-        html = (self.out / "index.html").read_text()
+        html = (self.out / "index.html").read_text(encoding="utf-8")
         for text in ("Requires 200 ms observation history", "Zero Jev calls", "Images illustrate scenes", "Consistent fabricated readings", "Physically complete", "Freshness or history fault"):
             self.assertIn(text, html)
 
@@ -126,7 +126,7 @@ class LocalGoalVerifierReportTests(unittest.TestCase):
         self.cases["cases"][0]["note"] = '</script><script>alert("injection")</script>'
         write_json(self.root / "cases.json", self.cases)
         self.build()
-        html = (self.out / "index.html").read_text()
+        html = (self.out / "index.html").read_text(encoding="utf-8")
         self.assertNotIn('</script><script>alert', html)
         self.assertIn('\\u003c/script\\u003e', html)
         self.assertNotIn('innerHTML', html)

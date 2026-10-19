@@ -247,14 +247,36 @@ def check(path):
     return plan, payload
 
 
+def checked_qa(gate, payload):
+    """Retain an explicitly authorized blocked-browser release as incomplete QA."""
+    if gate.get("browser_qa_passed") is True:
+        return {"browser_qa_passed": True, "status": "passed"}
+    pending = (gate.get("browser_qa_passed") is False
+        and gate.get("browser_qa_status") == "blocked-macos-locked"
+        and gate.get("static_qa_passed") is True
+        and gate.get("publication_authorized_with_browser_qa_pending") is True)
+    qa_path = NAMESPACE + "/ui-qa.json"
+    if not pending or qa_path not in payload:
+        raise PublicationError("Browser QA must pass or remain explicitly authorized and documented as pending.")
+    receipt = json.loads(payload[qa_path])
+    if (receipt.get("status") != "partial-browser-blocked"
+            or receipt.get("viewer_sha256") != record(payload[NAMESPACE + "/index.html"])["sha256"]
+            or receipt.get("static_checks", {}).get("unique_element_ids") is not True
+            or receipt.get("browser", {}).get("screenshots") != []):
+        raise PublicationError("Pending visual QA requires the exact viewer's honest static-check receipt.")
+    return {"browser_qa_passed": False, "status": "pending-macos-locked", "static_qa_passed": True,
+            "publication_authorized_with_browser_qa_pending": True, "public_receipt": qa_path}
+
+
 def publish(path, gate_path):
     path = plain(path)
     plan, payload = check(path)
     gate = json.loads(read(gate_path, 1024 * 1024))
     if (gate.get("source_commit") != plan["source_commit"]
-            or any(gate.get(key) is not True for key in ("tests_passed", "browser_qa_passed", "benchmark_reviewed"))
+            or any(gate.get(key) is not True for key in ("tests_passed", "benchmark_reviewed"))
             or gate.get("integrity_sha256") != plan["files"][NAMESPACE + "/publication-integrity.json"]["sha256"]):
-        raise PublicationError("Publication requires source-bound test, browser and evidence review.")
+        raise PublicationError("Publication requires source-bound tests and evidence review.")
+    qa = checked_qa(gate, payload)
     api, token = client(path.parent / "publisher-cache")
     if any(token.encode() in raw for raw in payload.values()):
         raise PublicationError("Credential occurs in upload bytes.")
@@ -301,7 +323,7 @@ def publish(path, gate_path):
     receipt = {"schema": "dvidia.local-goal-hf-publication/v1", "repo_id": REPO_ID, "namespace": NAMESPACE,
         "source_commit": plan["source_commit"], "parent_commit": plan["parent_commit"], "commit": revision,
         "plan_sha256": plan_hash, "verified_public_files": len(payload), "unchanged_historical_tree_entries": len(unchanged),
-        "all_new_files_regular_git": True, "files": plan["files"]}
+        "all_new_files_regular_git": True, "qa": qa, "files": plan["files"]}
     (path.parent / "after-tree.json").write_bytes(encoded(after))
     (path.parent / "publication-receipt.json").write_bytes(encoded(receipt))
     return receipt

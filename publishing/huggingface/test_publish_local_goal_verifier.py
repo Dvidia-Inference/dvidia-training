@@ -123,6 +123,23 @@ class LocalVerifierPublicationTests(unittest.TestCase):
         (self.parent/'snapshot.json').write_bytes(publisher.encoded(snapshot))
         with self.assertRaises(publisher.PublicationError): publisher.stage(self.export, self.parent, self.root/'stage', 'e'*40)
 
+    def test_browser_block_does_not_silently_become_a_pass(self):
+        pending = {"browser_qa_passed": False, "browser_qa_status": "blocked-macos-locked", "static_qa_passed": True,
+                   "publication_authorized_with_browser_qa_pending": True}
+        html = self.release['index.html']
+        evidence = {'status': 'partial-browser-blocked', 'viewer_sha256': publisher.record(html)['sha256'],
+                    'static_checks': {'unique_element_ids': True}, 'browser': {'screenshots': []}}
+        payload = {publisher.NAMESPACE+'/index.html': html, publisher.NAMESPACE+'/ui-qa.json': publisher.encoded(evidence)}
+        qa = publisher.checked_qa(pending, payload)
+        self.assertFalse(qa['browser_qa_passed'])
+        self.assertEqual(qa['status'], 'pending-macos-locked')
+        with self.assertRaises(publisher.PublicationError):
+            publisher.checked_qa({**pending, 'publication_authorized_with_browser_qa_pending': False}, payload)
+        evidence['viewer_sha256'] = '0'*64
+        payload[publisher.NAMESPACE+'/ui-qa.json'] = publisher.encoded(evidence)
+        with self.assertRaises(publisher.PublicationError): publisher.checked_qa(pending, payload)
+        self.assertTrue(publisher.checked_qa({'browser_qa_passed': True}, payload)['browser_qa_passed'])
+
     def test_unknown_source_or_protocol_drift_rejected(self):
         with self.assertRaises(publisher.PublicationError): publisher.check_export(self.export, 'f'*40)
         self.alter('protocol.json', lambda x: x.update(provider_calls=1))
