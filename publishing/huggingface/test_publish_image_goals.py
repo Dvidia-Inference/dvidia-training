@@ -5,10 +5,12 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import publish_image_goals as publisher
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'src'))
 from dvidia_training.image_goal_report import build_report
+from dvidia_training.image_goal_benchmark import score
 
 PNG = base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jfZkAAAAASUVORK5CYII=')
 
@@ -59,6 +61,86 @@ class ImageGoalPublicationTests(unittest.TestCase):
 
     def stage(self):
         return publisher.stage(self.export, self.parent, self.root / 'stage', 'b'*40)
+
+    def measured_followup(self):
+        result = json.loads(self.release['results.json'])
+        result['status'] = 'completed'
+        for row in result['results']:
+            row.update(status='ok', attempts=1, presence='absent', verdict='incomplete',
+                       p_present=0.02, p_complete=0.01, online_total_ms=200,
+                       latency_ms={'prepare': 1, 'http': 199, 'total': 200})
+        result['metrics'] = score(result['results'], json.loads(self.release['cases.json'])['cases'])
+        self.release['results.json'] = publisher.encoded(result)
+        provenance = json.loads(self.release['provenance.json'])
+        provenance['provider_status'] = 'completed'
+        self.release['provenance.json'] = publisher.encoded(provenance)
+        self.save()
+        viewer = self.root / 'measured-viewer'
+        build_report(self.export, viewer)
+        for path in viewer.rglob('*'):
+            if path.is_file():
+                self.release[path.relative_to(viewer).as_posix()] = path.read_bytes()
+        self.save()
+
+    def prior_protocol_snapshot(self):
+        self.original['index.html'] = self.original['index.html'].replace(
+            b'<section aria-labelledby="graspability-title">',
+            b'<section aria-labelledby="image-goals-title"><h2 id="image-goals-title">Original unrun protocol</h2></section><section aria-labelledby="graspability-title">')
+        self.original['provenance.json'] = b'{"previous":{"keep":true},"image_goals_v01":{"keep":"original protocol"}}\n'
+        for name, raw in self.original.items():
+            (self.parent / name).write_bytes(raw)
+            self.tree[name] = {'blob': publisher.git_blob(raw), 'size': len(raw), 'lfs_sha256': None}
+        self.tree['image-goals/v01/index.html'] = {'blob': 'e'*40, 'size': 100, 'lfs_sha256': None}
+        (self.parent / 'snapshot.json').write_bytes(publisher.encoded({'repo_id': publisher.REPO_ID,
+            'namespace': publisher.NAMESPACE, 'parent_commit': 'a'*40, 'tree': self.tree}))
+
+    def test_measured_followup_appends_v02_and_preserves_v01_and_old_roots(self):
+        self.measured_followup()
+        with patch.object(publisher, 'NAMESPACE', 'image-goals/v02'):
+            self.prior_protocol_snapshot()
+            result = self.stage()
+            plan, payload = publisher.check(result['plan'])
+            self.assertEqual(plan['namespace'], 'image-goals/v02')
+            self.assertEqual(plan['parent_tree'], self.tree)
+            self.assertFalse(any(name.startswith('image-goals/v01/') for name in payload))
+            self.assertEqual(set(payload) & self.tree.keys(), publisher.ROOT_FILES)
+            self.assertIn(b'Original unrun protocol', payload['index.html'])
+            self.assertIn(b'How does Jev judge completion?', payload['index.html'])
+            self.assertIn(self.original['README.md'], payload['README.md'])
+            provenance = json.loads(payload['provenance.json'])
+            self.assertEqual(provenance['image_goals_v01'], {'keep': 'original protocol'})
+            self.assertEqual(provenance['image_goals_v02']['provider_status'], 'completed')
+
+    def test_measured_followup_rejects_unrun_provider_and_duplicate_card(self):
+        with patch.object(publisher, 'NAMESPACE', 'image-goals/v02'):
+            self.prior_protocol_snapshot()
+            with self.assertRaisesRegex(publisher.PublicationError, 'completed provider run'):
+                self.stage()
+            self.measured_followup()
+            parent = dict(self.original)
+            parent['index.html'] += b'<h2 id="image-goals-results-title">Already published</h2>'
+            with self.assertRaisesRegex(publisher.PublicationError, 'duplicate release'):
+                publisher.updated_roots(parent, 'b'*40, self.release)
+
+    def test_completed_provider_scores_cannot_be_fabricated_in_source_results(self):
+        self.measured_followup()
+        result = json.loads(self.release['results.json'])
+        result['metrics']['overall']['physical_false_completion']['numerator'] = 999
+        self.release['results.json'] = publisher.encoded(result)
+        self.save()
+        with self.assertRaisesRegex(publisher.PublicationError, 'independently recomputed frozen scores'):
+            self.stage()
+
+    def test_completed_provider_cannot_hide_an_unrun_trial(self):
+        self.measured_followup()
+        result = json.loads(self.release['results.json'])
+        result['results'][0] = {'case_id': 'missing', 'condition': result['results'][0]['condition'],
+            'status': 'not_run', 'attempts': 0}
+        result['metrics'] = None
+        self.release['results.json'] = publisher.encoded(result)
+        self.save()
+        with self.assertRaisesRegex(publisher.PublicationError, 'provider run status'):
+            self.stage()
 
     def test_new_namespace_preserves_history_and_visible_pending_status(self):
         result = self.stage()

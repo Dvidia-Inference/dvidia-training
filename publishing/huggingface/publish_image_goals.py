@@ -20,6 +20,14 @@ from publish_prerequisites import (encoded, git_blob, inspect_bytes, matches_tre
 
 REPO_ID = "Dvidia/robot-simulation-lab"
 NAMESPACE = "image-goals/v01"
+RELEASES = {
+    "image-goals/v01": {"id": "image-goals-title", "before": "graspability-title",
+        "heading": "Does it only look finished?", "readme_heading": "Image-goal benchmark v0.1",
+        "provenance": "image_goals_v01", "paper": "image-goal-jev-v01"},
+    "image-goals/v02": {"id": "image-goals-results-title", "before": "image-goals-title",
+        "heading": "How does Jev judge completion?", "readme_heading": "Image-goal measured follow-up (publication v0.2)",
+        "provenance": "image_goals_v02", "paper": "image-goal-jev-v02"},
+}
 ROOT_FILES = {"index.html", "README.md", "provenance.json"}
 SHA = re.compile(r"[a-f0-9]{40}\Z")
 MAX_FILE = 4 * 1024 * 1024
@@ -124,7 +132,8 @@ def check_export(export, source_commit):
                 raise PublicationError("Unrun provider trials cannot carry predictions or service measurements.")
         if b"Jev has not been run" not in payload["index.html"]:
             raise PublicationError("Unrun provider status must be visible in the report.")
-    elif result.get("status") != "completed" or pending:
+    elif (result.get("status") != "completed"
+          or any(row.get("status") not in {"ok", "error"} for row in result["results"])):
         raise PublicationError("Unexpected provider run status.")
     viewer_seal = json.loads(payload["report-integrity.json"])
     for name, expected_file in viewer_seal.get("files", {}).items():
@@ -133,6 +142,11 @@ def check_export(export, source_commit):
     source_root = str(Path(__file__).resolve().parents[2] / "src")
     if source_root not in sys.path:
         sys.path.insert(0, source_root)
+    if result.get("status") == "completed":
+        from dvidia_training.image_goal_benchmark import score
+        expected_metrics = score(result["results"], cases)
+        if result.get("metrics") != expected_metrics:
+            raise PublicationError("Provider metrics differ from independently recomputed frozen scores.")
     from dvidia_training.image_goal_report import build_report
     with tempfile.TemporaryDirectory(prefix="dvidia-image-goal-publication-") as temporary:
         expected_viewer = Path(temporary).resolve() / "viewer"
@@ -174,28 +188,31 @@ def snapshot(output, parent_commit):
 
 
 def updated_roots(parent, source_commit, export):
+    release = RELEASES[NAMESPACE]
     status = json.loads(export["results.json"])["status"]
     pending = status == "not_run"
+    if NAMESPACE == "image-goals/v02" and pending:
+        raise PublicationError("The measured follow-up requires a completed provider run.")
     count = len(json.loads(export["cases.json"])["cases"])
     description = (f"Explore {count} frozen PiPER image-goal cases, including absent targets, wrong arrangements and visually identical moving scenes. "
         + ("Native fixture validation is published. Jev accuracy and service latency are not yet measured."
            if pending else "Inspect all paired Jev judgments, failures, abstentions and measured service latency.")
         + " Synthetic diagnostic fixtures; passive evaluation; no robot controller or hardware qualification.")
     index = parent["index.html"].decode()
-    marker = '<section aria-labelledby="graspability-title">'
-    if index.count(marker) != 1 or 'id="image-goals-title"' in index:
-        raise PublicationError("Expected one existing graspability section and no image-goal section.")
-    card = ('<section aria-labelledby="image-goals-title"><h2 id="image-goals-title">Does it only look finished?</h2>'
+    marker = f'<section aria-labelledby="{release["before"]}">'
+    if index.count(marker) != 1 or f'id="{release["id"]}"' in index:
+        raise PublicationError("Expected one prior release section and no duplicate release section.")
+    card = (f'<section aria-labelledby="{release["id"]}"><h2 id="{release["id"]}">{release["heading"]}</h2>'
             f'<p>{description}</p><a href="{NAMESPACE}/index.html">Inspect image goals and physical references →</a></section>')
     index = index.replace(marker, card + marker)
-    readme = parent["README.md"] + ("\n\n## Image-goal benchmark v0.1\n\n"
+    readme = parent["README.md"] + (f'\n\n## {release["readme_heading"]}\n\n'
         f"[Inspect the image-goal benchmark]({NAMESPACE}/index.html). {description}\n\n"
         f"[Pinned source](https://github.com/Dvidia-Inference/dvidia-training/tree/{source_commit}) · "
-        "[Research](https://research.dvidia.org/papers/image-goal-jev-v01/)\n").encode()
+        f'[Research](https://research.dvidia.org/papers/{release["paper"]}/)\n').encode()
     provenance = json.loads(parent["provenance.json"])
-    if "image_goals_v01" in provenance:
+    if release["provenance"] in provenance:
         raise PublicationError("Image-goal root provenance already exists.")
-    provenance["image_goals_v01"] = {"path": NAMESPACE, "source_commit": source_commit,
+    provenance[release["provenance"]] = {"path": NAMESPACE, "source_commit": source_commit,
         "integrity": record(export["publication-integrity.json"]), "provider_status": status,
         "mode": "recorded-passive-evaluation", "learned_policy": False, "physical_robot_ready": False}
     return {"index.html": index.encode(), "README.md": readme, "provenance.json": encoded(provenance)}
@@ -317,7 +334,10 @@ def publish(path, gate_path):
 
 
 def main():
+    global NAMESPACE
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--namespace", choices=tuple(RELEASES), default=NAMESPACE,
+        help="Append-only release namespace; the original protocol remains at v01.")
     sub = parser.add_subparsers(dest="action", required=True)
     snap = sub.add_parser("snapshot"); snap.add_argument("output"); snap.add_argument("--parent-commit", required=True)
     stage_parser = sub.add_parser("stage")
@@ -327,6 +347,7 @@ def main():
     check_parser = sub.add_parser("check"); check_parser.add_argument("plan")
     publish_parser = sub.add_parser("publish"); publish_parser.add_argument("plan"); publish_parser.add_argument("gate")
     args = parser.parse_args()
+    NAMESPACE = args.namespace
     try:
         if args.action == "snapshot":
             result = snapshot(args.output, args.parent_commit)

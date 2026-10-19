@@ -87,6 +87,28 @@ class ImageGoalReportTests(unittest.TestCase):
                 self.assertNotIn(secret.encode(), path.read_bytes())
                 self.assertNotIn(b'alert(1)', path.read_bytes())
 
+    def test_positive_recall_keeps_incomplete_abstained_error_and_unrun_cases(self):
+        positive = self.cases[2]
+        self.cases = [{**positive, 'id': f'positive-{i}'} for i in range(5)] + [self.cases[1]]
+        self.write_cases()
+        self.result([
+            {'case_id': 'positive-0', 'condition': 'rgb', 'status': 'ok', 'verdict': 'complete'},
+            {'case_id': 'positive-1', 'condition': 'rgb', 'status': 'ok', 'verdict': 'incomplete'},
+            {'case_id': 'positive-2', 'condition': 'rgb', 'status': 'ok', 'verdict': 'unknown'},
+            {'case_id': 'positive-3', 'condition': 'rgb', 'status': 'error', 'verdict': 'complete'},
+            {'case_id': 'positive-4', 'condition': 'rgb', 'status': 'not_run'},
+            {'case_id': 'held', 'condition': 'rgb', 'status': 'ok', 'verdict': 'incomplete'},
+        ])
+        data, _ = self.build()
+        self.assertEqual(data['summary'][0]['true_completion'],
+            {'count': 1, 'planned_complete': 5, 'answered_complete': 2, 'valid_complete': 3})
+        self.assertEqual(data['summary'][0]['false_completion']['count'], 0)
+        self.assertEqual(data['summary'][1]['true_completion']['planned_complete'], 5)
+        self.assertEqual(data['summary'][1]['true_completion']['valid_complete'], 0)
+        html = (self.root / 'report/index.html').read_text()
+        self.assertIn('<option value="complete">Physically complete</option>', html)
+        self.assertIn('Physically complete cases recognized in this input condition:', html)
+
     def test_explicit_provider_vocabulary_and_missing_credentials(self):
         self.result([
             {'case_id': 'missing', 'condition': 'rgb', 'status': 'ok', 'presence': 'absent', 'verdict': 'incomplete', 'timing_ms': {'total_ms': 10}},
