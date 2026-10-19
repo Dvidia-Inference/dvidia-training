@@ -20,6 +20,18 @@ This is measured-state verification, not learned vision or a robot controller.
 [Research](https://research.dvidia.org/papers/local-goal-verifier-v03/) ·
 [Run locally](docs/local-goal-verifier.md).
 
+**[Independent sensor corroboration v0.4](benchmarks/sensor-goal-verifier-v04/README.md).**
+RGB and PiPER drive checks prevent **69/112 deliberately false completion
+readings**, while **43 remain** through orientation, identity, support, sampling
+and replay blind spots. The conservative gate also abstains on **73/80 baseline
+true completions**, including all 64 injected sensor-fault controls. Processed
+path latency is **22.1 ms median / 31.5 ms p95**, excluding the 200 ms evidence
+window and rendering. This is a paired synthetic benchmark, not an independent
+physical-sensor or hardware result.
+[Inspect the cases](https://dvidia-robot-simulation-lab.static.hf.space/image-goals/v04/index.html) ·
+[Research](https://research.dvidia.org/papers/sensor-corroboration-v04/) ·
+[Protocol](docs/sensor-goal-verifier.md).
+
 **[Image-goal verification: measured Jev results](benchmarks/image-goal-20261019/README.md).**
 32 native PiPER fixtures test missing targets, wrong arrangements, unreleased
 contact and moving shoes that render identically to settled shoes. The runnable

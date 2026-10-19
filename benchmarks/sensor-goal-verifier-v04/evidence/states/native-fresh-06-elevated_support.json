@@ -1,0 +1,4220 @@
+{
+  "schema": "dvidia.sensor-native-scenes/v1",
+  "layout": {
+    "id": "fresh-06",
+    "xy_m": [
+      0.389885,
+      -0.086064
+    ],
+    "yaw_rad": 0.065939,
+    "azimuth_deg": 155.536
+  },
+  "scenario": "elevated_support",
+  "t_s": 0.8000000000000006,
+  "qpos": [
+    -0.23690997846652154,
+    1.5182589435160563,
+    -1.5227935702651774,
+    0.1286804379029073,
+    1.154239858642497,
+    -0.25843887783406816,
+    0.0349999999999886,
+    -0.03499999999987438,
+    0.3898849842971771,
+    -0.08606410743265239,
+    0.1198922612813693,
+    0.9994565517117555,
+    -8.275361322449602e-05,
+    1.532048321331653e-05,
+    0.03296352768693529
+  ],
+  "qvel": [
+    3.0469286459888197e-12,
+    2.900264369797689e-11,
+    -6.122071098989661e-11,
+    -6.762253413647596e-12,
+    7.415111255038091e-11,
+    -5.848749974750104e-13,
+    -9.902516489642316e-13,
+    -9.951371044319743e-14,
+    2.845384445108513e-12,
+    -8.400990275460126e-11,
+    7.511323740555174e-13,
+    -8.383612582011184e-10,
+    -1.6744035290496368e-11,
+    1.653750404716133e-10
+  ],
+  "ctrl": [
+    -0.23690997846637904,
+    1.5182589435169767,
+    -1.5227935702679674,
+    0.12868043790265263,
+    1.154239858646203,
+    -0.2584388778339991,
+    0.035
+  ],
+  "actuator_force": [
+    -3.8333780594257405e-12,
+    -7.136691237974446e-11,
+    8.290612640848849e-11,
+    2.362376960718393e-11,
+    -7.416467440179986e-11,
+    1.567634910770721e-12,
+    5.4072302191343624e-12
+  ],
+  "current_measurement": {
+    "target_present": true,
+    "target_position_m": [
+      0.3898849842971771,
+      -0.08606410743265239,
+      0.1198922612813693
+    ],
+    "position_error_m": 1.0857418406233275e-07,
+    "yaw_error_rad": 2.1911821385112162e-09,
+    "linear_speed_m_s": 8.406143094976067e-11,
+    "angular_speed_rad_s": 8.54680563708664e-10,
+    "table_support_force_n": 0.0,
+    "robot_contact_force_n": 0.0,
+    "contacts": [
+      {
+        "other_geom": "elevated_support_platform",
+        "normal_force_n": 0.08002167947145328
+      },
+      {
+        "other_geom": "elevated_support_platform",
+        "normal_force_n": 0.07290258840903882
+      },
+      {
+        "other_geom": "elevated_support_platform",
+        "normal_force_n": 0.06715129147818603
+      },
+      {
+        "other_geom": "elevated_support_platform",
+        "normal_force_n": 0.07422444064086939
+      }
+    ],
+    "instantaneous_conditions_met": false,
+    "t_s": 0.8000000000000006,
+    "yaw_rad": 0.06593899780881786
+  },
+  "history": [
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429815466,
+        -0.08606410742659837,
+        0.11989226125614857
+      ],
+      "position_error_m": 1.08568052314057e-07,
+      "yaw_error_rad": 2.19655620081749e-09,
+      "linear_speed_m_s": 9.189151825438461e-10,
+      "angular_speed_rad_s": 2.581649521828829e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167924607517
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258820582379
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0671512912219255
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444039558992
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6020000000000004,
+      "yaw_rad": 0.0659389978034438
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429815466,
+        -0.08606410742659841,
+        0.11989226125786136
+      ],
+      "position_error_m": 1.0856805235525265e-07,
+      "yaw_error_rad": 2.1965562285730655e-09,
+      "linear_speed_m_s": 8.563883550794989e-10,
+      "angular_speed_rad_s": 2.41236348914451e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167926043631
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258821890752
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129124005026
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444041337277
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6040000000000004,
+      "yaw_rad": 0.06593899780344377
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429815466,
+        -0.08606410742659845,
+        0.1198922612594576
+      ],
+      "position_error_m": 1.0856805239644828e-07,
+      "yaw_error_rad": 2.1965562424508533e-09,
+      "linear_speed_m_s": 7.981163551820696e-10,
+      "angular_speed_rad_s": 2.2541452460099726e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167927381117
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258823109315
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129125695325
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244404299482
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6060000000000004,
+      "yaw_rad": 0.06593899780344376
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429815466,
+        -0.08606410742659848,
+        0.11989226126094521
+      ],
+      "position_error_m": 1.0856805242391204e-07,
+      "yaw_error_rad": 2.196556256328641e-09,
+      "linear_speed_m_s": 7.438096042296913e-10,
+      "angular_speed_rad_s": 2.106273773830979e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0800216792862677
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258824244279
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0671512912727168
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444044539847
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6080000000000004,
+      "yaw_rad": 0.06593899780344374
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429815466,
+        -0.08606410742659851,
+        0.1198922612623316
+      ],
+      "position_error_m": 1.0856805245137581e-07,
+      "yaw_error_rad": 2.196556256328641e-09,
+      "linear_speed_m_s": 6.93198298544643e-10,
+      "angular_speed_rad_s": 1.9680744813665432e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167929786877
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0729025882530135
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129128741763
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244404597997
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6100000000000004,
+      "yaw_rad": 0.06593899780344374
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429815466,
+        -0.08606410742659854,
+        0.11989226126362366
+      ],
+      "position_error_m": 1.0856805247883957e-07,
+      "yaw_error_rad": 2.196556270206429e-09,
+      "linear_speed_m_s": 6.460309402628009e-10,
+      "angular_speed_rad_s": 1.8389169483619102e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167930867331
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.072902588262859
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129130112746
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244404732233
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6120000000000004,
+      "yaw_rad": 0.06593899780344373
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429815466,
+        -0.08606410742659856,
+        0.11989226126482781
+      ],
+      "position_error_m": 1.0856805250630333e-07,
+      "yaw_error_rad": 2.1965562840842168e-09,
+      "linear_speed_m_s": 6.020731876885595e-10,
+      "angular_speed_rad_s": 1.7182114565750005e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167931873573
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258827202863
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129131391286
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244404857353
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6140000000000004,
+      "yaw_rad": 0.06593899780344371
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429815466,
+        -0.08606410742659859,
+        0.11989226126595003
+      ],
+      "position_error_m": 1.0856805253376709e-07,
+      "yaw_error_rad": 2.1965563118397924e-09,
+      "linear_speed_m_s": 5.611065672904976e-10,
+      "angular_speed_rad_s": 1.6054067723505386e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167932810725
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258828056917
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129132583626
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444049739779
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6160000000000004,
+      "yaw_rad": 0.06593899780344369
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429815466,
+        -0.08606410742659862,
+        0.11989226126699588
+      ],
+      "position_error_m": 1.0856805256123085e-07,
+      "yaw_error_rad": 2.1965563118397924e-09,
+      "linear_speed_m_s": 5.229275390146677e-10,
+      "angular_speed_rad_s": 1.4999873652954452e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167933683543
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258828852375
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129133695595
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444050826851
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6180000000000004,
+      "yaw_rad": 0.06593899780344369
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429815466,
+        -0.08606410742659865,
+        0.11989226126797058
+      ],
+      "position_error_m": 1.0856805258869461e-07,
+      "yaw_error_rad": 2.19655632571758e-09,
+      "linear_speed_m_s": 4.873464287406319e-10,
+      "angular_speed_rad_s": 1.4014709415848164e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167934496426
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0729025882959326
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129134732586
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444051840103
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6200000000000004,
+      "yaw_rad": 0.06593899780344367
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429815466,
+        -0.08606410742659867,
+        0.11989226126887895
+      ],
+      "position_error_m": 1.0856805261615837e-07,
+      "yaw_error_rad": 2.19655632571758e-09,
+      "linear_speed_m_s": 4.5418644429667086e-10,
+      "angular_speed_rad_s": 1.309407485380585e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167935253542
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258830283353
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129135699692
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444052784608
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6220000000000004,
+      "yaw_rad": 0.06593899780344367
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429815466,
+        -0.08606410742659869,
+        0.1198922612697255
+      ],
+      "position_error_m": 1.0856805262989025e-07,
+      "yaw_error_rad": 2.196556353473156e-09,
+      "linear_speed_m_s": 4.232829321929873e-10,
+      "angular_speed_rad_s": 1.2233751816654777e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167935958668
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258830926095
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129136601587
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444053664963
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6240000000000004,
+      "yaw_rad": 0.06593899780344364
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429815466,
+        -0.0860641074265987,
+        0.11989226127051447
+      ],
+      "position_error_m": 1.0856805264362214e-07,
+      "yaw_error_rad": 2.196556339595368e-09,
+      "linear_speed_m_s": 3.9448232564749696e-10,
+      "angular_speed_rad_s": 1.1429803965944038e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167936615302
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258831524672
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.067151291374426
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444054485476
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6260000000000004,
+      "yaw_rad": 0.06593899780344366
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429815466,
+        -0.08606410742659872,
+        0.11989226127124976
+      ],
+      "position_error_m": 1.0856805265735401e-07,
+      "yaw_error_rad": 2.196556353473156e-09,
+      "linear_speed_m_s": 3.6764133119463824e-10,
+      "angular_speed_rad_s": 1.0678546474625085e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167937226937
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258832082257
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0671512913822697
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244405525033
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6280000000000004,
+      "yaw_rad": 0.06593899780344364
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429815466,
+        -0.08606410742659873,
+        0.11989226127193502
+      ],
+      "position_error_m": 1.085680526710859e-07,
+      "yaw_error_rad": 2.196556339595368e-09,
+      "linear_speed_m_s": 3.426267768077105e-10,
+      "angular_speed_rad_s": 9.976537345389814e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167937796525
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258832601544
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129138958419
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444055963207
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6300000000000004,
+      "yaw_rad": 0.06593899780344366
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429815466,
+        -0.08606410742659874,
+        0.11989226127257364
+      ],
+      "position_error_m": 1.0856805268481777e-07,
+      "yaw_error_rad": 2.196556353473156e-09,
+      "linear_speed_m_s": 3.193142679691454e-10,
+      "angular_speed_rad_s": 9.320558060219918e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167956286486
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0729025885573289
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129165057272
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444077368276
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6320000000000005,
+      "yaw_rad": 0.06593899780344364
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842981385,
+        -0.08606410742661519,
+        0.1198922612732881
+      ],
+      "position_error_m": 1.0856807129336096e-07,
+      "yaw_error_rad": 2.1965581714633586e-09,
+      "linear_speed_m_s": 3.574114521453421e-10,
+      "angular_speed_rad_s": 1.1548553781030083e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167935026205
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258828661768
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129134771565
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244405277214
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6340000000000005,
+      "yaw_rad": 0.06593899780344183
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842981258,
+        -0.08606410742662816,
+        0.1198922612739364
+      ],
+      "position_error_m": 1.0856808597117432e-07,
+      "yaw_error_rad": 2.196559656386654e-09,
+      "linear_speed_m_s": 3.2427947903287123e-10,
+      "angular_speed_rad_s": 1.0348376454804485e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167936175883
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258829923192
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129136264089
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244405406079
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6360000000000005,
+      "yaw_rad": 0.06593899780344034
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429811574,
+        -0.08606410742663842,
+        0.11989226127452564
+      ],
+      "position_error_m": 1.0856809757217635e-07,
+      "yaw_error_rad": 2.1965607804874665e-09,
+      "linear_speed_m_s": 2.947060626282751e-10,
+      "angular_speed_rad_s": 9.297694637999319e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167937176416
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258831018409
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129137585484
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244405520732
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6380000000000005,
+      "yaw_rad": 0.06593899780343922
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842981078,
+        -0.08606410742664651,
+        0.11989226127506203
+      ],
+      "position_error_m": 1.0856810672592585e-07,
+      "yaw_error_rad": 2.196561682543674e-09,
+      "linear_speed_m_s": 2.682548861339848e-10,
+      "angular_speed_rad_s": 8.37517306120633e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167938049769
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258831971438
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0671512913875611
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444056228307
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6400000000000005,
+      "yaw_rad": 0.06593899780343832
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429810153,
+        -0.0860641074266529,
+        0.11989226127555104
+      ],
+      "position_error_m": 1.0856811394980196e-07,
+      "yaw_error_rad": 2.19656240418864e-09,
+      "linear_speed_m_s": 2.4454838270375007e-10,
+      "angular_speed_rad_s": 7.56276227634883e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167938814587
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258832802823
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129139794145
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444057138623
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6420000000000005,
+      "yaw_rad": 0.0659389978034376
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842980966,
+        -0.08606410742665793,
+        0.1198922612759975
+      ],
+      "position_error_m": 1.0856811964900382e-07,
+      "yaw_error_rad": 2.19656297317794e-09,
+      "linear_speed_m_s": 2.2325983572844335e-10,
+      "angular_speed_rad_s": 6.845181895270381e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167939486297
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258833529732
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129140715428
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444057951097
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6440000000000005,
+      "yaw_rad": 0.06593899780343702
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842980927,
+        -0.08606410742666191,
+        0.11989226127640568
+      ],
+      "position_error_m": 1.0856812415204294e-07,
+      "yaw_error_rad": 2.196563403389362e-09,
+      "linear_speed_m_s": 2.0410545771687017e-10,
+      "angular_speed_rad_s": 6.209485892072425e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167940077984
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258834166802
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129141533967
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244405867716
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6460000000000005,
+      "yaw_rad": 0.0659389978034366
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429808965,
+        -0.08606410742666505,
+        0.11989226127677932
+      ],
+      "position_error_m": 1.0856812769701111e-07,
+      "yaw_error_rad": 2.196563778089633e-09,
+      "linear_speed_m_s": 1.8683855810416391e-10,
+      "angular_speed_rad_s": 5.644678300845646e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0800216794060075
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258834726522
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129142262108
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244405932686
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6480000000000005,
+      "yaw_rad": 0.06593899780343622
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842980872,
+        -0.08606410742666754,
+        0.1198922612771218
+      ],
+      "position_error_m": 1.085681305082683e-07,
+      "yaw_error_rad": 2.1965640417676013e-09,
+      "linear_speed_m_s": 1.712444144928185e-10,
+      "angular_speed_rad_s": 5.141414264053527e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167941063906
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258835219446
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129142910625
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444059909
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6500000000000005,
+      "yaw_rad": 0.06593899780343596
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429808527,
+        -0.08606410742666949,
+        0.11989226127743606
+      ],
+      "position_error_m": 1.0856813272545827e-07,
+      "yaw_error_rad": 2.1965642638122063e-09,
+      "linear_speed_m_s": 1.5713563503859269e-10,
+      "angular_speed_rad_s": 4.691725897536315e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167952933838
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258857638544
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129168129633
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444074570474
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6520000000000005,
+      "yaw_rad": 0.06593899780343573
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842980087,
+        -0.0860641074268001,
+        0.11989226127783102
+      ],
+      "position_error_m": 1.0856827302739309e-07,
+      "yaw_error_rad": 2.196555826117219e-09,
+      "linear_speed_m_s": 2.114914197732459e-10,
+      "angular_speed_rad_s": 1.7358232870831422e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167939818312
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258831542186
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129138341502
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444057560604
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6540000000000005,
+      "yaw_rad": 0.06593899780344417
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429794827,
+        -0.08606410742690324,
+        0.11989226127817988
+      ],
+      "position_error_m": 1.0856838382571221e-07,
+      "yaw_error_rad": 2.1965491647790714e-09,
+      "linear_speed_m_s": 1.843855672638217e-10,
+      "angular_speed_rad_s": 1.4121560493570062e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167940812618
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258832845206
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0671512913950163
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444058274906
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6560000000000005,
+      "yaw_rad": 0.06593899780345083
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842979005,
+        -0.08606410742698467,
+        0.11989226127848861
+      ],
+      "position_error_m": 1.0856847130886807e-07,
+      "yaw_error_rad": 2.1965438912197044e-09,
+      "linear_speed_m_s": 1.6141803624881117e-10,
+      "angular_speed_rad_s": 1.1426227497905543e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167941593025
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258833904907
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129140576137
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444058962019
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6580000000000005,
+      "yaw_rad": 0.0659389978034561
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429786284,
+        -0.08606410742704897,
+        0.11989226127876236
+      ],
+      "position_error_m": 1.0856854038000727e-07,
+      "yaw_error_rad": 2.19653974176115e-09,
+      "linear_speed_m_s": 1.418565756897848e-10,
+      "angular_speed_rad_s": 9.183735862237393e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167942207167
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258834769313
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129141560432
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444059611888
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6600000000000005,
+      "yaw_rad": 0.06593899780346026
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842978331,
+        -0.08606410742709973,
+        0.11989226127900557
+      ],
+      "position_error_m": 1.0856859491449567e-07,
+      "yaw_error_rad": 2.1965364527254394e-09,
+      "linear_speed_m_s": 1.2511422182907452e-10,
+      "angular_speed_rad_s": 7.320364130800436e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167942692252
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258835476848
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129142454086
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444060218683
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6620000000000005,
+      "yaw_rad": 0.06593899780346354
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842978096,
+        -0.08606410742713981,
+        0.11989226127922208
+      ],
+      "position_error_m": 1.0856863796822011e-07,
+      "yaw_error_rad": 2.196533885334695e-09,
+      "linear_speed_m_s": 1.1071830666377222e-10,
+      "angular_speed_rad_s": 5.774648945096771e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167943077095
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258836058057
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129143259414
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444060779432
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6640000000000005,
+      "yaw_rad": 0.06593899780346611
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429779106,
+        -0.08606410742717145,
+        0.1198922612794152
+      ],
+      "position_error_m": 1.085686719584271e-07,
+      "yaw_error_rad": 2.1965318314220994e-09,
+      "linear_speed_m_s": 9.828587926236518e-11,
+      "angular_speed_rad_s": 4.495367051851384e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0800216794338427
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258836537578
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129143980758
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244406129354
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6660000000000005,
+      "yaw_rad": 0.06593899780346817
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842977764,
+        -0.08606410742719643,
+        0.1198922612795878
+      ],
+      "position_error_m": 1.0856869879533761e-07,
+      "yaw_error_rad": 2.196530207720926e-09,
+      "linear_speed_m_s": 8.750532450626292e-11,
+      "angular_speed_rad_s": 3.4398676112354336e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167943631322
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258836935036
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129144623548
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444061761839
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6680000000000005,
+      "yaw_rad": 0.06593899780346979
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429776486,
+        -0.08606410742721615,
+        0.11989226127974235
+      ],
+      "position_error_m": 1.0856871997826982e-07,
+      "yaw_error_rad": 2.1965289309644476e-09,
+      "linear_speed_m_s": 7.812157410504797e-11,
+      "angular_speed_rad_s": 2.572838125016064e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167943831703
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258837266098
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129145193727
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444062186055
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6700000000000005,
+      "yaw_rad": 0.06593899780347107
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842977557,
+        -0.08606410742723171,
+        0.11989226127988103
+      ],
+      "position_error_m": 1.0856873669641248e-07,
+      "yaw_error_rad": 2.1965279178859376e-09,
+      "linear_speed_m_s": 6.992436879326602e-11,
+      "angular_speed_rad_s": 1.8655081167157054e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0800216794399603
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258837543456
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129145697618
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244406256875
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6720000000000005,
+      "yaw_rad": 0.06593899780347208
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842977485,
+        -0.08606410742724399,
+        0.1198922612800057
+      ],
+      "position_error_m": 1.0856874989283367e-07,
+      "yaw_error_rad": 2.1965271129742447e-09,
+      "linear_speed_m_s": 6.273981160205462e-11,
+      "angular_speed_rad_s": 1.2956181064196917e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0800216794413233
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258837777111
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129146141383
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444062912661
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6740000000000005,
+      "yaw_rad": 0.06593899780347288
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429774276,
+        -0.08606410742725368,
+        0.11989226128011798
+      ],
+      "position_error_m": 1.0856876030462353e-07,
+      "yaw_error_rad": 2.1965264607182178e-09,
+      "linear_speed_m_s": 5.642290540600938e-11,
+      "angular_speed_rad_s": 8.494848275217262e-11,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167944246953
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0729025883797529
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0671512914653111
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244406322087
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6760000000000005,
+      "yaw_rad": 0.06593899780347354
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429773827,
+        -0.08606410742726132,
+        0.1198922612802193
+      ],
+      "position_error_m": 1.0856876852119966e-07,
+      "yaw_error_rad": 2.1965259611178567e-09,
+      "linear_speed_m_s": 5.085249586903068e-11,
+      "angular_speed_rad_s": 5.307819568161427e-11,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167944344606
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258838144373
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129146872405
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244406349631
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6780000000000005,
+      "yaw_rad": 0.06593899780347404
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842977347,
+        -0.08606410742726736,
+        0.11989226128031089
+      ],
+      "position_error_m": 1.0856877500839293e-07,
+      "yaw_error_rad": 2.196525586417586e-09,
+      "linear_speed_m_s": 4.5926416590145716e-11,
+      "angular_speed_rad_s": 3.803933065135796e-11,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167944429138
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258838289752
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129147170706
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444063742091
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6800000000000005,
+      "yaw_rad": 0.06593899780347441
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429773194,
+        -0.08606410742727212,
+        0.11989226128039382
+      ],
+      "position_error_m": 1.0856878011985395e-07,
+      "yaw_error_rad": 2.1965252672284663e-09,
+      "linear_speed_m_s": 4.155869235145953e-11,
+      "angular_speed_rad_s": 4.1572129238819566e-11,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167945077969
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0729025884745718
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129159747074
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444067833936
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6820000000000005,
+      "yaw_rad": 0.06593899780347473
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842976466,
+        -0.08606410742757094,
+        0.11989226128051583
+      ],
+      "position_error_m": 1.0856908813448514e-07,
+      "yaw_error_rad": 2.1964244312222547e-09,
+      "linear_speed_m_s": 1.669235783581486e-10,
+      "angular_speed_rad_s": 2.67939485622908e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167945357072
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258837248535
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129144196244
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444062554892
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6840000000000005,
+      "yaw_rad": 0.06593899780357557
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429757923,
+        -0.08606410742780689,
+        0.11989226128062085
+      ],
+      "position_error_m": 1.0856933135050834e-07,
+      "yaw_error_rad": 2.1963448143536013e-09,
+      "linear_speed_m_s": 1.3345458164822703e-10,
+      "angular_speed_rad_s": 2.0691368446146104e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167945979256
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258838090671
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129144375903
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444062373855
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6860000000000005,
+      "yaw_rad": 0.06593899780365518
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.389884984297526,
+        -0.0860641074279932,
+        0.11989226128071132
+      ],
+      "position_error_m": 1.0856952340033615e-07,
+      "yaw_error_rad": 2.196281947974832e-09,
+      "linear_speed_m_s": 1.0691810439605446e-10,
+      "angular_speed_rad_s": 1.5672717838359376e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946342166
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258838665532
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129144692067
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244406237448
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6880000000000005,
+      "yaw_rad": 0.06593899780371805
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429748397,
+        -0.0860641074281403,
+        0.11989226128078932
+      ],
+      "position_error_m": 1.085696750358487e-07,
+      "yaw_error_rad": 2.1962323071278433e-09,
+      "linear_speed_m_s": 8.58638497257876e-11,
+      "angular_speed_rad_s": 1.1555607877801168e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946520973
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839044096
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129145088297
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444062497588
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6900000000000005,
+      "yaw_rad": 0.06593899780376769
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842974508,
+        -0.08606410742825644,
+        0.11989226128085666
+      ],
+      "position_error_m": 1.0856979475900606e-07,
+      "yaw_error_rad": 2.196193116255074e-09,
+      "linear_speed_m_s": 6.91456345706667e-11,
+      "angular_speed_rad_s": 8.188988488350683e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946571866
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.072902588392802
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129145523911
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444062699186
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6920000000000005,
+      "yaw_rad": 0.06593899780380688
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842974246,
+        -0.08606410742834814,
+        0.11989226128091485
+      ],
+      "position_error_m": 1.085698892749993e-07,
+      "yaw_error_rad": 2.1961621687882626e-09,
+      "linear_speed_m_s": 5.585734640825234e-11,
+      "angular_speed_rad_s": 5.448103767389122e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946536771
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0729025883941463
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0671512914597038
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444062947135
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6940000000000005,
+      "yaw_rad": 0.06593899780383783
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429740387,
+        -0.08606410742842052,
+        0.11989226128096518
+      ],
+      "position_error_m": 1.0856996389512493e-07,
+      "yaw_error_rad": 2.1961377022483575e-09,
+      "linear_speed_m_s": 4.528269642231192e-11,
+      "angular_speed_rad_s": 3.23172889188214e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946446553
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839478013
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0671512914640812
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444063218195
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6960000000000005,
+      "yaw_rad": 0.0659389978038623
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842973875,
+        -0.08606410742847766,
+        0.11989226128100879
+      ],
+      "position_error_m": 1.0857002279769027e-07,
+      "yaw_error_rad": 2.196118398245517e-09,
+      "linear_speed_m_s": 3.6855314849911993e-11,
+      "angular_speed_rad_s": 1.4700143205208804e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946323772
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0729025883949324
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129146824333
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444063495974
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.6980000000000005,
+      "yaw_rad": 0.0659389978038816
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429737456,
+        -0.08606410742852276,
+        0.1198922612810466
+      ],
+      "position_error_m": 1.0857006929694742e-07,
+      "yaw_error_rad": 2.196103146556716e-09,
+      "linear_speed_m_s": 3.0127473335372307e-11,
+      "angular_speed_rad_s": 4.275199996321713e-11,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946184593
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839477208
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129147211076
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444063769133
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7000000000000005,
+      "yaw_rad": 0.06593899780389685
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429736435,
+        -0.08606410742855836,
+        0.11989226128107944
+      ],
+      "position_error_m": 1.0857010599646914e-07,
+      "yaw_error_rad": 2.1960910728813232e-09,
+      "linear_speed_m_s": 2.4745174254395024e-11,
+      "angular_speed_rad_s": 1.2471137038609992e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946040302
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839442183
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129147563928
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.074224440640301
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7020000000000005,
+      "yaw_rad": 0.06593899780390892
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842973563,
+        -0.08606410742858644,
+        0.11989226128110798
+      ],
+      "position_error_m": 1.0857013495393125e-07,
+      "yaw_error_rad": 2.196081566596675e-09,
+      "linear_speed_m_s": 2.0428510232484372e-11,
+      "angular_speed_rad_s": 2.109232252135689e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167945898678
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839397029
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129147881088
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444064274107
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7040000000000005,
+      "yaw_rad": 0.06593899780391843
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842973499,
+        -0.08606410742860862,
+        0.11989226128113284
+      ],
+      "position_error_m": 1.085701578207567e-07,
+      "yaw_error_rad": 2.196074044835683e-09,
+      "linear_speed_m_s": 1.6956209420780268e-11,
+      "angular_speed_rad_s": 2.7878252947103914e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167945764901
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839348071
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129148162576
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444064498582
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7060000000000005,
+      "yaw_rad": 0.06593899780392595
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842973449,
+        -0.08606410742862612,
+        0.11989226128115452
+      ],
+      "position_error_m": 1.0857017585922527e-07,
+      "yaw_error_rad": 2.1960681051425013e-09,
+      "linear_speed_m_s": 1.4153600491576875e-11,
+      "angular_speed_rad_s": 3.303137853667207e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167945641983
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839299452
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129148409407
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244406470217
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7080000000000005,
+      "yaw_rad": 0.06593899780393189
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.389884984297341,
+        -0.08606410742863993,
+        0.11989226128117346
+      ],
+      "position_error_m": 1.0857019009247169e-07,
+      "yaw_error_rad": 2.1960634005724344e-09,
+      "linear_speed_m_s": 1.1882496613102538e-11,
+      "angular_speed_rad_s": 3.6816122773008177e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167945531632
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839253998
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129148623526
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444064884726
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7100000000000005,
+      "yaw_rad": 0.0659389978039366
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429733787,
+        -0.08606410742865082,
+        0.11989226128119003
+      ],
+      "position_error_m": 1.0857020132159533e-07,
+      "yaw_error_rad": 2.1960596952030897e-09,
+      "linear_speed_m_s": 1.0033777079816611e-11,
+      "angular_speed_rad_s": 3.9470023767357156e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167945434649
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839213523
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129148807382
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444065046827
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7120000000000005,
+      "yaw_rad": 0.0659389978039403
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842973354,
+        -0.08606410742865941,
+        0.11989226128120455
+      ],
+      "position_error_m": 1.0857021017488449e-07,
+      "yaw_error_rad": 2.1960567669898623e-09,
+      "linear_speed_m_s": 8.521465862436368e-12,
+      "angular_speed_rad_s": 4.1196351098777593e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167945351038
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839179001
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129148963601
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.074224440651895
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7140000000000005,
+      "yaw_rad": 0.06593899780394323
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842973335,
+        -0.08606410742866619,
+        0.11989226128121729
+      ],
+      "position_error_m": 1.0857021715704063e-07,
+      "yaw_error_rad": 2.1960544355215106e-09,
+      "linear_speed_m_s": 7.277800928494526e-12,
+      "angular_speed_rad_s": 4.2166743039262503e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167945280256
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839150782
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129149094845
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444065313996
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7160000000000005,
+      "yaw_rad": 0.06593899780394556
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842973319,
+        -0.08606410742867153,
+        0.11989226128122848
+      ],
+      "position_error_m": 1.0857022266861343e-07,
+      "yaw_error_rad": 2.19605260365352e-09,
+      "linear_speed_m_s": 6.2492468748546885e-12,
+      "angular_speed_rad_s": 4.2525348650234975e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167943252735
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0729025884054858
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129153932306
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444066776346
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7180000000000005,
+      "yaw_rad": 0.0659389978039474
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842972957,
+        -0.0860641074290083,
+        0.11989226128125503
+      ],
+      "position_error_m": 1.0857056114264492e-07,
+      "yaw_error_rad": 2.1958083407103146e-09,
+      "linear_speed_m_s": 1.6987943577789898e-10,
+      "angular_speed_rad_s": 2.6046542962257467e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946574834
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839628697
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129147379958
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244406431847
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7200000000000005,
+      "yaw_rad": 0.06593899780419166
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429726703,
+        -0.08606410742927423,
+        0.11989226128127678
+      ],
+      "position_error_m": 1.0857082841554899e-07,
+      "yaw_error_rad": 2.1956154672153616e-09,
+      "linear_speed_m_s": 1.3417221007837734e-10,
+      "angular_speed_rad_s": 1.946511612256473e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167947056983
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258840169145
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129147097072
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444063884322
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7220000000000005,
+      "yaw_rad": 0.06593899780438453
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842972444,
+        -0.0860641074294842,
+        0.1198922612812945
+      ],
+      "position_error_m": 1.0857103945445384e-07,
+      "yaw_error_rad": 2.1954631862497465e-09,
+      "linear_speed_m_s": 1.0596441637543907e-10,
+      "angular_speed_rad_s": 1.4084467924697324e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.080021679472849
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258840463461
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129147031558
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444063688781
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7240000000000005,
+      "yaw_rad": 0.06593899780453681
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842972265,
+        -0.08606410742964998,
+        0.11989226128130887
+      ],
+      "position_error_m": 1.0857120608061638e-07,
+      "yaw_error_rad": 2.195342921340604e-09,
+      "linear_speed_m_s": 8.368082026954463e-11,
+      "angular_speed_rad_s": 9.701426820423752e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167947336387
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258840584996
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129147111483
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244406365871
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7260000000000005,
+      "yaw_rad": 0.06593899780465708
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842972124,
+        -0.08606410742978088,
+        0.11989226128132041
+      ],
+      "position_error_m": 1.0857133763890596e-07,
+      "yaw_error_rad": 2.195247969516423e-09,
+      "linear_speed_m_s": 6.607714969016752e-11,
+      "angular_speed_rad_s": 6.149535138541713e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167947269528
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258840588687
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129147284034
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444063739753
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7280000000000005,
+      "yaw_rad": 0.06593899780475203
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429720125,
+        -0.08606410742988421,
+        0.11989226128132963
+      ],
+      "position_error_m": 1.0857144150018035e-07,
+      "yaw_error_rad": 2.1951729878288972e-09,
+      "linear_speed_m_s": 5.2170603871341936e-11,
+      "angular_speed_rad_s": 3.2986336672526615e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167947126991
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258840515085
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129147510657
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444063891621
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7300000000000005,
+      "yaw_rad": 0.06593899780482701
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842971924,
+        -0.08606410742996579,
+        0.11989226128133688
+      ],
+      "position_error_m": 1.085715234926769e-07,
+      "yaw_error_rad": 2.195113785186109e-09,
+      "linear_speed_m_s": 4.118485989274382e-11,
+      "angular_speed_rad_s": 1.1154292006226975e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0800216794694003
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258840394052
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.067151291477639
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444064085072
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7320000000000005,
+      "yaw_rad": 0.06593899780488621
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842971855,
+        -0.08606410743003018,
+        0.11989226128134252
+      ],
+      "position_error_m": 1.085715882121424e-07,
+      "yaw_error_rad": 2.1950670170411968e-09,
+      "linear_speed_m_s": 3.25067729209578e-11,
+      "angular_speed_rad_s": 1.0930804061003448e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946730898
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258840246995
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129148024379
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244406429898
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7340000000000005,
+      "yaw_rad": 0.06593899780493298
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429718,
+        -0.086064107430081,
+        0.11989226128134682
+      ],
+      "position_error_m": 1.085716392930926e-07,
+      "yaw_error_rad": 2.1950300743700524e-09,
+      "linear_speed_m_s": 2.565204363923993e-11,
+      "angular_speed_rad_s": 2.430848814744773e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0800216794651535
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258840089198
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0671512914827897
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444064518509
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7360000000000005,
+      "yaw_rad": 0.06593899780496992
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429717566,
+        -0.08606410743012112,
+        0.11989226128135001
+      ],
+      "position_error_m": 1.0857167961816815e-07,
+      "yaw_error_rad": 2.195000917137868e-09,
+      "linear_speed_m_s": 2.0238147551932625e-11,
+      "angular_speed_rad_s": 3.529970269244686e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946304121
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839931214
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129148519075
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244406473352
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7380000000000005,
+      "yaw_rad": 0.06593899780499908
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842971722,
+        -0.08606410743015278,
+        0.11989226128135229
+      ],
+      "position_error_m": 1.0857171143834362e-07,
+      "yaw_error_rad": 2.194977880010107e-09,
+      "linear_speed_m_s": 1.5962985872841625e-11,
+      "angular_speed_rad_s": 4.376740959156068e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0800216794610428
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839780125
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129148739483
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444064937335
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7400000000000005,
+      "yaw_rad": 0.06593899780502212
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842971695,
+        -0.08606410743017776,
+        0.11989226128135383
+      ],
+      "position_error_m": 1.0857173654911642e-07,
+      "yaw_error_rad": 2.1949596723525033e-09,
+      "linear_speed_m_s": 1.2587982998999248e-11,
+      "angular_speed_rad_s": 5.008733298368155e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167945920106
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839640339
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129148937318
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444065125776
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7420000000000005,
+      "yaw_rad": 0.06593899780504033
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429716734,
+        -0.08606410743019746,
+        0.11989226128135476
+      ],
+      "position_error_m": 1.0857175636149148e-07,
+      "yaw_error_rad": 2.1949453088421222e-09,
+      "linear_speed_m_s": 9.924762661752966e-12,
+      "angular_speed_rad_s": 5.462514969612402e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167945754105
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839514555
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129149111596
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244406529669
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7440000000000005,
+      "yaw_rad": 0.06593899780505469
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429716567,
+        -0.08606410743021302,
+        0.11989226128135519
+      ],
+      "position_error_m": 1.0857177199577908e-07,
+      "yaw_error_rad": 2.1949339568116955e-09,
+      "linear_speed_m_s": 7.824585314716326e-12,
+      "angular_speed_rad_s": 5.769816068436289e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0800216794560711
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839403907
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129149262308
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244406544904
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7460000000000006,
+      "yaw_rad": 0.06593899780506604
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429716434,
+        -0.08606410743022529,
+        0.11989226128135522
+      ],
+      "position_error_m": 1.0857178432744123e-07,
+      "yaw_error_rad": 2.1949249917607716e-09,
+      "linear_speed_m_s": 6.170063921567295e-12,
+      "angular_speed_rad_s": 5.957505908967373e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167945479223
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839308758
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129149390447
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444065582909
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7480000000000006,
+      "yaw_rad": 0.065938997805075
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842971633,
+        -0.08606410743023496,
+        0.11989226128135494
+      ],
+      "position_error_m": 1.085717940511001e-07,
+      "yaw_error_rad": 2.1949179140889896e-09,
+      "linear_speed_m_s": 4.868547843120181e-12,
+      "angular_speed_rad_s": 6.048166870482223e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167945369677
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0729025883922866
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129149497343
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444065698827
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7500000000000006,
+      "yaw_rad": 0.06593899780508208
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429716245,
+        -0.08606410743024259,
+        0.11989226128135441
+      ],
+      "position_error_m": 1.0857180172405926e-07,
+      "yaw_error_rad": 2.1949123074627153e-09,
+      "linear_speed_m_s": 3.846955516671663e-12,
+      "angular_speed_rad_s": 6.060702157683439e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167945277416
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839162841
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129149584746
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444065797855
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7520000000000006,
+      "yaw_rad": 0.06593899780508769
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842971618,
+        -0.08606410743024862,
+        0.11989226128135369
+      ],
+      "position_error_m": 1.0857180778003534e-07,
+      "yaw_error_rad": 2.1949078804484046e-09,
+      "linear_speed_m_s": 3.047616852358444e-12,
+      "angular_speed_rad_s": 6.010904851459447e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167945201108
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0729025883911025
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129149654502
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444065881266
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7540000000000006,
+      "yaw_rad": 0.06593899780509212
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842971613,
+        -0.08606410743025336,
+        0.11989226128135282
+      ],
+      "position_error_m": 1.0857181254859331e-07,
+      "yaw_error_rad": 2.194904383245877e-09,
+      "linear_speed_m_s": 2.425053598317971e-12,
+      "angular_speed_rad_s": 5.91193181673042e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167943688498
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258838420097
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129151674668
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444067123357
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7560000000000006,
+      "yaw_rad": 0.06593899780509561
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842971575,
+        -0.0860641074305539,
+        0.11989226128135963
+      ],
+      "position_error_m": 1.0857211047197278e-07,
+      "yaw_error_rad": 2.1945266021061727e-09,
+      "linear_speed_m_s": 1.5032009127097213e-10,
+      "angular_speed_rad_s": 2.1193222812971126e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946253103
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839941066
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129148535433
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444064930743
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7580000000000006,
+      "yaw_rad": 0.0659389978054734
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842971545,
+        -0.08606410743079121,
+        0.11989226128136465
+      ],
+      "position_error_m": 1.0857234572055021e-07,
+      "yaw_error_rad": 2.1942283268128193e-09,
+      "linear_speed_m_s": 1.1869143630797186e-10,
+      "angular_speed_rad_s": 1.5450956373717775e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946679475
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0729025884035382
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129148166371
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444064514645
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7600000000000006,
+      "yaw_rad": 0.06593899780577167
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842971522,
+        -0.08606410743097859,
+        0.11989226128136822
+      ],
+      "position_error_m": 1.0857253146551081e-07,
+      "yaw_error_rad": 2.1939927791203573e-09,
+      "linear_speed_m_s": 9.371302444484749e-11,
+      "angular_speed_rad_s": 1.0774940597076525e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946883781
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258840556221
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129148004693
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444064315478
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7620000000000006,
+      "yaw_rad": 0.06593899780600722
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842971503,
+        -0.08606410743112652,
+        0.1198922612813706
+      ],
+      "position_error_m": 1.0857267812026137e-07,
+      "yaw_error_rad": 2.1938068028859448e-09,
+      "linear_speed_m_s": 7.398740301026367e-11,
+      "angular_speed_rad_s": 6.985256308244898e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946934205
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0729025884061312
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129147985059
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444064267038
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7640000000000006,
+      "yaw_rad": 0.0659389978061932
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842971488,
+        -0.08606410743124333,
+        0.119892261281372
+      ],
+      "position_error_m": 1.0857279391822055e-07,
+      "yaw_error_rad": 2.1936599481353625e-09,
+      "linear_speed_m_s": 5.841079116826056e-11,
+      "angular_speed_rad_s": 3.93895127687267e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946881315
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258840572567
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129148058915
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244406431982
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7660000000000006,
+      "yaw_rad": 0.06593899780634005
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429714763,
+        -0.08606410743133555,
+        0.11989226128137262
+      ],
+      "position_error_m": 1.0857288533512822e-07,
+      "yaw_error_rad": 2.1935439853404404e-09,
+      "linear_speed_m_s": 4.6111407120663674e-11,
+      "angular_speed_rad_s": 1.5607111925660367e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946762542
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258840470076
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129148190803
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444064437468
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7680000000000006,
+      "yaw_rad": 0.06593899780645601
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842971467,
+        -0.08606410743140834,
+        0.11989226128137262
+      ],
+      "position_error_m": 1.0857295749529793e-07,
+      "yaw_error_rad": 2.1934524058186966e-09,
+      "linear_speed_m_s": 3.640068523323666e-11,
+      "angular_speed_rad_s": 8.406998085936635e-11,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946604993
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258840331347
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129148354998
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444064593302
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7700000000000006,
+      "yaw_rad": 0.06593899780654759
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429714596,
+        -0.08606410743146581,
+        0.11989226128137213
+      ],
+      "position_error_m": 1.0857301446336404e-07,
+      "yaw_error_rad": 2.193380102544218e-09,
+      "linear_speed_m_s": 2.8734812341033373e-11,
+      "angular_speed_rad_s": 2.1858570951604646e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946428156
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258840174789
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129148533246
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444064768248
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7720000000000006,
+      "yaw_rad": 0.0659389978066199
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842971454,
+        -0.08606410743151116,
+        0.11989226128137126
+      ],
+      "position_error_m": 1.0857305941941786e-07,
+      "yaw_error_rad": 2.1933230093251765e-09,
+      "linear_speed_m_s": 2.2684292508319226e-11,
+      "angular_speed_rad_s": 3.356400405982252e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946245839
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0729025884001343
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129148713016
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444064948981
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7740000000000006,
+      "yaw_rad": 0.06593899780667699
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429714497,
+        -0.08606410743154697,
+        0.1198922612813701
+      ],
+      "position_error_m": 1.0857309491188466e-07,
+      "yaw_error_rad": 2.1932778926370133e-09,
+      "linear_speed_m_s": 1.7909942012781422e-11,
+      "angular_speed_rad_s": 4.265191952603714e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946067287
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839855958
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0671512914888573
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444065126207
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7760000000000006,
+      "yaw_rad": 0.0659389978067221
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842971446,
+        -0.08606410743157522,
+        0.11989226128136869
+      ],
+      "position_error_m": 1.0857312292618285e-07,
+      "yaw_error_rad": 2.1932422961112863e-09,
+      "linear_speed_m_s": 1.4143918910065817e-11,
+      "angular_speed_rad_s": 4.947673367866003e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167945898653
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0729025883970813
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129149046038
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444065293962
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7780000000000006,
+      "yaw_rad": 0.0659389978067577
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842971443,
+        -0.08606410743159751,
+        0.11989226128136714
+      ],
+      "position_error_m": 1.0857314501971762e-07,
+      "yaw_error_rad": 2.193214151957612e-09,
+      "linear_speed_m_s": 1.1174725409746173e-11,
+      "angular_speed_rad_s": 5.441805318379735e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167945743739
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839573445
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129149190786
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444065448493
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7800000000000006,
+      "yaw_rad": 0.06593899780678585
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842971441,
+        -0.08606410743161509,
+        0.11989226128136546
+      ],
+      "position_error_m": 1.085731624501181e-07,
+      "yaw_error_rad": 2.1931919474971195e-09,
+      "linear_speed_m_s": 8.835355969430493e-12,
+      "angular_speed_rad_s": 5.780968273189855e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0800216794560461
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0729025883945378
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129149318459
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444065587831
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7820000000000006,
+      "yaw_rad": 0.06593899780680805
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842971439,
+        -0.08606410743162897,
+        0.11989226128136371
+      ],
+      "position_error_m": 1.085731762060793e-07,
+      "yaw_error_rad": 2.1931744059733305e-09,
+      "linear_speed_m_s": 6.9939587564889305e-12,
+      "angular_speed_rad_s": 5.993516884081369e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167945481997
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839349759
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129149428567
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444065711027
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7840000000000006,
+      "yaw_rad": 0.06593899780682559
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429714374,
+        -0.08606410743163992,
+        0.11989226128136192
+      ],
+      "position_error_m": 1.0857318706461478e-07,
+      "yaw_error_rad": 2.1931605420633105e-09,
+      "linear_speed_m_s": 5.5464448761961936e-12,
+      "angular_speed_rad_s": 6.103293073612149e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.080021679453759
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839261318
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129149521502
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0742244406581809
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7860000000000006,
+      "yaw_rad": 0.06593899780683946
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429714363,
+        -0.08606410743164855,
+        0.11989226128136012
+      ],
+      "position_error_m": 1.085731956218985e-07,
+      "yaw_error_rad": 2.19314959248873e-09,
+      "linear_speed_m_s": 4.410641969740497e-12,
+      "angular_speed_rad_s": 6.130250785378095e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167945285736
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839187824
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129149598155
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444065909642
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7880000000000006,
+      "yaw_rad": 0.0659389978068504
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842971435,
+        -0.08606410743165537,
+        0.11989226128135831
+      ],
+      "position_error_m": 1.0857320238030652e-07,
+      "yaw_error_rad": 2.193140946626926e-09,
+      "linear_speed_m_s": 3.521617065767071e-12,
+      "angular_speed_rad_s": 6.091049403224539e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167945210538
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258839128308
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129149659717
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444065986573
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7900000000000006,
+      "yaw_rad": 0.06593899780685905
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429714347,
+        -0.08606410743166074,
+        0.11989226128135654
+      ],
+      "position_error_m": 1.0857320770257095e-07,
+      "yaw_error_rad": 2.193134132633112e-09,
+      "linear_speed_m_s": 2.828007816476842e-12,
+      "angular_speed_rad_s": 5.99956992242491e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167943749494
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258837859866
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0671512915127455
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444067446275
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7920000000000006,
+      "yaw_rad": 0.06593899780686586
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.389884984297155,
+        -0.08606410743200206,
+        0.11989226128136167
+      ],
+      "position_error_m": 1.085735437681356e-07,
+      "yaw_error_rad": 2.1924622534141847e-09,
+      "linear_speed_m_s": 1.7077718268146095e-10,
+      "angular_speed_rad_s": 2.4744312699007174e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167946353708
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258840184925
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129148516329
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444064859951
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7940000000000006,
+      "yaw_rad": 0.06593899780753774
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.38988498429716417,
+        -0.08606410743227157,
+        0.11989226128136533
+      ],
+      "position_error_m": 1.08573809116491e-07,
+      "yaw_error_rad": 2.191931774975231e-09,
+      "linear_speed_m_s": 1.3484596349684193e-10,
+      "angular_speed_rad_s": 1.82021051003782e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0800216794684366
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258840638371
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129148069209
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444064378961
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7960000000000006,
+      "yaw_rad": 0.06593899780806822
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842971714,
+        -0.08606410743248437,
+        0.1198922612813678
+      ],
+      "position_error_m": 1.085740186374081e-07,
+      "yaw_error_rad": 2.191512873950252e-09,
+      "linear_speed_m_s": 1.0646998570142878e-10,
+      "angular_speed_rad_s": 1.2870964422089363e-09,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167947081915
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258840853414
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.0671512914786145
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444064146566
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.7980000000000006,
+      "yaw_rad": 0.06593899780848712
+    },
+    {
+      "target_present": true,
+      "target_position_m": [
+        0.3898849842971771,
+        -0.08606410743265239,
+        0.1198922612813693
+      ],
+      "position_error_m": 1.0857418406233275e-07,
+      "yaw_error_rad": 2.1911821385112162e-09,
+      "linear_speed_m_s": 8.406143094976067e-11,
+      "angular_speed_rad_s": 8.54680563708664e-10,
+      "table_support_force_n": 0.0,
+      "robot_contact_force_n": 0.0,
+      "contacts": [
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.08002167947145328
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07290258840903882
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.06715129147818603
+        },
+        {
+          "other_geom": "elevated_support_platform",
+          "normal_force_n": 0.07422444064086939
+        }
+      ],
+      "instantaneous_conditions_met": false,
+      "t_s": 0.8000000000000006,
+      "yaw_rad": 0.06593899780881786
+    }
+  ],
+  "camera_capture_states": [
+    {
+      "t_s": 0.6000000000000004,
+      "qpos": [
+        -0.2369099784664237,
+        1.5182589435176175,
+        -1.522793570268259,
+        0.12868043790246853,
+        1.1542398586466955,
+        -0.25843887783415004,
+        0.034999999999986486,
+        -0.03499999999988183,
+        0.38988498429815466,
+        -0.08606410742659833,
+        0.11989226125431074,
+        0.9994565517118499,
+        -8.27535582109156e-05,
+        1.532047250609562e-05,
+        0.0329635276842479
+      ],
+      "qvel": [
+        8.686631187521919e-12,
+        1.4272098001291306e-10,
+        -2.829140865406561e-10,
+        -3.8935942917674e-11,
+        3.908648283069296e-10,
+        -7.856295745758307e-12,
+        3.8167501431236443e-13,
+        9.80128835884297e-13,
+        -6.945313672865622e-15,
+        -2.2748500606273406e-14,
+        9.86007450988588e-10,
+        -2.6398106513960977e-09,
+        8.150600320513944e-10,
+        1.2542418262833965e-13
+      ],
+      "ctrl": [
+        -0.23690997846637904,
+        1.5182589435169767,
+        -1.5227935702679674,
+        0.12868043790265263,
+        1.154239858646203,
+        -0.2584388778339991,
+        0.035
+      ],
+      "actuator_force": [
+        -3.985789476246282e-11,
+        -7.648566224816022e-10,
+        1.4379111235029995e-09,
+        2.020437150918042e-10,
+        -5.912212941439066e-10,
+        1.3293366407651774e-11,
+        -1.3677947663381929e-12
+      ]
+    },
+    {
+      "t_s": 0.6200000000000004,
+      "qpos": [
+        -0.2369099784662885,
+        1.5182589435194118,
+        -1.5227935702719264,
+        0.12868043790198166,
+        1.1542398586516485,
+        -0.2584388778342203,
+        0.03499999999998401,
+        -0.03499999999988158,
+        0.38988498429815466,
+        -0.08606410742659865,
+        0.11989226126797058,
+        0.9994565517118484,
+        -8.275357689814797e-05,
+        1.53204776658128e-05,
+        0.032963527684248595
+      ],
+      "qvel": [
+        4.967104670718076e-12,
+        4.511308809489159e-11,
+        -9.926442667909176e-11,
+        -1.1855671835173651e-11,
+        1.2711175809463616e-10,
+        -8.82232400699e-14,
+        -5.090469798563089e-13,
+        -6.969496053688184e-13,
+        -3.5525247224672196e-15,
+        -1.1319684264593e-14,
+        4.873464285962216e-10,
+        -1.336645449123756e-09,
+        4.213071791761462e-10,
+        6.494630830397912e-14
+      ],
+      "ctrl": [
+        -0.23690997846637904,
+        1.5182589435169767,
+        -1.5227935702679674,
+        0.12868043790265263,
+        1.154239858646203,
+        -0.2584388778339991,
+        0.035
+      ],
+      "actuator_force": [
+        -3.207745180588972e-11,
+        -4.2037129333039047e-10,
+        8.130598416755674e-10,
+        8.611600321728474e-11,
+        -2.4511948026884056e-10,
+        2.3443469387984806e-12,
+        3.185007813044649e-12
+      ]
+    },
+    {
+      "t_s": 0.6400000000000005,
+      "qpos": [
+        -0.23690997846618173,
+        1.5182589435205462,
+        -1.5227935702743614,
+        0.12868043790167244,
+        1.1542398586548814,
+        -0.2584388778342389,
+        0.03499999999998142,
+        -0.03499999999989741,
+        0.3898849842981078,
+        -0.08606410742664651,
+        0.11989226127506203,
+        0.9994565517118473,
+        -8.275358697925357e-05,
+        1.5320480982218303e-05,
+        0.03296352768424635
+      ],
+      "qvel": [
+        3.0996807526501534e-12,
+        9.298399614522918e-12,
+        -3.085923444647349e-11,
+        -2.273716850726873e-12,
+        3.299411360123946e-11,
+        2.3177177845577253e-12,
+        -4.200487871740743e-13,
+        -1.464401499548001e-12,
+        -3.968074731137269e-12,
+        -4.046215462674495e-12,
+        2.6819501572198334e-10,
+        -7.726823673861149e-10,
+        3.2310530323164905e-10,
+        -4.0025708626837006e-13
+      ],
+      "ctrl": [
+        -0.23690997846637904,
+        1.5182589435169767,
+        -1.5227935702679674,
+        0.12868043790265263,
+        1.154239858646203,
+        -0.2584388778339991,
+        0.035
+      ],
+      "actuator_force": [
+        -3.128164394183841e-11,
+        -3.320650421301252e-10,
+        6.658211759713595e-10,
+        5.057643193140393e-11,
+        -1.3627321493459021e-10,
+        -1.078692690725802e-12,
+        2.843503210669951e-12
+      ]
+    },
+    {
+      "t_s": 0.6600000000000005,
+      "qpos": [
+        -0.2369099784661029,
+        1.518258943521141,
+        -1.5227935702757749,
+        0.12868043790151132,
+        1.1542398586567058,
+        -0.2584388778342212,
+        0.034999999999979374,
+        -0.03499999999992155,
+        0.38988498429786284,
+        -0.08606410742704897,
+        0.11989226127876236,
+        0.9994565517118463,
+        -8.275359527534556e-05,
+        1.532048395954722e-05,
+        0.03296352768425771
+      ],
+      "qvel": [
+        -2.19776100321164e-12,
+        -8.606635151210285e-11,
+        1.5361621874275317e-10,
+        2.4920051269071872e-11,
+        -2.2547236085944838e-10,
+        7.754647550625691e-12,
+        -8.230972357367696e-13,
+        -2.6478870478544436e-12,
+        -1.88480024492054e-11,
+        -3.214820835533878e-11,
+        1.3687415230659192e-10,
+        -8.526846693181712e-10,
+        3.410782103396811e-10,
+        2.1337794387380267e-12
+      ],
+      "ctrl": [
+        -0.23690997846637904,
+        1.5182589435169767,
+        -1.5227935702679674,
+        0.12868043790265263,
+        1.154239858646203,
+        -0.2584388778339991,
+        0.035
+      ],
+      "actuator_force": [
+        -1.1102230246251565e-11,
+        9.71738245425513e-11,
+        -1.4347278920467943e-10,
+        -7.894751519188503e-11,
+        2.331823623080709e-10,
+        -9.411138535142527e-12,
+        4.940714504186872e-12
+      ]
+    },
+    {
+      "t_s": 0.6800000000000005,
+      "qpos": [
+        -0.23690997846621095,
+        1.5182589435186176,
+        -1.5227935702710083,
+        0.12868043790220005,
+        1.154239858649963,
+        -0.2584388778340282,
+        0.03499999999997476,
+        -0.03499999999998638,
+        0.3898849842977347,
+        -0.08606410742726736,
+        0.11989226128031089,
+        0.9994565517118461,
+        -8.275359799511663e-05,
+        1.5320484616854498e-05,
+        0.0329635276842649
+      ],
+      "qvel": [
+        -8.769250587663064e-12,
+        -1.8255002214741303e-10,
+        3.510895026525543e-10,
+        4.972204638495526e-11,
+        -4.939959594940464e-10,
+        1.2824565439337587e-11,
+        -4.3151341988165033e-13,
+        -3.650864838064061e-12,
+        -1.7732738174624388e-12,
+        -3.01655153335201e-12,
+        4.579292147948791e-11,
+        -1.9193641129726518e-11,
+        -3.28413935033722e-11,
+        1.941374339835504e-13
+      ],
+      "ctrl": [
+        -0.23690997846637904,
+        1.5182589435169767,
+        -1.5227935702679674,
+        0.12868043790265263,
+        1.154239858646203,
+        -0.2584388778339991,
+        0.035
+      ],
+      "actuator_force": [
+        3.0400570949495886e-11,
+        7.814833224983886e-10,
+        -1.5121770502446452e-09,
+        -2.305071689079341e-10,
+        7.03396452195193e-10,
+        -1.894662204904307e-11,
+        3.1672442446506466e-12
+      ]
+    },
+    {
+      "t_s": 0.7000000000000005,
+      "qpos": [
+        -0.23690997846634967,
+        1.5182589435162859,
+        -1.522793570266424,
+        0.12868043790283198,
+        1.154239858643677,
+        -0.25843887783389335,
+        0.03499999999997899,
+        -0.034999999999968265,
+        0.38988498429737456,
+        -0.08606410742852276,
+        0.1198922612810466,
+        0.9994565517118383,
+        -8.275360721378117e-05,
+        1.5320485698413602e-05,
+        0.03296352768447627
+      ],
+      "qvel": [
+        -5.036886597836157e-12,
+        -6.120502149013606e-11,
+        1.2590899240234326e-10,
+        1.5959345284297565e-11,
+        -1.6412041420529125e-10,
+        2.160590158657014e-12,
+        5.206126550628597e-13,
+        2.1185816370797003e-12,
+        -6.455019739139434e-12,
+        -2.2551559309624716e-11,
+        1.890567487410509e-11,
+        -4.512216278830161e-12,
+        -4.1825005334119715e-11,
+        7.618551956168242e-12
+      ],
+      "ctrl": [
+        -0.23690997846637904,
+        1.5182589435169767,
+        -1.5227935702679674,
+        0.12868043790265263,
+        1.154239858646203,
+        -0.2584388778339991,
+        0.035
+      ],
+      "actuator_force": [
+        2.283684352732962e-11,
+        3.6129677027929574e-10,
+        -7.530047696491238e-10,
+        -8.697131903545596e-11,
+        2.7143975955823407e-10,
+        -4.298783551348606e-12,
+        -1.7625900738948985e-12
+      ]
+    },
+    {
+      "t_s": 0.7200000000000005,
+      "qpos": [
+        -0.23690997846646616,
+        1.5182589435147822,
+        -1.5227935702633468,
+        0.1286804379032388,
+        1.154239858639567,
+        -0.2584388778338366,
+        0.03499999999997962,
+        -0.034999999999940745,
+        0.3898849842972957,
+        -0.0860641074290083,
+        0.11989226128125503,
+        0.9994565517118333,
+        -8.275360695566501e-05,
+        1.5320484988732682e-05,
+        0.03296352768462352
+      ],
+      "qvel": [
+        -3.248701173100148e-12,
+        -1.6486801735956635e-11,
+        4.187273183409026e-11,
+        4.010980201926526e-12,
+        -4.6195343594473354e-11,
+        -1.4126902707957914e-12,
+        3.769296302738999e-13,
+        1.5515322746767913e-12,
+        -1.8134538798175656e-11,
+        -1.6838660743924556e-10,
+        1.3270706005943198e-11,
+        -2.5976683535425264e-09,
+        1.4635761726377946e-10,
+        1.2215799490729196e-10
+      ],
+      "ctrl": [
+        -0.23690997846637904,
+        1.5182589435169767,
+        -1.5227935702679674,
+        0.12868043790265263,
+        1.154239858646203,
+        -0.2584388778339991,
+        0.035
+      ],
+      "actuator_force": [
+        2.3213431177282473e-11,
+        2.579980673544924e-10,
+        -5.790070645161904e-10,
+        -4.3502090818492434e-11,
+        1.3565326639763953e-10,
+        4.942712905631197e-13,
+        -1.0691447727140257e-12
+      ]
+    },
+    {
+      "t_s": 0.7400000000000005,
+      "qpos": [
+        -0.23690997846659786,
+        1.5182589435130658,
+        -1.5227935702598143,
+        0.12868043790371328,
+        1.1542398586347768,
+        -0.25843887783377517,
+        0.03499999999997608,
+        -0.034999999999933966,
+        0.3898849842971722,
+        -0.08606410743015278,
+        0.11989226128135229,
+        0.9994565517118194,
+        -8.275361120336719e-05,
+        1.532048462690759e-05,
+        0.03296352768503857
+      ],
+      "qvel": [
+        -8.719179354799206e-12,
+        -1.317769271364577e-10,
+        2.660136701937366e-10,
+        3.6602847377820836e-11,
+        -3.678978679594602e-10,
+        6.233677686507774e-12,
+        -4.943252999610584e-13,
+        -4.635103968781896e-13,
+        -1.7150913608700758e-12,
+        -1.582955147166855e-11,
+        1.1404735008785568e-12,
+        4.2980988553993583e-10,
+        -8.179093906777564e-11,
+        1.1502991528400731e-11
+      ],
+      "ctrl": [
+        -0.23690997846637904,
+        1.5182589435169767,
+        -1.5227935702679674,
+        0.12868043790265263,
+        1.154239858646203,
+        -0.2584388778339991,
+        0.035
+      ],
+      "actuator_force": [
+        6.110312256168982e-11,
+        9.717524562802282e-10,
+        -1.982300545932958e-09,
+        -2.2544099920196459e-10,
+        6.661089457793423e-10,
+        -1.1589840198666934e-11,
+        3.4285907446474084e-12
+      ]
+    },
+    {
+      "t_s": 0.7600000000000006,
+      "qpos": [
+        -0.23690997846669806,
+        1.5182589435120526,
+        -1.522793570257604,
+        0.12868043790399408,
+        1.1542398586318359,
+        -0.2584388778337662,
+        0.03499999999997826,
+        -0.03499999999993283,
+        0.3898849842971545,
+        -0.08606410743079121,
+        0.11989226128136465,
+        0.9994565517118066,
+        -8.2753610256218e-05,
+        1.5320484003453207e-05,
+        0.03296352768541306
+      ],
+      "qvel": [
+        -4.391199752294013e-12,
+        -3.8820907298255403e-11,
+        8.803764153360377e-11,
+        1.0881941165421267e-11,
+        -1.1634543672604861e-10,
+        -3.816768616497677e-13,
+        2.329236878163477e-13,
+        4.595212926818231e-14,
+        -1.4879957735448719e-12,
+        -1.1865547479527475e-10,
+        2.5142041554279474e-12,
+        -1.5378755197495574e-09,
+        -3.9726320820409115e-12,
+        1.4914299371632867e-10
+      ],
+      "ctrl": [
+        -0.23690997846637904,
+        1.5182589435169767,
+        -1.5227935702679674,
+        0.12868043790265263,
+        1.154239858646203,
+        -0.2584388778339991,
+        0.035
+      ],
+      "actuator_force": [
+        4.7478465603489894e-11,
+        5.880309572603437e-10,
+        -1.269242488888267e-09,
+        -1.0806822103859304e-10,
+        3.1818991885756986e-10,
+        -1.7572610033766978e-12,
+        -2.948752353404416e-13
+      ]
+    },
+    {
+      "t_s": 0.7800000000000006,
+      "qpos": [
+        -0.2369099784666375,
+        1.5182589435140166,
+        -1.5227935702612032,
+        0.12868043790345138,
+        1.1542398586370375,
+        -0.25843887783394076,
+        0.034999999999994015,
+        -0.03499999999989989,
+        0.3898849842971443,
+        -0.08606410743159751,
+        0.11989226128136714,
+        0.9994565517117896,
+        -8.275361047564706e-05,
+        1.532048360486093e-05,
+        0.03296352768591983
+      ],
+      "qvel": [
+        4.093812167346812e-12,
+        8.575247619771705e-11,
+        -1.6336407502674487e-10,
+        -2.2576267525798353e-11,
+        2.2654782791018615e-10,
+        -6.315444879804965e-12,
+        -3.1549622114270343e-13,
+        1.6310015223644496e-12,
+        -1.43919339230826e-13,
+        -1.1146580283113693e-11,
+        -7.794377455083845e-13,
+        5.41933228731727e-10,
+        -4.7363788468749315e-11,
+        1.4053411320847233e-11
+      ],
+      "ctrl": [
+        -0.23690997846637904,
+        1.5182589435169767,
+        -1.5227935702679674,
+        0.12868043790265263,
+        1.154239858646203,
+        -0.2584388778339991,
+        0.035
+      ],
+      "actuator_force": [
+        2.0605739337042905e-13,
+        -1.9194601463823346e-10,
+        2.7570479232963407e-10,
+        8.093081760307541e-11,
+        -2.48165932248412e-10,
+        8.889777802778553e-12,
+        1.8169910021015312e-12
+      ]
+    },
+    {
+      "t_s": 0.8000000000000006,
+      "qpos": [
+        -0.23690997846652154,
+        1.5182589435160563,
+        -1.5227935702651774,
+        0.1286804379029073,
+        1.154239858642497,
+        -0.25843887783406816,
+        0.0349999999999886,
+        -0.03499999999987438,
+        0.3898849842971771,
+        -0.08606410743265239,
+        0.1198922612813693,
+        0.9994565517117555,
+        -8.275361322449602e-05,
+        1.532048321331653e-05,
+        0.03296352768693529
+      ],
+      "qvel": [
+        3.0469286459888197e-12,
+        2.900264369797689e-11,
+        -6.122071098989661e-11,
+        -6.762253413647596e-12,
+        7.415111255038091e-11,
+        -5.848749974750104e-13,
+        -9.902516489642316e-13,
+        -9.951371044319743e-14,
+        2.845384445108513e-12,
+        -8.400990275460126e-11,
+        7.511323740555174e-13,
+        -8.383612582011184e-10,
+        -1.6744035290496368e-11,
+        1.653750404716133e-10
+      ],
+      "ctrl": [
+        -0.23690997846637904,
+        1.5182589435169767,
+        -1.5227935702679674,
+        0.12868043790265263,
+        1.154239858646203,
+        -0.2584388778339991,
+        0.035
+      ],
+      "actuator_force": [
+        -3.8333780594257405e-12,
+        -7.136691237974446e-11,
+        8.290612640848849e-11,
+        2.362376960718393e-11,
+        -7.416467440179986e-11,
+        1.567634910770721e-12,
+        5.4072302191343624e-12
+      ]
+    }
+  ],
+  "physical_truth": {
+    "present": true,
+    "complete": false,
+    "physical_conditions_dwell_s": 0.0,
+    "position_error_m": 1.0857418406233275e-07,
+    "yaw_error_rad": 2.1911821385112162e-09,
+    "supported": false,
+    "released": true,
+    "linear_speed_m_s": 8.406143094976067e-11,
+    "angular_speed_rad_s": 8.54680563708664e-10
+  },
+  "physics_timestep_s": 0.002,
+  "native_steps": 400,
+  "prescribed_intervention": "A fixed colliding platform supports the shoe 120 mm above the workstation table; no object attachment or compensating force.",
+  "solver_warnings": 0,
+  "object_attachment_constraints_added": 0,
+  "model_equalities": 1,
+  "external_forces_applied": false,
+  "object_gravity_compensation_added": false,
+  "platform_support_force_n": 0.2942999999995475,
+  "native_window_displacement_m": null,
+  "generation_errors": []
+}

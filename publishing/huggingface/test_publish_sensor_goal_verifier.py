@@ -1,0 +1,38 @@
+"""Static release checks for the append-only v0.4 Space publisher."""
+import json
+from pathlib import Path
+import sys
+import tempfile
+import unittest
+
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+import publish_sensor_goal_verifier as publisher
+
+
+class SensorGoalPublisherTests(unittest.TestCase):
+    def test_inventory_rejects_private_keys_and_token_shapes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory).resolve()
+            (root/'good.json').write_text('{"schema":"public"}')
+            self.assertEqual(set(publisher.inventory(root)),{'good.json'})
+            (root/'bad.json').write_text('{"nested":{"api_key":"redacted"}}')
+            with self.assertRaises(publisher.PublicationError): publisher.inventory(root)
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory).resolve();(root/'README.md').write_text('hf_'+'a'*40)
+            with self.assertRaises(publisher.PublicationError): publisher.inventory(root)
+
+    def test_root_updates_are_append_only_and_disclose_tradeoffs(self):
+        parent={'index.html':b'<main><section aria-labelledby="local-goal-verifier-title">v03</section></main>',
+            'README.md':b'Prior release', 'provenance.json':b'{"local_goal_verifier_v03":{"retained":true}}\n'}
+        export={'cases.json':json.dumps({'cases':[{} for _ in range(272)]}).encode(),
+            'publication-integrity.json':b'{"sha256":"sealed"}'}
+        roots=publisher.updated_roots(parent,export,'a'*40)
+        self.assertIn(b'69 of 112',roots['index.html'])
+        self.assertIn(b'73/80',roots['README.md'])
+        self.assertIn(b'local_goal_verifier_v03',roots['provenance.json'])
+        self.assertIn(b'sensor_goal_v04',roots['provenance.json'])
+        self.assertIn(b'image-goals/v04/index.html',roots['index.html'])
+
+
+if __name__=='__main__': unittest.main()
