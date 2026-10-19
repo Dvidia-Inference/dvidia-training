@@ -1,0 +1,268 @@
+{
+  "schema": "dvidia.native-contact-audit-publication/v1",
+  "source_repository": "https://github.com/Dvidia-Inference/dvidia-training",
+  "source_commit": "ff40985ec076eaed8421821b1244217d8502777e",
+  "audit_copied_without_modification": true,
+  "audit_integrity_sha256": "dc7b6091b1c680b9479ea65157c7d553043af688e159463db6174696ad5949fa",
+  "audit_files": 59,
+  "audit_bytes": 151876079,
+  "new_policy_trials": 0,
+  "scope": "Passive exact replays on the simplified rigid-box arm; separate from PiPER shoe studies and hardware.",
+  "files": {
+    "LICENSE-CODE": {
+      "sha256": "ab47d245880a661fdca3c6a4cb91671031302deee50d64f8d2d6df86832962e1",
+      "bytes": 1076
+    },
+    "README.md": {
+      "sha256": "cebd7511109e7c2e8b2bc0727ff5c2abe74f50238f9aedc8621b5a2af37a61a8",
+      "bytes": 3866
+    },
+    "audit/episodes/baseline-student-scene14/native-trace.jsonl.gz": {
+      "sha256": "ce562f5ba1902fde53080894b02b647da2a5ecf48a14335e780110967bdd6f40",
+      "bytes": 9620445
+    },
+    "audit/episodes/baseline-student-scene14/receipt.json": {
+      "sha256": "1bd1b7b0b0c351f44a983b20bea8c110740fcb268e0892e2f834ac8ffbfa37f9",
+      "bytes": 9422
+    },
+    "audit/episodes/baseline-student-scene14-open-jaw/native-trace.jsonl.gz": {
+      "sha256": "4658d2a0cea8d3eb23a51db78d28623ba38a4a4b69cc3cdf397a3981d15a296c",
+      "bytes": 8914391
+    },
+    "audit/episodes/baseline-student-scene14-open-jaw/receipt.json": {
+      "sha256": "3b97cba874afce8ac4f7ea72fa8a5899f29ae39d088f779ccbbb7eb03b886ee6",
+      "bytes": 5193
+    },
+    "audit/episodes/baseline-student-scene15/native-trace.jsonl.gz": {
+      "sha256": "876091112d9856f3265cdf12bee634cd1986be8f5ed20bbe025be733c433f729",
+      "bytes": 10985854
+    },
+    "audit/episodes/baseline-student-scene15/receipt.json": {
+      "sha256": "965af5523c129bba311f0c08004a22bd39f408ba808e7dd0041bb416573ac614",
+      "bytes": 171397
+    },
+    "audit/episodes/baseline-student-scene15-open-jaw/native-trace.jsonl.gz": {
+      "sha256": "51919fd04ad242fed6b0a3a08b445149175a7d9a3f72b58298f340d6a4de0cfb",
+      "bytes": 8889990
+    },
+    "audit/episodes/baseline-student-scene15-open-jaw/receipt.json": {
+      "sha256": "1bfd93897c3de83a0e32043d5c543996f5591ddf962d974927f0c3eb8496aa96",
+      "bytes": 6035
+    },
+    "audit/episodes/baseline-teacher-scene15/native-trace.jsonl.gz": {
+      "sha256": "4872a7e6409c973eef87adb87999d8304b7943c3ffa53aecd5fb0a07c8ce5505",
+      "bytes": 11453597
+    },
+    "audit/episodes/baseline-teacher-scene15/receipt.json": {
+      "sha256": "45639069a501f6fe0205d0d35cbcb67e858cd3884f6d7552bc487daf795b592b",
+      "bytes": 211626
+    },
+    "audit/episodes/baseline-teacher-scene15-open-jaw/native-trace.jsonl.gz": {
+      "sha256": "643621794fdde305f09b189c0750554987eaf69fadd540f285d617ef08bfc2ac",
+      "bytes": 8889628
+    },
+    "audit/episodes/baseline-teacher-scene15-open-jaw/receipt.json": {
+      "sha256": "d16da6cb197e3107ee6da17f2442796bf4f67a707f304114f554de8395d807bb",
+      "bytes": 6354
+    },
+    "audit/episodes/compliance-student-scene15/native-trace.jsonl.gz": {
+      "sha256": "11f443b778d42c7b98036b4f30a1cbe5d5b9d8cfdd3f618619e1a37de2efaf6d",
+      "bytes": 10946227
+    },
+    "audit/episodes/compliance-student-scene15/receipt.json": {
+      "sha256": "d2effecb318fcbe10c14549814b2b0ee9b2fb67fd82c6eb1ea67617a08c8654f",
+      "bytes": 122088
+    },
+    "audit/episodes/compliance-student-scene15-open-jaw/native-trace.jsonl.gz": {
+      "sha256": "61568fb20da90b0cf46292c5d7fa81f7ad5c154bcf421c26a84a13b7b47715a0",
+      "bytes": 8894877
+    },
+    "audit/episodes/compliance-student-scene15-open-jaw/receipt.json": {
+      "sha256": "045eb331cd7355966d72060f2f3352f70d5c27e7b78be7fcb1741a86e29a0519",
+      "bytes": 6050
+    },
+    "audit/episodes/compliance-teacher-scene15/native-trace.jsonl.gz": {
+      "sha256": "220f41a3d8516906231ea4417268fe6e93c6dd703655e6a234a92f04efaf6f74",
+      "bytes": 11367554
+    },
+    "audit/episodes/compliance-teacher-scene15/receipt.json": {
+      "sha256": "d939f3274bc7c8b916aba798d1c6398f6a95404fbda569ba5d7f99572e126413",
+      "bytes": 189002
+    },
+    "audit/episodes/compliance-teacher-scene15-open-jaw/native-trace.jsonl.gz": {
+      "sha256": "9f42f3b16f0580665abec2a208824953765449344abea8124ca58af5c3d1a64a",
+      "bytes": 8889040
+    },
+    "audit/episodes/compliance-teacher-scene15-open-jaw/receipt.json": {
+      "sha256": "53cf1b4a70e5c4a581470c6cac50b1b32c76c4527eb8e18fa57a663dd07e655e",
+      "bytes": 6379
+    },
+    "audit/episodes/smoothing-student-scene15/native-trace.jsonl.gz": {
+      "sha256": "9b8295880444754d233daebb139e7a8658f3320f5a8d59a9794e014f2e9f3e99",
+      "bytes": 11063187
+    },
+    "audit/episodes/smoothing-student-scene15/receipt.json": {
+      "sha256": "3a53f61e489f14abf526f7d2794a8a9eaab927ffea5602a8fed4667e0ce0f2af",
+      "bytes": 154501
+    },
+    "audit/episodes/smoothing-student-scene15-open-jaw/native-trace.jsonl.gz": {
+      "sha256": "e636a3cb754c4ff4bfbf3940c8fcb48fef4e634fb21119001d04560bb803cb45",
+      "bytes": 8888989
+    },
+    "audit/episodes/smoothing-student-scene15-open-jaw/receipt.json": {
+      "sha256": "c9786e17962417c72a51fbb41b0d5f8ee4b0be80ea73569ad95c0d8603e0f2d7",
+      "bytes": 6066
+    },
+    "audit/episodes/smoothing-teacher-scene15/native-trace.jsonl.gz": {
+      "sha256": "0f208abdf75f1562926a6812b205b72731900fd4c5daf30ea017a75f2b7a284c",
+      "bytes": 11378112
+    },
+    "audit/episodes/smoothing-teacher-scene15/receipt.json": {
+      "sha256": "e9e8874de9a610258b06782498fe87f824034f6e292e46fe9c48a5ab8de4ed11",
+      "bytes": 195481
+    },
+    "audit/episodes/smoothing-teacher-scene15-open-jaw/native-trace.jsonl.gz": {
+      "sha256": "42a13eaabfdc202019ca051dc820195ab76053a124c8f871377ef11978fabd01",
+      "bytes": 8881614
+    },
+    "audit/episodes/smoothing-teacher-scene15-open-jaw/receipt.json": {
+      "sha256": "093373872fdcda51142219ca442595544f202f87f9a2f67d63687ee728fc757d",
+      "bytes": 6359
+    },
+    "audit/inputs/baseline-student-scene14-open-jaw.json.gz": {
+      "sha256": "980d3b07ef717cb12697a6b74f5c256832242e692662314b20e974d9a596109e",
+      "bytes": 564458
+    },
+    "audit/inputs/baseline-student-scene14.json.gz": {
+      "sha256": "29e336f0d56ed2cb4eb5c5eef0245475ccdc5b7222fbb9b14f65481573e0d94f",
+      "bytes": 581103
+    },
+    "audit/inputs/baseline-student-scene15-open-jaw.json.gz": {
+      "sha256": "c234acc13fa56117fb517b774e60eecdba35c861f9d2f271597689bc567d1cca",
+      "bytes": 588028
+    },
+    "audit/inputs/baseline-student-scene15.json.gz": {
+      "sha256": "4c4847156003fbdabbb28c2c2fb17c21a4ee90b5da3b4764d7af8589ccb31940",
+      "bytes": 672028
+    },
+    "audit/inputs/baseline-teacher-scene15-open-jaw.json.gz": {
+      "sha256": "3ad177baa08e8b8d59e120638b93ead6c0486556223b1962f597ce134c3ae36c",
+      "bytes": 588275
+    },
+    "audit/inputs/baseline-teacher-scene15.json.gz": {
+      "sha256": "7d30926fbed7ec24a499ebb45b291a686b8284facd860f3115ff2b4aa77fc94d",
+      "bytes": 676888
+    },
+    "audit/inputs/compliance-student-scene15-open-jaw.json.gz": {
+      "sha256": "4a3648f7023fd882df919d18a9afc9e50098b19c92c63110bff9a9301bdb6cf4",
+      "bytes": 589582
+    },
+    "audit/inputs/compliance-student-scene15.json.gz": {
+      "sha256": "2ba7e8cf7fff02bc352483874d83b2146fc0066b504000ed8f118c9f8c21365e",
+      "bytes": 718327
+    },
+    "audit/inputs/compliance-teacher-scene15-open-jaw.json.gz": {
+      "sha256": "b84ceb68fd5cbefde3f7fdc742fca3e7236d6ab9e1289bada534cc6e0686fd53",
+      "bytes": 587782
+    },
+    "audit/inputs/compliance-teacher-scene15.json.gz": {
+      "sha256": "1eda6cffc03278555c0434fd392dc26e966b7e0d2e2449eb7ea1ce7a6290b235",
+      "bytes": 723381
+    },
+    "audit/inputs/smoothing-student-scene15-open-jaw.json.gz": {
+      "sha256": "8937295e8a7c6da3534f697f77016ec2bcaea774469f90ae70f81353e34c2734",
+      "bytes": 588306
+    },
+    "audit/inputs/smoothing-student-scene15.json.gz": {
+      "sha256": "90139f7d757d5c78376027606db708f63349cd8dfd6634936a0a8ee9841854fd",
+      "bytes": 715718
+    },
+    "audit/inputs/smoothing-teacher-scene15-open-jaw.json.gz": {
+      "sha256": "461053279b9696ff863e9d46801b88900d8048cda8b93daeb6c15ea9f02b5520",
+      "bytes": 588001
+    },
+    "audit/inputs/smoothing-teacher-scene15.json.gz": {
+      "sha256": "9f5ee3649a583ea154d57aca2495bbf59886162bba6266b2edc6847b5e9ad2b7",
+      "bytes": 721834
+    },
+    "audit/integrity.json": {
+      "sha256": "dc7b6091b1c680b9479ea65157c7d553043af688e159463db6174696ad5949fa",
+      "bytes": 8130
+    },
+    "audit/progress.json": {
+      "sha256": "8701d634e6071614c8e8c2afb301b0537bc741fbd2116043bba7ca4404b82578",
+      "bytes": 76
+    },
+    "audit/protocol.json": {
+      "sha256": "f5ded43bc66dd512e223ffea76ad51897ffea15bb016fa2c29dcd1b4fb6601e2",
+      "bytes": 16421
+    },
+    "audit/protocol.sha256": {
+      "sha256": "6fae783469c9d0f06b6d4ddfb5456e31dd7c7c5e87441a8c5da294c67c6041e2",
+      "bytes": 65
+    },
+    "audit/report.json": {
+      "sha256": "e1c8ad0fafd2aa040d215601dcdc235a9fd010dd212400a43a450bb3bf7eec63",
+      "bytes": 1097403
+    },
+    "audit/sources/arm_env.py": {
+      "sha256": "e4af9b75364a568284b1e6d96469deacf498dd87a60b067fa5e310fe15c54c00",
+      "bytes": 27576
+    },
+    "audit/sources/arm_policy.py": {
+      "sha256": "d6d53d87703fb8608390092309285afb6a2c8fd3103a7abd77668be85469eab3",
+      "bytes": 12249
+    },
+    "audit/sources/arm_runner.py": {
+      "sha256": "affb5812b6a395f6cca9cb4e900af2ef28162e7ff1e52a51bd29b789daa98df1",
+      "bytes": 14492
+    },
+    "audit/sources/cli.py": {
+      "sha256": "192ec6a0852c7fd5dd3ae912815dae2fc7c9cfb93b97c85d528060e00a975b17",
+      "bytes": 13819
+    },
+    "audit/sources/env.py": {
+      "sha256": "929c1d8c3c4cafe0054c633ee5f3e51c551dd6b26ae014ab1ea9219b58eca8e4",
+      "bytes": 26684
+    },
+    "audit/sources/installer.py": {
+      "sha256": "d3a2c5a4913920c52beef89df9954494b89fd0becb08bb4847264dae48d3761c",
+      "bytes": 7649
+    },
+    "audit/sources/native_contact_audit.py": {
+      "sha256": "4d5866a34503fcccfc224c9583e6aabdc9f63754d56af777c164dafb122304f6",
+      "bytes": 31219
+    },
+    "audit/sources/skillspace.py": {
+      "sha256": "34b651609358ae9a58b9a610545ce7b85b83fb3d6c699613414ff8e0ea457b3c",
+      "bytes": 20417
+    },
+    "audit/upstream/compliance-protocol.json": {
+      "sha256": "cc13853612a01d2f4301a9db0dbe7b2a702577f77d396ef0c4cc3af8c4b656fc",
+      "bytes": 15808
+    },
+    "audit/upstream/compliance-report.json": {
+      "sha256": "adcace792306828353dc93e4857db6cda56e7f01692b83f2d8ba19b3f84ba5fb",
+      "bytes": 756158
+    },
+    "audit/upstream/smoothing-protocol.json": {
+      "sha256": "cfcf9199220cbad3e9dc5acc50e00e95c5b449b3c4cc3ee6f714c422a5f85551",
+      "bytes": 15279
+    },
+    "audit/upstream/smoothing-report.json": {
+      "sha256": "4ca816d0c1f3a03aebbceb64bf2bb116b969129b07777b8f3ecb9e9428bf26ed",
+      "bytes": 749465
+    },
+    "download-audit.py": {
+      "sha256": "fac88c925d06f480de8448149e43d210ce8a96438ca57784f2ba8ec7876ccaf2",
+      "bytes": 3590
+    },
+    "qa.json": {
+      "sha256": "c9a6120e03d1aea102b4d5aa90bdfb16e0148267672a5650caca9932cef7df3e",
+      "bytes": 12519
+    }
+  },
+  "qa_sha256": "c9a6120e03d1aea102b4d5aa90bdfb16e0148267672a5650caca9932cef7df3e",
+  "qa_private_execution_paths_omitted": true,
+  "original_qa_sha256": "3eae5f17972ca8b84641f133ac39074f28604c0c2fb60c1df83fa22d59846ea4"
+}
