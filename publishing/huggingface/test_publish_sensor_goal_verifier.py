@@ -49,6 +49,19 @@ class SensorGoalPublisherTests(unittest.TestCase):
             [*sorted(name for name in payload if name not in publisher.ROOT_FILES), *sorted(publisher.ROOT_FILES)])
         self.assertTrue(all(len(batch) <= publisher.MAX_COMMIT_FILES for batch in batches))
         self.assertTrue(all(sum(map(lambda name: len(payload[name]), batch)) <= publisher.MAX_COMMIT_BYTES for batch in batches))
+        self.assertEqual(publisher._remaining_batch(['a','b','c'], {'a','b'}), ['c'])
+        self.assertEqual(publisher._remaining_batch(['a','b'], {'a','b'}), [])
+        with self.assertRaises(publisher.PublicationError): publisher._remaining_batch(['a','b','c'], {'a','c'})
+
+    def test_xet_attribute_additions_preserve_parent_and_match_uploaded_images(self):
+        parent = b'*.bin filter=lfs diff=lfs merge=lfs -text\n'
+        image = 'image-goals/v04/images/a.png'
+        line = f'{image} filter=lfs diff=lfs merge=lfs -text\n'.encode()
+        publisher._verify_lfs_attributes(parent, parent + line, [image], {image:{'lfs_sha256':'a'*64}})
+        with self.assertRaises(publisher.PublicationError):
+            publisher._verify_lfs_attributes(parent, parent + line + b'unexpected.png filter=lfs diff=lfs merge=lfs -text\n', [image], {image:{'lfs_sha256':'a'*64}})
+        with self.assertRaises(publisher.PublicationError):
+            publisher._verify_lfs_attributes(parent, b'*.bin filter=lfs diff=lfs merge=lfs -text\nchanged\n' + line, [image], {image:{'lfs_sha256':'a'*64}})
 
 
 if __name__=='__main__': unittest.main()

@@ -27,7 +27,7 @@ SHA = re.compile(r"[a-f0-9]{40}\Z")
 MAX_FILE = 16 * 1024 * 1024
 MAX_TOTAL = 112 * 1024 * 1024
 MAX_FILES = 1600
-MAX_COMMIT_BYTES = 8 * 1024 * 1024
+MAX_COMMIT_BYTES = 16 * 1024 * 1024
 MAX_COMMIT_FILES = 64
 PRIVATE_KEYS = {"authorization", "api_key", "apikey", "credential", "credentials", "token", "headers", "raw_response", "response"}
 
@@ -350,22 +350,48 @@ def _batches(payload):
         yield batch
 
 
+def _remaining_batch(names, completed):
+    done = [name in completed for name in names]
+    if all(done):
+        return []
+    first_pending = next((index for index, is_done in enumerate(done) if not is_done), 0)
+    if any(done[first_pending:]):
+        raise PublicationError("Saved upload progress is not a contiguous prefix of the release.")
+    return names[first_pending:]
+
+
 def _save_upload_state(path, state):
     temporary = path.with_name(".pending-upload-state")
     temporary.write_bytes(encoded(state))
     temporary.replace(path)
 
 
-def _verify_progress(api, revision, plan, payload, completed):
+def _verify_lfs_attributes(parent_attributes, current_attributes, completed, current_tree):
+    parent_lines = parent_attributes.decode("utf-8").splitlines()
+    current_lines = current_attributes.decode("utf-8").splitlines()
+    if current_lines[:len(parent_lines)] != parent_lines:
+        raise PublicationError("Hub changed existing .gitattributes rules during upload.")
+    added = current_lines[len(parent_lines):]
+    expected = [f"{name} filter=lfs diff=lfs merge=lfs -text" for name in completed
+        if current_tree[name].get("lfs_sha256") is not None]
+    if len(added) != len(expected) or set(added) != set(expected):
+        raise PublicationError("Hub added unexpected binary-storage attributes.")
+
+
+def _verify_progress(api, revision, plan, payload, completed, parent_attributes):
     current = tree(api, revision)
     if set(current) != set(plan["parent_tree"]) | set(completed):
         raise PublicationError("Interrupted Hub upload has an unexpected file inventory.")
     for name, prior in plan["parent_tree"].items():
-        if current[name] != prior:
+        if name not in payload and name != ".gitattributes" and current[name] != prior:
             raise PublicationError("A historical Space file changed during upload.")
     for name in completed:
         if not matches_tree(payload[name], current[name]):
             raise PublicationError("A completed upload batch differs from the reviewed bytes.")
+    from huggingface_hub import hf_hub_download
+    actual_attributes = Path(hf_hub_download(REPO_ID, ".gitattributes", repo_type="space",
+        revision=revision, token=False)).read_bytes()
+    _verify_lfs_attributes(parent_attributes, actual_attributes, completed, current)
     return current
 
 
@@ -398,17 +424,17 @@ def publish(path, gate_path):
         revision = pending["commit"]
         if not set(completed) <= set(payload) or info.sha != revision:
             raise PublicationError("Hub head differs from the last verified upload receipt.")
-        _verify_progress(api, revision, plan, payload, completed)
+        parent_attributes = read(path.parent / "parent-gitattributes.txt", 65536)
+        _verify_progress(api, revision, plan, payload, completed, parent_attributes)
     else:
         if info.sha != plan["parent_commit"] or tree(api, info.sha) != plan["parent_tree"]:
             raise PublicationError("Space changed after its reviewed snapshot.")
         revision, completed = info.sha, []
     from huggingface_hub import CommitOperationAdd
     for names in _batches(payload):
-        if names[0] in completed:
-            if names[-1] in completed:
-                continue
-            raise PublicationError("Saved upload progress ends inside a deterministic batch.")
+        names = _remaining_batch(names, set(completed))
+        if not names:
+            continue
         operations = []
         for name in names:
             operation = CommitOperationAdd(path_in_repo=name, path_or_fileobj=payload[name])
@@ -422,7 +448,8 @@ def publish(path, gate_path):
             latest = api.repo_info(REPO_ID, repo_type="space")
             if latest.sha == revision:
                 raise
-            _verify_progress(api, latest.sha, plan, payload, completed + names)
+            parent_attributes = read(path.parent / "parent-gitattributes.txt", 65536)
+            _verify_progress(api, latest.sha, plan, payload, completed + names, parent_attributes)
             revision = latest.sha
         completed.extend(names)
         _save_upload_state(pending_path, {"schema": "dvidia.sensor-goal-v04-upload-progress/v1",
@@ -431,11 +458,13 @@ def publish(path, gate_path):
     after = tree(api, revision)
     if set(after) != set(plan["parent_tree"]) | set(payload):
         raise PublicationError("Published Space has unexpected added or removed files.")
-    unchanged = set(plan["parent_tree"]) - set(payload)
+    unchanged = set(plan["parent_tree"]) - set(payload) - {".gitattributes"}
     if any(after[name] != plan["parent_tree"][name] for name in unchanged):
         raise PublicationError("An earlier Space file changed during publication.")
     if any(not matches_tree(raw, after[name]) for name, raw in payload.items()):
         raise PublicationError("Published files differ from the sealed regular-Git payload.")
+    after = _verify_progress(api, revision, plan, payload, list(payload),
+        read(path.parent / "parent-gitattributes.txt", 65536))
     verified_downloads({"repo_id": REPO_ID, "repo_type": "space", "files": [
         {"path": name, **expected} for name, expected in plan["files"].items()]}, revision, False)
     receipt = {"schema": "dvidia.sensor-goal-v04-hf-publication/v1", "repo_id": REPO_ID,
