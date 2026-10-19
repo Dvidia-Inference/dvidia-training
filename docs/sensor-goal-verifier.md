@@ -57,7 +57,7 @@ python -m pip install -e '.[arm]'
 
 # Provision the pinned PiPER assets through docs/robot-simulation-library.md.
 dvidia-sensor-goal generate --assets /absolute/path/to/robot-profile-upstream/assets \
-  --output runs/sensor-goal-fresh --seed 2026102006 --count 8
+  --output runs/sensor-goal-fresh --seed 2026102007 --count 8
 dvidia-sensor-goal evaluate --run runs/sensor-goal-fresh
 python -m dvidia_training.sensor_goal_verifier_report --help
 ```

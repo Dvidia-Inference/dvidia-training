@@ -20,7 +20,7 @@ from . import sensor_goal_observers as sensors
 from . import workstation as ws, robot_profiles
 
 SCHEMA = "dvidia.sensor-native-scenes/v1"
-FINAL_SEED = 2026102006
+FINAL_SEED = 2026102007
 DEVELOPMENT_SEED = 2026101904
 SCENARIOS = ("complete", "occluded", "wrong_position", "wrong_orientation",
              "missing_target", "wrong_object", "unreleased", "sustained_motion",

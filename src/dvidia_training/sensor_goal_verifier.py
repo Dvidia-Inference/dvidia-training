@@ -64,7 +64,7 @@ def camera_window(packet, decoded_frames, *, now_s):
 
 
 def actuator_window(packet, *, now_s):
-    invalid = dict(status='unknown',reason='invalid_actuator_window',observations=[])
+    invalid = dict(status='unknown',reason='invalid_actuator_window',sample_count=0)
     if (type(packet) is not dict or set(packet) != {'schema','source_id','calibration_id','history_start_s','samples'}
         or packet['schema'] != 'dvidia.sensor-drive-window/v1'
         or packet['source_id'] != 'piper-drive-bus-v1' or packet['calibration_id'] != DRIVE.calibration_id
@@ -73,7 +73,7 @@ def actuator_window(packet, *, now_s):
         return invalid
     observations = [observe_actuators(s,calibration=DRIVE) for s in packet['samples']]
     if any(o['status'] != 'observed' for o in observations):
-        return dict(invalid,reason='invalid_actuator_sample',observations=observations)
+        return dict(invalid,reason='invalid_actuator_sample',sample_count=len(observations))
     reasons = set()
     for o in observations:
         if o['servo_consistency'] != 'compatible': reasons.add('drive_servo_contradiction')
@@ -83,7 +83,11 @@ def actuator_window(packet, *, now_s):
         if max(abs(x) for x in o['gripper_effort_interval_n']) > RELEASE['effort_abs_max_n']: reasons.add('low_drive_effort_not_corroborated')
         if max(abs(x) for x in o['jaw_gap_rate_interval_m_s']) > RELEASE['jaw_rate_abs_max_m_s']: reasons.add('settled_gripper_not_corroborated')
     return dict(schema='dvidia.drive-window-features/v1',status='observed',reason='valid_drive_window',
-        observations=observations,start_s=packet['history_start_s'],end_s=packet['samples'][-1]['t_s'],
+        sample_count=len(observations),start_s=packet['history_start_s'],end_s=packet['samples'][-1]['t_s'],
+        jaw_gap_min_m=min(o['jaw_gap_interval_m'][0] for o in observations),
+        jaw_gap_max_m=max(o['jaw_gap_interval_m'][1] for o in observations),
+        maximum_abs_drive_effort_n=max(max(abs(v) for v in o['gripper_effort_interval_n']) for o in observations),
+        maximum_abs_jaw_rate_m_s=max(max(abs(v) for v in o['jaw_gap_rate_interval_m_s']) for o in observations),
         release_corroborated=not reasons,reasons=sorted(reasons))
 
 
