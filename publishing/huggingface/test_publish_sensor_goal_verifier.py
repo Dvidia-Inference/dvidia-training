@@ -40,5 +40,15 @@ class SensorGoalPublisherTests(unittest.TestCase):
         self.assertIn(b'sensor_goal_v04',roots['provenance.json'])
         self.assertIn(b'image-goals/v04/index.html',roots['index.html'])
 
+    def test_commit_batches_are_bounded_and_publish_pointers_last(self):
+        payload = {f'image-goals/v04/{index:04}.json': b'x' * 1024 for index in range(130)}
+        payload.update({name: b'root' for name in publisher.ROOT_FILES})
+        batches = list(publisher._batches(payload))
+        self.assertGreater(len(batches), 1)
+        self.assertEqual([name for batch in batches for name in batch],
+            [*sorted(name for name in payload if name not in publisher.ROOT_FILES), *sorted(publisher.ROOT_FILES)])
+        self.assertTrue(all(len(batch) <= publisher.MAX_COMMIT_FILES for batch in batches))
+        self.assertTrue(all(sum(map(lambda name: len(payload[name]), batch)) <= publisher.MAX_COMMIT_BYTES for batch in batches))
+
 
 if __name__=='__main__': unittest.main()

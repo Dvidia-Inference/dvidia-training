@@ -27,6 +27,8 @@ SHA = re.compile(r"[a-f0-9]{40}\Z")
 MAX_FILE = 16 * 1024 * 1024
 MAX_TOTAL = 112 * 1024 * 1024
 MAX_FILES = 1600
+MAX_COMMIT_BYTES = 8 * 1024 * 1024
+MAX_COMMIT_FILES = 64
 PRIVATE_KEYS = {"authorization", "api_key", "apikey", "credential", "credentials", "token", "headers", "raw_response", "response"}
 
 
@@ -330,6 +332,43 @@ def check(path):
     return plan, payload
 
 
+def _batches(payload):
+    """Bound Hub requests and update the public pointers only in the last batch."""
+    names = sorted(name for name in payload if name not in ROOT_FILES)
+    names.extend(name for name in sorted(ROOT_FILES) if name in payload)
+    batch, size = [], 0
+    for name in names:
+        length = len(payload[name])
+        if length > MAX_COMMIT_BYTES:
+            raise PublicationError("A single publication file exceeds the bounded commit size.")
+        if batch and (len(batch) >= MAX_COMMIT_FILES or size + length > MAX_COMMIT_BYTES):
+            yield batch
+            batch, size = [], 0
+        batch.append(name)
+        size += length
+    if batch:
+        yield batch
+
+
+def _save_upload_state(path, state):
+    temporary = path.with_name(".pending-upload-state")
+    temporary.write_bytes(encoded(state))
+    temporary.replace(path)
+
+
+def _verify_progress(api, revision, plan, payload, completed):
+    current = tree(api, revision)
+    if set(current) != set(plan["parent_tree"]) | set(completed):
+        raise PublicationError("Interrupted Hub upload has an unexpected file inventory.")
+    for name, prior in plan["parent_tree"].items():
+        if current[name] != prior:
+            raise PublicationError("A historical Space file changed during upload.")
+    for name in completed:
+        if not matches_tree(payload[name], current[name]):
+            raise PublicationError("A completed upload batch differs from the reviewed bytes.")
+    return current
+
+
 def publish(path, gate_path):
     path = plain(path)
     plan, payload = check(path)
@@ -345,26 +384,52 @@ def publish(path, gate_path):
         raise PublicationError("Publisher is not a member of the Dvidia organization.")
     pending_path = plain(path.parent / "pending.json")
     plan_hash = record(read(path, 2 * 1024 * 1024))["sha256"]
+    info = api.repo_info(REPO_ID, repo_type="space")
+    checked_remote(info, "space")
     if pending_path.exists():
-        pending = _json(read(pending_path, 1024 * 1024))
-        if pending.get("plan_sha256") != plan_hash or SHA.fullmatch(pending.get("commit", "")) is None:
+        pending = _json(read(pending_path, 4 * 1024 * 1024))
+        completed = pending.get("completed_files")
+        if (pending.get("schema") != "dvidia.sensor-goal-v04-upload-progress/v1"
+                or pending.get("plan_sha256") != plan_hash
+                or pending.get("parent_commit") != plan["parent_commit"]
+                or SHA.fullmatch(pending.get("commit", "")) is None
+                or not isinstance(completed, list) or len(set(completed)) != len(completed)):
             raise PublicationError("Retry receipt belongs to a different plan.")
         revision = pending["commit"]
+        if not set(completed) <= set(payload) or info.sha != revision:
+            raise PublicationError("Hub head differs from the last verified upload receipt.")
+        _verify_progress(api, revision, plan, payload, completed)
     else:
-        info = api.repo_info(REPO_ID, repo_type="space")
-        checked_remote(info, "space")
         if info.sha != plan["parent_commit"] or tree(api, info.sha) != plan["parent_tree"]:
             raise PublicationError("Space changed after its reviewed snapshot.")
-        from huggingface_hub import CommitOperationAdd
+        revision, completed = info.sha, []
+    from huggingface_hub import CommitOperationAdd
+    for names in _batches(payload):
+        if names[0] in completed:
+            if names[-1] in completed:
+                continue
+            raise PublicationError("Saved upload progress ends inside a deterministic batch.")
         operations = []
-        for name, raw in payload.items():
-            operation = CommitOperationAdd(path_in_repo=name, path_or_fileobj=raw)
+        for name in names:
+            operation = CommitOperationAdd(path_in_repo=name, path_or_fileobj=payload[name])
             operation._upload_mode = "regular"
             operation._should_ignore = False
             operations.append(operation)
-        revision = api.create_commit(REPO_ID, repo_type="space", parent_commit=plan["parent_commit"],
-            operations=operations, commit_message="Publish independent RGB and actuator verifier v0.4").oid
-        pending_path.write_bytes(encoded({"plan_sha256": plan_hash, "commit": revision}))
+        try:
+            revision = api.create_commit(REPO_ID, repo_type="space", parent_commit=revision,
+                operations=operations, commit_message="Publish independent RGB and actuator verifier v0.4").oid
+        except Exception:
+            # Recover a commit whose response was lost only if its exact files
+            # and the complete previous tree are visible at the new Hub head.
+            latest = api.repo_info(REPO_ID, repo_type="space")
+            if latest.sha == revision:
+                raise
+            _verify_progress(api, latest.sha, plan, payload, completed + names)
+            revision = latest.sha
+        completed.extend(names)
+        _save_upload_state(pending_path, {"schema": "dvidia.sensor-goal-v04-upload-progress/v1",
+            "plan_sha256": plan_hash, "parent_commit": plan["parent_commit"], "commit": revision,
+            "completed_files": completed})
     after = tree(api, revision)
     if set(after) != set(plan["parent_tree"]) | set(payload):
         raise PublicationError("Published Space has unexpected added or removed files.")
