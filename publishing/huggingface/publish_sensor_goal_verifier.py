@@ -199,7 +199,7 @@ def check_export(export, publication_source_commit):
         raise PublicationError("Published metrics differ from all saved case results.")
     from dvidia_training.sensor_goal_verifier_report import build_report
     with tempfile.TemporaryDirectory(prefix="dvidia-sensor-goal-export-") as temporary:
-        viewer = Path(temporary) / "viewer"
+        viewer = Path(temporary).resolve() / "viewer"
         expected_seal = build_report(export, viewer)
         if _json(payload["report-integrity.json"]) != expected_seal:
             raise PublicationError("Viewer differs from the regenerated report seal.")
