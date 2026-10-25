@@ -1,0 +1,193 @@
+{
+  "schema": "dvidia.video-goal-error-analysis/v1",
+  "report_sha256": "5b929f3b1ed91f171a27c4647660fc58e11f0b2c4d45aa5b05a1f7ab935fd682",
+  "integrity_sha256": "23e20dc5bdac558306588acec6cb7e3125b42281180a04f1a2c72822f16e3719",
+  "validation": {
+    "status": "verified",
+    "sealed_files": 91,
+    "sources": 4,
+    "controller_attempts": 20,
+    "fault_attempts": 12,
+    "videos_reprocessed": false,
+    "native_dynamics_recomputed": false,
+    "variants": {
+      "oracle_goal": {
+        "scheduled": 4,
+        "executed": 4,
+        "successes": 4
+      },
+      "video_goal": {
+        "scheduled": 4,
+        "executed": 4,
+        "successes": 3
+      },
+      "shuffled_video": {
+        "scheduled": 4,
+        "executed": 4,
+        "successes": 0
+      },
+      "miscalibrated_video": {
+        "scheduled": 4,
+        "executed": 3,
+        "successes": 0
+      },
+      "open_jaw": {
+        "scheduled": 4,
+        "executed": 4,
+        "successes": 0
+      }
+    }
+  },
+  "layouts": [
+    {
+      "id": "layout-00",
+      "primary_task_success": true,
+      "error_budget": {
+        "demonstration": {
+          "norm_mm": 3.87446819901851,
+          "xy_mm": [
+            3.8658004773095556,
+            -0.2590183291563547
+          ]
+        },
+        "perception": {
+          "norm_mm": 5.129653232355977,
+          "xy_mm": [
+            5.051599670087114,
+            -0.8914499747018217
+          ]
+        },
+        "execution": {
+          "norm_mm": 4.78002196372612,
+          "xy_mm": [
+            4.780018836001876,
+            -0.005468196355468136
+          ]
+        },
+        "total": {
+          "norm_mm": 13.746107667237771,
+          "xy_mm": [
+            13.697418983398546,
+            -1.1559365002136446
+          ]
+        }
+      },
+      "secondary_destination_replay_success": true,
+      "inference_ms": 571.8906251713634
+    },
+    {
+      "id": "layout-01",
+      "primary_task_success": true,
+      "error_budget": {
+        "demonstration": {
+          "norm_mm": 9.792349954799255,
+          "xy_mm": [
+            9.716781681525898,
+            -1.2141957794440246
+          ]
+        },
+        "perception": {
+          "norm_mm": 1.776795478281895,
+          "xy_mm": [
+            1.5949751315708083,
+            0.7829792470517155
+          ]
+        },
+        "execution": {
+          "norm_mm": 10.721111323951254,
+          "xy_mm": [
+            10.633649573511262,
+            -1.3666472728248307
+          ]
+        },
+        "total": {
+          "norm_mm": 22.01892766997257,
+          "xy_mm": [
+            21.945406386607967,
+            -1.7978638052171396
+          ]
+        }
+      },
+      "secondary_destination_replay_success": true,
+      "inference_ms": 250.10645808652043
+    },
+    {
+      "id": "layout-02",
+      "primary_task_success": false,
+      "error_budget": {
+        "demonstration": {
+          "norm_mm": 12.04358738421226,
+          "xy_mm": [
+            11.951807826816264,
+            1.4840103611532678
+          ]
+        },
+        "perception": {
+          "norm_mm": 2.701712091910475,
+          "xy_mm": [
+            2.643188192405388,
+            0.5592891980934489
+          ]
+        },
+        "execution": {
+          "norm_mm": 13.051261808908897,
+          "xy_mm": [
+            12.955522224821214,
+            1.5779349437944346
+          ]
+        },
+        "total": {
+          "norm_mm": 27.7874862994362,
+          "xy_mm": [
+            27.550518244042866,
+            3.6212345030411512
+          ]
+        }
+      },
+      "secondary_destination_replay_success": true,
+      "inference_ms": 132.97508284449577
+    },
+    {
+      "id": "layout-03",
+      "primary_task_success": true,
+      "error_budget": {
+        "demonstration": {
+          "norm_mm": 5.0444372647899165,
+          "xy_mm": [
+            5.044231032629076,
+            -0.045613680655878786
+          ]
+        },
+        "perception": {
+          "norm_mm": 4.013492822669575,
+          "xy_mm": [
+            4.0086884621006735,
+            0.19631976834015574
+          ]
+        },
+        "execution": {
+          "norm_mm": 6.699878100518082,
+          "xy_mm": [
+            6.678821112290734,
+            -0.5307684163751158
+          ]
+        },
+        "total": {
+          "norm_mm": 15.73633089065768,
+          "xy_mm": [
+            15.731740607020484,
+            -0.3800623286908389
+          ]
+        }
+      },
+      "secondary_destination_replay_success": true,
+      "inference_ms": 260.880165733397
+    }
+  ],
+  "primary_task_successes": 3,
+  "secondary_destination_replay_successes": 4,
+  "scheduled_layouts": 4,
+  "interpretation": "Primary scores retain the intended task center frozen before generation. The exploratory secondary score instead asks whether execution matches the observed source endpoint. The oracle receives the exact intended center; the video only sees an imperfect demonstrated outcome. Offset vectors add; their norms generally do not. Components diagnose accumulated offsets, not their physical cause.",
+  "motor_policy_learned": false,
+  "physical_robot_ready": false
+}

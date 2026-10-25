@@ -8,6 +8,14 @@
 
 **Research alpha.** The recorded demo covers the original one-scene simulation pilot; the frozen benchmark is a separate experiment. Training runs locally. No human-video action bridge or hardware skill is established.
 
+**[Video destination bridge v0.1](benchmarks/video-goal-bridge-v01-20261025/README.md).**
+An encoded simulation clip supplies a destination to the existing PiPER controller.
+Four video goals yield **3/4 intended-task placements**, versus **4/4 oracle goals**;
+all 12 engineered pixel-fault clips cause abstention. The missed task exposes
+accumulating demonstration, perception and execution offsets. This is calibrated
+green-proxy grounding with an authored controller; no motor policy is trained.
+[Run and inspect locally](docs/video-goal-bridge-v01.md).
+
 **[Local goal verifier v0.3](benchmarks/local-goal-verifier-20261019/README.md).**
 A local CPU verifier recognizes **16/16 completed native scenes** with **0/48
 false completions** on incomplete native scenes. It checks identity, frames,

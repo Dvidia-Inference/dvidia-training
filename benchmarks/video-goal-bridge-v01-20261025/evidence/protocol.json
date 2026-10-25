@@ -1,0 +1,143 @@
+{
+  "schema": "dvidia.video-goal-benchmark/v1",
+  "seed": 2026102507,
+  "planned_layouts": 4,
+  "cases": [
+    {
+      "id": "layout-00",
+      "seed": 202507,
+      "object_xy_m": [
+        0.2981486517074606,
+        -0.028190028889755223
+      ],
+      "task_goal_xy_m": [
+        0.3394990876923744,
+        0.08007124798912284
+      ],
+      "shuffled_source_id": "layout-01"
+    },
+    {
+      "id": "layout-01",
+      "seed": 202508,
+      "object_xy_m": [
+        0.3018049984948649,
+        -0.031830742229898276
+      ],
+      "task_goal_xy_m": [
+        0.39977706488738085,
+        -0.08138576696408473
+      ],
+      "shuffled_source_id": "layout-02"
+    },
+    {
+      "id": "layout-02",
+      "seed": 202509,
+      "object_xy_m": [
+        0.29917265934684956,
+        -0.03070750919843191
+      ],
+      "task_goal_xy_m": [
+        0.4412788261244768,
+        0.07089913271401593
+      ],
+      "shuffled_source_id": "layout-03"
+    },
+    {
+      "id": "layout-03",
+      "seed": 202510,
+      "object_xy_m": [
+        0.3000583709255042,
+        -0.0296563917449107
+      ],
+      "task_goal_xy_m": [
+        0.340635262159906,
+        -0.11832959194075045
+      ],
+      "shuffled_source_id": "layout-00"
+    }
+  ],
+  "variants": [
+    "oracle_goal",
+    "video_goal",
+    "shuffled_video",
+    "miscalibrated_video",
+    "open_jaw"
+  ],
+  "faults": [
+    "terminal_occlusion",
+    "extra_green_candidate",
+    "terminal_camera_motion"
+  ],
+  "planned_source_episodes": 4,
+  "planned_controller_attempts": 20,
+  "planned_fault_clips": 12,
+  "calibration": {
+    "width": 320,
+    "height": 240,
+    "center_xy_m": [
+      0.36,
+      0.0
+    ],
+    "vertical_span_m": 0.5,
+    "position_bound_m": 0.005,
+    "terminal_dwell_s": 0.5,
+    "maximum_terminal_spread_m": 0.005
+  },
+  "video": {
+    "width": 320,
+    "height": 240,
+    "fps": 5,
+    "maximum_duration_s": 30,
+    "origin": "Native teacher rollout replay at recorded 200ms boundaries; no human demonstrations."
+  },
+  "scoring": {
+    "position_tolerance_m": 0.025,
+    "terminal_dwell_s": 0.25,
+    "proposal_error_tolerance_m": 0.01,
+    "minimum_lift_m": 0.06,
+    "tool_retreat_m": 0.1,
+    "linear_speed_max_m_s": 0.035,
+    "angular_speed_max_rad_s": 0.3
+  },
+  "selection": "All scheduled layouts, sources, faults and controller attempts remain in the report. No outcome-based retries.",
+  "physical_robot_ready": false,
+  "motor_policy_learned": false,
+  "limitations": [
+    "All videos and trials are synthetic PiPER rigid-block simulations, not human footage or shoes.",
+    "A known green proxy and a trusted fixed orthographic camera supply XY only. No identity, depth, force or contact is inferred from pixels.",
+    "The policy, grasp phases, IK and recovery are authored. This experiment trains no motor model and has no action-label learning curve.",
+    "The controller still uses privileged live simulator joint/object/contact observations. Only its destination comes from the video.",
+    "A stationary visible centroid cannot certify correct completion or physical rest. A wrong calibration or same-color lookalike can produce a wrong proposal.",
+    "Compute latency excludes capture, the observation dwell, network, transport and physical actuation. These trials do not qualify a physical robot."
+  ],
+  "asset_provenance": {
+    "profile": "piper",
+    "repository": "https://github.com/google-deepmind/mujoco_menagerie",
+    "commit": "0059d4335f8156206f63a35662313385f7ad6d74",
+    "files_verified": 90,
+    "bytes_verified": 34562302,
+    "lock_sha256": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+    "simulation_asset_license": "MIT"
+  },
+  "source_sha256": {
+    "video_goal_benchmark.py": "69ecc7d9512abe04cc815dbb77c126cb671dd88b5c51a2643c1d8794fd3703ec",
+    "video_goal_bridge.py": "c7794ff3fd18876774e8aaad425ba93ff798a84355b27216d9d51c33f610441a",
+    "piper_task.py": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f",
+    "reference_task.py": "bbc768ccc202b8dd41cbd235b206e6478806ce47c1f30ae15dc662c0c1edcc3e",
+    "reference_sim.py": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8",
+    "reference_replay.py": "f73731434d55bac150db16c7205d341a70b95ce13e582e7a23d11dee31b27a19",
+    "robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d",
+    "robot_profiles.lock.json": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+    "sensor_goal_observers.py": "53e96c99ffae058c701c9ccc0b5339317262909637acc14b351bec9e6cca99f7",
+    "footage_data.py": "c54828b712afb1c7e89dc764b34dec1fe1ab28517c3ec589ba0977a2146c450d",
+    "piper_grip_guard.py": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb",
+    "piper_contact_memory.py": "f608d6647046f6fa02d8ad5e87fad10853837520a6a0fae2043c7ad260a06c4c",
+    "piper_contact_recovery.py": "81058659b332f4d1233fb88d9e3d84fd935f5a9fe9d418b040a4a536b5291f6c",
+    "piper_reacquisition.py": "b1eaffd7f9d80f21d3b9371e1adbe8b9c730a834745d8160c558937d35691e21",
+    "piper_grasp_strategy.py": "a2cbf9f954f6428894bd11cb42f228fe86f2ae88ba62e431f78bc33c7f3db36b"
+  },
+  "host": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "numpy": "2.5.3"
+  }
+}

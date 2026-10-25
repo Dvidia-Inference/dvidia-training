@@ -1,0 +1,32 @@
+{
+  "case_id": "layout-00",
+  "variant": "miscalibrated_video",
+  "attempted": true,
+  "success": false,
+  "error": null,
+  "goal_xy_m": [
+    0.3484164878397711,
+    0.13892077968526467
+  ],
+  "source_clip_id": "layout-00",
+  "score": {
+    "success": false,
+    "reference_xy_m": [
+      0.3394990876923744,
+      0.08007124798912284
+    ],
+    "terminal_dwell_s": 0.0,
+    "terminal_xy_error_m": 0.05956592746810752,
+    "valid_native_physics": true,
+    "retained_transfer": true,
+    "controller_self_success": true,
+    "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+  },
+  "episode_file": "attempts/layout-00-miscalibrated_video.json.gz",
+  "calibration_intervention_m": [
+    0.0,
+    0.06
+  ],
+  "native_error": null,
+  "wall_seconds": 2.999342374969274
+}
