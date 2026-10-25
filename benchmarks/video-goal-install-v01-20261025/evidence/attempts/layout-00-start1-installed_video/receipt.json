@@ -1,0 +1,112 @@
+{
+  "schema": "dvidia.video-goal-execution/v1",
+  "status": "simulation_attempt_recorded",
+  "candidate_id": "622b55d77ac4dade9070d230",
+  "profile": "piper",
+  "bundle_manifest_sha256": "48bfb24b1b8d7fca45a91645240e8b535a1ba6e6eb829b0a690cec7c90bb8af8",
+  "asset_provenance": {
+    "profile": "piper",
+    "repository": "https://github.com/google-deepmind/mujoco_menagerie",
+    "commit": "0059d4335f8156206f63a35662313385f7ad6d74",
+    "files_verified": 90,
+    "bytes_verified": 34562302,
+    "lock_sha256": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+    "simulation_asset_license": "MIT"
+  },
+  "runtime": {
+    "profile": "piper",
+    "source_sha256": {
+      "video_goal_install.py": "dbdb70f85f494f05e30b58ec3a53bf7c834b9cf8696fea0a26b3caffb718bef4",
+      "video_goal_bridge.py": "c7794ff3fd18876774e8aaad425ba93ff798a84355b27216d9d51c33f610441a",
+      "sensor_goal_observers.py": "53e96c99ffae058c701c9ccc0b5339317262909637acc14b351bec9e6cca99f7",
+      "footage_data.py": "c54828b712afb1c7e89dc764b34dec1fe1ab28517c3ec589ba0977a2146c450d",
+      "piper_task.py": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f",
+      "reference_task.py": "bbc768ccc202b8dd41cbd235b206e6478806ce47c1f30ae15dc662c0c1edcc3e",
+      "reference_sim.py": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8",
+      "robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d",
+      "robot_profiles.lock.json": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+      "piper_grip_guard.py": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb",
+      "piper_contact_memory.py": "f608d6647046f6fa02d8ad5e87fad10853837520a6a0fae2043c7ad260a06c4c",
+      "piper_contact_recovery.py": "81058659b332f4d1233fb88d9e3d84fd935f5a9fe9d418b040a4a536b5291f6c",
+      "piper_reacquisition.py": "b1eaffd7f9d80f21d3b9371e1adbe8b9c730a834745d8160c558937d35691e21",
+      "piper_grasp_strategy.py": "a2cbf9f954f6428894bd11cb42f228fe86f2ae88ba62e431f78bc33c7f3db36b"
+    },
+    "python": "3.12.9",
+    "numpy": "2.5.3",
+    "mujoco": "3.15.0"
+  },
+  "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e",
+  "goal_binding": {
+    "frame": "piper_task_world",
+    "units": "m",
+    "xy_m": [
+      0.3484164878397711,
+      0.07892077968526466
+    ],
+    "target_z_m": 0.08,
+    "object_xy_m": [
+      0.307,
+      -0.038
+    ],
+    "object_z_m": 0.082,
+    "source_video_sha256": "5a79551936423b63e6db38478135b4a96b4544f6c72d2ad943607e0510596928"
+  },
+  "seed": 212508,
+  "episode_file": "episode.json.gz",
+  "episode": {
+    "file": "episode.json.gz",
+    "bytes": 714423,
+    "sha256": "d3c0d99ddaa5a0a775d4d66d4a20207e2e88526a89add9ea9c839d993b63e245"
+  },
+  "goal_xy_m": [
+    0.3484164878397711,
+    0.07892077968526466
+  ],
+  "run_wall_seconds": 1.7387206247076392,
+  "valid": true,
+  "success": true,
+  "reason": "success",
+  "metrics": {
+    "valid": true,
+    "success": true,
+    "reason": "success",
+    "simulation_time": 20.00000000000146,
+    "steps": 1000,
+    "lift_seen": true,
+    "grasp_seen": true,
+    "max_object_lift_m": 0.09762190653489736,
+    "dwell_seconds": 5.059000000000024,
+    "lift_dwell_seconds": 0.0,
+    "max_pad_normal_force_n": 1.0238133092938977,
+    "unexpected_contact_native_ticks": 0,
+    "carry_complete": true,
+    "retention_lost": false,
+    "max_carry_contact_loss_seconds": 0.0,
+    "carry_contact_loss_events": 0,
+    "carry_contact_loss_tolerance_seconds": 0.04,
+    "first_success_time_seconds": 15.19099999999702,
+    "target_distance_m": 0.0038210083849021417,
+    "warnings": [],
+    "physical_robot_ready": false,
+    "contact_pair_native_ticks": {
+      "1:90": 17815,
+      "88:90": 2741,
+      "89:90": 2601,
+      "86:90": 2814,
+      "85:90": 2697
+    }
+  },
+  "controller_origin": "authored PiPER simulation controller; no learned policy",
+  "policy_learned": false,
+  "physical_robot_ready": false,
+  "network_used": false,
+  "hardware_commands_sent": false,
+  "scope": "one simulation attempt; not hardware qualification",
+  "limitations": [
+    "The proposal detects one green candidate under a caller-declared fixed orthographic calibration; it does not identify arbitrary objects or infer depth.",
+    "Video goal XY is mapped directly into the PiPER task world frame. Camera-to-robot calibration is assumed, not measured by this bundle.",
+    "Execution uses privileged live simulator state and the existing authored PiPER controller; no motor policy or action sequence is learned.",
+    "The bundle contains a proposal and source-video digest, not the original video. Local hashes are integrity checks, not a signature or proof of proposal provenance.",
+    "This simulation-only profile does not qualify a physical robot or establish performance on human footage, shoes, or other arms."
+  ]
+}

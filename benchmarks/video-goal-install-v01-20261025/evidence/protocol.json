@@ -1,0 +1,121 @@
+{
+  "schema": "dvidia.video-goal-install-protocol/v1",
+  "cases": [
+    {
+      "id": "layout-00",
+      "clip": "layout-00.mp4",
+      "task_goal_xy_m": [
+        0.3394990876923744,
+        0.08007124798912284
+      ],
+      "demonstrated_final_xy_m": [
+        0.34336488816968397,
+        0.07981222965996648
+      ],
+      "seed": 202507,
+      "clip_sha256": "5a79551936423b63e6db38478135b4a96b4544f6c72d2ad943607e0510596928"
+    },
+    {
+      "id": "layout-01",
+      "clip": "layout-01.mp4",
+      "task_goal_xy_m": [
+        0.39977706488738085,
+        -0.08138576696408473
+      ],
+      "demonstrated_final_xy_m": [
+        0.40949384656890675,
+        -0.08259996274352875
+      ],
+      "seed": 202508,
+      "clip_sha256": "a0a411ba3abbeb10769822c6844140538b956de333501c1a5b431550bec753b8"
+    },
+    {
+      "id": "layout-02",
+      "clip": "layout-02.mp4",
+      "task_goal_xy_m": [
+        0.4412788261244768,
+        0.07089913271401593
+      ],
+      "demonstrated_final_xy_m": [
+        0.45323063395129304,
+        0.0723831430751692
+      ],
+      "seed": 202509,
+      "clip_sha256": "12cdec4e5e91205dd64498a714dbed99d9002851b6e5265f4b98130e6eac69f3"
+    },
+    {
+      "id": "layout-03",
+      "clip": "layout-03.mp4",
+      "task_goal_xy_m": [
+        0.340635262159906,
+        -0.11832959194075045
+      ],
+      "demonstrated_final_xy_m": [
+        0.3456794931925351,
+        -0.11837520562140633
+      ],
+      "seed": 202510,
+      "clip_sha256": "c9565df1da303e088578eee4569630be420455047d238796544ba0b62f98052c"
+    }
+  ],
+  "starts_xy_m": [
+    [
+      0.294,
+      -0.025
+    ],
+    [
+      0.307,
+      -0.038
+    ]
+  ],
+  "variants": [
+    "oracle",
+    "installed_video",
+    "shuffled_video",
+    "open_jaw"
+  ],
+  "scheduled_attempts": 32,
+  "source_report_sha256": "5b929f3b1ed91f171a27c4647660fc58e11f0b2c4d45aa5b05a1f7ab935fd682",
+  "source_inventory_sha256": "23e20dc5bdac558306588acec6cb7e3125b42281180a04f1a2c72822f16e3719",
+  "runtime": {
+    "profile": "piper",
+    "source_sha256": {
+      "video_goal_install.py": "dbdb70f85f494f05e30b58ec3a53bf7c834b9cf8696fea0a26b3caffb718bef4",
+      "video_goal_bridge.py": "c7794ff3fd18876774e8aaad425ba93ff798a84355b27216d9d51c33f610441a",
+      "sensor_goal_observers.py": "53e96c99ffae058c701c9ccc0b5339317262909637acc14b351bec9e6cca99f7",
+      "footage_data.py": "c54828b712afb1c7e89dc764b34dec1fe1ab28517c3ec589ba0977a2146c450d",
+      "piper_task.py": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f",
+      "reference_task.py": "bbc768ccc202b8dd41cbd235b206e6478806ce47c1f30ae15dc662c0c1edcc3e",
+      "reference_sim.py": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8",
+      "robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d",
+      "robot_profiles.lock.json": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+      "piper_grip_guard.py": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb",
+      "piper_contact_memory.py": "f608d6647046f6fa02d8ad5e87fad10853837520a6a0fae2043c7ad260a06c4c",
+      "piper_contact_recovery.py": "81058659b332f4d1233fb88d9e3d84fd935f5a9fe9d418b040a4a536b5291f6c",
+      "piper_reacquisition.py": "b1eaffd7f9d80f21d3b9371e1adbe8b9c730a834745d8160c558937d35691e21",
+      "piper_grasp_strategy.py": "a2cbf9f954f6428894bd11cb42f228fe86f2ae88ba62e431f78bc33c7f3db36b"
+    },
+    "python": "3.12.9",
+    "numpy": "2.5.3",
+    "mujoco": "3.15.0"
+  },
+  "robot_assets": {
+    "profile": "piper",
+    "repository": "https://github.com/google-deepmind/mujoco_menagerie",
+    "commit": "0059d4335f8156206f63a35662313385f7ad6d74",
+    "files_verified": 90,
+    "bytes_verified": 34562302,
+    "lock_sha256": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+    "simulation_asset_license": "MIT"
+  },
+  "benchmark_source_sha256": "fe8833f924fd1d06058033fcd1a39d2677fe6f159c2c0bf1c78d14c74036dab7",
+  "scoring_source_sha256": "69ecc7d9512abe04cc815dbb77c126cb671dd88b5c51a2643c1d8794fd3703ec",
+  "primary_reference": "Original intended source-task XY; 25mm tolerance and native lift/release/rest/contact gates.",
+  "secondary_reference": "Actually demonstrated terminal object XY; reported separately without replacing the primary reference.",
+  "selection": "All 32 predeclared attempts remain; one invocation each, no result-based reruns or parameter tuning.",
+  "scope": "Synthetic calibrated green rigid block; authored PiPER control using privileged native state. No motor model trained.",
+  "missing_arm_check": "SO101 candidate inspection must reject; no compatible contact task adapter exists.",
+  "unknown_video_check": "Four source terminal-occlusion clips must refuse candidate creation.",
+  "physical_robot_ready": false,
+  "motor_policy_learned": false
+}

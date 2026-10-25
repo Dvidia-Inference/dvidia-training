@@ -1,0 +1,59 @@
+{
+  "schema": "dvidia.video-goal-install/v1",
+  "status": "candidate",
+  "profile": "piper",
+  "video": {
+    "sha256": "5a79551936423b63e6db38478135b4a96b4544f6c72d2ad943607e0510596928",
+    "bytes": 261463,
+    "included": false
+  },
+  "goal_xy_m": [
+    0.3484164878397711,
+    0.07892077968526466
+  ],
+  "proposal_schema": "dvidia.video-goal-proposal/v1",
+  "files": {
+    "proposal.json": {
+      "bytes": 18613,
+      "sha256": "3cae8bc0af4bee0e8713bce98804c8deb27d77982a8a85b59b9d58ec04f3756c"
+    },
+    "calibration.json": {
+      "bytes": 198,
+      "sha256": "e54f35fe74e52363417968c63cabe2d8fa6b89873da52e569117b0430841db1f"
+    }
+  },
+  "runtime": {
+    "profile": "piper",
+    "source_sha256": {
+      "video_goal_install.py": "dbdb70f85f494f05e30b58ec3a53bf7c834b9cf8696fea0a26b3caffb718bef4",
+      "video_goal_bridge.py": "c7794ff3fd18876774e8aaad425ba93ff798a84355b27216d9d51c33f610441a",
+      "sensor_goal_observers.py": "53e96c99ffae058c701c9ccc0b5339317262909637acc14b351bec9e6cca99f7",
+      "footage_data.py": "c54828b712afb1c7e89dc764b34dec1fe1ab28517c3ec589ba0977a2146c450d",
+      "piper_task.py": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f",
+      "reference_task.py": "bbc768ccc202b8dd41cbd235b206e6478806ce47c1f30ae15dc662c0c1edcc3e",
+      "reference_sim.py": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8",
+      "robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d",
+      "robot_profiles.lock.json": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+      "piper_grip_guard.py": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb",
+      "piper_contact_memory.py": "f608d6647046f6fa02d8ad5e87fad10853837520a6a0fae2043c7ad260a06c4c",
+      "piper_contact_recovery.py": "81058659b332f4d1233fb88d9e3d84fd935f5a9fe9d418b040a4a536b5291f6c",
+      "piper_reacquisition.py": "b1eaffd7f9d80f21d3b9371e1adbe8b9c730a834745d8160c558937d35691e21",
+      "piper_grasp_strategy.py": "a2cbf9f954f6428894bd11cb42f228fe86f2ae88ba62e431f78bc33c7f3db36b"
+    },
+    "python": "3.12.9",
+    "numpy": "2.5.3",
+    "mujoco": "3.15.0"
+  },
+  "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e",
+  "candidate_id": "622b55d77ac4dade9070d230",
+  "scope": "calibrated-video-goal plus authored PiPER simulation controller",
+  "policy_learned": false,
+  "physical_robot_ready": false,
+  "limitations": [
+    "The proposal detects one green candidate under a caller-declared fixed orthographic calibration; it does not identify arbitrary objects or infer depth.",
+    "Video goal XY is mapped directly into the PiPER task world frame. Camera-to-robot calibration is assumed, not measured by this bundle.",
+    "Execution uses privileged live simulator state and the existing authored PiPER controller; no motor policy or action sequence is learned.",
+    "The bundle contains a proposal and source-video digest, not the original video. Local hashes are integrity checks, not a signature or proof of proposal provenance.",
+    "This simulation-only profile does not qualify a physical robot or establish performance on human footage, shoes, or other arms."
+  ]
+}

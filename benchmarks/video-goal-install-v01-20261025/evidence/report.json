@@ -1,0 +1,1859 @@
+{
+  "schema": "dvidia.video-goal-install-benchmark/v1",
+  "protocol_sha256": "f9a9ba3f3231621af75c0f83b785b949b935ae24ae7815502b8ebc27baebbb0f",
+  "installations": [
+    {
+      "case_id": "layout-00",
+      "created": true,
+      "error": null,
+      "creation_wall_s": 0.8695856253616512,
+      "reload_wall_s": 0.2472101249732077,
+      "manifest": {
+        "schema": "dvidia.video-goal-install/v1",
+        "status": "candidate",
+        "profile": "piper",
+        "video": {
+          "sha256": "5a79551936423b63e6db38478135b4a96b4544f6c72d2ad943607e0510596928",
+          "bytes": 261463,
+          "included": false
+        },
+        "goal_xy_m": [
+          0.3484164878397711,
+          0.07892077968526466
+        ],
+        "proposal_schema": "dvidia.video-goal-proposal/v1",
+        "files": {
+          "proposal.json": {
+            "bytes": 18613,
+            "sha256": "3cae8bc0af4bee0e8713bce98804c8deb27d77982a8a85b59b9d58ec04f3756c"
+          },
+          "calibration.json": {
+            "bytes": 198,
+            "sha256": "e54f35fe74e52363417968c63cabe2d8fa6b89873da52e569117b0430841db1f"
+          }
+        },
+        "runtime": {
+          "profile": "piper",
+          "source_sha256": {
+            "video_goal_install.py": "dbdb70f85f494f05e30b58ec3a53bf7c834b9cf8696fea0a26b3caffb718bef4",
+            "video_goal_bridge.py": "c7794ff3fd18876774e8aaad425ba93ff798a84355b27216d9d51c33f610441a",
+            "sensor_goal_observers.py": "53e96c99ffae058c701c9ccc0b5339317262909637acc14b351bec9e6cca99f7",
+            "footage_data.py": "c54828b712afb1c7e89dc764b34dec1fe1ab28517c3ec589ba0977a2146c450d",
+            "piper_task.py": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f",
+            "reference_task.py": "bbc768ccc202b8dd41cbd235b206e6478806ce47c1f30ae15dc662c0c1edcc3e",
+            "reference_sim.py": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8",
+            "robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d",
+            "robot_profiles.lock.json": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+            "piper_grip_guard.py": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb",
+            "piper_contact_memory.py": "f608d6647046f6fa02d8ad5e87fad10853837520a6a0fae2043c7ad260a06c4c",
+            "piper_contact_recovery.py": "81058659b332f4d1233fb88d9e3d84fd935f5a9fe9d418b040a4a536b5291f6c",
+            "piper_reacquisition.py": "b1eaffd7f9d80f21d3b9371e1adbe8b9c730a834745d8160c558937d35691e21",
+            "piper_grasp_strategy.py": "a2cbf9f954f6428894bd11cb42f228fe86f2ae88ba62e431f78bc33c7f3db36b"
+          },
+          "python": "3.12.9",
+          "numpy": "2.5.3",
+          "mujoco": "3.15.0"
+        },
+        "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e",
+        "candidate_id": "622b55d77ac4dade9070d230",
+        "scope": "calibrated-video-goal plus authored PiPER simulation controller",
+        "policy_learned": false,
+        "physical_robot_ready": false,
+        "limitations": [
+          "The proposal detects one green candidate under a caller-declared fixed orthographic calibration; it does not identify arbitrary objects or infer depth.",
+          "Video goal XY is mapped directly into the PiPER task world frame. Camera-to-robot calibration is assumed, not measured by this bundle.",
+          "Execution uses privileged live simulator state and the existing authored PiPER controller; no motor policy or action sequence is learned.",
+          "The bundle contains a proposal and source-video digest, not the original video. Local hashes are integrity checks, not a signature or proof of proposal provenance.",
+          "This simulation-only profile does not qualify a physical robot or establish performance on human footage, shoes, or other arms."
+        ]
+      },
+      "creation_receipt": {
+        "candidate_id": "622b55d77ac4dade9070d230",
+        "status": "candidate",
+        "output": "runs/video-goal-install-v01-20261025-frozen/bundles/layout-00"
+      }
+    },
+    {
+      "case_id": "layout-01",
+      "created": true,
+      "error": null,
+      "creation_wall_s": 0.48001716705039144,
+      "reload_wall_s": 0.20505870832130313,
+      "manifest": {
+        "schema": "dvidia.video-goal-install/v1",
+        "status": "candidate",
+        "profile": "piper",
+        "video": {
+          "sha256": "a0a411ba3abbeb10769822c6844140538b956de333501c1a5b431550bec753b8",
+          "bytes": 273560,
+          "included": false
+        },
+        "goal_xy_m": [
+          0.41108882170047756,
+          -0.08181698349647704
+        ],
+        "proposal_schema": "dvidia.video-goal-proposal/v1",
+        "files": {
+          "proposal.json": {
+            "bytes": 18565,
+            "sha256": "60cb47caeb8faef9e2716e14c8f17ca9d44144f47ee6bb5b3d073ef4fdd4bac7"
+          },
+          "calibration.json": {
+            "bytes": 198,
+            "sha256": "e54f35fe74e52363417968c63cabe2d8fa6b89873da52e569117b0430841db1f"
+          }
+        },
+        "runtime": {
+          "profile": "piper",
+          "source_sha256": {
+            "video_goal_install.py": "dbdb70f85f494f05e30b58ec3a53bf7c834b9cf8696fea0a26b3caffb718bef4",
+            "video_goal_bridge.py": "c7794ff3fd18876774e8aaad425ba93ff798a84355b27216d9d51c33f610441a",
+            "sensor_goal_observers.py": "53e96c99ffae058c701c9ccc0b5339317262909637acc14b351bec9e6cca99f7",
+            "footage_data.py": "c54828b712afb1c7e89dc764b34dec1fe1ab28517c3ec589ba0977a2146c450d",
+            "piper_task.py": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f",
+            "reference_task.py": "bbc768ccc202b8dd41cbd235b206e6478806ce47c1f30ae15dc662c0c1edcc3e",
+            "reference_sim.py": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8",
+            "robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d",
+            "robot_profiles.lock.json": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+            "piper_grip_guard.py": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb",
+            "piper_contact_memory.py": "f608d6647046f6fa02d8ad5e87fad10853837520a6a0fae2043c7ad260a06c4c",
+            "piper_contact_recovery.py": "81058659b332f4d1233fb88d9e3d84fd935f5a9fe9d418b040a4a536b5291f6c",
+            "piper_reacquisition.py": "b1eaffd7f9d80f21d3b9371e1adbe8b9c730a834745d8160c558937d35691e21",
+            "piper_grasp_strategy.py": "a2cbf9f954f6428894bd11cb42f228fe86f2ae88ba62e431f78bc33c7f3db36b"
+          },
+          "python": "3.12.9",
+          "numpy": "2.5.3",
+          "mujoco": "3.15.0"
+        },
+        "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e",
+        "candidate_id": "d3e7ee2d081f0fb140c860a2",
+        "scope": "calibrated-video-goal plus authored PiPER simulation controller",
+        "policy_learned": false,
+        "physical_robot_ready": false,
+        "limitations": [
+          "The proposal detects one green candidate under a caller-declared fixed orthographic calibration; it does not identify arbitrary objects or infer depth.",
+          "Video goal XY is mapped directly into the PiPER task world frame. Camera-to-robot calibration is assumed, not measured by this bundle.",
+          "Execution uses privileged live simulator state and the existing authored PiPER controller; no motor policy or action sequence is learned.",
+          "The bundle contains a proposal and source-video digest, not the original video. Local hashes are integrity checks, not a signature or proof of proposal provenance.",
+          "This simulation-only profile does not qualify a physical robot or establish performance on human footage, shoes, or other arms."
+        ]
+      },
+      "creation_receipt": {
+        "candidate_id": "d3e7ee2d081f0fb140c860a2",
+        "status": "candidate",
+        "output": "runs/video-goal-install-v01-20261025-frozen/bundles/layout-01"
+      }
+    },
+    {
+      "case_id": "layout-02",
+      "created": true,
+      "error": null,
+      "creation_wall_s": 0.4841080829501152,
+      "reload_wall_s": 0.18020670861005783,
+      "manifest": {
+        "schema": "dvidia.video-goal-install/v1",
+        "status": "candidate",
+        "profile": "piper",
+        "video": {
+          "sha256": "12cdec4e5e91205dd64498a714dbed99d9002851b6e5265f4b98130e6eac69f3",
+          "bytes": 279885,
+          "included": false
+        },
+        "goal_xy_m": [
+          0.4558738221436984,
+          0.07294243227326265
+        ],
+        "proposal_schema": "dvidia.video-goal-proposal/v1",
+        "files": {
+          "proposal.json": {
+            "bytes": 18423,
+            "sha256": "42b418fd304157b410c30250f7198d49b55512bc4748f29de0d3edbb074c2506"
+          },
+          "calibration.json": {
+            "bytes": 198,
+            "sha256": "e54f35fe74e52363417968c63cabe2d8fa6b89873da52e569117b0430841db1f"
+          }
+        },
+        "runtime": {
+          "profile": "piper",
+          "source_sha256": {
+            "video_goal_install.py": "dbdb70f85f494f05e30b58ec3a53bf7c834b9cf8696fea0a26b3caffb718bef4",
+            "video_goal_bridge.py": "c7794ff3fd18876774e8aaad425ba93ff798a84355b27216d9d51c33f610441a",
+            "sensor_goal_observers.py": "53e96c99ffae058c701c9ccc0b5339317262909637acc14b351bec9e6cca99f7",
+            "footage_data.py": "c54828b712afb1c7e89dc764b34dec1fe1ab28517c3ec589ba0977a2146c450d",
+            "piper_task.py": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f",
+            "reference_task.py": "bbc768ccc202b8dd41cbd235b206e6478806ce47c1f30ae15dc662c0c1edcc3e",
+            "reference_sim.py": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8",
+            "robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d",
+            "robot_profiles.lock.json": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+            "piper_grip_guard.py": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb",
+            "piper_contact_memory.py": "f608d6647046f6fa02d8ad5e87fad10853837520a6a0fae2043c7ad260a06c4c",
+            "piper_contact_recovery.py": "81058659b332f4d1233fb88d9e3d84fd935f5a9fe9d418b040a4a536b5291f6c",
+            "piper_reacquisition.py": "b1eaffd7f9d80f21d3b9371e1adbe8b9c730a834745d8160c558937d35691e21",
+            "piper_grasp_strategy.py": "a2cbf9f954f6428894bd11cb42f228fe86f2ae88ba62e431f78bc33c7f3db36b"
+          },
+          "python": "3.12.9",
+          "numpy": "2.5.3",
+          "mujoco": "3.15.0"
+        },
+        "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e",
+        "candidate_id": "dd07320616f4c74f07044ee2",
+        "scope": "calibrated-video-goal plus authored PiPER simulation controller",
+        "policy_learned": false,
+        "physical_robot_ready": false,
+        "limitations": [
+          "The proposal detects one green candidate under a caller-declared fixed orthographic calibration; it does not identify arbitrary objects or infer depth.",
+          "Video goal XY is mapped directly into the PiPER task world frame. Camera-to-robot calibration is assumed, not measured by this bundle.",
+          "Execution uses privileged live simulator state and the existing authored PiPER controller; no motor policy or action sequence is learned.",
+          "The bundle contains a proposal and source-video digest, not the original video. Local hashes are integrity checks, not a signature or proof of proposal provenance.",
+          "This simulation-only profile does not qualify a physical robot or establish performance on human footage, shoes, or other arms."
+        ]
+      },
+      "creation_receipt": {
+        "candidate_id": "dd07320616f4c74f07044ee2",
+        "status": "candidate",
+        "output": "runs/video-goal-install-v01-20261025-frozen/bundles/layout-02"
+      }
+    },
+    {
+      "case_id": "layout-03",
+      "created": true,
+      "error": null,
+      "creation_wall_s": 0.4058063328266144,
+      "reload_wall_s": 0.16869420930743217,
+      "manifest": {
+        "schema": "dvidia.video-goal-install/v1",
+        "status": "candidate",
+        "profile": "piper",
+        "video": {
+          "sha256": "c9565df1da303e088578eee4569630be420455047d238796544ba0b62f98052c",
+          "bytes": 258571,
+          "included": false
+        },
+        "goal_xy_m": [
+          0.3496881816546358,
+          -0.11817888585306617
+        ],
+        "proposal_schema": "dvidia.video-goal-proposal/v1",
+        "files": {
+          "proposal.json": {
+            "bytes": 18590,
+            "sha256": "090ee623a7006b126cca3646f5d4861606d4167f01bc318f1ac9c81fa3df39ba"
+          },
+          "calibration.json": {
+            "bytes": 198,
+            "sha256": "e54f35fe74e52363417968c63cabe2d8fa6b89873da52e569117b0430841db1f"
+          }
+        },
+        "runtime": {
+          "profile": "piper",
+          "source_sha256": {
+            "video_goal_install.py": "dbdb70f85f494f05e30b58ec3a53bf7c834b9cf8696fea0a26b3caffb718bef4",
+            "video_goal_bridge.py": "c7794ff3fd18876774e8aaad425ba93ff798a84355b27216d9d51c33f610441a",
+            "sensor_goal_observers.py": "53e96c99ffae058c701c9ccc0b5339317262909637acc14b351bec9e6cca99f7",
+            "footage_data.py": "c54828b712afb1c7e89dc764b34dec1fe1ab28517c3ec589ba0977a2146c450d",
+            "piper_task.py": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f",
+            "reference_task.py": "bbc768ccc202b8dd41cbd235b206e6478806ce47c1f30ae15dc662c0c1edcc3e",
+            "reference_sim.py": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8",
+            "robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d",
+            "robot_profiles.lock.json": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+            "piper_grip_guard.py": "90895566cad8d5a3c158a14d3165fa1866cb3d7a4a3eecac3ca0ca8ab3e88dfb",
+            "piper_contact_memory.py": "f608d6647046f6fa02d8ad5e87fad10853837520a6a0fae2043c7ad260a06c4c",
+            "piper_contact_recovery.py": "81058659b332f4d1233fb88d9e3d84fd935f5a9fe9d418b040a4a536b5291f6c",
+            "piper_reacquisition.py": "b1eaffd7f9d80f21d3b9371e1adbe8b9c730a834745d8160c558937d35691e21",
+            "piper_grasp_strategy.py": "a2cbf9f954f6428894bd11cb42f228fe86f2ae88ba62e431f78bc33c7f3db36b"
+          },
+          "python": "3.12.9",
+          "numpy": "2.5.3",
+          "mujoco": "3.15.0"
+        },
+        "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e",
+        "candidate_id": "ecf50152a4a449eb7afc4961",
+        "scope": "calibrated-video-goal plus authored PiPER simulation controller",
+        "policy_learned": false,
+        "physical_robot_ready": false,
+        "limitations": [
+          "The proposal detects one green candidate under a caller-declared fixed orthographic calibration; it does not identify arbitrary objects or infer depth.",
+          "Video goal XY is mapped directly into the PiPER task world frame. Camera-to-robot calibration is assumed, not measured by this bundle.",
+          "Execution uses privileged live simulator state and the existing authored PiPER controller; no motor policy or action sequence is learned.",
+          "The bundle contains a proposal and source-video digest, not the original video. Local hashes are integrity checks, not a signature or proof of proposal provenance.",
+          "This simulation-only profile does not qualify a physical robot or establish performance on human footage, shoes, or other arms."
+        ]
+      },
+      "creation_receipt": {
+        "candidate_id": "ecf50152a4a449eb7afc4961",
+        "status": "candidate",
+        "output": "runs/video-goal-install-v01-20261025-frozen/bundles/layout-03"
+      }
+    }
+  ],
+  "rejections": [
+    {
+      "case_id": "layout-00",
+      "intervention": "unsupported_so101_profile",
+      "correctly_refused": true,
+      "error": "Candidate subprocess failed: Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 431, in <module>\n    main()\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 418, in main\n    result = load_candidate(args.bundle, profile=args.profile)[\"manifest\"]\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 288, in load_candidate\n    profile = _profile(profile)\n              ^^^^^^^^^^^^^^^^^\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 117, in _profile\n    raise ValueError(\"Only the piper simulation profile is supported\")\nValueError: Only the piper simulation profile is supported\n"
+    },
+    {
+      "case_id": "layout-00",
+      "intervention": "terminal_occlusion",
+      "correctly_refused": true,
+      "error": "Candidate subprocess failed: Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 431, in <module>\n    main()\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 416, in main\n    result = create_candidate(args.video, args.calibration, args.output)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 240, in create_candidate\n    goal = _proposal(proposal, calibration)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 161, in _proposal\n    raise ValueError(\"Only a proposed video destination can be installed\")\nValueError: Only a proposed video destination can be installed\n"
+    },
+    {
+      "case_id": "layout-01",
+      "intervention": "unsupported_so101_profile",
+      "correctly_refused": true,
+      "error": "Candidate subprocess failed: Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 431, in <module>\n    main()\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 418, in main\n    result = load_candidate(args.bundle, profile=args.profile)[\"manifest\"]\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 288, in load_candidate\n    profile = _profile(profile)\n              ^^^^^^^^^^^^^^^^^\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 117, in _profile\n    raise ValueError(\"Only the piper simulation profile is supported\")\nValueError: Only the piper simulation profile is supported\n"
+    },
+    {
+      "case_id": "layout-01",
+      "intervention": "terminal_occlusion",
+      "correctly_refused": true,
+      "error": "Candidate subprocess failed: Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 431, in <module>\n    main()\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 416, in main\n    result = create_candidate(args.video, args.calibration, args.output)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 240, in create_candidate\n    goal = _proposal(proposal, calibration)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 161, in _proposal\n    raise ValueError(\"Only a proposed video destination can be installed\")\nValueError: Only a proposed video destination can be installed\n"
+    },
+    {
+      "case_id": "layout-02",
+      "intervention": "unsupported_so101_profile",
+      "correctly_refused": true,
+      "error": "Candidate subprocess failed: Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 431, in <module>\n    main()\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 418, in main\n    result = load_candidate(args.bundle, profile=args.profile)[\"manifest\"]\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 288, in load_candidate\n    profile = _profile(profile)\n              ^^^^^^^^^^^^^^^^^\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 117, in _profile\n    raise ValueError(\"Only the piper simulation profile is supported\")\nValueError: Only the piper simulation profile is supported\n"
+    },
+    {
+      "case_id": "layout-02",
+      "intervention": "terminal_occlusion",
+      "correctly_refused": true,
+      "error": "Candidate subprocess failed: Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 431, in <module>\n    main()\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 416, in main\n    result = create_candidate(args.video, args.calibration, args.output)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 240, in create_candidate\n    goal = _proposal(proposal, calibration)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 161, in _proposal\n    raise ValueError(\"Only a proposed video destination can be installed\")\nValueError: Only a proposed video destination can be installed\n"
+    },
+    {
+      "case_id": "layout-03",
+      "intervention": "unsupported_so101_profile",
+      "correctly_refused": true,
+      "error": "Candidate subprocess failed: Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 431, in <module>\n    main()\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 418, in main\n    result = load_candidate(args.bundle, profile=args.profile)[\"manifest\"]\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 288, in load_candidate\n    profile = _profile(profile)\n              ^^^^^^^^^^^^^^^^^\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 117, in _profile\n    raise ValueError(\"Only the piper simulation profile is supported\")\nValueError: Only the piper simulation profile is supported\n"
+    },
+    {
+      "case_id": "layout-03",
+      "intervention": "terminal_occlusion",
+      "correctly_refused": true,
+      "error": "Candidate subprocess failed: Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 431, in <module>\n    main()\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 416, in main\n    result = create_candidate(args.video, args.calibration, args.output)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 240, in create_candidate\n    goal = _proposal(proposal, calibration)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/roguedev/dvidia.org/dvidia-image-goal/src/dvidia_training/video_goal_install.py\", line 161, in _proposal\n    raise ValueError(\"Only a proposed video destination can be installed\")\nValueError: Only a proposed video destination can be installed\n"
+    }
+  ],
+  "attempts": [
+    {
+      "id": "layout-00-start0-oracle",
+      "case_id": "layout-00",
+      "start_index": 0,
+      "variant": "oracle",
+      "attempted": true,
+      "error": null,
+      "primary_success": true,
+      "demonstrated_endpoint_success": true,
+      "score": {
+        "success": true,
+        "reference_xy_m": [
+          0.3394990876923744,
+          0.08007124798912284
+        ],
+        "terminal_dwell_s": 5.460000000004079,
+        "terminal_xy_error_m": 0.004033175118243165,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": true,
+        "reference_xy_m": [
+          0.34336488816968397,
+          0.07981222965996648
+        ],
+        "terminal_dwell_s": 5.460000000004079,
+        "terminal_xy_error_m": 0.0001634486091436337,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "episode_file": "attempts/layout-00-start0-oracle/episode.json.gz",
+      "wall_seconds": 2.68819291703403
+    },
+    {
+      "id": "layout-00-start0-installed_video",
+      "case_id": "layout-00",
+      "start_index": 0,
+      "variant": "installed_video",
+      "attempted": true,
+      "error": null,
+      "primary_success": true,
+      "demonstrated_endpoint_success": true,
+      "score": {
+        "success": true,
+        "reference_xy_m": [
+          0.3394990876923744,
+          0.08007124798912284
+        ],
+        "terminal_dwell_s": 5.380000000004124,
+        "terminal_xy_error_m": 0.014008323359543216,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": true,
+        "reference_xy_m": [
+          0.34336488816968397,
+          0.07981222965996648
+        ],
+        "terminal_dwell_s": 5.380000000004124,
+        "terminal_xy_error_m": 0.010135215700669628,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "execution_receipt": {
+        "schema": "dvidia.video-goal-execution/v1",
+        "status": "simulation_attempt_recorded",
+        "candidate_id": "622b55d77ac4dade9070d230",
+        "profile": "piper",
+        "goal_xy_m": [
+          0.3484164878397711,
+          0.07892077968526466
+        ],
+        "episode_file": "episode.json.gz",
+        "valid": true,
+        "success": true,
+        "run_wall_seconds": 1.8858715421520174,
+        "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e"
+      },
+      "subprocess_wall_s": 2.1746347919106483,
+      "bundle_source_id": "layout-00",
+      "episode_file": "attempts/layout-00-start0-installed_video/episode.json.gz",
+      "wall_seconds": 2.2052002497948706
+    },
+    {
+      "id": "layout-00-start0-shuffled_video",
+      "case_id": "layout-00",
+      "start_index": 0,
+      "variant": "shuffled_video",
+      "attempted": true,
+      "error": null,
+      "primary_success": false,
+      "demonstrated_endpoint_success": false,
+      "score": {
+        "success": false,
+        "reference_xy_m": [
+          0.3394990876923744,
+          0.08007124798912284
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.18287523735983033,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": false,
+        "reference_xy_m": [
+          0.34336488816968397,
+          0.07981222965996648
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.1809344212198218,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "execution_receipt": {
+        "schema": "dvidia.video-goal-execution/v1",
+        "status": "simulation_attempt_recorded",
+        "candidate_id": "d3e7ee2d081f0fb140c860a2",
+        "profile": "piper",
+        "goal_xy_m": [
+          0.41108882170047756,
+          -0.08181698349647704
+        ],
+        "episode_file": "episode.json.gz",
+        "valid": true,
+        "success": true,
+        "run_wall_seconds": 2.2815215829759836,
+        "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e"
+      },
+      "subprocess_wall_s": 2.650516000110656,
+      "bundle_source_id": "layout-01",
+      "episode_file": "attempts/layout-00-start0-shuffled_video/episode.json.gz",
+      "wall_seconds": 2.6854308750480413
+    },
+    {
+      "id": "layout-00-start0-open_jaw",
+      "case_id": "layout-00",
+      "start_index": 0,
+      "variant": "open_jaw",
+      "attempted": true,
+      "error": null,
+      "primary_success": false,
+      "demonstrated_endpoint_success": false,
+      "score": {
+        "success": false,
+        "reference_xy_m": [
+          0.3394990876923744,
+          0.08007124798912284
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.11449960356788899,
+        "valid_native_physics": true,
+        "retained_transfer": false,
+        "controller_self_success": false,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": false,
+        "reference_xy_m": [
+          0.34336488816968397,
+          0.07981222965996648
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.11585560035305055,
+        "valid_native_physics": true,
+        "retained_transfer": false,
+        "controller_self_success": false,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "episode_file": "attempts/layout-00-start0-open_jaw/episode.json.gz",
+      "wall_seconds": 2.2461786246858537
+    },
+    {
+      "id": "layout-00-start1-oracle",
+      "case_id": "layout-00",
+      "start_index": 1,
+      "variant": "oracle",
+      "attempted": true,
+      "error": null,
+      "primary_success": true,
+      "demonstrated_endpoint_success": true,
+      "score": {
+        "success": true,
+        "reference_xy_m": [
+          0.3394990876923744,
+          0.08007124798912284
+        ],
+        "terminal_dwell_s": 5.100000000004279,
+        "terminal_xy_error_m": 0.003387991972409822,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": true,
+        "reference_xy_m": [
+          0.34336488816968397,
+          0.07981222965996648
+        ],
+        "terminal_dwell_s": 5.100000000004279,
+        "terminal_xy_error_m": 0.0004864953778812665,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "episode_file": "attempts/layout-00-start1-oracle/episode.json.gz",
+      "wall_seconds": 1.560262416023761
+    },
+    {
+      "id": "layout-00-start1-installed_video",
+      "case_id": "layout-00",
+      "start_index": 1,
+      "variant": "installed_video",
+      "attempted": true,
+      "error": null,
+      "primary_success": true,
+      "demonstrated_endpoint_success": true,
+      "score": {
+        "success": true,
+        "reference_xy_m": [
+          0.3394990876923744,
+          0.08007124798912284
+        ],
+        "terminal_dwell_s": 5.040000000004312,
+        "terminal_xy_error_m": 0.012789873193019411,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": true,
+        "reference_xy_m": [
+          0.34336488816968397,
+          0.07981222965996648
+        ],
+        "terminal_dwell_s": 5.040000000004312,
+        "terminal_xy_error_m": 0.008917028455824072,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "execution_receipt": {
+        "schema": "dvidia.video-goal-execution/v1",
+        "status": "simulation_attempt_recorded",
+        "candidate_id": "622b55d77ac4dade9070d230",
+        "profile": "piper",
+        "goal_xy_m": [
+          0.3484164878397711,
+          0.07892077968526466
+        ],
+        "episode_file": "episode.json.gz",
+        "valid": true,
+        "success": true,
+        "run_wall_seconds": 1.7387206247076392,
+        "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e"
+      },
+      "subprocess_wall_s": 2.008516542147845,
+      "bundle_source_id": "layout-00",
+      "episode_file": "attempts/layout-00-start1-installed_video/episode.json.gz",
+      "wall_seconds": 2.038230124861002
+    },
+    {
+      "id": "layout-00-start1-shuffled_video",
+      "case_id": "layout-00",
+      "start_index": 1,
+      "variant": "shuffled_video",
+      "attempted": true,
+      "error": null,
+      "primary_success": false,
+      "demonstrated_endpoint_success": false,
+      "score": {
+        "success": false,
+        "reference_xy_m": [
+          0.3394990876923744,
+          0.08007124798912284
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.18250283896900904,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": false,
+        "reference_xy_m": [
+          0.34336488816968397,
+          0.07981222965996648
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.180571290356519,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "execution_receipt": {
+        "schema": "dvidia.video-goal-execution/v1",
+        "status": "simulation_attempt_recorded",
+        "candidate_id": "d3e7ee2d081f0fb140c860a2",
+        "profile": "piper",
+        "goal_xy_m": [
+          0.41108882170047756,
+          -0.08181698349647704
+        ],
+        "episode_file": "episode.json.gz",
+        "valid": true,
+        "success": true,
+        "run_wall_seconds": 1.891247000079602,
+        "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e"
+      },
+      "subprocess_wall_s": 2.1822740831412375,
+      "bundle_source_id": "layout-01",
+      "episode_file": "attempts/layout-00-start1-shuffled_video/episode.json.gz",
+      "wall_seconds": 2.208013375289738
+    },
+    {
+      "id": "layout-00-start1-open_jaw",
+      "case_id": "layout-00",
+      "start_index": 1,
+      "variant": "open_jaw",
+      "attempted": true,
+      "error": null,
+      "primary_success": false,
+      "demonstrated_endpoint_success": false,
+      "score": {
+        "success": false,
+        "reference_xy_m": [
+          0.3394990876923744,
+          0.08007124798912284
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.12246240689057543,
+        "valid_native_physics": true,
+        "retained_transfer": false,
+        "controller_self_success": false,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": false,
+        "reference_xy_m": [
+          0.34336488816968397,
+          0.07981222965996648
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.12329702643806331,
+        "valid_native_physics": true,
+        "retained_transfer": false,
+        "controller_self_success": false,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "episode_file": "attempts/layout-00-start1-open_jaw/episode.json.gz",
+      "wall_seconds": 1.5676760827191174
+    },
+    {
+      "id": "layout-01-start0-oracle",
+      "case_id": "layout-01",
+      "start_index": 0,
+      "variant": "oracle",
+      "attempted": true,
+      "error": null,
+      "primary_success": true,
+      "demonstrated_endpoint_success": true,
+      "score": {
+        "success": true,
+        "reference_xy_m": [
+          0.39977706488738085,
+          -0.08138576696408473
+        ],
+        "terminal_dwell_s": 4.920000000004379,
+        "terminal_xy_error_m": 0.009821507364675798,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": true,
+        "reference_xy_m": [
+          0.40949384656890675,
+          -0.08259996274352875
+        ],
+        "terminal_dwell_s": 4.920000000004379,
+        "terminal_xy_error_m": 0.00011759652118899207,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "episode_file": "attempts/layout-01-start0-oracle/episode.json.gz",
+      "wall_seconds": 1.9698150418698788
+    },
+    {
+      "id": "layout-01-start0-installed_video",
+      "case_id": "layout-01",
+      "start_index": 0,
+      "variant": "installed_video",
+      "attempted": true,
+      "error": null,
+      "primary_success": true,
+      "demonstrated_endpoint_success": true,
+      "score": {
+        "success": true,
+        "reference_xy_m": [
+          0.39977706488738085,
+          -0.08138576696408473
+        ],
+        "terminal_dwell_s": 4.800000000004445,
+        "terminal_xy_error_m": 0.02212383517262416,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": true,
+        "reference_xy_m": [
+          0.40949384656890675,
+          -0.08259996274352875
+        ],
+        "terminal_dwell_s": 4.800000000004445,
+        "terminal_xy_error_m": 0.01234627596330151,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "execution_receipt": {
+        "schema": "dvidia.video-goal-execution/v1",
+        "status": "simulation_attempt_recorded",
+        "candidate_id": "d3e7ee2d081f0fb140c860a2",
+        "profile": "piper",
+        "goal_xy_m": [
+          0.41108882170047756,
+          -0.08181698349647704
+        ],
+        "episode_file": "episode.json.gz",
+        "valid": true,
+        "success": true,
+        "run_wall_seconds": 2.0232562092132866,
+        "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e"
+      },
+      "subprocess_wall_s": 2.3367867921479046,
+      "bundle_source_id": "layout-01",
+      "episode_file": "attempts/layout-01-start0-installed_video/episode.json.gz",
+      "wall_seconds": 2.3681142502464354
+    },
+    {
+      "id": "layout-01-start0-shuffled_video",
+      "case_id": "layout-01",
+      "start_index": 0,
+      "variant": "shuffled_video",
+      "attempted": true,
+      "error": null,
+      "primary_success": false,
+      "demonstrated_endpoint_success": false,
+      "score": {
+        "success": false,
+        "reference_xy_m": [
+          0.39977706488738085,
+          -0.08138576696408473
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.17023347081593118,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": false,
+        "reference_xy_m": [
+          0.40949384656890675,
+          -0.08259996274352875
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.1676875696268301,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "execution_receipt": {
+        "schema": "dvidia.video-goal-execution/v1",
+        "status": "simulation_attempt_recorded",
+        "candidate_id": "dd07320616f4c74f07044ee2",
+        "profile": "piper",
+        "goal_xy_m": [
+          0.4558738221436984,
+          0.07294243227326265
+        ],
+        "episode_file": "episode.json.gz",
+        "valid": true,
+        "success": true,
+        "run_wall_seconds": 2.2547549582086504,
+        "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e"
+      },
+      "subprocess_wall_s": 2.571214708033949,
+      "bundle_source_id": "layout-02",
+      "episode_file": "attempts/layout-01-start0-shuffled_video/episode.json.gz",
+      "wall_seconds": 2.6032945001497865
+    },
+    {
+      "id": "layout-01-start0-open_jaw",
+      "case_id": "layout-01",
+      "start_index": 0,
+      "variant": "open_jaw",
+      "attempted": true,
+      "error": null,
+      "primary_success": false,
+      "demonstrated_endpoint_success": false,
+      "score": {
+        "success": false,
+        "reference_xy_m": [
+          0.39977706488738085,
+          -0.08138576696408473
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.11986705327183397,
+        "valid_native_physics": true,
+        "retained_transfer": false,
+        "controller_self_success": false,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": false,
+        "reference_xy_m": [
+          0.40949384656890675,
+          -0.08259996274352875
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.12906026059685588,
+        "valid_native_physics": true,
+        "retained_transfer": false,
+        "controller_self_success": false,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "episode_file": "attempts/layout-01-start0-open_jaw/episode.json.gz",
+      "wall_seconds": 2.5714005418121815
+    },
+    {
+      "id": "layout-01-start1-oracle",
+      "case_id": "layout-01",
+      "start_index": 1,
+      "variant": "oracle",
+      "attempted": true,
+      "error": null,
+      "primary_success": true,
+      "demonstrated_endpoint_success": true,
+      "score": {
+        "success": true,
+        "reference_xy_m": [
+          0.39977706488738085,
+          -0.08138576696408473
+        ],
+        "terminal_dwell_s": 4.7200000000044895,
+        "terminal_xy_error_m": 0.009769869868384936,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": true,
+        "reference_xy_m": [
+          0.40949384656890675,
+          -0.08259996274352875
+        ],
+        "terminal_dwell_s": 4.7200000000044895,
+        "terminal_xy_error_m": 8.301818650205615e-05,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "episode_file": "attempts/layout-01-start1-oracle/episode.json.gz",
+      "wall_seconds": 2.091663584113121
+    },
+    {
+      "id": "layout-01-start1-installed_video",
+      "case_id": "layout-01",
+      "start_index": 1,
+      "variant": "installed_video",
+      "attempted": true,
+      "error": null,
+      "primary_success": true,
+      "demonstrated_endpoint_success": true,
+      "score": {
+        "success": true,
+        "reference_xy_m": [
+          0.39977706488738085,
+          -0.08138576696408473
+        ],
+        "terminal_dwell_s": 4.600000000004556,
+        "terminal_xy_error_m": 0.02150443624831656,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": true,
+        "reference_xy_m": [
+          0.40949384656890675,
+          -0.08259996274352875
+        ],
+        "terminal_dwell_s": 4.600000000004556,
+        "terminal_xy_error_m": 0.011729263473071289,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "execution_receipt": {
+        "schema": "dvidia.video-goal-execution/v1",
+        "status": "simulation_attempt_recorded",
+        "candidate_id": "d3e7ee2d081f0fb140c860a2",
+        "profile": "piper",
+        "goal_xy_m": [
+          0.41108882170047756,
+          -0.08181698349647704
+        ],
+        "episode_file": "episode.json.gz",
+        "valid": true,
+        "success": true,
+        "run_wall_seconds": 1.9335676673799753,
+        "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e"
+      },
+      "subprocess_wall_s": 2.2939156251959503,
+      "bundle_source_id": "layout-01",
+      "episode_file": "attempts/layout-01-start1-installed_video/episode.json.gz",
+      "wall_seconds": 2.319643042050302
+    },
+    {
+      "id": "layout-01-start1-shuffled_video",
+      "case_id": "layout-01",
+      "start_index": 1,
+      "variant": "shuffled_video",
+      "attempted": true,
+      "error": null,
+      "primary_success": false,
+      "demonstrated_endpoint_success": false,
+      "score": {
+        "success": false,
+        "reference_xy_m": [
+          0.39977706488738085,
+          -0.08138576696408473
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.17034638896355084,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": false,
+        "reference_xy_m": [
+          0.40949384656890675,
+          -0.08259996274352875
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.16780427154808594,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "execution_receipt": {
+        "schema": "dvidia.video-goal-execution/v1",
+        "status": "simulation_attempt_recorded",
+        "candidate_id": "dd07320616f4c74f07044ee2",
+        "profile": "piper",
+        "goal_xy_m": [
+          0.4558738221436984,
+          0.07294243227326265
+        ],
+        "episode_file": "episode.json.gz",
+        "valid": true,
+        "success": true,
+        "run_wall_seconds": 1.7036658329889178,
+        "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e"
+      },
+      "subprocess_wall_s": 1.947994832880795,
+      "bundle_source_id": "layout-02",
+      "episode_file": "attempts/layout-01-start1-shuffled_video/episode.json.gz",
+      "wall_seconds": 1.9711935836821795
+    },
+    {
+      "id": "layout-01-start1-open_jaw",
+      "case_id": "layout-01",
+      "start_index": 1,
+      "variant": "open_jaw",
+      "attempted": true,
+      "error": null,
+      "primary_success": false,
+      "demonstrated_endpoint_success": false,
+      "score": {
+        "success": false,
+        "reference_xy_m": [
+          0.39977706488738085,
+          -0.08138576696408473
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.10242012764871072,
+        "valid_native_physics": true,
+        "retained_transfer": false,
+        "controller_self_success": false,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": false,
+        "reference_xy_m": [
+          0.40949384656890675,
+          -0.08259996274352875
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.1117770886136692,
+        "valid_native_physics": true,
+        "retained_transfer": false,
+        "controller_self_success": false,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "episode_file": "attempts/layout-01-start1-open_jaw/episode.json.gz",
+      "wall_seconds": 1.3989083329215646
+    },
+    {
+      "id": "layout-02-start0-oracle",
+      "case_id": "layout-02",
+      "start_index": 0,
+      "variant": "oracle",
+      "attempted": true,
+      "error": null,
+      "primary_success": true,
+      "demonstrated_endpoint_success": true,
+      "score": {
+        "success": true,
+        "reference_xy_m": [
+          0.4412788261244768,
+          0.07089913271401593
+        ],
+        "terminal_dwell_s": 4.500000000004611,
+        "terminal_xy_error_m": 0.012274617280284896,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": true,
+        "reference_xy_m": [
+          0.45323063395129304,
+          0.0723831430751692
+        ],
+        "terminal_dwell_s": 4.500000000004611,
+        "terminal_xy_error_m": 0.00025026067496230207,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "episode_file": "attempts/layout-02-start0-oracle/episode.json.gz",
+      "wall_seconds": 1.6767542916350067
+    },
+    {
+      "id": "layout-02-start0-installed_video",
+      "case_id": "layout-02",
+      "start_index": 0,
+      "variant": "installed_video",
+      "attempted": true,
+      "error": null,
+      "primary_success": false,
+      "demonstrated_endpoint_success": true,
+      "score": {
+        "success": false,
+        "reference_xy_m": [
+          0.4412788261244768,
+          0.07089913271401593
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.02738922907003311,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": true,
+        "reference_xy_m": [
+          0.45323063395129304,
+          0.0723831430751692
+        ],
+        "terminal_dwell_s": 4.3400000000047,
+        "terminal_xy_error_m": 0.015345816254619893,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "execution_receipt": {
+        "schema": "dvidia.video-goal-execution/v1",
+        "status": "simulation_attempt_recorded",
+        "candidate_id": "dd07320616f4c74f07044ee2",
+        "profile": "piper",
+        "goal_xy_m": [
+          0.4558738221436984,
+          0.07294243227326265
+        ],
+        "episode_file": "episode.json.gz",
+        "valid": true,
+        "success": true,
+        "run_wall_seconds": 2.4371349159628153,
+        "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e"
+      },
+      "subprocess_wall_s": 2.777374042198062,
+      "bundle_source_id": "layout-02",
+      "episode_file": "attempts/layout-02-start0-installed_video/episode.json.gz",
+      "wall_seconds": 2.805422500241548
+    },
+    {
+      "id": "layout-02-start0-shuffled_video",
+      "case_id": "layout-02",
+      "start_index": 0,
+      "variant": "shuffled_video",
+      "attempted": true,
+      "error": null,
+      "primary_success": false,
+      "demonstrated_endpoint_success": false,
+      "score": {
+        "success": false,
+        "reference_xy_m": [
+          0.4412788261244768,
+          0.07089913271401593
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.2080333491828613,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": false,
+        "reference_xy_m": [
+          0.45323063395129304,
+          0.0723831430751692
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.21456407468625596,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "execution_receipt": {
+        "schema": "dvidia.video-goal-execution/v1",
+        "status": "simulation_attempt_recorded",
+        "candidate_id": "ecf50152a4a449eb7afc4961",
+        "profile": "piper",
+        "goal_xy_m": [
+          0.3496881816546358,
+          -0.11817888585306617
+        ],
+        "episode_file": "episode.json.gz",
+        "valid": true,
+        "success": true,
+        "run_wall_seconds": 1.6413501668721437,
+        "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e"
+      },
+      "subprocess_wall_s": 1.8974077077582479,
+      "bundle_source_id": "layout-03",
+      "episode_file": "attempts/layout-02-start0-shuffled_video/episode.json.gz",
+      "wall_seconds": 1.9217309998348355
+    },
+    {
+      "id": "layout-02-start0-open_jaw",
+      "case_id": "layout-02",
+      "start_index": 0,
+      "variant": "open_jaw",
+      "attempted": true,
+      "error": null,
+      "primary_success": false,
+      "demonstrated_endpoint_success": false,
+      "score": {
+        "success": false,
+        "reference_xy_m": [
+          0.4412788261244768,
+          0.07089913271401593
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.17574898107050343,
+        "valid_native_physics": true,
+        "retained_transfer": false,
+        "controller_self_success": false,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": false,
+        "reference_xy_m": [
+          0.45323063395129304,
+          0.0723831430751692
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.1866490776295421,
+        "valid_native_physics": true,
+        "retained_transfer": false,
+        "controller_self_success": false,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "episode_file": "attempts/layout-02-start0-open_jaw/episode.json.gz",
+      "wall_seconds": 1.4030622909776866
+    },
+    {
+      "id": "layout-02-start1-oracle",
+      "case_id": "layout-02",
+      "start_index": 1,
+      "variant": "oracle",
+      "attempted": true,
+      "error": null,
+      "primary_success": true,
+      "demonstrated_endpoint_success": true,
+      "score": {
+        "success": true,
+        "reference_xy_m": [
+          0.4412788261244768,
+          0.07089913271401593
+        ],
+        "terminal_dwell_s": 4.280000000004733,
+        "terminal_xy_error_m": 0.01194216685026494,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": true,
+        "reference_xy_m": [
+          0.45323063395129304,
+          0.0723831430751692
+        ],
+        "terminal_dwell_s": 4.280000000004733,
+        "terminal_xy_error_m": 0.00013730350297066842,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "episode_file": "attempts/layout-02-start1-oracle/episode.json.gz",
+      "wall_seconds": 1.7090452499687672
+    },
+    {
+      "id": "layout-02-start1-installed_video",
+      "case_id": "layout-02",
+      "start_index": 1,
+      "variant": "installed_video",
+      "attempted": true,
+      "error": null,
+      "primary_success": false,
+      "demonstrated_endpoint_success": true,
+      "score": {
+        "success": false,
+        "reference_xy_m": [
+          0.4412788261244768,
+          0.07089913271401593
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.027387210891773914,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": true,
+        "reference_xy_m": [
+          0.45323063395129304,
+          0.0723831430751692
+        ],
+        "terminal_dwell_s": 4.120000000004822,
+        "terminal_xy_error_m": 0.015344474135691556,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "execution_receipt": {
+        "schema": "dvidia.video-goal-execution/v1",
+        "status": "simulation_attempt_recorded",
+        "candidate_id": "dd07320616f4c74f07044ee2",
+        "profile": "piper",
+        "goal_xy_m": [
+          0.4558738221436984,
+          0.07294243227326265
+        ],
+        "episode_file": "episode.json.gz",
+        "valid": true,
+        "success": true,
+        "run_wall_seconds": 1.9291181252337992,
+        "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e"
+      },
+      "subprocess_wall_s": 2.2227283329702914,
+      "bundle_source_id": "layout-02",
+      "episode_file": "attempts/layout-02-start1-installed_video/episode.json.gz",
+      "wall_seconds": 2.249835124704987
+    },
+    {
+      "id": "layout-02-start1-shuffled_video",
+      "case_id": "layout-02",
+      "start_index": 1,
+      "variant": "shuffled_video",
+      "attempted": true,
+      "error": null,
+      "primary_success": false,
+      "demonstrated_endpoint_success": false,
+      "score": {
+        "success": false,
+        "reference_xy_m": [
+          0.4412788261244768,
+          0.07089913271401593
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.2078457976220506,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": false,
+        "reference_xy_m": [
+          0.45323063395129304,
+          0.0723831430751692
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.2143537781584531,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "execution_receipt": {
+        "schema": "dvidia.video-goal-execution/v1",
+        "status": "simulation_attempt_recorded",
+        "candidate_id": "ecf50152a4a449eb7afc4961",
+        "profile": "piper",
+        "goal_xy_m": [
+          0.3496881816546358,
+          -0.11817888585306617
+        ],
+        "episode_file": "episode.json.gz",
+        "valid": true,
+        "success": true,
+        "run_wall_seconds": 1.8248875411227345,
+        "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e"
+      },
+      "subprocess_wall_s": 2.0862311250530183,
+      "bundle_source_id": "layout-03",
+      "episode_file": "attempts/layout-02-start1-shuffled_video/episode.json.gz",
+      "wall_seconds": 2.1118749999441206
+    },
+    {
+      "id": "layout-02-start1-open_jaw",
+      "case_id": "layout-02",
+      "start_index": 1,
+      "variant": "open_jaw",
+      "attempted": true,
+      "error": null,
+      "primary_success": false,
+      "demonstrated_endpoint_success": false,
+      "score": {
+        "success": false,
+        "reference_xy_m": [
+          0.4412788261244768,
+          0.07089913271401593
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.17288677808391642,
+        "valid_native_physics": true,
+        "retained_transfer": false,
+        "controller_self_success": false,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": false,
+        "reference_xy_m": [
+          0.45323063395129304,
+          0.0723831430751692
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.183215308134773,
+        "valid_native_physics": true,
+        "retained_transfer": false,
+        "controller_self_success": false,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "episode_file": "attempts/layout-02-start1-open_jaw/episode.json.gz",
+      "wall_seconds": 1.763302874751389
+    },
+    {
+      "id": "layout-03-start0-oracle",
+      "case_id": "layout-03",
+      "start_index": 0,
+      "variant": "oracle",
+      "attempted": true,
+      "error": null,
+      "primary_success": true,
+      "demonstrated_endpoint_success": true,
+      "score": {
+        "success": true,
+        "reference_xy_m": [
+          0.340635262159906,
+          -0.11832959194075045
+        ],
+        "terminal_dwell_s": 5.500000000004057,
+        "terminal_xy_error_m": 0.005426090784098229,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": true,
+        "reference_xy_m": [
+          0.3456794931925351,
+          -0.11837520562140633
+        ],
+        "terminal_dwell_s": 5.500000000004057,
+        "terminal_xy_error_m": 0.00039221138382278795,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "episode_file": "attempts/layout-03-start0-oracle/episode.json.gz",
+      "wall_seconds": 1.9722970421425998
+    },
+    {
+      "id": "layout-03-start0-installed_video",
+      "case_id": "layout-03",
+      "start_index": 0,
+      "variant": "installed_video",
+      "attempted": true,
+      "error": null,
+      "primary_success": true,
+      "demonstrated_endpoint_success": true,
+      "score": {
+        "success": true,
+        "reference_xy_m": [
+          0.340635262159906,
+          -0.11832959194075045
+        ],
+        "terminal_dwell_s": 5.4400000000040905,
+        "terminal_xy_error_m": 0.014783650002250435,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": true,
+        "reference_xy_m": [
+          0.3456794931925351,
+          -0.11837520562140633
+        ],
+        "terminal_dwell_s": 5.4400000000040905,
+        "terminal_xy_error_m": 0.00973948746741222,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "execution_receipt": {
+        "schema": "dvidia.video-goal-execution/v1",
+        "status": "simulation_attempt_recorded",
+        "candidate_id": "ecf50152a4a449eb7afc4961",
+        "profile": "piper",
+        "goal_xy_m": [
+          0.3496881816546358,
+          -0.11817888585306617
+        ],
+        "episode_file": "episode.json.gz",
+        "valid": true,
+        "success": true,
+        "run_wall_seconds": 2.084199792239815,
+        "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e"
+      },
+      "subprocess_wall_s": 2.5220072916708887,
+      "bundle_source_id": "layout-03",
+      "episode_file": "attempts/layout-03-start0-installed_video/episode.json.gz",
+      "wall_seconds": 2.5818254998885095
+    },
+    {
+      "id": "layout-03-start0-shuffled_video",
+      "case_id": "layout-03",
+      "start_index": 0,
+      "variant": "shuffled_video",
+      "attempted": true,
+      "error": null,
+      "primary_success": false,
+      "demonstrated_endpoint_success": false,
+      "score": {
+        "success": false,
+        "reference_xy_m": [
+          0.340635262159906,
+          -0.11832959194075045
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.19756568163091476,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": false,
+        "reference_xy_m": [
+          0.3456794931925351,
+          -0.11837520562140633
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.19734825837135553,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "execution_receipt": {
+        "schema": "dvidia.video-goal-execution/v1",
+        "status": "simulation_attempt_recorded",
+        "candidate_id": "622b55d77ac4dade9070d230",
+        "profile": "piper",
+        "goal_xy_m": [
+          0.3484164878397711,
+          0.07892077968526466
+        ],
+        "episode_file": "episode.json.gz",
+        "valid": true,
+        "success": true,
+        "run_wall_seconds": 2.597052250057459,
+        "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e"
+      },
+      "subprocess_wall_s": 2.9753400832414627,
+      "bundle_source_id": "layout-00",
+      "episode_file": "attempts/layout-03-start0-shuffled_video/episode.json.gz",
+      "wall_seconds": 3.0043437089771032
+    },
+    {
+      "id": "layout-03-start0-open_jaw",
+      "case_id": "layout-03",
+      "start_index": 0,
+      "variant": "open_jaw",
+      "attempted": true,
+      "error": null,
+      "primary_success": false,
+      "demonstrated_endpoint_success": false,
+      "score": {
+        "success": false,
+        "reference_xy_m": [
+          0.340635262159906,
+          -0.11832959194075045
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.10433228611300492,
+        "valid_native_physics": true,
+        "retained_transfer": false,
+        "controller_self_success": false,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": false,
+        "reference_xy_m": [
+          0.3456794931925351,
+          -0.11837520562140633
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.10672236802882235,
+        "valid_native_physics": true,
+        "retained_transfer": false,
+        "controller_self_success": false,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "episode_file": "attempts/layout-03-start0-open_jaw/episode.json.gz",
+      "wall_seconds": 1.700206957757473
+    },
+    {
+      "id": "layout-03-start1-oracle",
+      "case_id": "layout-03",
+      "start_index": 1,
+      "variant": "oracle",
+      "attempted": true,
+      "error": null,
+      "primary_success": true,
+      "demonstrated_endpoint_success": true,
+      "score": {
+        "success": true,
+        "reference_xy_m": [
+          0.340635262159906,
+          -0.11832959194075045
+        ],
+        "terminal_dwell_s": 5.26000000000419,
+        "terminal_xy_error_m": 0.005238508401007643,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": true,
+        "reference_xy_m": [
+          0.3456794931925351,
+          -0.11837520562140633
+        ],
+        "terminal_dwell_s": 5.26000000000419,
+        "terminal_xy_error_m": 0.00022689750381911747,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "episode_file": "attempts/layout-03-start1-oracle/episode.json.gz",
+      "wall_seconds": 1.643729875329882
+    },
+    {
+      "id": "layout-03-start1-installed_video",
+      "case_id": "layout-03",
+      "start_index": 1,
+      "variant": "installed_video",
+      "attempted": true,
+      "error": null,
+      "primary_success": true,
+      "demonstrated_endpoint_success": true,
+      "score": {
+        "success": true,
+        "reference_xy_m": [
+          0.340635262159906,
+          -0.11832959194075045
+        ],
+        "terminal_dwell_s": 5.220000000004212,
+        "terminal_xy_error_m": 0.015297731948359634,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": true,
+        "reference_xy_m": [
+          0.3456794931925351,
+          -0.11837520562140633
+        ],
+        "terminal_dwell_s": 5.220000000004212,
+        "terminal_xy_error_m": 0.010253641408778186,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "execution_receipt": {
+        "schema": "dvidia.video-goal-execution/v1",
+        "status": "simulation_attempt_recorded",
+        "candidate_id": "ecf50152a4a449eb7afc4961",
+        "profile": "piper",
+        "goal_xy_m": [
+          0.3496881816546358,
+          -0.11817888585306617
+        ],
+        "episode_file": "episode.json.gz",
+        "valid": true,
+        "success": true,
+        "run_wall_seconds": 2.608787499833852,
+        "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e"
+      },
+      "subprocess_wall_s": 3.1625277078710496,
+      "bundle_source_id": "layout-03",
+      "episode_file": "attempts/layout-03-start1-installed_video/episode.json.gz",
+      "wall_seconds": 3.2130812909454107
+    },
+    {
+      "id": "layout-03-start1-shuffled_video",
+      "case_id": "layout-03",
+      "start_index": 1,
+      "variant": "shuffled_video",
+      "attempted": true,
+      "error": null,
+      "primary_success": false,
+      "demonstrated_endpoint_success": false,
+      "score": {
+        "success": false,
+        "reference_xy_m": [
+          0.340635262159906,
+          -0.11832959194075045
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.1975784862333282,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": false,
+        "reference_xy_m": [
+          0.3456794931925351,
+          -0.11837520562140633
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.19739216014217495,
+        "valid_native_physics": true,
+        "retained_transfer": true,
+        "controller_self_success": true,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "execution_receipt": {
+        "schema": "dvidia.video-goal-execution/v1",
+        "status": "simulation_attempt_recorded",
+        "candidate_id": "622b55d77ac4dade9070d230",
+        "profile": "piper",
+        "goal_xy_m": [
+          0.3484164878397711,
+          0.07892077968526466
+        ],
+        "episode_file": "episode.json.gz",
+        "valid": true,
+        "success": true,
+        "run_wall_seconds": 3.1875305832363665,
+        "runtime_fingerprint": "6bc3881a6c7a42950ea9284bcef5bc2962cd194160918231975bd1eafe57ea3e"
+      },
+      "subprocess_wall_s": 3.8232855000533164,
+      "bundle_source_id": "layout-00",
+      "episode_file": "attempts/layout-03-start1-shuffled_video/episode.json.gz",
+      "wall_seconds": 3.858780875336379
+    },
+    {
+      "id": "layout-03-start1-open_jaw",
+      "case_id": "layout-03",
+      "start_index": 1,
+      "variant": "open_jaw",
+      "attempted": true,
+      "error": null,
+      "primary_success": false,
+      "demonstrated_endpoint_success": false,
+      "score": {
+        "success": false,
+        "reference_xy_m": [
+          0.340635262159906,
+          -0.11832959194075045
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.0870869992223823,
+        "valid_native_physics": true,
+        "retained_transfer": false,
+        "controller_self_success": false,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "secondary_score": {
+        "success": false,
+        "reference_xy_m": [
+          0.3456794931925351,
+          -0.11837520562140633
+        ],
+        "terminal_dwell_s": 0.0,
+        "terminal_xy_error_m": 0.08919779920594757,
+        "valid_native_physics": true,
+        "retained_transfer": false,
+        "controller_self_success": false,
+        "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+      },
+      "episode_file": "attempts/layout-03-start1-open_jaw/episode.json.gz",
+      "wall_seconds": 2.022847375366837
+    }
+  ],
+  "variants": {
+    "oracle": {
+      "scheduled": 8,
+      "executed": 8,
+      "primary_successes": 8,
+      "demonstrated_endpoint_successes": 8
+    },
+    "installed_video": {
+      "scheduled": 8,
+      "executed": 8,
+      "primary_successes": 6,
+      "demonstrated_endpoint_successes": 8
+    },
+    "shuffled_video": {
+      "scheduled": 8,
+      "executed": 8,
+      "primary_successes": 0,
+      "demonstrated_endpoint_successes": 0
+    },
+    "open_jaw": {
+      "scheduled": 8,
+      "executed": 8,
+      "primary_successes": 0,
+      "demonstrated_endpoint_successes": 0
+    }
+  },
+  "wall_seconds": 75.19190983334556,
+  "motor_policy_learned": false,
+  "physical_robot_ready": false
+}

@@ -6,6 +6,18 @@
 
 [Recorded demo](https://huggingface.co/spaces/Dvidia/dvidia-training) · [Synthetic datasets](https://huggingface.co/datasets/Dvidia/dvidia-training-examples) · [Pilot models](https://huggingface.co/Dvidia/dvidia-training-pilot)
 
+**[Video-to-skill evidence gates](docs/video-to-skill-milestones.md).**
+The [local installation pilot](benchmarks/video-goal-install-v01-20261025/README.md)
+saves calibrated video destinations as data-only PiPER simulation candidates and
+tests reload/execution in fresh processes. It completes 6/8 intended tasks from
+new starts (oracle 8/8; shuffled/open-jaw 0/8 each), with actual-demo-endpoint
+replay scored separately at 8/8. This uses an authored controller; no motor
+policy is learned. [Run a candidate locally](docs/video-goal-install-v01.md).
+The [NVIDIA SimReady pilot](benchmarks/nvidia-material-appearance-v01-20261025/README.md)
+adds five fabric appearances with 6/6 physics-invariance checks and records exact
+Central asset metadata. The green-only observer misses four fabric variants,
+making appearance-independent object grounding a concrete next target.
+
 **Research alpha.** The recorded demo covers the original one-scene simulation pilot; the frozen benchmark is a separate experiment. Training runs locally. No human-video action bridge or hardware skill is established.
 
 **[Video destination bridge v0.1](benchmarks/video-goal-bridge-v01-20261025/README.md).**

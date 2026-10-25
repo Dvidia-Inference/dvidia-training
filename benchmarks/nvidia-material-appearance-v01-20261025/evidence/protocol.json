@@ -1,0 +1,206 @@
+{
+  "schema": "dvidia.material-appearance-protocol/v1",
+  "materials": [
+    "Fabric_Denim",
+    "Fabric_Cotton_White",
+    "Fabric_Polyester_Honeycomb_Green",
+    "Fabric_Canvas",
+    "Fabric_Polyester_Safety_Pink"
+  ],
+  "robot": "piper",
+  "shoes": [
+    "trainer-left",
+    "trainer-right"
+  ],
+  "timestep_s": 0.002,
+  "physics_s": 2.0,
+  "compared_arrays": [
+    "body_mass",
+    "body_inertia",
+    "body_ipos",
+    "body_iquat",
+    "geom_type",
+    "geom_bodyid",
+    "geom_size",
+    "geom_pos",
+    "geom_quat",
+    "geom_friction",
+    "geom_contype",
+    "geom_conaffinity",
+    "geom_condim",
+    "geom_priority",
+    "geom_solref",
+    "geom_solimp",
+    "geom_margin",
+    "geom_gap",
+    "jnt_type",
+    "jnt_axis",
+    "jnt_pos",
+    "jnt_range",
+    "jnt_stiffness",
+    "dof_armature",
+    "dof_damping",
+    "dof_frictionloss",
+    "actuator_gainprm",
+    "actuator_biasprm",
+    "actuator_gear",
+    "actuator_forcerange",
+    "actuator_ctrlrange",
+    "eq_type",
+    "eq_data",
+    "gravity",
+    "timestep",
+    "dimensions"
+  ],
+  "source_archive_sha256": "a68ca7376ed4abd6160ff7fed234cd1012bded73fd17f1588adcd34a91fe7d42",
+  "source_archive_catalog": {
+    "repository": "NVIDIA-Omniverse/PhysicalAI-SimReady-Materials",
+    "release": "v0.2.0",
+    "release_url": "https://github.com/NVIDIA-Omniverse/PhysicalAI-SimReady-Materials/releases/tag/v0.2.0",
+    "source_sha": "8f80fbd",
+    "license": "MIT-0",
+    "archive_sha256": "a68ca7376ed4abd6160ff7fed234cd1012bded73fd17f1588adcd34a91fe7d42",
+    "materials": [
+      {
+        "id": "Fabric_Canvas",
+        "material_path": "Materials/Fabric/Fabric_Canvas.usda",
+        "material_sha256": "e14d7eece870f13afec9fcc83e2041977037b370a80cac117499a59209f341ab",
+        "diffuse_texture_path": "Materials/Fabric/textures/Fabric_Canvas_diffuse.jpg",
+        "diffuse_texture_sha256": "f1bb8c01b8c624a09f44249979716483579cb0e6081090ad17d07e4324d8d448",
+        "diffuse_texture_bytes": 670133
+      },
+      {
+        "id": "Fabric_Chino_Light_Blue",
+        "material_path": "Materials/Fabric/Fabric_Chino_Light_Blue.usda",
+        "material_sha256": "77c6d5284ec23135ca80f2bea1d2e6bc198a8ce0b6c6031d24188ee35b6623f3",
+        "diffuse_texture_path": "Materials/Fabric/textures/Fabric_Chino_Light_Blue_diffuse.jpg",
+        "diffuse_texture_sha256": "abaebc76f65b9c944526a698dfe6009a17231a3e1d38fb853bd4cc79d578b301",
+        "diffuse_texture_bytes": 774865
+      },
+      {
+        "id": "Fabric_Chino_Light_Brown",
+        "material_path": "Materials/Fabric/Fabric_Chino_Light_Brown.usda",
+        "material_sha256": "224babb24ff51e7124b344d5f93bed59ac854669eb63c54f1cb27b2fcc423d5b",
+        "diffuse_texture_path": "Materials/Fabric/textures/Fabric_Chino_Light_Brown_diffuse.jpg",
+        "diffuse_texture_sha256": "ff390b1e2de743f0b8ba545f792aa8576912824afb3a8399fef1d2a1cb01d7ed",
+        "diffuse_texture_bytes": 1061305
+      },
+      {
+        "id": "Fabric_Cotton_White",
+        "material_path": "Materials/Fabric/Fabric_Cotton_White.usda",
+        "material_sha256": "aa3b037b3faac8291828acf85ff235547bf31a8842cad506f7e9e4b02ccc019c",
+        "diffuse_texture_path": "Materials/Fabric/textures/Fabric_Cotton_White_diffuse.jpg",
+        "diffuse_texture_sha256": "f70cb4a86a4e4c835c2ef92387b85e816f0df4da8ec9cbc7b6d8b04f5dfb04ff",
+        "diffuse_texture_bytes": 780912
+      },
+      {
+        "id": "Fabric_Denim",
+        "material_path": "Materials/Fabric/Fabric_Denim.usda",
+        "material_sha256": "db79c14dbfc83e8ec219ca1080dd9b7a732b1b54bd93dc5849eee172620b79d8",
+        "diffuse_texture_path": "Materials/Fabric/textures/Fabric_Denim_diffuse.jpg",
+        "diffuse_texture_sha256": "48a322074c475862fbddb48e42c734b15cb91ae4727690ad1a132b52f9f9e6a2",
+        "diffuse_texture_bytes": 1283424
+      },
+      {
+        "id": "Fabric_Oxford",
+        "material_path": "Materials/Fabric/Fabric_Oxford.usda",
+        "material_sha256": "f73d84bc67c2e8b2a3dcea1561a800cdcce0eb57b2fe742a84285ebd41d86918",
+        "diffuse_texture_path": "Materials/Fabric/textures/Fabric_Oxford_diffuse.jpg",
+        "diffuse_texture_sha256": "dcf42cb003095a8b33db40821306a513540310c85cb75e5fad335c7c3eeb5b4c",
+        "diffuse_texture_bytes": 1124730
+      },
+      {
+        "id": "Fabric_Polyester_Honeycomb_Green",
+        "material_path": "Materials/Fabric/Fabric_Polyester_Honeycomb_Green.usda",
+        "material_sha256": "8bdc7c11559515e3a8d389554987e261dbc81d085ed9cfc8fa2536a29212ef6d",
+        "diffuse_texture_path": "Materials/Fabric/textures/Fabric_Polyester_Honeycomb_Green_diffuse.jpg",
+        "diffuse_texture_sha256": "f98c2827cff7848ace9d5092cbac7775c638da00e3ccdaa92cc4f70ddfa66ba1",
+        "diffuse_texture_bytes": 1029618
+      },
+      {
+        "id": "Fabric_Polyester_Honeycomb_Orange",
+        "material_path": "Materials/Fabric/Fabric_Polyester_Honeycomb_Orange.usda",
+        "material_sha256": "041137efe266d88ef7b28307ea97e93c716e41fcf947909b1e8278da43108935",
+        "diffuse_texture_path": "Materials/Fabric/textures/Fabric_Polyester_Honeycomb_Orange_diffuse.jpg",
+        "diffuse_texture_sha256": "25693c0c6d374c2ce161ded48064e24db1e96a1bae3040b3ee5cd37e593cee1f",
+        "diffuse_texture_bytes": 1166105
+      },
+      {
+        "id": "Fabric_Polyester_Safety_Pink",
+        "material_path": "Materials/Fabric/Fabric_Polyester_Safety_Pink.usda",
+        "material_sha256": "9cc5c1a91562fb1cc59cfcaa0c6103f9138f8722fb0d9d4e17172b0fb626c9e3",
+        "diffuse_texture_path": "Materials/Fabric/textures/Fabric_Polyester_Safety_Pink_diffuse.jpg",
+        "diffuse_texture_sha256": "f3af96b464aa235de0a7a4c600db0c6f35255bc2db8c1d6568e698a2ed68326e",
+        "diffuse_texture_bytes": 790103
+      },
+      {
+        "id": "Fabric_Polyester_Safety_Yellow",
+        "material_path": "Materials/Fabric/Fabric_Polyester_Safety_Yellow.usda",
+        "material_sha256": "855de43e903994b036249e183d046f0ce7d31c7635e099c1e6ea67a540781fee",
+        "diffuse_texture_path": "Materials/Fabric/textures/Fabric_Polyester_Safety_Yellow_diffuse.jpg",
+        "diffuse_texture_sha256": "4f9274fd5d375359aceeef371cb9a8c402c425e7467547ac1e52cdea049c6674",
+        "diffuse_texture_bytes": 726262
+      },
+      {
+        "id": "Fabric_Ripstop_Coated",
+        "material_path": "Materials/Fabric/Fabric_Ripstop_Coated.usda",
+        "material_sha256": "943a9c97e79d592bdc73c6e6eee78554fdc8606f045868b01283100b7d93bed7",
+        "diffuse_texture_path": "Materials/Fabric/textures/Fabric_Ripstop_Coated_diffuse.jpg",
+        "diffuse_texture_sha256": "73ad9635276647cc2ba17f0b8598eb17297d0655537dfef4b01f9cd20982db8b",
+        "diffuse_texture_bytes": 927786
+      },
+      {
+        "id": "Fabric_Ripstop_Woven",
+        "material_path": "Materials/Fabric/Fabric_Ripstop_Woven.usda",
+        "material_sha256": "9a2bad0573e3c2f233bb3d421465e68fb77468bf448eb33d4cc79058d05a753f",
+        "diffuse_texture_path": "Materials/Fabric/textures/Fabric_Ripstop_Woven_diffuse.jpg",
+        "diffuse_texture_sha256": "e35f5b67d87262ae7f9b22d33ae12c6572282427b6c96e09c6c13625e06e0e45",
+        "diffuse_texture_bytes": 1206189
+      },
+      {
+        "id": "Fabric_Wool_Fuzzy",
+        "material_path": "Materials/Fabric/Fabric_Wool_Fuzzy.usda",
+        "material_sha256": "10fdbb241e6415e045f916bc4fa7a0cd5b3f2e7d36554a3d8f31464c8c021bcc",
+        "diffuse_texture_path": "Materials/Fabric/textures/Fabric_Wool_Fuzzy_diffuse.jpg",
+        "diffuse_texture_sha256": "1f0bc62db2d98809dbf8e3ceae48a7e8d4ea36e31a8f5ee5a7c81b2938c49f02",
+        "diffuse_texture_bytes": 908267
+      }
+    ],
+    "limitations": [
+      "Only the declared base-color diffuse JPEG is used.",
+      "Normal, roughness, weight, fuzz, and other OpenPBR/MaterialX channels are not evaluated.",
+      "Upstream UV tiling and offset controls are not applied; MuJoCo geom UVs are used unchanged.",
+      "This is an albedo appearance approximation, not a full USD material import.",
+      "No mass, friction, restitution, stiffness, damping, or other physics values are inferred or changed."
+    ]
+  },
+  "robot_asset_provenance": {
+    "profile": "piper",
+    "repository": "https://github.com/google-deepmind/mujoco_menagerie",
+    "commit": "0059d4335f8156206f63a35662313385f7ad6d74",
+    "files_verified": 90,
+    "bytes_verified": 34562302,
+    "lock_sha256": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+    "simulation_asset_license": "MIT"
+  },
+  "pixel_fixture": "One static supported rigid cube per appearance; not a video/task-success test.",
+  "source_sha256": {
+    "material_appearance_benchmark.py": "96dff1233131162ba9ad497e790798bfdc02336a1e821d46db7fa487c8acc5fe",
+    "material_appearance.py": "e7bd6c4a6b7ad7961dbc09f9be9f12483d90c7af5920b80261e4094ced62cb5a",
+    "asset_library.py": "347bfdeb61e22eb3f65e317c18f94d3b2076d05def77630ebbb6e7dde427c2a7",
+    "asset_catalog.json": "592f363389a96fef7f9223737aa72a2f1a74f400238924bf6790ec5bfd3302b7",
+    "robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d",
+    "robot_profiles.lock.json": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+    "reference_sim.py": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8",
+    "sensor_goal_observers.py": "53e96c99ffae058c701c9ccc0b5339317262909637acc14b351bec9e6cca99f7",
+    "video_goal_bridge.py": "c7794ff3fd18876774e8aaad425ba93ff798a84355b27216d9d51c33f610441a",
+    "footage_data.py": "c54828b712afb1c7e89dc764b34dec1fe1ab28517c3ec589ba0977a2146c450d"
+  },
+  "platform": {
+    "os": "macOS-26.5.2-arm64-arm-64bit",
+    "numpy": "2.5.3",
+    "mujoco": "3.15.0"
+  },
+  "rules": "Original plus all selected appearances count; failures remain. No outcome-based replacement.",
+  "physical_properties": "Keep original authored mass/friction/inertia/collision/contact settings. No material-name-to-physics mapping."
+}

@@ -1,0 +1,38 @@
+{
+  "appearance_kind": "diffuse_albedo_approximation",
+  "limitations": [
+    "Only the declared base-color diffuse JPEG is used.",
+    "Normal, roughness, weight, fuzz, and other OpenPBR/MaterialX channels are not evaluated.",
+    "Upstream UV tiling and offset controls are not applied; MuJoCo geom UVs are used unchanged.",
+    "This is an albedo appearance approximation, not a full USD material import.",
+    "No mass, friction, restitution, stiffness, damping, or other physics values are inferred or changed."
+  ],
+  "material_id": "Fabric_Cotton_White",
+  "schema": "dvidia.material-appearance/v1",
+  "source": {
+    "archive_sha256": "a68ca7376ed4abd6160ff7fed234cd1012bded73fd17f1588adcd34a91fe7d42",
+    "diffuse_texture_bytes": 780912,
+    "diffuse_texture_path": "Materials/Fabric/textures/Fabric_Cotton_White_diffuse.jpg",
+    "diffuse_texture_sha256": "f70cb4a86a4e4c835c2ef92387b85e816f0df4da8ec9cbc7b6d8b04f5dfb04ff",
+    "license": "MIT-0",
+    "material_path": "Materials/Fabric/Fabric_Cotton_White.usda",
+    "material_sha256": "aa3b037b3faac8291828acf85ff235547bf31a8842cad506f7e9e4b02ccc019c",
+    "release": "v0.2.0",
+    "release_url": "https://github.com/NVIDIA-Omniverse/PhysicalAI-SimReady-Materials/releases/tag/v0.2.0",
+    "repository": "NVIDIA-Omniverse/PhysicalAI-SimReady-Materials",
+    "source_sha": "8f80fbd"
+  },
+  "texture": {
+    "channels": 3,
+    "height": 256,
+    "pixel_format": "RGB24",
+    "png_bytes": 28838,
+    "png_path": "texture.png",
+    "png_sha256": "8c14ae2065d0d50e545be6fba8903a0b577414047e0640a4498827104fe548fe",
+    "resize_method": "FFmpeg bilinear exact-square resize",
+    "rgb_bytes": 196608,
+    "rgb_path": "texture.rgb",
+    "rgb_sha256": "d1f3afe3256dc133fdad8fb3adbf66e3526e5706c36893a9ac350dc75044e7f0",
+    "width": 256
+  }
+}

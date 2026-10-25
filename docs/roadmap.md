@@ -1,7 +1,24 @@
 # Execution map: footage to installable skills
 
-Working map, updated 14 October 2026. This is the team's sequence of builds and evidence
+Working map, updated 25 October 2026. This is the team's sequence of builds and evidence
 gates. A completed software component does not establish robot competence.
+
+## Latest bounded milestones
+
+The [persisted video-goal pilot](../benchmarks/video-goal-install-v01-20261025/README.md)
+connects four synthetic videos to reloadable PiPER simulation candidates. Across
+two new starts each, installed goals complete 6/8 intended tasks; oracle goals
+complete 8/8, and shuffled/open-jaw controls 0/8 each. Actual demonstrated
+endpoints are replayed in 8/8 cases, showing why copying a demonstration's error
+must remain distinct from task completion. No motor model is trained.
+
+The [NVIDIA appearance pilot](../benchmarks/nvidia-material-appearance-v01-20261025/README.md)
+adds five fabric textures without changing compiled mechanics or sampled native
+trajectories (6/6 cases). Four fabric appearances defeat the green-only observer.
+The next implementation target is selected-object grounding across appearance
+changes, followed by synchronized robot action data and a second qualified task
+adapter. See [ordered evidence gates](video-to-skill-milestones.md) and
+[SimReady Central asset findings](nvidia-simready-integration-v01.md).
 
 ## The product loop
 

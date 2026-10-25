@@ -1,0 +1,38 @@
+{
+  "appearance_kind": "diffuse_albedo_approximation",
+  "limitations": [
+    "Only the declared base-color diffuse JPEG is used.",
+    "Normal, roughness, weight, fuzz, and other OpenPBR/MaterialX channels are not evaluated.",
+    "Upstream UV tiling and offset controls are not applied; MuJoCo geom UVs are used unchanged.",
+    "This is an albedo appearance approximation, not a full USD material import.",
+    "No mass, friction, restitution, stiffness, damping, or other physics values are inferred or changed."
+  ],
+  "material_id": "Fabric_Polyester_Honeycomb_Green",
+  "schema": "dvidia.material-appearance/v1",
+  "source": {
+    "archive_sha256": "a68ca7376ed4abd6160ff7fed234cd1012bded73fd17f1588adcd34a91fe7d42",
+    "diffuse_texture_bytes": 1029618,
+    "diffuse_texture_path": "Materials/Fabric/textures/Fabric_Polyester_Honeycomb_Green_diffuse.jpg",
+    "diffuse_texture_sha256": "f98c2827cff7848ace9d5092cbac7775c638da00e3ccdaa92cc4f70ddfa66ba1",
+    "license": "MIT-0",
+    "material_path": "Materials/Fabric/Fabric_Polyester_Honeycomb_Green.usda",
+    "material_sha256": "8bdc7c11559515e3a8d389554987e261dbc81d085ed9cfc8fa2536a29212ef6d",
+    "release": "v0.2.0",
+    "release_url": "https://github.com/NVIDIA-Omniverse/PhysicalAI-SimReady-Materials/releases/tag/v0.2.0",
+    "repository": "NVIDIA-Omniverse/PhysicalAI-SimReady-Materials",
+    "source_sha": "8f80fbd"
+  },
+  "texture": {
+    "channels": 3,
+    "height": 256,
+    "pixel_format": "RGB24",
+    "png_bytes": 87032,
+    "png_path": "texture.png",
+    "png_sha256": "ab3476bcec96c80fe0fc7c293d8ab8e9dab909aa17cbfd857aa5b2fe883450d1",
+    "resize_method": "FFmpeg bilinear exact-square resize",
+    "rgb_bytes": 196608,
+    "rgb_path": "texture.rgb",
+    "rgb_sha256": "e6922170f64b619c3a0612e8b1a5ac648686917ee1c962b7d25c6187db60904f",
+    "width": 256
+  }
+}

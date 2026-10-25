@@ -1,0 +1,38 @@
+{
+  "appearance_kind": "diffuse_albedo_approximation",
+  "limitations": [
+    "Only the declared base-color diffuse JPEG is used.",
+    "Normal, roughness, weight, fuzz, and other OpenPBR/MaterialX channels are not evaluated.",
+    "Upstream UV tiling and offset controls are not applied; MuJoCo geom UVs are used unchanged.",
+    "This is an albedo appearance approximation, not a full USD material import.",
+    "No mass, friction, restitution, stiffness, damping, or other physics values are inferred or changed."
+  ],
+  "material_id": "Fabric_Canvas",
+  "schema": "dvidia.material-appearance/v1",
+  "source": {
+    "archive_sha256": "a68ca7376ed4abd6160ff7fed234cd1012bded73fd17f1588adcd34a91fe7d42",
+    "diffuse_texture_bytes": 670133,
+    "diffuse_texture_path": "Materials/Fabric/textures/Fabric_Canvas_diffuse.jpg",
+    "diffuse_texture_sha256": "f1bb8c01b8c624a09f44249979716483579cb0e6081090ad17d07e4324d8d448",
+    "license": "MIT-0",
+    "material_path": "Materials/Fabric/Fabric_Canvas.usda",
+    "material_sha256": "e14d7eece870f13afec9fcc83e2041977037b370a80cac117499a59209f341ab",
+    "release": "v0.2.0",
+    "release_url": "https://github.com/NVIDIA-Omniverse/PhysicalAI-SimReady-Materials/releases/tag/v0.2.0",
+    "repository": "NVIDIA-Omniverse/PhysicalAI-SimReady-Materials",
+    "source_sha": "8f80fbd"
+  },
+  "texture": {
+    "channels": 3,
+    "height": 256,
+    "pixel_format": "RGB24",
+    "png_bytes": 57974,
+    "png_path": "texture.png",
+    "png_sha256": "f62a57d56236da3c96d3da172c5a5547348f00d8a20dc9ae78a1c6cdd81f88ef",
+    "resize_method": "FFmpeg bilinear exact-square resize",
+    "rgb_bytes": 196608,
+    "rgb_path": "texture.rgb",
+    "rgb_sha256": "b766e18909411ddbe754e2b05797ce7eb398c1f3ec2e6c0a804c7bea7528d2ec",
+    "width": 256
+  }
+}

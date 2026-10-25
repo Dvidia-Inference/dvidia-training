@@ -97,7 +97,7 @@ def _robot_spec(robot, assets, dt):
     return spec
 
 
-def build_scene(robot: str, assets, shoe_ids=None, timestep=.002):
+def build_scene(robot: str, assets, shoe_ids=None, timestep=.002, *, appearance=None):
     """Build a native MuJoCo model from one pinned robot and up to six shoe proxies.
 
     Shoes are free rigid bodies with gravity and collidable box/ellipsoid geometry.
@@ -131,6 +131,15 @@ def build_scene(robot: str, assets, shoe_ids=None, timestep=.002):
                 contype=1, conaffinity=1, friction=friction,
                 priority=contact["priority"], condim=contact["condim"],
                 solref=contact["solref"], solimp=contact["solimp"])
+    if appearance is not None:
+        # A separate, local appearance bundle cannot override catalog mechanics.
+        # Scene-v1 descriptors do not capture this optional visual layer; callers
+        # must retain its provenance alongside their render/experiment receipt.
+        from .material_appearance import apply_to_spec
+        upper_geoms = ["shoe_" + identifier.replace("-", "_") + "_" + piece["name"]
+                       for identifier in identifiers for piece in lookup[identifier]["geometry"]
+                       if piece["name"] != "sole"]
+        apply_to_spec(spec, appearance, upper_geoms)
     model = spec.compile()
     expected = next(item for item in collection["robots"] if item["id"] == robot)["expected_dimensions"]
     dimensions = (expected["nq"] + 7 * len(identifiers), expected["nv"] + 6 * len(identifiers),

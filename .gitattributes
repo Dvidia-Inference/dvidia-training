@@ -3,3 +3,5 @@ src/dvidia_training/reference_replay.bundle.js linguist-generated=true -diff
 src/dvidia_training/workstation.bundle.js linguist-generated=true -diff
 src/dvidia_training/workstation_worker.bundle.js linguist-generated=true -diff
 src/dvidia_training/mujoco.wasm binary
+# Preserve exact NVIDIA metadata bytes, including upstream trailing blank lines.
+benchmarks/nvidia-material-appearance-v01-20261025/central-metadata/*.usda -text -whitespace

@@ -1,0 +1,186 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary SimReady_Metadata = {
+            dictionary Variants = {
+                dictionary Physics = {
+                    dictionary MuJoCo = {
+                        string activateOption = "Enabled"
+                        string prim = "/RootNode"
+                        string variantSetName = "MuJoCo"
+                    }
+                    dictionary Newton = {
+                        string activateOption = "Enabled"
+                        string prim = "/RootNode"
+                        string variantSetName = "Newton"
+                    }
+                    dictionary PhysX = {
+                        string activateOption = "Enabled"
+                        string prim = "/RootNode"
+                        string variantSetName = "PhysX"
+                    }
+                }
+            }
+            string asset_location = "simready_content\\common_assets\\props_hospital\\bottle_laboratory_a01\\simready_physx_usd\\sm_bottle_laboratory_a01_01.usd"
+            string asset_type = "prop"
+            string uuid = "721cc04b-c214-4fcc-acf4-3f2f8114dcc7"
+            dictionary validation = {
+                string profile = "Robotics-Prop"
+                string profile_version = "3.1.0"
+                dictionary validated_features = {
+                    dictionary "2026-04-01" = {
+                        dictionary FET000_CORE = {
+                            string dependencies = "[]"
+                            bool passed = 1
+                            string version = "0.1.0"
+                        }
+                        dictionary FET001_BASE_NEUTRAL = {
+                            string dependencies = "[]"
+                            string "failing requirements" = "['AA.001']"
+                            bool passed = 0
+                            string version = "0.1.0"
+                        }
+                        dictionary FET003_BASE_NEUTRAL = {
+                            string dependencies = "[]"
+                            bool passed = 1
+                            string version = "0.1.0"
+                        }
+                        dictionary FET003_BASE_PHYSX = {
+                            string dependencies = "[{'FET003_BASE_NEUTRAL': {'version': '0.1.0'}}]"
+                            bool passed = 1
+                            string version = "0.1.0"
+                        }
+                        dictionary FET004_BASE_NEUTRAL = {
+                            string dependencies = "[{'FET003_BASE_NEUTRAL': {'version': '0.1.0'}}]"
+                            bool passed = 1
+                            string version = "0.1.0"
+                        }
+                        dictionary FET004_BASE_PHYSX = {
+                            string dependencies = "[{'FET003_BASE_PHYSX': {'version': '0.1.0'}}, {'FET004_BASE_NEUTRAL': {'version': '0.1.0'}}]"
+                            bool passed = 1
+                            string version = "0.1.0"
+                        }
+                        dictionary FET005_BASE_NEUTRAL = {
+                            string dependencies = "[]"
+                            bool passed = 1
+                            string version = "0.1.0"
+                        }
+                        dictionary FET006_BASE_MDL = {
+                            string dependencies = "[]"
+                            string "failing requirements" = "['VM.MDL.001']"
+                            bool passed = 0
+                            string version = "0.1.0"
+                        }
+                    }
+                }
+            }
+        }
+        string asset_dir = "simready_content/common_assets/props_hospital/bottle_laboratory_a01"
+        string asset_name = "bottle_laboratory_a01"
+        string asset_type = "prop"
+        string profile = "Prop-Robotics-Neutral"
+        string source_file = "../simready_usd/sm_bottle_laboratory_a01_01.usd"
+        string usd_date_generated = "2026-04-01 10:20:57"
+        bool used_dsrs_exporter = 1
+    }
+    defaultPrim = "RootNode"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+over "RootNode"
+{
+    over "Geometry"
+    {
+        over "cap_01_obj_00" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI"]
+        )
+        {
+        }
+
+        over "part_01_obj_00" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI"]
+        )
+        {
+        }
+
+        over "body_01_obj_00" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI"]
+        )
+        {
+        }
+    }
+
+    over "PhysicsMaterials"
+    {
+        over "physics_mat_m_opaque__plastic__blue_a01" (
+            prepend apiSchemas = ["PhysicsMaterialAPI"]
+        )
+        {
+            float physics:density = 950
+            float physics:dynamicFriction = 0.4
+            float physics:restitution = 0.4
+            float physics:staticFriction = 0.4
+        }
+
+        over "physics_mat_m_opaque__plastic__green_a01" (
+            prepend apiSchemas = ["PhysicsMaterialAPI"]
+        )
+        {
+            float physics:density = 950
+            float physics:dynamicFriction = 0.4
+            float physics:restitution = 0.4
+            float physics:staticFriction = 0.4
+        }
+
+        over "physics_mat_m_opaque__plastic__gray_a01" (
+            prepend apiSchemas = ["PhysicsMaterialAPI"]
+        )
+        {
+            float physics:density = 950
+            float physics:dynamicFriction = 0.4
+            float physics:restitution = 0.4
+            float physics:staticFriction = 0.4
+        }
+
+        over "physics_mat_m_trans__glass__clear_a01" (
+            prepend apiSchemas = ["PhysicsMaterialAPI"]
+        )
+        {
+            float physics:density = 2500
+            float physics:dynamicFriction = 0.4
+            float physics:restitution = 0.05
+            float physics:staticFriction = 0.4
+        }
+    }
+
+    over "Joints"
+    {
+        def PhysicsFixedJoint "joint_part_01_joint_00"
+        {
+            custom rel physics:body0
+            prepend rel physics:body0 = </RootNode/Geometry/body_01_obj_00/body_01_mesh_00>
+            custom rel physics:body1
+            prepend rel physics:body1 = </RootNode/Geometry/part_01_obj_00/part_01_mesh_00>
+            float physics:breakForce = inf
+            float physics:breakTorque = inf
+            point3f physics:localPos0 = (0.011210179, 0.004325529, 0.08474177)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+        }
+
+        def PhysicsFixedJoint "joint_cap_01_joint_00"
+        {
+            custom rel physics:body0
+            prepend rel physics:body0 = </RootNode/Geometry/body_01_obj_00/body_01_mesh_00>
+            custom rel physics:body1
+            prepend rel physics:body1 = </RootNode/Geometry/cap_01_obj_00/cap_01_mesh_00>
+            float physics:breakForce = inf
+            float physics:breakTorque = inf
+            point3f physics:localPos0 = (8.827213e-9, 1.413313e-9, 0.13598546)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+        }
+    }
+}
+
