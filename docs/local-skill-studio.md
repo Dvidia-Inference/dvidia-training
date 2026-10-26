@@ -2,18 +2,19 @@
 
 Skill Studio adds a small browser interface to the same video-goal commands used
 in Terminal. It is ready for **local research use with the documented PiPER
-green-block task**. It is not a production integration for arbitrary platform
-videos, a learned motor policy, or a hardware controller.
+green-block task**. The [Skillspace handoff](skillspace-local-handoff.md) opens
+an explicitly exported account video. It does not turn arbitrary platform
+videos into a learned motor policy or control physical hardware.
 
 ## Install and launch
 
-Use the [experimental installer](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/skill-studio-v0.1-alpha.1)
+Use the [experimental installer](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/skill-studio-v0.1-alpha.2)
 with Python 3.12+ and FFmpeg/ffprobe on PATH. No source checkout or Git is required:
 
 ```sh
 python -m venv .venv
 source .venv/bin/activate
-python -m pip install 'dvidia-training[arm] @ https://github.com/Dvidia-Inference/dvidia-training/releases/download/skill-studio-v0.1-alpha.1/dvidia_training-0.1.0-py3-none-any.whl'
+python -m pip install 'dvidia-training[arm] @ https://github.com/Dvidia-Inference/dvidia-training/releases/download/skill-studio-v0.1-alpha.2/dvidia_training-0.1.0-py3-none-any.whl'
 dvidia-skill-studio --fetch-assets
 ```
 
@@ -26,9 +27,8 @@ launches can omit that flag and operate offline:
 dvidia-skill-studio
 ```
 
-The release includes `SHA256SUMS`. The tested wheel's SHA-256 is
-`c793cb693cd9bac3f0f33c86b33e6f94fecfe1825e7ac2a2dacc0347c4b473c3`.
-For source development, check out `feat/local-skill-studio-v01` and use
+The release includes `SHA256SUMS` for its exact installer bytes.
+For source development, check out `feat/skillspace-local-handoff-v01` and use
 `python -m pip install '.[arm]'` in that checkout instead.
 
 Open `http://127.0.0.1:8290/`. The default workspace is `./dvidia-skills`.
@@ -69,8 +69,8 @@ front end is one HTML/CSS/JavaScript file with system fonts and no framework,
 CDN, telemetry or browser build step. Video uploads stream to disk in bounded
 chunks; native video previews support HTTP ranges. Polling runs while a worker
 job is active and pauses in a hidden tab. Candidate export is roughly 22 KB for
-the included example and includes no model weights. The measured wheel for this
-tested build is 4,850,292 bytes; the UI is under 36 KiB before HTTP compression.
+the included example and includes no model weights. The UI is under 36 KiB before HTTP compression; release checks record the exact
+wheel size and digest.
 
 Requirements are Python 3.12+, NumPy 2.5.3, MuJoCo 3.15.0 and FFmpeg/ffprobe.
 No GPU, CUDA, cloud key or account is required. The wheel and pinned dependencies
@@ -80,23 +80,18 @@ RAM or CPU minimum certification; Windows/Linux and offline provisioning still
 need their own install checks. The desktop/mobile layout check is a browser
 test, not native-mobile support.
 
-## Platform integration boundary
+## Platform handoff
 
-DVIDIA's account-owned video detail under `/videos?tab=mine` is the appropriate
-entry point. Its same-origin contribution-video route enforces ownership; keep
-that authorization in the platform. A first integration can provide an explicit
-authorized download plus this local setup guide. Users select the local clip and
-its camera calibration. Offer this experimentally for compatible captures; most
-platform footage does not yet satisfy the green-object/orthographic contract.
+The website's **Run locally** action exports one owned saved video into the
+[bounded video-source package](skillspace-local-handoff.md). Choose or drop the
+ZIP in this UI, or pass it with `--import`. Skillspace identity and video bytes
+travel together. The current platform does not supply camera calibration;
+choose the JSON for that capture before creating a simulation candidate.
 
-The local service intentionally rejects other origins, does not accept platform
-cookies/tokens, and cannot be embedded as a hosted iframe. Do not loosen those
-checks to make a website call localhost. A future bridge needs an explicit
-consented export bound to the contribution ID/revision, video bytes/hash,
-calibration and permission to process locally. That contract is **not implemented**
-by this alpha. A hosted version would instead wrap the same Python candidate API
-in the platform's authenticated, resource-limited job service, with authorized
-artifact access. There is no production platform change in this release.
+The local service intentionally rejects other origins and does not accept
+platform cookies/tokens or remote URLs. The website never posts video bytes to
+localhost, and the local UI is not a hosted iframe. A hosted job service and
+direct robot control remain separate integrations.
 
 The UI's completion result is scored against the **detected goal**, not a
 separately verified human intention. The [paired benchmark](../benchmarks/video-goal-install-v01-20261025/README.md)

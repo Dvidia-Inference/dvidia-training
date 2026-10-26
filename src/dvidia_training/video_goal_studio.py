@@ -29,6 +29,7 @@ import zipfile
 from .footage_data import _json, VIDEO_EXTENSIONS
 from .video_goal_bridge import MAX_VIDEO_BYTES, PlanarVideoCalibration
 from .video_goal_install import FILES, MAX_MANIFEST_BYTES, MAX_PROPOSAL_BYTES, MAX_CALIBRATION_BYTES
+from .skillspace_video import SOURCE_PACKAGE_LIMIT, import_skillspace_video, inspect_skillspace_video
 
 JSON_LIMIT = 32 * 1024
 BUNDLE_LIMIT = 3 * 1024 * 1024
@@ -147,6 +148,9 @@ class VideoGoalStudioServer(ThreadingHTTPServer):
             if job['kind'] == 'create':
                 from .video_goal_install import load_candidate
                 manifest = load_candidate(job['output'])['manifest']
+                self.validate_source()
+                if self.source['skillspace'] and manifest['video']['sha256'] != self.source['skillspace']['video_sha256']:
+                    raise ValueError('The candidate does not match the imported Skillspace video. Import it again.')
                 candidate = {'id': manifest['candidate_id'], 'directory': job['output'], 'manifest': manifest}
                 self.candidates[candidate['id']] = self.candidate = candidate
                 # Restore only the calibration explicitly supplied for this
@@ -174,7 +178,7 @@ class VideoGoalStudioServer(ThreadingHTTPServer):
             if not self.asset_state['ready'] and time.monotonic()-self.assets_checked_at >= 3.:
                 self.refresh_assets()
             source = None if self.source is None else {key: self.source[key] for key in
-                ('id', 'name', 'size_bytes', 'media_url', 'sample', 'calibration')}
+                ('id', 'name', 'size_bytes', 'media_url', 'sample', 'calibration', 'skillspace')}
             candidate = None if self.candidate is None else {
                 'id': self.candidate['id'], 'goal_xy_m': self.candidate['manifest']['goal_xy_m'],
                 'video_sha256': self.candidate['manifest']['video']['sha256'],
@@ -183,7 +187,8 @@ class VideoGoalStudioServer(ThreadingHTTPServer):
             job = None if self.job is None else {key: self.job[key] for key in
                 ('id', 'kind', 'status', 'error', 'result')}
             if job is not None: job['elapsed_s'] = (self.job.get('finished') or time.monotonic())-self.job['started']
-            return {'profile': 'piper', 'limits': {'video_bytes': MAX_VIDEO_BYTES},
+            return {'profile': 'piper', 'limits': {'video_bytes': MAX_VIDEO_BYTES,
+                    'source_package_bytes': SOURCE_PACKAGE_LIMIT},
                 'assets': dict(self.asset_state), 'example': {'available': self.example_available()},
                 'source': source, 'candidate': candidate, 'job': job}
 
@@ -195,13 +200,42 @@ class VideoGoalStudioServer(ThreadingHTTPServer):
         root = Path(__file__).parent
         return (root/'video_goal_example.mp4').is_file() and (root/'video_goal_example.json').is_file()
 
-    def register_source(self, path, name, *, sample=False, calibration=None):
+    def register_source(self, path, name, *, sample=False, calibration=None, skillspace=None):
         identity = path.parent.name
         self.source = {'id': identity, 'path': path, 'name': name,
             'size_bytes': path.stat().st_size, 'media_url': '/media/'+identity,
-            'sample': sample, 'calibration': calibration}
+            'sample': sample, 'calibration': calibration, 'skillspace': skillspace,
+            'file_signature': self.file_signature(path)}
         self.sources[identity] = self.source
         self.candidate = self.job = None
+
+    @staticmethod
+    def file_signature(path):
+        info = path.stat()
+        if path.is_symlink() or not path.is_file(): raise ValueError('Choose a regular local video file.')
+        return (info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns, info.st_ctime_ns)
+
+    def validate_source(self, *, verify_hash=True):
+        source = self.source
+        if source is None: raise ValueError('Choose the source video again.')
+        if self.file_signature(source['path']) != source['file_signature']:
+            raise ValueError('Local video changed. Import or upload it again before creating a candidate.')
+        if verify_hash and source['skillspace']:
+            manifest = inspect_skillspace_video(source['path'].parent)
+            if (manifest['video']['sha256'] != source['skillspace']['video_sha256']
+                    or manifest['contribution'] != {key: source['skillspace'][key] for key in
+                        ('id', 'revision', 'skillspace_id', 'task_title')}):
+                raise ValueError('Local Skillspace source changed. Import the package again.')
+
+    def import_video(self, package):
+        """Open an explicit local export without contacting the platform."""
+        with self.lock:
+            self.idle()
+            output = self.directory/'uploads'/uuid.uuid4().hex
+            manifest = import_skillspace_video(package, output)
+            self.register_source(output/manifest['video']['filename'], manifest['video']['original_name'],
+                skillspace={**manifest['contribution'], 'exported_at': manifest['exported_at'],
+                            'video_sha256': manifest['video']['sha256']})
 
     def example(self):
         with self.lock:
@@ -225,6 +259,7 @@ class VideoGoalStudioServer(ThreadingHTTPServer):
                     raise ValueError('Supply a source and its camera calibration.')
                 if self.source is None or payload['source_id'] != self.source['id']:
                     raise ValueError('Choose the current source video.')
+                self.validate_source()
                 source = self.source['path']; calibration = _calibration(payload['calibration'])
                 object_xy = None; seed = 0
                 self.candidate = None
@@ -313,7 +348,7 @@ class VideoGoalStudioHandler(BaseHTTPRequestHandler):
             raise ValueError('No such source in this local session.')
         source = self.server.sources[identity]
         path = source['path']; size = path.stat().st_size
-        if path.is_symlink() or not path.is_file() or size != source['size_bytes']:
+        if self.server.file_signature(path) != source['file_signature']:
             raise ValueError('Local video changed; upload it again.')
         start, end, status = 0, size-1, 200
         requested = self.headers.get('Range')
@@ -405,6 +440,18 @@ class VideoGoalStudioHandler(BaseHTTPRequestHandler):
                     candidate = {'id': manifest['candidate_id'], 'directory': output, 'manifest': manifest}
                     self.server.candidates[candidate['id']] = self.server.candidate = candidate
                     self.server.source = self.server.job = None
+            elif path == '/api/import-video':
+                length = self.length('application/zip', SOURCE_PACKAGE_LIMIT)
+                # Stream to a private temporary file. The offline importer then
+                # checks names, manifest, size and source digest before adoption.
+                with tempfile.NamedTemporaryFile(dir=self.server.directory, suffix='.zip') as package:
+                    remaining = length
+                    while remaining:
+                        data = self.rfile.read(min(64*1024, remaining))
+                        if not data: raise ValueError('Incomplete video package upload.')
+                        package.write(data); remaining -= len(data)
+                    package.flush()
+                    self.server.import_video(Path(package.name))
             elif path == '/api/example':
                 if _json(self.body('application/json', JSON_LIMIT)) != {}: raise ValueError('Example takes no arguments.')
                 self.server.example()
@@ -422,6 +469,8 @@ def main(argv=None):
     parser.add_argument('--assets', type=Path)
     parser.add_argument('--port', type=int, default=8290)
     parser.add_argument('--fetch-assets', action='store_true', help='explicitly download pinned public PiPER assets before starting')
+    parser.add_argument('--import', dest='source_package', type=Path,
+                        help='open a downloaded DVIDIA video package in the local studio')
     args = parser.parse_args(argv)
     if not 1 <= args.port <= 65535: parser.error('Port must be between 1 and 65535.')
     if args.fetch_assets:
@@ -429,6 +478,9 @@ def main(argv=None):
         try: provision_assets(assets)
         except (ValueError, OSError) as exc: parser.exit(2, 'Asset setup: '+str(exc)+'\n')
     with VideoGoalStudioServer(('127.0.0.1', args.port), args.directory, args.assets) as server:
+        if args.source_package:
+            try: server.import_video(args.source_package)
+            except (ValueError, OSError) as exc: parser.exit(2, 'Video package: '+str(exc)+'\n')
         print(f'DVIDIA Skill Studio: http://127.0.0.1:{server.server_port}', flush=True)
         print('Local research alpha · PiPER simulation · no motor policy trained', flush=True)
         try: server.serve_forever()

@@ -1,4 +1,5 @@
 from dataclasses import asdict
+from hashlib import sha256
 import http.client
 import io
 import json
@@ -58,6 +59,23 @@ class StudioHTTPTests(unittest.TestCase):
         state=self.wait()
         self.assertEqual(state['job']['status'],'complete',state['job']['error'])
         return state
+
+    def source_package(self, *, corrupt=False):
+        video=Path(studio.__file__).with_name('video_goal_example.mp4').read_bytes()
+        manifest={
+            'schema':'dvidia.skillspace-video.v1','platform_origin':'https://dvidia.org',
+            'exported_at':'2026-10-25T20:00:00.000Z',
+            'contribution':{'id':'55155155-1551-4551-8551-551551551551',
+                'revision':'2026-10-25T19:00:00.000Z', 'skillspace_id':'clothing-folding',
+                'task_title':'Synthetic block placement'},
+            'video':{'filename':'video.mp4','original_name':'block.mp4',
+                'content_type':'video/mp4','bytes':len(video),'sha256':sha256(video).hexdigest()},
+            'processing':{'scope':'local-only','accepted':True},'calibration':None}
+        raw=io.BytesIO()
+        with zipfile.ZipFile(raw,'w',compression=zipfile.ZIP_STORED) as archive:
+            archive.writestr('manifest.json',json.dumps(manifest))
+            archive.writestr('video.mp4',video if not corrupt else b'x'*len(video))
+        return raw.getvalue(),manifest
 
     def test_same_origin_controls_and_no_filesystem_route(self):
         self.assertEqual(self.request('/api/state',method='GET',headers={'Host':'attacker.invalid'})[0],403)
@@ -140,6 +158,68 @@ class StudioHTTPTests(unittest.TestCase):
             self.assertEqual(self.request('/api/create',payload)[0],400)
         finally: event.set()
         self.assertEqual(self.wait()['job']['status'],'complete')
+
+    def test_skillspace_package_opens_source_and_requires_its_own_calibration(self):
+        self.create()
+        raw,manifest=self.source_package()
+        status, _, state=self.request('/api/import-video',raw=raw,headers={'Content-Type':'application/zip'})
+        self.assertEqual(status,200,state)
+        self.assertIsNone(state['candidate'])
+        self.assertIsNone(state['job'])
+        source=state['source']
+        self.assertEqual(source['name'],'block.mp4')
+        self.assertFalse(source['sample'])
+        self.assertIsNone(source['calibration'])
+        self.assertEqual(source['skillspace']['id'],manifest['contribution']['id'])
+        self.assertEqual(source['skillspace']['video_sha256'],manifest['video']['sha256'])
+        status,_,video=self.request(source['media_url'],method='GET')
+        self.assertEqual(status,200)
+        self.assertEqual(sha256(video).hexdigest(),manifest['video']['sha256'])
+        self.assertEqual(self.request('/api/create',dict(source_id=source['id'],calibration={}))[0],400)
+        self.request('/api/create',dict(source_id=source['id'],calibration=asdict(PlanarVideoCalibration())))
+        self.assertEqual(self.wait()['job']['status'],'complete')
+
+    def test_bad_package_preserves_existing_source_and_cross_origin_is_rejected(self):
+        original=self.create()
+        raw,_=self.source_package(corrupt=True)
+        self.assertEqual(self.request('/api/import-video',raw=raw,headers={'Content-Type':'application/zip'})[0],400)
+        _,_,state=self.request('/api/state',method='GET')
+        self.assertEqual(state['source'],original['source'])
+        self.assertEqual(state['candidate'],original['candidate'])
+        self.assertEqual(self.request('/api/import-video',raw=b'x',
+            headers={'Content-Type':'application/zip','Origin':'https://dvidia.org'})[0],403)
+        self.assertFalse(list(Path(self.temp.name).rglob('*.zip')))
+
+    def test_package_import_startup_and_size_boundary(self):
+        raw,manifest=self.source_package()
+        package=Path(self.temp.name).resolve()/'selected.zip'; package.write_bytes(raw)
+        self.server.import_video(package)
+        self.assertEqual(self.server.state()['source']['skillspace']['revision'],manifest['contribution']['revision'])
+        self.assertEqual(self.request('/api/import-video',raw=b'x',headers={
+            'Content-Type':'application/zip','Content-Length':str(studio.SOURCE_PACKAGE_LIMIT+1)})[0],400)
+
+    def test_changed_imported_video_or_provenance_cannot_create_a_candidate(self):
+        raw,_=self.source_package()
+        _,_,state=self.request('/api/import-video',raw=raw,headers={'Content-Type':'application/zip'})
+        source=self.server.source
+        video=source['path']; original=video.read_bytes()
+        video.write_bytes(b'x'*len(original))
+        self.assertEqual(self.request(state['source']['media_url'],method='GET')[0],400)
+        payload=dict(source_id=source['id'],calibration=asdict(PlanarVideoCalibration()))
+        status,_,error=self.request('/api/create',payload)
+        self.assertEqual(status,400)
+        self.assertIn('changed',error['error'])
+        self.assertIsNone(self.server.candidate)
+
+        _,_,state=self.request('/api/import-video',raw=raw,headers={'Content-Type':'application/zip'})
+        source=self.server.source
+        manifest_path=source['path'].parent/'manifest.json'
+        manifest=json.loads(manifest_path.read_text())
+        manifest['contribution']['task_title']='Changed after import'
+        manifest_path.write_text(json.dumps(manifest))
+        self.assertEqual(self.request('/api/create',dict(
+            source_id=source['id'],calibration=asdict(PlanarVideoCalibration())))[0],400)
+        self.assertIsNone(self.server.candidate)
 
 
 class ImportBoundaryTests(unittest.TestCase):
