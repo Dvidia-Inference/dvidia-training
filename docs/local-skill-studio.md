@@ -7,13 +7,13 @@ videos, a learned motor policy, or a hardware controller.
 
 ## Install and launch
 
-From a checkout that includes this feature, with Python 3.12+ and FFmpeg/ffprobe
-on PATH:
+Use the [experimental installer](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/skill-studio-v0.1-alpha.1)
+with Python 3.12+ and FFmpeg/ffprobe on PATH. No source checkout or Git is required:
 
 ```sh
 python -m venv .venv
 source .venv/bin/activate
-python -m pip install '.[arm]'
+python -m pip install 'dvidia-training[arm] @ https://github.com/Dvidia-Inference/dvidia-training/releases/download/skill-studio-v0.1-alpha.1/dvidia_training-0.1.0-py3-none-any.whl'
 dvidia-skill-studio --fetch-assets
 ```
 
@@ -25,6 +25,11 @@ launches can omit that flag and operate offline:
 ```sh
 dvidia-skill-studio
 ```
+
+The release includes `SHA256SUMS`. The tested wheel's SHA-256 is
+`c793cb693cd9bac3f0f33c86b33e6f94fecfe1825e7ac2a2dacc0347c4b473c3`.
+For source development, check out `feat/local-skill-studio-v01` and use
+`python -m pip install '.[arm]'` in that checkout instead.
 
 Open `http://127.0.0.1:8290/`. The default workspace is `./dvidia-skills`.
 Choose a different directory, port or existing asset root when needed:

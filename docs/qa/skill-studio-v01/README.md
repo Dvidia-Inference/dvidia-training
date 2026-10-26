@@ -3,6 +3,10 @@
 [Checks and package digest](checks.json) · [Desktop screenshot](desktop.png) ·
 [Narrow screenshot](narrow.png) · [Setup and platform boundary](../../local-skill-studio.md)
 
+The [experimental GitHub installer](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/skill-studio-v0.1-alpha.1)
+is published. An anonymous download matched the exact size and SHA-256 of the
+wheel tested below. No platform or Hugging Face deployment is part of this release.
+
 Sixteen tests pass: eleven local HTTP/import/setup cases and five candidate
 contract cases. They include real example decoding, exact ZIP round trip,
 cross-origin/Host rejection, media ranges, failed-job isolation, source-change
