@@ -8,13 +8,13 @@ videos into a learned motor policy or control physical hardware.
 
 ## Install and launch
 
-Use the [experimental installer](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/skill-studio-v0.1-alpha.2)
+Use the [experimental installer](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/skill-studio-v0.1-alpha.3)
 with Python 3.12+ and FFmpeg/ffprobe on PATH. No source checkout or Git is required:
 
 ```sh
 python -m venv .venv
 source .venv/bin/activate
-python -m pip install 'dvidia-training[arm] @ https://github.com/Dvidia-Inference/dvidia-training/releases/download/skill-studio-v0.1-alpha.2/dvidia_training-0.1.0-py3-none-any.whl'
+python -m pip install 'dvidia-training[arm] @ https://github.com/Dvidia-Inference/dvidia-training/releases/download/skill-studio-v0.1-alpha.3/dvidia_training-0.1.0-py3-none-any.whl'
 dvidia-skill-studio --fetch-assets
 ```
 

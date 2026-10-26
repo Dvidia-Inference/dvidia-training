@@ -1,6 +1,6 @@
 {
-  "bytes": 4856074,
-  "sha256": "e0364d1c465bfe9b2fef337a1c876f1abfda51db681bb6403615d85b90ed18d6",
+  "bytes": 4856165,
+  "sha256": "df10f2f65e1f230f214ec3799eb5427abef5f5ecc29d03db383865ff19b59165",
   "source_parity": true,
   "date": "2026-10-26",
   "python_tests": {
@@ -17,7 +17,22 @@
     "wall_seconds": 4.079482208006084,
     "policy": "authored PiPER controller"
   },
-  "frontend_bytes": 36331,
+  "frontend_bytes": 36383,
   "worker_streaming_zip_imported_by_python": true,
-  "scope": "local research alpha; calibrated green proxy; no learned policy or physical robot qualification"
+  "scope": "local research alpha; calibrated green proxy; no learned policy or physical robot qualification",
+  "release_tag": "skill-studio-v0.1-alpha.3",
+  "preview_fix": {
+    "installed_html_matches_source": true,
+    "desktop_frame_and_video_css_px": [
+      657.6,
+      180
+    ],
+    "narrow_viewport_css_px": 444,
+    "narrow_frame_and_video_css_px": [
+      412.6,
+      180
+    ],
+    "horizontal_overflow": false
+  },
+  "native_note": "Controller and import/runtime Python files are unchanged from alpha2. The installed server retained its valid native result after the HTML-only update."
 }

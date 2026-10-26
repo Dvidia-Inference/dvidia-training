@@ -33,3 +33,8 @@ See [package digest and checks](checks.json), [local result](local-result.png),
 and [the handoff guide](../../skillspace-local-handoff.md). Platform publication
 and its browser acceptance are recorded separately in the private platform
 release receipt.
+
+The alpha 3 visual correction gives the preview a definite full-width grid and
+height, so the intrinsic 4:3 video fits inside the player instead of being cropped.
+The complete media controls remain visible. Measured desktop video/frame bounds
+match at about658 ×180 CSS pixels; the page has no horizontal overflow.
