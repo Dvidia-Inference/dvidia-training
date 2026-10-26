@@ -1,0 +1,21 @@
+{
+  "title": "PiPER block placement \u2014 synthetic example",
+  "creator": "DVIDIA",
+  "source": "benchmarks/video-goal-bridge-v01-20261025/evidence/layout-00.mp4",
+  "sha256": "5a79551936423b63e6db38478135b4a96b4544f6c72d2ad943607e0510596928",
+  "calibration": {
+    "width": 320,
+    "height": 240,
+    "center_xy_m": [
+      0.36,
+      0.0
+    ],
+    "vertical_span_m": 0.5,
+    "position_bound_m": 0.005,
+    "terminal_dwell_s": 0.5,
+    "maximum_terminal_spread_m": 0.005
+  },
+  "scope": "Synthetic green rigid block with a known orthographic camera. No human footage or learned policy.",
+  "license": "MIT",
+  "robot_asset_credit": "AgileX PiPER model from google-deepmind/mujoco_menagerie, MIT; pinned source in robot_profiles.lock.json"
+}

@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "Local CPU training from Skillspace footage, with optional simulation movement candidates"
 readme = "README.md"
 license = "MIT AND Apache-2.0"
-license-files = ["LICENSE", "third_party/observation-models/*LICENSE.txt", "third_party/mujoco/*.txt"]
+license-files = ["LICENSE", "third_party/observation-models/*LICENSE.txt", "third_party/mujoco/*.txt", "third_party/robot-models/*LICENSE.txt"]
 requires-python = ">=3.12"
 dependencies = ["numpy==2.5.3"]
 classifiers = [
@@ -57,9 +57,11 @@ dvidia-sensor-goal = "dvidia_training.sensor_goal_benchmark:main"
 dvidia-prerequisites = "dvidia_training.prerequisite_benchmark:main"
 dvidia-grip-benchmark = "dvidia_training.grip_benchmark:main"
 dvidia-graspability-benchmark = "dvidia_training.graspability_benchmark:main"
+dvidia-video-skill = "dvidia_training.video_goal_install:main"
+dvidia-skill-studio = "dvidia_training.video_goal_studio:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
-dvidia_training = ["*.html", "*.json", "*.js", "*.txt", "*.wasm", "LICENSE", "requirements.lock.txt"]
+dvidia_training = ["*.html", "*.json", "*.js", "*.txt", "*.wasm", "video_goal_example.mp4", "LICENSE", "requirements.lock.txt"]

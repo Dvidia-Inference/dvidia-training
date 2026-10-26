@@ -1,0 +1,84 @@
+{
+  "date": "2026-10-25",
+  "scope": "Local calibrated video-goal alpha; no learned motor policy or hardware qualification",
+  "tests": {
+    "studio_contract_http_setup": 11,
+    "candidate_compatibility": 5,
+    "failures": 0
+  },
+  "wheel": {
+    "file": "dvidia_training-0.1.0-py3-none-any.whl",
+    "bytes": 4850292,
+    "sha256": "c793cb693cd9bac3f0f33c86b33e6f94fecfe1825e7ac2a2dacc0347c4b473c3",
+    "matches_checkout": {
+      "video_goal_studio.py": true,
+      "video_goal_studio.html": true,
+      "video_goal_example.json": true,
+      "video_goal_example.mp4": true
+    }
+  },
+  "frontend": {
+    "html_bytes": 35873,
+    "external_assets": 0
+  },
+  "desktop_layout": {
+    "createTop": 659.317138671875,
+    "reviewTop": 200.1880798339844,
+    "runTop": 668.7644653320312,
+    "scrollWidth": 1359,
+    "viewport": {
+      "height": 1374,
+      "width": 1359
+    },
+    "wrap": {
+      "bottom": 1205.1214599609375,
+      "height": 1205.1214599609375,
+      "left": 119.6325225830078,
+      "right": 1239.6266632080078,
+      "top": 0,
+      "width": 1119.994140625,
+      "x": 119.6325225830078,
+      "y": 0
+    }
+  },
+  "narrow_layout": {
+    "height": 741,
+    "scrollWidth": 444,
+    "width": 444
+  },
+  "fresh_install": {
+    "python": "3.12.9",
+    "numpy": "2.5.3",
+    "mujoco": "3.15.0",
+    "cwd_outside_repository": true,
+    "cli_create": true,
+    "cli_run_valid": true,
+    "cli_run_self_success": true
+  },
+  "browser_verified": [
+    "bundled_example",
+    "normal_video_upload",
+    "missing_calibration_refused",
+    "invalid_calibration_error",
+    "create_candidate",
+    "native_simulation",
+    "candidate_download",
+    "candidate_import",
+    "import_clears_old_video_and_result",
+    "source_change_invalidates_candidate",
+    "reduced_width_without_horizontal_overflow"
+  ],
+  "installed_browser_example": {
+    "goal_error_m": 0.005,
+    "terminal_dwell_s": 5.38,
+    "simulated_seconds": 20,
+    "observed_wall_seconds": 12.76,
+    "reference": "detected video goal, not original human intention"
+  },
+  "limits": [
+    "macOS validation only; other operating systems unqualified",
+    "Measured browser width was 444 CSS px; no 320px device test claimed",
+    "Host-dependent native run timings are observations, not real-time guarantees",
+    "Hosted platform integration not implemented"
+  ]
+}

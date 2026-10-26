@@ -6,6 +6,14 @@
 
 [Recorded demo](https://huggingface.co/spaces/Dvidia/dvidia-training) · [Synthetic datasets](https://huggingface.co/datasets/Dvidia/dvidia-training-examples) · [Pilot models](https://huggingface.co/Dvidia/dvidia-training-pilot)
 
+**[Run DVIDIA Skill Studio locally](docs/local-skill-studio.md).**
+`dvidia-skill-studio --fetch-assets` opens a compact video → candidate → PiPER
+simulation workflow after installation. Try the included synthetic example,
+upload a calibrated clip, download/reopen a candidate, or use the same workflow
+through `dvidia-video-skill` in Terminal. It needs no GPU or account. This is a
+local research alpha for the documented green-block task; hosted-platform
+integration and arbitrary-video motor learning remain separate work.
+
 **[Video-to-skill evidence gates](docs/video-to-skill-milestones.md).**
 The [local installation pilot](benchmarks/video-goal-install-v01-20261025/README.md)
 saves calibrated video destinations as data-only PiPER simulation candidates and
