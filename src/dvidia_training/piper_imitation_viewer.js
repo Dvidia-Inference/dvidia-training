@@ -17,12 +17,27 @@ function localHref(href) {
   assert(typeof href === 'string' && /^[a-zA-Z0-9_.-]+(?:\/[a-zA-Z0-9_.-]+)*$/.test(href) && !href.split('/').some(p => p === '.' || p === '..'), 'Study links must stay inside the exported directory.');
   return href;
 }
+const HF_SPACE_HOST = 'dvidia-robot-simulation-lab.static.hf.space';
+const HF_VIEWER_PATH = '/learned-placement/v01/viewer/';
+const HF_BINARY_ROOT = 'https://huggingface.co/spaces/Dvidia/robot-simulation-lab/resolve/main/learned-placement/v01/viewer/';
+function studyUrl(href) {
+  const path = localHref(href);
+  const hosted = location.protocol === 'https:' && location.host === HF_SPACE_HOST && location.pathname.startsWith(HF_VIEWER_PATH);
+  // Static Spaces do not expand Git LFS pointers. The Hub resolves these
+  // public binary files; local and research exports remain self-contained.
+  return new URL(path, hosted && /\.(?:gz|bin|npz)$/.test(path) ? HF_BINARY_ROOT : location.href);
+}
+function trustedResponseUrl(final, requested) {
+  if (final.username || final.password) return false;
+  if (requested.origin === location.origin) return final.origin === location.origin;
+  if (!requested.href.startsWith(HF_BINARY_ROOT)) return false;
+  return final.href === requested.href || (final.protocol === 'https:' && final.host === 'us.aws.cdn.hf.co');
+}
 async function response(href) {
-  const requestedUrl = new URL(localHref(href), location.href);
-  const hostedHF = location.protocol === 'https:' && location.hostname.endsWith('.static.hf.space');
-  const result = await fetch(requestedUrl, {credentials: 'omit', referrerPolicy: 'no-referrer', redirect: hostedHF ? 'follow' : 'error'});
+  const requestedUrl = studyUrl(href);
+  const result = await fetch(requestedUrl, {credentials: 'omit', referrerPolicy: 'no-referrer', redirect: requestedUrl.origin === location.origin ? 'error' : 'follow'});
   const final = new URL(result.url);
-  assert(final.origin === location.origin || (hostedHF && final.protocol === 'https:' && /^(?:[a-z0-9-]+\.)*cdn\.hf\.co$/.test(final.hostname)), 'Unexpected study download origin.');
+  assert(trustedResponseUrl(final, requestedUrl), 'Unexpected study download origin.');
   assert(result.ok, `Could not load ${href} (${result.status}).`);
   return result;
 }
@@ -208,7 +223,7 @@ function evidence() {
   const details = document.createElement('details'), summary = document.createElement('summary'), list = document.createElement('ul');
   summary.textContent = `All ${metadata.all_attempts.length} attempt traces`;
   for (const item of metadata.all_attempts) {
-    const li = document.createElement('li'), a = document.createElement('a'); a.href = localHref(item.episode); a.download = ''; a.textContent = `${item.id} · ${labels[item.variant]} · ${item.score.success ? 'completed' : 'failed'} ↓`; li.append(a); list.append(li);
+    const li = document.createElement('li'), a = document.createElement('a'); a.href = studyUrl(item.episode).href; a.download = ''; a.referrerPolicy = 'no-referrer'; a.rel = 'noreferrer'; a.textContent = `${item.id} · ${labels[item.variant]} · ${item.score.success ? 'completed' : 'failed'} ↓`; li.append(a); list.append(li);
   }
   details.append(summary, list); $('selection-note').after(details);
 }
