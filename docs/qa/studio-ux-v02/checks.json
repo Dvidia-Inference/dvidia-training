@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-26",
+  "release_tag": "skill-studio-v0.1-alpha.4",
+  "wheel": {
+    "bytes": 4859776,
+    "sha256": "6f7491604ba72662a970365c9b41939c47b089dcb9fe3f4cdb3f3b7a1affb53d",
+    "source_parity": true
+  },
+  "frontend_bytes": 45142,
+  "python_tests": {
+    "passed": 30,
+    "failed": 0
+  },
+  "node_tests": {
+    "passed": 4,
+    "failed": 0
+  },
+  "installed_ui": {
+    "cwd": "outside repository",
+    "source_package_opened": true,
+    "same_source_reopened": true,
+    "new_source_geometry_blank": true,
+    "saved_mapping_imported": true,
+    "example_mapping_locked": true,
+    "connection_loss_and_reconnect": true
+  },
+  "source_ui": {
+    "manual_mapping": true,
+    "mapping_edit_blocks_run": true,
+    "empty_mapping_not_restored": true,
+    "out_of_range_error": true,
+    "stale_result_marker_download_hidden": true,
+    "exact_mapping_restore_reenables": true
+  },
+  "responsive": {
+    "observed_narrow_css_width": 444,
+    "single_column": true,
+    "horizontal_overflow": false,
+    "preview_height_css_px": 180,
+    "override_reset": true
+  },
+  "native": {
+    "goal_score": {
+      "success": true,
+      "reference_xy_m": [
+        0.3484164878397711,
+        0.07892077968526466
+      ],
+      "terminal_dwell_s": 5.380000000004124,
+      "terminal_xy_error_m": 0.005035935015901352,
+      "valid_native_physics": true,
+      "retained_transfer": true,
+      "controller_self_success": true,
+      "scoring_scope": "Native state and contact truth against fixed demonstrated task reference; unavailable to pixel inference."
+    },
+    "wall_seconds": 7.485766666941345,
+    "simulated_seconds": 20.00000000000146,
+    "receipt_sha256": "eaa625f093c051b82b3eddca8a830d0970e2dfc7f258be86018221c99e651a88",
+    "episode_sha256": "1befa35dbd342ae50fa5e40c0f34faa1488be5bc8199f5ba3736bc33741be330"
+  },
+  "scope": "synthetic planar green-block placement; authored PiPER controller; no learned policy or physical robot qualification"
+}

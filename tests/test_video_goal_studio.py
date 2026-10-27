@@ -85,6 +85,12 @@ class StudioHTTPTests(unittest.TestCase):
         _, headers, page=self.request('/',method='GET')
         self.assertIn('frame-ancestors',headers['Content-Security-Policy'])
         self.assertIn(b'video-player',page)
+        for name in ('studio-mapping.js', 'studio-ui.js'):
+            status, headers, script = self.request('/'+name, method='GET')
+            self.assertEqual(status, 200)
+            self.assertTrue(headers['Content-Type'].startswith('text/javascript'))
+            self.assertGreater(len(script), 100)
+        self.assertEqual(self.request('/../studio_ui.js', method='GET')[0], 404)
 
     def test_real_create_export_import_and_media_ranges(self):
         state=self.create(); source=state['source']; candidate=state['candidate']

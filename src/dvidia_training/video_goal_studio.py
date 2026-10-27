@@ -392,6 +392,9 @@ class VideoGoalStudioHandler(BaseHTTPRequestHandler):
             self.local()
             path = urlsplit(self.path).path
             if path == '/': return self.send(200, Path(__file__).with_name('video_goal_studio.html').read_bytes(), 'text/html; charset=utf-8')
+            scripts = {'/studio-mapping.js': 'studio_mapping.js', '/studio-ui.js': 'studio_ui.js'}
+            if path in scripts:
+                return self.send(200, Path(__file__).with_name(scripts[path]).read_bytes(), 'text/javascript; charset=utf-8')
             if path == '/api/state': return self.send(200, self.server.state())
             if path.startswith('/media/'): return self.media(path[len('/media/'):])
             match = re.fullmatch(r'/api/download/([a-f0-9]{24})\.zip', path)

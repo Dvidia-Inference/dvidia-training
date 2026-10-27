@@ -7,7 +7,7 @@
 [Recorded demo](https://huggingface.co/spaces/Dvidia/dvidia-training) · [Synthetic datasets](https://huggingface.co/datasets/Dvidia/dvidia-training-examples) · [Pilot models](https://huggingface.co/Dvidia/dvidia-training-pilot)
 
 **[Run DVIDIA Skill Studio locally](docs/local-skill-studio.md).**
-[Download the experimental installer](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/skill-studio-v0.1-alpha.3).
+[Download the experimental installer](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/skill-studio-v0.1-alpha.4).
 `dvidia-skill-studio --fetch-assets` opens a compact video → candidate → PiPER
 simulation workflow after installation. Try the included synthetic example,
 upload a calibrated clip, download/reopen a candidate, or use the same workflow
@@ -17,6 +17,10 @@ local research alpha for the documented green-block task.
 Run locally on its platform receipt, download the source ZIP, and open it here
 or with `dvidia-skillspace import-video`. Arbitrary-video motor learning remains
 research work.
+
+The latest Studio adds a camera measurement form, a proposed-goal overlay,
+stale-mapping checks and connection recovery. [Research assessment: what remains
+between visual goals and learned actions](reports/Readable%20video%20skill%20readiness.md).
 
 **[Video-to-skill evidence gates](docs/video-to-skill-milestones.md).**
 The [local installation pilot](benchmarks/video-goal-install-v01-20261025/README.md)

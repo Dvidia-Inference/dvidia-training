@@ -8,13 +8,13 @@ videos into a learned motor policy or control physical hardware.
 
 ## Install and launch
 
-Use the [experimental installer](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/skill-studio-v0.1-alpha.3)
+Use the [experimental installer](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/skill-studio-v0.1-alpha.4)
 with Python 3.12+ and FFmpeg/ffprobe on PATH. No source checkout or Git is required:
 
 ```sh
 python -m venv .venv
 source .venv/bin/activate
-python -m pip install 'dvidia-training[arm] @ https://github.com/Dvidia-Inference/dvidia-training/releases/download/skill-studio-v0.1-alpha.3/dvidia_training-0.1.0-py3-none-any.whl'
+python -m pip install 'dvidia-training[arm] @ https://github.com/Dvidia-Inference/dvidia-training/releases/download/skill-studio-v0.1-alpha.4/dvidia_training-0.1.0-py3-none-any.whl'
 dvidia-skill-studio --fetch-assets
 ```
 
@@ -39,12 +39,28 @@ dvidia-skill-studio --directory ./my-skills --assets ./robot-assets --port 8290
 ```
 
 Use the supplied synthetic example first. Its camera calibration is included.
-For an uploaded clip, select its calibration JSON; the app never silently uses
-the example camera for another video. Creation detects a bounded planar goal.
-Review it, run the PiPER simulation, and download the data-only candidate ZIP.
+For an uploaded clip, enter its measured camera mapping, or import its mapping
+JSON under **Map camera to workspace → Import or edit mapping JSON**. Image size
+comes from browser metadata when available. Image centre, visible scene height,
+and declared error have no example defaults for your footage. This alpha assumes
+a fixed top-down orthographic view with +X right and +Y up in the task frame;
+it does not estimate a camera pose or validate the supplied error bound.
+
+Choose **Check destination**, inspect the **Proposed goal** marker, and use
+**View clip ending** to compare it with the source. The marker is an endpoint
+proposal, not an object track or proof of task completion. Run the PiPER
+simulation and download the data-only candidate ZIP.
 Import that ZIP to reopen it; raw footage is not inside it. Uploaded videos and
 native attempt receipts remain in the local workspace. Sessions can reopen a
 saved candidate through Import after a server restart.
+
+Changing or clearing the mapping blocks the old candidate from running and
+hides its result, marker and download until the mapping matches again or you
+recheck it. Start coordinates and seed are under **Trial start and seed**.
+Unsupported clip size/duration is flagged before starting a worker when browser
+metadata is available; FFmpeg still performs the authoritative decoding checks.
+Use a 0.6–30 second clip, 64–640 pixels wide and 64–480 pixels high. If you resize
+a copy, supply the mapping for that copy. The app does not silently resize it.
 
 ## Terminal interface
 
@@ -65,11 +81,12 @@ See [candidate format and limits](video-goal-install-v01.md).
 ## Compute and delivery
 
 The launcher uses Python's standard HTTP server and one spawned CPU worker. The
-front end is one HTML/CSS/JavaScript file with system fonts and no framework,
+front end uses HTML/CSS and two local scripts, with system fonts and no framework,
 CDN, telemetry or browser build step. Video uploads stream to disk in bounded
 chunks; native video previews support HTTP ranges. Polling runs while a worker
-job is active and pauses in a hidden tab. Candidate export is roughly 22 KB for
-the included example and includes no model weights. The UI is under 36 KiB before HTTP compression; release checks record the exact
+job is active and pauses in a hidden tab. A lost connection stops polling and
+offers **Reconnect** to recover the service state. Candidate export is roughly 22 KB for
+the included example and includes no model weights. The UI is under 45 KiB before HTTP compression; release checks record the exact
 wheel size and digest.
 
 Requirements are Python 3.12+, NumPy 2.5.3, MuJoCo 3.15.0 and FFmpeg/ffprobe.
@@ -86,7 +103,8 @@ The website's **Run locally** action exports one owned saved video into the
 [bounded video-source package](skillspace-local-handoff.md). Choose or drop the
 ZIP in this UI, or pass it with `--import`. Skillspace identity and video bytes
 travel together. The current platform does not supply camera calibration;
-choose the JSON for that capture before creating a simulation candidate.
+enter the camera measurements or import the JSON for that capture before
+creating a simulation candidate.
 
 The local service intentionally rejects other origins and does not accept
 platform cookies/tokens or remote URLs. The website never posts video bytes to
@@ -97,3 +115,6 @@ The UI's completion result is scored against the **detected goal**, not a
 separately verified human intention. The [paired benchmark](../benchmarks/video-goal-install-v01-20261025/README.md)
 keeps those references distinct. The next research gates are color-independent
 object grounding, synchronized action data and a second qualified robot adapter.
+The [research assessment](../reports/Readable%20video%20skill%20readiness.md)
+sets out a bounded action-learning experiment and independent verification gates.
+See the [alpha 4 UX checks](qa/studio-ux-v02/README.md) for tested behavior and limits.
