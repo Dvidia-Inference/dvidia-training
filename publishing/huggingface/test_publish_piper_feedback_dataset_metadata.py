@@ -44,8 +44,7 @@ class DatasetMetadataTests(unittest.TestCase):
         self.seal = encoded(dict(schema=metadata.study.INTEGRITY_SCHEMA,
             files={name: metadata.study._receipt(raw) for name, raw in self.files.items()}))
         self.files.update({'integrity.json': self.seal,
-            metadata.CARD: metadata.study._card('dataset', self.report),
-            'docs/publication/LICENSE': self.files['LICENSE']})
+            metadata.CARD: metadata.study._card('dataset', self.report)})
         for name, raw in self.files.items():
             path = self.dataset/name; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(raw)
         self.remote = {**self.files, '.gitattributes': b'*.npz filter=lfs diff=lfs merge=lfs -text\n'}
@@ -83,6 +82,45 @@ class DatasetMetadataTests(unittest.TestCase):
         self.assertEqual(overlay['initial_dataset_commit'], self.parent)
         self.assertEqual(original, {name: (self.dataset/name).read_bytes() for name in self.files})
         self.assertEqual(tree, self.tree)
+
+    def test_only_the_derived_card_is_unsealed_and_the_root_mit_license_is_preserved(self):
+        self.assertIn('LICENSE', json.loads(self.seal)['files'])
+        self.assertTrue(self.files['LICENSE'].startswith(b'MIT License'))
+        self.assertNotIn('docs/publication/LICENSE', self.files)
+        original_license = (self.dataset/'LICENSE').read_bytes()
+        self.stage()
+        self.assertEqual((self.dataset/'LICENSE').read_bytes(), original_license)
+
+    def test_unexpected_initial_extra_is_rejected_even_with_matching_tree_and_file_count(self):
+        for name in ('docs/publication/LICENSE', 'docs/publication/unexpected.json'):
+            raw = self.files['LICENSE'] if name.endswith('LICENSE') else b'{}'
+            path = self.dataset/name; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(raw)
+            baseline = json.loads(self.baseline.read_bytes()); baseline['tree'][name] = entry(raw)
+            self.baseline.write_bytes(encoded(baseline))
+            initial = deepcopy(self.initial)
+            next(row for row in initial['repositories'] if row['repo_type'] == 'dataset')['verified_files'] += 1
+            self.receipt.write_bytes(encoded(initial))
+            with self.subTest(name=name), self.assertRaisesRegex(metadata.PublicationError, 'inventory'):
+                self.stage()
+            self.assertFalse(self.output.exists())
+            path.unlink()
+            self.baseline.write_bytes(encoded(dict(schema=metadata.BASELINE_SCHEMA, repo_id=metadata.study.DATASET_REPO,
+                repo_type='dataset', commit=self.parent, tree=self.tree)))
+            self.receipt.write_bytes(encoded(self.initial))
+
+    def test_rehashed_non_mit_root_license_is_rejected(self):
+        raw = b'Apache License Version 2.0\n'
+        (self.dataset/'LICENSE').write_bytes(raw)
+        seal = json.loads(self.seal); seal['files']['LICENSE'] = metadata.study._receipt(raw)
+        seal_raw = encoded(seal); (self.dataset/'integrity.json').write_bytes(seal_raw)
+        initial = deepcopy(self.initial); initial['source_integrity_sha256'] = sha256(seal_raw).hexdigest()
+        self.receipt.write_bytes(encoded(initial))
+        baseline = json.loads(self.baseline.read_bytes())
+        baseline['tree']['LICENSE'] = entry(raw); baseline['tree']['integrity.json'] = entry(seal_raw)
+        self.baseline.write_bytes(encoded(baseline))
+        with self.assertRaisesRegex(metadata.PublicationError, 'not MIT'):
+            self.stage()
+        self.assertFalse(self.output.exists())
 
     def test_stage_rejects_unfinished_receipt_wrong_parent_tree_license_or_counts(self):
         changes = [dict(anonymous_readback=False), dict(source_integrity_sha256='f'*64), dict(repositories=[])]

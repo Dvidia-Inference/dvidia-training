@@ -135,7 +135,7 @@ def _source(dataset, receipt_raw, parent, tree):
             name = path.relative_to(dataset).as_posix(); study._relative(name)
             inventory[name] = path
     if (len(inventory) != verified_count or set(tree)-{'.gitattributes'} != set(inventory)
-            or set(inventory)-set(scientific) != {CARD, 'docs/publication/LICENSE'}
+            or set(inventory)-set(scientific) != {CARD}
             or not {'README.md', 'report.json', 'protocol.json', 'frozen.json', 'LICENSE'} <= set(scientific)
             or ALLOWED-{ROOT_README} & set(tree)):
         raise PublicationError('Initial dataset inventory is incomplete or an overlay path already exists.')

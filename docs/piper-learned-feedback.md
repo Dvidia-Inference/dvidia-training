@@ -10,7 +10,7 @@ A successful local installation does not establish a robust learned skill, human
 
 ## Run a downloaded skill locally
 
-Download the wheel from the [GitHub release](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/piper-feedback-v0.2), then install it from the directory containing the download:
+Use a fresh virtual environment, following the installation kit's README. Experimental wheels currently share package version `0.1.0`, so an existing installation may otherwise reuse an older runner. Download the wheel from the [GitHub release](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/piper-feedback-v0.2), then install it from the directory containing the download:
 
 ```sh
 python -m pip install './dvidia_training-0.1.0-py3-none-any.whl[arm]'

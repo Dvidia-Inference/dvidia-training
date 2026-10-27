@@ -42,6 +42,11 @@ unfrozen development finding, separate from the completed v0.2 confirmation.
 The local CLI, finite model files, source hashes and full replay/export tools
 are usable research components. Universal video-to-arm transfer remains unproven.
 
+Alongside the control experiments, the proposed [local workflow integration](workflow-integration-plan.md)
+connects existing tools through one manifest/preflight, a durable run record shared
+by UI and Terminal, and evidence-gated installation. These engineering improvements
+must preserve the distinction between a completed workflow and a successful skill.
+
 The [persisted video-goal pilot](../benchmarks/video-goal-install-v01-20261025/README.md)
 connects four synthetic videos to reloadable PiPER simulation candidates. Across
 two new starts each, installed goals complete 6/8 intended tasks; oracle goals
