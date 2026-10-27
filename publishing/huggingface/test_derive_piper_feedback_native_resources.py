@@ -95,6 +95,8 @@ class NativeResourceTests(unittest.TestCase):
                 for name,receipt in integrity['files'].items():self.assertEqual(resources.hosting._receipt((output/name).read_bytes()),receipt)
                 html=(output/'index.html').read_text();self.assertIn("script-src 'self'",html);self.assertIn('integrity="sha384-',html)
                 self.assertIn('crossorigin="anonymous"',html);self.assertIn('referrerpolicy="no-referrer"',html)
+                bundle=(output/'piper_feedback_viewer.bundle.js').read_bytes()
+                self.assertIn('src="piper_feedback_viewer.bundle.js?sha256='+sha256(bundle).hexdigest()+'"',html)
                 with self.assertRaises(resources.hosting.PublicationError):resources.derive(source,Path(directory)/'invalid',expected_viewer_sha256=seal,dataset_revision='main')
 
 
