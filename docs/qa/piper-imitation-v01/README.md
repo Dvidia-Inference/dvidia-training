@@ -22,3 +22,5 @@ On 27 October 2026, the deployed research viewer loaded native meshes and all 1,
 The Hugging Face static host requires the explicit `viewer/index.html` entry. An initial binary request returned a network error; a reload after anonymous byte verification played through 20 seconds. This motivated a separately recorded fallback update. Final verification of that update is recorded in the public publication provenance. No browser loading latency or network-reliability benchmark is claimed.
 
 See [the public research replay](public-research.png).
+
+Final Hugging Face hosting patch `73390d05bc8f8b82333f4de060b77076ccd603d3` was checked through the corrected namespace landing page: it redirected to the explicit viewer entry, loaded native meshes, played to frame 1,001 / 20.00 seconds, and retained the failed case at 10.9 mm. Its separately derived frontend passed 17 transport tests. All 25 PiPER publication tests passed, and the hosting adapter verified unchanged tree entries plus anonymous readback at the final revisions. See [the hosted failure case](public-huggingface.png).
