@@ -14,3 +14,11 @@ Verified in the Codex in-app browser on 27 October 2026. Screenshots show the lo
 The exporter independently reconstructed 16,016 recorded frames using `mj_forward`, with zero maximum object/TCP residual. It did not step physics. Original Float64 evidence remains separate from Float32 browser body poses.
 
 See [desktop](desktop.png) and [390-pixel preview](narrow-390.png). The latter includes the surrounding test harness.
+
+## Public hosting verification
+
+On 27 October 2026, the deployed research viewer loaded native meshes and all 1,001 saved frames. Play advanced from frame 1 to frame 1,001; timeline scrubbing updated the clock and joint readouts. Failed learned case 00-goal1 remained failed at 10.9 mm, while the teacher and open-jaw comparisons showed completed and failed outcomes respectively. All 60 trace links were present. The research transport projection preserves the original model, geometry, motion, native tapes and scores. Its separately recorded frontend adds bounded downloads and exact size/SHA-256 verification.
+
+The Hugging Face static host requires the explicit `viewer/index.html` entry. An initial binary request returned a network error; a reload after anonymous byte verification played through 20 seconds. This motivated a separately recorded fallback update. Final verification of that update is recorded in the public publication provenance. No browser loading latency or network-reliability benchmark is claimed.
+
+See [the public research replay](public-research.png).

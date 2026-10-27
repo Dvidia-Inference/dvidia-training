@@ -25,11 +25,15 @@ MODEL_REPO = 'Dvidia/piper-block-placement-v01'
 DATASET_REPO = 'Dvidia/piper-block-placement-demonstrations-v01'
 SPACE_REPO = 'Dvidia/robot-simulation-lab'
 SPACE_NAMESPACE = 'learned-placement/v01'
-SPACE_VIEWER_URL = 'https://dvidia-robot-simulation-lab.static.hf.space/' + SPACE_NAMESPACE + '/viewer/'
+SPACE_VIEWER_URL = 'https://dvidia-robot-simulation-lab.static.hf.space/' + SPACE_NAMESPACE + '/viewer/index.html'
 SPACE_LANDING_PAGE = (b'<!doctype html><html lang="en"><meta charset="utf-8">'
-                      b'<meta http-equiv="refresh" content="0; url=viewer/">'
+                      b'<meta http-equiv="refresh" content="0; url=viewer/index.html">'
                       b'<title>PiPER learned placement replay</title>'
-                      b'<p>Opening the recorded replay. <a href="viewer/">Open the viewer</a>.</p></html>')
+                      b'<p>Opening the recorded replay. <a href="viewer/index.html">Open the viewer</a>.</p></html>')
+LEGACY_SPACE_LANDING_PAGE = (b'<!doctype html><html lang="en"><meta charset="utf-8">'
+                             b'<meta http-equiv="refresh" content="0; url=viewer/">'
+                             b'<title>PiPER learned placement replay</title>'
+                             b'<p>Opening the recorded replay. <a href="viewer/">Open the viewer</a>.</p></html>')
 KIND = 'dvidia.piper-imitation-publication'
 SCHEMA_VERSION = 1
 MAX_FILE_BYTES = 64 * 1024 * 1024
@@ -643,10 +647,10 @@ def checked_plan(path: Path) -> dict:
                        SPACE_NAMESPACE + '/LICENSE'}
     if set(staged['space']) != expected_space:
         raise PublicationError('Space plan must contain the full sealed run and only the new version namespace.')
-    landing_receipt = receipt_bytes(SPACE_LANDING_PAGE)
-    if staged['space'].get(SPACE_NAMESPACE + '/index.html') != (
-            landing_receipt['bytes'], landing_receipt['sha256']):
-        raise PublicationError('Space namespace landing page must redirect to the relative viewer directory.')
+    landing_receipts = {(receipt_bytes(candidate)['bytes'], receipt_bytes(candidate)['sha256'])
+                        for candidate in (SPACE_LANDING_PAGE, LEGACY_SPACE_LANDING_PAGE)}
+    if staged['space'].get(SPACE_NAMESPACE + '/index.html') not in landing_receipts:
+        raise PublicationError('Space namespace landing page must use one of the two fixed relative viewer entrypoints.')
     dataset_sources = {name for name in source_names if name in RUN_ROOT_FILES
                        or name.startswith(('training/', 'demonstrations/', 'attempts/', 'attempt-starts/', 'attempt-scores/',
                                            'development_models/', 'sources/', 'driver-recovery/'))}

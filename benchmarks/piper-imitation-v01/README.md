@@ -20,7 +20,7 @@ The original frozen driver pauses after saving a tape because of a tuple/list id
 
 - [Run and reproduce locally](../../docs/piper-learned-placement.md)
 - [Research paper](https://research.dvidia.org/papers/learned-piper-placement-v01/)
-- [Recorded 3D replay](https://dvidia-robot-simulation-lab.static.hf.space/learned-placement/v01/viewer/)
+- [Recorded 3D replay](https://dvidia-robot-simulation-lab.static.hf.space/learned-placement/v01/viewer/index.html)
 - [Model](https://huggingface.co/Dvidia/piper-block-placement-v01) · [Dataset and full traces](https://huggingface.co/datasets/Dvidia/piper-block-placement-demonstrations-v01)
 - [Wheel, model and full sealed evidence bundle](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/piper-imitation-v0.1)
 

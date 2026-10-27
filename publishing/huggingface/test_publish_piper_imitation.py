@@ -144,8 +144,8 @@ class PiperImitationPublisherTests(unittest.TestCase):
             self.assertIn('learned-placement/v01/index.html', {item['path'] for item in space['files']})
             staged_space = output / 'space' / 'learned-placement/v01'
             landing = (staged_space / 'index.html').read_text()
-            self.assertIn('url=viewer/', landing)
-            self.assertIn('href="viewer/"', landing)
+            self.assertIn('url=viewer/index.html', landing)
+            self.assertIn('href="viewer/index.html"', landing)
             self.assertEqual((staged_space / 'viewer/index.html').read_bytes(),
                              (run / 'viewer/index.html').read_bytes())
             parser = _LocalResources()
