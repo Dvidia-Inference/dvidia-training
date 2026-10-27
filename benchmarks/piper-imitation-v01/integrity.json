@@ -949,10 +949,6 @@
       "bytes": 647,
       "sha256": "f765d57aea8507c3ff1ae3ddfa344eab9f63f3c45ec7321fb6a8636cefd8b5c3"
     },
-    "development_models/mlp160/sources/__pycache__/piper_imitation.cpython-312.pyc": {
-      "bytes": 31881,
-      "sha256": "e2e32b3fb31728d9bea5124166660873fb476f8c82ab05559179586fa7166357"
-    },
     "development_models/mlp160/sources/piper_imitation.py": {
       "bytes": 20261,
       "sha256": "9b96770faff72e0ce5c8d7713011f472bcca241445653d46393df7845a1b0bc9"
@@ -1000,10 +996,6 @@
     "development_models/primitive201/receipt.json": {
       "bytes": 1177,
       "sha256": "8c107d4811117c991a98391ada4955396406368ac5d37af3be44ede3accfc41d"
-    },
-    "development_models/primitive201/sources/__pycache__/piper_motor_primitive.cpython-312.pyc": {
-      "bytes": 22361,
-      "sha256": "c87848853f237574f8bef2273bbfd9b5f2cefe84f0d319abd39123e21dc0cb03"
     },
     "development_models/primitive201/sources/piper_imitation.py": {
       "bytes": 25487,
@@ -1749,5 +1741,13 @@
       "bytes": 10466,
       "sha256": "68718dd6d59ad837f9294a8dd985d3701ad0006b98d226a80d395d4a4a270c15"
     }
+  },
+  "publication_export": {
+    "original_seal_sha256": "d726ba55a5b5ee1d47a09408137d157e87abd4fddf7f3370eba21f66cafa0a8a",
+    "excluded_generated_python_bytecode": [
+      "development_models/mlp160/sources/__pycache__/piper_imitation.cpython-312.pyc",
+      "development_models/primitive201/sources/__pycache__/piper_motor_primitive.cpython-312.pyc"
+    ],
+    "native_tapes_models_and_plaintext_sources_changed": false
   }
 }

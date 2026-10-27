@@ -25,3 +25,5 @@ The original frozen driver pauses after saving a tape because of a tuple/list id
 - [Wheel, model and full sealed evidence bundle](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/piper-imitation-v0.1)
 
 This directory keeps the full report, audit, protocol, frozen hashes and complete-bundle integrity inventory. Compressed demonstrations, all development and confirmation tapes, recorded geometry, model weights and source snapshots are distributed in the release bundle and Hugging Face. [Release artifact hashes](release-artifacts.json) bind the downloads. Original code, generated data and model weights use MIT; upstream notices remain in the bundle. The research site's writing uses its own published license.
+
+The public export excludes two generated Python bytecode caches. Its integrity manifest records the exclusion and original seal hash; every native tape, model and plaintext source remains byte-identical.
