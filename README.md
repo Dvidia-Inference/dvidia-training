@@ -2,6 +2,13 @@
 
 # DVIDIA Training
 
+**[PiPER learned grip feedback v0.2](https://research.dvidia.org/papers/learned-piper-grip-v02/).**
+A local CPU runner and installable model kit, with all failed experiments retained.
+The frozen simulation study completed **6/24** with feedback, **8/24** with its
+matched blind learner and **24/24** with the authored teacher. No live-feedback
+advantage or physical robot transfer is established.
+[Download the installation kit](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/piper-feedback-v0.2) · [Model](https://huggingface.co/Dvidia/piper-block-placement-feedback-v02) · [Full evidence](https://huggingface.co/datasets/Dvidia/piper-block-placement-feedback-demonstrations-v02) · [Tagged source and CLI](https://github.com/Dvidia-Inference/dvidia-training/tree/piper-feedback-v0.2).
+
 [Install locally](docs/installation.md) · [Hardware guide](docs/hardware.md) · [Execution map](docs/roadmap.md) · [Official site](https://dvidia.org/) · [Research](https://research.dvidia.org/papers/skillspace-footage-training/) · [Frozen benchmark evidence](benchmarks/sample-count-19047/README.md)
 
 [Recorded demo](https://huggingface.co/spaces/Dvidia/dvidia-training) · [Synthetic datasets](https://huggingface.co/datasets/Dvidia/dvidia-training-examples) · [Pilot models](https://huggingface.co/Dvidia/dvidia-training-pilot)
