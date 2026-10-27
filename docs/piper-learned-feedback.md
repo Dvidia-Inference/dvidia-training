@@ -10,7 +10,13 @@ A successful local installation does not establish a robust learned skill, human
 
 ## Run a downloaded skill locally
 
-Install the published wheel with its native simulation dependency, or install the repository:
+Download the wheel from the [GitHub release](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/piper-feedback-v0.2), then install it from the directory containing the download:
+
+```sh
+python -m pip install './dvidia_training-0.1.0-py3-none-any.whl[arm]'
+```
+
+The smaller installation kit on that release also contains the models and a complete command example. If using a source checkout instead, run this from the repository root:
 
 ```sh
 python -m pip install '.[arm]'
