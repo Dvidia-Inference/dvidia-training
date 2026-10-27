@@ -367,8 +367,26 @@ def _card(kind: str, run: dict[str, bytes]) -> bytes:
     limits = report.get('limitations', report.get('limits'))
     result_table = '\n'.join(f"| {name} | {row['successes']} / {row['scheduled']} |"
                              for name, row in variants.items())
-    limitation_text = ('\n'.join(f'- {item}' for item in limits) if isinstance(limits, list)
-                       else '\n'.join(f'- {name}: {value}' for name, value in limits.items()))
+    displayed_limits = limits
+    if isinstance(limits, list) and model_schema == 'dvidia.piper-motor-primitive/v2':
+        displayed_limits = [
+            ('Earlier MLP candidates used privileged simulator joint, TCP, object and contact measurements; '
+             'no vision pipeline was trained. This broad report statement describes those candidates, not '
+             'the selected v2 primitive input contract.')
+            if item == ('Learned inference uses privileged simulator joint, TCP, object and contact measurements; '
+                        'no vision pipeline is trained.') else item
+            for item in limits
+        ]
+    limitation_text = ('\n'.join(f'- {item}' for item in displayed_limits) if isinstance(displayed_limits, list)
+                       else '\n'.join(f'- {name}: {value}' for name, value in displayed_limits.items()))
+    selected_input_note = (
+        'Selected v2 primitive inputs: reset-time object XY, one of the two known goal coordinates, and elapsed '
+        'time. Live joint positions are used only by generic native joint-target caps. The selected policy does '
+        'not consume TCP or contact estimates and does not learn contact feedback or recovery. The retained '
+        'demonstrations and evaluation traces contain richer privileged simulator data; those records do not '
+        'change this selected-policy input contract.\n\n'
+        if model_schema == 'dvidia.piper-motor-primitive/v2' else ''
+    )
     recovery_note = (
         'Confirmation encountered a serialization guard: the live configuration used tuples, while '
         'the persisted JSON representation used lists. A bounded adapter checked the exact error and '
@@ -390,7 +408,7 @@ def _card(kind: str, run: dict[str, bytes]) -> bytes:
             'candidate checkpoints and their development traces, and all confirmation '
             'attempts. Browse the '
             '[complete dataset](https://huggingface.co/datasets/' + DATASET_REPO +
-            ') or open the [recorded replay viewer](' + SPACE_VIEWER_URL + ').\n\n' + recovery_note +
+            ') or open the [recorded replay viewer](' + SPACE_VIEWER_URL + ').\n\n' + selected_input_note + recovery_note +
             '## Run the policy in native simulation\n\n'
             'Use Python 3.12 or later. This runs locally in pinned native simulation and does not '
             'connect to robot hardware.\n\n'
@@ -414,7 +432,7 @@ def _card(kind: str, run: dict[str, bytes]) -> bytes:
             'simulator state/action observations; they are not human demonstrations or footage. The dataset '
             'includes all scheduled teacher demonstrations, held-out attempts, source snapshots, '
             'earlier failed MLP candidate checkpoints and all their development traces, the frozen protocol, and '
-            'declared limitations for audit. ' + recovery_note + 'Open the [recorded replay '
+            'declared limitations for audit. ' + selected_input_note + recovery_note + 'Open the [recorded replay '
             'evidence](https://huggingface.co/spaces/' + SPACE_REPO + '/tree/main/' + SPACE_NAMESPACE +
             ') for the browser viewer.\n\n'
             'These artifacts do not '
@@ -429,7 +447,7 @@ def _card(kind: str, run: dict[str, bytes]) -> bytes:
             'simulator teacher and uses privileged simulator data.' + primitive_limit +
             ' This evidence does not establish '
             'human-video learning, camera-only control, physical performance, or hardware readiness.\n\n'
-            + recovery_note +
+            + selected_input_note + recovery_note +
             'Open `index.html` to inspect the selected replay and `report.json` for the recorded '
             'variant counts and declared limits. Full attempt traces and the source model are '
             'retained under this versioned path.\n')

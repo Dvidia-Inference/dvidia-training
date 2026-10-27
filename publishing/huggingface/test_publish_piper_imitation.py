@@ -172,6 +172,10 @@ class PiperImitationPublisherTests(unittest.TestCase):
                 self.assertIn('synthetic', card.lower())
                 self.assertIn('privileged simulator', card.lower())
                 self.assertIn('establish', card.lower())
+                self.assertIn('Selected v2 primitive inputs: reset-time object XY', card)
+                self.assertIn('does not consume TCP or contact estimates', card)
+                self.assertNotIn('Learned inference uses privileged simulator joint, TCP, object and contact measurements',
+                                 card)
             model_card = (output / 'model' / 'README.md').read_text()
             self.assertIn(publisher.SPACE_VIEWER_URL, model_card)
             self.assertIn('dvidia-piper-learned --model model.json', model_card)
@@ -194,6 +198,8 @@ class PiperImitationPublisherTests(unittest.TestCase):
             self.assertIn('earlier failed MLP candidate checkpoints', dataset_card)
             self.assertIn('development traces', dataset_card)
             self.assertIn('serialization guard', dataset_card)
+            self.assertIn('retained demonstrations and evaluation traces contain richer privileged simulator data',
+                          dataset_card)
 
     def test_integrity_seal_must_cover_every_run_file(self):
         with tempfile.TemporaryDirectory() as directory:
