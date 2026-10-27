@@ -15,9 +15,12 @@ reliability. Finger-table contact and movement timing are now measured bottlenec
 
 The immediate research priority is **coupled movement timing and grip control**:
 
-1. Preserve the learned path's geometry while learning a bounded progress clock
-   and clearance correction. Compare against the same path without feedback;
-   avoid unrestricted seven-command residuals that amplified small deviations.
+1. First preserve the learned path's geometry while learning a bounded progress
+   clock that can wait for a secure grip. Compare against the same path with a
+   blind clock and fixed timing. Treat clearance correction as a separately
+   versioned path change with its own evaluation; it cannot preserve all six
+   original arm references. Avoid unrestricted seven-command residuals that
+   amplified small deviations.
 2. Apply separately reported actuator disturbances after verified loaded grip,
    including table-free holds. Count every scheduled case, including cases
    where no grasp or disturbance activation occurs. The current jaw pulses
