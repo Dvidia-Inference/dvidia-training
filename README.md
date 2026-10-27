@@ -13,6 +13,13 @@ feedback learners and tests a feedforward motion primitive. This is bounded
 simulation research, with no learned contact recovery or human-video action bridge.
 [Cosmos as a possible observation layer](docs/cosmos-observation-layer.md).
 
+**[Learned PiPER grip feedback prototype](docs/piper-learned-feedback.md).**
+The next experiment learns an absolute jaw command while preserving the frozen
+six-axis movement model. A small local NumPy tree uses causal grip history;
+matched blind controls and fresh confirmation are part of the benchmark.
+Results and publication links are pending. The same local installer accepts
+strict data-only residual or jaw-adapter models and records their architecture.
+
 **[Run DVIDIA Skill Studio locally](docs/local-skill-studio.md).**
 [Download the experimental installer](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/skill-studio-v0.1-alpha.4).
 `dvidia-skill-studio --fetch-assets` opens a compact video → candidate → PiPER
