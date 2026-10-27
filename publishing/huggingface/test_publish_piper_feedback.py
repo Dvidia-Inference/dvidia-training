@@ -1,14 +1,19 @@
 """Offline publication tests; FakeHub never reads a credential or uses a network."""
 from hashlib import sha1, sha256
+import base64
+import csv
 import gzip
 import io
 import json
 from pathlib import Path
 import shutil
+import stat
 import sys
 import tempfile
 from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
+import warnings
 import zipfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -27,6 +32,117 @@ def npz():
     with zipfile.ZipFile(stream, 'w', compression=zipfile.ZIP_DEFLATED) as archive:
         archive.writestr('values.npy', b'\x93NUMPY\x01\x00'+len(header).to_bytes(2, 'little')+header+b'\0'*8)
     return stream.getvalue()
+
+
+def zipped(members):
+    stream = io.BytesIO()
+    with zipfile.ZipFile(stream, 'w', compression=zipfile.ZIP_DEFLATED) as archive:
+        for name, raw in members.items():
+            archive.writestr(name, raw)
+    return stream.getvalue()
+
+
+def wheel(source=b"const scheme = 'file://';\n"):
+    members = {'dvidia_training/worker.js': source,
+        publication.DIST_ROOT+'WHEEL': b'Wheel-Version: 1.0\nRoot-Is-Purelib: true\nTag: py3-none-any\n',
+        publication.DIST_ROOT+'METADATA': b'Metadata-Version: 2.4\nName: dvidia-training\nVersion: 0.1.0\n'}
+    records = io.StringIO()
+    writer = csv.writer(records)
+    for name, raw in members.items():
+        writer.writerow([name, 'sha256='+base64.urlsafe_b64encode(sha256(raw).digest()).rstrip(b'=').decode(), str(len(raw))])
+    writer.writerow([publication.DIST_ROOT+'RECORD', '', ''])
+    members[publication.DIST_ROOT+'RECORD'] = records.getvalue().encode()
+    return members
+
+
+def smoke(*, native=None, episode=None):
+    members = {'base-model.json': b'{}', 'feedback-model.json': b'{}', 'started.json': b'{}',
+        'native.json': b'{}', 'score.json': b'{"valid":true,"success":true}',
+        'native.npz': native or npz(), 'episode.json.gz': episode or gzip.compress(b'{"fixture":true}', mtime=0)}
+    install = dict(physical_robot_ready=False, base_model_raw_sha256=sha256(members['base-model.json']).hexdigest(),
+        feedback_model_raw_sha256=sha256(members['feedback-model.json']).hexdigest(),
+        files={n: sha256(raw).hexdigest() for n, raw in members.items()})
+    members['install.json'] = publication._encoded(install)
+    members['receipt.json'] = publication._encoded(dict(files={n: sha256(raw).hexdigest() for n, raw in members.items()}))
+    return members
+
+
+class ContractArchiveTests(unittest.TestCase):
+    def inspect_reviewed_fixture(self, name, raw):
+        with patch.dict(publication.CONTRACT_ARCHIVES, {name: publication._receipt(raw)}):
+            return publication._inspect(name, raw)
+
+    def test_only_two_contract_paths_and_exact_archive_digests_are_accepted(self):
+        for name in ('contracts/arbitrary.zip', 'docs/installation-smoke.zip', 'contracts/arbitrary.whl'):
+            with self.assertRaises(publication.PublicationError):
+                publication._relative(name)
+        name = 'contracts/dvidia_training-0.1.0-py3-none-any.whl'
+        self.assertEqual(publication._relative(name).as_posix(), name)
+        with self.assertRaisesRegex(publication.PublicationError, 'exact reviewed'):
+            publication._inspect(name, zipped(wheel()))
+
+    def test_reviewed_wheel_validates_record_and_allows_only_bare_quoted_file_scheme(self):
+        name = 'contracts/dvidia_training-0.1.0-py3-none-any.whl'
+        self.assertGreater(self.inspect_reviewed_fixture(name, zipped(wheel())), 0)
+        for source in (b"const secret='hf_"+b'Z'*35+b"';", b"const path='file:///Users/private/data';"):
+            with self.assertRaisesRegex(publication.PublicationError, 'credential or private path'):
+                self.inspect_reviewed_fixture(name, zipped(wheel(source)))
+
+    def test_rehashed_archive_with_forged_wheel_record_or_unapproved_footage_is_rejected(self):
+        name = 'contracts/dvidia_training-0.1.0-py3-none-any.whl'
+        members = wheel()
+        members['dvidia_training/worker.js'] += b'// changed after RECORD\n'
+        with self.assertRaisesRegex(publication.PublicationError, 'RECORD digest'):
+            self.inspect_reviewed_fixture(name, zipped(members))
+        members = wheel()
+        members['dvidia_training/raw-user-video.mp4'] = b'not an approved example asset'
+        with self.assertRaisesRegex(publication.PublicationError, 'reviewed simulator/example'):
+            self.inspect_reviewed_fixture(name, zipped(members))
+
+    def test_archive_traversal_symlink_encryption_duplicates_and_expansion_are_rejected(self):
+        with self.assertRaisesRegex(publication.PublicationError, 'unsafe'):
+            publication._archive_members(zipped({'../escape.py': b'bad'}))
+        stream = io.BytesIO()
+        with zipfile.ZipFile(stream, 'w') as archive:
+            info = zipfile.ZipInfo('dvidia_training/link.py')
+            info.create_system = 3
+            info.external_attr = (stat.S_IFLNK | 0o777) << 16
+            archive.writestr(info, b'/outside')
+        with self.assertRaisesRegex(publication.PublicationError, 'linked'):
+            publication._archive_members(stream.getvalue())
+        stream = io.BytesIO()
+        with warnings.catch_warnings():
+            warnings.simplefilter('ignore', UserWarning)
+            with zipfile.ZipFile(stream, 'w') as archive:
+                archive.writestr('same.py', b'one')
+                archive.writestr('same.py', b'two')
+        with self.assertRaisesRegex(publication.PublicationError, 'duplicate'):
+            publication._archive_members(stream.getvalue())
+        encrypted = bytearray(zipped({'data.py': b'code'}))
+        local, central = encrypted.index(b'PK\x03\x04'), encrypted.index(b'PK\x01\x02')
+        encrypted[local+6] |= 1
+        encrypted[central+8] |= 1
+        with self.assertRaisesRegex(publication.PublicationError, 'encrypted'):
+            publication._archive_members(bytes(encrypted))
+        with patch.object(publication, 'ARCHIVE_DECODED_LIMIT', 1), self.assertRaisesRegex(publication.PublicationError, 'decoded bound'):
+            publication._archive_members(zipped({'data.py': b'oversized'}))
+
+    def test_installation_archive_scans_nested_gzip_npz_and_receipt_hashes(self):
+        name = 'contracts/installation-smoke.zip'
+        self.assertGreater(self.inspect_reviewed_fixture(name, zipped(smoke())), 0)
+        token_episode = gzip.compress(publication._encoded({'note': 'hf_'+'Z'*35}), mtime=0)
+        with self.assertRaisesRegex(publication.PublicationError, 'credential'):
+            self.inspect_reviewed_fixture(name, zipped(smoke(episode=token_episode)))
+        stream = io.BytesIO()
+        header = b"{'descr': '|O', 'fortran_order': False, 'shape': (1,), }\n"
+        with zipfile.ZipFile(stream, 'w') as archive:
+            archive.writestr('unsafe.npy', b'\x93NUMPY\x01\x00'+len(header).to_bytes(2,'little')+header+b'pickle')
+        with self.assertRaisesRegex(publication.PublicationError, 'Object or structured'):
+            self.inspect_reviewed_fixture(name, zipped(smoke(native=stream.getvalue())))
+        members = smoke()
+        members['started.json'] = b'{"changed":true}'
+        with self.assertRaisesRegex(publication.PublicationError, 'smoke hashes'):
+            self.inspect_reviewed_fixture(name, zipped(members))
 
 
 def reseal(root):

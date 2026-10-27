@@ -9,7 +9,9 @@ from __future__ import annotations
 
 import argparse
 import ast
+import base64
 from concurrent.futures import ThreadPoolExecutor
+import csv
 import gzip
 from hashlib import sha256
 import io
@@ -18,6 +20,7 @@ import os
 from pathlib import Path, PurePosixPath
 import re
 import shutil
+import stat
 import sys
 import tempfile
 import time
@@ -58,6 +61,21 @@ ROOT_FILES = {'base-model.json', 'protocol.json', 'report.json', 'frozen.json', 
 RUN_DIRS = {'sources', 'demonstrations', 'dagger', 'candidates', 'confirmation', 'docs', 'contracts', 'licenses', 'prior-studies'}
 LFS_SUFFIXES = ('.gz', '.bin', '.npz')
 JOURNAL_NAME = 'piper-feedback-batch-journal.json'
+CONTRACT_ARCHIVES = {
+    'contracts/dvidia_training-0.1.0-py3-none-any.whl':
+        {'bytes': 5250154, 'sha256': '4af950dfa1a1498e2a5bcc5a1f4c2c5d471e1b5db07545902ca9efd05240fe9e'},
+    'contracts/installation-smoke.zip':
+        {'bytes': 5602814, 'sha256': 'eea9ea33422a932bfff8aa5a5e9754a406b5b17e0c930e96850dc484ac7e4710'},
+}
+ARCHIVE_DECODED_LIMIT = 32*1024*1024
+WHEEL_ROOT = 'dvidia_training/'
+DIST_ROOT = 'dvidia_training-0.1.0.dist-info/'
+WHEEL_BINARY_MEMBERS = {
+    'dvidia_training/mujoco.wasm': 'd59c489dd521c80af6965756c5b90daff549fa281566544e4540c170d937633d',
+    'dvidia_training/video_goal_example.mp4': '5a79551936423b63e6db38478135b4a96b4544f6c72d2ad943607e0510596928',
+}
+SMOKE_MEMBERS = {'base-model.json', 'feedback-model.json', 'started.json', 'episode.json.gz',
+                 'native.npz', 'native.json', 'score.json', 'install.json', 'receipt.json'}
 
 
 def _plain(path):
@@ -74,7 +92,8 @@ def _relative(name):
         raise PublicationError('Invalid public artifact path.')
     p = PurePosixPath(name)
     if (p.is_absolute() or p.as_posix() != name or any(v.startswith('.') for v in p.parts)
-            or '__pycache__' in p.parts or (p.suffix not in SUFFIXES and p.name != 'LICENSE')):
+            or '__pycache__' in p.parts
+            or (p.suffix not in SUFFIXES and p.name != 'LICENSE' and name not in CONTRACT_ARCHIVES)):
         raise PublicationError('Unsafe or unexpected public artifact path.')
     return p
 
@@ -105,8 +124,11 @@ def _receipt(raw):
     return dict(bytes=len(raw), sha256=sha256(raw).hexdigest())
 
 
-def _scan(raw, *, json_value=False):
-    if TOKEN.search(raw) or PRIVATE.search(raw):
+def _scan(raw, *, json_value=False, source_text=False):
+    # A quoted bare protocol literal contains no local path. Credential scans
+    # remain unconditional, and actual file URIs/private paths still fail.
+    private_scan = re.sub(rb"(['\"])file://\1", b'quoted-file-scheme', raw) if source_text else raw
+    if TOKEN.search(raw) or PRIVATE.search(private_scan):
         raise PublicationError('Possible credential or private path in a public artifact.')
     if json_value:
         values = [_json(raw)]
@@ -120,7 +142,99 @@ def _scan(raw, *, json_value=False):
                 values.extend(value)
 
 
+def _archive_members(raw):
+    """Read bounded members without extracting files or following links."""
+    if len(raw) > MAX_FILE:
+        raise PublicationError('Contract archive exceeds its packed byte bound.')
+    try:
+        with zipfile.ZipFile(io.BytesIO(raw)) as archive:
+            entries = archive.infolist()
+            if not 1 <= len(entries) <= 512 or len({i.filename for i in entries}) != len(entries):
+                raise PublicationError('Contract archive has duplicate or excessive members.')
+            if sum(i.file_size for i in entries) > ARCHIVE_DECODED_LIMIT:
+                raise PublicationError('Contract archive exceeds its decoded bound.')
+            members = {}
+            for item in entries:
+                name, p = item.filename, PurePosixPath(item.filename)
+                kind = stat.S_IFMT(item.external_attr >> 16)
+                if (not name or '\\' in name or ':' in name or '\0' in name or p.is_absolute()
+                        or p.as_posix() != name or any(v.startswith('.') for v in p.parts)
+                        or '__pycache__' in p.parts or item.is_dir() or kind not in (0, stat.S_IFREG)
+                        or item.flag_bits & 1 or item.compress_type not in (zipfile.ZIP_STORED, zipfile.ZIP_DEFLATED)
+                        or item.file_size > 16*1024*1024):
+                    raise PublicationError('Contract archive member is unsafe, encrypted, linked or oversized.')
+                members[name] = archive.read(item)
+            return members
+    except PublicationError:
+        raise
+    except (OSError, zipfile.BadZipFile, RuntimeError, NotImplementedError) as exc:
+        raise PublicationError('Contract archive is invalid.') from exc
+
+
+def _inspect_contract_archive(name, raw):
+    if name not in CONTRACT_ARCHIVES or _receipt(raw) != CONTRACT_ARCHIVES[name]:
+        raise PublicationError('Contract archive differs from the two exact reviewed install artifacts.')
+    if TOKEN.search(raw):
+        raise PublicationError('Possible credential in a contract archive.')
+    members = _archive_members(raw)
+    decoded = sum(map(len, members.values()))
+    if name.endswith('.whl'):
+        record_name = DIST_ROOT+'RECORD'
+        if record_name not in members or DIST_ROOT+'WHEEL' not in members:
+            raise PublicationError('Reviewed wheel is missing its packaging records.')
+        for member, content in members.items():
+            p = PurePosixPath(member)
+            if member.startswith(WHEEL_ROOT):
+                if p.suffix in {'.wasm', '.mp4'}:
+                    if WHEEL_BINARY_MEMBERS.get(member) != sha256(content).hexdigest():
+                        raise PublicationError('Wheel binary differs from the reviewed simulator/example asset.')
+                elif p.suffix not in {'.py', '.json', '.html', '.js', '.txt'} and p.name != 'LICENSE':
+                    raise PublicationError('Unexpected package file type in the reviewed wheel.')
+            elif member.startswith(DIST_ROOT):
+                relative = member.removeprefix(DIST_ROOT)
+                if (relative not in {'METADATA', 'WHEEL', 'entry_points.txt', 'top_level.txt', 'RECORD'}
+                        and not relative.startswith('licenses/')):
+                    raise PublicationError('Unexpected wheel metadata path.')
+            else:
+                raise PublicationError('Wheel file lies outside the two reviewed package namespaces.')
+            _scan(content, json_value=member.endswith('.json'), source_text=p.suffix in {'.py', '.js', '.html'})
+        try:
+            records = list(csv.reader(io.StringIO(members[record_name].decode('utf8'))))
+            if (len(records) != len(members) or any(len(row) != 3 for row in records)
+                    or {row[0] for row in records} != set(members)):
+                raise PublicationError('Wheel RECORD inventory differs from its actual members.')
+            for member, digest, size in records:
+                if member == record_name:
+                    if digest or size:
+                        raise PublicationError('Wheel RECORD must leave its own digest and size blank.')
+                else:
+                    expected = base64.urlsafe_b64encode(sha256(members[member]).digest()).rstrip(b'=').decode()
+                    if digest != 'sha256='+expected or size != str(len(members[member])):
+                        raise PublicationError('Wheel RECORD digest differs from a member.')
+        except (UnicodeError, csv.Error) as exc:
+            raise PublicationError('Wheel RECORD is not valid UTF-8 CSV.') from exc
+    else:
+        if set(members) != SMOKE_MEMBERS:
+            raise PublicationError('Installation smoke archive must contain exactly its nine reviewed evidence files.')
+        for member, content in members.items():
+            decoded += _inspect(member, content)
+        install, receipt = _json(members['install.json']), _json(members['receipt.json'])
+        expected = {member: sha256(content).hexdigest() for member, content in members.items()
+                    if member not in {'install.json', 'receipt.json'}}
+        if (not isinstance(install, dict) or not isinstance(receipt, dict) or install.get('files') != expected
+                or receipt.get('files') != {**expected, 'install.json': sha256(members['install.json']).hexdigest()}
+                or install.get('physical_robot_ready') is not False
+                or install.get('base_model_raw_sha256') != sha256(members['base-model.json']).hexdigest()
+                or install.get('feedback_model_raw_sha256') != sha256(members['feedback-model.json']).hexdigest()):
+            raise PublicationError('Installation smoke hashes or simulation-only scope differ from its receipt.')
+    if decoded > ARCHIVE_DECODED_LIMIT:
+        raise PublicationError('Nested contract evidence exceeds its decoded bound.')
+    return decoded
+
+
 def _inspect(name, raw):
+    if name in CONTRACT_ARCHIVES:
+        return _inspect_contract_archive(name, raw)
     _scan(raw, json_value=name.endswith('.json'))
     decoded = 0
     if name.endswith('.json.gz'):
