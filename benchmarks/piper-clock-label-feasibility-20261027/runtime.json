@@ -1,0 +1,54 @@
+{
+  "schema": "dvidia.offline-diagnostic-runtime/v1",
+  "report": {
+    "path": "original-diagnostic:report.json",
+    "sha256": "87126c306abb9644618329a15cad4a5d576a7f7fd45c83764f5052ae3f48c689"
+  },
+  "source_files": [
+    {
+      "path": "src/dvidia_training/piper_motor_primitive.py",
+      "bytes": 17476,
+      "sha256": "02a45b88913db6f223e4d9975eac64d4942a92739c5817c6ede4cc9fa332ed1c"
+    },
+    {
+      "path": "src/dvidia_training/piper_grip_adapter.py",
+      "bytes": 23655,
+      "sha256": "e9c480ca6ebd21d4e00b4f4136f623dd9b7cda402dc8ec9669fb4982267e0aa7"
+    },
+    {
+      "path": "src/dvidia_training/piper_imitation.py",
+      "bytes": 25561,
+      "sha256": "849f66512c58441a240cd20230fcc58691234ddd254c5bbcbfd76abc21b14868"
+    },
+    {
+      "path": "src/dvidia_training/piper_task.py",
+      "bytes": 34355,
+      "sha256": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f"
+    },
+    {
+      "path": "src/dvidia_training/robot_profiles.py",
+      "bytes": 26493,
+      "sha256": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d"
+    },
+    {
+      "path": "src/dvidia_training/reference_sim.py",
+      "bytes": 24336,
+      "sha256": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8"
+    },
+    {
+      "path": "src/dvidia_training/reference_task.py",
+      "bytes": 34166,
+      "sha256": "bbc768ccc202b8dd41cbd235b206e6478806ce47c1f30ae15dc662c0c1edcc3e"
+    },
+    {
+      "path": "src/dvidia_training/reference_replay.py",
+      "bytes": 26037,
+      "sha256": "f73731434d55bac150db16c7205d341a70b95ce13e582e7a23d11dee31b27a19"
+    }
+  ],
+  "python": "3.12.9",
+  "numpy": "2.5.3",
+  "mujoco": "3.15.0",
+  "platform": "macOS-26.5.2-arm64-arm-64bit",
+  "statement": "Read-only training-tape analysis and static forward kinematics; no learning, native dynamics steps, rollout, or development/confirmation tape reads."
+}

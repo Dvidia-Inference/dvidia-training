@@ -1,0 +1,21 @@
+{
+  "schema": "dvidia.clock-feasibility-dp-exhaustive-check/v1",
+  "status": "passed",
+  "analysis_sha256": "fc03d92bdf357bfe5d82983f4159455973e3aed7eabbaa78bd549f0c33a29e3f",
+  "checker_sha256": "fc7e4e7fd25520d7cee8492aa8f49e1b9d119ca648c22de2d9f637f0cce954e7",
+  "deterministic_seed": 27017,
+  "matrices_checked": 70,
+  "legal_paths_checked": 1040,
+  "largest_objective_error": 3.552713678800501e-15,
+  "checks": [
+    "initial index zero",
+    "bounded monotonic increments",
+    "minimum exhaustive objective",
+    "earliest terminal exact tie",
+    "maximum-rate unique path",
+    "terminal index not forced"
+  ],
+  "native_simulator_imported": false,
+  "physics_steps": 0,
+  "limitation": "Recurrence/constraint check only; not a validation of progress-label semantics."
+}

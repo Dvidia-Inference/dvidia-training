@@ -1,0 +1,525 @@
+{
+  "schema": "dvidia.clock-feasibility-public-derivation/v1",
+  "status": "derived_unfrozen_training_only_diagnostic",
+  "original_package": {
+    "files": {
+      "README.md": {
+        "bytes": 14295,
+        "sha256": "88dab2d3d6bd49e33a6b116a9b2590ef06c8db7cfdaba94ff943ea0a81beddef"
+      },
+      "analysis.py": {
+        "bytes": 12504,
+        "sha256": "1c3cc0d1ffcec1a2a4314aaf45d3a5d90af7d014554aa20929269870e6257400"
+      },
+      "dp-check.json": {
+        "bytes": 780,
+        "sha256": "c98f3c6f7ec825f02c540f2a4e0349307284fd39ded9b341f1f1b384d9596ddf"
+      },
+      "package-integrity.json": {
+        "bytes": 1363,
+        "sha256": "fe58eeb3f707c56823ee6b0306b5e01dc7f41ef3807873af0198cb5b42ea446f"
+      },
+      "preserved-inputs.json": {
+        "bytes": 1334,
+        "sha256": "413b2f576bab7683d6375eb2554ffd506b9d2440c7f66b096efea68c6bc3314a"
+      },
+      "protocol-proposal.md": {
+        "bytes": 10891,
+        "sha256": "1b2178c4382dcc24c29947e63e46f266a83abda73572a47dd059ab986be05012"
+      },
+      "report.json": {
+        "bytes": 310395,
+        "sha256": "87126c306abb9644618329a15cad4a5d576a7f7fd45c83764f5052ae3f48c689"
+      },
+      "runtime.json": {
+        "bytes": 2336,
+        "sha256": "2fbae13acf47f588094f30b81e4c5fb252ebbe587c844ac8ed360da7293315c5"
+      },
+      "verify_dp.py": {
+        "bytes": 4281,
+        "sha256": "fc7e4e7fd25520d7cee8492aa8f49e1b9d119ca648c22de2d9f637f0cce954e7"
+      }
+    }
+  },
+  "json_path_replacements": {
+    "report.json": [
+      {
+        "pointer": "/input_bindings/0/path",
+        "before_value_sha256": "bfce772a0a45925b91ee995baf0f44744bb29701ab4e6b81237ffa6e5b0ddd8b",
+        "after_value": "original-diagnostic:analysis.py"
+      },
+      {
+        "pointer": "/input_bindings/1/path",
+        "before_value_sha256": "aaf3354231cc1ea6a82220de6240851a38ee2dd4604c1ab31ccf477419b90f87",
+        "after_value": "benchmarks/piper-clock-label-feasibility-20261027/protocol-proposal.md"
+      },
+      {
+        "pointer": "/input_bindings/2/path",
+        "before_value_sha256": "5203a8c118bbba34d59a881c47669cfbd6f185507c0cfdb8563a611735a470ab",
+        "after_value": "dataset:base-model.json"
+      },
+      {
+        "pointer": "/input_bindings/3/path",
+        "before_value_sha256": "8c38f608d3beb71ef129ce1668a6d9470040d7306d9f4331dda27d35f19e365e",
+        "after_value": "dataset:candidates/jaw4/model.json"
+      },
+      {
+        "pointer": "/input_bindings/4/path",
+        "before_value_sha256": "45f2b39ee361d58f64006b97ffe98a11cf9431c6a9f075d85733794d8bd8e0c6",
+        "after_value": "dataset:prior-studies/study01/protocol.json"
+      },
+      {
+        "pointer": "/input_bindings/5/path",
+        "before_value_sha256": "443fd76325596a3d36d7602128066f94b52c2090ece766ab623eaf7736ef51ae",
+        "after_value": "dataset:training-parent.json"
+      },
+      {
+        "pointer": "/input_bindings/6/path",
+        "before_value_sha256": "5bb478f3b3953cd17c83fec118af98a72458e97e946bbbcaeb9f64d394ec5e97",
+        "after_value": "src/dvidia_training/robot_profiles.lock.json"
+      },
+      {
+        "pointer": "/input_bindings/7/path",
+        "before_value_sha256": "979fc791124854e1178bf25ec782f874587739a21bc6eee7df5691377f43662e",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-00-goal0-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/8/path",
+        "before_value_sha256": "700788a79823b38700ae227b61c865c308cc9033e97a3f9e53795470878453c2",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-00-goal0-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/9/path",
+        "before_value_sha256": "a585d0faa56a9c1872c57b0b5d96c41282fed0687991be00e2378972f41f78c1",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-00-goal1-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/10/path",
+        "before_value_sha256": "adaadd0ecfa7415e46f1898065c6269e2f7b6156819a8e39f47362c10cd0f1c7",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-00-goal1-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/11/path",
+        "before_value_sha256": "c6f97bbf8a14a2ba8bc328ee756f4a4aaee4928566a4abf69907e769661f8c1c",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-01-goal0-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/12/path",
+        "before_value_sha256": "25357bf48e44c65a1d562f2898eba9e89902cacb59b520b4e95e1b6a52d0490d",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-01-goal0-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/13/path",
+        "before_value_sha256": "d7093fc90f8628e9070279953f5938ff2e4da779c16b15412e753ac20b5eee4a",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-01-goal1-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/14/path",
+        "before_value_sha256": "403822c0b746690650f5918752fcad04efbc696d8ab7cc5c8429c30901d14cc1",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-01-goal1-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/15/path",
+        "before_value_sha256": "5fc406e0ea4f60550d8db708a6668b27cb549cf9f3ef2bd197e66aa19375acfc",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-02-goal0-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/16/path",
+        "before_value_sha256": "e1ed3c49cbfcd2f1ad26c7117f251d495c139694c654678c4b6ffdd23a6d2250",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-02-goal0-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/17/path",
+        "before_value_sha256": "594869c22a5ccd98d11d96028186a8eb9c5be5da89e75ac162d04e342a769e81",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-02-goal1-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/18/path",
+        "before_value_sha256": "df598db795da3e66cf11ed5743b669254ce0c513912458ae6345d8479e027760",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-02-goal1-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/19/path",
+        "before_value_sha256": "568660dcd626fc3004f60f2b8fbf7d87d177fdaa4068e82e26e8dfffdc774499",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-03-goal0-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/20/path",
+        "before_value_sha256": "4af81083040fc6293c72a0c423f7b0c9b39e22962e07c471cbfa8d62ed5469be",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-03-goal0-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/21/path",
+        "before_value_sha256": "0aa393a5c5daf42bef4d227f039c47928182288d74c2efcf558658a9af1e6348",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-03-goal1-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/22/path",
+        "before_value_sha256": "4c98a3defbea381b98c48e6f01ceb091c9703a26af8a996327cbe93a06bb4de4",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-03-goal1-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/23/path",
+        "before_value_sha256": "57958843c5e881802b393a9a18d106889fc19ee7a025ff21594f9cfc154ca691",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-04-goal0-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/24/path",
+        "before_value_sha256": "5aafffdbb1cc1dca4257a50f730fcdb1f4d9a13a5a2c4b6217c614750956e6e1",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-04-goal0-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/25/path",
+        "before_value_sha256": "2973860275cd62b52f785587a0fa78cb39a155e53c7beadcb6b48d95ee283751",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-04-goal1-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/26/path",
+        "before_value_sha256": "d9ddcdd101d4e064255fbe1c098adead676d5b26c5298e7f3409f9f4729b9763",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-04-goal1-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/27/path",
+        "before_value_sha256": "92c156fbd07b39144e2481117532b3514f8cb5edeb2c39425c7fe8ddf4230dae",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-05-goal0-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/28/path",
+        "before_value_sha256": "eb2a0e85fcad69ae3c4e7025a32d76e6624f8a88a41929d9d7d55bc89107aef8",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-05-goal0-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/29/path",
+        "before_value_sha256": "1a873810eebc264624286045fa3da70a71fe39480ab6d1ace01d2235938ed7fd",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-05-goal1-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/30/path",
+        "before_value_sha256": "75ea04b4ae67183a988c67207b804bb63f00e147db58f9158cec97a8bb6b6971",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-05-goal1-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/31/path",
+        "before_value_sha256": "a9b711b3312eb1a37f7c72b5757e26922a98182761cbc29e41cc5df306970f5c",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-06-goal0-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/32/path",
+        "before_value_sha256": "ecb5da1c29c0503bd54ea255604e9f57e1f727b5f57b9c936f96aff063743b09",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-06-goal0-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/33/path",
+        "before_value_sha256": "386a9740bb63a77a316021bbf6dc64fcdcd862cadc8de1dc6a094e7adada223d",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-06-goal1-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/34/path",
+        "before_value_sha256": "ccdd3f054be06ee910988ccbd8b016bb938d6a465c4e2de23aaf5c4ef48dcfd7",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-06-goal1-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/35/path",
+        "before_value_sha256": "cb69b52a4a5a5ff47e343bc712ce700fca476e7e527ed4d20b567fdce883b01c",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-07-goal0-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/36/path",
+        "before_value_sha256": "bf1ba9ee1baa662cad974b82e696bf7b7ebd96245f8f0690dce1a1e35e468d23",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-07-goal0-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/37/path",
+        "before_value_sha256": "2dafcd1c7c4e095bd48f4693c2cc1909b4222e6b0dcdbad221ab23703e3c00f8",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-07-goal1-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/38/path",
+        "before_value_sha256": "8192f1b94c39a5b23f8fedec1ffbdf7c3f03924acd059e2b857f5545f0d5f692",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-07-goal1-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/39/path",
+        "before_value_sha256": "5a53f271f28e3cef5726cff3348b4242b5d9ce4314e771fd51486cef7a4c2ec3",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-08-goal0-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/40/path",
+        "before_value_sha256": "bdb848ce3e500dacc2cf4b3713bb18f056253f5975fa8ba03f7585dd18bfdc48",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-08-goal0-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/41/path",
+        "before_value_sha256": "e8cf18bae827e6511317c7e7b1b1b8b0ffec47d06afa6bfa96186a40453d6402",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-08-goal1-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/42/path",
+        "before_value_sha256": "afb7cf4c4581cdf8e2a807b2332fc4703ec1042080b93b5591984b8910adf2ae",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-08-goal1-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/43/path",
+        "before_value_sha256": "8cf43281d4864890b94301535e4a76b2f7007ad323c149aaad0054c27b628933",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-09-goal0-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/44/path",
+        "before_value_sha256": "73d6929b1db2a1ef275fcd9b2d3157b332ffeed5dd5b165704718d107502d74b",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-09-goal0-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/45/path",
+        "before_value_sha256": "b82eb71448f2310e45108ff33fb93c566d1bd93ece2022fa281bfb300da75af6",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-09-goal1-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/46/path",
+        "before_value_sha256": "6755e66857b4b262c560a41c18e940748291a7349732f42f54d4a65758a990fd",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-09-goal1-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/47/path",
+        "before_value_sha256": "ed4b225d872626cc2cb55b86f97081e0108577b781a60fb98453f04bf80159ee",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-10-goal0-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/48/path",
+        "before_value_sha256": "b24e5e20cb9538696a4766a7b779563d585e3091a67ed44cde26b6fef3c619c4",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-10-goal0-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/49/path",
+        "before_value_sha256": "9499d2c2f85acdb61019fc48c0a46cb441d912191e023c796db3132879d24ae0",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-10-goal1-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/50/path",
+        "before_value_sha256": "8942ff87a73cdbfa682b9d63c8135db19d075512e43adb200289a497b498b0d4",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-10-goal1-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/51/path",
+        "before_value_sha256": "0bd30c890269ae0c8c9813bc8ce9f8e12efe184bcc214e7d5c1d385da6d05a72",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-11-goal0-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/52/path",
+        "before_value_sha256": "e416b11545be1f183e428ae1452dc919bfe0ad95ce0bb63c71f884a23d8e6092",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-11-goal0-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/53/path",
+        "before_value_sha256": "42a398245768ca6e78aab9b813eadf07c3200b5834815ac6df7db8133d65231c",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-11-goal1-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/54/path",
+        "before_value_sha256": "f4a84c14704e7637aade97d1e1d36ef87e745c80f5cb74ba07a79729edf0f153",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-11-goal1-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/55/path",
+        "before_value_sha256": "8abc7a1eccc4148ba752848819ddeb35c77f060ef1abf8fbfef9537aee1a8345",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-12-goal0-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/56/path",
+        "before_value_sha256": "87a99cfae796fc90a5aaf0ad1d79650a1f542619d6129185ac68307809c085e2",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-12-goal0-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/57/path",
+        "before_value_sha256": "6a1e86456fd9aef4739ab6930846e6f5f1f2de847b861949bd3fd28ccdc50d74",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-12-goal1-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/58/path",
+        "before_value_sha256": "0c9d79d697b0d34f03126bd33965544bc220f705257ef229cd0cb3b29c91b862",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-12-goal1-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/59/path",
+        "before_value_sha256": "7e13a68e2846712dd8d5d6d5687c8ca2921152944a51fc392b31174ddaa30fd6",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-13-goal0-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/60/path",
+        "before_value_sha256": "b6bacb80221af0358e403a5f4a733e78aa1975196f6cf8646a5113dede6167e5",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-13-goal0-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/61/path",
+        "before_value_sha256": "5e62bc34d7e52eacc6dcfbb5e4c115845cd60dfd857a6b4bdf403e1bbd9793c9",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-13-goal1-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/62/path",
+        "before_value_sha256": "c83ceb6c244ae76d8d5d335fb7c19641071f4d8e2f3a9990bd7433a5af29e3ff",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-13-goal1-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/63/path",
+        "before_value_sha256": "0c69aa321e838fb41c117b0ccfc04d253ce03eeec900d76c967d7305ca358ad9",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-14-goal0-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/64/path",
+        "before_value_sha256": "371e8f848a70f837030d935cfe9b23dadba508bae25155d10a884b568d5d4b32",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-14-goal0-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/65/path",
+        "before_value_sha256": "d34a7001041bfac61d095a9be00fced7a706b2fdc7304137ee43b8e00a07f951",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-14-goal1-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/66/path",
+        "before_value_sha256": "851f9ec8b2cf63105f0bf3b2e831e433f8f541b2e5b30692cb42b85c36d9a1eb",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-14-goal1-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/67/path",
+        "before_value_sha256": "61fda066b4702605f46020f831852992e395bba34903b3736e7833f25e9e8d65",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-15-goal0-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/68/path",
+        "before_value_sha256": "61bde5daab11c1a86b2db08305ee0e9d7d6c4e7f61e2a8147f2b6693f3baffcd",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-15-goal0-jaw_interruption/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/69/path",
+        "before_value_sha256": "bd1f065a63eba051a222837835c2950e20589b847d99f800750c3446378efe87",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-15-goal1-nominal/episode.json.gz"
+      },
+      {
+        "pointer": "/input_bindings/70/path",
+        "before_value_sha256": "c9d282a909a6d53461db93daaa1a9c797d143476a8927c00dd2fb7d5f8bd810e",
+        "after_value": "dataset:prior-studies/study01/demonstrations/train-15-goal1-jaw_interruption/episode.json.gz"
+      }
+    ],
+    "runtime.json": [
+      {
+        "pointer": "/report/path",
+        "before_value_sha256": "4bd300c0205a4a42ab5c87ba588c68c273a818ce20abb826e496035872af69b2",
+        "after_value": "original-diagnostic:report.json"
+      },
+      {
+        "pointer": "/source_files/0/path",
+        "before_value_sha256": "cdc6ba074d370bbb6df4f3f7f62ee4abbcd12ce2c74dc57beba1478a66bffbc8",
+        "after_value": "src/dvidia_training/piper_motor_primitive.py"
+      },
+      {
+        "pointer": "/source_files/1/path",
+        "before_value_sha256": "99e9813612bf57588bb91570e570b8eef8dccd9e0093143763d1096c295b5cb2",
+        "after_value": "src/dvidia_training/piper_grip_adapter.py"
+      },
+      {
+        "pointer": "/source_files/2/path",
+        "before_value_sha256": "28d906bf4634a002c7dbc71b86659ad8180288c18128c703028390167ad3bef2",
+        "after_value": "src/dvidia_training/piper_imitation.py"
+      },
+      {
+        "pointer": "/source_files/3/path",
+        "before_value_sha256": "541fc164d5f76e7518b510170bdb81b9703ab9a81c31d5d94dc556cd897167d3",
+        "after_value": "src/dvidia_training/piper_task.py"
+      },
+      {
+        "pointer": "/source_files/4/path",
+        "before_value_sha256": "deae644b571bd9b92b93efde069e96ddbc1312ce85cf0c3a08f31ed2ff2e9682",
+        "after_value": "src/dvidia_training/robot_profiles.py"
+      },
+      {
+        "pointer": "/source_files/5/path",
+        "before_value_sha256": "3417d8857fdecbecaff049f0eb86a8c3eb13835d19256fe86f888040042cf5fa",
+        "after_value": "src/dvidia_training/reference_sim.py"
+      },
+      {
+        "pointer": "/source_files/6/path",
+        "before_value_sha256": "eb4912338a3fe80c8c85d72ef75d5e2f6aa8c259c686e2ffa3f27c0cd31b7909",
+        "after_value": "src/dvidia_training/reference_task.py"
+      },
+      {
+        "pointer": "/source_files/7/path",
+        "before_value_sha256": "b09e22389eb57e1fce82223a2ac92a69e0ecc3f6e3f25ddb0893f60b709c27ed",
+        "after_value": "src/dvidia_training/reference_replay.py"
+      }
+    ],
+    "preserved-inputs.json": [
+      {
+        "pointer": "/files/report.json/source",
+        "before_value_sha256": "4bd300c0205a4a42ab5c87ba588c68c273a818ce20abb826e496035872af69b2",
+        "after_value": "original-diagnostic:report.json"
+      },
+      {
+        "pointer": "/files/runtime.json/source",
+        "before_value_sha256": "644e7c4cd27f9fbca4307bacfc82f3b35e95b869d916432fd2cfb225371781d7",
+        "after_value": "original-diagnostic:runtime.json"
+      },
+      {
+        "pointer": "/files/analysis.py/source",
+        "before_value_sha256": "bfce772a0a45925b91ee995baf0f44744bb29701ab4e6b81237ffa6e5b0ddd8b",
+        "after_value": "original-diagnostic:analysis.py"
+      },
+      {
+        "pointer": "/files/protocol-proposal.md/source",
+        "before_value_sha256": "aaf3354231cc1ea6a82220de6240851a38ee2dd4604c1ab31ccf477419b90f87",
+        "after_value": "benchmarks/piper-clock-label-feasibility-20261027/protocol-proposal.md"
+      }
+    ]
+  },
+  "replacement_value_hash_encoding": "SHA256 of original JSON string value encoded as UTF-8, without JSON quoting",
+  "script_change": {
+    "before_sha256": "1c3cc0d1ffcec1a2a4314aaf45d3a5d90af7d014554aa20929269870e6257400",
+    "after_sha256": "fc03d92bdf357bfe5d82983f4159455973e3aed7eabbaa78bd549f0c33a29e3f",
+    "before_literal_value_sha256": "f63b94cf2ef04695ca4f27edc909200e848a399de497e1b2531cd3179b3bb7d7",
+    "after_literal_value": "runs/clock-label-assets",
+    "allowed_change": "Exactly one existing --assets default string literal; all remaining bytes identical."
+  },
+  "scientific_preservation": "All original numeric values, source/data hashes, model bindings and JSON values other than the declared path strings remain unchanged. Historical digests in report/runtime/preserved-inputs refer to original raw records.",
+  "path_reference_meanings": {
+    "src/": "DVIDIA Training repository root",
+    "dataset:": "Full pinned Dvidia/piper-block-placement-feedback-demonstrations-v02 snapshot root",
+    "original-diagnostic:": "Historical raw record in the retained original package; its raw SHA256 remains in the scientific binding"
+  },
+  "dp_check_change": "Only analysis_sha256 updated to derived public script; exhaustive checker bytes and all numerical results unchanged.",
+  "derived_payloads": {
+    "README.md": {
+      "bytes": 16566,
+      "sha256": "bd2612bc809237d73a122e239dbf6ca7ad2a15daa1359f294545038afb4c4678"
+    },
+    "analysis.py": {
+      "bytes": 12450,
+      "sha256": "fc03d92bdf357bfe5d82983f4159455973e3aed7eabbaa78bd549f0c33a29e3f"
+    },
+    "dp-check.json": {
+      "bytes": 780,
+      "sha256": "83d6dae388e1f3a000a52fb8c1442c29b2410639045f858919db17b5dda5dea0"
+    },
+    "preserved-inputs.json": {
+      "bytes": 1096,
+      "sha256": "82678673843b4ec1d2298ee4a1f2321e9fb721eebfea5bafb3126a3e60623aef"
+    },
+    "protocol-proposal.md": {
+      "bytes": 10891,
+      "sha256": "1b2178c4382dcc24c29947e63e46f266a83abda73572a47dd059ab986be05012"
+    },
+    "report.json": {
+      "bytes": 304968,
+      "sha256": "c0005c80970462dc8a836046beae41d791811195715378d0ce8bd0548e027ef4"
+    },
+    "runtime.json": {
+      "bytes": 1896,
+      "sha256": "a853d05b221af476e83af2e2cf473eb33d6dba2cb97be0fae66621863d367681"
+    },
+    "verify_derivation.py": {
+      "bytes": 5939,
+      "sha256": "da09f9d6d8605cabcdf87ae44bc9a639cb5d5961042b7e8bd97d173b973b4834"
+    },
+    "verify_dp.py": {
+      "bytes": 4281,
+      "sha256": "fc7e4e7fd25520d7cee8492aa8f49e1b9d119ca648c22de2d9f637f0cce954e7"
+    }
+  }
+}

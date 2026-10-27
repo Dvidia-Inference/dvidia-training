@@ -15,12 +15,14 @@ reliability. Finger-table contact and movement timing are now measured bottlenec
 
 The immediate research priority is **coupled movement timing and grip control**:
 
-1. First preserve the learned path's geometry while learning a bounded progress
-   clock that can wait for a secure grip. Compare against the same path with a
-   blind clock and fixed timing. Treat clearance correction as a separately
-   versioned path change with its own evaluation; it cannot preserve all six
-   original arm references. Avoid unrestricted seven-command residuals that
-   amplified small deviations.
+1. First validate an explicitly logged same-path teacher that can hold or advance
+   a bounded progress clock. Existing TRAINING-only pose projection does not yet
+   provide validated clock labels: repeated poses and pauses are ambiguous. Test
+   whether timing alone is feasible before fitting a learner. Then compare a
+   learned clock against a blind clock and fixed timing on the same path. Treat
+   clearance correction as a separately versioned path change with its own
+   evaluation; it cannot preserve all six original arm references. Avoid
+   unrestricted seven-command residuals that amplified small deviations.
 2. Apply separately reported actuator disturbances after verified loaded grip,
    including table-free holds. Count every scheduled case, including cases
    where no grasp or disturbance activation occurs. The current jaw pulses
@@ -32,6 +34,10 @@ The immediate research priority is **coupled movement timing and grip control**:
 4. Add synchronized real demonstration video, joint commands and sensed contact
    to this working control loop. Human video alone still lacks the actuator
    supervision and calibration needed for a physical arm.
+
+The [TRAINING-only clock-label diagnostic](../benchmarks/piper-clock-label-feasibility-20261027/README.md)
+checks that first label-design step without fitting or stepping physics. It is an
+unfrozen development finding, separate from the completed v0.2 confirmation.
 
 The local CLI, finite model files, source hashes and full replay/export tools
 are usable research components. Universal video-to-arm transfer remains unproven.

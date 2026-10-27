@@ -55,7 +55,7 @@ The earlier seven-command residual family uses a different 183-feature contract 
 
 ## Refit the jaw prototype from preserved evidence
 
-The jaw family has its own prepared study folder and protocol. It imports all 64 teacher episodes from its verified parent evidence, including unsuccessful finite prefixes, without recollecting physics. The parent's mixed-policy data and failed development candidates are retained for transparency and excluded from jaw-only fitting.
+The jaw family has its own prepared study folder and protocol. It imports all 64 teacher episodes from its verified parent evidence without recollecting physics. All 64 of these teacher attempts succeeded strictly; the collection contract also preserves finite unsuccessful prefixes when they occur. The parent's mixed-policy data and failed development candidates are retained for transparency and excluded from jaw-only fitting.
 
 With that prepared lineage-bound folder available, fit the selected tree recipe and its matched blind control into fresh candidate names. A completed frozen study refuses retraining; preserve it and create a separate development study:
 
