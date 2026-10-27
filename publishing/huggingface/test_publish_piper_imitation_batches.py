@@ -1,6 +1,7 @@
 """Offline recovery and batching tests for the PiPER Hub adapter."""
 from hashlib import sha1, sha256
 from pathlib import Path
+import json
 import sys
 import tempfile
 from types import SimpleNamespace
@@ -39,7 +40,9 @@ class FakeHub:
                 base = {'.gitattributes': b'* filter=lfs diff=lfs merge=lfs -text\n'}
                 revision = '2' * 40
             else:
-                base = {'.gitattributes': b'*.bin filter=lfs diff=lfs merge=lfs -text\n',
+                base = {'.gitattributes': (b'*.bin filter=lfs diff=lfs merge=lfs -text\n'
+                                           b'*.gz filter=lfs diff=lfs merge=lfs -text\n'
+                                           b'*.npz filter=lfs diff=lfs merge=lfs -text\n'),
                         'README.md': b'pre-existing Space root\n'}
                 revision = batches.EXPECTED_SPACE_BASE
             self.repos[kind] = {'row': row, 'files': base, 'head': revision,
@@ -70,13 +73,17 @@ class FakeHub:
         raw_total = sum(len(op.path_or_fileobj) for op in operations)
         assert raw_total <= batches.BATCH_MAX_BYTES
         if repo_type == 'space':
-            assert all(op._upload_mode == 'regular' and op._should_ignore is False for op in operations)
+            assert all(op._should_ignore is False for op in operations)
         paths = [op.path_in_repo for op in operations]
         if len(set(paths)) != len(paths) or set(paths) & set(repo['files']):
             raise AssertionError('file overwrite attempted')
         new_files = dict(repo['files'])
         for op in operations:
             new_files[op.path_in_repo] = op.path_or_fileobj
+            if repo_type == 'space' and op._upload_mode == 'lfs':
+                self.lfs_paths.add(op.path_in_repo)
+            elif repo_type == 'space':
+                self.lfs_paths.discard(op.path_in_repo)
         revision = sha1((parent_commit + '\0' + '\0'.join(paths)).encode()).hexdigest()
         repo['files'] = new_files
         repo['head'] = revision
@@ -111,9 +118,17 @@ class FakeHub:
 
 def _stage(directory):
     base = Path(directory)
+    base.mkdir(parents=True, exist_ok=True)
     run, output = base / 'run', base / 'stage'
     run.mkdir()
     fixtures._make_run(run)
+    viewer = run / 'viewer'
+    viewer_files = {path.relative_to(viewer).as_posix(): batches._receipt(path.read_bytes())
+                    for path in viewer.rglob('*') if path.is_file()}
+    (viewer / 'viewer-integrity.json').write_text(json.dumps({
+        'schema': 'dvidia.piper-imitation-viewer/v1', 'scope': 'Artifact consistency only',
+        'files': viewer_files,
+    }, sort_keys=True), encoding='utf-8')
     # Enough independent source artifacts to require multiple operation batches.
     for index in range(28):
         path = run / 'sources' / f'batch-fixture-{index:02}.py'
@@ -215,14 +230,127 @@ class PiperImitationBatchPublisherTests(unittest.TestCase):
         batches.verify_public_files(row, 'a' * 40, flaky_download)
         self.assertEqual(len(attempts), 3)
 
-    def test_space_files_must_be_regular_git_blobs(self):
+    def test_space_lfs_is_required_only_for_pinned_attribute_paths(self):
         with tempfile.TemporaryDirectory() as directory:
             plan_path, plan = _stage(directory)
             api = FakeHub(plan, plan_path.parent)
             space_row = next(row for row in plan['repositories'] if row['repo_type'] == 'space')
-            api.lfs_paths.add(space_row['files'][0]['path'])
-            with self.assertRaisesRegex(study.PublicationError, 'regular Git bytes'):
-                batches.publish(plan_path, api=api, downloader=api.download, operation_cls=Add)
+            text_item = next(item for item in space_row['files'] if item['path'].endswith('.json'))
+            baselines, _ = batches._initial_preflight(plan['repositories'], api, api.download)
+            api.lfs_paths.add(text_item['path'])
+            api.put_external('space', text_item['path'],
+                             (plan_path.parent / 'space' / text_item['path']).read_bytes())
+            payload = batches._payload(plan, plan_path.parent, None)
+            with self.assertRaisesRegex(study.PublicationError, 'Git/LFS representation'):
+                batches._validate_live(space_row, baselines['space'],
+                    batches._read_info(api, space_row), api, payload, api.download,
+                    reconcile=False)
+
+    def test_space_binary_artifacts_use_lfs_and_verify_raw_digest(self):
+        with tempfile.TemporaryDirectory() as directory:
+            plan_path, plan = _stage(directory)
+            api = FakeHub(plan, plan_path.parent)
+            results = batches.publish(plan_path, api=api, downloader=api.download, operation_cls=Add)
+            self.assertEqual(len(results), 3)
+            tree = batches._tree(api, study.SPACE_REPO, 'space', api.repos['space']['head'])
+            for name, raw in api.repos['space']['files'].items():
+                if name.endswith(('.gz', '.bin', '.npz')):
+                    self.assertIn(name, api.lfs_paths)
+                    self.assertEqual(sha256(raw).hexdigest(), tree[name]['lfs_sha256'])
+
+
+def _frontend(directory):
+    root = Path(directory)
+    files = {
+        'viewer/piper_imitation_viewer.bundle.js': b'fetch("https://huggingface.co/spaces/Dvidia/robot-simulation-lab/resolve/abc/learned-placement/v01/viewer/motion.bin");',
+        'viewer/piper_imitation_viewer.source.js': b'// readable transport source\n',
+        'HF-TRANSPORT.md': b'Pinned Hub resolve links are used for LFS-backed viewer assets.\n',
+    }
+    for name, raw in files.items():
+        path = root / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(raw)
+    return root
+
+
+class PiperImitationOverlayTests(unittest.TestCase):
+    def test_overlay_derivation_preserves_model_dataset_and_limits_space_diff(self):
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            original_path, original = _stage(base / 'source')
+            overlay_path = base / 'v03'
+            overlay = batches.derive_overlay(original_path, _frontend(base / 'frontend'), overlay_path)
+            old_rows = {row['repo_type']: row for row in original['repositories']}
+            new_rows = {row['repo_type']: row for row in overlay['repositories']}
+            self.assertEqual(new_rows['model'], old_rows['model'])
+            self.assertEqual(new_rows['dataset'], old_rows['dataset'])
+            old_space = {item['path']: item for item in old_rows['space']['files']}
+            new_space = {item['path']: item for item in new_rows['space']['files']}
+            changed = {name for name in old_space.keys() | new_space.keys()
+                       if old_space.get(name) != new_space.get(name)}
+            self.assertEqual(changed, batches.OVERLAY_CHANGE_PATHS)
+            self.assertEqual(overlay['overlay']['original_plan_sha256'], batches._plan_sha(original_path))
+            self.assertEqual(overlay['overlay']['diff_sha256'],
+                             json.loads((overlay_path / 'overlay-derivation.json').read_text())['diff_sha256'])
+
+    def test_overlay_journal_migrates_only_after_exact_live_preflight(self):
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            original_path, original = _stage(base / 'source')
+            overlay_path = base / 'v03'
+            batches.derive_overlay(original_path, _frontend(base / 'frontend'), overlay_path)
+            api = FakeHub(original, original_path.parent)
+            baselines, _ = batches._initial_preflight(original['repositories'], api, api.download)
+            journal = batches._journal_new(batches._plan_sha(original_path), baselines)
+            space_row = next(row for row in original['repositories'] if row['repo_type'] == 'space')
+            first = next(item for item in space_row['files'] if item['path'].endswith('.json'))
+            raw = (original_path.parent / 'space' / first['path']).read_bytes()
+            op = Add(path_in_repo=first['path'], path_or_fileobj=raw)
+            op._upload_mode = 'regular'
+            op._should_ignore = False
+            commit = api.create_commit(study.SPACE_REPO, 'space', [op], batches.EXPECTED_SPACE_BASE, 'fixture batch')
+            journal['repositories']['space']['completed_batches'].append({
+                'parent_commit': batches.EXPECTED_SPACE_BASE, 'commit': commit.oid,
+                'paths': [first['path']], 'reconciled': False,
+            })
+            batches._atomic_json(original_path.parent / 'piper-imitation-batch-journal.json', journal)
+            batches.migrate_overlay_journal(original_path, overlay_path / 'publication-plan.json', api, api.download)
+            migrated = batches._read_journal(overlay_path / 'piper-imitation-batch-journal.json',
+                                             batches._plan_sha(overlay_path / 'publication-plan.json'))
+            self.assertEqual(migrated['migration']['from_plan_sha256'], batches._plan_sha(original_path))
+            self.assertEqual(migrated['repositories']['space']['completed_batches'],
+                             journal['repositories']['space']['completed_batches'])
+            self.assertFalse((original_path.parent / 'publication-receipt.json').exists())
+            results = batches.publish(overlay_path / 'publication-plan.json', api=api,
+                                      downloader=api.download, operation_cls=Add)
+            self.assertEqual({row['repo_type'] for row in results}, {'model', 'dataset', 'space'})
+            self.assertTrue((overlay_path / 'publication-receipt.json').is_file())
+
+    def test_overlay_migration_refuses_changed_already_published_path(self):
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            original_path, original = _stage(base / 'source')
+            overlay_path = base / 'v03'
+            batches.derive_overlay(original_path, _frontend(base / 'frontend'), overlay_path)
+            api = FakeHub(original, original_path.parent)
+            baselines, _ = batches._initial_preflight(original['repositories'], api, api.download)
+            journal = batches._journal_new(batches._plan_sha(original_path), baselines)
+            bundle = 'learned-placement/v01/viewer/piper_imitation_viewer.bundle.js'
+            raw = (original_path.parent / 'space' / bundle).read_bytes()
+            op = Add(path_in_repo=bundle, path_or_fileobj=raw)
+            op._upload_mode = 'regular'
+            op._should_ignore = False
+            commit = api.create_commit(study.SPACE_REPO, 'space',
+                                       [op],
+                                       batches.EXPECTED_SPACE_BASE, 'fixture bundle')
+            journal['repositories']['space']['completed_batches'].append({
+                'parent_commit': batches.EXPECTED_SPACE_BASE, 'commit': commit.oid,
+                'paths': [bundle], 'reconciled': False,
+            })
+            batches._atomic_json(original_path.parent / 'piper-imitation-batch-journal.json', journal)
+            with self.assertRaisesRegex(study.PublicationError, 'changes a path already present'):
+                batches.migrate_overlay_journal(original_path, overlay_path / 'publication-plan.json', api, api.download)
+            self.assertFalse((overlay_path / 'piper-imitation-batch-journal.json').exists())
 
 
 if __name__ == '__main__':

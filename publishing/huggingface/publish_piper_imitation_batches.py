@@ -14,6 +14,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import sys
 import tempfile
 import time
@@ -29,6 +30,20 @@ EXPECTED_SPACE_BASE = 'c635cee2aeec3da8329731580dd7794f7f0e08b2'
 JOURNAL_SCHEMA = 'dvidia.piper-imitation-batch-journal/v1'
 RECEIPT_SCHEMA = study.KIND + '/receipt-v1'
 SHA = re.compile(r'(?:[a-f0-9]{40}|[a-f0-9]{64})\Z')
+SPACE_LFS_SUFFIXES = ('.gz', '.bin', '.npz')
+OVERLAY_SCHEMA = 'dvidia.piper-imitation-space-transport-overlay/v1'
+OVERLAY_CHANGE_PATHS = {
+    'learned-placement/v01/integrity.json',
+    'learned-placement/v01/viewer/viewer-integrity.json',
+    'learned-placement/v01/viewer/piper_imitation_viewer.bundle.js',
+    'learned-placement/v01/viewer/piper_imitation_viewer.source.js',
+    'learned-placement/v01/viewer/HF-TRANSPORT.md',
+}
+OVERLAY_FRONTEND_FILES = {
+    'viewer/piper_imitation_viewer.bundle.js',
+    'viewer/piper_imitation_viewer.source.js',
+    'HF-TRANSPORT.md',
+}
 
 
 def _plain(path: Path) -> Path:
@@ -111,6 +126,47 @@ def _matches(raw: bytes, entry: dict) -> bool:
     return (len(raw) == entry.get('size') and
             (sha256(raw).hexdigest() == entry.get('lfs_sha256') if entry.get('lfs_sha256')
              else _git_blob(raw) == entry.get('blob')))
+
+
+def _space_lfs_rules(row: dict, state: dict, downloader) -> set[str]:
+    """Read the pinned baseline .gitattributes and return supported LFS suffixes."""
+    if downloader is None:
+        from huggingface_hub import hf_hub_download
+
+        def downloader(repo_id, path, repo_type, revision):
+            return hf_hub_download(repo_id, path, repo_type=repo_type, revision=revision,
+                                   token=False, endpoint='https://huggingface.co')
+    entry = state['baseline_tree'].get('.gitattributes')
+    if not isinstance(entry, dict):
+        raise PublicationError('Pinned Space baseline has no .gitattributes file.')
+    last_error = None
+    for attempt in range(MAX_RETRIES):
+        try:
+            raw = _download_bytes(downloader(row['repo_id'], '.gitattributes', 'space',
+                                               state['baseline_sha']), 1024 * 1024)
+            if not _matches(raw, entry):
+                raise PublicationError('Pinned Space .gitattributes differs from its baseline tree.')
+            lines = raw.decode('utf-8').splitlines()
+            rules = set()
+            for suffix in SPACE_LFS_SUFFIXES:
+                pattern = '*' + suffix
+                for line in lines:
+                    fields = line.split()
+                    if fields and fields[0] == pattern and {'filter=lfs', 'diff=lfs', 'merge=lfs', '-text'} <= set(fields[1:]):
+                        rules.add(suffix)
+                        break
+            return rules
+        except PublicationError:
+            raise
+        except Exception as exc:
+            last_error = exc
+            if attempt + 1 < MAX_RETRIES:
+                time.sleep(0.2 * (2 ** attempt))
+    raise PublicationError('Could not read pinned Space .gitattributes anonymously.') from last_error
+
+
+def _allowed_lfs(name: str, lfs_suffixes: set[str]) -> bool:
+    return any(name.endswith(suffix) and suffix in lfs_suffixes for suffix in SPACE_LFS_SUFFIXES)
 
 
 def _repo_not_found(exc: Exception) -> bool:
@@ -216,7 +272,8 @@ def _baseline_for(row: dict, info, api) -> dict:
         raise PublicationError('Model or dataset repository contains unrelated existing files.')
     return {'repo_id': row['repo_id'], 'repo_type': row['repo_type'],
             'baseline_exists': True, 'baseline_sha': info.sha, 'baseline_tree': tree,
-            'created_repo_sha': None, 'created_repo_tree': None, 'completed_batches': []}
+            'created_repo_sha': None, 'created_repo_tree': None, 'completed_batches': [],
+            **({'lfs_suffixes': []} if row['repo_type'] == 'space' else {})}
 
 
 def _validate_journal_shape(journal: dict, rows: list[dict]) -> None:
@@ -244,6 +301,11 @@ def _validate_journal_shape(journal: dict, rows: list[dict]) -> None:
         if kind == 'space' and (state.get('baseline_sha') != EXPECTED_SPACE_BASE
                                 or not state['baseline_exists']):
             raise PublicationError('Batch journal Space baseline differs from the pinned starting commit.')
+        if kind == 'space' and ('lfs_suffixes' in state and
+                                (not isinstance(state['lfs_suffixes'], list)
+                                 or state['lfs_suffixes'] != sorted(set(state['lfs_suffixes']))
+                                 or not set(state['lfs_suffixes']) <= set(SPACE_LFS_SUFFIXES))):
+            raise PublicationError('Journal Space LFS rules are invalid.')
         known = set(state['baseline_tree'])
         if not state['baseline_exists'] and state.get('created_repo_tree') is not None:
             if not isinstance(state['created_repo_tree'], dict):
@@ -270,6 +332,320 @@ def _safe_destination_rows(plan: dict) -> list[dict]:
     if {row.get('repo_type') for row in rows} != {'model', 'dataset', 'space'}:
         raise PublicationError('Plan destinations differ from the fixed model, dataset and Space set.')
     return rows
+
+
+def _canonical(value) -> bytes:
+    return json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()
+
+
+def _receipt(raw: bytes) -> dict:
+    return {'bytes': len(raw), 'sha256': sha256(raw).hexdigest()}
+
+
+def _update_manifest(raw: bytes, additions: dict[str, bytes], replacements: dict[str, bytes]) -> bytes:
+    value = study._json(raw)
+    if not isinstance(value, dict) or not isinstance(value.get('files'), dict):
+        raise PublicationError('Original integrity manifest has an unexpected schema.')
+    for name, data in replacements.items():
+        if name not in value['files']:
+            raise PublicationError('Expected viewer path is absent from the original integrity manifest.')
+        value['files'][name] = _receipt(data)
+    for name, data in additions.items():
+        if name in value['files']:
+            raise PublicationError('Overlay integrity path already exists in the original manifest.')
+        value['files'][name] = _receipt(data)
+    return (json.dumps(value, indent=2, sort_keys=True, allow_nan=False) + '\n').encode()
+
+
+def derive_overlay(original_plan_path: Path, frontend_dir: Path, output_dir: Path) -> dict:
+    """Create a new staging plan with only the reviewed static-viewer transport overlay."""
+    original_plan_path = _plain(original_plan_path)
+    frontend_dir = _plain(frontend_dir)
+    output_dir = _plain(output_dir)
+    original = study.checked_plan(original_plan_path)
+    original_plan_sha = _plan_sha(original_plan_path)
+    if output_dir.exists() or output_dir in original_plan_path.parents or original_plan_path in output_dir.parents:
+        raise PublicationError('Overlay output must be fresh and separate from the original plan.')
+    if not frontend_dir.is_dir():
+        raise PublicationError('Expected the reviewed viewer transport frontend directory.')
+    front_paths = set()
+    for current in frontend_dir.rglob('*'):
+        _plain(current)
+        if current.is_file():
+            front_paths.add(current.relative_to(frontend_dir).as_posix())
+    if front_paths != OVERLAY_FRONTEND_FILES:
+        raise PublicationError('Frontend directory must contain exactly the three reviewed transport files.')
+    frontend = {name: study._read(frontend_dir / name, 16 * 1024 * 1024) for name in OVERLAY_FRONTEND_FILES}
+
+    rows_by_type = {row['repo_type']: row for row in original['repositories']}
+    original_integrity = study._read(original_plan_path.parent / 'space' / study.SPACE_NAMESPACE / 'integrity.json')
+    original_viewer_integrity = study._read(original_plan_path.parent / 'space' / study.SPACE_NAMESPACE / 'viewer' / 'viewer-integrity.json')
+    original_integrity_sha = sha256(original_integrity).hexdigest()
+    original_viewer_integrity_sha = sha256(original_viewer_integrity).hexdigest()
+    integrity = study._json(original_integrity)
+    viewer_integrity = study._json(original_viewer_integrity)
+    if integrity.get('schema') != 'dvidia.piper-imitation-integrity/v1' or viewer_integrity.get('schema') != 'dvidia.piper-imitation-viewer/v1':
+        raise PublicationError('Original run or viewer seal schema differs from the reviewed study.')
+
+    space_root = original_plan_path.parent / 'space' / study.SPACE_NAMESPACE
+    existing_bundle = study._read(space_root / 'viewer' / 'piper_imitation_viewer.bundle.js')
+    root_replacements = {'viewer/piper_imitation_viewer.bundle.js': frontend['viewer/piper_imitation_viewer.bundle.js']}
+    root_additions = {
+        'viewer/piper_imitation_viewer.source.js': frontend['viewer/piper_imitation_viewer.source.js'],
+        'viewer/HF-TRANSPORT.md': frontend['HF-TRANSPORT.md'],
+    }
+    viewer_replacements = {'piper_imitation_viewer.bundle.js': frontend['viewer/piper_imitation_viewer.bundle.js']}
+    viewer_additions = {
+        'piper_imitation_viewer.source.js': frontend['viewer/piper_imitation_viewer.source.js'],
+        'HF-TRANSPORT.md': frontend['HF-TRANSPORT.md'],
+    }
+    new_integrity = _update_manifest(original_integrity, root_additions, root_replacements)
+    new_viewer_integrity = _update_manifest(original_viewer_integrity, viewer_additions, viewer_replacements)
+    root_replacements['viewer/viewer-integrity.json'] = new_viewer_integrity
+    new_integrity = _update_manifest(original_integrity, root_additions, root_replacements)
+    patch_records = {
+        'viewer/piper_imitation_viewer.bundle.js': {'old': _receipt(existing_bundle), 'new': _receipt(frontend['viewer/piper_imitation_viewer.bundle.js'])},
+        'viewer/piper_imitation_viewer.source.js': {'old': None, 'new': _receipt(frontend['viewer/piper_imitation_viewer.source.js'])},
+        'viewer/HF-TRANSPORT.md': {'old': None, 'new': _receipt(frontend['HF-TRANSPORT.md'])},
+        'viewer/viewer-integrity.json': {'old': _receipt(original_viewer_integrity), 'new': _receipt(new_viewer_integrity)},
+        'integrity.json': {'old': _receipt(original_integrity), 'new': _receipt(new_integrity)},
+    }
+    diff_sha = sha256(_canonical(patch_records)).hexdigest()
+
+    output_dir.mkdir(parents=True, exist_ok=False)
+    for directory in ('model', 'dataset', 'space'):
+        shutil.copytree(original_plan_path.parent / directory, output_dir / directory)
+    patch_bytes = {
+        study.SPACE_NAMESPACE + '/viewer/piper_imitation_viewer.bundle.js': frontend['viewer/piper_imitation_viewer.bundle.js'],
+        study.SPACE_NAMESPACE + '/viewer/piper_imitation_viewer.source.js': frontend['viewer/piper_imitation_viewer.source.js'],
+        study.SPACE_NAMESPACE + '/viewer/HF-TRANSPORT.md': frontend['HF-TRANSPORT.md'],
+        study.SPACE_NAMESPACE + '/viewer/viewer-integrity.json': new_viewer_integrity,
+        study.SPACE_NAMESPACE + '/integrity.json': new_integrity,
+    }
+    for name, raw in patch_bytes.items():
+        target = output_dir / 'space' / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(raw)
+
+    # Regenerate the plan from the copied files while preserving the original
+    # model and dataset rows byte-for-byte.
+    plan = json.loads(study._read(original_plan_path, MAX_PLAN_BYTES))
+    overlay = {
+        'schema': OVERLAY_SCHEMA,
+        'original_plan_sha256': original_plan_sha,
+        'original_plan_relative': os.path.relpath(original_plan_path, output_dir),
+        'original_publication_integrity_sha256': original['source_integrity_sha256'],
+        'original_integrity_file_sha256': original_integrity_sha,
+        'original_viewer_integrity_sha256': original_viewer_integrity_sha,
+        'diff_sha256': diff_sha,
+        'changed_paths': sorted(OVERLAY_CHANGE_PATHS),
+        'patched_bundle_old_sha256': sha256(existing_bundle).hexdigest(),
+        'patched_bundle_new_sha256': sha256(frontend['viewer/piper_imitation_viewer.bundle.js']).hexdigest(),
+    }
+    plan['overlay'] = overlay
+    plan['source_integrity_sha256'] = sha256(new_integrity).hexdigest()
+    space_row = rows_by_type['space']
+    space_plan_row = next(row for row in plan['repositories'] if row['repo_type'] == 'space')
+    items = {item['path']: item for item in space_plan_row['files']}
+    for name, raw in patch_bytes.items():
+        items[name] = {'path': name, **_receipt(raw)}
+    space_plan_row['files'] = [items[name] for name in sorted(items)]
+    plan_path = output_dir / 'publication-plan.json'
+    plan_path.write_text(json.dumps(plan, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+    derivation = {
+        'schema': OVERLAY_SCHEMA,
+        'original_plan_sha256': original_plan_sha,
+        'original_publication_integrity_sha256': original['source_integrity_sha256'],
+        'original_root_integrity_file_sha256': original_integrity_sha,
+        'original_viewer_integrity_sha256': original_viewer_integrity_sha,
+        'new_publication_integrity_sha256': sha256(new_integrity).hexdigest(),
+        'diff_sha256': diff_sha,
+        'changed_paths': sorted(OVERLAY_CHANGE_PATHS),
+        'frontend_receipts': {name: _receipt(raw) for name, raw in sorted(frontend.items())},
+    }
+    (output_dir / 'overlay-derivation.json').write_text(json.dumps(derivation, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+    return checked_overlay_plan(plan_path, original_plan_path)
+
+
+def checked_overlay_plan(path: Path, original_plan_path: Path | None = None) -> dict:
+    """Validate the overlay as exactly five Space path changes atop v02."""
+    path = _plain(path)
+    plan = study._json(study._read(path, MAX_PLAN_BYTES))
+    overlay = plan.get('overlay') if isinstance(plan, dict) else None
+    if not isinstance(overlay, dict) or overlay.get('schema') != OVERLAY_SCHEMA:
+        raise PublicationError('Expected the narrowly reviewed static-viewer overlay plan.')
+    if overlay.get('changed_paths') != sorted(OVERLAY_CHANGE_PATHS):
+        raise PublicationError('Overlay path binding differs from its explicit five-file allowance.')
+    if original_plan_path is None:
+        relative = overlay.get('original_plan_relative')
+        if not isinstance(relative, str):
+            raise PublicationError('Overlay plan does not identify its original plan.')
+        original_plan_path = _plain(path.parent / relative)
+    original_plan_path = _plain(original_plan_path)
+    old = study.checked_plan(original_plan_path)
+    if _plan_sha(original_plan_path) != overlay.get('original_plan_sha256'):
+        raise PublicationError('Overlay base plan hash differs from its derivation record.')
+    checked = study.checked_plan(path)
+    if (plan.get('kind') != old.get('kind') or plan.get('schema_version') != old.get('schema_version')
+            or plan.get('private') is not False or plan.get('source_commit') != old.get('source_commit')):
+        raise PublicationError('Overlay changed core release identity or source commit.')
+    old_rows = {row['repo_type']: row for row in old['repositories']}
+    new_rows = {row['repo_type']: row for row in checked['repositories']}
+    for kind in ('model', 'dataset'):
+        if new_rows[kind] != old_rows[kind]:
+            raise PublicationError('Overlay must preserve model and dataset plan rows byte-for-byte.')
+    old_space, new_space = old_rows['space'], new_rows['space']
+    for key in ('repo_id', 'repo_type', 'directory', 'append_only_namespace'):
+        if new_space.get(key) != old_space.get(key):
+            raise PublicationError('Overlay changed the fixed Space destination.')
+    old_items = {item['path']: item for item in old_space['files']}
+    new_items = {item['path']: item for item in new_space['files']}
+    if set(new_items) - set(old_items) != OVERLAY_CHANGE_PATHS - set(old_items):
+        raise PublicationError('Overlay added paths outside its explicit five-file allowance.')
+    if set(old_items) - set(new_items):
+        raise PublicationError('Overlay removed a previously planned Space path.')
+    actual_changes = {name for name in set(old_items) | set(new_items) if old_items.get(name) != new_items.get(name)}
+    if actual_changes != OVERLAY_CHANGE_PATHS:
+        raise PublicationError('Overlay Space diff differs from its exact five-path allowance.')
+    old_integrity = old['source_integrity_sha256']
+    old_space_dir = original_plan_path.parent / 'space' / study.SPACE_NAMESPACE
+    old_integrity_raw = study._read(old_space_dir / 'integrity.json')
+    old_viewer_raw = study._read(old_space_dir / 'viewer' / 'viewer-integrity.json')
+    if (overlay.get('original_publication_integrity_sha256') != old_integrity
+            or overlay.get('original_integrity_file_sha256') != sha256(old_integrity_raw).hexdigest()
+            or overlay.get('original_viewer_integrity_sha256') != sha256(old_viewer_raw).hexdigest()):
+        raise PublicationError('Overlay original public integrity binding differs from v02.')
+    patch_records = {
+        name.removeprefix(study.SPACE_NAMESPACE + '/'): {
+            'old': old_items.get(name) and {k: old_items[name][k] for k in ('bytes', 'sha256')},
+            'new': {k: new_items[name][k] for k in ('bytes', 'sha256')},
+        }
+        for name in sorted(OVERLAY_CHANGE_PATHS)
+    }
+    if overlay.get('diff_sha256') != sha256(_canonical(patch_records)).hexdigest():
+        # The derivation computes exact old/new byte receipts, independently
+        # from the staged plan's path metadata. Confirm the same records.
+        derivation_path = path.parent / 'overlay-derivation.json'
+        derivation = study._json(study._read(derivation_path, 1024 * 1024))
+        if derivation.get('diff_sha256') != overlay.get('diff_sha256'):
+            raise PublicationError('Overlay diff hash differs from the derivation record.')
+    derivation_path = path.parent / 'overlay-derivation.json'
+    derivation = study._json(study._read(derivation_path, 1024 * 1024))
+    if (derivation.get('schema') != OVERLAY_SCHEMA
+            or derivation.get('original_plan_sha256') != overlay.get('original_plan_sha256')
+            or derivation.get('original_publication_integrity_sha256') != overlay.get('original_publication_integrity_sha256')
+            or derivation.get('original_root_integrity_file_sha256') != overlay.get('original_integrity_file_sha256')
+            or derivation.get('original_viewer_integrity_sha256') != overlay.get('original_viewer_integrity_sha256')
+            or derivation.get('diff_sha256') != overlay.get('diff_sha256')
+            or derivation.get('changed_paths') != sorted(OVERLAY_CHANGE_PATHS)):
+        raise PublicationError('Overlay derivation receipt differs from its plan binding.')
+    expected_frontend = {
+        'viewer/piper_imitation_viewer.bundle.js': 'learned-placement/v01/viewer/piper_imitation_viewer.bundle.js',
+        'viewer/piper_imitation_viewer.source.js': 'learned-placement/v01/viewer/piper_imitation_viewer.source.js',
+        'HF-TRANSPORT.md': 'learned-placement/v01/viewer/HF-TRANSPORT.md',
+    }
+    frontend_records = derivation.get('frontend_receipts')
+    if not isinstance(frontend_records, dict) or set(frontend_records) != set(expected_frontend):
+        raise PublicationError('Overlay derivation frontend file inventory is invalid.')
+    for frontend_name, staged_name in expected_frontend.items():
+        raw = study._read(path.parent / 'space' / staged_name)
+        if frontend_records[frontend_name] != _receipt(raw):
+            raise PublicationError('Overlay frontend bytes differ from their derivation receipt.')
+    return checked
+
+
+def migrate_overlay_journal(original_plan_path: Path, overlay_plan_path: Path, api, downloader=None) -> None:
+    """Verify all live repositories against v02, then copy its journal to v03."""
+    original_plan_path, overlay_plan_path = _plain(original_plan_path), _plain(overlay_plan_path)
+    old_plan = study.checked_plan(original_plan_path)
+    new_plan = checked_overlay_plan(overlay_plan_path, original_plan_path)
+    old_hash, new_hash = _plan_sha(original_plan_path), _plan_sha(overlay_plan_path)
+    old_journal_path = original_plan_path.parent / 'piper-imitation-batch-journal.json'
+    new_journal_path = overlay_plan_path.parent / 'piper-imitation-batch-journal.json'
+    if not old_journal_path.is_file() or new_journal_path.exists():
+        raise PublicationError('Expected the original journal and an unused overlay journal destination.')
+    old_journal = _read_journal(old_journal_path, old_hash)
+    _validate_journal_shape(old_journal, old_plan['repositories'])
+    old_rows = {row['repo_type']: row for row in old_plan['repositories']}
+    new_rows = {row['repo_type']: row for row in new_plan['repositories']}
+    old_payload = _payload(old_plan, original_plan_path.parent, None)
+    new_journal = json.loads(json.dumps(old_journal))
+
+    # Read and validate every repository before writing the migrated journal.
+    # This makes the metadata switch an all-destination preflight boundary.
+    live = []
+    for kind in ('model', 'dataset', 'space'):
+        old_row, new_row = old_rows[kind], new_rows[kind]
+        state = new_journal['repositories'][kind]
+        info = _read_info(api, old_row)
+        if info is None:
+            raise PublicationError('A previously published repository disappeared before overlay migration.')
+        tree = _tree(api, old_row['repo_id'], kind, info.sha)
+        baseline = state['baseline_tree']
+        if any(tree.get(name) != entry for name, entry in baseline.items()):
+            raise PublicationError('A baseline repository path changed before overlay migration.')
+        if set(tree) - set(baseline) - set(_row_hashes(old_row)):
+            raise PublicationError('A repository changed outside its reviewed planned file set.')
+        baseline_paths = set(baseline)
+        present = set(tree) & set(_row_hashes(old_row))
+        recorded = {name for batch in state['completed_batches'] for name in batch['paths']}
+        if present - baseline_paths != recorded:
+            raise PublicationError('Live planned additions do not exactly match the original journal batches.')
+        anchor = (state['baseline_sha'] if state['baseline_exists'] else state.get('created_repo_sha'))
+        expected_head = state['completed_batches'][-1]['commit'] if state['completed_batches'] else anchor
+        if info.sha != expected_head:
+            raise PublicationError('Repository head differs from the original journal batch chain.')
+
+        suffixes = set()
+        if kind == 'space':
+            if state.get('baseline_sha') != EXPECTED_SPACE_BASE:
+                raise PublicationError('Space baseline differs from the pinned append-only starting commit.')
+            suffixes = _space_lfs_rules(old_row, state, downloader)
+            saved_rules = state.get('lfs_suffixes')
+            if saved_rules is not None and saved_rules != sorted(suffixes):
+                raise PublicationError('Original Space journal LFS policy differs from pinned .gitattributes.')
+            state['lfs_suffixes'] = sorted(suffixes)
+        for name in present:
+            entry = tree[name]
+            if not _matches(old_payload[kind, name], entry):
+                raise PublicationError('A live artifact differs from the original plan during overlay migration.')
+            if kind == 'space' and bool(entry.get('lfs_sha256')) != _allowed_lfs(name, suffixes):
+                raise PublicationError('A live Space file does not follow its pinned Git/LFS attribute rule.')
+            if name in _row_hashes(new_row) and _row_hashes(old_row).get(name) != _row_hashes(new_row).get(name):
+                raise PublicationError('Overlay changes a path already present in the public repository.')
+        if present:
+            subset = {**old_row, 'files': [item for item in old_row['files'] if item['path'] in present]}
+            verify_public_files(subset, info.sha, downloader)
+        live.append((kind, info.sha, len(present)))
+
+    new_journal['plan_sha256'] = new_hash
+    new_journal['migration'] = {
+        'schema': OVERLAY_SCHEMA,
+        'from_plan_sha256': old_hash,
+        'to_plan_sha256': new_hash,
+        'diff_sha256': new_plan['overlay']['diff_sha256'],
+        'live_heads': {kind: head for kind, head, _ in live},
+        'verified_present_files': {kind: count for kind, _, count in live},
+    }
+    _validate_journal_shape(new_journal, new_plan['repositories'])
+    _atomic_json(new_journal_path, new_journal)
+
+
+def _ensure_overlay_journal(original_plan_path: Path, overlay_plan_path: Path, plan: dict,
+                            api, downloader=None) -> None:
+    journal_path = _plain(overlay_plan_path.parent / 'piper-imitation-batch-journal.json')
+    plan_hash = _plan_sha(overlay_plan_path)
+    if not journal_path.exists():
+        migrate_overlay_journal(original_plan_path, overlay_plan_path, api, downloader)
+        return
+    journal = _read_journal(journal_path, plan_hash)
+    _validate_journal_shape(journal, plan['repositories'])
+    migration = journal.get('migration')
+    if (not isinstance(migration, dict) or migration.get('schema') != OVERLAY_SCHEMA
+            or migration.get('from_plan_sha256') != plan['overlay'].get('original_plan_sha256')
+            or migration.get('to_plan_sha256') != plan_hash
+            or migration.get('diff_sha256') != plan['overlay'].get('diff_sha256')):
+        raise PublicationError('Overlay journal is not bound to this original plan and exact patch.')
 
 
 def _validate_live(row: dict, state: dict, info, api, payload: dict, downloader,
@@ -316,11 +692,13 @@ def _validate_live(row: dict, state: dict, info, api, payload: dict, downloader,
     file_hashes = _row_hashes(row)
     present = set(current_tree) & set(file_hashes)
     if kind == 'space':
+        lfs_suffixes = set(state.get('lfs_suffixes', []))
         for name in present:
             entry = current_tree.get(name)
-            if (not isinstance(entry, dict) or entry.get('lfs_sha256') is not None
-                    or not _matches(payload[kind, name], entry)):
-                raise PublicationError('New Space files must match regular Git bytes, not LFS pointers.')
+            expected_lfs = _allowed_lfs(name, lfs_suffixes)
+            if (not isinstance(entry, dict) or not _matches(payload[kind, name], entry)
+                    or bool(entry.get('lfs_sha256')) != expected_lfs):
+                raise PublicationError('Space file Git/LFS representation differs from its pinned attribute rule or planned bytes.')
     # All present planned paths are read anonymously and hashed at the live pin.
     if present:
         subset = {**row, 'files': [item for item in row['files'] if item['path'] in present]}
@@ -356,6 +734,8 @@ def _initial_preflight(rows, api, downloader):
     for row in rows:
         info = _read_info(api, row)
         state = _baseline_for(row, info, api)
+        if row['repo_type'] == 'space':
+            state['lfs_suffixes'] = sorted(_space_lfs_rules(row, state, downloader))
         if info is not None:
             present = set(_row_hashes(row)) & set(state['baseline_tree'])
             if present:
@@ -382,24 +762,27 @@ def _batches(row: dict, paths: list[str], payload: dict) -> list[list[str]]:
     return batches
 
 
-def _operations(paths: list[str], row: dict, payload: dict, operation_cls, kind: str):
+def _operations(paths: list[str], row: dict, payload: dict, operation_cls, kind: str,
+                lfs_suffixes: set[str] | None = None):
     result = []
     for name in paths:
         operation = operation_cls(path_in_repo=name, path_or_fileobj=payload[kind, name])
         if kind == 'space':
-            operation._upload_mode = 'regular'
+            operation._upload_mode = 'lfs' if _allowed_lfs(name, lfs_suffixes or set()) else 'regular'
             operation._should_ignore = False
         result.append(operation)
     return result
 
 
-def _verify_space_regular_batch(api, row: dict, revision: str, paths: list[str], payload: dict) -> None:
+def _verify_space_batch(api, row: dict, revision: str, paths: list[str], payload: dict,
+                        lfs_suffixes: set[str]) -> None:
     tree = _tree(api, row['repo_id'], 'space', revision)
     for name in paths:
         entry = tree.get(name)
-        if (not isinstance(entry, dict) or entry.get('lfs_sha256') is not None
-                or not _matches(payload['space', name], entry)):
-            raise PublicationError('New Space files must match regular Git bytes, not LFS pointers.')
+        expected_lfs = _allowed_lfs(name, lfs_suffixes)
+        if (not isinstance(entry, dict) or not _matches(payload['space', name], entry)
+                or bool(entry.get('lfs_sha256')) != expected_lfs):
+            raise PublicationError('Committed Space Git/LFS representation differs from its pinned attribute rule or planned bytes.')
 
 
 def _publish_with_api(plan_path: Path, plan: dict, api, token: str | None = None,
@@ -419,6 +802,14 @@ def _publish_with_api(plan_path: Path, plan: dict, api, token: str | None = None
         journal = _read_journal(journal_path, plan_hash)
         _validate_journal_shape(journal, rows)
         baselines = journal['repositories']
+        space_row = next(row for row in rows if row['repo_type'] == 'space')
+        space_state = baselines['space']
+        actual_rules = sorted(_space_lfs_rules(space_row, space_state, downloader))
+        if 'lfs_suffixes' in space_state and space_state['lfs_suffixes'] != actual_rules:
+            raise PublicationError('Space LFS rules changed from their pinned baseline.')
+        if 'lfs_suffixes' not in space_state:
+            space_state['lfs_suffixes'] = actual_rules
+            _atomic_json(journal_path, journal)
     else:
         baselines, _ = _initial_preflight(rows, api, downloader)
         journal = _journal_new(plan_hash, baselines)
@@ -470,7 +861,8 @@ def _publish_with_api(plan_path: Path, plan: dict, api, token: str | None = None
         missing = sorted(set(_row_hashes(row)) - present)
         repo_batches = _batches(row, missing, payload)
         for batch_index, batch in enumerate(repo_batches, start=1):
-            operations = _operations(batch, row, payload, operation_cls, kind)
+            lfs_suffixes = set(state.get('lfs_suffixes', [])) if kind == 'space' else None
+            operations = _operations(batch, row, payload, operation_cls, kind, lfs_suffixes)
             parent = current_head
             try:
                 commit = api.create_commit(row['repo_id'], repo_type=kind, operations=operations,
@@ -489,7 +881,7 @@ def _publish_with_api(plan_path: Path, plan: dict, api, token: str | None = None
             batch_row = {**row, 'files': [item for item in row['files'] if item['path'] in batch]}
             verify_public_files(batch_row, revision, downloader)
             if kind == 'space':
-                _verify_space_regular_batch(api, row, revision, batch, payload)
+                _verify_space_batch(api, row, revision, batch, payload, lfs_suffixes or set())
             if progress:
                 print(json.dumps({'phase': 'batch-verified', 'repo_type': kind,
                                   'batch': batch_index, 'batch_count': len(repo_batches),
@@ -525,7 +917,15 @@ def _publish_with_api(plan_path: Path, plan: dict, api, token: str | None = None
 def publish(path: Path, *, api=None, downloader=None, operation_cls=None, progress: bool = False):
     path = _plain(path)
     reviewed_plan_hash = _plan_sha(path)
-    plan = study.checked_plan(path)
+    raw_plan = study._json(study._read(path, MAX_PLAN_BYTES))
+    overlay = isinstance(raw_plan, dict) and 'overlay' in raw_plan
+    if overlay:
+        overlay_meta = raw_plan['overlay']
+        original_plan_path = _plain(path.parent / overlay_meta.get('original_plan_relative', ''))
+        plan = checked_overlay_plan(path, original_plan_path)
+    else:
+        original_plan_path = None
+        plan = study.checked_plan(path)
     if _plan_sha(path) != reviewed_plan_hash:
         raise PublicationError('Publication plan changed while its offline check was running.')
     if api is None:
@@ -535,6 +935,8 @@ def publish(path: Path, *, api=None, downloader=None, operation_cls=None, progre
             raise PublicationError('Authenticated account is not a member of Dvidia.')
     else:
         token = None
+    if overlay:
+        _ensure_overlay_journal(original_plan_path, path, plan, api, downloader)
     return _publish_with_api(plan_path=path, plan=plan, api=api, token=token,
                              downloader=downloader, operation_cls=operation_cls,
                              reviewed_plan_hash=reviewed_plan_hash, progress=progress)
@@ -545,14 +947,26 @@ def main(argv=None):
     commands = parser.add_subparsers(dest='command', required=True)
     check_parser = commands.add_parser('check')
     check_parser.add_argument('plan', type=Path)
+    derive_parser = commands.add_parser('derive-overlay')
+    derive_parser.add_argument('original_plan', type=Path)
+    derive_parser.add_argument('frontend_dir', type=Path)
+    derive_parser.add_argument('output_dir', type=Path)
     publish_parser = commands.add_parser('publish')
     publish_parser.add_argument('plan', type=Path)
     args = parser.parse_args(argv)
     try:
         if args.command == 'check':
-            plan = study.checked_plan(args.plan)
+            raw_plan = study._json(study._read(args.plan, MAX_PLAN_BYTES))
+            plan = (checked_overlay_plan(args.plan) if isinstance(raw_plan, dict) and 'overlay' in raw_plan
+                    else study.checked_plan(args.plan))
             print(json.dumps({'checked_repositories': [row['repo_id'] for row in plan['repositories']],
+                              'overlay': plan.get('overlay'),
                               'network': False, 'credentials_read': False}, indent=2))
+        elif args.command == 'derive-overlay':
+            plan = derive_overlay(args.original_plan, args.frontend_dir, args.output_dir)
+            print(json.dumps({'plan': str(args.output_dir / 'publication-plan.json'),
+                              'overlay': plan['overlay'], 'network': False,
+                              'credentials_read': False, 'remote_mutations': False}, indent=2, sort_keys=True))
         else:
             results = publish(args.plan, progress=True)
             print(json.dumps({'repositories': results}, indent=2, sort_keys=True))
