@@ -1,9 +1,37 @@
 # Execution map: footage to installable skills
 
-Working map, updated 25 October 2026. This is the team's sequence of builds and evidence
+Working map, updated 27 October 2026. This is the team's sequence of builds and evidence
 gates. A completed software component does not establish robot competence.
 
 ## Latest bounded milestones
+
+The [learned placement primitive](piper-learned-placement.md) supplies a small,
+installable movement model from synthetic robot demonstrations. The next
+[learned grip study](../benchmarks/piper-feedback-v02-20261027/README.md) tested
+live grip history around that frozen path: feedback completed 6/24, the matched
+blind learner 8/24 and the authored teacher 24/24. All 360 collected attempts
+remain available. This does not demonstrate that live feedback improves skill
+reliability. Finger-table contact and movement timing are now measured bottlenecks.
+
+The immediate research priority is **coupled movement timing and grip control**:
+
+1. Preserve the learned path's geometry while learning a bounded progress clock
+   and clearance correction. Compare against the same path without feedback;
+   avoid unrestricted seven-command residuals that amplified small deviations.
+2. Apply separately reported actuator disturbances after verified loaded grip,
+   including table-free holds. Count every scheduled case, including cases
+   where no grasp or disturbance activation occurs. The current jaw pulses
+   primarily disturb acquisition and cannot establish post-grasp recovery.
+3. Predeclare fresh confirmation starts and contact conditions. Report complete
+   lift/carry/release/settling success, finger-table contacts, grip restoration,
+   false intervention and full-step deadline tails against blind and teacher
+   controls. The opened v0.2 cases become regression evidence only.
+4. Add synchronized real demonstration video, joint commands and sensed contact
+   to this working control loop. Human video alone still lacks the actuator
+   supervision and calibration needed for a physical arm.
+
+The local CLI, finite model files, source hashes and full replay/export tools
+are usable research components. Universal video-to-arm transfer remains unproven.
 
 The [persisted video-goal pilot](../benchmarks/video-goal-install-v01-20261025/README.md)
 connects four synthetic videos to reloadable PiPER simulation candidates. Across
@@ -15,9 +43,9 @@ must remain distinct from task completion. No motor model is trained.
 The [NVIDIA appearance pilot](../benchmarks/nvidia-material-appearance-v01-20261025/README.md)
 adds five fabric textures without changing compiled mechanics or sampled native
 trajectories (6/6 cases). Four fabric appearances defeat the green-only observer.
-The next implementation target is selected-object grounding across appearance
-changes, followed by synchronized robot action data and a second qualified task
-adapter. See [ordered evidence gates](video-to-skill-milestones.md) and
+Selected-object grounding across appearance changes remains a parallel perception
+gap, alongside synchronized action data and a second qualified task adapter.
+See [ordered evidence gates](video-to-skill-milestones.md) and
 [SimReady Central asset findings](nvidia-simready-integration-v01.md).
 
 ## The product loop
