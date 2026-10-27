@@ -34,6 +34,22 @@ their original protocol and runtime hashes. No old confirmation data may exist.
 This lineage does not imply the new model trains on the preserved DAgger data;
 the candidate's training recipe must disclose which original labels it uses.
 
+After the real confirmation report and all source snapshots are complete,
+produce the independent numeric audit before creating the outer integrity seal:
+
+```sh
+python scripts/audit-piper-feedback.py \
+  --run runs/complete-study02 \
+  --output runs/complete-study02/audit.json
+```
+
+This command checks the old and active evidence rosters, all raw model/source
+bindings and each native NPZ against independent scoring. It also reconstructs
+timing percentiles and deadline counts. It runs no physics or training, writes
+no simulation artifacts, and refuses partial confirmation or existing output.
+The audit's `status: "passed"` means evidence consistency; preserved invalid or
+unsuccessful attempts remain visible in its counts.
+
 The viewer must have its own `dvidia.piper-feedback-viewer/v0.2` seal, match the
 same report/protocol/frozen bytes, and contain no native NPZ arrays. Native
 arrays stay in the dataset; the viewer links to those files with their hashes.

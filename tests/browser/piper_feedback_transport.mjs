@@ -239,3 +239,17 @@ test('selected pose chunks must exactly match recorded frame layout and finite c
   assert.throws(() => app.validateCaseRows({frame_count: 1}, [{...row, pad_normal_forces_n: {left: NaN, right: 0}}], poses), /pad force/);
   assert.throws(() => app.validateCaseRows({frame_count: 1}, [row], new Float32Array([NaN, 0, 0, 1, 0, 0, 0]).buffer), /Nonfinite body pose/);
 });
+
+test('headline summary includes all five strict counts and interrupted feedback without selecting a favorable control', () => {
+  const app = viewer(base);
+  vm.runInContext(source.slice(source.indexOf('function confirmationSummary('), source.indexOf('function evidence() {')), app);
+  const successes = {feedback: 6, blind: 8, feedforward: 5, teacher: 24, open_jaw: 0};
+  const attempts = Object.entries(successes).flatMap(([variant, count]) => Array.from({length: 24}, (_, i) => ({
+    variant, condition: i < 12 ? 'nominal' : 'jaw_interruption', score: {success: i < count}})));
+  const text = app.confirmationSummary(attempts);
+  for (const phrase of ['learned jaw feedback 6/24', 'learner without live feedback 8/24', 'frozen primitive 5/24',
+    'authored teacher 24/24', 'open jaw 0/24', 'Feedback under jaw interruption: 0/12']) assert.ok(text.includes(phrase), phrase);
+  attempts[12].score.success = true;
+  assert.ok(app.confirmationSummary(attempts).includes('learned jaw feedback 7/24'));
+  assert.ok(app.confirmationSummary(attempts).includes('Feedback under jaw interruption: 1/12'));
+});

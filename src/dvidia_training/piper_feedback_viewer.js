@@ -298,12 +298,17 @@ function evidenceUrl(item, key) {
   assert(typeof value === 'string' && /^https:\/\/huggingface\.co\/datasets\/Dvidia\/piper-block-placement-feedback-demonstrations-v02\/resolve\/(?:main|[0-9a-f]{40})\/confirmation\/[a-zA-Z0-9_-]+\/(?:feedback|blind|feedforward|teacher|open_jaw)\/native\.npz$/.test(value), 'Unexpected external native evidence link.');
   return value;
 }
-function evidence() {
+function confirmationSummary(attempts) {
   const count = (variant, condition) => {
-    const rows = metadata.all_attempts.filter(item => item.variant === variant && item.condition === condition);
+    const rows = attempts.filter(item => item.variant === variant && (!condition || item.condition === condition));
     return `${rows.filter(item => item.score.success).length}/${rows.length}`;
   };
-  $('aggregate').textContent = `Full confirmation · feedback: nominal ${count('feedback', 'nominal')}, jaw interruption ${count('feedback', 'jaw_interruption')} · frozen primitive: nominal ${count('feedforward', 'nominal')}, jaw interruption ${count('feedforward', 'jaw_interruption')}. Simulation only.`;
+  const names = [['feedback', 'learned jaw feedback'], ['blind', 'learner without live feedback'],
+    ['feedforward', 'frozen primitive'], ['teacher', 'authored teacher'], ['open_jaw', 'open jaw']];
+  return `Full confirmation · ${names.map(([variant, name]) => `${name} ${count(variant)}`).join(' · ')}. Feedback under jaw interruption: ${count('feedback', 'jaw_interruption')}. Simulation only.`;
+}
+function evidence() {
+  $('aggregate').textContent = confirmationSummary(metadata.all_attempts);
   $('selection-note').textContent = metadata.selection_notice;
   if (metadata.training_parent_manifest) { const a = document.createElement('a'); a.href = studyUrl(localHref(metadata.training_parent_manifest)).href; a.download = ''; a.textContent = 'Download preserved training lineage ↓'; $('selection-note').append(document.createTextNode(' '), a); }
   $('counts').replaceChildren();
