@@ -28,6 +28,9 @@ class FakeHub:
         self.repos, self.commits, self.reads, self.pending_path = {}, [], [], None
         self.ambiguous_after = False; self.ambiguous_before = False
         self.bad_download = None; self.mutate_after = False; self.private = False; self.wrong_space_mode = False
+        self.auto_dataset_wheel_rule = False
+        self.dataset_rule_override = None
+        self.append_rule_on_every_commit = False
         for kind, head in [('model', '1'*40), ('dataset', '2'*40), ('space', 'a'*40)]:
             files = {'.gitattributes': attributes}
             if kind == 'space': files['old/index.html'] = b'old shared Space content'
@@ -62,7 +65,7 @@ class FakeHub:
         if self.pending_path is not None:
             pending = json.loads(self.pending_path.read_bytes())['pending']
             assert pending == dict(repo_type=repo_type, parent_commit=parent_commit,
-                paths=names, group_index=pending['group_index'])
+                paths=names, group_index=pending['group_index'], metadata_transition=pending['metadata_transition'])
         if self.ambiguous_before:
             self.ambiguous_before = False
             raise RuntimeError('Connection lost before the commit arrived')
@@ -74,6 +77,9 @@ class FakeHub:
                 assert operation._should_ignore is False
                 assert (operation._upload_mode == 'lfs') == lfs
             if lfs and not (repo_type == 'space' and self.wrong_space_mode): repo['lfs'].add(operation.path_in_repo)
+        if repo_type == 'dataset' and (self.append_rule_on_every_commit or self.auto_dataset_wheel_rule and continuation.WHEEL in names):
+            rule = self.dataset_rule_override if self.dataset_rule_override is not None else continuation.WHEEL_RULE
+            repo['files'][continuation.ATTRIBUTES] += rule
         head = sha1((parent_commit+'\0'+commit_message+'\0'+'\0'.join(names)).encode()).hexdigest()
         repo['head'] = head; repo['history'][head] = dict(repo['files'])
         repo['parents'][head] = parent_commit; repo['titles'][head] = commit_message
@@ -143,6 +149,7 @@ class ContinuationTests(unittest.TestCase):
         self.boundary.write_bytes(original._encoded(dict(schema=continuation.SCHEMA+'/boundary',
             original_plan=original._receipt(self.plan_path.read_bytes()), original_journal=original._receipt(self.journal_path.read_bytes()),
             stopped_writer_pid=self.pid, anonymous_public_trees=True,
+            metadata_evidence=None,
             repositories={kind: dict(repo_id=repo_id, repo_type=kind, head=self.api.repos[kind]['head'], tree=self.api.tree(kind))
                           for kind, repo_id in original.REPOSITORIES.items()})))
 
@@ -349,6 +356,144 @@ class ExitedWriterTests(unittest.TestCase):
         with patch.object(os, 'kill', side_effect=PermissionError()), self.assertRaisesRegex(continuation.PublicationError, 'cannot be established'):
             continuation._dead(12345)
         with patch.object(os, 'kill', side_effect=ProcessLookupError()): continuation._dead(12345)
+
+
+class WheelMetadataEvidenceTests(unittest.TestCase):
+    def fixture(self):
+        before = b'*.zip filter=lfs diff=lfs merge=lfs -text\n'
+        after = before+continuation.WHEEL_RULE
+        wheel = dict(path=continuation.WHEEL, **original.CONTRACT_ARCHIVES[continuation.WHEEL])
+        plan = dict(repositories=[dict(repo_type=k, files=[wheel]) for k in ('model', 'dataset')])
+        commits = ['1'*40, continuation.MODEL_WHEEL_COMMIT, '3'*40, '4'*40]
+        parent = 'a'*40
+        batches = []
+        for index, commit in enumerate(commits):
+            batches.append(dict(commit=commit, parent_commit=parent,
+                paths=[continuation.WHEEL] if index == 1 else [f'sources/item{index}.py']))
+            parent = commit
+        model = dict(created_sha='a'*40, baseline_sha=None, baseline_tree={continuation.ATTRIBUTES: entry(before)}, batches=batches)
+        dataset = dict(created_sha='b'*40, baseline_sha=None, baseline_tree={continuation.ATTRIBUTES: entry(before)}, batches=[])
+        journal = dict(repositories=dict(model=model, dataset=dataset))
+        plan_raw, journal_raw = original._encoded(plan), original._encoded(journal)
+        value = dict(schema=continuation.SCHEMA+'/wheel-attributes-evidence',
+            original_plan=original._receipt(plan_raw), original_journal=original._receipt(journal_raw),
+            model=dict(repo_id=original.MODEL_REPO, path=continuation.ATTRIBUTES, wheel=wheel,
+                added_line_utf8=continuation.WHEEL_RULE.decode(), anonymous_readbacks=True,
+                before=continuation._attribute_readback('a'*40, before),
+                after=continuation._attribute_readback('4'*40, after),
+                provenance=[dict(index=i, commit=b['commit'], parent_commit=b['parent_commit'],
+                    attributes_entry=entry(before if i == 0 else after)) for i,b in enumerate(batches)]),
+            dataset_before=continuation._attribute_readback('b'*40, before))
+        return plan, journal, plan_raw, journal_raw, value
+
+    def test_exact_historical_model_append_and_dataset_before_are_verified_offline(self):
+        plan, journal, plan_raw, journal_raw, value = self.fixture()
+        self.assertEqual(continuation._metadata_evidence(value, plan, journal, plan_raw, journal_raw), value)
+        self.assertEqual(len(continuation.WHEEL_RULE), 85)
+
+    def test_changed_line_extra_bytes_wrong_manifest_or_wrong_commit_provenance_fail(self):
+        plan, journal, plan_raw, journal_raw, value = self.fixture()
+        for raw in [value['model']['before']['utf8'].encode()+b'*.whl filter=lfs diff=lfs merge=lfs -text\n',
+                    value['model']['after']['utf8'].encode()+b'# extra edit\n']:
+            changed = deepcopy(value)
+            changed['model']['after'] = continuation._attribute_readback('4'*40, raw)
+            with self.assertRaisesRegex(continuation.PublicationError, 'single appended'):
+                continuation._metadata_evidence(changed, plan, journal, plan_raw, journal_raw)
+        changed = deepcopy(value); changed['model']['wheel']['sha256'] = 'f'*64
+        with self.assertRaises(continuation.PublicationError):
+            continuation._metadata_evidence(changed, plan, journal, plan_raw, journal_raw)
+        changed = deepcopy(value); changed['model']['provenance'][0]['attributes_entry'] = changed['model']['after']['entry']
+        with self.assertRaisesRegex(continuation.PublicationError, 'provenance'):
+            continuation._metadata_evidence(changed, plan, journal, plan_raw, journal_raw)
+
+    def test_dataset_transition_reserves_one_path_and_full_after_bytes_in_the_wheel_group(self):
+        _, _, _, _, evidence = self.fixture()
+        wheel = evidence['model']['wheel']
+        state = dict(created_sha='b'*40, baseline_sha=None, baseline_tree={'.gitattributes': entry(b'x\n')}, batches=[], pending=None)
+        row = dict(repo_type='dataset', files=[dict(path=f'sources/a{i:04}.py', bytes=1, sha256='0'*64) for i in range(200)]+[wheel])
+        reserve = len(evidence['dataset_before']['utf8'].encode()+continuation.WHEEL_RULE)
+        groups = continuation._groups(row, state, reserve)
+        transition = continuation._dataset_transition([dict(repo_type='dataset', groups=groups)], evidence)
+        self.assertEqual(sum(g['metadata_reserved_bytes'] > 0 for g in groups), 1)
+        self.assertEqual(groups[transition['group_index']]['metadata_reserved_bytes'], reserve)
+        self.assertTrue(all(len(g['paths'])+int(g['metadata_reserved_bytes'] > 0) <= 100 for g in groups))
+        self.assertTrue(all(g['bytes'] <= continuation.MAX_BYTES for g in groups))
+        self.assertEqual(transition['after']['utf8'], evidence['dataset_before']['utf8']+continuation.WHEEL_RULE.decode())
+
+
+class WheelMetadataRuntimeTests(unittest.TestCase):
+    def setUp(self):
+        temporary = TemporaryDirectory(); self.addCleanup(temporary.cleanup)
+        self.home = Path(temporary.name)
+        self.source = self.home/'source'; self.output = self.home/'continuation'; self.output.mkdir()
+        self.api = FakeHub(); self.api.auto_dataset_wheel_rule = True
+        self.raw = b'exact finite wheel transport fixture bytes'
+        path = self.source/'dataset'/continuation.WHEEL; path.parent.mkdir(parents=True); path.write_bytes(self.raw)
+        before = self.api.repos['dataset']['files'][continuation.ATTRIBUTES]
+        after = before+continuation.WHEEL_RULE
+        self.group = dict(index=0, logical_batches=[dict(index=120, paths=[continuation.WHEEL])],
+            paths=[continuation.WHEEL], bytes=len(self.raw)+len(after), metadata_reserved_bytes=len(after))
+        self.row = dict(repo_id=original.DATASET_REPO, repo_type='dataset', boundary_head=self.api.repos['dataset']['head'],
+            original_manifest=[dict(path=continuation.WHEEL, **original._receipt(self.raw))], groups=[self.group])
+        self.transition = dict(repo_id=original.DATASET_REPO, repo_type='dataset', path=continuation.ATTRIBUTES,
+            group_index=0, wheel=self.row['original_manifest'][0], added_line_utf8=continuation.WHEEL_RULE.decode(),
+            before=continuation._attribute_readback(self.row['boundary_head'], before),
+            after=dict(entry=entry(after), receipt=original._receipt(after), utf8=after.decode()))
+        self.rows = [self.row if kind == 'dataset' else dict(repo_id=repo, repo_type=kind,
+            boundary_head=self.api.repos[kind]['head'], original_manifest=[], groups=[])
+            for kind,repo in original.REPOSITORIES.items()]
+        self.plan = dict(repositories=self.rows, dataset_metadata_transition=self.transition)
+        self.plan_sha = 'd'*64
+        self.boundary = dict(repositories={kind: dict(head=self.api.repos[kind]['head'], tree=self.api.tree(kind))
+                                          for kind in original.REPOSITORIES})
+        self.old_journal = dict(repositories={kind: dict(lfs_suffixes=list(original.LFS_SUFFIXES)) for kind in original.REPOSITORIES})
+        self.journal_path = self.output/continuation.JOURNAL
+        self.progress,self.expected = continuation._load_progress(self.journal_path,self.plan,self.plan_sha,self.boundary,self.source,self.old_journal)
+        self.progress['pending'] = dict(repo_type='dataset', group_index=0, parent_commit=self.row['boundary_head'],
+            paths=[continuation.WHEEL], metadata_transition=self.transition)
+        original._atomic(self.journal_path,self.progress); self.api.pending_path=self.journal_path
+
+    def commit(self):
+        return self.api.create_commit(original.DATASET_REPO,repo_type='dataset',
+            operations=[Add(continuation.WHEEL,self.raw)],parent_commit=self.row['boundary_head'],
+            commit_message=continuation._message(self.plan_sha,'dataset',self.group))
+
+    def finish(self, revision, *, transition=True):
+        return continuation._finish_group(self.api,self.api.download,self.row,self.group,{continuation.WHEEL:self.raw},
+            revision,self.expected['dataset'],self.progress,self.journal_path,self.old_journal['repositories']['dataset'],
+            reconciled=False,duration=.1,transition=self.transition if transition else None)
+
+    def test_correct_automatic_dataset_delta_is_read_back_and_sealed_in_journal(self):
+        result=self.commit(); self.finish(result.oid)
+        self.assertIn(('dataset',result.oid,continuation.ATTRIBUTES),self.api.reads)
+        self.assertIsNone(self.progress['pending'])
+        self.assertEqual(self.progress['repositories']['dataset']['groups'][0]['entries'][continuation.ATTRIBUTES],self.transition['after']['entry'])
+        continuation._load_progress(self.journal_path,self.plan,self.plan_sha,self.boundary,self.source,self.old_journal)
+
+    def test_wrong_line_extra_line_and_missing_or_early_delta_fail_without_acknowledgment(self):
+        for rule in [b'*.whl filter=lfs diff=lfs merge=lfs -text\n', continuation.WHEEL_RULE+b'# extra edit\n', b'']:
+            with self.subTest(rule=rule):
+                repo=self.api.repos['dataset']; repo['head']=self.row['boundary_head']
+                repo['files']=dict(repo['history'][repo['head']]);self.api.dataset_rule_override=rule
+                result=self.commit()
+                with self.assertRaisesRegex(continuation.PublicationError,'outside'): self.finish(result.oid)
+                self.assertIsNotNone(self.progress['pending'])
+        repo=self.api.repos['dataset'];repo['head']=self.row['boundary_head'];repo['files']=dict(repo['history'][repo['head']])
+        self.api.dataset_rule_override=None
+        result=self.commit()
+        with self.assertRaisesRegex(continuation.PublicationError,'outside'): self.finish(result.oid,transition=False)
+
+    def test_unknown_commit_reply_reconciles_the_exact_dataset_metadata_delta_without_recommit(self):
+        self.api.ambiguous_after=True
+        with self.assertRaises(RuntimeError):self.commit()
+        before=len(self.api.commits)
+        progress,expected=continuation._load_progress(self.journal_path,self.plan,self.plan_sha,self.boundary,self.source,self.old_journal)
+        continuation._reconcile(self.api,self.api.download,self.plan,self.plan_sha,progress,expected,
+            self.source,self.old_journal,self.journal_path)
+        self.assertEqual(len(self.api.commits),before)
+        self.assertIsNone(progress['pending'])
+        self.assertTrue(progress['repositories']['dataset']['groups'][0]['reconciled'])
+        self.assertIn(continuation.ATTRIBUTES,progress['repositories']['dataset']['groups'][0]['entries'])
 
 
 if __name__ == '__main__':
