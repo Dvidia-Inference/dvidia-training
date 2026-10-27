@@ -116,7 +116,7 @@ test('a valid compressed fixture is length- and SHA-verified without fetching th
   assert.equal(calls.length, 1);
   assert.equal(calls[0].url, localBase + 'motion.bin.gz');
   assert.equal(calls[0].options.credentials, 'same-origin');
-  assert.equal(calls[0].options.signal.aborted, false);
+  assert.equal(calls[0].options.signal.aborted, true);
 });
 
 test('hung gzip headers abort at the compressed deadline and fall back to verified raw bytes', async () => {
@@ -127,6 +127,35 @@ test('hung gzip headers abort at the compressed deadline and fall back to verifi
   assert.deepEqual(Buffer.from(await app.binary(meta, 'motion.bin')), Buffer.from(raw));
   assert.deepEqual(calls.map(call => call.url), [localBase + 'motion.bin.gz', localBase + 'motion.bin']);
   assert.equal(calls[0].signal.aborted, true);
+});
+
+test('an HTTP error aborts its unread response before the raw fallback begins', async () => {
+  let failedSignal;
+  const app = viewer(localBase, async (url, options) => {
+    if (url.pathname.endsWith('.gz')) {
+      failedSignal = options.signal;
+      return {url: url.href, ok: false, status: 403, body: new ReadableStream()};
+    }
+    assert.equal(failedSignal.aborted, true);
+    return fixture(url, raw);
+  });
+  assert.deepEqual(Buffer.from(await app.binary(meta, 'motion.bin')), Buffer.from(raw));
+});
+
+test('hosted gzip network errors fall back to the fixed Hub raw URL with credentials omitted', async () => {
+  const calls = [], app = viewer(base + 'index.html', async (url, options) => {
+    calls.push({url: url.href, options});
+    if (url.pathname.endsWith('.gz')) throw new TypeError('Network error');
+    return {url: 'https://us.aws.cdn.hf.co/xet-bridge-us/verified-fixture', ok: true, body: new Blob([raw]).stream()};
+  });
+  assert.deepEqual(Buffer.from(await app.binary(meta, 'motion.bin')), Buffer.from(raw));
+  assert.deepEqual(calls.map(call => call.url), [hub + 'motion.bin.gz', hub + 'motion.bin']);
+  for (const call of calls) {
+    assert.equal(call.options.credentials, 'omit');
+    assert.equal(call.options.referrerPolicy, 'no-referrer');
+    assert.equal(call.options.redirect, 'follow');
+    assert.equal(call.options.signal.aborted, true);
+  }
 });
 
 test('hung gzip body reads are cancelled and raw fallback can complete', async () => {

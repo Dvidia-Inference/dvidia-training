@@ -57,7 +57,11 @@ async function deadline(href, milliseconds, operation) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(new Error(`Timed out loading ${href} after ${milliseconds / 1000} s. Check the connection or open the complete download locally.`)), milliseconds);
   try { return await abortable(operation(controller.signal), controller.signal); }
-  finally { clearTimeout(timer); }
+  finally {
+    clearTimeout(timer);
+    // Also release an unread response when status or origin checks fail early.
+    controller.abort();
+  }
 }
 async function bounded(stream, limit, signal) {
   assert(stream, 'Study response is empty.');
