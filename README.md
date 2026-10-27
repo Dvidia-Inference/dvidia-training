@@ -6,6 +6,13 @@
 
 [Recorded demo](https://huggingface.co/spaces/Dvidia/dvidia-training) · [Synthetic datasets](https://huggingface.co/datasets/Dvidia/dvidia-training-examples) · [Pilot models](https://huggingface.co/Dvidia/dvidia-training-pilot)
 
+**[Learned PiPER placement study](docs/piper-learned-placement.md).**
+Synthetic demonstrations train a small local movement model; new starts are
+checked against retained lift, placement and release. The study preserves failed
+feedback learners and tests a feedforward motion primitive. This is bounded
+simulation research, with no learned contact recovery or human-video action bridge.
+[Cosmos as a possible observation layer](docs/cosmos-observation-layer.md).
+
 **[Run DVIDIA Skill Studio locally](docs/local-skill-studio.md).**
 [Download the experimental installer](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/skill-studio-v0.1-alpha.4).
 `dvidia-skill-studio --fetch-assets` opens a compact video → candidate → PiPER

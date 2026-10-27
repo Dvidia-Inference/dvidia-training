@@ -60,6 +60,9 @@ dvidia-graspability-benchmark = "dvidia_training.graspability_benchmark:main"
 dvidia-video-skill = "dvidia_training.video_goal_install:main"
 dvidia-skill-studio = "dvidia_training.video_goal_studio:main"
 dvidia-skillspace = "dvidia_training.skillspace_video:main"
+dvidia-piper-imitation = "dvidia_training.piper_imitation_benchmark:main"
+dvidia-piper-learned = "dvidia_training.piper_learned_skill:main"
+dvidia-piper-confirm = "dvidia_training.piper_imitation_driver:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

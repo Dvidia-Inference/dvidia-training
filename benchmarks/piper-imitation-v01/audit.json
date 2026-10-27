@@ -1,0 +1,168 @@
+{
+  "schema": "dvidia.piper-imitation-audit/v1",
+  "report_sha256": "52ae9f37e845c0949879012fe9e5279192a543dc5f898a8a8d2fe9ab0f51d4fe",
+  "verified_attempts": 60,
+  "split_overlap": false,
+  "variants": {
+    "learned": {
+      "scheduled": 12,
+      "valid": 12,
+      "successes": 5,
+      "failures": 7,
+      "reasons": {
+        "success": 5,
+        "native_outcome_failed": 7
+      },
+      "descriptive_wilson_95_interval": [
+        0.19326031365875665,
+        0.6804886874504503
+      ],
+      "inference_compute": {
+        "samples": 12000,
+        "p50_s": 0.00014808354899287224,
+        "p95_s": 0.0010386524023488148,
+        "p99_s": 0.0032591192470863496,
+        "maximum_s": 0.12923712516203523
+      },
+      "control_step_compute": {
+        "samples": 12000,
+        "p50_s": 0.002158749382942915,
+        "p95_s": 0.014440981671214097,
+        "p99_s": 0.03255935212131595,
+        "maximum_s": 0.5332735842093825
+      },
+      "episode_wall": {
+        "samples": 12,
+        "p50_s": 3.391443145694211,
+        "p95_s": 14.094288227381174,
+        "p99_s": 21.14088054546156,
+        "maximum_s": 22.90252862498164
+      },
+      "missed_20ms_compute_boundaries": 344,
+      "process_peak_rss_bytes": 736444416
+    },
+    "teacher": {
+      "scheduled": 12,
+      "valid": 12,
+      "successes": 12,
+      "failures": 0,
+      "reasons": {
+        "success": 12
+      },
+      "descriptive_wilson_95_interval": [
+        0.7575059933447592,
+        1.0
+      ],
+      "inference_compute": null,
+      "control_step_compute": null,
+      "episode_wall": null,
+      "missed_20ms_compute_boundaries": 0,
+      "process_peak_rss_bytes": null
+    },
+    "open_jaw": {
+      "scheduled": 12,
+      "valid": 12,
+      "successes": 0,
+      "failures": 12,
+      "reasons": {
+        "native_outcome_failed": 12
+      },
+      "descriptive_wilson_95_interval": [
+        2.7755575615628914e-17,
+        0.24249400665524085
+      ],
+      "inference_compute": {
+        "samples": 12000,
+        "p50_s": 0.00015033315867185593,
+        "p95_s": 0.0009418000932782869,
+        "p99_s": 0.0026942880265414743,
+        "maximum_s": 0.11845645774155855
+      },
+      "control_step_compute": {
+        "samples": 12000,
+        "p50_s": 0.0020144376903772354,
+        "p95_s": 0.010997645440511404,
+        "p99_s": 0.02192531631793827,
+        "maximum_s": 0.22316104173660278
+      },
+      "episode_wall": {
+        "samples": 12,
+        "p50_s": 3.6442344582173973,
+        "p95_s": 12.586064423085187,
+        "p99_s": 15.048667184752416,
+        "maximum_s": 15.664317875169218
+      },
+      "missed_20ms_compute_boundaries": 146,
+      "process_peak_rss_bytes": 736444416
+    },
+    "hold": {
+      "scheduled": 12,
+      "valid": 12,
+      "successes": 0,
+      "failures": 12,
+      "reasons": {
+        "native_outcome_failed": 12
+      },
+      "descriptive_wilson_95_interval": [
+        2.7755575615628914e-17,
+        0.24249400665524085
+      ],
+      "inference_compute": null,
+      "control_step_compute": {
+        "samples": 12000,
+        "p50_s": 0.002309792209416628,
+        "p95_s": 0.007684969226829707,
+        "p99_s": 0.01606330575887118,
+        "maximum_s": 0.1396929589100182
+      },
+      "episode_wall": {
+        "samples": 12,
+        "p50_s": 4.683651937171817,
+        "p95_s": 8.436456277081742,
+        "p99_s": 9.14603835550137,
+        "maximum_s": 9.323433875106275
+      },
+      "missed_20ms_compute_boundaries": 72,
+      "process_peak_rss_bytes": 736444416
+    },
+    "shuffled_labels": {
+      "scheduled": 12,
+      "valid": 12,
+      "successes": 0,
+      "failures": 12,
+      "reasons": {
+        "native_outcome_failed": 12
+      },
+      "descriptive_wilson_95_interval": [
+        2.7755575615628914e-17,
+        0.24249400665524085
+      ],
+      "inference_compute": {
+        "samples": 12000,
+        "p50_s": 0.0001632915809750557,
+        "p95_s": 0.0008990625850856295,
+        "p99_s": 0.0028845481341704753,
+        "maximum_s": 0.23349608341231942
+      },
+      "control_step_compute": {
+        "samples": 12000,
+        "p50_s": 0.0021591244731098413,
+        "p95_s": 0.010949680930934829,
+        "p99_s": 0.0288240658678115,
+        "maximum_s": 0.3149603339843452
+      },
+      "episode_wall": {
+        "samples": 12,
+        "p50_s": 3.6591430413536727,
+        "p95_s": 11.864104456477794,
+        "p99_s": 14.944786658366215,
+        "maximum_s": 15.714957208838314
+      },
+      "missed_20ms_compute_boundaries": 245,
+      "process_peak_rss_bytes": 736444416
+    }
+  },
+  "confidence_scope": "Descriptive Wilson intervals only; these twelve deterministic nearby cases are not independent draws from a real-world task distribution.",
+  "timing_scope": "CPU compute only; includes source-process overhead, excludes camera, transport and physical actuation. Peak RSS is cumulative process high-water mark.",
+  "physical_robot_ready": false
+}
