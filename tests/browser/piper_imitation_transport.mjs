@@ -1,15 +1,19 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {webcrypto} from 'node:crypto';
 import test from 'node:test';
 import vm from 'node:vm';
+import {gzipSync} from 'node:zlib';
 
 // Exercise the exact viewer transport without starting Three.js or the DOM.
 const source = readFileSync(new URL('../../src/dvidia_training/piper_imitation_viewer.js', import.meta.url), 'utf8');
-const transport = source.slice(source.indexOf('function assert('), source.indexOf('async function bounded('));
+const transport = source.slice(source.indexOf('function assert('), source.indexOf('function validate('));
 const base = 'https://dvidia-robot-simulation-lab.static.hf.space/learned-placement/v01/viewer/';
 const hub = 'https://huggingface.co/spaces/Dvidia/robot-simulation-lab/resolve/main/learned-placement/v01/viewer/';
-function viewer(url, fetch = () => { throw new Error('Unexpected fetch'); }) {
-  const context = vm.createContext({URL, location: new URL(url), fetch});
+function viewer(url, fetch = () => { throw new Error('Unexpected fetch'); }, overrides = {}) {
+  const context = vm.createContext({URL, location: new URL(url), fetch, MAX_BYTES: 64 * 1024 * 1024,
+    AbortController, Blob, TextDecoder, Uint8Array, crypto: webcrypto, DecompressionStream,
+    setTimeout, clearTimeout, ...overrides});
   vm.runInContext(transport, context);
   return context;
 }
@@ -77,7 +81,7 @@ test('mapped fetch omits credentials and referrer and validates its final URL', 
   });
   await app.response('motion.bin.gz');
   assert.equal(calls[0].url, hub + 'motion.bin.gz');
-  assert.deepEqual({...calls[0].options}, {credentials: 'omit', referrerPolicy: 'no-referrer', redirect: 'follow'});
+  assert.deepEqual({...calls[0].options}, {credentials: 'omit', referrerPolicy: 'no-referrer', redirect: 'follow', signal: undefined});
 });
 
 test('same-origin fetch rejects redirects and untrusted final destinations', async () => {
@@ -89,4 +93,79 @@ test('same-origin fetch rejects redirects and untrusted final destinations', asy
   await assert.rejects(app.response('scene.json'), /Unexpected study download origin/);
   assert.equal(calls[0].url, base + 'scene.json');
   assert.equal(calls[0].options.redirect, 'error');
+  assert.equal(calls[0].options.credentials, 'same-origin');
+});
+
+const localBase = 'https://research.dvidia.org/study/viewer/';
+const raw = new TextEncoder().encode('A small native binary fixture.');
+const compressed = gzipSync(raw);
+const sha256 = Buffer.from(await webcrypto.subtle.digest('SHA-256', raw)).toString('hex');
+const meta = {href: 'motion.bin', bytes: raw.byteLength, sha256, compressed_href: 'motion.bin.gz',
+  compressed_bytes: compressed.byteLength, compression: 'gzip'};
+const quickDeadlines = {setTimeout: (callback, ms) => setTimeout(callback, ms === 8000 ? 15 : 100)};
+function fixture(url, data) {
+  return {url: url.href, ok: true, body: new Blob([data]).stream()};
+}
+
+test('a valid compressed fixture is length- and SHA-verified without fetching the raw copy', async () => {
+  const calls = [], app = viewer(localBase, async (url, options) => {
+    calls.push({url: url.href, options}); return fixture(url, compressed);
+  });
+  const bytes = await app.binary(meta, 'motion.bin');
+  assert.deepEqual(Buffer.from(bytes), Buffer.from(raw));
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].url, localBase + 'motion.bin.gz');
+  assert.equal(calls[0].options.credentials, 'same-origin');
+  assert.equal(calls[0].options.signal.aborted, false);
+});
+
+test('hung gzip headers abort at the compressed deadline and fall back to verified raw bytes', async () => {
+  const calls = [], app = viewer(localBase, async (url, options) => {
+    calls.push({url: url.href, signal: options.signal});
+    return url.pathname.endsWith('.gz') ? new Promise(() => {}) : fixture(url, raw);
+  }, quickDeadlines);
+  assert.deepEqual(Buffer.from(await app.binary(meta, 'motion.bin')), Buffer.from(raw));
+  assert.deepEqual(calls.map(call => call.url), [localBase + 'motion.bin.gz', localBase + 'motion.bin']);
+  assert.equal(calls[0].signal.aborted, true);
+});
+
+test('hung gzip body reads are cancelled and raw fallback can complete', async () => {
+  let cancelled = false;
+  const app = viewer(localBase, async url => url.pathname.endsWith('.gz') ?
+    {url: url.href, ok: true, body: new ReadableStream({cancel() { cancelled = true; }})} : fixture(url, raw), quickDeadlines);
+  assert.deepEqual(Buffer.from(await app.binary(meta, 'motion.bin')), Buffer.from(raw));
+  assert.equal(cancelled, true);
+});
+
+test('the gzip deadline also covers decompression, even if stream cancellation never completes', async () => {
+  class StalledDecompression {
+    constructor() { return new TransformStream({transform() { return new Promise(() => {}); }}); }
+  }
+  const calls = [], app = viewer(localBase, async url => {
+    calls.push(url.href); return fixture(url, url.pathname.endsWith('.gz') ? compressed : raw);
+  }, {...quickDeadlines, DecompressionStream: StalledDecompression});
+  assert.deepEqual(Buffer.from(await app.binary(meta, 'motion.bin')), Buffer.from(raw));
+  assert.equal(calls.length, 2);
+});
+
+test('corrupt raw fallback cannot pass the original binary SHA-256', async () => {
+  const corrupt = raw.slice(); corrupt[0] ^= 1;
+  const app = viewer(localBase, async url => url.pathname.endsWith('.gz') ?
+    new Promise(() => {}) : fixture(url, corrupt), quickDeadlines);
+  await assert.rejects(app.binary(meta, 'motion.bin'), /Study binary SHA256 changed/);
+});
+
+test('a raw copy exceeding its declared size is rejected', async () => {
+  const app = viewer(localBase, async url => fixture(url, new Uint8Array(raw.length + 1)), {DecompressionStream: undefined});
+  await assert.rejects(app.binary(meta, 'motion.bin'), /exceeds its byte bound/);
+});
+
+test('a stalled raw fallback ends with an actionable error rather than indefinite loading', async () => {
+  const app = viewer(localBase, async () => new Promise(() => {}), quickDeadlines);
+  await assert.rejects(app.binary(meta, 'motion.bin'), /Timed out loading motion\.bin after 30 s.*open the complete download locally/);
+});
+
+test('the metadata deadline covers a stalled body after response headers arrive', async () => {
+  const app = viewer(localBase, async url => ({url: url.href, ok: true, body: new ReadableStream()}), quickDeadlines);
+  await assert.rejects(app.json('motion.json'), /Timed out loading motion\.json after 30 s/);
 });

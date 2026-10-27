@@ -33,47 +33,80 @@ function trustedResponseUrl(final, requested) {
   if (!requested.href.startsWith(HF_BINARY_ROOT)) return false;
   return final.href === requested.href || (final.protocol === 'https:' && final.host === 'us.aws.cdn.hf.co');
 }
-async function response(href) {
+async function response(href, signal) {
   const requestedUrl = studyUrl(href);
-  const result = await fetch(requestedUrl, {credentials: 'omit', referrerPolicy: 'no-referrer', redirect: requestedUrl.origin === location.origin ? 'error' : 'follow'});
+  const sameOrigin = requestedUrl.origin === location.origin;
+  const result = await abortable(fetch(requestedUrl, {credentials: sameOrigin ? 'same-origin' : 'omit', referrerPolicy: 'no-referrer', redirect: sameOrigin ? 'error' : 'follow', signal}), signal);
   const final = new URL(result.url);
   assert(trustedResponseUrl(final, requestedUrl), 'Unexpected study download origin.');
   assert(result.ok, `Could not load ${href} (${result.status}).`);
   return result;
 }
-async function bounded(stream, limit) {
+async function abortable(promise, signal) {
+  if (!signal) return await promise;
+  if (signal.aborted) throw signal.reason;
+  let listener;
+  const aborted = new Promise((resolve, reject) => {
+    listener = () => reject(signal.reason);
+    signal.addEventListener('abort', listener, {once: true});
+  });
+  try { return await Promise.race([promise, aborted]); }
+  finally { signal.removeEventListener('abort', listener); }
+}
+async function deadline(href, milliseconds, operation) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(new Error(`Timed out loading ${href} after ${milliseconds / 1000} s. Check the connection or open the complete download locally.`)), milliseconds);
+  try { return await abortable(operation(controller.signal), controller.signal); }
+  finally { clearTimeout(timer); }
+}
+async function bounded(stream, limit, signal) {
   assert(stream, 'Study response is empty.');
-  const reader = stream.getReader(), chunks = []; let size = 0;
+  const reader = stream.getReader(), chunks = []; let size = 0, finished = false;
   try {
     for (;;) {
-      const part = await reader.read(); if (part.done) break;
+      const part = await abortable(reader.read(), signal); if (part.done) { finished = true; break; }
       size += part.value.byteLength;
-      if (size > limit) { await reader.cancel(); throw new Error('Study file exceeds its byte bound.'); }
+      if (size > limit) throw new Error('Study file exceeds its byte bound.');
       chunks.push(part.value);
     }
-  } finally { reader.releaseLock(); }
+  } finally {
+    // A stalled source must not keep startup waiting for cancellation either.
+    if (!finished) void reader.cancel().catch(() => {});
+    reader.releaseLock();
+  }
   const bytes = new Uint8Array(size); let offset = 0;
   for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
   return bytes.buffer;
 }
-async function json(href) { return JSON.parse(new TextDecoder().decode(await bounded((await response(href)).body, MAX_BYTES))); }
+async function json(href) {
+  return deadline(href, 30000, async signal => JSON.parse(new TextDecoder().decode(await bounded((await response(href, signal)).body, MAX_BYTES, signal))));
+}
+async function verifiedBinary(bytes, meta) {
+  assert(bytes.byteLength === meta.bytes, 'Binary byte count changed.');
+  assert(globalThis.crypto?.subtle, 'SHA-256 verification requires HTTPS or a localhost server.');
+  const hash = [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))].map(n => n.toString(16).padStart(2, '0')).join('');
+  assert(hash === meta.sha256, 'Study binary SHA256 changed.');
+  return bytes;
+}
 async function binary(meta, expected) {
   assert(meta && meta.href === expected, 'Unexpected binary file.');
   integer(meta.bytes, 0, MAX_BYTES, 'binary byte count');
-  let bytes;
   if (typeof DecompressionStream === 'function' && meta.compressed_href) {
     assert(meta.compression === 'gzip', 'Unsupported binary compression.');
     integer(meta.compressed_bytes, 0, MAX_BYTES, 'compressed byte count');
-    const compressed = await bounded((await response(meta.compressed_href)).body, meta.compressed_bytes);
-    assert(compressed.byteLength === meta.compressed_bytes, 'Compressed byte count changed.');
-    bytes = await bounded(new Blob([compressed]).stream().pipeThrough(new DecompressionStream('gzip')), meta.bytes);
-  } else bytes = await bounded((await response(meta.href)).body, meta.bytes);
-  assert(bytes.byteLength === meta.bytes, 'Binary byte count changed.');
-  if (crypto.subtle) {
-    const hash = [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))].map(n => n.toString(16).padStart(2, '0')).join('');
-    assert(hash === meta.sha256, 'Study binary SHA256 changed.');
+    try {
+      return await deadline(meta.compressed_href, 8000, async signal => {
+        const compressed = await bounded((await response(meta.compressed_href, signal)).body, meta.compressed_bytes, signal);
+        assert(compressed.byteLength === meta.compressed_bytes, 'Compressed byte count changed.');
+        const bytes = await bounded(new Blob([compressed]).stream().pipeThrough(new DecompressionStream('gzip'), {signal}), meta.bytes, signal);
+        return verifiedBinary(bytes, meta);
+      });
+    } catch (error) {
+      // The raw bytes have their own deadline and must pass the same digest.
+      // A blocked or stalled compressed response cannot strand the replay.
+    }
   }
-  return bytes;
+  return deadline(meta.href, 30000, async signal => verifiedBinary(await bounded((await response(meta.href, signal)).body, meta.bytes, signal), meta));
 }
 function validate(geometry, motion) {
   assert(model.schema === 'dvidia.piper-imitation-scene/v1' && metadata.schema === 'dvidia.piper-imitation-viewer/v1', 'Unsupported study replay format.');
