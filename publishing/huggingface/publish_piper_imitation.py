@@ -305,20 +305,27 @@ def inventory(run: Path) -> dict[str, bytes]:
             or any(not isinstance(case_id, str) for case_id in train_ids)
             or len(set(train_ids)) != len(train_ids)):
         raise PublicationError('Training receipt does not include every scheduled teacher demonstration.')
+    train_cases_by_id = {case['id']: case for case in train_cases}
     expected_train_ids = set(train_ids)
     observed_train_ids = set()
     for row in training_rows:
-        if not isinstance(row, dict) or not isinstance(row.get('case_id'), str):
+        case_id = row.get('id') if isinstance(row, dict) else None
+        if not isinstance(row, dict) or not isinstance(case_id, str):
             raise PublicationError('Training receipt contains an invalid teacher demonstration row.')
         demo_name, demo_digest = row.get('episode'), row.get('sha256')
         demo_path = _relative(demo_name) if isinstance(demo_name, str) else None
         demo_raw = payload.get(demo_path.as_posix()) if demo_path else None
+        scheduled_case = train_cases_by_id.get(case_id)
         if (demo_raw is None or not demo_path.as_posix().startswith('demonstrations/')
-                or demo_path.as_posix() != f"demonstrations/{row['case_id']}.json.gz"
+                or demo_path.as_posix() != f'demonstrations/{case_id}.json.gz'
                 or sha256(demo_raw).hexdigest() != demo_digest
-                or row['case_id'] not in expected_train_ids or row['case_id'] in observed_train_ids):
+                or case_id not in expected_train_ids or case_id in observed_train_ids
+                or not isinstance(scheduled_case, dict)
+                or row.get('start_xy') != scheduled_case.get('start_xy')
+                or row.get('goal_xy') != scheduled_case.get('goal_xy')
+                or row.get('seed') != scheduled_case.get('seed')):
             raise PublicationError('Training receipt differs from its retained teacher demonstration.')
-        observed_train_ids.add(row['case_id'])
+        observed_train_ids.add(case_id)
     if observed_train_ids != expected_train_ids:
         raise PublicationError('Training receipt omits a frozen training scene.')
 

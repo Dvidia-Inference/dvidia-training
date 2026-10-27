@@ -52,12 +52,15 @@ def _make_run(root: Path):
         archive.writestr('features.npy', b'fixture-numeric-array')
     samples = buffer.getvalue()
     protocol = json.dumps({'schema':'dvidia.piper-imitation-study/v1', 'variants':['teacher','learned'],
-                           'cases':{'train':[{'id':'train1'}], 'confirmation':[{'id':'case1'}]}}, sort_keys=True).encode()
+                           'cases':{'train':[{'id':'train1', 'start_xy':[0.28,-0.04],
+                                              'goal_xy':[0.35,0.08], 'seed':123}],
+                                    'confirmation':[{'id':'case1'}]}}, sort_keys=True).encode()
     model = b'{"schema":"dvidia.piper-motor-primitive/v2","selected":true}'
     shuffled = b'{"architecture":"mlp","negative_control":true}'
     demonstration = gzip.compress(b'{"demonstration":[]}', mtime=0)
     dataset = json.dumps({'schema':'test-dataset','protocol_sha256':digest(protocol),
-                          'samples_sha256':digest(samples), 'rows':[{'case_id':'train1',
+                          'samples_sha256':digest(samples), 'rows':[{'id':'train1',
+                          'start_xy':[0.28,-0.04], 'goal_xy':[0.35,0.08], 'seed':123,
                           'episode':'demonstrations/train1.json.gz','sha256':digest(demonstration)}]}, sort_keys=True).encode()
     frozen = json.dumps({'protocol_sha256':digest(protocol),'dataset_sha256':digest(dataset),
                          'model_sha256':digest(model),'shuffled_model_sha256':digest(shuffled)},sort_keys=True).encode()
