@@ -1,0 +1,33 @@
+{
+  "schema": "dvidia.piper-clock-installed-smoke/v0.3",
+  "wheel_sha256": "01e61f5e0e536f3c0b446110d108a5c056fa6c8f001fc18e6d55d92bdd076c47",
+  "package_version": "0.1.1",
+  "fresh_processes": 2,
+  "cwd_is_checkout": false,
+  "pythonpath_unset": true,
+  "dependencies": "Existing pinned NumPy2.5.3/MuJoCo3.15.0 inherited through documented local .pth; no fresh resolver or Linux qualification.",
+  "additional_training_labels": 0,
+  "physical_robot_ready": false,
+  "attempts": [
+    {
+      "variant": "clock",
+      "exit_status": 0,
+      "valid": true,
+      "success": true,
+      "reason": "success",
+      "runtime_matches_prepared_study": true,
+      "install_sha256": "952fc3c37ba955cc018f8bcb27277d0ac43880aab2136a077b93a0017e97a299",
+      "receipt_sha256": "3392f7d9a082111d6d6c9638c5d38325e9f31aa7f6299dee36d95fa006dce74b"
+    },
+    {
+      "variant": "blind_clock",
+      "exit_status": 0,
+      "valid": true,
+      "success": true,
+      "reason": "success",
+      "runtime_matches_prepared_study": true,
+      "install_sha256": "67a004cbfd57c392d891f5864d1a9113c7a32bce5e8ef14427058c1f7991fb9e",
+      "receipt_sha256": "7e2d159e041067da71a0aeabe13cf19b78c4815c5f66710c86ee800e8bc4178c"
+    }
+  ]
+}

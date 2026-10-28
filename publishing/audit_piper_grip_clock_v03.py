@@ -7,12 +7,14 @@ here; the unchanged strict numeric scorer is reused only after source checks.
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ProcessPoolExecutor
 from collections import deque
 import gzip
 from hashlib import sha256
 import io
 import json
 import math
+import multiprocessing
 import os
 from pathlib import Path
 import tempfile
@@ -421,7 +423,133 @@ def _requests(root, protocol, split):
                 yield 'confirmation', case, variant, root/'confirmation'/case['id']/variant, path, False
 
 
-def audit(study, output, *, split='all', source_root=None):
+def _audit_attempt(request, context):
+    """One immutable numeric evidence job; identical in serial/spawned workers."""
+    partition, case, variant, folder, model_path, labels = request
+    root, protocol = context['root'], context['protocol']
+    protocol_hash, sources = context['protocol_hash'], context['sources']
+    base, jaw = context['base'], context['jaw']
+    strict_scorer, post_grip_scorer = context['strict_scorer'], context['post_grip_scorer']
+    document = _read(model_path) if model_path else None
+    if document is not None and (document.get('base_sha256') != _canonical_hash(base)
+            or document.get('jaw_sha256') != _canonical_hash(jaw)
+            or document.get('blind') is not (variant == 'blind_clock')):
+        raise ValueError('Clock model dependency or blind/full identity differs.')
+    binding = _verify_attempt(folder, case, variant, protocol_hash, _hash(model_path) if model_path else None, labels)
+    if (binding['runtime_sha256'] != sources
+            or binding['split'] != partition
+            or binding['base_model_raw_sha256'] != protocol['base_model_raw_sha256']
+            or binding['jaw_model_raw_sha256'] != protocol['jaw_model_raw_sha256']
+            or binding['jaw_mode'] != protocol['jaw_mode']
+            or binding['teacher_config'] != protocol['teacher_config']
+            or binding['post_grip_parameters'] != protocol['post_grip_parameters']):
+        raise ValueError('Attempt runtime differs from the source snapshot.')
+    episode, arrays, metadata = _episode(folder/'episode.json.gz'), _npz(folder/'native.npz'), _read(folder/'native.json')
+    if (episode['case_id'] != case['id'] or episode['seed'] != case['seed'] or episode['condition'] != case['condition']
+            or episode['policy_kind'] != variant or episode['jaw_mode'] != protocol['jaw_mode']
+            or episode['base_model_sha256'] != _canonical_hash(base) or episode['jaw_model_sha256'] != _canonical_hash(jaw)
+            or episode['model_sha256'] != (_canonical_hash(document) if document else None)
+            or not np.allclose(episode['config']['object_position_m'], [*case['start_xy'], .082], atol=1e-12, rtol=0)
+            or not np.allclose(episode['config']['target_position_m'], [*case['goal_xy'], .08], atol=1e-12, rtol=0)
+            or episode['implementation_sha256'] != binding['runtime_sha256']):
+        raise ValueError('Episode identity differs from its receipt/dependencies.')
+    numeric = strict_scorer.score_feedback_episode(episode, arrays, metadata, case['goal_xy'])
+    post = post_grip_scorer.analyze_post_grip(arrays, metadata)
+    saved = _read(folder/'score.json')
+    numeric_matches = all(saved.get(key) == value for key, value in numeric.items())
+    post_matches = post == _read(folder/'post-grip.json') == saved.get('post_grip_analysis')
+    trace = inspect_trace(episode, arrays, base, jaw, document, protocol['teacher_config'], protocol['jaw_mode'])
+    label_mismatches = 0
+    if labels:
+        samples = _npz(folder/'samples.npz')
+        expected_features = np.asarray([a['clock_decision']['features'] for a in episode['actions']])
+        blind = expected_features.copy()
+        blind[:, 8:56] = 0.
+        targets = np.asarray([a['clock_decision']['increment_s'] for a in episode['actions']])
+        expected = dict(features=expected_features, blind_features=blind, targets=targets,
+            weights=np.where(targets == 0., 20., 1.), groups=np.asarray([case['id']]*len(targets)))
+        label_mismatches = int(set(samples) != set(expected) or any(not np.array_equal(samples.get(key), value) for key, value in expected.items()))
+    failures = (sum(trace[key] for key in ('feature_mismatches', 'progress_mismatches', 'decision_mismatches',
+                'command_mismatches', 'teacher_metadata_mismatches', 'clock_metadata_mismatches'))+label_mismatches
+                +int(not numeric_matches)+int(not post_matches))
+    candidate = model_path.parent.name if model_path is not None and model_path.parent.parent.name == 'candidates' else variant
+    return dict(partition=partition, case_id=case['id'], variant=variant, candidate=candidate,
+        relative_path=folder.relative_to(root).as_posix(), receipt_sha256=_hash(folder/'receipt.json'),
+        numeric_score_matches=numeric_matches, intervention_matches=post_matches,
+        training_label_mismatches=label_mismatches, audit_mismatches=failures,
+        valid=numeric['valid'], strict_success=numeric['success'], terminal_only=numeric.get('terminal_only'),
+        grip_summary=numeric.get('grip_summary'), grip_events=numeric.get('grip_events'),
+        native_task=numeric.get('native_recomputed'), intervention=post, trace=trace)
+
+
+_WORKER_CONTEXT = None
+
+
+def _initialize_worker(info):
+    """Recheck shared immutable inputs after spawn, before evaluating any job."""
+    global _WORKER_CONTEXT
+    root, source_root = Path(info['root']), Path(info['source_root'])
+    if _hash(root/'protocol.json') != info['protocol_hash']:
+        raise ValueError('Protocol changed before numeric worker startup.')
+    protocol = _read(root/'protocol.json')
+    sources = protocol['source_sha256']
+    if sources != info['sources']:
+        raise ValueError('Numeric worker source manifest differs from parent preflight.')
+    for name, expected in sources.items():
+        if (_hash(root/'sources'/name) != expected or _hash(source_root/name) != expected):
+            raise ValueError('Source changed before numeric worker startup: '+name)
+    for filename, key in (('base-model.json', 'base_model_raw_sha256'), ('jaw-model.json', 'jaw_model_raw_sha256')):
+        if _hash(root/filename) != protocol[key]:
+            raise ValueError('Frozen base/jaw changed before numeric worker startup.')
+    from dvidia_training import piper_feedback_score as strict_scorer
+    from dvidia_training import piper_grip_clock_env as post_grip_scorer
+    if (_hash(strict_scorer.__file__) != sources['piper_feedback_score.py']
+            or _hash(post_grip_scorer.__file__) != sources['piper_grip_clock_env.py']):
+        raise ValueError('Spawned numeric scorers differ from the frozen source.')
+    _WORKER_CONTEXT = dict(root=root, protocol=protocol, protocol_hash=info['protocol_hash'],
+        sources=sources, base=_read(root/'base-model.json'), jaw=_read(root/'jaw-model.json'),
+        strict_scorer=strict_scorer, post_grip_scorer=post_grip_scorer,
+        expected_models=info['expected_models'])
+
+
+def _audit_worker(request):
+    if _WORKER_CONTEXT is None:
+        raise ValueError('Numeric audit worker has no verified context.')
+    path = request[4]
+    if path is not None and _hash(path) != _WORKER_CONTEXT['expected_models'][str(path)]:
+        raise ValueError('Clock model changed after parent preflight.')
+    return _audit_attempt(request, _WORKER_CONTEXT)
+
+
+def _ordered_map(requests, workers, *, function, initializer=None, initargs=()):
+    """Bounded spawn isolation with ordered results and fail-closed errors."""
+    if type(workers) is not int or not 1 <= workers <= 4:
+        raise ValueError('Numeric audit supports one to four workers.')
+    if workers == 1:
+        if initializer is not None:
+            initializer(*initargs)
+        return [function(request) for request in requests]
+    # Scope these limits to this audit process and its new children. They do not
+    # alter any robot/simulator run or its previously measured timing samples.
+    variables = ('OPENBLAS_NUM_THREADS', 'OMP_NUM_THREADS', 'MKL_NUM_THREADS', 'VECLIB_MAXIMUM_THREADS')
+    previous = {name: os.environ.get(name) for name in variables}
+    try:
+        for name in variables:
+            os.environ[name] = '1'
+        with ProcessPoolExecutor(max_workers=workers, mp_context=multiprocessing.get_context('spawn'),
+                                 initializer=initializer, initargs=initargs) as executor:
+            return list(executor.map(function, requests, chunksize=1))
+    finally:
+        for name, value in previous.items():
+            if value is None:
+                os.environ.pop(name, None)
+            else:
+                os.environ[name] = value
+
+
+def audit(study, output, *, split='all', source_root=None, workers=1):
+    if type(workers) is not int or not 1 <= workers <= 4:
+        raise ValueError('Numeric audit supports one to four workers.')
     root, output = Path(study).resolve(), Path(output).resolve()
     if output.is_relative_to(root) or output.exists():
         raise ValueError('Use a fresh immutable audit output outside the frozen study.')
@@ -473,58 +601,23 @@ def audit(study, output, *, split='all', source_root=None):
     if (_hash(strict_scorer.__file__) != sources['piper_feedback_score.py']
             or _hash(post_grip_scorer.__file__) != sources['piper_grip_clock_env.py']):
         raise ValueError('Imported numeric scorers differ from the frozen source.')
-    rows = []
-    for partition, case, variant, folder, model_path, labels in _requests(root, protocol, split):
-        document = _read(model_path) if model_path else None
-        if document is not None and (document.get('base_sha256') != _canonical_hash(base)
-                or document.get('jaw_sha256') != _canonical_hash(jaw)
-                or document.get('blind') is not (variant == 'blind_clock')):
-            raise ValueError('Clock model dependency or blind/full identity differs.')
-        binding = _verify_attempt(folder, case, variant, protocol_hash, _hash(model_path) if model_path else None, labels)
-        if (binding['runtime_sha256'] != sources
-                or binding['split'] != partition
-                or binding['base_model_raw_sha256'] != protocol['base_model_raw_sha256']
-                or binding['jaw_model_raw_sha256'] != protocol['jaw_model_raw_sha256']
-                or binding['jaw_mode'] != protocol['jaw_mode']
-                or binding['teacher_config'] != protocol['teacher_config']
-                or binding['post_grip_parameters'] != protocol['post_grip_parameters']):
-            raise ValueError('Attempt runtime differs from the source snapshot.')
-        episode, arrays, metadata = _episode(folder/'episode.json.gz'), _npz(folder/'native.npz'), _read(folder/'native.json')
-        if (episode['case_id'] != case['id'] or episode['seed'] != case['seed'] or episode['condition'] != case['condition']
-                or episode['policy_kind'] != variant or episode['jaw_mode'] != protocol['jaw_mode']
-                or episode['base_model_sha256'] != _canonical_hash(base) or episode['jaw_model_sha256'] != _canonical_hash(jaw)
-                or episode['model_sha256'] != (_canonical_hash(document) if document else None)
-                or not np.allclose(episode['config']['object_position_m'], [*case['start_xy'], .082], atol=1e-12, rtol=0)
-                or not np.allclose(episode['config']['target_position_m'], [*case['goal_xy'], .08], atol=1e-12, rtol=0)
-                or episode['implementation_sha256'] != binding['runtime_sha256']):
-            raise ValueError('Episode identity differs from its receipt/dependencies.')
-        numeric = strict_scorer.score_feedback_episode(episode, arrays, metadata, case['goal_xy'])
-        post = post_grip_scorer.analyze_post_grip(arrays, metadata)
-        saved = _read(folder/'score.json')
-        numeric_matches = all(saved.get(key) == value for key, value in numeric.items())
-        post_matches = post == _read(folder/'post-grip.json') == saved.get('post_grip_analysis')
-        trace = inspect_trace(episode, arrays, base, jaw, document, protocol['teacher_config'], protocol['jaw_mode'])
-        label_mismatches = 0
-        if labels:
-            samples = _npz(folder/'samples.npz')
-            expected_features = np.asarray([a['clock_decision']['features'] for a in episode['actions']])
-            blind = expected_features.copy()
-            blind[:, 8:56] = 0.
-            targets = np.asarray([a['clock_decision']['increment_s'] for a in episode['actions']])
-            expected = dict(features=expected_features, blind_features=blind, targets=targets,
-                weights=np.where(targets == 0., 20., 1.), groups=np.asarray([case['id']]*len(targets)))
-            label_mismatches = int(set(samples) != set(expected) or any(not np.array_equal(samples.get(key), value) for key, value in expected.items()))
-        failures = (sum(trace[key] for key in ('feature_mismatches', 'progress_mismatches', 'decision_mismatches',
-                    'command_mismatches', 'teacher_metadata_mismatches', 'clock_metadata_mismatches'))+label_mismatches
-                    +int(not numeric_matches)+int(not post_matches))
-        candidate = model_path.parent.name if model_path is not None and model_path.parent.parent.name == 'candidates' else variant
-        rows.append(dict(partition=partition, case_id=case['id'], variant=variant, candidate=candidate,
-            relative_path=folder.relative_to(root).as_posix(), receipt_sha256=_hash(folder/'receipt.json'),
-            numeric_score_matches=numeric_matches, intervention_matches=post_matches,
-            training_label_mismatches=label_mismatches, audit_mismatches=failures,
-            valid=numeric['valid'], strict_success=numeric['success'], terminal_only=numeric.get('terminal_only'),
-            grip_summary=numeric.get('grip_summary'), grip_events=numeric.get('grip_events'),
-            native_task=numeric.get('native_recomputed'), intervention=post, trace=trace))
+    requests = list(_requests(root, protocol, split))
+    expected_models = {}
+    for _, _, variant, _, model_path, _ in requests:
+        if model_path is not None and str(model_path) not in expected_models:
+            document = _read(model_path)
+            if (document.get('base_sha256') != _canonical_hash(base)
+                    or document.get('jaw_sha256') != _canonical_hash(jaw)
+                    or document.get('blind') is not (variant == 'blind_clock')):
+                raise ValueError('Parent model dependency or feature mode differs.')
+            expected_models[str(model_path)] = _hash(model_path)
+    info = dict(root=str(root), source_root=str(source_root), protocol_hash=protocol_hash,
+                sources=sources, expected_models=expected_models)
+    rows = _ordered_map(requests, workers, function=_audit_worker,
+                        initializer=_initialize_worker, initargs=(info,))
+    for path, expected in expected_models.items():
+        if _hash(path) != expected:
+            raise ValueError('Clock model changed during independent numeric audit.')
     for name, expected in sources.items():
         if _hash(source_root/name) != expected:
             raise ValueError('Source changed during independent numeric audit.')
@@ -576,8 +669,10 @@ def main(argv=None):
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--split', choices=('all', 'train', 'development', 'confirmation'), default='all')
     parser.add_argument('--source-root', type=Path)
+    parser.add_argument('--workers', type=int, choices=(1, 2, 3, 4), default=4,
+                        help='Independent numeric audit processes; default 4, no physics or policy execution.')
     args = parser.parse_args(argv)
-    result = audit(args.study, args.output, split=args.split, source_root=args.source_root)
+    result = audit(args.study, args.output, split=args.split, source_root=args.source_root, workers=args.workers)
     print(json.dumps({k: v for k, v in result.items() if k not in ('rows', 'source_sha256')}, indent=2))
     return int(result['audit_mismatches'] != 0)
 

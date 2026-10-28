@@ -1,0 +1,81 @@
+{
+  "architecture": "Small NumPy binary hold/advance tree over 58 causal privileged simulator features; six arm references and original jaw reference share virtual progress.",
+  "arm": "PiPER reference model",
+  "blind": {
+    "max_bins": 31,
+    "max_depth": 4,
+    "min_leaf": 64,
+    "sample_count": 64000,
+    "weight_sum": 117884.0
+  },
+  "continuous_slip_recovery_established": false,
+  "goals_xy_m": [
+    [
+      0.35,
+      0.08
+    ],
+    [
+      0.4,
+      -0.08
+    ]
+  ],
+  "masks": "Blind clock zeros live/history slots 8:56; both clocks retain context and clock debt.",
+  "models": {
+    "base-model.json": {
+      "bytes": 2031879,
+      "sha256": "2976a605575d9edefb5db366e72c5e006c0ce85a5531ad3d61512436864c8ded"
+    },
+    "blind.json": {
+      "bytes": 14292,
+      "sha256": "fd19918f363e47b309b7f983108af72263e63731694f4718ab5fe4a894717743"
+    },
+    "jaw-model.json": {
+      "bytes": 201,
+      "sha256": "f747de9881c2f63178a8268942e9af3784b98d1b7cc8bb58739d2de5d79a7f12"
+    },
+    "selected.json": {
+      "bytes": 13520,
+      "sha256": "c71966b4e7e1ec11c3b0b2269b0c736c237f9aa8d7f416b7ed4bcef850cc93ec"
+    }
+  },
+  "new_grasp_geometry_learned": false,
+  "object": "40 g rigid block",
+  "physical_robot_ready": false,
+  "runtime_teacher_available": false,
+  "schema": "dvidia.piper-grip-clock-release-kit/v0.3/model-fit-scope",
+  "selected": {
+    "max_bins": 31,
+    "max_depth": 4,
+    "min_leaf": 64,
+    "sample_count": 64000,
+    "weight_sum": 117884.0
+  },
+  "source_report": {
+    "bytes": 2198676,
+    "sha256": "222b6b88f817bbb04497ae0dd284830e6db3924d85c4ce1971e59459ce209d01"
+  },
+  "source_wheel": {
+    "bytes": 5310464,
+    "name": "dvidia_training-0.1.1-py3-none-any.whl",
+    "sha256": "01e61f5e0e536f3c0b446110d108a5c056fa6c8f001fc18e6d55d92bdd076c47"
+  },
+  "start_bounds_xy_m": [
+    [
+      0.284,
+      0.314
+    ],
+    [
+      -0.045,
+      -0.015
+    ]
+  ],
+  "training": {
+    "advance_weight": 1,
+    "episodes": 64,
+    "failed_demonstration_rows_retained": true,
+    "hold_weight": 20,
+    "label_source": "Authored acquisition-only causal grip teacher; no human footage.",
+    "labels": 64000,
+    "xy_groups": 16
+  }
+}

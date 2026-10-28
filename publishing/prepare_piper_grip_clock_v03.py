@@ -228,11 +228,25 @@ def _result_rows(report):
     return '\n'.join(result)
 
 
+def _comparison_text(report):
+    rows = report.get('contrasts', [])
+    if len(rows) != 2 or {row.get('comparator') for row in rows} != {'blind_clock', 'fixed'}:
+        raise ValueError('Cards require both frozen grouped comparisons.')
+    values = []
+    for row in rows:
+        low, high = row['interval']
+        values.append(f"Full minus {row['comparator']}: {100*row['mean_difference']:+.1f} percentage points "
+                      f"(approximate 97.5% interval {100*low:+.1f} to {100*high:+.1f}).")
+    return (' '.join(values)+' These are paired XY-group t intervals with Bonferroni simultaneous 95% coverage under their assumptions. '
+            'They are exploratory, not a powered qualification. All predeclared follow-up gates passed: '
+            +str(report['advance_to_followup_simulation']).lower()+'. Hardware qualification remains false.')
+
+
 def _model_card(frozen, report):
     selected, blind = frozen['selected'], frozen['blind']
     return _frontmatter() + f"""# PiPER grip clock v0.3
 
-A compact learned progress clock pauses a frozen PiPER movement reference while acquiring a grasp on one 40 g rigid block. The clock uses privileged simulator state and the original arm and jaw reference. Waiting delays both arm progress and jaw release. It does not learn grasp geometry.
+A compact learned progress clock chooses when to hold or advance a frozen PiPER movement reference while acquiring a grasp on one 40 g rigid block. The clock uses privileged simulator state and the original arm and jaw reference. Waiting delays both arm progress and jaw release. It does not learn grasp geometry.
 
 The matched blind clock uses the same teacher rows, fit recipe, and tree depth as the selected full clock, with live grip and history inputs masked. The selected pair is `{selected}` and `{blind}` at matched depth. All four candidate fits, receipts, protocol, freeze, report, independent audit, runtime source snapshots, and integrity hashes are included.
 
@@ -244,6 +258,8 @@ Strict successes and valid attempts are reported for every scheduled controller.
 |---|---:|---:|
 {_result_rows(report)}
 
+{_comparison_text(report)}
+
 The independent numeric audit covered {report['variants']['clock']['scheduled'] * 4 + 256} attempts (64 training, 192 development, 512 confirmation) with zero mismatches. The confirmation roster contains 32 fresh XY groups, each paired across two known destinations and nominal/post-grip conditions.
 
 ## Scope
@@ -254,9 +270,9 @@ Shared-host timing describes four spawn-isolated simulator workers on an Apple M
 
 ## Files and reproduction
 
-This model artifact is published as `Dvidia/piper-grip-clock-v03`. The complete synthetic demonstration and attempt lineage is in the [DVIDIA dataset repository](https://huggingface.co/datasets/Dvidia/piper-grip-clock-demonstrations-v03). The reproduction guide and host record are in `docs/`. The static viewer entry point is [learned-placement/v03/viewer/index.html](https://huggingface.co/spaces/Dvidia/robot-simulation-lab/tree/main/learned-placement/v03/viewer/index.html); the paper record is [research.dvidia.org/papers/learned-piper-grip-clock-v03/](https://research.dvidia.org/papers/learned-piper-grip-clock-v03/).
+This model artifact is published as `Dvidia/piper-grip-clock-v03`. The complete synthetic demonstration and attempt lineage is in the [DVIDIA dataset repository](https://huggingface.co/datasets/Dvidia/piper-grip-clock-demonstrations-v03). The reproduction guide and host record are in `docs/`. [Open the recorded 3D comparison](https://dvidia-robot-simulation-lab.static.hf.space/learned-placement/v03/viewer/index.html), or read the [research paper](https://research.dvidia.org/papers/learned-piper-grip-clock-v03/).
 
-Code: [Dvidia-Inference/dvidia-training](https://github.com/Dvidia-Inference/dvidia-training), release tag `piper-grip-clock-v0.3`. Contact: hello@dvidia.org · X: [@Xiammrriver](https://x.com/Xiammrriver).
+Code: [DVIDIA-Inference/dvidia-training](https://github.com/Dvidia-Inference/dvidia-training), release tag `piper-grip-clock-v0.3`. Contact: hello@dvidia.org · X: [@iammrriver](https://x.com/iammrriver).
 
 DVIDIA-authored code, models, and synthetic numeric evidence are MIT licensed. Upstream PiPER geometry and renderer notices remain with their assets and replay; no robot assets or wheel are bundled here.
 """
@@ -273,13 +289,15 @@ The confirmation comparison uses 32 fresh XY groups. Each group contains two kno
 |---|---:|---:|
 {_result_rows(report)}
 
+{_comparison_text(report)}
+
 ## Data scope
 
 Episodes are authored simulator outputs for one synthetic 40 g rigid block, two known destinations, and a narrow PiPER start envelope. Training labels come from a causal sampled acquisition teacher using privileged simulator state. The teacher checks bilateral contact/force and tool-relative drift across 100 ms, then releases a latch; this dataset does not demonstrate continuous learned recovery. It contains no human videos, camera observations, physical robot trials, arbitrary-object transfer, or hardware qualification.
 
 The `study/` directory is a byte-preserving copy of the frozen study, excluding only its local lifecycle lock. `audit.json` contains the independent all-partition numeric audit. `docs/` includes the reproduction guide, measured shared-host record, and development lineage. `integrity.json` binds every other file in this payload by size and SHA-256.
 
-DVIDIA-authored code and synthetic numeric evidence are MIT licensed. No robot asset bundle is included. Upstream asset notices remain applicable when assets are fetched separately. Questions: hello@dvidia.org · X: [@Xiammrriver](https://x.com/Xiammrriver).
+DVIDIA-authored code and synthetic numeric evidence are MIT licensed. No robot asset bundle is included. Upstream asset notices remain applicable when assets are fetched separately. Questions: hello@dvidia.org · X: [@iammrriver](https://x.com/iammrriver).
 """
 
 
@@ -351,6 +369,7 @@ def _prepare_locked(study, audit, output, *, guide, host, lineage=None):
                 raise ValueError('Frozen runtime source snapshot hash differs: ' + name)
             _copy_file(study/'sources'/name, model_root/'runtime'/name)
         _copy_file(audit_path, model_root/'audit.json')
+        _copy_file(AUDIT_MODULE, model_root/'tools'/'audit_piper_grip_clock_v03.py')
         _copy_file(guide, model_root/'docs'/'guide.md')
         _copy_file(host, model_root/'docs'/'host.json')
         _write(model_root/'README.md', _model_card(frozen, report).encode())
@@ -358,6 +377,7 @@ def _prepare_locked(study, audit, output, *, guide, host, lineage=None):
 
         _copy_study(study, dataset_root/'study')
         _copy_file(audit_path, dataset_root/'audit.json')
+        _copy_file(AUDIT_MODULE, dataset_root/'tools'/'audit_piper_grip_clock_v03.py')
         _copy_file(guide, dataset_root/'docs'/'guide.md')
         _copy_file(host, dataset_root/'docs'/'host.json')
         _copy_file(lineage, dataset_root/'docs'/'development-lineage.md')

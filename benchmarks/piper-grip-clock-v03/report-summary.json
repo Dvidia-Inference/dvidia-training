@@ -1,0 +1,313 @@
+{
+  "advance_to_followup_simulation": false,
+  "conclusion": "Full sensing has more completions than the blind clock, but its group interval includes zero; the fixed-timing reference completes more tasks. The qualification gates are not met.",
+  "confirmation_attempts": 512,
+  "frozen_sha256": "077255f13301476c159d63ff83f1bfcf2c21d3021b65abe58191e63f8c016c0b",
+  "gates": {
+    "compute": true,
+    "critical_contacts": false,
+    "nominal": false,
+    "paired_benefit": false,
+    "post_grip_exposure": false,
+    "validity": true
+  },
+  "independent_xy_groups": 32,
+  "limitations": [
+    "Exploratory simulation-only comparison; 32 independent XY groups do not establish adequate statistical power.",
+    "Synthetic direct hold/advance labels and privileged simulator sensing, not human videos or camera learning.",
+    "Jaw architecture is declared and hash-bound separately; physical-jaw and coordinated-reference studies are not pooled.",
+    "Blind clock masks only its live clock inputs; it has the same declared path/jaw architecture as the full clock.",
+    "Acquisition-only teacher releases its wait latch once; this is not continuous learned grip recovery.",
+    "Same rigid 40 g block, two known destinations and narrow PiPER start envelope; no physical robot qualification.",
+    "Simulator computation timing excludes camera, communication and physical actuators; no hard real-time guarantee.",
+    "All seven frozen v0.1 raw references, including the learned base jaw reference, share virtual progress; no v0.2 jaw adapter."
+  ],
+  "physical_robot_ready": false,
+  "protocol_sha256": "bff1c076594b8ed06cd7ae3d7eb3f7b819ee29226242abe577b19f9ffe97fde3",
+  "qualified_robot_skill": false,
+  "schema": "dvidia.piper-grip-clock-release-kit/v0.3/report-summary",
+  "source_report": {
+    "bytes": 2198676,
+    "sha256": "222b6b88f817bbb04497ae0dd284830e6db3924d85c4ce1971e59459ce209d01"
+  },
+  "variants": {
+    "blind_clock": {
+      "acquisition_failures": 48,
+      "airborne_loss_events": 6,
+      "clock_advance_decisions": 87272,
+      "clock_hold_decisions": 40728,
+      "critical_contact_attempts": 14,
+      "episodes_reaching_path_end": 0,
+      "invalid_or_aborted": 0,
+      "loaded_loss_events": 36,
+      "maximum_episode_clock_debt_s": 9.940000000001435,
+      "nominal_scheduled": 64,
+      "nominal_successes": 13,
+      "nonactivation_reasons": {
+        "eligibility_not_reached": 42
+      },
+      "post_grip_activated": 22,
+      "post_grip_effective": 22,
+      "post_grip_effective_fraction": 0.34375,
+      "post_grip_eligible": 22,
+      "post_grip_scheduled": 64,
+      "post_grip_successes": 13,
+      "qualifying_lift_failures": 84,
+      "restored_contact_events": 6,
+      "retention_failures": 6,
+      "scheduled": 128,
+      "strict_success_rate": 0.203125,
+      "strict_successes": 26,
+      "supported_loss_events": 30,
+      "terminal_only_successes": 44,
+      "timing": {
+        "episode_wall": {
+          "count": 128,
+          "maximum_s": 21.589028333313763,
+          "over_20ms": 128,
+          "over_20ms_fraction": 1.0,
+          "p50_s": 6.867729687597603,
+          "p95_s": 9.888203220814466,
+          "p99_s": 11.899899255414494
+        },
+        "full_step": {
+          "count": 128000,
+          "maximum_s": 0.28819183399900794,
+          "over_20ms": 770,
+          "over_20ms_fraction": 0.006015625,
+          "p50_s": 0.004384937696158886,
+          "p95_s": 0.009398098220117387,
+          "p99_s": 0.016140133272856447
+        },
+        "inference": {
+          "count": 128000,
+          "maximum_s": 0.20636987499892712,
+          "over_20ms": 125,
+          "over_20ms_fraction": 0.0009765625,
+          "p50_s": 0.0009607500396668911,
+          "p95_s": 0.001977252075448632,
+          "p99_s": 0.0039816281106322985
+        },
+        "platforms": [
+          {
+            "machine": "arm64",
+            "mujoco": "3.15.0",
+            "numpy": "2.5.3",
+            "python": "3.12.9",
+            "system": "Darwin"
+          }
+        ],
+        "scope": "Dense simulator CPU computation; excludes camera, transport and real actuation."
+      },
+      "valid": 128
+    },
+    "clock": {
+      "acquisition_failures": 40,
+      "airborne_loss_events": 10,
+      "clock_advance_decisions": 94398,
+      "clock_hold_decisions": 33602,
+      "critical_contact_attempts": 16,
+      "episodes_reaching_path_end": 0,
+      "invalid_or_aborted": 0,
+      "loaded_loss_events": 24,
+      "maximum_episode_clock_debt_s": 9.760000000001435,
+      "nominal_scheduled": 64,
+      "nominal_successes": 22,
+      "nonactivation_reasons": {
+        "eligibility_not_reached": 34
+      },
+      "post_grip_activated": 30,
+      "post_grip_effective": 30,
+      "post_grip_effective_fraction": 0.46875,
+      "post_grip_eligible": 30,
+      "post_grip_scheduled": 64,
+      "post_grip_successes": 22,
+      "qualifying_lift_failures": 68,
+      "restored_contact_events": 4,
+      "retention_failures": 8,
+      "scheduled": 128,
+      "strict_success_rate": 0.34375,
+      "strict_successes": 44,
+      "supported_loss_events": 14,
+      "terminal_only_successes": 60,
+      "timing": {
+        "episode_wall": {
+          "count": 128,
+          "maximum_s": 20.71453129220754,
+          "over_20ms": 128,
+          "over_20ms_fraction": 1.0,
+          "p50_s": 6.947132145287469,
+          "p95_s": 9.714079308370128,
+          "p99_s": 11.876895396150655
+        },
+        "full_step": {
+          "count": 128000,
+          "maximum_s": 0.2659094170667231,
+          "over_20ms": 728,
+          "over_20ms_fraction": 0.0056875,
+          "p50_s": 0.004420687910169363,
+          "p95_s": 0.009594427561387417,
+          "p99_s": 0.015838973736390462
+        },
+        "inference": {
+          "count": 128000,
+          "maximum_s": 0.25639399979263544,
+          "over_20ms": 119,
+          "over_20ms_fraction": 0.0009296875,
+          "p50_s": 0.0009373545181006193,
+          "p95_s": 0.0019158769631758327,
+          "p99_s": 0.003946552216075355
+        },
+        "platforms": [
+          {
+            "machine": "arm64",
+            "mujoco": "3.15.0",
+            "numpy": "2.5.3",
+            "python": "3.12.9",
+            "system": "Darwin"
+          }
+        ],
+        "scope": "Dense simulator CPU computation; excludes camera, transport and real actuation."
+      },
+      "valid": 128
+    },
+    "fixed": {
+      "acquisition_failures": 0,
+      "airborne_loss_events": 22,
+      "clock_advance_decisions": 128000,
+      "clock_hold_decisions": 0,
+      "critical_contact_attempts": 46,
+      "episodes_reaching_path_end": 128,
+      "invalid_or_aborted": 0,
+      "loaded_loss_events": 33,
+      "maximum_episode_clock_debt_s": 1.4352963262354024e-12,
+      "nominal_scheduled": 64,
+      "nominal_successes": 37,
+      "nonactivation_reasons": {},
+      "post_grip_activated": 64,
+      "post_grip_effective": 64,
+      "post_grip_effective_fraction": 1.0,
+      "post_grip_eligible": 64,
+      "post_grip_scheduled": 64,
+      "post_grip_successes": 35,
+      "qualifying_lift_failures": 0,
+      "restored_contact_events": 4,
+      "retention_failures": 25,
+      "scheduled": 128,
+      "strict_success_rate": 0.5625,
+      "strict_successes": 72,
+      "supported_loss_events": 11,
+      "terminal_only_successes": 128,
+      "timing": {
+        "episode_wall": {
+          "count": 128,
+          "maximum_s": 17.66431604186073,
+          "over_20ms": 128,
+          "over_20ms_fraction": 1.0,
+          "p50_s": 5.576580645516515,
+          "p95_s": 8.02856620857492,
+          "p99_s": 10.337312802225362
+        },
+        "full_step": {
+          "count": 128000,
+          "maximum_s": 0.41659741709008813,
+          "over_20ms": 435,
+          "over_20ms_fraction": 0.0033984375,
+          "p50_s": 0.0037986249662935734,
+          "p95_s": 0.007754791993647814,
+          "p99_s": 0.012967558237723976
+        },
+        "inference": {
+          "count": 128000,
+          "maximum_s": 0.3970717089250684,
+          "over_20ms": 51,
+          "over_20ms_fraction": 0.0003984375,
+          "p50_s": 0.0003260411322116852,
+          "p95_s": 0.0006764168152585626,
+          "p99_s": 0.0015162512147799127
+        },
+        "platforms": [
+          {
+            "machine": "arm64",
+            "mujoco": "3.15.0",
+            "numpy": "2.5.3",
+            "python": "3.12.9",
+            "system": "Darwin"
+          }
+        ],
+        "scope": "Dense simulator CPU computation; excludes camera, transport and real actuation."
+      },
+      "valid": 128
+    },
+    "teacher": {
+      "acquisition_failures": 0,
+      "airborne_loss_events": 24,
+      "clock_advance_decisions": 122356,
+      "clock_hold_decisions": 5644,
+      "critical_contact_attempts": 42,
+      "episodes_reaching_path_end": 0,
+      "invalid_or_aborted": 0,
+      "loaded_loss_events": 33,
+      "maximum_episode_clock_debt_s": 9.360000000001435,
+      "nominal_scheduled": 64,
+      "nominal_successes": 34,
+      "nonactivation_reasons": {
+        "eligibility_not_reached": 4
+      },
+      "post_grip_activated": 60,
+      "post_grip_effective": 60,
+      "post_grip_effective_fraction": 0.9375,
+      "post_grip_eligible": 60,
+      "post_grip_scheduled": 64,
+      "post_grip_successes": 33,
+      "qualifying_lift_failures": 8,
+      "restored_contact_events": 2,
+      "retention_failures": 28,
+      "scheduled": 128,
+      "strict_success_rate": 0.5234375,
+      "strict_successes": 67,
+      "supported_loss_events": 9,
+      "terminal_only_successes": 120,
+      "timing": {
+        "episode_wall": {
+          "count": 128,
+          "maximum_s": 17.184399041347206,
+          "over_20ms": 128,
+          "over_20ms_fraction": 1.0,
+          "p50_s": 6.022423686925322,
+          "p95_s": 8.762666558288036,
+          "p99_s": 10.842696552458225
+        },
+        "full_step": {
+          "count": 128000,
+          "maximum_s": 0.2660942911170423,
+          "over_20ms": 643,
+          "over_20ms_fraction": 0.0050234375,
+          "p50_s": 0.003969395998865366,
+          "p95_s": 0.008728876919485628,
+          "p99_s": 0.014598068483173833
+        },
+        "inference": {
+          "count": 128000,
+          "maximum_s": 0.2603093748912215,
+          "over_20ms": 171,
+          "over_20ms_fraction": 0.0013359375,
+          "p50_s": 0.0005071251653134823,
+          "p95_s": 0.00109558943659067,
+          "p99_s": 0.0022802929300814864
+        },
+        "platforms": [
+          {
+            "machine": "arm64",
+            "mujoco": "3.15.0",
+            "numpy": "2.5.3",
+            "python": "3.12.9",
+            "system": "Darwin"
+          }
+        ],
+        "scope": "Dense simulator CPU computation; excludes camera, transport and real actuation."
+      },
+      "valid": 128
+    }
+  }
+}

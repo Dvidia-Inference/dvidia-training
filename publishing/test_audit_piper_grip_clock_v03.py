@@ -1,9 +1,11 @@
 """Handcrafted causal numeric evidence; no policy, fitting or physics calls."""
 from copy import deepcopy
 import json
+import os
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 
@@ -77,7 +79,44 @@ def synthetic_trace(variant='fixed'):
                       trajectory=states, actions=actions, config=dict(min_lift_m=.06, min_lift_dwell_s=.1))
 
 
+def crafted_parallel_job(item):
+    """Importable spawn fixture: inspect a data trace, never execute a policy."""
+    index, variant = item
+    if index < 0:
+        raise ValueError('Crafted immutable-input failure.')
+    base, episode = synthetic_trace(variant)
+    arrays = native()
+    if index%2:
+        arrays['pad_normal_forces_n'][54, 0] = 0.
+    if index == 5:
+        episode['actions'][0]['clock_decision']['features'][4] = .5
+    document = None if variant == 'fixed' else dict(nodes=[dict(feature=-1, advance_probability=1.)])
+    result = audit.inspect_trace(episode, arrays, base, {}, document, CONFIG, 'coordinated_reference')
+    return dict(input_index=index, variant=variant, trace=result)
+
+
 class IndependentClockAuditTests(unittest.TestCase):
+    def test_four_spawned_processes_preserve_serial_trace_rows_and_scheduled_order(self):
+        requests = [(3, 'fixed'), (0, 'clock'), (5, 'blind_clock'), (1, 'fixed'),
+                    (7, 'clock'), (2, 'blind_clock'), (6, 'fixed'), (4, 'clock')]
+        serial = audit._ordered_map(requests, 1, function=crafted_parallel_job)
+        with patch.dict(os.environ, {'OPENBLAS_NUM_THREADS': '7'}):
+            parallel = audit._ordered_map(requests, 4, function=crafted_parallel_job)
+            self.assertEqual(os.environ['OPENBLAS_NUM_THREADS'], '7')
+        self.assertEqual(parallel, serial)
+        self.assertEqual([row['input_index'] for row in parallel], [item[0] for item in requests])
+        self.assertEqual(sum(row['trace']['feature_mismatches'] for row in parallel), 1)
+        self.assertEqual(sum(row['trace']['sampled_secure_native_insecure'] for row in parallel), 4)
+
+    def test_parallel_failure_propagates_and_worker_budget_is_bounded(self):
+        for workers in (0, 5, True, 1.5):
+            with self.subTest(workers=workers), self.assertRaises(ValueError):
+                audit._ordered_map([], workers, function=crafted_parallel_job)
+        before = os.environ.get('OPENBLAS_NUM_THREADS')
+        with self.assertRaisesRegex(ValueError, 'Crafted immutable-input failure'):
+            audit._ordered_map([(0, 'fixed'), (-1, 'fixed')], 4, function=crafted_parallel_job)
+        self.assertEqual(os.environ.get('OPENBLAS_NUM_THREADS'), before)
+
     def test_tool_local_offset_is_invariant_under_rigid_rotation(self):
         for degrees in (0., 1., 5., 90.):
             observation = state(0., angle=np.deg2rad(degrees))

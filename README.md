@@ -6,6 +6,19 @@
 
 [Recorded demo](https://huggingface.co/spaces/Dvidia/dvidia-training) · [Synthetic datasets](https://huggingface.co/datasets/Dvidia/dvidia-training-examples) · [Pilot models](https://huggingface.co/Dvidia/dvidia-training-pilot)
 
+**[Learned PiPER grip clock v0.3](docs/piper-grip-clock-v03.md).**
+A compact model learns when to wait during grasp acquisition, coordinating the
+original arm and jaw reference. Frozen strict completion is **44/128**, versus
+**26/128** for its matched blind model, **72/128** for fixed timing and **67/128**
+for the sampled teacher. The grouped uncertainty interval crosses zero against
+the blind model; no reliable feedback advantage is established.
+[Research and 3D comparison](https://research.dvidia.org/papers/learned-piper-grip-clock-v03/) ·
+[Install the local CPU runner](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/piper-grip-clock-v0.3) ·
+[Model](https://huggingface.co/Dvidia/piper-grip-clock-v03) ·
+[Complete evidence](https://huggingface.co/datasets/Dvidia/piper-grip-clock-demonstrations-v03).
+This is simulation-only acquisition timing, with no human-video motor learning
+or hardware qualification.
+
 **[Learned PiPER placement study](docs/piper-learned-placement.md).**
 Synthetic demonstrations train a small local movement model; new starts are
 checked against retained lift, placement and release. The study preserves failed

@@ -1,0 +1,39 @@
+{
+  "dependency_resolution_tested": false,
+  "inputs": {
+    "audit.json": {
+      "bytes": 2772607,
+      "sha256": "3557c428fd5dc0e6c5b1052f4daa34f85d16b43c925db2e1329ae48fc2e4f381"
+    },
+    "dvidia_training-0.1.1-py3-none-any.whl": {
+      "bytes": 5310464,
+      "sha256": "01e61f5e0e536f3c0b446110d108a5c056fa6c8f001fc18e6d55d92bdd076c47"
+    },
+    "installation-smoke.json": {
+      "bytes": 1218,
+      "sha256": "da5505d1347924dbef8ca1185fc9dface1183bccc7ed1b4866cff4fb854e3d68"
+    },
+    "report.json": {
+      "bytes": 2198676,
+      "sha256": "222b6b88f817bbb04497ae0dd284830e6db3924d85c4ce1971e59459ce209d01"
+    },
+    "wheel-source-parity.json": {
+      "bytes": 33998,
+      "sha256": "89ef0fa53d769c6ad56d03834cb3f3928f61ba02b02291543da249fae307d37e"
+    }
+  },
+  "installed_smoke_case": {
+    "condition": "nominal",
+    "goal": 0,
+    "start_xy_m": [
+      0.312,
+      -0.037
+    ],
+    "use": "Known installation smoke only; excluded from confirmation denominator."
+  },
+  "new_physics": false,
+  "new_training": false,
+  "physical_robot_ready": false,
+  "schema": "dvidia.piper-grip-clock-release-kit/v0.3/provenance",
+  "source_helper_sha256": "8c0151e0dc3b182622751544515ea70619ebe69cd6c5bf4f4a21adab0297b694"
+}
