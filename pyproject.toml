@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dvidia-training"
-version = "0.1.0"
+version = "0.1.1"
 description = "Local CPU training from Skillspace footage, with optional simulation movement candidates"
 readme = "README.md"
 license = "MIT AND Apache-2.0"
@@ -66,6 +66,8 @@ dvidia-piper-confirm = "dvidia_training.piper_imitation_driver:main"
 dvidia-piper-feedback = "dvidia_training.piper_feedback_benchmark:main"
 dvidia-piper-feedback-skill = "dvidia_training.piper_feedback_skill:main"
 dvidia-piper-learned-grip = "dvidia_training.piper_learned_grip_benchmark:main"
+dvidia-piper-grip-clock = "dvidia_training.piper_grip_clock_cli:main"
+dvidia-piper-clock-skill = "dvidia_training.piper_grip_clock_skill:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
