@@ -9,7 +9,7 @@
   "numpy": "2.5.3",
   "mujoco": "3.15.0",
   "gpu_used_for_training_or_native_simulation": false,
-  "execution": "Sequential native attempts on a shared desktop host; other application, audit, packaging and development work may run concurrently.",
+  "execution": "Sequential training/development attempts; confirmation dispatches four spawn-isolated controller attempts per case and awaits all four before the next case. Other applications, audit and packaging may run concurrently on the shared desktop.",
   "measurement_scope": "Recorded simulator computation and dense telemetry; excludes cameras, transport, rendering and real actuation.",
   "minimum_hardware_qualified": false,
   "hard_realtime_qualified": false
