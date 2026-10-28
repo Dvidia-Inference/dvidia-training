@@ -1,0 +1,77 @@
+{
+  "schema": "dvidia.piper-grip-wait-diagnostic/v0.1",
+  "created": "2026-10-28",
+  "source_study": "runs/piper-grip-clock-v03-20261027",
+  "independent_audit": "runs/piper-grip-clock-v03-final-audit-20261027.json",
+  "scope": "Post-hoc numeric reconstruction of frozen synthetic simulator evidence. Descriptive disagreement and localization are not a causal intervention or hardware claim.",
+  "confirmation_outcomes": {
+    "scheduled_and_valid_per_controller": 128,
+    "strict_successes": {
+      "clock": 44,
+      "blind_clock": 26,
+      "fixed": 72,
+      "teacher": 67
+    },
+    "acquisition_failures": {
+      "clock": 40,
+      "blind_clock": 48,
+      "fixed": 0,
+      "teacher": 0
+    },
+    "retention_failures": {
+      "clock": 8,
+      "blind_clock": 6,
+      "fixed": 25,
+      "teacher": 28
+    }
+  },
+  "full_clock_hold_diagnostics": {
+    "hold_decisions": 33602,
+    "sampled_teacher_would_advance": 33418,
+    "sampled_teacher_disagreement_fraction": 0.994524135467,
+    "aggregate_hold_seconds_at_20ms": 672.04,
+    "progress_bin_width_seconds": 2,
+    "hold_decisions_by_progress_bin_start_seconds": {
+      "10": 33600,
+      "12": 2
+    },
+    "hold_ticks_with_bilateral_contact": 13666,
+    "hold_ticks_with_total_pad_force_over_0_1N": 10574,
+    "hold_ticks_with_object_z_over_0_14m": 0,
+    "note": "Progress binning uses each saved action's progress_before_s. Contact, force, and object-height values are the aligned saved trajectory observation. The simple 0.14 m height threshold is descriptive only."
+  },
+  "cross_controller_hold_decisions_by_progress_bin_start_seconds": {
+    "clock": {"10": 33600, "12": 2},
+    "blind_clock": {"10": 40728},
+    "fixed": {},
+    "teacher": {"10": 5644}
+  },
+  "audit_confirmation": {
+    "attempts": 512,
+    "audit_mismatches": 0,
+    "clock_premature_advances_before_sampled_readiness": 4,
+    "clock_holds_when_sampled_teacher_would_advance": 33418,
+    "blind_clock_premature_advances_before_sampled_readiness": 300,
+    "blind_clock_holds_when_sampled_teacher_would_advance": 40728,
+    "fixed_premature_advances_before_sampled_readiness": 2396,
+    "teacher_premature_advances_before_sampled_readiness": 0,
+    "teacher_holds_when_sampled_teacher_would_advance": 0
+  },
+  "selected_depth4_tree": {
+    "root_feature_index": 17,
+    "root_feature": "current:jaw_left_m/.035",
+    "root_threshold": 0.8996731490266321,
+    "remaining_internal_features": [
+      {"index": 51, "name": "lag120:log1p_left_force_n/3"},
+      {"index": 11, "name": "current:target_minus_object_x_m/.2"},
+      {"index": 57, "name": "physical_minus_virtual_seconds/20"}
+    ],
+    "stateful_acquisition_release_latch": false
+  },
+  "recommendation": {
+    "candidate": "Separate acquisition-only supervisor with 20ms decisions, bilateral contact/force plus 100ms dwell and <=2mm relative drift, one-way secure latch, 1.0s wait bound, and explicit recovery.",
+    "carried_object_guard": "If load/lift suggests a possibly carried object and secure readiness is absent, hold progress and jaw command and fault; never resume/force-advance. Recovery must be bounded and evaluated separately.",
+    "development_and_confirmation": "New lineage; fresh development roster for freeze, then at least 32 unseen XY groups paired across goals and nominal/post-grip conditions; interleave fixed/full/teacher/candidate per case; preserve failures and report component outcomes, wait/recovery metrics, uncertainty, timing, and independent trace audit.",
+    "qualification": "Simulation-only evidence; no physical robot readiness, hard real-time, or transfer claim."
+  }
+}
