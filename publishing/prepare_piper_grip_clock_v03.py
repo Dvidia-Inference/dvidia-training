@@ -214,10 +214,10 @@ def _verify_inputs(study, audit_path):
 
 def _frontmatter(*, dataset=False):
     if dataset:
-        return ('---\nlicense: mit\ntags:\n- robotics\n- simulation\n- synthetic-data\n- piper\n'
+        return ('---\nlicense: mit\ntags:\n- robotics\n- simulation\n- synthetic-data\n- agilex-piper\n'
                 '---\n\n')
     return ('---\nlicense: mit\nlibrary_name: dvidia-training\npipeline_tag: robotics\n'
-            'tags:\n- robotics\n- simulation-only\n- piper\n---\n\n')
+            'tags:\n- robotics\n- simulation-only\n- agilex-piper\n---\n\n')
 
 
 def _result_rows(report):
