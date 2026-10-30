@@ -6,6 +6,15 @@
 
 [Recorded demo](https://huggingface.co/spaces/Dvidia/dvidia-training) · [Synthetic datasets](https://huggingface.co/datasets/Dvidia/dvidia-training-examples) · [Pilot models](https://huggingface.co/Dvidia/dvidia-training-pilot)
 
+**[Bounded grip waiting v0.4](benchmarks/piper-grip-wait-v04/recovery-20261030/README.md).**
+A 200 ms authored acquisition supervisor avoids indefinite waiting. Strict
+completion is **42/128**, versus **32/128** learned clock, **44/128** fixed
+progression and **41/128** teacher; both paired comparisons are inconclusive.
+The recovered study preserves **508 scored attempts and four unknowns**.
+[Compact Hugging Face evidence](https://huggingface.co/datasets/Dvidia/piper-grip-wait-recovery-v04) ·
+[Research and every scheduled outcome](https://research.dvidia.org/papers/bounded-grip-waiting-v04/).
+The raw native archive remains local; no new model or hardware skill is claimed.
+
 **[OpenUSD workstation v0.1](docs/usd-workstation-v01.md).**
 A versioned USD scene compiles into a local PiPER/MuJoCo workstation with explicit
 mass, inertia, gravity and friction. A frozen CPU benchmark passes **45/45 passive

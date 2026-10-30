@@ -1,0 +1,132 @@
+{
+  "schema": "dvidia.piper-grip-wait-interruptions/v1",
+  "full_raw_report": {
+    "path": "runs/piper-grip-wait-v04-recovery-20261030/recovery-report.json",
+    "bytes": 35327217,
+    "sha256": "87d252d2ffe2aea5a1bca6b50d926abbd2181b4f51695471dfb5747af91e4e56",
+    "scope": "Full local evidence report identity; this compact bundle does not contain its native arrays, full decision reconstruction or per-step timing samples."
+  },
+  "protocol_sha256": "51b951a2b0c761dacf2186ffd5812ba7191c3cb815c8196faba68afef7294820",
+  "frozen_sha256": "93f757645a37dec3cefc7f7198419d97caa0a54b42b523fd7b1cf9f518c85f62",
+  "initial_counts": {
+    "complete": 72,
+    "interrupted": 4,
+    "never_started": 436
+  },
+  "resumed_never_started_attempts": 436,
+  "completed_scored_confirmation_attempts": 508,
+  "scheduled_confirmation_attempts": 512,
+  "original_inventory_file_count": 874,
+  "original_inventory_unchanged": true,
+  "all_original_partial_attempts_unchanged": true,
+  "recovery_plan": {
+    "path": "runs/piper-grip-wait-v04-recovery-20261030/recovery-plan.json",
+    "bytes": 264418,
+    "sha256": "bfda3d4ae35ae854375737ffe34063bf486ff9c7f898c0b6916ca8a779bfa001"
+  },
+  "final_evidence_inventory": {
+    "path": "runs/piper-grip-wait-v04-recovery-20261030/final-evidence-inventory.json",
+    "bytes": 720276,
+    "sha256": "17ef46131d87574713f9aa96965cd403be7a177d16fff55037801939f1d7a900"
+  },
+  "original_inventory_canonical_sha256": "2b7c8a1321487c20495cd54b1e0456bd5449e2c7f42e1549039d2af55375e168",
+  "missingness": "The four interrupted outcomes are unknown, not observed controller failures. Primary scheduled-denominator analysis conservatively imputes failure for all four; sensitivity removes the entire affected XY group, leaving 31 complete groups.",
+  "protocol_deviation": "Session interruption after 72 complete and four started but incomplete confirmation attempts. Complete these 436 never-started requests only; retain all four incomplete attempts untouched and unevaluable. No protocol, policy, labels, configuration or selection changes.",
+  "original_clean_confirmation_complete": false,
+  "original_study_report_created": false,
+  "scope": "Exact before/after byte identities and retained UTF-8 contents of the four incomplete started.json files. No episode, score, native tape or receipt exists for these four outcomes. Their observed physical outcomes are unknown; failure imputation is an analysis convention.",
+  "attempts": [
+    {
+      "case_id": "confirmation-xy04-g1-nominal",
+      "variant": "guarded",
+      "relative_path": "confirmation/confirmation-xy04-g1-nominal/guarded",
+      "outcome": "unevaluable_interrupted",
+      "scored": false,
+      "physics_retried": false,
+      "files": [
+        {
+          "path": "confirmation/confirmation-xy04-g1-nominal/guarded/started.json",
+          "before": {
+            "bytes": 2956,
+            "sha256": "21fcb15f259be47c6ac338da7a7b46f649baac7a6a62845e60fd5e5745b3e941"
+          },
+          "after": {
+            "bytes": 2956,
+            "sha256": "21fcb15f259be47c6ac338da7a7b46f649baac7a6a62845e60fd5e5745b3e941"
+          },
+          "byte_identical": true,
+          "retained_utf8": "{\n  \"schema\": \"dvidia.piper-grip-wait-study/v0.4\",\n  \"protocol_sha256\": \"51b951a2b0c761dacf2186ffd5812ba7191c3cb815c8196faba68afef7294820\",\n  \"runtime_sha256\": {\n    \"piper_grip_clock_benchmark.py\": \"1dc5733a75689479d11a67f4e69a1c6c2da29be8eb3d54cea6a3b8bea4685193\",\n    \"piper_grip_clock.py\": \"0ae71aab4d5a5a74c10820f729fd0a1f2ffc938ce9ab0507f4d1bc0077ce592c\",\n    \"piper_grip_clock_model.py\": \"4ef0464b0e4f1339156f4531dff76c85826594af60f2fbc5d949363744c34ba9\",\n    \"piper_grip_clock_env.py\": \"4fea7289c1aeea209e6c4ab2090d88271ba1663e836b24a77fb3f39749858c99\",\n    \"piper_grip_clock_cli.py\": \"bffb4a8b1fc2259f8a0126c5435ae2eff80f7e630c3cf1c43509fbafdfb2494b\",\n    \"piper_learned_grip_benchmark.py\": \"fc2fb376507bb0036aa1ed300f9f07f4a4bcdc55eacf7e7e1798fdce1af8db9b\",\n    \"piper_grip_adapter.py\": \"e9c480ca6ebd21d4e00b4f4136f623dd9b7cda402dc8ec9669fb4982267e0aa7\",\n    \"piper_feedback_benchmark.py\": \"76fd214eb5033019b42c034e7c504c1610cca7e9a924edeb9f84d52ad29aa264\",\n    \"piper_feedback_model.py\": \"b0cdaa4e9adc302649eab9365f619a8825f05f2d752688245a6b7b7f8a665845\",\n    \"piper_feedback_env.py\": \"0dbae423231968a81bdeed52226d8dffaf8df622013ed3a360d7217148f1bcac\",\n    \"piper_feedback_score.py\": \"863a272828208c631de4cf57647e973eb3e4f5e99eb7a1eacb4eaa68dc42eb0e\",\n    \"piper_motor_primitive.py\": \"02a45b88913db6f223e4d9975eac64d4942a92739c5817c6ede4cc9fa332ed1c\",\n    \"piper_imitation.py\": \"849f66512c58441a240cd20230fcc58691234ddd254c5bbcbfd76abc21b14868\",\n    \"piper_imitation_score.py\": \"0cd4663abfdd7f14f2f33d93e9a2bd45122b998d6160d45b8afcc880512cba2b\",\n    \"piper_task.py\": \"e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f\",\n    \"reference_task.py\": \"bbc768ccc202b8dd41cbd235b206e6478806ce47c1f30ae15dc662c0c1edcc3e\",\n    \"reference_sim.py\": \"c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8\",\n    \"robot_profiles.py\": \"fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d\",\n    \"robot_profiles.lock.json\": \"4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe\",\n    \"piper_imitation_benchmark.py\": \"0ef4649f8e84fc74166fa1acc4d7348aae885ffec238e4b4d714ccf2ca54993f\",\n    \"piper_grip_wait_v04.py\": \"41889e7c88d8d95441ba212442778b7e235e1e7ec42d941219a93d6e4762b6d6\",\n    \"piper_grip_wait_v04_benchmark.py\": \"8a84270289e08802ec690079cdccf775252460f2e97202c1696e2ee6900ff460\"\n  },\n  \"case\": {\n    \"id\": \"confirmation-xy04-g1-nominal\",\n    \"start_xy\": [\n      0.295134,\n      -0.032252\n    ],\n    \"goal_xy\": [\n      0.4,\n      -0.08\n    ],\n    \"seed\": 284209,\n    \"condition\": \"nominal\"\n  },\n  \"variant\": \"guarded\",\n  \"config\": {\n    \"maximum_wait_s\": 0.2,\n    \"gate_offset_s\": 0.0,\n    \"eligible_minimum_pad_force_n\": 0.1,\n    \"secure_minimum_pad_force_n\": 0.2,\n    \"secure_dwell_s\": 0.1,\n    \"maximum_relative_drift_m\": 0.002,\n    \"maximum_object_tcp_distance_m\": 0.12,\n    \"closed_jaw_reference_m\": 0.01\n  },\n  \"frozen_sha256\": \"93f757645a37dec3cefc7f7198419d97caa0a54b42b523fd7b1cf9f518c85f62\"\n}\n"
+        }
+      ]
+    },
+    {
+      "case_id": "confirmation-xy04-g1-nominal",
+      "variant": "clock",
+      "relative_path": "confirmation/confirmation-xy04-g1-nominal/clock",
+      "outcome": "unevaluable_interrupted",
+      "scored": false,
+      "physics_retried": false,
+      "files": [
+        {
+          "path": "confirmation/confirmation-xy04-g1-nominal/clock/started.json",
+          "before": {
+            "bytes": 2676,
+            "sha256": "e20fe6cd5a637ca44a68e026e367b6d2040c545ea8fda4aeab8ee464e7305775"
+          },
+          "after": {
+            "bytes": 2676,
+            "sha256": "e20fe6cd5a637ca44a68e026e367b6d2040c545ea8fda4aeab8ee464e7305775"
+          },
+          "byte_identical": true,
+          "retained_utf8": "{\n  \"schema\": \"dvidia.piper-grip-wait-study/v0.4\",\n  \"protocol_sha256\": \"51b951a2b0c761dacf2186ffd5812ba7191c3cb815c8196faba68afef7294820\",\n  \"runtime_sha256\": {\n    \"piper_grip_clock_benchmark.py\": \"1dc5733a75689479d11a67f4e69a1c6c2da29be8eb3d54cea6a3b8bea4685193\",\n    \"piper_grip_clock.py\": \"0ae71aab4d5a5a74c10820f729fd0a1f2ffc938ce9ab0507f4d1bc0077ce592c\",\n    \"piper_grip_clock_model.py\": \"4ef0464b0e4f1339156f4531dff76c85826594af60f2fbc5d949363744c34ba9\",\n    \"piper_grip_clock_env.py\": \"4fea7289c1aeea209e6c4ab2090d88271ba1663e836b24a77fb3f39749858c99\",\n    \"piper_grip_clock_cli.py\": \"bffb4a8b1fc2259f8a0126c5435ae2eff80f7e630c3cf1c43509fbafdfb2494b\",\n    \"piper_learned_grip_benchmark.py\": \"fc2fb376507bb0036aa1ed300f9f07f4a4bcdc55eacf7e7e1798fdce1af8db9b\",\n    \"piper_grip_adapter.py\": \"e9c480ca6ebd21d4e00b4f4136f623dd9b7cda402dc8ec9669fb4982267e0aa7\",\n    \"piper_feedback_benchmark.py\": \"76fd214eb5033019b42c034e7c504c1610cca7e9a924edeb9f84d52ad29aa264\",\n    \"piper_feedback_model.py\": \"b0cdaa4e9adc302649eab9365f619a8825f05f2d752688245a6b7b7f8a665845\",\n    \"piper_feedback_env.py\": \"0dbae423231968a81bdeed52226d8dffaf8df622013ed3a360d7217148f1bcac\",\n    \"piper_feedback_score.py\": \"863a272828208c631de4cf57647e973eb3e4f5e99eb7a1eacb4eaa68dc42eb0e\",\n    \"piper_motor_primitive.py\": \"02a45b88913db6f223e4d9975eac64d4942a92739c5817c6ede4cc9fa332ed1c\",\n    \"piper_imitation.py\": \"849f66512c58441a240cd20230fcc58691234ddd254c5bbcbfd76abc21b14868\",\n    \"piper_imitation_score.py\": \"0cd4663abfdd7f14f2f33d93e9a2bd45122b998d6160d45b8afcc880512cba2b\",\n    \"piper_task.py\": \"e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f\",\n    \"reference_task.py\": \"bbc768ccc202b8dd41cbd235b206e6478806ce47c1f30ae15dc662c0c1edcc3e\",\n    \"reference_sim.py\": \"c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8\",\n    \"robot_profiles.py\": \"fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d\",\n    \"robot_profiles.lock.json\": \"4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe\",\n    \"piper_imitation_benchmark.py\": \"0ef4649f8e84fc74166fa1acc4d7348aae885ffec238e4b4d714ccf2ca54993f\",\n    \"piper_grip_wait_v04.py\": \"41889e7c88d8d95441ba212442778b7e235e1e7ec42d941219a93d6e4762b6d6\",\n    \"piper_grip_wait_v04_benchmark.py\": \"8a84270289e08802ec690079cdccf775252460f2e97202c1696e2ee6900ff460\"\n  },\n  \"case\": {\n    \"id\": \"confirmation-xy04-g1-nominal\",\n    \"start_xy\": [\n      0.295134,\n      -0.032252\n    ],\n    \"goal_xy\": [\n      0.4,\n      -0.08\n    ],\n    \"seed\": 284209,\n    \"condition\": \"nominal\"\n  },\n  \"variant\": \"clock\",\n  \"config\": null,\n  \"frozen_sha256\": \"93f757645a37dec3cefc7f7198419d97caa0a54b42b523fd7b1cf9f518c85f62\"\n}\n"
+        }
+      ]
+    },
+    {
+      "case_id": "confirmation-xy04-g1-nominal",
+      "variant": "fixed",
+      "relative_path": "confirmation/confirmation-xy04-g1-nominal/fixed",
+      "outcome": "unevaluable_interrupted",
+      "scored": false,
+      "physics_retried": false,
+      "files": [
+        {
+          "path": "confirmation/confirmation-xy04-g1-nominal/fixed/started.json",
+          "before": {
+            "bytes": 2676,
+            "sha256": "5dc7ecb33faa8cdf44fcb9c566fd2c1260e6559cbaa0ddc73fa73a671008ac09"
+          },
+          "after": {
+            "bytes": 2676,
+            "sha256": "5dc7ecb33faa8cdf44fcb9c566fd2c1260e6559cbaa0ddc73fa73a671008ac09"
+          },
+          "byte_identical": true,
+          "retained_utf8": "{\n  \"schema\": \"dvidia.piper-grip-wait-study/v0.4\",\n  \"protocol_sha256\": \"51b951a2b0c761dacf2186ffd5812ba7191c3cb815c8196faba68afef7294820\",\n  \"runtime_sha256\": {\n    \"piper_grip_clock_benchmark.py\": \"1dc5733a75689479d11a67f4e69a1c6c2da29be8eb3d54cea6a3b8bea4685193\",\n    \"piper_grip_clock.py\": \"0ae71aab4d5a5a74c10820f729fd0a1f2ffc938ce9ab0507f4d1bc0077ce592c\",\n    \"piper_grip_clock_model.py\": \"4ef0464b0e4f1339156f4531dff76c85826594af60f2fbc5d949363744c34ba9\",\n    \"piper_grip_clock_env.py\": \"4fea7289c1aeea209e6c4ab2090d88271ba1663e836b24a77fb3f39749858c99\",\n    \"piper_grip_clock_cli.py\": \"bffb4a8b1fc2259f8a0126c5435ae2eff80f7e630c3cf1c43509fbafdfb2494b\",\n    \"piper_learned_grip_benchmark.py\": \"fc2fb376507bb0036aa1ed300f9f07f4a4bcdc55eacf7e7e1798fdce1af8db9b\",\n    \"piper_grip_adapter.py\": \"e9c480ca6ebd21d4e00b4f4136f623dd9b7cda402dc8ec9669fb4982267e0aa7\",\n    \"piper_feedback_benchmark.py\": \"76fd214eb5033019b42c034e7c504c1610cca7e9a924edeb9f84d52ad29aa264\",\n    \"piper_feedback_model.py\": \"b0cdaa4e9adc302649eab9365f619a8825f05f2d752688245a6b7b7f8a665845\",\n    \"piper_feedback_env.py\": \"0dbae423231968a81bdeed52226d8dffaf8df622013ed3a360d7217148f1bcac\",\n    \"piper_feedback_score.py\": \"863a272828208c631de4cf57647e973eb3e4f5e99eb7a1eacb4eaa68dc42eb0e\",\n    \"piper_motor_primitive.py\": \"02a45b88913db6f223e4d9975eac64d4942a92739c5817c6ede4cc9fa332ed1c\",\n    \"piper_imitation.py\": \"849f66512c58441a240cd20230fcc58691234ddd254c5bbcbfd76abc21b14868\",\n    \"piper_imitation_score.py\": \"0cd4663abfdd7f14f2f33d93e9a2bd45122b998d6160d45b8afcc880512cba2b\",\n    \"piper_task.py\": \"e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f\",\n    \"reference_task.py\": \"bbc768ccc202b8dd41cbd235b206e6478806ce47c1f30ae15dc662c0c1edcc3e\",\n    \"reference_sim.py\": \"c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8\",\n    \"robot_profiles.py\": \"fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d\",\n    \"robot_profiles.lock.json\": \"4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe\",\n    \"piper_imitation_benchmark.py\": \"0ef4649f8e84fc74166fa1acc4d7348aae885ffec238e4b4d714ccf2ca54993f\",\n    \"piper_grip_wait_v04.py\": \"41889e7c88d8d95441ba212442778b7e235e1e7ec42d941219a93d6e4762b6d6\",\n    \"piper_grip_wait_v04_benchmark.py\": \"8a84270289e08802ec690079cdccf775252460f2e97202c1696e2ee6900ff460\"\n  },\n  \"case\": {\n    \"id\": \"confirmation-xy04-g1-nominal\",\n    \"start_xy\": [\n      0.295134,\n      -0.032252\n    ],\n    \"goal_xy\": [\n      0.4,\n      -0.08\n    ],\n    \"seed\": 284209,\n    \"condition\": \"nominal\"\n  },\n  \"variant\": \"fixed\",\n  \"config\": null,\n  \"frozen_sha256\": \"93f757645a37dec3cefc7f7198419d97caa0a54b42b523fd7b1cf9f518c85f62\"\n}\n"
+        }
+      ]
+    },
+    {
+      "case_id": "confirmation-xy04-g1-nominal",
+      "variant": "teacher",
+      "relative_path": "confirmation/confirmation-xy04-g1-nominal/teacher",
+      "outcome": "unevaluable_interrupted",
+      "scored": false,
+      "physics_retried": false,
+      "files": [
+        {
+          "path": "confirmation/confirmation-xy04-g1-nominal/teacher/started.json",
+          "before": {
+            "bytes": 2678,
+            "sha256": "6456a07cdd6b135e2923560d12af6d22db7742facb8a8afd0e59fb1f024efda1"
+          },
+          "after": {
+            "bytes": 2678,
+            "sha256": "6456a07cdd6b135e2923560d12af6d22db7742facb8a8afd0e59fb1f024efda1"
+          },
+          "byte_identical": true,
+          "retained_utf8": "{\n  \"schema\": \"dvidia.piper-grip-wait-study/v0.4\",\n  \"protocol_sha256\": \"51b951a2b0c761dacf2186ffd5812ba7191c3cb815c8196faba68afef7294820\",\n  \"runtime_sha256\": {\n    \"piper_grip_clock_benchmark.py\": \"1dc5733a75689479d11a67f4e69a1c6c2da29be8eb3d54cea6a3b8bea4685193\",\n    \"piper_grip_clock.py\": \"0ae71aab4d5a5a74c10820f729fd0a1f2ffc938ce9ab0507f4d1bc0077ce592c\",\n    \"piper_grip_clock_model.py\": \"4ef0464b0e4f1339156f4531dff76c85826594af60f2fbc5d949363744c34ba9\",\n    \"piper_grip_clock_env.py\": \"4fea7289c1aeea209e6c4ab2090d88271ba1663e836b24a77fb3f39749858c99\",\n    \"piper_grip_clock_cli.py\": \"bffb4a8b1fc2259f8a0126c5435ae2eff80f7e630c3cf1c43509fbafdfb2494b\",\n    \"piper_learned_grip_benchmark.py\": \"fc2fb376507bb0036aa1ed300f9f07f4a4bcdc55eacf7e7e1798fdce1af8db9b\",\n    \"piper_grip_adapter.py\": \"e9c480ca6ebd21d4e00b4f4136f623dd9b7cda402dc8ec9669fb4982267e0aa7\",\n    \"piper_feedback_benchmark.py\": \"76fd214eb5033019b42c034e7c504c1610cca7e9a924edeb9f84d52ad29aa264\",\n    \"piper_feedback_model.py\": \"b0cdaa4e9adc302649eab9365f619a8825f05f2d752688245a6b7b7f8a665845\",\n    \"piper_feedback_env.py\": \"0dbae423231968a81bdeed52226d8dffaf8df622013ed3a360d7217148f1bcac\",\n    \"piper_feedback_score.py\": \"863a272828208c631de4cf57647e973eb3e4f5e99eb7a1eacb4eaa68dc42eb0e\",\n    \"piper_motor_primitive.py\": \"02a45b88913db6f223e4d9975eac64d4942a92739c5817c6ede4cc9fa332ed1c\",\n    \"piper_imitation.py\": \"849f66512c58441a240cd20230fcc58691234ddd254c5bbcbfd76abc21b14868\",\n    \"piper_imitation_score.py\": \"0cd4663abfdd7f14f2f33d93e9a2bd45122b998d6160d45b8afcc880512cba2b\",\n    \"piper_task.py\": \"e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f\",\n    \"reference_task.py\": \"bbc768ccc202b8dd41cbd235b206e6478806ce47c1f30ae15dc662c0c1edcc3e\",\n    \"reference_sim.py\": \"c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8\",\n    \"robot_profiles.py\": \"fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d\",\n    \"robot_profiles.lock.json\": \"4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe\",\n    \"piper_imitation_benchmark.py\": \"0ef4649f8e84fc74166fa1acc4d7348aae885ffec238e4b4d714ccf2ca54993f\",\n    \"piper_grip_wait_v04.py\": \"41889e7c88d8d95441ba212442778b7e235e1e7ec42d941219a93d6e4762b6d6\",\n    \"piper_grip_wait_v04_benchmark.py\": \"8a84270289e08802ec690079cdccf775252460f2e97202c1696e2ee6900ff460\"\n  },\n  \"case\": {\n    \"id\": \"confirmation-xy04-g1-nominal\",\n    \"start_xy\": [\n      0.295134,\n      -0.032252\n    ],\n    \"goal_xy\": [\n      0.4,\n      -0.08\n    ],\n    \"seed\": 284209,\n    \"condition\": \"nominal\"\n  },\n  \"variant\": \"teacher\",\n  \"config\": null,\n  \"frozen_sha256\": \"93f757645a37dec3cefc7f7198419d97caa0a54b42b523fd7b1cf9f518c85f62\"\n}\n"
+        }
+      ]
+    }
+  ]
+}
