@@ -30,7 +30,9 @@ availability, and age times. Capture time is the frame exposure time;
 availability cannot precede capture or follow the decision boundary. Age is the
 decision time minus exposure time. A result older than the contract's 100 ms
 maximum is stale and cannot be used as a fresh learning input. Include measured
-processing latency in the evaluation record. Do not forward-fill missing
+processing latency in the evaluation record. Paused simulation timestamps do not
+measure physical delivery latency; a later asynchronous integration must preserve
+the original exposure and actual delivery times. Do not forward-fill missing
 estimates.
 
 The estimator must abstain when the object is absent, occluded, out of usable
