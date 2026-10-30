@@ -4,7 +4,7 @@
 
 ## Why change actions instead of adding another waiting rule
 
-In [v0.3](../benchmarks/piper-grip-clock-v03/report-summary.json), fixed progression achieved 72/128 strict placements versus 44/128 for the learned clock. In the different [v0.4 cohort](../benchmarks/piper-grip-wait-v04/recovery-20261030/report.json), bounded waiting achieved 42/128 scheduled successes, learned timing 32/128, and fixed progression 44/128; both primary comparisons were inconclusive. Four interrupted outcomes remained unknown and were failure-imputed only for the scheduled analysis.
+In [v0.3](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/piper-grip-clock-v0.3), fixed progression achieved 72/128 strict placements versus 44/128 for the learned clock. In the different [v0.4 cohort](../benchmarks/piper-grip-wait-v04/recovery-20261030/report.json), bounded waiting achieved 42/128 scheduled successes, learned timing 32/128, and fixed progression 44/128; both primary comparisons were inconclusive. Four interrupted outcomes remained unknown and were failure-imputed only for the scheduled analysis.
 
 A plausible hypothesis is that stopping early can block the centering motion that creates a grasp. Bounded eligibility permits that motion, but cannot change a poor grasp or carrying path. Its 31 retention failures and 52 critical-contact attempts suggest unresolved manipulation problems; they do not prove their causes. Unequal pulse exposure also prevents attributing differences to recovery quality. Test whether demonstrated corrective actions improve contact and retention, rather than teaching another clock to wait longer.
 

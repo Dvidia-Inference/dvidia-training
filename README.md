@@ -2,6 +2,14 @@
 
 # DVIDIA Training
 
+**[New: action-demonstration tools in 0.1.2](docs/action-demonstrations.md).**
+`dvidia-action-demo` records and validates causal PiPER motor evidence: camera/state
+timing, requested and issued actions, and applied native targets. It preserves
+interrupted/failing records and refuses missing, stale or incompatible training
+inputs. **27 focused tests pass.** The example is synthetic metadata; live capture,
+corrective demonstration collection and learned control remain separate work.
+[Install the reviewed Terminal tools](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/training-v0.1.2).
+
 **[New: testable simulation scenes and bounded grip waiting](docs/research-20261030.md).**
 A local OpenUSD/PiPER bridge passes **45/45 passive physics checks**, with a
 recorded 3D viewer, native Terminal tools and an independently verified release kit.

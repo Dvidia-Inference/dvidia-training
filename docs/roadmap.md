@@ -1,7 +1,29 @@
 # Execution map: footage to installable skills
 
-Working map, 9 October 2026. This is the team's sequence of builds and evidence
+Working map, updated 30 October 2026. This is the team's sequence of builds and evidence
 gates. A completed software component does not establish robot competence.
+
+## Current priority: collect usable corrective action evidence
+
+The [action-demonstration recorder](action-demonstrations.md) now preserves causal
+PiPER observations and motor targets with explicit native coordinates, missingness
+and outcomes; 27 focused tests pass. This is a data-only contract and Terminal tool.
+Live synchronized capture and reviewed corrective demonstrations are not collected.
+The example is synthetic metadata and cannot qualify as a training demonstration.
+
+A separate [OpenUSD workstation](https://research.dvidia.org/papers/openusd-workstation-v01/)
+passes all 45 frozen passive physics checks, with a local installed-package smoke.
+It validates an original rigid-object scene bridge, not a manipulation policy.
+Recovered [bounded grip waiting](https://research.dvidia.org/papers/bounded-grip-waiting-v04/)
+completes 42/128 scheduled attempts versus 32/128 learned clock and 44/128 fixed.
+Both paired comparisons are inconclusive; retention and critical contacts remain.
+
+Next: connect a synchronized simulation producer, verify corrective recording and
+replay evidence, then fit a small action adapter from reviewed demonstrations.
+The [proposed next experiment](piper-next-learning-experiment.md) fixes held-out
+groups, matched post-lift disturbances, blind/fixed controls and strict physical
+outcomes before execution. It remains unrun. Human-video motor recovery, other
+embodiments and physical-arm qualification remain separate gates.
 
 ## The product loop
 
@@ -25,7 +47,7 @@ Confirmation evidence is opened after a candidate is frozen. Once inspected,
 that suite becomes regression evidence for later changes. Further qualification
 needs fresh confirmation scenarios; it cannot silently reuse a known test set.
 
-## Current foundation and next builds
+## Earlier foundation map, 9 October
 
 | Order | Build and owner role | Current state | Evidence needed to advance |
 | --- | --- | --- | --- |

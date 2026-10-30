@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dvidia-training"
-version = "0.1.0"
+version = "0.1.2"
 description = "Local CPU training from Skillspace footage, with optional simulation movement candidates"
 readme = "README.md"
 license = "MIT"
@@ -32,6 +32,7 @@ dvidia-training-benchmark = "dvidia_training.footage_benchmark:main"
 dvidia-skill-capsule = "dvidia_training.arm_entrypoints:capsule_main"
 dvidia-skillspace-coverage = "dvidia_training.coverage:main"
 dvidia-episode-tape = "dvidia_training.episode_tape:main"
+dvidia-action-demo = "dvidia_training.action_demonstration:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
