@@ -2,6 +2,16 @@
 
 # DVIDIA Training
 
+**[Native PiPER capture preview: 0.1.3.dev1](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/piper-action-capture-v0.1-preview).**
+Capture genuine RGB-D, measured joints/fingers and issued/applied motor references locally through `dvidia-piper-capture`.
+Two 1,000-interval runs repeat one fixed start exactly; an interrupted prefix remains unknown. **37 focused tests pass** (including the 27 recorder tests), and a fresh installed wheel captures native frames outside the checkout.
+Four object-tracker channels remain missing, so training export refuses. No corrective demonstrations, new learner or hardware qualification is provided.
+Install the separate preview wheel with its `arm` extra; the default branch's stable package remains 0.1.2.
+[Capture guide](https://github.com/Dvidia-Inference/dvidia-training/blob/piper-action-capture-v0.1-preview/docs/piper-action-capture.md) ·
+[Recorded viewer](https://dvidia-robot-simulation-lab.static.hf.space/action-capture/v01/index.html) ·
+[Complete evidence](https://huggingface.co/datasets/Dvidia/piper-action-capture-v01) ·
+[Research](https://research.dvidia.org/papers/native-action-capture-v01/).
+
 **[New: action-demonstration tools in 0.1.2](docs/action-demonstrations.md).**
 `dvidia-action-demo` records and validates causal PiPER motor evidence: camera/state
 timing, requested and issued actions, and applied native targets. It preserves

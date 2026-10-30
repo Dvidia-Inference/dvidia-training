@@ -7,9 +7,10 @@ gates. A completed software component does not establish robot competence.
 
 The [action-demonstration recorder](action-demonstrations.md) now preserves causal
 PiPER observations and motor targets with explicit native coordinates, missingness
-and outcomes; 27 focused tests pass. This is a data-only contract and Terminal tool.
-Live synchronized capture and reviewed corrective demonstrations are not collected.
-The example is synthetic metadata and cannot qualify as a training demonstration.
+and outcomes; 27 focused tests pass. Stable SDK 0.1.2 provides that data-only
+contract and Terminal tool; its example remains synthetic metadata.
+
+The separate [native capture preview](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/piper-action-capture-v0.1-preview), 0.1.3.dev1, now records genuine rendered RGB-D, measured encoders and native commands. Two identical 20-second runs preserve 1,000 intervals each; an interrupted prefix preserves two intervals with an unknown outcome. All 37 focused tests and a fresh installed native smoke pass. These are authored-controller repeats of one fixed start, without operator corrections. Four object-tracker channels remain missing, so strict training export refuses; depth accuracy remains unverified.
 
 A separate [OpenUSD workstation](https://research.dvidia.org/papers/openusd-workstation-v01/)
 passes all 45 frozen passive physics checks, with a local installed-package smoke.
@@ -18,8 +19,10 @@ Recovered [bounded grip waiting](https://research.dvidia.org/papers/bounded-grip
 completes 42/128 scheduled attempts versus 32/128 learned clock and 44/128 fixed.
 Both paired comparisons are inconclusive; retention and critical contacts remain.
 
-Next: connect a synchronized simulation producer, verify corrective recording and
-replay evidence, then fit a small action adapter from reviewed demonstrations.
+Next: validate a frozen camera estimator, collect and review corrective segments,
+verify their replay evidence, then fit a small action adapter. Keep repeated
+trajectories together when assigning train/test groups. A future camera-cadence
+sweep must preserve acquisition age rather than invent fresh frames.
 The [proposed next experiment](piper-next-learning-experiment.md) fixes held-out
 groups, matched post-lift disturbances, blind/fixed controls and strict physical
 outcomes before execution. It remains unrun. Human-video motor recovery, other
