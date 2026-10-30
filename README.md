@@ -2,6 +2,17 @@
 
 # DVIDIA Training
 
+**[New: testable simulation scenes and bounded grip waiting](docs/research-20261030.md).**
+A local OpenUSD/PiPER bridge passes **45/45 passive physics checks**, with a
+recorded 3D viewer, native Terminal tools and an independently verified release kit.
+A separate recovered grip-wait study retains **508 scored attempts and four unknowns**:
+strict completions are **42/128 bounded, 32/128 learned clock, 44/128 fixed, 41/128 teacher**;
+both paired comparisons are inconclusive.
+[Open the workstation](https://dvidia-robot-simulation-lab.static.hf.space/usd-workstation/v01/index.html) ·
+[Download and run locally](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/usd-workstation-v0.1) ·
+[Grip-wait evidence](https://huggingface.co/datasets/Dvidia/piper-grip-wait-recovery-v04).
+These are bounded simulation results; universal video-to-robot learning remains open.
+
 **[PiPER learned grip feedback v0.2](https://research.dvidia.org/papers/learned-piper-grip-v02/).**
 A local CPU runner and installable model kit, with all failed experiments retained.
 The frozen simulation study completed **6/24** with feedback, **8/24** with its

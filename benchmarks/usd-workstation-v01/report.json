@@ -1,0 +1,2794 @@
+{
+  "schema": "dvidia.usd-workstation-benchmark/v1",
+  "scheduled": 45,
+  "valid": 45,
+  "passed": 45,
+  "normal_scheduled": 36,
+  "normal_passed": 36,
+  "negative_scheduled": 9,
+  "negative_passed": 9,
+  "wall_seconds": 47.61332283960655,
+  "results": [
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.0002452505350112738,
+        "final_height_m": 0.01989224457530307,
+        "final_speed_m_s": 3.1876320262544444e-11
+      },
+      "case": {
+        "id": "case-00",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.04,
+        "friction": 0.1,
+        "height_m": 0.05,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.7779999999998903,
+        "success": true
+      },
+      "wall_seconds": 9.723066166974604,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "ef1b1cafd91d55d151c49cc9822c1def26aa46ddaab3b120829ee7de1620a020"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.0002452505350112877,
+        "final_height_m": 0.019892244575303,
+        "final_speed_m_s": 2.1411711660551734e-11
+      },
+      "case": {
+        "id": "case-01",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.04,
+        "friction": 0.1,
+        "height_m": 0.1,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.7259999999998903,
+        "success": true
+      },
+      "wall_seconds": 1.1632358748465776,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "65568a2feba522ade8a268cdd1310b2a7c3db2dfb41e5bcf8de4db0133bde91e"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.00024525053501131544,
+        "final_height_m": 0.019892244575303034,
+        "final_speed_m_s": 2.5812223997228496e-11
+      },
+      "case": {
+        "id": "case-02",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.04,
+        "friction": 0.1,
+        "height_m": 0.2,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.6589999999998903,
+        "success": true
+      },
+      "wall_seconds": 0.7178924172185361,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "792e1ff30e9de91ac923957f83a87d183b4301e306bd28e017b01af2b35ef436"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "initial_velocity": true,
+        "supported": true,
+        "stopped": true,
+        "sliding_accuracy": true,
+        "moved": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "displacement_m": 0.08137320103660017,
+        "ideal_stopping_distance_m": 0.08154943934760449,
+        "stopping_distance_error_m": 0.00017623831100431475,
+        "final_speed_m_s": 2.120554836020803e-11
+      },
+      "case": {
+        "id": "case-03",
+        "seed": 301729,
+        "kind": "slide",
+        "mass_kg": 0.04,
+        "friction": 0.1,
+        "height_m": 0.0,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": false,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": false,
+        "settled_s": 0.0,
+        "success": false
+      },
+      "wall_seconds": 0.6413628752343357,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "7a1555cdf6363f3cfee1922371c3ae3048297dad123b860f1e113833406c90d1"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.0002452505350112738,
+        "final_height_m": 0.019892244575303048,
+        "final_speed_m_s": 3.13700464407347e-11
+      },
+      "case": {
+        "id": "case-04",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.04,
+        "friction": 0.5,
+        "height_m": 0.05,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.7779999999998903,
+        "success": true
+      },
+      "wall_seconds": 1.8370739580132067,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "3dd792367a0b93ee8c1f090248dd5e62f2bbcdd5e5c77031a892adda8d666fd9"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.0002452505350112877,
+        "final_height_m": 0.019892244575303007,
+        "final_speed_m_s": 2.1636027361918114e-11
+      },
+      "case": {
+        "id": "case-05",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.04,
+        "friction": 0.5,
+        "height_m": 0.1,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.7259999999998903,
+        "success": true
+      },
+      "wall_seconds": 0.8576442920602858,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "b22c663278b1b040c7898ca15c343822f05369a50ba8f275097bfcd0e26e5db0"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.00024525053501131544,
+        "final_height_m": 0.01989224457530303,
+        "final_speed_m_s": 2.6157122298483823e-11
+      },
+      "case": {
+        "id": "case-06",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.04,
+        "friction": 0.5,
+        "height_m": 0.2,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.6589999999998903,
+        "success": true
+      },
+      "wall_seconds": 1.3258735002018511,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "35a98cce58984f0b2c5f415c9bfe83059d132d30e7308a2bbebe4a53113fde87"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "initial_velocity": true,
+        "supported": true,
+        "stopped": true,
+        "sliding_accuracy": true,
+        "moved": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "displacement_m": 0.016301852852840026,
+        "ideal_stopping_distance_m": 0.0163098878695209,
+        "stopping_distance_error_m": 8.035016680871948e-06,
+        "final_speed_m_s": 2.8298591407732633e-11
+      },
+      "case": {
+        "id": "case-07",
+        "seed": 301729,
+        "kind": "slide",
+        "mass_kg": 0.04,
+        "friction": 0.5,
+        "height_m": 0.0,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 0.9130000000000006,
+        "success": true
+      },
+      "wall_seconds": 2.65051291603595,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "9c0f0df430fa6e867c06cbdc766fd91eb02bddaf1f448fdc30f10b652f966ffc"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.0002452505350112738,
+        "final_height_m": 0.019892244575303048,
+        "final_speed_m_s": 3.13700464407347e-11
+      },
+      "case": {
+        "id": "case-08",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.04,
+        "friction": 1.0,
+        "height_m": 0.05,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.7779999999998903,
+        "success": true
+      },
+      "wall_seconds": 0.551257667131722,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "e38599bfbfc29d5af81af1198e3429bdea3e1ef1b0d2eb9fbc078dd62be5dffe"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.0002452505350112877,
+        "final_height_m": 0.019892244575303007,
+        "final_speed_m_s": 2.1636027361918114e-11
+      },
+      "case": {
+        "id": "case-09",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.04,
+        "friction": 1.0,
+        "height_m": 0.1,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.7259999999998903,
+        "success": true
+      },
+      "wall_seconds": 0.9736430831253529,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "c30145ab48d45f6d08563ea7c9e162884be0011565df3d70b92fc5a73fd33ce5"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.00024525053501131544,
+        "final_height_m": 0.01989224457530303,
+        "final_speed_m_s": 2.6157122298483823e-11
+      },
+      "case": {
+        "id": "case-10",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.04,
+        "friction": 1.0,
+        "height_m": 0.2,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.6589999999998903,
+        "success": true
+      },
+      "wall_seconds": 0.7973415004089475,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "3eef824c92542d9ea93b530b07dec5e76eb7bba62eab14b97f646d13fb244bc9"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "initial_velocity": true,
+        "supported": true,
+        "stopped": true,
+        "sliding_accuracy": true,
+        "moved": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "displacement_m": 0.008194850781482688,
+        "ideal_stopping_distance_m": 0.00815494393476045,
+        "stopping_distance_error_m": 3.990684672223847e-05,
+        "final_speed_m_s": 4.0379895001988346e-11
+      },
+      "case": {
+        "id": "case-11",
+        "seed": 301729,
+        "kind": "slide",
+        "mass_kg": 0.04,
+        "friction": 1.0,
+        "height_m": 0.0,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 0.9380000000000006,
+        "success": true
+      },
+      "wall_seconds": 0.5627882918342948,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "0082b4bb915dc51c38167b595c72b7303990e163f882bcbc42ef409bd0df41fd"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.0002452505350112738,
+        "final_height_m": 0.01989224457530307,
+        "final_speed_m_s": 3.139420673998185e-11
+      },
+      "case": {
+        "id": "case-12",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.08,
+        "friction": 0.1,
+        "height_m": 0.05,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.7779999999998903,
+        "success": true
+      },
+      "wall_seconds": 0.7572017083875835,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "1e527dcc5e6e5e5f6ad2369d4ee369966e5438d503ccd8f868f937fd91248f4e"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.0002452505350112877,
+        "final_height_m": 0.019892244575303027,
+        "final_speed_m_s": 2.134142037752948e-11
+      },
+      "case": {
+        "id": "case-13",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.08,
+        "friction": 0.1,
+        "height_m": 0.1,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.7259999999998903,
+        "success": true
+      },
+      "wall_seconds": 0.9163225418888032,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "4b2e2dc664e2ffad1b3561d4248fbfd87a3cb2bd0d8cfcd3597859f3cdf49ed5"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.00024525053501131544,
+        "final_height_m": 0.019892244575303045,
+        "final_speed_m_s": 2.839960203564101e-11
+      },
+      "case": {
+        "id": "case-14",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.08,
+        "friction": 0.1,
+        "height_m": 0.2,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.6589999999998903,
+        "success": true
+      },
+      "wall_seconds": 0.7674087500199676,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "366806ce87f84e924360044a870fbcfd0dc1ed487f996b7ce206fa070fbac44b"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "initial_velocity": true,
+        "supported": true,
+        "stopped": true,
+        "sliding_accuracy": true,
+        "moved": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "displacement_m": 0.08137320103659468,
+        "ideal_stopping_distance_m": 0.08154943934760449,
+        "stopping_distance_error_m": 0.00017623831100981036,
+        "final_speed_m_s": 2.1205242307643973e-11
+      },
+      "case": {
+        "id": "case-15",
+        "seed": 301729,
+        "kind": "slide",
+        "mass_kg": 0.08,
+        "friction": 0.1,
+        "height_m": 0.0,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": false,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": false,
+        "settled_s": 0.0,
+        "success": false
+      },
+      "wall_seconds": 0.7159740841016173,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "b18d2bb0969470c260216b4392c5f3220332c16de4dd0c13cd807ea5bd972875"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.0002452505350112738,
+        "final_height_m": 0.01989224457530307,
+        "final_speed_m_s": 3.200486665071287e-11
+      },
+      "case": {
+        "id": "case-16",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.08,
+        "friction": 0.5,
+        "height_m": 0.05,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.7779999999998903,
+        "success": true
+      },
+      "wall_seconds": 0.5833238339982927,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "65edf28850b653acd17f6a8bf3fe742e6cfb47294b60561af271de5f00634c6b"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.0002452505350112877,
+        "final_height_m": 0.019892244575303013,
+        "final_speed_m_s": 2.1818032943487936e-11
+      },
+      "case": {
+        "id": "case-17",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.08,
+        "friction": 0.5,
+        "height_m": 0.1,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.7259999999998903,
+        "success": true
+      },
+      "wall_seconds": 0.5844227499328554,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "8a5b16e86fee108777929dfaab9575882509aeef266557de7ab8af438fb62193"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.00024525053501131544,
+        "final_height_m": 0.019892244575303024,
+        "final_speed_m_s": 2.8996469814013484e-11
+      },
+      "case": {
+        "id": "case-18",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.08,
+        "friction": 0.5,
+        "height_m": 0.2,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.6589999999998903,
+        "success": true
+      },
+      "wall_seconds": 0.6065622912719846,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "8b8dc2f83985f2685a975851e6e295d2f974fef49e66989984b1f64697c56737"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "initial_velocity": true,
+        "supported": true,
+        "stopped": true,
+        "sliding_accuracy": true,
+        "moved": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "displacement_m": 0.01630185285275576,
+        "ideal_stopping_distance_m": 0.0163098878695209,
+        "stopping_distance_error_m": 8.035016765137876e-06,
+        "final_speed_m_s": 2.82982961339642e-11
+      },
+      "case": {
+        "id": "case-19",
+        "seed": 301729,
+        "kind": "slide",
+        "mass_kg": 0.08,
+        "friction": 0.5,
+        "height_m": 0.0,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 0.9130000000000006,
+        "success": true
+      },
+      "wall_seconds": 0.45316441589966416,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "48d9102cf4bae742a1474714a320f9d18f45749c55809d64689c565082142a73"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.0002452505350112738,
+        "final_height_m": 0.01989224457530307,
+        "final_speed_m_s": 3.200486665071287e-11
+      },
+      "case": {
+        "id": "case-20",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.08,
+        "friction": 1.0,
+        "height_m": 0.05,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.7779999999998903,
+        "success": true
+      },
+      "wall_seconds": 0.7533152909018099,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "9a49c3c310948b15ce85cea261e10dcbd2f064000d8bf513a0ce20338c5b2003"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.0002452505350112877,
+        "final_height_m": 0.019892244575303013,
+        "final_speed_m_s": 2.1818032943487936e-11
+      },
+      "case": {
+        "id": "case-21",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.08,
+        "friction": 1.0,
+        "height_m": 0.1,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.7259999999998903,
+        "success": true
+      },
+      "wall_seconds": 0.7613771669566631,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "2e88f8befe02cf702d3264e48d36253ef7073ff25986b5a1d286c42689359462"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.00024525053501131544,
+        "final_height_m": 0.019892244575303024,
+        "final_speed_m_s": 2.8996469814013484e-11
+      },
+      "case": {
+        "id": "case-22",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.08,
+        "friction": 1.0,
+        "height_m": 0.2,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.6589999999998903,
+        "success": true
+      },
+      "wall_seconds": 1.8228618749417365,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "65748e959cb240007c3895455f8438489df61321f262e6d64912b55e0763b3c5"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "initial_velocity": true,
+        "supported": true,
+        "stopped": true,
+        "sliding_accuracy": true,
+        "moved": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "displacement_m": 0.008194850781238217,
+        "ideal_stopping_distance_m": 0.00815494393476045,
+        "stopping_distance_error_m": 3.990684647776736e-05,
+        "final_speed_m_s": 4.0379444128088933e-11
+      },
+      "case": {
+        "id": "case-23",
+        "seed": 301729,
+        "kind": "slide",
+        "mass_kg": 0.08,
+        "friction": 1.0,
+        "height_m": 0.0,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 0.9380000000000006,
+        "success": true
+      },
+      "wall_seconds": 0.6242459169588983,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "6d3522b0ce94211ac743881f81db5ea2d6ec383a8c473f7d64d26c2b73735682"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.0002452505350112738,
+        "final_height_m": 0.01989224457530307,
+        "final_speed_m_s": 3.2423802382953165e-11
+      },
+      "case": {
+        "id": "case-24",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.16,
+        "friction": 0.1,
+        "height_m": 0.05,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.7779999999998903,
+        "success": true
+      },
+      "wall_seconds": 1.1319606672041118,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "3ef1a6c444351d356b10bcb664cfc8d3ecd05c10c47d5f6a8215b144d34c843e"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.0002452505350112877,
+        "final_height_m": 0.019892244575302996,
+        "final_speed_m_s": 2.166360930701608e-11
+      },
+      "case": {
+        "id": "case-25",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.16,
+        "friction": 0.1,
+        "height_m": 0.1,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.7259999999998903,
+        "success": true
+      },
+      "wall_seconds": 1.2704620421864092,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "3f5494c1f6c86b75de916e58b9f5c2910b0ded6a059a7400e4295a3c824157a9"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.00024525053501131544,
+        "final_height_m": 0.019892244575303034,
+        "final_speed_m_s": 2.5812223997228496e-11
+      },
+      "case": {
+        "id": "case-26",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.16,
+        "friction": 0.1,
+        "height_m": 0.2,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.6589999999998903,
+        "success": true
+      },
+      "wall_seconds": 1.5568804172798991,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "86e1f0b0d780ed3d648557d42a1407514ff709d9c8772ea0bc942ca5f90b7ff8"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "initial_velocity": true,
+        "supported": true,
+        "stopped": true,
+        "sliding_accuracy": true,
+        "moved": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "displacement_m": 0.0813732010366,
+        "ideal_stopping_distance_m": 0.08154943934760449,
+        "stopping_distance_error_m": 0.00017623831100448129,
+        "final_speed_m_s": 2.1205261791986813e-11
+      },
+      "case": {
+        "id": "case-27",
+        "seed": 301729,
+        "kind": "slide",
+        "mass_kg": 0.16,
+        "friction": 0.1,
+        "height_m": 0.0,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": false,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": false,
+        "settled_s": 0.0,
+        "success": false
+      },
+      "wall_seconds": 0.5392490001395345,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "98154f79b117f3b02b4efd0b08d77f1298c3c1f560bbb041e90522e4b5afacc7"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.0002452505350112738,
+        "final_height_m": 0.019892244575303048,
+        "final_speed_m_s": 3.13700464407347e-11
+      },
+      "case": {
+        "id": "case-28",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.16,
+        "friction": 0.5,
+        "height_m": 0.05,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.7779999999998903,
+        "success": true
+      },
+      "wall_seconds": 0.743746459018439,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "e83b402e26cb47948bc579240428d5cac90a71a6f90b916494720922c4598edf"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.0002452505350112877,
+        "final_height_m": 0.019892244575303007,
+        "final_speed_m_s": 2.1636027361918114e-11
+      },
+      "case": {
+        "id": "case-29",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.16,
+        "friction": 0.5,
+        "height_m": 0.1,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.7259999999998903,
+        "success": true
+      },
+      "wall_seconds": 0.5846584998071194,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "f373943f88f34cd42629238ec25c555507a1e1186dda53c6c70a9ed2e0b41f1b"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.00024525053501131544,
+        "final_height_m": 0.01989224457530303,
+        "final_speed_m_s": 2.6157122298483823e-11
+      },
+      "case": {
+        "id": "case-30",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.16,
+        "friction": 0.5,
+        "height_m": 0.2,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.6589999999998903,
+        "success": true
+      },
+      "wall_seconds": 0.882732667028904,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "f1f279a933214823a4d069038e7abd1f308106b16f16adced8fdca445b76ec8d"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "initial_velocity": true,
+        "supported": true,
+        "stopped": true,
+        "sliding_accuracy": true,
+        "moved": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "displacement_m": 0.01630185285283975,
+        "ideal_stopping_distance_m": 0.0163098878695209,
+        "stopping_distance_error_m": 8.035016681149504e-06,
+        "final_speed_m_s": 2.829978070119027e-11
+      },
+      "case": {
+        "id": "case-31",
+        "seed": 301729,
+        "kind": "slide",
+        "mass_kg": 0.16,
+        "friction": 0.5,
+        "height_m": 0.0,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 0.9130000000000006,
+        "success": true
+      },
+      "wall_seconds": 0.7652111249044538,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "daa348d43dda12e1b346129ac19b532ea78dfde0d12b28709a405c6f7a1b1ccb"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.0002452505350112738,
+        "final_height_m": 0.019892244575303048,
+        "final_speed_m_s": 3.13700464407347e-11
+      },
+      "case": {
+        "id": "case-32",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.16,
+        "friction": 1.0,
+        "height_m": 0.05,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.7779999999998903,
+        "success": true
+      },
+      "wall_seconds": 0.638368250336498,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "4b2341091495b5b50deffe999b68fd75274b778d7c666b5319d10ef318b323fa"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.0002452505350112877,
+        "final_height_m": 0.019892244575303007,
+        "final_speed_m_s": 2.1636027361918114e-11
+      },
+      "case": {
+        "id": "case-33",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.16,
+        "friction": 1.0,
+        "height_m": 0.1,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.7259999999998903,
+        "success": true
+      },
+      "wall_seconds": 0.5710506248287857,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "4a11a780e9607f9b69ac4fb864fbb1b3e29b1d68ba8e8efbe90a4280dd88a7fb"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "freefall_accuracy": true,
+        "resting_height": true,
+        "stopped": true,
+        "supported": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.00024525053501131544,
+        "final_height_m": 0.01989224457530303,
+        "final_speed_m_s": 2.6157122298483823e-11
+      },
+      "case": {
+        "id": "case-34",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.16,
+        "friction": 1.0,
+        "height_m": 0.2,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 1.6589999999998903,
+        "success": true
+      },
+      "wall_seconds": 0.7380717094056308,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "2165e8e916b12f0ce3f9681300c4655c0a6ed87bbb346483f0197db66d824d60"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "initial_velocity": true,
+        "supported": true,
+        "stopped": true,
+        "sliding_accuracy": true,
+        "moved": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "displacement_m": 0.008194850781482854,
+        "ideal_stopping_distance_m": 0.00815494393476045,
+        "stopping_distance_error_m": 3.990684672240501e-05,
+        "final_speed_m_s": 4.0379606469371224e-11
+      },
+      "case": {
+        "id": "case-35",
+        "seed": 301729,
+        "kind": "slide",
+        "mass_kg": 0.16,
+        "friction": 1.0,
+        "height_m": 0.0,
+        "control": "normal"
+      },
+      "native_goal": {
+        "position": true,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": true,
+        "settled_s": 0.9380000000000006,
+        "success": true
+      },
+      "wall_seconds": 0.6695542498491704,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "normal",
+      "native_model_sha256": "37775b0969ce9276b6c59caa4c14618e2200d8feb5064e3b57e04783e810648c"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "missing_support_detected": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.0002452505350112738,
+        "final_height_m": -19.559810839652883,
+        "final_speed_m_s": 19.62000083923298
+      },
+      "case": {
+        "id": "case-36",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.04,
+        "friction": 0.5,
+        "height_m": 0.05,
+        "control": "table_disabled"
+      },
+      "native_goal": {
+        "position": false,
+        "linear_speed": false,
+        "angular_speed": true,
+        "table_contact": false,
+        "no_robot_contact": true,
+        "instantaneous": false,
+        "settled_s": 0.0,
+        "success": false
+      },
+      "wall_seconds": 0.6028440832160413,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "table_disabled",
+      "native_model_sha256": "e7c8016d7ee2a5ca5267339463393396c4b05872d6334cd05c5aa9a0c536a944"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "missing_gravity_detected": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.012262500000000023,
+        "final_height_m": 0.07,
+        "final_speed_m_s": 0.0
+      },
+      "case": {
+        "id": "case-37",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.04,
+        "friction": 0.5,
+        "height_m": 0.05,
+        "control": "gravity_disabled"
+      },
+      "native_goal": {
+        "position": false,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": false,
+        "no_robot_contact": true,
+        "instantaneous": false,
+        "settled_s": 0.0,
+        "success": false
+      },
+      "wall_seconds": 0.48599595902487636,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "gravity_disabled",
+      "native_model_sha256": "6f71fa4d1be0c924451f4cfaf7f92e7ae67c2bb37d5619f789b11822951aa994"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "missing_support_detected": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.0002452505350112877,
+        "final_height_m": -19.509810839652882,
+        "final_speed_m_s": 19.62000083923298
+      },
+      "case": {
+        "id": "case-38",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.04,
+        "friction": 0.5,
+        "height_m": 0.1,
+        "control": "table_disabled"
+      },
+      "native_goal": {
+        "position": false,
+        "linear_speed": false,
+        "angular_speed": true,
+        "table_contact": false,
+        "no_robot_contact": true,
+        "instantaneous": false,
+        "settled_s": 0.0,
+        "success": false
+      },
+      "wall_seconds": 0.5106432917527854,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "table_disabled",
+      "native_model_sha256": "e91742ae719cf6742e01ed62f707dcc2479019c88661aa1733e5a41095d07149"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "missing_gravity_detected": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.012262500000000023,
+        "final_height_m": 0.12000000000000001,
+        "final_speed_m_s": 0.0
+      },
+      "case": {
+        "id": "case-39",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.04,
+        "friction": 0.5,
+        "height_m": 0.1,
+        "control": "gravity_disabled"
+      },
+      "native_goal": {
+        "position": false,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": false,
+        "no_robot_contact": true,
+        "instantaneous": false,
+        "settled_s": 0.0,
+        "success": false
+      },
+      "wall_seconds": 0.577182041015476,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "gravity_disabled",
+      "native_model_sha256": "bb5752c6aa80683587561965b7ac93ca7593954d26b4c0f19b4203417d719467"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "missing_support_detected": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.00024525053501131544,
+        "final_height_m": -19.40981083965288,
+        "final_speed_m_s": 19.62000083923298
+      },
+      "case": {
+        "id": "case-40",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.04,
+        "friction": 0.5,
+        "height_m": 0.2,
+        "control": "table_disabled"
+      },
+      "native_goal": {
+        "position": false,
+        "linear_speed": false,
+        "angular_speed": true,
+        "table_contact": false,
+        "no_robot_contact": true,
+        "instantaneous": false,
+        "settled_s": 0.0,
+        "success": false
+      },
+      "wall_seconds": 0.8012839588336647,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "table_disabled",
+      "native_model_sha256": "f6d35e6e08c39e1ce9eb4777857df49c54e773d50f9dbbd30ced88d9f266399c"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "missing_gravity_detected": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "early_position_error_m": 0.01226250000000001,
+        "final_height_m": 0.22,
+        "final_speed_m_s": 0.0
+      },
+      "case": {
+        "id": "case-41",
+        "seed": 301729,
+        "kind": "drop",
+        "mass_kg": 0.04,
+        "friction": 0.5,
+        "height_m": 0.2,
+        "control": "gravity_disabled"
+      },
+      "native_goal": {
+        "position": false,
+        "linear_speed": true,
+        "angular_speed": true,
+        "table_contact": false,
+        "no_robot_contact": true,
+        "instantaneous": false,
+        "settled_s": 0.0,
+        "success": false
+      },
+      "wall_seconds": 0.9545727083459496,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "gravity_disabled",
+      "native_model_sha256": "bbfcf8f25e8ef8403f617449a12769830faa5ec495c407ce5c3692be5fe67762"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "initial_velocity": true,
+        "missing_friction_detected": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "displacement_m": 0.3999509009462619,
+        "ideal_stopping_distance_m": null,
+        "stopping_distance_error_m": null,
+        "final_speed_m_s": 0.39990189999581244
+      },
+      "case": {
+        "id": "case-42",
+        "seed": 301729,
+        "kind": "slide",
+        "mass_kg": 0.04,
+        "friction": 0.0,
+        "height_m": 0.0,
+        "control": "friction_disabled"
+      },
+      "native_goal": {
+        "position": false,
+        "linear_speed": false,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": false,
+        "settled_s": 0.0,
+        "success": false
+      },
+      "wall_seconds": 0.7461713752709329,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "friction_disabled",
+      "native_model_sha256": "fb30c11b90e6e7a2f2990e4fb5ca39ac918622e088a1b7a1fadb4498a0f2ea52"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "initial_velocity": true,
+        "missing_friction_detected": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "displacement_m": 0.39995090094626196,
+        "ideal_stopping_distance_m": null,
+        "stopping_distance_error_m": null,
+        "final_speed_m_s": 0.3999018999958124
+      },
+      "case": {
+        "id": "case-43",
+        "seed": 301729,
+        "kind": "slide",
+        "mass_kg": 0.08,
+        "friction": 0.0,
+        "height_m": 0.0,
+        "control": "friction_disabled"
+      },
+      "native_goal": {
+        "position": false,
+        "linear_speed": false,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": false,
+        "settled_s": 0.0,
+        "success": false
+      },
+      "wall_seconds": 1.055431874934584,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "friction_disabled",
+      "native_model_sha256": "9cbccf92ba546f19a07a682a5b425b63a8185f7632b5096954b9ce05f40bf243"
+    },
+    {
+      "valid": true,
+      "checks": {
+        "finite": true,
+        "complete_cadence": true,
+        "robot_contact_absent": true,
+        "initial_velocity": true,
+        "missing_friction_detected": true,
+        "no_native_warning": true
+      },
+      "success": true,
+      "metrics": {
+        "displacement_m": 0.3999509009462619,
+        "ideal_stopping_distance_m": null,
+        "stopping_distance_error_m": null,
+        "final_speed_m_s": 0.39990189999581244
+      },
+      "case": {
+        "id": "case-44",
+        "seed": 301729,
+        "kind": "slide",
+        "mass_kg": 0.16,
+        "friction": 0.0,
+        "height_m": 0.0,
+        "control": "friction_disabled"
+      },
+      "native_goal": {
+        "position": false,
+        "linear_speed": false,
+        "angular_speed": true,
+        "table_contact": true,
+        "no_robot_contact": true,
+        "instantaneous": false,
+        "settled_s": 0.0,
+        "success": false
+      },
+      "wall_seconds": 0.6393786668777466,
+      "native_warnings": [],
+      "compiled_property_checks": {
+        "object_mass": true,
+        "object_inertia": true,
+        "object_center_of_mass": true,
+        "object_inertia_axes": true,
+        "object_gravity_compensation_disabled": true,
+        "object_size": true,
+        "table_size": true,
+        "object_position": true,
+        "object_orientation": true,
+        "table_position": true,
+        "table_orientation": true,
+        "gravity": true,
+        "object_friction": true,
+        "table_friction": true,
+        "free_object": true,
+        "native_dimensions": true
+      },
+      "native_timestep_s": 0.001,
+      "control": "friction_disabled",
+      "native_model_sha256": "9569a3e1335d81abc993d0593cca64be9829675d2e59b2e86c6672f292d4eb1c"
+    }
+  ],
+  "protocol_sha256": "383cd32d445365e66fbc74f4ec37d5385459b95a30d80051a46f70fdc6a0243b",
+  "runtime": {
+    "python": "3.12.9",
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "numpy": "2.5.3",
+    "mujoco": "3.15.0",
+    "openusd": [
+      0,
+      26,
+      11
+    ]
+  },
+  "scope": "Passive rigid-box scene conversion, drop/support and Coulomb sliding. Arm holds native home controls; no policy, shoe grasp or video learning.",
+  "physics_calibrated": false,
+  "learned_skill": false,
+  "physical_robot_ready": false,
+  "independent_native_goal": {
+    "drop_gravity_disabled": {
+      "scheduled": 3,
+      "settled_at_recipe_goal": 0
+    },
+    "drop_normal": {
+      "scheduled": 27,
+      "settled_at_recipe_goal": 27
+    },
+    "drop_table_disabled": {
+      "scheduled": 3,
+      "settled_at_recipe_goal": 0
+    },
+    "slide_friction_disabled": {
+      "scheduled": 3,
+      "settled_at_recipe_goal": 0
+    },
+    "slide_normal": {
+      "scheduled": 9,
+      "settled_at_recipe_goal": 6
+    }
+  },
+  "independent_native_goal_scope": "Separate from passive physics checks. The recipe goal remains at the initial XY; successful sliding can correctly end outside that goal."
+}

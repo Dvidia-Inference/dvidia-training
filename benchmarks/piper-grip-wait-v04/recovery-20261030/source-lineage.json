@@ -1,0 +1,147 @@
+{
+  "schema": "dvidia.piper-grip-wait-source-lineage/v1",
+  "full_raw_report": {
+    "path": "runs/piper-grip-wait-v04-recovery-20261030/recovery-report.json",
+    "bytes": 35327217,
+    "sha256": "87d252d2ffe2aea5a1bca6b50d926abbd2181b4f51695471dfb5747af91e4e56",
+    "scope": "Full local evidence report identity; this compact bundle does not contain its native arrays, full decision reconstruction or per-step timing samples."
+  },
+  "protocol": {
+    "path": "runs/piper-grip-wait-v04-20261028/protocol.json",
+    "bytes": 42416,
+    "sha256": "51b951a2b0c761dacf2186ffd5812ba7191c3cb815c8196faba68afef7294820"
+  },
+  "selection": {
+    "path": "runs/piper-grip-wait-v04-20261028/frozen.json",
+    "bytes": 49251,
+    "sha256": "93f757645a37dec3cefc7f7198419d97caa0a54b42b523fd7b1cf9f518c85f62"
+  },
+  "recovery_plan": {
+    "path": "runs/piper-grip-wait-v04-recovery-20261030/recovery-plan.json",
+    "bytes": 264418,
+    "sha256": "bfda3d4ae35ae854375737ffe34063bf486ff9c7f898c0b6916ca8a779bfa001"
+  },
+  "execution_intent": {
+    "path": "runs/piper-grip-wait-v04-recovery-20261030/execution-intent.json",
+    "bytes": 526,
+    "sha256": "05cfb536ecdf10317e1135b79f61fdc982f0f4948376cd557840419ddd8de47c"
+  },
+  "execution_result": {
+    "path": "runs/piper-grip-wait-v04-recovery-20261030/execution-result.json",
+    "bytes": 30231668,
+    "sha256": "cc81e673b3a228d554503351c704a77dfb82357d82d165a61bc300bac8ef4222"
+  },
+  "final_evidence_inventory": {
+    "path": "runs/piper-grip-wait-v04-recovery-20261030/final-evidence-inventory.json",
+    "bytes": 720276,
+    "sha256": "17ef46131d87574713f9aa96965cd403be7a177d16fff55037801939f1d7a900"
+  },
+  "frozen_runtime_sha256": {
+    "piper_grip_clock_benchmark.py": "1dc5733a75689479d11a67f4e69a1c6c2da29be8eb3d54cea6a3b8bea4685193",
+    "piper_grip_clock.py": "0ae71aab4d5a5a74c10820f729fd0a1f2ffc938ce9ab0507f4d1bc0077ce592c",
+    "piper_grip_clock_model.py": "4ef0464b0e4f1339156f4531dff76c85826594af60f2fbc5d949363744c34ba9",
+    "piper_grip_clock_env.py": "4fea7289c1aeea209e6c4ab2090d88271ba1663e836b24a77fb3f39749858c99",
+    "piper_grip_clock_cli.py": "bffb4a8b1fc2259f8a0126c5435ae2eff80f7e630c3cf1c43509fbafdfb2494b",
+    "piper_learned_grip_benchmark.py": "fc2fb376507bb0036aa1ed300f9f07f4a4bcdc55eacf7e7e1798fdce1af8db9b",
+    "piper_grip_adapter.py": "e9c480ca6ebd21d4e00b4f4136f623dd9b7cda402dc8ec9669fb4982267e0aa7",
+    "piper_feedback_benchmark.py": "76fd214eb5033019b42c034e7c504c1610cca7e9a924edeb9f84d52ad29aa264",
+    "piper_feedback_model.py": "b0cdaa4e9adc302649eab9365f619a8825f05f2d752688245a6b7b7f8a665845",
+    "piper_feedback_env.py": "0dbae423231968a81bdeed52226d8dffaf8df622013ed3a360d7217148f1bcac",
+    "piper_feedback_score.py": "863a272828208c631de4cf57647e973eb3e4f5e99eb7a1eacb4eaa68dc42eb0e",
+    "piper_motor_primitive.py": "02a45b88913db6f223e4d9975eac64d4942a92739c5817c6ede4cc9fa332ed1c",
+    "piper_imitation.py": "849f66512c58441a240cd20230fcc58691234ddd254c5bbcbfd76abc21b14868",
+    "piper_imitation_score.py": "0cd4663abfdd7f14f2f33d93e9a2bd45122b998d6160d45b8afcc880512cba2b",
+    "piper_task.py": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f",
+    "reference_task.py": "bbc768ccc202b8dd41cbd235b206e6478806ce47c1f30ae15dc662c0c1edcc3e",
+    "reference_sim.py": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8",
+    "robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d",
+    "robot_profiles.lock.json": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+    "piper_imitation_benchmark.py": "0ef4649f8e84fc74166fa1acc4d7348aae885ffec238e4b4d714ccf2ca54993f",
+    "piper_grip_wait_v04.py": "41889e7c88d8d95441ba212442778b7e235e1e7ec42d941219a93d6e4762b6d6",
+    "piper_grip_wait_v04_benchmark.py": "8a84270289e08802ec690079cdccf775252460f2e97202c1696e2ee6900ff460"
+  },
+  "frozen_policy_input_sha256": {
+    "base-model.json": "2976a605575d9edefb5db366e72c5e006c0ce85a5531ad3d61512436864c8ded",
+    "jaw-model.json": "f747de9881c2f63178a8268942e9af3784b98d1b7cc8bb58739d2de5d79a7f12",
+    "selected.json": "c71966b4e7e1ec11c3b0b2269b0c736c237f9aa8d7f416b7ed4bcef850cc93ec"
+  },
+  "previous_study": {
+    "previous_protocol_sha256": "bff1c076594b8ed06cd7ae3d7eb3f7b819ee29226242abe577b19f9ffe97fde3",
+    "previous_frozen_sha256": "077255f13301476c159d63ff83f1bfcf2c21d3021b65abe58191e63f8c016c0b",
+    "previous_report_sha256": "222b6b88f817bbb04497ae0dd284830e6db3924d85c4ce1971e59459ce209d01"
+  },
+  "tooling": [
+    {
+      "path": "publishing/recover_piper_grip_wait_v04.py",
+      "bytes": 21720,
+      "sha256": "571f80f70317bfc91ae8b12d7f41c2aac9e5f1d733e896a100d70d92f8ec2349"
+    },
+    {
+      "path": "publishing/test_recover_piper_grip_wait_v04.py",
+      "bytes": 8152,
+      "sha256": "28bc2f40ef5ab89f16f0252bc18d959739513735084168eb2861bbf97ef58e72"
+    },
+    {
+      "path": "publishing/audit_piper_grip_wait_v04.py",
+      "bytes": 23069,
+      "sha256": "c51ec970f1a35190df050094a950c7004982c3d466e984f6565f8e1dde74f716"
+    },
+    {
+      "path": "publishing/test_audit_piper_grip_wait_v04.py",
+      "bytes": 7895,
+      "sha256": "2baf8bccc31273d7fd8b82ae2298fc9e201fffef70ba449c2241b5035049c301"
+    },
+    {
+      "path": "publishing/audit_piper_grip_clock_v03.py",
+      "bytes": 41286,
+      "sha256": "8f2e04af61760cf3a24ff0e08db0ed98e574463c7b99ffbf03b06b55b16eb94c"
+    },
+    {
+      "path": "tests/test_piper_grip_wait_v04.py",
+      "bytes": 12570,
+      "sha256": "d83ac33c9dfe574668af8a8672fa6344127512eafa2b8c0c01e50afe505da2a7"
+    },
+    {
+      "path": "tests/test_piper_grip_wait_v04_benchmark.py",
+      "bytes": 23241,
+      "sha256": "6ee5c22be5226348512caf3eab4ab52af8553f20c7a0a56e9204f461b1eafa48"
+    }
+  ],
+  "compact_generator": {
+    "path": "runs/compact-grip-wait-recovery-20261030.py",
+    "bytes": 15112,
+    "sha256": "d1c1a9ab7f52d60882d1e65c080f4a0a6a7a668c96a5937491afa04e1b23901c"
+  },
+  "paper": {
+    "path": "reports/Bounded grip waiting v04.md",
+    "bytes": 5932,
+    "sha256": "2557ac42b4ff2da720700185e62620a75ca835cb34fd000f4b470e587048dc50"
+  },
+  "tests": {
+    "focused_recovery_tests": 10,
+    "related_tests": 36,
+    "passed": true,
+    "focused_log": {
+      "path": "runs/piper-grip-wait-v04-recovery-tests-20261030.log",
+      "bytes": 109,
+      "sha256": "09e67bdc2fbdb2e88d3052c4c59e91612cec937c21c1da4f441c12b656d31f2c"
+    },
+    "scope": "Synthetic no-retry, exact-byte inventory, denominator, paired-sensitivity and audit-binding contracts; these are not additional native rollouts."
+  },
+  "platform": {
+    "system": "Darwin",
+    "machine": "arm64",
+    "python": "3.12.9",
+    "numpy": "2.5.3",
+    "mujoco": "3.15.0"
+  },
+  "workers": 4,
+  "original_platform_versions_matched": true,
+  "timing_scope": "The original partial session and resumed session occur on different dates and shared-host loads. Timing is descriptive by session; no uninterrupted-run, isolated throughput or hardware real-time claim.",
+  "newly_trained_model": false,
+  "authored_acquisition_supervisor": true,
+  "learned_prediction_advisory": true,
+  "qualified_robot_skill": false,
+  "physical_robot_ready": false,
+  "scope": "Hashes describe already frozen simulation methods and external recovery/compaction tools. Paths are repository-relative descriptors, not claims that every full raw artifact is included in this compact bundle."
+}
