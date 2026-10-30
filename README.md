@@ -6,6 +6,15 @@
 
 [Recorded demo](https://huggingface.co/spaces/Dvidia/dvidia-training) · [Synthetic datasets](https://huggingface.co/datasets/Dvidia/dvidia-training-examples) · [Pilot models](https://huggingface.co/Dvidia/dvidia-training-pilot)
 
+**[OpenUSD workstation v0.1](docs/usd-workstation-v01.md).**
+A versioned USD scene compiles into a local PiPER/MuJoCo workstation with explicit
+mass, inertia, gravity and friction. A frozen CPU benchmark passes **45/45 passive
+physics checks**, including nine missing-effect controls. All inputs, recorded 3D
+poses and independent audits are available in the
+[release kit](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/usd-workstation-v0.1)
+and [research note](https://research.dvidia.org/papers/openusd-workstation-v01/).
+This validates a bounded environment bridge; policy learning and hardware transfer remain open.
+
 **[Learned PiPER grip clock v0.3](docs/piper-grip-clock-v03.md).**
 A compact model learns when to wait during grasp acquisition, coordinating the
 original arm and jaw reference. Frozen strict completion is **44/128**, versus
