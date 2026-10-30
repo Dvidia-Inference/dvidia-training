@@ -6,6 +6,14 @@
 
 [Recorded demo](https://huggingface.co/spaces/Dvidia/dvidia-training) · [Synthetic datasets](https://huggingface.co/datasets/Dvidia/dvidia-training-examples) · [Pilot models](https://huggingface.co/Dvidia/dvidia-training-pilot)
 
+**[Record the motor evidence](docs/action-demonstrations.md).**
+DVIDIA Training **0.1.2** adds `dvidia-action-demo`: a data-only PiPER recorder,
+validator and target exporter that keeps observations, requested/issued commands
+and applied targets separate. It checks causal camera timing, native joint limits,
+gripper units, missing data and interrupted attempts. All **27 focused tests pass**.
+The included example is synthetic metadata; this tool has no live capture,
+video-to-action inference, policy training or robot command execution.
+
 **[Bounded grip waiting v0.4](benchmarks/piper-grip-wait-v04/recovery-20261030/README.md).**
 A 200 ms authored acquisition supervisor avoids indefinite waiting. Strict
 completion is **42/128**, versus **32/128** learned clock, **44/128** fixed

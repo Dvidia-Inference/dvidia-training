@@ -1,0 +1,1091 @@
+{
+  "binding": {
+    "calibration_sha256": "b699388f288fd0eca1951271ad410bc843613df811abfae2576a1679601c33a4",
+    "configuration_sha256": "d51cd6962bb3eec03dbaf54ed8ca9c7e828a1f3c6f6e69811d18d363416b97d5",
+    "limits_sha256": "1bc24b12c655979dc468898640b008a165a424332773b14e54be115eb2d19d30",
+    "model_sha256": "3b8b46d635e142dacaf6dee4f470bf8f593f1557e4d6359216bef9f7379f9733",
+    "profile_lock_sha256": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+    "profile_record_sha256": "7d37252aa93148e2adbb74fec2a9bfa6d4b0ddd691cbbf53ce9871708dfb0277",
+    "reference_policy_sha256": "03d0561e2aa87e4cbd4d623e4ae80adc1627bc775e17f96ba4be07b3e59867d3",
+    "scene_sha256": "5f4419ce3364be390096a13aca9eb9e83f6d88a7eb20f170c7588157185bd157"
+  },
+  "calibration": {
+    "base_frame": "robot_base",
+    "base_from_camera": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "camera_frame": "rgbd_optical",
+    "depth_units": "m",
+    "id": "authored-fixture-camera",
+    "intrinsics": {
+      "cx": 320.0,
+      "cy": 240.0,
+      "fx": 500.0,
+      "fy": 500.0,
+      "height": 480,
+      "width": 640
+    },
+    "tool_frame": "link6",
+    "valid_from_seconds": 0.0,
+    "valid_until_seconds": 20.0
+  },
+  "clock": {
+    "control_dt_seconds": 0.02,
+    "kind": "shared_simulation_elapsed_seconds",
+    "maximum_sensor_age_seconds": 0.1,
+    "origin": "producer_zero"
+  },
+  "goal_position_m": [
+    0.35,
+    0.08,
+    0.08
+  ],
+  "initial": {
+    "camera": {
+      "age_seconds": 0.0,
+      "available_at_seconds": 0.0,
+      "captured_at_seconds": 0.0,
+      "status": "available",
+      "value": {
+        "depth": {
+          "bytes": 89,
+          "path": "frames/depth-0000.fixture.json",
+          "sha256": "0a8b84ce6938ede4848b35fad5230907df2a3bcc594576388b8379ddbbe62889"
+        },
+        "exposure_end_seconds": 0.0,
+        "exposure_start_seconds": 0.0,
+        "index": 0,
+        "rgb": {
+          "bytes": 87,
+          "path": "frames/rgb-0000.fixture.json",
+          "sha256": "561c21ac6f2998e16c79d5d74c72ce75ecdee2ea29ddf10e144ce0d7d571faa0"
+        }
+      }
+    },
+    "signals": {
+      "gripper_joint_position_m": {
+        "age_seconds": 0.0,
+        "available_at_seconds": 0.0,
+        "captured_at_seconds": 0.0,
+        "status": "available",
+        "value": [
+          0.025,
+          -0.025
+        ]
+      },
+      "gripper_joint_velocity_m_s": {
+        "age_seconds": 0.0,
+        "available_at_seconds": 0.0,
+        "captured_at_seconds": 0.0,
+        "status": "available",
+        "value": [
+          -0.005,
+          0.005
+        ]
+      },
+      "joint_position_rad": {
+        "age_seconds": 0.0,
+        "available_at_seconds": 0.0,
+        "captured_at_seconds": 0.0,
+        "status": "available",
+        "value": [
+          0.0,
+          0.5,
+          -0.5,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "joint_velocity_rad_s": {
+        "age_seconds": 0.0,
+        "available_at_seconds": 0.0,
+        "captured_at_seconds": 0.0,
+        "status": "available",
+        "value": [
+          0.05,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "object_orientation_uncertainty_rad": {
+        "age_seconds": 0.0,
+        "available_at_seconds": 0.0,
+        "captured_at_seconds": 0.0,
+        "status": "available",
+        "value": [
+          0.01
+        ]
+      },
+      "object_position_estimate_m": {
+        "age_seconds": 0.0,
+        "available_at_seconds": 0.0,
+        "captured_at_seconds": 0.0,
+        "status": "available",
+        "value": [
+          0.3,
+          -0.03,
+          0.082
+        ]
+      },
+      "object_position_uncertainty_m": {
+        "age_seconds": 0.0,
+        "available_at_seconds": 0.0,
+        "captured_at_seconds": 0.0,
+        "status": "available",
+        "value": [
+          0.001
+        ]
+      },
+      "object_quaternion_estimate_wxyz": {
+        "age_seconds": 0.0,
+        "available_at_seconds": 0.0,
+        "captured_at_seconds": 0.0,
+        "status": "available",
+        "value": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "tcp_position_estimate_m": {
+        "age_seconds": 0.0,
+        "available_at_seconds": 0.0,
+        "captured_at_seconds": 0.0,
+        "status": "available",
+        "value": [
+          0.3,
+          -0.03,
+          0.15
+        ]
+      },
+      "tcp_quaternion_estimate_wxyz": {
+        "age_seconds": 0.0,
+        "available_at_seconds": 0.0,
+        "captured_at_seconds": 0.0,
+        "status": "available",
+        "value": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "timestamp_seconds": 0.0,
+    "vision_frame_index": 0
+  },
+  "initial_applied_targets": {
+    "gripper_position_m": 0.025,
+    "joint_targets_rad": [
+      0.0,
+      0.5,
+      -0.5,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "limits": {
+    "gripper_position_limits_m": [
+      0.0,
+      0.035
+    ],
+    "jaw_target_rate_m_s": 0.05,
+    "joint_limits_rad": [
+      [
+        -2.618,
+        2.618
+      ],
+      [
+        0.0,
+        3.14
+      ],
+      [
+        -2.697,
+        0.0
+      ],
+      [
+        -1.832,
+        1.832
+      ],
+      [
+        -1.22,
+        1.22
+      ],
+      [
+        -3.14,
+        3.14
+      ]
+    ],
+    "joint_target_rate_rad_s": 1.5
+  },
+  "outcome": {
+    "end_seconds": 0.04,
+    "evidence_sha256": null,
+    "reason": "producer_finished",
+    "scorer_sha256": null,
+    "status": "complete",
+    "task_result": "unverified"
+  },
+  "physical_robot_ready": false,
+  "profile": {
+    "actuator_names": [
+      "joint1",
+      "joint2",
+      "joint3",
+      "joint4",
+      "joint5",
+      "joint6",
+      "gripper"
+    ],
+    "arm_joint_names": [
+      "joint1",
+      "joint2",
+      "joint3",
+      "joint4",
+      "joint5",
+      "joint6"
+    ],
+    "gripper_command": "single-finger slide target in metres, native range [0,0.035]; not total jaw gap",
+    "gripper_joint_names": [
+      "joint7",
+      "joint8"
+    ],
+    "id": "piper",
+    "native_command_range": [
+      [
+        -2.618,
+        2.618
+      ],
+      [
+        0.0,
+        3.14
+      ],
+      [
+        -2.697,
+        0.0
+      ],
+      [
+        -1.832,
+        1.832
+      ],
+      [
+        -1.22,
+        1.22
+      ],
+      [
+        -3.14,
+        3.14
+      ],
+      [
+        0.0,
+        0.035
+      ]
+    ],
+    "native_command_units": [
+      "rad",
+      "rad",
+      "rad",
+      "rad",
+      "rad",
+      "rad",
+      "m"
+    ],
+    "tool_frame_body": "link6"
+  },
+  "provenance": {
+    "episode_id": "authored-example-00",
+    "kind": "authored_fixture",
+    "producer_revision": "authored-data-only-v1",
+    "replay_of_sha256": null,
+    "session_id": "authored-example-session",
+    "source_group": "authored-example-group",
+    "source_recording_id": "authored-example-source"
+  },
+  "schema": "dvidia.action-demonstration/v1",
+  "scope": "simulation-only",
+  "signal_contract": {
+    "gripper_joint_position_m": {
+      "frame": "joint7_joint8_signed_coordinates",
+      "origin": "simulated_encoder",
+      "size": 2,
+      "units": "m"
+    },
+    "gripper_joint_velocity_m_s": {
+      "frame": "joint7_joint8_signed_coordinates",
+      "origin": "simulated_encoder",
+      "size": 2,
+      "units": "m/s"
+    },
+    "joint_position_rad": {
+      "frame": "joint_coordinates",
+      "origin": "simulated_encoder",
+      "size": 6,
+      "units": "rad"
+    },
+    "joint_velocity_rad_s": {
+      "frame": "joint_coordinates",
+      "origin": "simulated_encoder",
+      "size": 6,
+      "units": "rad/s"
+    },
+    "object_orientation_uncertainty_rad": {
+      "frame": "robot_base",
+      "origin": "declared_rgbd_tracker",
+      "size": 1,
+      "units": "rad"
+    },
+    "object_position_estimate_m": {
+      "frame": "robot_base",
+      "origin": "declared_rgbd_tracker",
+      "size": 3,
+      "units": "m"
+    },
+    "object_position_uncertainty_m": {
+      "frame": "robot_base",
+      "origin": "declared_rgbd_tracker",
+      "size": 1,
+      "units": "m"
+    },
+    "object_quaternion_estimate_wxyz": {
+      "frame": "robot_base",
+      "origin": "declared_rgbd_tracker",
+      "size": 4,
+      "units": "unit_quaternion_wxyz"
+    },
+    "tcp_position_estimate_m": {
+      "frame": "robot_base",
+      "origin": "declared_encoder_fk",
+      "size": 3,
+      "units": "m"
+    },
+    "tcp_quaternion_estimate_wxyz": {
+      "frame": "robot_base",
+      "origin": "declared_encoder_fk",
+      "size": 4,
+      "units": "unit_quaternion_wxyz"
+    }
+  },
+  "steps": [
+    {
+      "after": {
+        "camera": {
+          "age_seconds": 0.0,
+          "available_at_seconds": 0.02,
+          "captured_at_seconds": 0.02,
+          "status": "available",
+          "value": {
+            "depth": {
+              "bytes": 89,
+              "path": "frames/depth-0001.fixture.json",
+              "sha256": "7c1a02ed9dafeebb6df6d0275f401fbddd24e9a03f6ba6674853701b6b60ac7c"
+            },
+            "exposure_end_seconds": 0.02,
+            "exposure_start_seconds": 0.02,
+            "index": 1,
+            "rgb": {
+              "bytes": 87,
+              "path": "frames/rgb-0001.fixture.json",
+              "sha256": "877ee424f3dd0a30d2eae026c2c564f1ce97dbce605d0c52cf48be665ef1fede"
+            }
+          }
+        },
+        "signals": {
+          "gripper_joint_position_m": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.02,
+            "captured_at_seconds": 0.02,
+            "status": "available",
+            "value": [
+              0.024900000000000002,
+              -0.024900000000000002
+            ]
+          },
+          "gripper_joint_velocity_m_s": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.02,
+            "captured_at_seconds": 0.02,
+            "status": "available",
+            "value": [
+              -0.005,
+              0.005
+            ]
+          },
+          "joint_position_rad": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.02,
+            "captured_at_seconds": 0.02,
+            "status": "available",
+            "value": [
+              0.001,
+              0.5,
+              -0.5,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "joint_velocity_rad_s": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.02,
+            "captured_at_seconds": 0.02,
+            "status": "available",
+            "value": [
+              0.05,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "object_orientation_uncertainty_rad": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.02,
+            "captured_at_seconds": 0.02,
+            "status": "available",
+            "value": [
+              0.01
+            ]
+          },
+          "object_position_estimate_m": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.02,
+            "captured_at_seconds": 0.02,
+            "status": "available",
+            "value": [
+              0.3,
+              -0.03,
+              0.082
+            ]
+          },
+          "object_position_uncertainty_m": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.02,
+            "captured_at_seconds": 0.02,
+            "status": "available",
+            "value": [
+              0.001
+            ]
+          },
+          "object_quaternion_estimate_wxyz": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.02,
+            "captured_at_seconds": 0.02,
+            "status": "available",
+            "value": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "tcp_position_estimate_m": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.02,
+            "captured_at_seconds": 0.02,
+            "status": "available",
+            "value": [
+              0.3,
+              -0.03,
+              0.15
+            ]
+          },
+          "tcp_quaternion_estimate_wxyz": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.02,
+            "captured_at_seconds": 0.02,
+            "status": "available",
+            "value": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "timestamp_seconds": 0.02,
+        "vision_frame_index": 1
+      },
+      "applied": {
+        "interval_end_seconds": 0.02,
+        "interval_start_seconds": 0.0,
+        "native_position_controls": [
+          0.004,
+          0.5,
+          -0.5,
+          0.0,
+          0.0,
+          0.0,
+          0.0248
+        ],
+        "ramped_targets": {
+          "gripper_position_m": 0.0248,
+          "joint_targets_rad": [
+            0.003,
+            0.5,
+            -0.5,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "rate_limited": true,
+        "scope": "final_native_tick_only"
+      },
+      "before": {
+        "camera": {
+          "age_seconds": 0.0,
+          "available_at_seconds": 0.0,
+          "captured_at_seconds": 0.0,
+          "status": "available",
+          "value": {
+            "depth": {
+              "bytes": 89,
+              "path": "frames/depth-0000.fixture.json",
+              "sha256": "0a8b84ce6938ede4848b35fad5230907df2a3bcc594576388b8379ddbbe62889"
+            },
+            "exposure_end_seconds": 0.0,
+            "exposure_start_seconds": 0.0,
+            "index": 0,
+            "rgb": {
+              "bytes": 87,
+              "path": "frames/rgb-0000.fixture.json",
+              "sha256": "561c21ac6f2998e16c79d5d74c72ce75ecdee2ea29ddf10e144ce0d7d571faa0"
+            }
+          }
+        },
+        "signals": {
+          "gripper_joint_position_m": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.0,
+            "captured_at_seconds": 0.0,
+            "status": "available",
+            "value": [
+              0.025,
+              -0.025
+            ]
+          },
+          "gripper_joint_velocity_m_s": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.0,
+            "captured_at_seconds": 0.0,
+            "status": "available",
+            "value": [
+              -0.005,
+              0.005
+            ]
+          },
+          "joint_position_rad": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.0,
+            "captured_at_seconds": 0.0,
+            "status": "available",
+            "value": [
+              0.0,
+              0.5,
+              -0.5,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "joint_velocity_rad_s": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.0,
+            "captured_at_seconds": 0.0,
+            "status": "available",
+            "value": [
+              0.05,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "object_orientation_uncertainty_rad": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.0,
+            "captured_at_seconds": 0.0,
+            "status": "available",
+            "value": [
+              0.01
+            ]
+          },
+          "object_position_estimate_m": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.0,
+            "captured_at_seconds": 0.0,
+            "status": "available",
+            "value": [
+              0.3,
+              -0.03,
+              0.082
+            ]
+          },
+          "object_position_uncertainty_m": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.0,
+            "captured_at_seconds": 0.0,
+            "status": "available",
+            "value": [
+              0.001
+            ]
+          },
+          "object_quaternion_estimate_wxyz": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.0,
+            "captured_at_seconds": 0.0,
+            "status": "available",
+            "value": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "tcp_position_estimate_m": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.0,
+            "captured_at_seconds": 0.0,
+            "status": "available",
+            "value": [
+              0.3,
+              -0.03,
+              0.15
+            ]
+          },
+          "tcp_quaternion_estimate_wxyz": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.0,
+            "captured_at_seconds": 0.0,
+            "status": "available",
+            "value": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "timestamp_seconds": 0.0,
+        "vision_frame_index": 0
+      },
+      "command": {
+        "authority": "authored_fixture",
+        "issue_reason": "producer_limiter",
+        "issued": {
+          "gripper_position_m": 0.0245,
+          "joint_targets_rad": [
+            0.01,
+            0.5,
+            -0.5,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "issued_at_seconds": 0.0,
+        "operator_correction": false,
+        "requested": {
+          "gripper_position_m": 0.024,
+          "joint_targets_rad": [
+            0.02,
+            0.5,
+            -0.5,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "index": 0,
+      "reference": {
+        "action": {
+          "gripper_position_m": 0.025,
+          "joint_targets_rad": [
+            0.006,
+            0.5,
+            -0.5,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "computed_at_seconds": 0.0,
+        "progress_seconds": 0.0
+      }
+    },
+    {
+      "after": {
+        "camera": {
+          "age_seconds": 0.0,
+          "available_at_seconds": 0.04,
+          "captured_at_seconds": 0.04,
+          "status": "available",
+          "value": {
+            "depth": {
+              "bytes": 89,
+              "path": "frames/depth-0002.fixture.json",
+              "sha256": "c57bb5432ac3f262e4eb904748974c5c493a68febf0ad5709c9ff2db812e9beb"
+            },
+            "exposure_end_seconds": 0.04,
+            "exposure_start_seconds": 0.04,
+            "index": 2,
+            "rgb": {
+              "bytes": 87,
+              "path": "frames/rgb-0002.fixture.json",
+              "sha256": "fb84483c82304197deeb09bdec84041a45d2264c166f0394ff853fc85b87e198"
+            }
+          }
+        },
+        "signals": {
+          "gripper_joint_position_m": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.04,
+            "captured_at_seconds": 0.04,
+            "status": "available",
+            "value": [
+              0.024800000000000003,
+              -0.024800000000000003
+            ]
+          },
+          "gripper_joint_velocity_m_s": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.04,
+            "captured_at_seconds": 0.04,
+            "status": "available",
+            "value": [
+              -0.005,
+              0.005
+            ]
+          },
+          "joint_position_rad": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.04,
+            "captured_at_seconds": 0.04,
+            "status": "available",
+            "value": [
+              0.002,
+              0.5,
+              -0.5,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "joint_velocity_rad_s": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.04,
+            "captured_at_seconds": 0.04,
+            "status": "available",
+            "value": [
+              0.05,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "object_orientation_uncertainty_rad": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.04,
+            "captured_at_seconds": 0.04,
+            "status": "available",
+            "value": [
+              0.01
+            ]
+          },
+          "object_position_estimate_m": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.04,
+            "captured_at_seconds": 0.04,
+            "status": "available",
+            "value": [
+              0.3,
+              -0.03,
+              0.082
+            ]
+          },
+          "object_position_uncertainty_m": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.04,
+            "captured_at_seconds": 0.04,
+            "status": "available",
+            "value": [
+              0.001
+            ]
+          },
+          "object_quaternion_estimate_wxyz": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.04,
+            "captured_at_seconds": 0.04,
+            "status": "available",
+            "value": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "tcp_position_estimate_m": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.04,
+            "captured_at_seconds": 0.04,
+            "status": "available",
+            "value": [
+              0.3,
+              -0.03,
+              0.15
+            ]
+          },
+          "tcp_quaternion_estimate_wxyz": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.04,
+            "captured_at_seconds": 0.04,
+            "status": "available",
+            "value": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "timestamp_seconds": 0.04,
+        "vision_frame_index": 2
+      },
+      "applied": {
+        "interval_end_seconds": 0.04,
+        "interval_start_seconds": 0.02,
+        "native_position_controls": [
+          0.006,
+          0.5,
+          -0.5,
+          0.0,
+          0.0,
+          0.0,
+          0.0248
+        ],
+        "ramped_targets": {
+          "gripper_position_m": 0.0248,
+          "joint_targets_rad": [
+            0.005,
+            0.5,
+            -0.5,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "rate_limited": true,
+        "scope": "final_native_tick_only"
+      },
+      "before": {
+        "camera": {
+          "age_seconds": 0.0,
+          "available_at_seconds": 0.02,
+          "captured_at_seconds": 0.02,
+          "status": "available",
+          "value": {
+            "depth": {
+              "bytes": 89,
+              "path": "frames/depth-0001.fixture.json",
+              "sha256": "7c1a02ed9dafeebb6df6d0275f401fbddd24e9a03f6ba6674853701b6b60ac7c"
+            },
+            "exposure_end_seconds": 0.02,
+            "exposure_start_seconds": 0.02,
+            "index": 1,
+            "rgb": {
+              "bytes": 87,
+              "path": "frames/rgb-0001.fixture.json",
+              "sha256": "877ee424f3dd0a30d2eae026c2c564f1ce97dbce605d0c52cf48be665ef1fede"
+            }
+          }
+        },
+        "signals": {
+          "gripper_joint_position_m": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.02,
+            "captured_at_seconds": 0.02,
+            "status": "available",
+            "value": [
+              0.024900000000000002,
+              -0.024900000000000002
+            ]
+          },
+          "gripper_joint_velocity_m_s": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.02,
+            "captured_at_seconds": 0.02,
+            "status": "available",
+            "value": [
+              -0.005,
+              0.005
+            ]
+          },
+          "joint_position_rad": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.02,
+            "captured_at_seconds": 0.02,
+            "status": "available",
+            "value": [
+              0.001,
+              0.5,
+              -0.5,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "joint_velocity_rad_s": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.02,
+            "captured_at_seconds": 0.02,
+            "status": "available",
+            "value": [
+              0.05,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "object_orientation_uncertainty_rad": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.02,
+            "captured_at_seconds": 0.02,
+            "status": "available",
+            "value": [
+              0.01
+            ]
+          },
+          "object_position_estimate_m": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.02,
+            "captured_at_seconds": 0.02,
+            "status": "available",
+            "value": [
+              0.3,
+              -0.03,
+              0.082
+            ]
+          },
+          "object_position_uncertainty_m": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.02,
+            "captured_at_seconds": 0.02,
+            "status": "available",
+            "value": [
+              0.001
+            ]
+          },
+          "object_quaternion_estimate_wxyz": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.02,
+            "captured_at_seconds": 0.02,
+            "status": "available",
+            "value": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "tcp_position_estimate_m": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.02,
+            "captured_at_seconds": 0.02,
+            "status": "available",
+            "value": [
+              0.3,
+              -0.03,
+              0.15
+            ]
+          },
+          "tcp_quaternion_estimate_wxyz": {
+            "age_seconds": 0.0,
+            "available_at_seconds": 0.02,
+            "captured_at_seconds": 0.02,
+            "status": "available",
+            "value": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "timestamp_seconds": 0.02,
+        "vision_frame_index": 1
+      },
+      "command": {
+        "authority": "authored_fixture",
+        "issue_reason": "producer_limiter",
+        "issued": {
+          "gripper_position_m": 0.0245,
+          "joint_targets_rad": [
+            0.015,
+            0.5,
+            -0.5,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "issued_at_seconds": 0.02,
+        "operator_correction": false,
+        "requested": {
+          "gripper_position_m": 0.024,
+          "joint_targets_rad": [
+            0.025,
+            0.5,
+            -0.5,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "index": 1,
+      "reference": {
+        "action": {
+          "gripper_position_m": 0.025,
+          "joint_targets_rad": [
+            0.011,
+            0.5,
+            -0.5,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "computed_at_seconds": 0.02,
+        "progress_seconds": 0.02
+      }
+    }
+  ]
+}
