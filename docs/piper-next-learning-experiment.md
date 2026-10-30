@@ -2,6 +2,10 @@
 
 **Proposed and unrun.** The [native action capture preview](piper-action-capture.md) now preserves actual rendered RGB-D, measured joint/jaw state, and issued/applied actuator references. It has no implemented object tracker or operator corrections; its repeated authored trajectory cannot qualify as corrective training data. The urgent steps are validating a frozen camera estimator, collecting reviewed corrective segments, and validating their replay evidence before training. A video without synchronized action evidence does not supply these motor labels.
 
+The [proposed RGB-D perception gate](piper-perception-gate-v01.md) specifies the
+causal estimator inputs, abstention, uncertainty and separate held-out evaluation
+needed before these recordings can supply visual action-learning inputs.
+
 ## Why change actions instead of adding another waiting rule
 
 In [v0.3](../benchmarks/piper-grip-clock-v03/report-summary.json), fixed progression achieved 72/128 strict placements versus 44/128 for the learned clock. In the different [v0.4 cohort](../benchmarks/piper-grip-wait-v04/recovery-20261030/report.json), bounded waiting achieved 42/128 scheduled successes, learned timing 32/128, and fixed progression 44/128; both primary comparisons were inconclusive. Four interrupted outcomes remained unknown and were failure-imputed only for the scheduled analysis.
