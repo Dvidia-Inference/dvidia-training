@@ -11,3 +11,5 @@ The read-only audit re-scores all 45 cases and checks 7,845 saved frames with ze
 Frozen protocol: `383cd32d445365e66fbc74f4ec37d5385459b95a30d80051a46f70fdc6a0243b`. ZIP SHA-256: `037a7fb053c317ed4900771321dc3498a83ed8a92ce83f9a648e20b7f29947e6`. Original code and scene: MIT. Upstream dependencies retain their licenses.
 
 This does not import arbitrary SimReady assets or USD articulations, estimate hidden materials from video, learn a policy or qualify a physical robot.
+
+A separate [clean-install smoke](clean-install-smoke.json) on 30 October validates the installed package outside the checkout: CLI inspection/build pass and 1,200 native ticks reach the passive settling goal with zero native warnings. It uses an isolated Python 3.12 venv, pip 26.2.2 with bounded download resumption, no injected native environment and previously verified local robot assets. This single smoke is outside the frozen 45-case matrix and does not certify other hosts or minimum hardware.

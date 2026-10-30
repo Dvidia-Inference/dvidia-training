@@ -1,0 +1,49 @@
+{
+  "schema": "dvidia.usd-clean-install-smoke/v1",
+  "date": "2026-10-30",
+  "python": "3.12.9",
+  "platform": "macOS-26.5.2-arm64-arm-64bit",
+  "numpy": "2.5.3",
+  "mujoco": "3.15.0",
+  "openusd": [
+    0,
+    26,
+    11
+  ],
+  "pip": "26.2.2",
+  "isolated_venv": true,
+  "system_site_packages": false,
+  "user_site_enabled": false,
+  "python_isolated_mode": true,
+  "existing_native_environment_injected": false,
+  "installed_source_sha256": {
+    "usd_scene.py": "8b6891deb214f2397249181390350336593a89adbc73cf0c30bcdfe885171470",
+    "usd_scene_benchmark.py": "b64d739362079635f89b9f448359565f09711d74a95aeeebaba0ea7bb3f79f39"
+  },
+  "cli_validate_passed": true,
+  "cli_build_passed": true,
+  "native_ticks": 1200,
+  "timestep_s": 0.001,
+  "goal": {
+    "position": true,
+    "linear_speed": true,
+    "angular_speed": true,
+    "table_contact": true,
+    "no_robot_contact": true,
+    "instantaneous": true,
+    "settled_s": 0.9029999999999785,
+    "success": true
+  },
+  "native_warning_count": 0,
+  "robot_asset_download_tested": false,
+  "robot_assets": "Previously verified local pinned PiPER asset files",
+  "new_confirmation_attempt": false,
+  "qualified_robot_skill": false,
+  "physical_robot_ready": false,
+  "notes": [
+    "Fresh full install initially stopped on truncated downloads failing package hash checks.",
+    "A separate NumPy wheel passed pip download verification; pip was updated inside this venv to 26.2.2 with bounded download resumption.",
+    "Final full package installation and installed-code execution passed without disabling hash verification or injecting the existing native environment.",
+    "Single passive smoke is separate from the frozen 45-case benchmark; no hardware minimum or performance claim."
+  ]
+}
