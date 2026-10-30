@@ -66,6 +66,19 @@ test('resource payload exact keys, canonical base64, compressed and raw hashes a
   await assert.rejects(api.decode(underdeclared, underdeclaredMeta), /decompression bound/);
 });
 
+test('large bounded base64 descriptors do not depend on the regular expression stack', () => {
+  const value = resource(Buffer.from('fixture'));
+  // A syntax-only descriptor fixture at the compressed-byte bound. Gzip and
+  // canonical pad bits are checked separately by decode before use.
+  value.compressed_bytes = 3 * 1024 * 1024;
+  value.data = 'QUJD'.repeat(value.compressed_bytes / 3);
+  assert.doesNotThrow(() => api.descriptor(value, value));
+  for (const data of [value.data.slice(0, 12) + '=' + value.data.slice(13),
+      value.data.slice(0, -1) + ' ', value.data.slice(0, -1) + '＝']) {
+    assert.throws(() => api.descriptor({...value, data}, {...value, data}), /base64/);
+  }
+});
+
 test('zero byte pose resources retain valid empty-gzip identity and stale callbacks do nothing', () => {
   const packed = zlib.gzipSync(Buffer.alloc(0));
   const digest = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
