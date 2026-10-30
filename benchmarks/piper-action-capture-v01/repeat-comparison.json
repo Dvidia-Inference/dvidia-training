@@ -1,0 +1,18 @@
+{
+  "control_steps": 1000,
+  "identical_rgb_and_depth_frame_pairs": 1001,
+  "maximum_absolute_difference_by_named_channel": {
+    "gripper_joint_position_m": 0.0,
+    "gripper_joint_velocity_m_s": 0.0,
+    "joint_position_rad": 0.0,
+    "joint_velocity_rad_s": 0.0,
+    "tcp_position_estimate_m": 0.0,
+    "tcp_quaternion_estimate_wxyz": 0.0
+  },
+  "physical_robot_ready": false,
+  "same_applied_controls": true,
+  "same_command_schedule": true,
+  "schema": "dvidia.native-action-capture-repeat-comparison/v0.1",
+  "scope": "Comparison of two independently captured authored-controller runs. Not the strict action-demo replay checker, which correctly refuses missing tracker channels; no correction learning or hardware qualification.",
+  "snapshot_pairs": 1001
+}

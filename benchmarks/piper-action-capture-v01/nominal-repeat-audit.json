@@ -1,0 +1,52 @@
+{
+  "causal_camera_boundary_check": true,
+  "decoded_depth_arrays": 1001,
+  "decoded_rgb_images": 1001,
+  "export_refusal": "Missing or stale required signals/frames refuse learning and replay targets.",
+  "frame_artifact_check": {
+    "byte_hashes_verified": true,
+    "bytes": 90103917,
+    "depth_accuracy_verified": false,
+    "images_decoded": false,
+    "unique_frame_files": 2002
+  },
+  "image_shape_hwc": [
+    120,
+    160,
+    3
+  ],
+  "limitations": [
+    "Internal byte, shape, timestamp and channel consistency; does not establish camera accuracy or physical fidelity.",
+    "Camera images decoded and depth arrays read back; no actual RGB-D object tracker exists in this capture.",
+    "No native physics is rerun by this audit.",
+    "The native controller is authored and uses privileged simulator state; these are not operator corrections or a learned skill."
+  ],
+  "metric_depth_range_m": [
+    0.6975898146629333,
+    1.985141396522522
+  ],
+  "minimum_rgb_span": 206,
+  "numpy_version": "2.5.3",
+  "outcome": {
+    "end_seconds": 20.00000000000146,
+    "evidence_sha256": null,
+    "reason": "capture_budget_complete",
+    "scorer_sha256": null,
+    "status": "complete",
+    "task_result": "unverified"
+  },
+  "physical_robot_ready": false,
+  "pillow_version": "12.0.0",
+  "readback_wall_seconds": 1.2654169593006372,
+  "recording": {
+    "bytes": 6437015,
+    "sha256": "5c593bce3494496b4bef9e2a9fee9736dc06cab22e29cbaee5a58fd0b6f11a6c"
+  },
+  "schema": "dvidia.native-action-capture-independent-readback/v0.1",
+  "snapshots": 1001,
+  "steps": 1000,
+  "tracker_missing_channels_per_snapshot": [
+    4
+  ],
+  "training_pair_export_refused": true
+}

@@ -1,0 +1,57 @@
+{
+  "cases": [
+    {
+      "configuration": "default PiperTaskConfig",
+      "controller": "unchanged PiperTaskPolicy",
+      "id": "nominal-full",
+      "maximum_control_steps": 1000,
+      "purpose": "Collect genuine RGB-D and native actuator evidence; retain independent outcome even if unsuccessful.",
+      "seed": 304031
+    },
+    {
+      "configuration": "default PiperTaskConfig",
+      "controller": "same deterministic issued schedule as nominal-full when replay API supports it; otherwise identical deterministic source controller, labeled repeat rather than replay",
+      "id": "nominal-repeat",
+      "maximum_control_steps": 1000,
+      "purpose": "Check recorded-measurement agreement; no new policy or camera-accuracy claim.",
+      "seed": 304031
+    },
+    {
+      "configuration": "default PiperTaskConfig",
+      "controller": "unchanged PiperTaskPolicy",
+      "id": "interrupted-prefix",
+      "interrupt_before_control_step": 3,
+      "maximum_control_steps": 10,
+      "purpose": "Retain explicit incomplete prefix and refuse strict training-target export.",
+      "seed": 304031
+    }
+  ],
+  "control_dt_seconds": 0.02,
+  "native_timestep_seconds": 0.001,
+  "physical_robot_ready": false,
+  "profile": "piper",
+  "registered_at_utc": "2026-10-30T17:02:04.712072+00:00",
+  "reported_metrics": [
+    "native/control step counts",
+    "valid complete/interrupted recording status",
+    "actual camera frame counts and bytes",
+    "frame SHA readback",
+    "zero future-frame input",
+    "strict export refusal",
+    "native task outcome independently scored",
+    "wall capture and render time on named shared host"
+  ],
+  "requirements": [
+    "All attempted captures and failures retained. No automatic substitute start or rerun.",
+    "Actual local image/depth bytes must match artifact hashes.",
+    "At every boundary camera exposure and availability precede the decision.",
+    "Native joint and two signed finger positions/velocities are measured, not filled from commands.",
+    "Requested, issued, ramped references and final native data.ctrl remain separately recorded.",
+    "Object RGB-D tracker channels stay missing until an actual estimator exists; strict learning target export must refuse.",
+    "No physical arm, live device capture, learned actions or hardware safety qualification."
+  ],
+  "schema": "dvidia.piper-action-capture-validation/v0.1",
+  "scope": "Engineering capture validation, not a manipulation improvement or learned-policy benchmark.",
+  "stopping": "Stop on implementation/contract defect and preserve diagnostics; any corrected validation uses a fresh declared attempt directory and is reported separately.",
+  "trained_skill": false
+}
