@@ -1,6 +1,6 @@
 # Next experiment: learn corrective actions from demonstrations
 
-**Proposed and unrun.** The most urgent development step is an action-tape recorder: synchronize calibrated rendered RGB-D, measured joint/jaw state, issued and applied actuator references, operator corrections, and independently scored outcomes. Validate timestamps, frames, units, and a replayed corrective demonstration before training. A video without synchronized action evidence does not supply these motor labels.
+**Proposed and unrun.** The [native action capture preview](piper-action-capture.md) now preserves actual rendered RGB-D, measured joint/jaw state, and issued/applied actuator references. It has no implemented object tracker or operator corrections; its repeated authored trajectory cannot qualify as corrective training data. The urgent steps are validating a frozen camera estimator, collecting reviewed corrective segments, and validating their replay evidence before training. A video without synchronized action evidence does not supply these motor labels.
 
 ## Why change actions instead of adding another waiting rule
 
