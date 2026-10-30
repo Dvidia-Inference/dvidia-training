@@ -1,0 +1,68 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 1
+    kilogramsPerUnit = 1
+    upAxis = "Z"
+)
+
+# Original DVIDIA rigid test geometry, MIT licensed. Assumed properties, not a
+# measured shoe or material. The PiPER is composed separately from pinned MJCF.
+def Xform "World"
+{
+    def PhysicsScene "Physics"
+    {
+        vector3f physics:gravityDirection = (0, 0, -1)
+        float physics:gravityMagnitude = 9.81
+    }
+
+    def Material "TableMaterial" (
+        prepend apiSchemas = ["PhysicsMaterialAPI"]
+    )
+    {
+        float physics:staticFriction = 0.5
+        float physics:dynamicFriction = 0.5
+        float physics:restitution = 0
+    }
+
+    def Material "ObjectMaterial" (
+        prepend apiSchemas = ["PhysicsMaterialAPI"]
+    )
+    {
+        float physics:staticFriction = 0.5
+        float physics:dynamicFriction = 0.5
+        float physics:restitution = 0
+    }
+
+    def Cube "Table" (
+        prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+    )
+    {
+        double size = 1
+        double3 xformOp:translate = (0.45, 0, -0.04)
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (1.2, 0.8, 0.08)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        bool physics:collisionEnabled = true
+        rel material:binding:physics = </World/TableMaterial>
+    }
+
+    def Cube "Object" (
+        prepend apiSchemas = ["PhysicsCollisionAPI", "PhysicsRigidBodyAPI", "PhysicsMassAPI", "MaterialBindingAPI"]
+    )
+    {
+        double size = 1
+        double3 xformOp:translate = (0.55, 0.15, 0.15)
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (0.04, 0.04, 0.04)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        bool physics:collisionEnabled = true
+        bool physics:rigidBodyEnabled = true
+        bool physics:kinematicEnabled = false
+        float physics:mass = 0.04
+        float3 physics:diagonalInertia = (0.0000106666666667, 0.0000106666666667, 0.0000106666666667)
+        point3f physics:centerOfMass = (0, 0, 0)
+        quatf physics:principalAxes = (1, 0, 0, 0)
+        rel material:binding:physics = </World/ObjectMaterial>
+    }
+}
