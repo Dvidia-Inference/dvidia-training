@@ -8,7 +8,7 @@ The pinned PiPER, open bin and original rigid objects retain **6 accepted fixtur
 This is passive environment infrastructure: the arm holds home, and no robot skill is learned.
 Install the separate preview wheel with its `usd` extra; the default branch's stable package remains 0.1.2.
 [Local UI and Terminal guide](https://github.com/Dvidia-Inference/dvidia-training/blob/task-environments-v0.2-preview/docs/task-environments-v02.md) ·
-[Environment studio and recorded benchmark](https://dvidia-robot-simulation-lab.static.hf.space/task-environments/v02/index.html) ·
+[Environment studio and recorded benchmark](https://dvidia-robot-simulation-lab.static.hf.space/task-environments/v02-reader02/index.html) ·
 [Complete evidence](https://huggingface.co/datasets/Dvidia/task-environments-v02) ·
 [Research](https://research.dvidia.org/papers/task-environments-v02/).
 
