@@ -1,0 +1,1263 @@
+{
+  "schema": "dvidia.arm-interface-benchmark-summary/v1",
+  "scope": "Unloaded native CPU tracking of authored setpoints using pinned upstream mechanics. Privileged simulator state; unpaced offline computation. No object task, learned policy, hardware latency, calibrated jaw gap/force or physical robot qualification.",
+  "settings": {
+    "accuracy": "Every post-step native millisecond, against both the applied held target and continuous reference at observation time.",
+    "arm_amplitude_limit_rad": 0.04,
+    "cases": [
+      "hold",
+      "arm_perturbation",
+      "gripper_cycle"
+    ],
+    "command_sampling": "At interval start; held until the next control boundary. No terminal command after the horizon.",
+    "control_periods_s": [
+      0.01,
+      0.02,
+      0.04
+    ],
+    "duration_s": 0.4,
+    "gripper_cycle_fraction_of_range": 0.2,
+    "pacing": "Unpaced offline; budget exceedances compare computation with nominal control periods only.",
+    "physics_timestep_s": 0.001,
+    "profiles": [
+      "piper",
+      "so101",
+      "ur5e-2f85"
+    ],
+    "repeats": 2,
+    "waveforms": {
+      "arm": "home + signed amplitude*sin(2*pi*t/duration)",
+      "gripper": "home + amplitude*sin(pi*t/duration)^2"
+    }
+  },
+  "platform": {
+    "machine": "arm64",
+    "python": "3.12.9",
+    "system": "Darwin"
+  },
+  "source_inventory": [
+    {
+      "bytes": 24648,
+      "name": "arm_interface_benchmark.py",
+      "sha256": "2b70e624264bed0c003d4836fee192f9b16d22dc59a91dd9dd54180abf4ed857"
+    },
+    {
+      "bytes": 19021,
+      "name": "arm_interfaces.py",
+      "sha256": "f5fd3952b194bc7d12dfefad25aa4bb6057a1bade90d593242b2c5099fb3570d"
+    },
+    {
+      "bytes": 9837,
+      "name": "asset_library.py",
+      "sha256": "347bfdeb61e22eb3f65e317c18f94d3b2076d05def77630ebbb6e7dde427c2a7"
+    },
+    {
+      "bytes": 37117,
+      "name": "asset_catalog.json",
+      "sha256": "592f363389a96fef7f9223737aa72a2f1a74f400238924bf6790ec5bfd3302b7"
+    },
+    {
+      "bytes": 24336,
+      "name": "reference_sim.py",
+      "sha256": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8"
+    },
+    {
+      "bytes": 10029,
+      "name": "reference_assets.lock.json",
+      "sha256": "941eb6f9fd474635a590b82c66b59a9d5124d8e0d9ddc203006f5b921d8d2861"
+    },
+    {
+      "bytes": 26493,
+      "name": "robot_profiles.py",
+      "sha256": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d"
+    },
+    {
+      "bytes": 35002,
+      "name": "robot_profiles.lock.json",
+      "sha256": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe"
+    },
+    {
+      "bytes": 26684,
+      "name": "env.py",
+      "sha256": "929c1d8c3c4cafe0054c633ee5f3e51c551dd6b26ae014ab1ea9219b58eca8e4"
+    }
+  ],
+  "protocol": {
+    "bytes": 10869,
+    "sha256": "30297af4696891b831332690eba4f0971f31c2d22ff453cfb52fbf2c2ddddabb"
+  },
+  "scientific_report_sha256": "5dd90299bd17515aee578631b46e3146c07ad18909eea838153d37bc4e9b1c5d",
+  "summary": {
+    "attempts": 54,
+    "failed_attempts": 0,
+    "groups": [
+      {
+        "attempts": 2,
+        "case": "hold",
+        "control_loop_compute_s": {
+          "count": 80,
+          "max": 0.08617058303207159,
+          "mean": 0.0066606729524210095,
+          "min": 0.0015232092700898647,
+          "p50": 0.0047638751566410065,
+          "p95": 0.014799892110750078,
+          "p99": 0.03052239155396775
+        },
+        "control_period_s": 0.01,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4800,
+            "max_abs": 1.072035066032009e-18,
+            "rms": 2.6891614825055087e-19,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 3.62491936055005e-22,
+            "rms": 1.7447726434640227e-22,
+            "unit": "m"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.0,
+            "rms": 0.0,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.0,
+            "rms": 0.0,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 12,
+        "profile": "piper",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "hold",
+        "control_loop_compute_s": {
+          "count": 40,
+          "max": 0.01233124965801835,
+          "mean": 0.0038010406540706755,
+          "min": 0.0018646251410245895,
+          "p50": 0.0031147501431405544,
+          "p95": 0.0071542119141668045,
+          "p99": 0.010771038737148044
+        },
+        "control_period_s": 0.02,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4800,
+            "max_abs": 1.072035066032009e-18,
+            "rms": 2.6891614825055087e-19,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 3.62491936055005e-22,
+            "rms": 1.7447726434640227e-22,
+            "unit": "m"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.0,
+            "rms": 0.0,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.0,
+            "rms": 0.0,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 0,
+        "profile": "piper",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "hold",
+        "control_loop_compute_s": {
+          "count": 20,
+          "max": 0.017511708196252584,
+          "mean": 0.004822466848418116,
+          "min": 0.0022527091205120087,
+          "p50": 0.00392885459586978,
+          "p95": 0.008204558771103628,
+          "p99": 0.01565027831122278
+        },
+        "control_period_s": 0.04,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4800,
+            "max_abs": 1.072035066032009e-18,
+            "rms": 2.6891614825055087e-19,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 3.62491936055005e-22,
+            "rms": 1.7447726434640227e-22,
+            "unit": "m"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.0,
+            "rms": 0.0,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.0,
+            "rms": 0.0,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 0,
+        "profile": "piper",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "arm_perturbation",
+        "control_loop_compute_s": {
+          "count": 80,
+          "max": 0.009031584020704031,
+          "mean": 0.0016621474002022295,
+          "min": 0.0008142921142280102,
+          "p50": 0.0014092291239649057,
+          "p95": 0.0029117225902155017,
+          "p99": 0.00530670105945316
+        },
+        "control_period_s": 0.01,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4800,
+            "max_abs": 0.04724642502768296,
+            "rms": 0.0259189106384304,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.0001351994203390188,
+            "rms": 5.080094981729882e-05,
+            "unit": "m"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.10438561600680343,
+            "rms": 0.06731460790372004,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.021219005288598238,
+            "rms": 0.012632019707729416,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 0,
+        "profile": "piper",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "arm_perturbation",
+        "control_loop_compute_s": {
+          "count": 40,
+          "max": 0.05367350019514561,
+          "mean": 0.00433168753515929,
+          "min": 0.001299167051911354,
+          "p50": 0.0026975630316883326,
+          "p95": 0.008022505533881482,
+          "p99": 0.036394225121475735
+        },
+        "control_period_s": 0.02,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4800,
+            "max_abs": 0.049326113426734604,
+            "rms": 0.0266725827200244,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.00012803344853616733,
+            "rms": 4.849687059039438e-05,
+            "unit": "m"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.10717565871593182,
+            "rms": 0.06881010138097117,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.022190858533605844,
+            "rms": 0.013150654546350329,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 1,
+        "profile": "piper",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "arm_perturbation",
+        "control_loop_compute_s": {
+          "count": 20,
+          "max": 0.004087208304554224,
+          "mean": 0.002820685459300876,
+          "min": 0.002134665846824646,
+          "p50": 0.0025993750896304846,
+          "p95": 0.0037898978451266887,
+          "p99": 0.004027746212668716
+        },
+        "control_period_s": 0.04,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4800,
+            "max_abs": 0.052438830751684054,
+            "rms": 0.0281278712769055,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.00010476945939613698,
+            "rms": 4.452074267440635e-05,
+            "unit": "m"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.11252260489735348,
+            "rms": 0.0715935747506626,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.02376565718713276,
+            "rms": 0.014051373013914846,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 0,
+        "profile": "piper",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "gripper_cycle",
+        "control_loop_compute_s": {
+          "count": 80,
+          "max": 0.004917166195809841,
+          "mean": 0.0012033292092382907,
+          "min": 0.0007904996164143085,
+          "p50": 0.0009583958890289068,
+          "p95": 0.0021210480947047466,
+          "p99": 0.003010369786061331
+        },
+        "control_period_s": 0.01,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4800,
+            "max_abs": 2.065458367289029e-06,
+            "rms": 5.253991747278222e-07,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.004242146705405987,
+            "rms": 0.0027446238272243783,
+            "unit": "m"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 2.073779136790703e-06,
+            "rms": 1.2908457178922924e-06,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 7.645892876832497e-07,
+            "rms": 4.757995861420835e-07,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 0,
+        "profile": "piper",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "gripper_cycle",
+        "control_loop_compute_s": {
+          "count": 40,
+          "max": 0.005131791345775127,
+          "mean": 0.0018414500751532613,
+          "min": 0.0012515839189291,
+          "p50": 0.0014223128091543913,
+          "p95": 0.003967785486020145,
+          "p99": 0.005110650369897485
+        },
+        "control_period_s": 0.02,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4800,
+            "max_abs": 2.0616016482556743e-06,
+            "rms": 5.156666908733432e-07,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.00439790975635305,
+            "rms": 0.002841191176530075,
+            "unit": "m"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 2.0699209397061008e-06,
+            "rms": 1.2668975659800765e-06,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 7.6316225784588e-07,
+            "rms": 4.6698384062746096e-07,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 0,
+        "profile": "piper",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "gripper_cycle",
+        "control_loop_compute_s": {
+          "count": 20,
+          "max": 0.006313000340014696,
+          "mean": 0.003634768771007657,
+          "min": 0.002731082960963249,
+          "p50": 0.0033808329608291388,
+          "p95": 0.0053234161809086805,
+          "p99": 0.006115083508193491
+        },
+        "control_period_s": 0.04,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4800,
+            "max_abs": 2.017621775088743e-06,
+            "rms": 4.940004529333514e-07,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.004704818823770997,
+            "rms": 0.003022171434978861,
+            "unit": "m"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 2.026119605515511e-06,
+            "rms": 1.2137267925339343e-06,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 7.468847515545881e-07,
+            "rms": 4.4735832857372413e-07,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 0,
+        "profile": "piper",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "hold",
+        "control_loop_compute_s": {
+          "count": 80,
+          "max": 0.007386083249002695,
+          "mean": 0.0018362766189966352,
+          "min": 0.0006946250796318054,
+          "p50": 0.0013957498595118523,
+          "p95": 0.005042399582453071,
+          "p99": 0.006279161768034092
+        },
+        "control_period_s": 0.01,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4000,
+            "max_abs": 0.0008273125449575409,
+            "rms": 0.00033999962887419643,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 3.5501089682247907e-06,
+            "rms": 3.3623058696310616e-06,
+            "unit": "rad"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.0016510537681685671,
+            "rms": 0.0011852927877226925,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.0003429001754549268,
+            "rms": 0.00024116740126096947,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 0,
+        "profile": "so101",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "hold",
+        "control_loop_compute_s": {
+          "count": 40,
+          "max": 0.00399504229426384,
+          "mean": 0.0023015928687527775,
+          "min": 0.001329083926975727,
+          "p50": 0.0023684795014560223,
+          "p95": 0.003282639337703585,
+          "p99": 0.0037617734819650646
+        },
+        "control_period_s": 0.02,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4000,
+            "max_abs": 0.0008273125449575409,
+            "rms": 0.00033999962887419643,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 3.5501089682247907e-06,
+            "rms": 3.3623058696310616e-06,
+            "unit": "rad"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.0016510537681685671,
+            "rms": 0.0011852927877226925,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.0003429001754549268,
+            "rms": 0.00024116740126096947,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 0,
+        "profile": "so101",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "hold",
+        "control_loop_compute_s": {
+          "count": 20,
+          "max": 0.007814249955117702,
+          "mean": 0.0045943541917949915,
+          "min": 0.002784957643598318,
+          "p50": 0.004228687146678567,
+          "p95": 0.0071518624434247615,
+          "p99": 0.007681772452779114
+        },
+        "control_period_s": 0.04,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4000,
+            "max_abs": 0.0008273125449575409,
+            "rms": 0.00033999962887419643,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 3.5501089682247907e-06,
+            "rms": 3.3623058696310616e-06,
+            "unit": "rad"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.0016510537681685671,
+            "rms": 0.0011852927877226925,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.0003429001754549268,
+            "rms": 0.00024116740126096947,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 0,
+        "profile": "so101",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "arm_perturbation",
+        "control_loop_compute_s": {
+          "count": 80,
+          "max": 0.03294887486845255,
+          "mean": 0.0023548394965473562,
+          "min": 0.0007292916998267174,
+          "p50": 0.00166637497022748,
+          "p95": 0.00406429162248969,
+          "p99": 0.013818037696182575
+        },
+        "control_period_s": 0.01,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4000,
+            "max_abs": 0.009648770514443216,
+            "rms": 0.0037458833325678793,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 4.7884265412057665e-06,
+            "rms": 3.6620513790191328e-06,
+            "unit": "rad"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.016190626819596828,
+            "rms": 0.006736781120174303,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.002897765942538507,
+            "rms": 0.0011735273435602572,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 1,
+        "profile": "so101",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "arm_perturbation",
+        "control_loop_compute_s": {
+          "count": 40,
+          "max": 0.004444666672497988,
+          "mean": 0.0017994416644796728,
+          "min": 0.0010527078993618488,
+          "p50": 0.0016369579825550318,
+          "p95": 0.0034136807313188905,
+          "p99": 0.004105366813018918
+        },
+        "control_period_s": 0.02,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4000,
+            "max_abs": 0.015516116990219667,
+            "rms": 0.006685054758093967,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 5.427756228551698e-06,
+            "rms": 4.097935989804088e-06,
+            "unit": "rad"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.026446557471206875,
+            "rms": 0.011817766498952506,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.004609791604128084,
+            "rms": 0.00201894266998173,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 0,
+        "profile": "so101",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "arm_perturbation",
+        "control_loop_compute_s": {
+          "count": 20,
+          "max": 0.009385792072862387,
+          "mean": 0.004458368662744761,
+          "min": 0.0027221660129725933,
+          "p50": 0.004178020637482405,
+          "p95": 0.008225643681362272,
+          "p99": 0.009153762394562361
+        },
+        "control_period_s": 0.04,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4000,
+            "max_abs": 0.02981608573929955,
+            "rms": 0.013225997518156242,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 5.742685293556856e-06,
+            "rms": 3.9261244221158015e-06,
+            "unit": "rad"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.04412389833215077,
+            "rms": 0.02308135101494951,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.0074642243022383335,
+            "rms": 0.003909878845013588,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 0,
+        "profile": "so101",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "gripper_cycle",
+        "control_loop_compute_s": {
+          "count": 80,
+          "max": 0.005029249936342239,
+          "mean": 0.0017759860085789115,
+          "min": 0.0006470419466495514,
+          "p50": 0.0015880623832345009,
+          "p95": 0.0034895459422841666,
+          "p99": 0.004584282496944066
+        },
+        "control_period_s": 0.01,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4000,
+            "max_abs": 0.0008326774844434457,
+            "rms": 0.0003401479099555081,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.03326425696156651,
+            "rms": 0.022034983995398955,
+            "unit": "rad"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.0016646717680845787,
+            "rms": 0.0011858260546533327,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.0003453338679850806,
+            "rms": 0.00024127155621666324,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 0,
+        "profile": "so101",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "gripper_cycle",
+        "control_loop_compute_s": {
+          "count": 40,
+          "max": 0.014186250045895576,
+          "mean": 0.005832515482325107,
+          "min": 0.0024369172751903534,
+          "p50": 0.005175937432795763,
+          "p95": 0.011559602105990052,
+          "p99": 0.013271910920739172
+        },
+        "control_period_s": 0.02,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4000,
+            "max_abs": 0.0008302996044630572,
+            "rms": 0.0003403271747363841,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.06013931453462634,
+            "rms": 0.04045494765734336,
+            "unit": "rad"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.0016591211974573538,
+            "rms": 0.0011861733552133054,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.0003442527186140464,
+            "rms": 0.00024139711439510506,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 0,
+        "profile": "so101",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "gripper_cycle",
+        "control_loop_compute_s": {
+          "count": 20,
+          "max": 0.012306916061788797,
+          "mean": 0.005707683321088552,
+          "min": 0.002658749930560589,
+          "p50": 0.0055744166020303965,
+          "p95": 0.009501170669682327,
+          "p99": 0.0117457669833675
+        },
+        "control_period_s": 0.04,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4000,
+            "max_abs": 0.0008273125449575409,
+            "rms": 0.00033949173576754035,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.1282969059974849,
+            "rms": 0.08070727519558452,
+            "unit": "rad"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.0016510537681685671,
+            "rms": 0.0011833645827660944,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.0003429001754549268,
+            "rms": 0.00024080873496737777,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 0,
+        "profile": "so101",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "hold",
+        "control_loop_compute_s": {
+          "count": 80,
+          "max": 0.010462332982569933,
+          "mean": 0.002613240631762892,
+          "min": 0.0009182081557810307,
+          "p50": 0.002148041967302561,
+          "p95": 0.0050189515808597195,
+          "p99": 0.010418849727138876
+        },
+        "control_period_s": 0.01,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4800,
+            "max_abs": 0.00924051608824783,
+            "rms": 0.003941959569853427,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.918050757342074,
+            "rms": 0.7432963040428657,
+            "unit": "native_0_255"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.02246886242112752,
+            "rms": 0.01595557972482612,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.010196041453349085,
+            "rms": 0.007233694287938201,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 2,
+        "profile": "ur5e-2f85",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "hold",
+        "control_loop_compute_s": {
+          "count": 40,
+          "max": 0.010665165726095438,
+          "mean": 0.0029893259867094456,
+          "min": 0.001444416120648384,
+          "p50": 0.0023972915951162577,
+          "p95": 0.004724524985067533,
+          "p99": 0.010085219778120517
+        },
+        "control_period_s": 0.02,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4800,
+            "max_abs": 0.00924051608824783,
+            "rms": 0.003941959569853427,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.918050757342074,
+            "rms": 0.7432963040428657,
+            "unit": "native_0_255"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.02246886242112752,
+            "rms": 0.01595557972482612,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.010196041453349085,
+            "rms": 0.007233694287938201,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 0,
+        "profile": "ur5e-2f85",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "hold",
+        "control_loop_compute_s": {
+          "count": 20,
+          "max": 0.03068029135465622,
+          "mean": 0.00730702702421695,
+          "min": 0.0036333748139441013,
+          "p50": 0.006057520629838109,
+          "p95": 0.011164164682850256,
+          "p99": 0.026777066020294997
+        },
+        "control_period_s": 0.04,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4800,
+            "max_abs": 0.00924051608824783,
+            "rms": 0.003941959569853427,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.918050757342074,
+            "rms": 0.7432963040428657,
+            "unit": "native_0_255"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.02246886242112752,
+            "rms": 0.01595557972482612,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.010196041453349085,
+            "rms": 0.007233694287938201,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 0,
+        "profile": "ur5e-2f85",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "arm_perturbation",
+        "control_loop_compute_s": {
+          "count": 80,
+          "max": 0.028616415802389383,
+          "mean": 0.0032046255597379058,
+          "min": 0.0007987502031028271,
+          "p50": 0.0017446046695113182,
+          "p95": 0.009493114170618355,
+          "p99": 0.016671616816893126
+        },
+        "control_period_s": 0.01,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4800,
+            "max_abs": 0.049907958494966875,
+            "rms": 0.02629572986085865,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.91891430947302,
+            "rms": 0.742849490208355,
+            "unit": "native_0_255"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.09721126416034358,
+            "rms": 0.06333744984330507,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.0299272221571862,
+            "rms": 0.019867215123913897,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 3,
+        "profile": "ur5e-2f85",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "arm_perturbation",
+        "control_loop_compute_s": {
+          "count": 40,
+          "max": 0.01701970910653472,
+          "mean": 0.004860776022542268,
+          "min": 0.002299458719789982,
+          "p50": 0.0037744168657809496,
+          "p95": 0.010586262354627236,
+          "p99": 0.016492006303742528
+        },
+        "control_period_s": 0.02,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4800,
+            "max_abs": 0.05093615810435548,
+            "rms": 0.02692251510465346,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.9189109458097693,
+            "rms": 0.7428486399409744,
+            "unit": "native_0_255"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.09963781465616382,
+            "rms": 0.06484564887474988,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.03065742603190389,
+            "rms": 0.0203147738467213,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 0,
+        "profile": "ur5e-2f85",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "arm_perturbation",
+        "control_loop_compute_s": {
+          "count": 20,
+          "max": 0.0472996667958796,
+          "mean": 0.013859724905341864,
+          "min": 0.0054442500695586205,
+          "p50": 0.011154124280437827,
+          "p95": 0.033417355967685594,
+          "p99": 0.04452320463024078
+        },
+        "control_period_s": 0.04,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4800,
+            "max_abs": 0.05301414459645004,
+            "rms": 0.02813457178537373,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.9184572014957235,
+            "rms": 0.742860215181785,
+            "unit": "native_0_255"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.10446790448844755,
+            "rms": 0.06777038006399526,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.03209588929058554,
+            "rms": 0.02118182912139,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 1,
+        "profile": "ur5e-2f85",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "gripper_cycle",
+        "control_loop_compute_s": {
+          "count": 80,
+          "max": 0.012316542211920023,
+          "mean": 0.002022490167291835,
+          "min": 0.0010337079875171185,
+          "p50": 0.0017133336514234543,
+          "p95": 0.0038158030016347756,
+          "p99": 0.006805337746627585
+        },
+        "control_period_s": 0.01,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4800,
+            "max_abs": 0.009242873218211045,
+            "rms": 0.003942259964223983,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 25.981403055286076,
+            "rms": 17.411248530599146,
+            "unit": "native_0_255"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.022475215784776733,
+            "rms": 0.01595686129225583,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.010198672475922427,
+            "rms": 0.007234223856341337,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 1,
+        "profile": "ur5e-2f85",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "gripper_cycle",
+        "control_loop_compute_s": {
+          "count": 40,
+          "max": 0.0027839168906211853,
+          "mean": 0.0016798335127532482,
+          "min": 0.0013720830902457237,
+          "p50": 0.0016017502639442682,
+          "p95": 0.0022791357943788156,
+          "p99": 0.002758485428057611
+        },
+        "control_period_s": 0.02,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4800,
+            "max_abs": 0.009242955768466565,
+            "rms": 0.003942226091800963,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 27.278609842746512,
+            "rms": 18.20819885391918,
+            "unit": "native_0_255"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.022475424829707862,
+            "rms": 0.01595671584359386,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.010198760817394103,
+            "rms": 0.007234163990656436,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 0,
+        "profile": "ur5e-2f85",
+        "valid_attempts": 2
+      },
+      {
+        "attempts": 2,
+        "case": "gripper_cycle",
+        "control_loop_compute_s": {
+          "count": 20,
+          "max": 0.0035013328306376934,
+          "mean": 0.0025757978204637767,
+          "min": 0.002161750104278326,
+          "p50": 0.0024899584241211414,
+          "p95": 0.003410094091668725,
+          "p99": 0.0034830850828438996
+        },
+        "control_period_s": 0.04,
+        "metrics": {
+          "arm_continuous_reference": {
+            "count": 4800,
+            "max_abs": 0.009242921287103467,
+            "rms": 0.003942153866106038,
+            "unit": "rad"
+          },
+          "gripper_continuous_reference": {
+            "count": 800,
+            "max_abs": 29.99713874092438,
+            "rms": 19.71692744342938,
+            "unit": "native_0_255"
+          },
+          "terminal_orientation_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.022475292741493097,
+            "rms": 0.015956405026585237,
+            "unit": "rad"
+          },
+          "terminal_position_continuous_reference": {
+            "count": 800,
+            "max_abs": 0.010198712778583216,
+            "rms": 0.007234036772854116,
+            "unit": "m"
+          }
+        },
+        "offline_control_budget_exceedances": 0,
+        "profile": "ur5e-2f85",
+        "valid_attempts": 2
+      }
+    ],
+    "selection": "All fixed roster attempts retained; no best-profile or period selection, tuning or automatic reruns.",
+    "valid_attempts": 54
+  },
+  "observed_step_timing_scope": "native_step_compute_s includes native step, forward update, snapshot/state checks and reference FK; not pure physics time.",
+  "repeat_scope": "Identical deterministic scenarios; no task generalization or confidence interval.",
+  "offline_control_budget_exceedances": 21,
+  "total_control_intervals": 1260
+}

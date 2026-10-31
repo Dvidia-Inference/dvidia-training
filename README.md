@@ -6,6 +6,16 @@
 
 [Recorded demo](https://huggingface.co/spaces/Dvidia/dvidia-training) · [Synthetic datasets](https://huggingface.co/datasets/Dvidia/dvidia-training-examples) · [Pilot models](https://huggingface.co/Dvidia/dvidia-training-pilot)
 
+**[Arm interfaces and installation v0.1](docs/arm-interfaces-v01.md).**
+The **0.1.3.dev3 preview** adds `dvidia-arm`: three explicit native simulation
+adapters, exact PiPER policy compatibility checks, separate install/run commands,
+and a data-only lift-planning gate. A fixed tracking study retains **54/54
+numerically valid attempts**, including **21/1,260 offline compute-budget
+exceedances**. These are mechanics checks, not task success or cross-arm transfer.
+[Benchmark](benchmarks/arm-interfaces-v01/README.md) ·
+[Install the preview](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/arm-interfaces-v0.1-preview) ·
+[Hugging Face evidence](https://huggingface.co/datasets/Dvidia/arm-interfaces-v01).
+
 **[Build a reusable task environment](docs/task-environments-v02.md).**
 The **0.1.3.dev2 native preview** adds a local metric editor and
 `dvidia-environment`: multiple rigid objects, an open bin, explicit OpenUSD and
