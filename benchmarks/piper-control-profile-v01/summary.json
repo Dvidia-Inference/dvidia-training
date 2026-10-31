@@ -1,0 +1,78 @@
+{
+  "archive": {
+    "bytes": 127941580,
+    "filename": "piper-control-profile-v01-evidence.zip",
+    "logical_bytes": 333173510,
+    "logical_files": 186,
+    "sha256": "382eea1a7c4e82bae14b12271cb658a32cfe1562bfc211a8f31f80a911d588fa",
+    "unique_blob_bytes": 130261531,
+    "unique_blobs": 107
+  },
+  "historical_learned_heldout_result": {
+    "attempts": 12,
+    "successes": 5,
+    "unchanged": true
+  },
+  "limitations": [
+    "Two matched shared-host pairs on one fixed synthetic command tape.",
+    "No learned inference in timed environment-step measurements.",
+    "Dense diagnostics are separate from timing runs.",
+    "No new held-out accuracy, physical calibration, recovery-robustness or real-time claim.",
+    "Scheduled jaw pulse also succeeds; it is perturbation-equivalence coverage."
+  ],
+  "new_wheel": false,
+  "original_report": {
+    "all_passed": false,
+    "bytes": 17508,
+    "reason": "Original dense reader rejected three case pairs exceeding its 64 MiB expansion bound.",
+    "sha256": "11351eebac7d9d615f9c34db3a8fa72133ddbc1d8b7186e501ee9dfe0d3ff934"
+  },
+  "paired_timing": [
+    {
+      "baseline_sum_s": 1.4684963417239487,
+      "candidate_p95_reduction_percent": 25.79315547361659,
+      "candidate_sum_s": 1.2328931200318038,
+      "candidate_total_step_reduction_percent": 16.043841240731815,
+      "pair": 0
+    },
+    {
+      "baseline_sum_s": 1.5423414260149002,
+      "candidate_p95_reduction_percent": 23.795316993807734,
+      "candidate_sum_s": 1.3053270056843758,
+      "candidate_total_step_reduction_percent": 15.367182410636659,
+      "pair": 1
+    }
+  ],
+  "physical_robot_ready": false,
+  "planned_attempts": 14,
+  "production_promotion": false,
+  "schema": "dvidia.piper-control-profile-public-summary/v1",
+  "scope": "One previously checked synthetic PiPER scenario, preserved commands and privileged native simulator state. Allocation-only source comparison, not new skill training, held-out success, hardware latency, calibrated contact or a real-time guarantee.",
+  "source_branch": "feat/piper-control-profile-v01",
+  "supplemental_readback": {
+    "bytes": 45061,
+    "eligible_under_predeclared_rule_after_complete_readback": true,
+    "evidence_unchanged": true,
+    "expanded_bound_bytes": 536870912,
+    "passed": true,
+    "sha256": "1a4f4a1093961b59c03a3a244d123afed35f5a5f77c98d1467a393a20c2d6fd4",
+    "total_dense_snapshots_compared": 200010
+  },
+  "timing": {
+    "step_cpu": {
+      "candidate_mean_reduction_percent": 12.599688117239072,
+      "mean_s": {
+        "baseline": 0.0014383610000000013,
+        "candidate": 0.001257132
+      }
+    },
+    "step_wall": {
+      "candidate_mean_reduction_percent": 15.69721381493122,
+      "mean_s": {
+        "baseline": 0.0015054188838694244,
+        "candidate": 0.0012691100628580898
+      }
+    }
+  },
+  "timing_pairs": 2
+}
