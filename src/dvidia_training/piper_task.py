@@ -220,8 +220,13 @@ class PiperTaskEnv:
         mj, np = sim._native_imports()
         counts, forces, table, critical, pairs = {'left': 0, 'right': 0}, {'left': 0., 'right': 0.}, 0, 0, []
         pads = set(sum(self.pad_geoms.values(), []))
+        nonpad_robot = self.robot_geoms-pads
+        support_geoms = {self.table_geom, self.floor_geom}
+        # Scratch storage is private to this call. Every contact still queries
+        # fresh native forces; no result survives a physics step or caller edit.
+        force = np.zeros(6)
         for index, contact in enumerate(self.data.contact[:self.data.ncon]):
-            force = np.zeros(6)
+            force.fill(0.)
             mj.mj_contactForce(self.model, self.data, index, force)
             if force[0] <= .01:
                 continue
@@ -233,8 +238,8 @@ class PiperTaskEnv:
                     if pair.intersection(self.pad_geoms[side]):
                         counts[side] += 1
                         forces[side] += float(force[0])
-                critical += int(bool(pair.intersection(self.robot_geoms-pads)) or self.floor_geom in pair)
-            elif pair.intersection({self.table_geom, self.floor_geom}) and pair.intersection(self.moving_geoms):
+                critical += int(bool(pair.intersection(nonpad_robot)) or self.floor_geom in pair)
+            elif pair.intersection(support_geoms) and pair.intersection(self.moving_geoms):
                 critical += 1
             elif pair.intersection(self.arm_geoms) and pair.issubset(self.robot_geoms):
                 critical += 1

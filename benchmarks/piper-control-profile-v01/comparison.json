@@ -1,0 +1,652 @@
+{
+  "adoption": {
+    "decision": "Do not promote runtime change",
+    "eligible_under_predeclared_rule": false,
+    "paired_lower_mean": [
+      {
+        "pair": 0,
+        "step_cpu": true,
+        "step_wall": true
+      },
+      {
+        "pair": 1,
+        "step_cpu": true,
+        "step_wall": true
+      }
+    ],
+    "pooled": {
+      "step_cpu": {
+        "candidate_mean_reduction_percent": 12.599688117239072,
+        "mean_s": {
+          "baseline": 0.0014383610000000013,
+          "candidate": 0.001257132
+        }
+      },
+      "step_wall": {
+        "candidate_mean_reduction_percent": 15.69721381493122,
+        "mean_s": {
+          "baseline": 0.0015054188838694244,
+          "candidate": 0.0012691100628580898
+        }
+      }
+    },
+    "rule": {
+      "minimum_pooled_mean_reduction_percent_each_clock": 5.0,
+      "on_failure": "Do not promote; retain as negative or inconclusive. No post-result tuning.",
+      "required_exact_equivalence": true,
+      "required_lower_candidate_mean_each_pair": [
+        "step_wall",
+        "step_cpu"
+      ]
+    }
+  },
+  "all_passed": false,
+  "attempts": [
+    {
+      "case": "original",
+      "id": "timing-00-baseline",
+      "mode": "timing",
+      "returncode": 0,
+      "subprocess_wall_s": 2.420006916858256,
+      "variant": "baseline"
+    },
+    {
+      "case": "original",
+      "id": "timing-01-candidate",
+      "mode": "timing",
+      "returncode": 0,
+      "subprocess_wall_s": 2.0803113747388124,
+      "variant": "candidate"
+    },
+    {
+      "case": "original",
+      "id": "timing-02-candidate",
+      "mode": "timing",
+      "returncode": 0,
+      "subprocess_wall_s": 2.0139063335955143,
+      "variant": "candidate"
+    },
+    {
+      "case": "original",
+      "id": "timing-03-baseline",
+      "mode": "timing",
+      "returncode": 0,
+      "subprocess_wall_s": 2.4118966250680387,
+      "variant": "baseline"
+    },
+    {
+      "case": "original",
+      "id": "dense-original-baseline",
+      "mode": "diagnostic",
+      "returncode": 0,
+      "subprocess_wall_s": 6.503215416800231,
+      "variant": "baseline"
+    },
+    {
+      "case": "original",
+      "id": "dense-original-candidate",
+      "mode": "diagnostic",
+      "returncode": 0,
+      "subprocess_wall_s": 6.568463541567326,
+      "variant": "candidate"
+    },
+    {
+      "case": "open-jaw",
+      "id": "dense-open-jaw-baseline",
+      "mode": "diagnostic",
+      "returncode": 0,
+      "subprocess_wall_s": 5.4805178749375045,
+      "variant": "baseline"
+    },
+    {
+      "case": "open-jaw",
+      "id": "dense-open-jaw-candidate",
+      "mode": "diagnostic",
+      "returncode": 0,
+      "subprocess_wall_s": 6.379173707682639,
+      "variant": "candidate"
+    },
+    {
+      "case": "hold",
+      "id": "dense-hold-baseline",
+      "mode": "diagnostic",
+      "returncode": 0,
+      "subprocess_wall_s": 5.533948041964322,
+      "variant": "baseline"
+    },
+    {
+      "case": "hold",
+      "id": "dense-hold-candidate",
+      "mode": "diagnostic",
+      "returncode": 0,
+      "subprocess_wall_s": 5.328347083181143,
+      "variant": "candidate"
+    },
+    {
+      "case": "feedback-no-pulse",
+      "id": "dense-feedback-no-pulse-baseline",
+      "mode": "diagnostic",
+      "returncode": 0,
+      "subprocess_wall_s": 7.0851437500678,
+      "variant": "baseline"
+    },
+    {
+      "case": "feedback-no-pulse",
+      "id": "dense-feedback-no-pulse-candidate",
+      "mode": "diagnostic",
+      "returncode": 0,
+      "subprocess_wall_s": 7.633159082848579,
+      "variant": "candidate"
+    },
+    {
+      "case": "feedback-pulse",
+      "id": "dense-feedback-pulse-baseline",
+      "mode": "diagnostic",
+      "returncode": 0,
+      "subprocess_wall_s": 7.811261875089258,
+      "variant": "baseline"
+    },
+    {
+      "case": "feedback-pulse",
+      "id": "dense-feedback-pulse-candidate",
+      "mode": "diagnostic",
+      "returncode": 0,
+      "subprocess_wall_s": 8.18520720815286,
+      "variant": "candidate"
+    }
+  ],
+  "comparisons": [
+    {
+      "both_complete": true,
+      "exact_match": true,
+      "kind": "timing-pair",
+      "pair": 0,
+      "same_assets": {
+        "different_fields": [],
+        "exact_match": true,
+        "fields_compared": [
+          "bytes_verified",
+          "commit",
+          "files_verified",
+          "lock_sha256",
+          "profile",
+          "repository",
+          "simulation_asset_license"
+        ]
+      },
+      "same_boundaries": {
+        "different_fields": [],
+        "exact_match": true,
+        "fields_compared": [
+          "config",
+          "seed",
+          "valid",
+          "success",
+          "reason",
+          "error",
+          "simulated_seconds",
+          "initial_object_position_m",
+          "compiled_model_sha256",
+          "trajectory",
+          "actions",
+          "metrics"
+        ]
+      },
+      "same_model": {
+        "different_fields": [],
+        "exact_match": true,
+        "fields_compared": [
+          "dimensions",
+          "native_bias",
+          "native_control_limits",
+          "native_force_limits",
+          "native_gains",
+          "sha256",
+          "timestep_s"
+        ]
+      },
+      "same_runtime": {
+        "different_fields": [],
+        "exact_match": true,
+        "fields_compared": [
+          "machine",
+          "mujoco",
+          "numpy",
+          "python",
+          "system"
+        ]
+      },
+      "same_score": {
+        "different_fields": [],
+        "exact_match": true,
+        "fields_compared": [
+          "native_metrics_source",
+          "native_outcome_success",
+          "native_outcome_valid",
+          "reason",
+          "reference_xy_m",
+          "required_dwell_s",
+          "required_lift_dwell_s",
+          "sample_interval_s",
+          "success",
+          "terminal_dwell_s",
+          "terminal_reference_success",
+          "terminal_xy_error_m",
+          "trace_lift_dwell_s",
+          "trajectory_complete"
+        ]
+      }
+    },
+    {
+      "both_complete": true,
+      "exact_match": true,
+      "kind": "timing-pair",
+      "pair": 1,
+      "same_assets": {
+        "different_fields": [],
+        "exact_match": true,
+        "fields_compared": [
+          "bytes_verified",
+          "commit",
+          "files_verified",
+          "lock_sha256",
+          "profile",
+          "repository",
+          "simulation_asset_license"
+        ]
+      },
+      "same_boundaries": {
+        "different_fields": [],
+        "exact_match": true,
+        "fields_compared": [
+          "config",
+          "seed",
+          "valid",
+          "success",
+          "reason",
+          "error",
+          "simulated_seconds",
+          "initial_object_position_m",
+          "compiled_model_sha256",
+          "trajectory",
+          "actions",
+          "metrics"
+        ]
+      },
+      "same_model": {
+        "different_fields": [],
+        "exact_match": true,
+        "fields_compared": [
+          "dimensions",
+          "native_bias",
+          "native_control_limits",
+          "native_force_limits",
+          "native_gains",
+          "sha256",
+          "timestep_s"
+        ]
+      },
+      "same_runtime": {
+        "different_fields": [],
+        "exact_match": true,
+        "fields_compared": [
+          "machine",
+          "mujoco",
+          "numpy",
+          "python",
+          "system"
+        ]
+      },
+      "same_score": {
+        "different_fields": [],
+        "exact_match": true,
+        "fields_compared": [
+          "native_metrics_source",
+          "native_outcome_success",
+          "native_outcome_valid",
+          "reason",
+          "reference_xy_m",
+          "required_dwell_s",
+          "required_lift_dwell_s",
+          "sample_interval_s",
+          "success",
+          "terminal_dwell_s",
+          "terminal_reference_success",
+          "terminal_xy_error_m",
+          "trace_lift_dwell_s",
+          "trajectory_complete"
+        ]
+      }
+    },
+    {
+      "case": "original",
+      "error": "ValueError: Expanded document exceeds bound",
+      "exact_match": false,
+      "kind": "dense-equivalence"
+    },
+    {
+      "both_complete": true,
+      "case": "open-jaw",
+      "complete_native_cadence": true,
+      "exact_match": true,
+      "kind": "dense-equivalence",
+      "same_assets": {
+        "different_fields": [],
+        "exact_match": true,
+        "fields_compared": [
+          "bytes_verified",
+          "commit",
+          "files_verified",
+          "lock_sha256",
+          "profile",
+          "repository",
+          "simulation_asset_license"
+        ]
+      },
+      "same_boundaries": {
+        "different_fields": [],
+        "exact_match": true,
+        "fields_compared": [
+          "config",
+          "seed",
+          "valid",
+          "success",
+          "reason",
+          "error",
+          "simulated_seconds",
+          "initial_object_position_m",
+          "compiled_model_sha256",
+          "trajectory",
+          "actions",
+          "metrics"
+        ]
+      },
+      "same_model": {
+        "different_fields": [],
+        "exact_match": true,
+        "fields_compared": [
+          "dimensions",
+          "native_bias",
+          "native_control_limits",
+          "native_force_limits",
+          "native_gains",
+          "sha256",
+          "timestep_s"
+        ]
+      },
+      "same_native_arrays": {
+        "differences": [],
+        "exact_match": true
+      },
+      "same_native_contacts_scorer": {
+        "baseline_rows": 20001,
+        "candidate_rows": 20001,
+        "exact_match": true,
+        "first_different_row": null
+      },
+      "same_runtime": {
+        "different_fields": [],
+        "exact_match": true,
+        "fields_compared": [
+          "machine",
+          "mujoco",
+          "numpy",
+          "python",
+          "system"
+        ]
+      },
+      "same_score": {
+        "different_fields": [],
+        "exact_match": true,
+        "fields_compared": [
+          "native_metrics_source",
+          "native_outcome_success",
+          "native_outcome_valid",
+          "reason",
+          "reference_xy_m",
+          "required_dwell_s",
+          "required_lift_dwell_s",
+          "sample_interval_s",
+          "success",
+          "terminal_dwell_s",
+          "terminal_reference_success",
+          "terminal_xy_error_m",
+          "trace_lift_dwell_s",
+          "trajectory_complete"
+        ]
+      }
+    },
+    {
+      "both_complete": true,
+      "case": "hold",
+      "complete_native_cadence": true,
+      "exact_match": true,
+      "kind": "dense-equivalence",
+      "same_assets": {
+        "different_fields": [],
+        "exact_match": true,
+        "fields_compared": [
+          "bytes_verified",
+          "commit",
+          "files_verified",
+          "lock_sha256",
+          "profile",
+          "repository",
+          "simulation_asset_license"
+        ]
+      },
+      "same_boundaries": {
+        "different_fields": [],
+        "exact_match": true,
+        "fields_compared": [
+          "config",
+          "seed",
+          "valid",
+          "success",
+          "reason",
+          "error",
+          "simulated_seconds",
+          "initial_object_position_m",
+          "compiled_model_sha256",
+          "trajectory",
+          "actions",
+          "metrics"
+        ]
+      },
+      "same_model": {
+        "different_fields": [],
+        "exact_match": true,
+        "fields_compared": [
+          "dimensions",
+          "native_bias",
+          "native_control_limits",
+          "native_force_limits",
+          "native_gains",
+          "sha256",
+          "timestep_s"
+        ]
+      },
+      "same_native_arrays": {
+        "differences": [],
+        "exact_match": true
+      },
+      "same_native_contacts_scorer": {
+        "baseline_rows": 20001,
+        "candidate_rows": 20001,
+        "exact_match": true,
+        "first_different_row": null
+      },
+      "same_runtime": {
+        "different_fields": [],
+        "exact_match": true,
+        "fields_compared": [
+          "machine",
+          "mujoco",
+          "numpy",
+          "python",
+          "system"
+        ]
+      },
+      "same_score": {
+        "different_fields": [],
+        "exact_match": true,
+        "fields_compared": [
+          "native_metrics_source",
+          "native_outcome_success",
+          "native_outcome_valid",
+          "reason",
+          "reference_xy_m",
+          "required_dwell_s",
+          "required_lift_dwell_s",
+          "sample_interval_s",
+          "success",
+          "terminal_dwell_s",
+          "terminal_reference_success",
+          "terminal_xy_error_m",
+          "trace_lift_dwell_s",
+          "trajectory_complete"
+        ]
+      }
+    },
+    {
+      "case": "feedback-no-pulse",
+      "error": "ValueError: Expanded document exceeds bound",
+      "exact_match": false,
+      "kind": "dense-equivalence"
+    },
+    {
+      "case": "feedback-pulse",
+      "error": "ValueError: Expanded document exceeds bound",
+      "exact_match": false,
+      "kind": "dense-equivalence"
+    }
+  ],
+  "interpretation": "These unpaced shared-host CPU samples compare one unchanged synthetic command tape. No inference time is included. Do not infer new task accuracy, hardware response, minimum hardware or real-time safety. Report every paired result; two pairs cannot establish robust population speedup.",
+  "paired_timing": [
+    {
+      "baseline_sum_s": 1.4684963417239487,
+      "candidate_p95_reduction_percent": 25.79315547361659,
+      "candidate_sum_s": 1.2328931200318038,
+      "candidate_total_step_reduction_percent": 16.043841240731815,
+      "pair": 0
+    },
+    {
+      "baseline_sum_s": 1.5423414260149002,
+      "candidate_p95_reduction_percent": 23.795316993807734,
+      "candidate_sum_s": 1.3053270056843758,
+      "candidate_total_step_reduction_percent": 15.367182410636659,
+      "pair": 1
+    }
+  ],
+  "planned_attempts": 14,
+  "protocol_sha256": "386c34e8201a86dbe81709805b7c0d47ec4c257120023514153cc4df652f5184",
+  "schema": "dvidia.piper-control-comparison/v1",
+  "scope": "One previously checked synthetic PiPER scenario, preserved commands and privileged native simulator state. Allocation-only source comparison, not new skill training, held-out success, hardware latency, calibrated contact or a real-time guarantee.",
+  "source_unchanged": true,
+  "timing_runs": [
+    {
+      "id": "timing-00-baseline",
+      "setup_reset_wall_s": 0.367916792165488,
+      "status": "complete",
+      "step_cpu": {
+        "count": 1000,
+        "max_s": 0.012059000000000042,
+        "mean_s": 0.0014127509999999999,
+        "over_nominal_20ms": 0,
+        "p50_s": 0.0011879999999999669,
+        "p95_s": 0.002274649999999988,
+        "p99_s": 0.002799599999999997,
+        "sum_s": 1.4127509999999999
+      },
+      "step_wall": {
+        "count": 1000,
+        "max_s": 0.012310583610087633,
+        "mean_s": 0.0014684963417239487,
+        "over_nominal_20ms": 0,
+        "p50_s": 0.0012011665385216475,
+        "p95_s": 0.002542358636856079,
+        "p99_s": 0.003286311766132712,
+        "sum_s": 1.4684963417239487
+      },
+      "variant": "baseline"
+    },
+    {
+      "id": "timing-01-candidate",
+      "setup_reset_wall_s": 0.28948104102164507,
+      "status": "complete",
+      "step_cpu": {
+        "count": 1000,
+        "max_s": 0.008727999999999847,
+        "mean_s": 0.0012205139999999996,
+        "over_nominal_20ms": 0,
+        "p50_s": 0.0010654999999999415,
+        "p95_s": 0.0018321999999998393,
+        "p99_s": 0.0024473500000000855,
+        "sum_s": 1.2205139999999997
+      },
+      "step_wall": {
+        "count": 1000,
+        "max_s": 0.010767832864075899,
+        "mean_s": 0.0012328931200318038,
+        "over_nominal_20ms": 0,
+        "p50_s": 0.0010669578332453966,
+        "p95_s": 0.001886604120954871,
+        "p99_s": 0.0025030286889523266,
+        "sum_s": 1.2328931200318038
+      },
+      "variant": "candidate"
+    },
+    {
+      "id": "timing-02-candidate",
+      "setup_reset_wall_s": 0.25960616674274206,
+      "status": "complete",
+      "step_cpu": {
+        "count": 1000,
+        "max_s": 0.00799099999999986,
+        "mean_s": 0.0012937500000000002,
+        "over_nominal_20ms": 0,
+        "p50_s": 0.001134999999999775,
+        "p95_s": 0.001920649999999912,
+        "p99_s": 0.0027079999999999327,
+        "sum_s": 1.2937500000000002
+      },
+      "step_wall": {
+        "count": 1000,
+        "max_s": 0.008000124711543322,
+        "mean_s": 0.0013053270056843757,
+        "over_nominal_20ms": 0,
+        "p50_s": 0.0011370624415576458,
+        "p95_s": 0.0019861731911078096,
+        "p99_s": 0.00277163659222424,
+        "sum_s": 1.3053270056843758
+      },
+      "variant": "candidate"
+    },
+    {
+      "id": "timing-03-baseline",
+      "setup_reset_wall_s": 0.3268076251260936,
+      "status": "complete",
+      "step_cpu": {
+        "count": 1000,
+        "max_s": 0.018218000000000067,
+        "mean_s": 0.001463971000000003,
+        "over_nominal_20ms": 0,
+        "p50_s": 0.0012210000000000276,
+        "p95_s": 0.002330100000000157,
+        "p99_s": 0.0029761600000003073,
+        "sum_s": 1.463971000000003
+      },
+      "step_wall": {
+        "count": 1000,
+        "max_s": 0.02005712501704693,
+        "mean_s": 0.0015423414260149002,
+        "over_nominal_20ms": 1,
+        "p50_s": 0.001237792195752263,
+        "p95_s": 0.0026063663186505436,
+        "p99_s": 0.003594016665592789,
+        "sum_s": 1.5423414260149002
+      },
+      "variant": "baseline"
+    }
+  ]
+}
