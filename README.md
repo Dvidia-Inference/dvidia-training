@@ -2,6 +2,16 @@
 
 # DVIDIA Training
 
+**[Task environment studio preview: 0.1.3.dev2](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/task-environments-v0.2-preview).**
+Edit multi-object scenes locally and run CPU physics through the simple browser studio or `dvidia-environment` Terminal tools.
+The pinned PiPER, open bin and original rigid objects retain **6 accepted fixtures, 6 rejected negative fixtures and 4 refused invalid layouts**.
+This is passive environment infrastructure: the arm holds home, and no robot skill is learned.
+Install the separate preview wheel with its `usd` extra; the default branch's stable package remains 0.1.2.
+[Local UI and Terminal guide](https://github.com/Dvidia-Inference/dvidia-training/blob/task-environments-v0.2-preview/docs/task-environments-v02.md) ·
+[Environment studio and recorded benchmark](https://dvidia-robot-simulation-lab.static.hf.space/task-environments/v02/index.html) ·
+[Complete evidence](https://huggingface.co/datasets/Dvidia/task-environments-v02) ·
+[Research](https://research.dvidia.org/papers/task-environments-v02/).
+
 **[Native PiPER capture preview: 0.1.3.dev1](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/piper-action-capture-v0.1-preview).**
 Capture genuine RGB-D, measured joints/fingers and issued/applied motor references locally through `dvidia-piper-capture`.
 Two 1,000-interval runs repeat one fixed start exactly; an interrupted prefix remains unknown. **37 focused tests pass** (including the 27 recorder tests), and a fresh installed wheel captures native frames outside the checkout.

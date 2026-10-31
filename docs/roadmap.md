@@ -1,7 +1,10 @@
 # Execution map: footage to installable skills
 
-Working map, updated 30 October 2026. This is the team's sequence of builds and evidence
+Working map, updated 31 October 2026. This is the team's sequence of builds and evidence
 gates. A completed software component does not establish robot competence.
+
+The new [task environment studio preview](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/task-environments-v0.2-preview), **0.1.3.dev2**, adds a local browser editor and `dvidia-environment` Terminal workflow for CPU physics with a pinned PiPER, an open bin and multiple original rigid objects. The frozen passive checks accept 6 completion fixtures, reject 6 negative fixtures and refuse 4 invalid layouts. PiPER holds home; these results establish environment and verifier infrastructure, with no learned manipulation skill. Stable default-branch SDK 0.1.2 remains separate.
+[Local UI/Terminal guide](https://github.com/Dvidia-Inference/dvidia-training/blob/task-environments-v0.2-preview/docs/task-environments-v02.md) · [Studio and recorded benchmark](https://dvidia-robot-simulation-lab.static.hf.space/task-environments/v02/index.html) · [Complete evidence](https://huggingface.co/datasets/Dvidia/task-environments-v02) · [Research](https://research.dvidia.org/papers/task-environments-v02/).
 
 ## Current priority: collect usable corrective action evidence
 
