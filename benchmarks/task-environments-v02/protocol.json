@@ -1,0 +1,192 @@
+{
+  "ablations": {
+    "any_instance_only": "At least one instance meets the full instantaneous predicates; the all-required-instance check omitted.",
+    "body_origin_only": "Naive single-point containment in the bin frame, no corner/margin/contact/speed/dwell checks. The native body origin is the bottom centre, not an estimated semantic object centre.",
+    "geometry_only": "All actual collision corners contained; support, speed, release and dwell omitted.",
+    "without_dwell": "Full instantaneous native predicates; continuous dwell omitted.",
+    "without_speed": "Full native predicates and continuous dwell, omitting linear/angular speed checks."
+  },
+  "cases": [
+    {
+      "control": "normal",
+      "duration_s": 1.5,
+      "expected_goal_success": true,
+      "id": "case-00",
+      "label": "One block released over the open bin",
+      "name": "block-drop"
+    },
+    {
+      "control": "normal",
+      "duration_s": 1.5,
+      "expected_goal_success": true,
+      "id": "case-01",
+      "label": "Original rigid shoe surrogate released over the bin",
+      "name": "shoe-drop"
+    },
+    {
+      "control": "normal",
+      "duration_s": 1.5,
+      "expected_goal_success": true,
+      "id": "case-02",
+      "label": "Two separate block instances",
+      "name": "two-blocks"
+    },
+    {
+      "control": "normal",
+      "duration_s": 1.5,
+      "expected_goal_success": true,
+      "id": "case-03",
+      "label": "Block and rigid shoe surrogate",
+      "name": "block-and-shoe"
+    },
+    {
+      "control": "normal",
+      "duration_s": 1.5,
+      "expected_goal_success": true,
+      "id": "case-04",
+      "label": "Rotated bin frame and two objects",
+      "name": "rotated-bin"
+    },
+    {
+      "control": "normal",
+      "duration_s": 1.5,
+      "expected_goal_success": true,
+      "id": "case-05",
+      "label": "Four distinct block instances",
+      "name": "four-instances"
+    },
+    {
+      "control": "normal",
+      "duration_s": 1.5,
+      "expected_goal_success": false,
+      "id": "case-06",
+      "label": "Stationary block on the table outside the bin",
+      "name": "outside-bin"
+    },
+    {
+      "control": "gravity_disabled",
+      "duration_s": 0.5,
+      "expected_goal_success": false,
+      "id": "case-07",
+      "label": "Body origin inside but collision volume overhangs the rim",
+      "name": "rim-overhang"
+    },
+    {
+      "control": "gravity_disabled",
+      "duration_s": 0.5,
+      "expected_goal_success": false,
+      "id": "case-08",
+      "label": "Contained and stationary without floor support",
+      "name": "unsupported"
+    },
+    {
+      "control": "initial_velocity",
+      "duration_s": 0.15,
+      "expected_goal_success": false,
+      "id": "case-09",
+      "label": "Floor-supported object sliding too fast",
+      "name": "moving"
+    },
+    {
+      "control": "normal",
+      "duration_s": 0.1,
+      "expected_goal_success": false,
+      "id": "case-10",
+      "label": "Supported release observed for too little time",
+      "name": "short-dwell"
+    },
+    {
+      "control": "normal",
+      "duration_s": 1.5,
+      "expected_goal_success": false,
+      "id": "case-11",
+      "label": "One of two required instances remains outside",
+      "name": "one-required-outside"
+    },
+    {
+      "control": "precheck",
+      "duration_s": 0.0,
+      "expected_goal_success": null,
+      "id": "case-12",
+      "label": "Overlapping starting instances rejected",
+      "name": "invalid-overlap"
+    },
+    {
+      "control": "precheck",
+      "duration_s": 0.0,
+      "expected_goal_success": null,
+      "id": "case-13",
+      "label": "Table overhang rejected",
+      "name": "invalid-support"
+    },
+    {
+      "control": "precheck",
+      "duration_s": 0.0,
+      "expected_goal_success": null,
+      "id": "case-14",
+      "label": "Object too large for the target bin rejected",
+      "name": "invalid-fit"
+    },
+    {
+      "control": "precheck",
+      "duration_s": 0.0,
+      "expected_goal_success": null,
+      "id": "case-15",
+      "label": "Duplicate instance identity rejected",
+      "name": "invalid-duplicate-id"
+    }
+  ],
+  "goal_semantics": "All required collision volumes inside bin, floor-supported, released, below velocity limits continuously for recipe dwell.",
+  "learned_skill": false,
+  "negative_controls": "Gravity disabled only for declared rim-overhang and unsupported stationary counterexamples. Moving case has a declared initial 0.3m/s linear velocity and zero authored contact friction. No pose, velocity or external-force overwrite during stepping.",
+  "physical_robot_ready": false,
+  "physics_calibrated": false,
+  "record_dt_s": 0.01,
+  "schema": "dvidia.task-scene-benchmark/v2",
+  "scope": "Passive, original rigid task-scene and independent completion checks. The native PiPER holds home; no learned grasp, image-based perception, shoe deformation or physical-robot transfer is evaluated.",
+  "source": {
+    "asset_catalog.json": {
+      "bytes": 37117,
+      "sha256": "592f363389a96fef7f9223737aa72a2f1a74f400238924bf6790ec5bfd3302b7"
+    },
+    "asset_library.py": {
+      "bytes": 9837,
+      "sha256": "347bfdeb61e22eb3f65e317c18f94d3b2076d05def77630ebbb6e7dde427c2a7"
+    },
+    "asset_preview.py": {
+      "bytes": 16887,
+      "sha256": "12f4806162504a3c8773b10b516d6b7abb05f670a1f5817be144ea98fc1d25d8"
+    },
+    "reference_assets.lock.json": {
+      "bytes": 10029,
+      "sha256": "941eb6f9fd474635a590b82c66b59a9d5124d8e0d9ddc203006f5b921d8d2861"
+    },
+    "reference_replay.py": {
+      "bytes": 26037,
+      "sha256": "f73731434d55bac150db16c7205d341a70b95ce13e582e7a23d11dee31b27a19"
+    },
+    "reference_sim.py": {
+      "bytes": 24336,
+      "sha256": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8"
+    },
+    "robot_profiles.lock.json": {
+      "bytes": 35002,
+      "sha256": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe"
+    },
+    "robot_profiles.py": {
+      "bytes": 26493,
+      "sha256": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d"
+    },
+    "task_scene.py": {
+      "bytes": 37808,
+      "sha256": "17034a12980fd69960adbb7b4be427bdde89222d6c69b75ddd51f90f99d48ba9"
+    },
+    "task_scene_benchmark.py": {
+      "bytes": 30586,
+      "sha256": "6c6a3db8edec4ab95d17aa7a58d5dfff668fe72783c036ec55f251c5315eb4d5"
+    }
+  },
+  "timestep_s": 0.001,
+  "timing_scope": "One CPU worker. Per-case elapsed includes compile, validation, all recorded native steps, geometry, compression and case output writes. run() total includes execution and final output writes; run_benchmark() additionally records preparation plus execution in full-wall-timing.json. No camera, training, network or physical actuators.",
+  "worker_count": 1
+}

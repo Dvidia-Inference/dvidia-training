@@ -1,0 +1,213 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    kilogramsPerUnit = 1
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Xform "World"
+{
+    def PhysicsScene "Physics"
+    {
+        vector3f physics:gravityDirection = (0, 0, -1)
+        float physics:gravityMagnitude = 9.81
+    }
+
+    def Material "Material_table" (
+        prepend apiSchemas = ["PhysicsMaterialAPI"]
+    )
+    {
+        float physics:dynamicFriction = 0.8
+        float physics:restitution = 0
+        float physics:staticFriction = 0.8
+    }
+
+    def Material "Material_bin" (
+        prepend apiSchemas = ["PhysicsMaterialAPI"]
+    )
+    {
+        float physics:dynamicFriction = 0.6
+        float physics:restitution = 0
+        float physics:staticFriction = 0.6
+    }
+
+    def Cube "Table" (
+        prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+    )
+    {
+        rel material:binding:physics = </World/Material_table>
+        bool physics:collisionEnabled = 1
+        double size = 1
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (1.2, 1, 0.08)
+        double3 xformOp:translate = (0.4, 0, -0.04)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def Cube "Bin_floor" (
+        prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+    )
+    {
+        rel material:binding:physics = </World/Material_bin>
+        bool physics:collisionEnabled = 1
+        double size = 1
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (0.39, 0.28, 0.015)
+        double3 xformOp:translate = (0.65, 0.2, 0.0075)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def Cube "Bin_left" (
+        prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+    )
+    {
+        rel material:binding:physics = </World/Material_bin>
+        bool physics:collisionEnabled = 1
+        double size = 1
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (0.015, 0.28, 0.16)
+        double3 xformOp:translate = (0.4625, 0.2, 0.095)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def Cube "Bin_right" (
+        prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+    )
+    {
+        rel material:binding:physics = </World/Material_bin>
+        bool physics:collisionEnabled = 1
+        double size = 1
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (0.015, 0.28, 0.16)
+        double3 xformOp:translate = (0.8375, 0.2, 0.095)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def Cube "Bin_front" (
+        prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+    )
+    {
+        rel material:binding:physics = </World/Material_bin>
+        bool physics:collisionEnabled = 1
+        double size = 1
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (0.36, 0.015, 0.16)
+        double3 xformOp:translate = (0.65, 0.0675, 0.095)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def Cube "Bin_back" (
+        prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+    )
+    {
+        rel material:binding:physics = </World/Material_bin>
+        bool physics:collisionEnabled = 1
+        double size = 1
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (0.36, 0.015, 0.16)
+        double3 xformOp:translate = (0.65, 0.3325, 0.095)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def Xform "Object_block" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0, 0, 0.02)
+        float3 physics:diagonalInertia = (0.000010666667, 0.000010666667, 0.000010666667)
+        bool physics:kinematicEnabled = 0
+        float physics:mass = 0.04
+        quatf physics:principalAxes = (1, 0, 0, 0)
+        bool physics:rigidBodyEnabled = 1
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:translate = (0.35, -0.2, 0.04)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+
+        def Cube "piece_0" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            rel material:binding:physics = </World/Material_object_block>
+            bool physics:collisionEnabled = 1
+            double size = 1
+            quatd xformOp:orient = (1, 0, 0, 0)
+            double3 xformOp:scale = (0.04, 0.04, 0.04)
+            double3 xformOp:translate = (0, 0, 0.02)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+    }
+
+    def Material "Material_object_block" (
+        prepend apiSchemas = ["PhysicsMaterialAPI"]
+    )
+    {
+        float physics:dynamicFriction = 0.5
+        float physics:restitution = 0
+        float physics:staticFriction = 0.5
+    }
+
+    def Xform "Object_shoe" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    )
+    {
+        point3f physics:centerOfMass = (0, 0, 0.02946843)
+        float3 physics:diagonalInertia = (0.00022178727, 0.00096437894, 0.0009957774)
+        bool physics:kinematicEnabled = 0
+        float physics:mass = 0.25
+        quatf physics:principalAxes = (1, 0, 0, 0)
+        bool physics:rigidBodyEnabled = 1
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:translate = (0.57, -0.2, 0.04)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+
+        def Cube "piece_0" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            rel material:binding:physics = </World/Material_object_shoe>
+            bool physics:collisionEnabled = 1
+            double size = 1
+            quatd xformOp:orient = (1, 0, 0, 0)
+            double3 xformOp:scale = (0.24, 0.09, 0.0126)
+            double3 xformOp:translate = (0, 0, 0.0063)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Cube "piece_1" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            rel material:binding:physics = </World/Material_object_shoe>
+            bool physics:collisionEnabled = 1
+            double size = 1
+            quatd xformOp:orient = (1, 0, 0, 0)
+            double3 xformOp:scale = (0.204, 0.0765, 0.035)
+            double3 xformOp:translate = (0, 0, 0.030100000000000002)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Cube "piece_2" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            rel material:binding:physics = </World/Material_object_shoe>
+            bool physics:collisionEnabled = 1
+            double size = 1
+            quatd xformOp:orient = (1, 0, 0, 0)
+            double3 xformOp:scale = (0.144, 0.063, 0.022400000000000003)
+            double3 xformOp:translate = (0, 0, 0.058800000000000005)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+    }
+
+    def Material "Material_object_shoe" (
+        prepend apiSchemas = ["PhysicsMaterialAPI"]
+    )
+    {
+        float physics:dynamicFriction = 0.8
+        float physics:restitution = 0
+        float physics:staticFriction = 0.8
+    }
+}
+

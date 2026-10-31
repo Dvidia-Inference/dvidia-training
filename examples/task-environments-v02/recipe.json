@@ -1,0 +1,90 @@
+{
+  "bin": {
+    "center_m": [
+      0.65,
+      0.2,
+      0.0
+    ],
+    "inner_size_m": [
+      0.36,
+      0.25,
+      0.16
+    ],
+    "property_evidence": "authored_assumption",
+    "sliding_friction": 0.6,
+    "wall_m": 0.015,
+    "yaw_rad": 0.0
+  },
+  "catalog_sha256": "592f363389a96fef7f9223737aa72a2f1a74f400238924bf6790ec5bfd3302b7",
+  "control_s": 0.02,
+  "goal": {
+    "containment_margin_m": 0.001,
+    "forbid_robot_contact": true,
+    "max_angular_speed_rad_s": 0.05,
+    "max_linear_speed_m_s": 0.01,
+    "require_bin_floor_contact": true,
+    "settle_s": 0.25
+  },
+  "objects": [
+    {
+      "id": "block",
+      "kind": "box",
+      "mass_kg": 0.04,
+      "position_m": [
+        0.35,
+        -0.2,
+        0.04
+      ],
+      "property_evidence": "authored_assumption",
+      "size_m": [
+        0.04,
+        0.04,
+        0.04
+      ],
+      "sliding_friction": 0.5,
+      "yaw_rad": 0.0
+    },
+    {
+      "id": "shoe",
+      "kind": "rigid_shoe_surrogate",
+      "mass_kg": 0.25,
+      "position_m": [
+        0.57,
+        -0.2,
+        0.04
+      ],
+      "property_evidence": "authored_assumption",
+      "size_m": [
+        0.24,
+        0.09,
+        0.07
+      ],
+      "sliding_friction": 0.8,
+      "yaw_rad": 0.0
+    }
+  ],
+  "robot_lock_sha256": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+  "robot_profile": "piper",
+  "schema": "dvidia.task-scene-recipe/v1",
+  "source_sha256": {
+    "asset_library.py": "347bfdeb61e22eb3f65e317c18f94d3b2076d05def77630ebbb6e7dde427c2a7",
+    "reference_sim.py": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8",
+    "robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d",
+    "task_scene.py": "17034a12980fd69960adbb7b4be427bdde89222d6c69b75ddd51f90f99d48ba9"
+  },
+  "table": {
+    "center_m": [
+      0.4,
+      0.0,
+      -0.04
+    ],
+    "property_evidence": "authored_assumption",
+    "size_m": [
+      1.2,
+      1.0,
+      0.08
+    ],
+    "sliding_friction": 0.8
+  },
+  "timestep_s": 0.001
+}

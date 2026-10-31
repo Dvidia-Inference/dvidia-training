@@ -6,6 +6,15 @@
 
 [Recorded demo](https://huggingface.co/spaces/Dvidia/dvidia-training) · [Synthetic datasets](https://huggingface.co/datasets/Dvidia/dvidia-training-examples) · [Pilot models](https://huggingface.co/Dvidia/dvidia-training-pilot)
 
+**[Build a reusable task environment](docs/task-environments-v02.md).**
+The **0.1.3.dev2 native preview** adds a local metric editor and
+`dvidia-environment`: multiple rigid objects, an open bin, explicit OpenUSD and
+native PiPER physics. Completion checks the full collision volume, release,
+support, speed and continuous settling for every object.
+[Recorded environment checks](https://dvidia-robot-simulation-lab.static.hf.space/task-environments/v02/index.html) ·
+[Install the preview](https://github.com/Dvidia-Inference/dvidia-training/releases/tag/task-environments-v0.2-preview).
+This builds the practice environment; passive settling does not demonstrate a learned placement skill.
+
 **[Record the motor evidence](docs/action-demonstrations.md).**
 DVIDIA Training **0.1.2** adds `dvidia-action-demo`: a data-only PiPER recorder,
 validator and target exporter that keeps observations, requested/issued commands
