@@ -1,0 +1,203 @@
+{
+  "auditor_sha256": "d1640bc14164c179d90baa44e8777dce2dce13d81edde17fa39e6519ba74ddfc",
+  "cases": [
+    {
+      "ablations_ever_accept": {
+        "any_instance_only": true,
+        "body_origin_only": true,
+        "geometry_only": true,
+        "without_dwell": true,
+        "without_speed": true
+      },
+      "goal_success": true,
+      "id": "case-00",
+      "max_replay_pose_roundoff": 2.825256939509302e-08,
+      "mismatches": 0,
+      "replay_frames": 151,
+      "trace_samples": 1501
+    },
+    {
+      "ablations_ever_accept": {
+        "any_instance_only": true,
+        "body_origin_only": true,
+        "geometry_only": true,
+        "without_dwell": true,
+        "without_speed": true
+      },
+      "goal_success": true,
+      "id": "case-01",
+      "max_replay_pose_roundoff": 2.4766273809539996e-08,
+      "mismatches": 0,
+      "replay_frames": 151,
+      "trace_samples": 1501
+    },
+    {
+      "ablations_ever_accept": {
+        "any_instance_only": true,
+        "body_origin_only": true,
+        "geometry_only": true,
+        "without_dwell": true,
+        "without_speed": true
+      },
+      "goal_success": true,
+      "id": "case-02",
+      "max_replay_pose_roundoff": 2.8971703702751483e-08,
+      "mismatches": 0,
+      "replay_frames": 151,
+      "trace_samples": 1501
+    },
+    {
+      "ablations_ever_accept": {
+        "any_instance_only": true,
+        "body_origin_only": true,
+        "geometry_only": true,
+        "without_dwell": true,
+        "without_speed": true
+      },
+      "goal_success": true,
+      "id": "case-03",
+      "max_replay_pose_roundoff": 2.4847270685413037e-08,
+      "mismatches": 0,
+      "replay_frames": 151,
+      "trace_samples": 1501
+    },
+    {
+      "ablations_ever_accept": {
+        "any_instance_only": true,
+        "body_origin_only": true,
+        "geometry_only": true,
+        "without_dwell": true,
+        "without_speed": true
+      },
+      "goal_success": true,
+      "id": "case-04",
+      "max_replay_pose_roundoff": 2.450124059194536e-08,
+      "mismatches": 0,
+      "replay_frames": 151,
+      "trace_samples": 1501
+    },
+    {
+      "ablations_ever_accept": {
+        "any_instance_only": true,
+        "body_origin_only": true,
+        "geometry_only": true,
+        "without_dwell": true,
+        "without_speed": true
+      },
+      "goal_success": true,
+      "id": "case-05",
+      "max_replay_pose_roundoff": 2.8610229518832853e-08,
+      "mismatches": 0,
+      "replay_frames": 151,
+      "trace_samples": 1501
+    },
+    {
+      "ablations_ever_accept": {
+        "any_instance_only": false,
+        "body_origin_only": false,
+        "geometry_only": false,
+        "without_dwell": false,
+        "without_speed": false
+      },
+      "goal_success": false,
+      "id": "case-06",
+      "max_replay_pose_roundoff": 5.960464455334602e-09,
+      "mismatches": 0,
+      "replay_frames": 151,
+      "trace_samples": 1501
+    },
+    {
+      "ablations_ever_accept": {
+        "any_instance_only": false,
+        "body_origin_only": true,
+        "geometry_only": false,
+        "without_dwell": false,
+        "without_speed": false
+      },
+      "goal_success": false,
+      "id": "case-07",
+      "max_replay_pose_roundoff": 1.1920928910669204e-08,
+      "mismatches": 0,
+      "replay_frames": 51,
+      "trace_samples": 501
+    },
+    {
+      "ablations_ever_accept": {
+        "any_instance_only": false,
+        "body_origin_only": true,
+        "geometry_only": true,
+        "without_dwell": false,
+        "without_speed": false
+      },
+      "goal_success": false,
+      "id": "case-08",
+      "max_replay_pose_roundoff": 2.384185793236071e-08,
+      "mismatches": 0,
+      "replay_frames": 51,
+      "trace_samples": 501
+    },
+    {
+      "ablations_ever_accept": {
+        "any_instance_only": false,
+        "body_origin_only": true,
+        "geometry_only": true,
+        "without_dwell": false,
+        "without_speed": true
+      },
+      "goal_success": false,
+      "id": "case-09",
+      "max_replay_pose_roundoff": 2.45457592029652e-08,
+      "mismatches": 0,
+      "replay_frames": 16,
+      "trace_samples": 151
+    },
+    {
+      "ablations_ever_accept": {
+        "any_instance_only": false,
+        "body_origin_only": true,
+        "geometry_only": true,
+        "without_dwell": true,
+        "without_speed": false
+      },
+      "goal_success": false,
+      "id": "case-10",
+      "max_replay_pose_roundoff": 1.4305114759416426e-08,
+      "mismatches": 0,
+      "replay_frames": 11,
+      "trace_samples": 101
+    },
+    {
+      "ablations_ever_accept": {
+        "any_instance_only": true,
+        "body_origin_only": false,
+        "geometry_only": false,
+        "without_dwell": false,
+        "without_speed": false
+      },
+      "goal_success": false,
+      "id": "case-11",
+      "max_replay_pose_roundoff": 2.825256939509302e-08,
+      "mismatches": 0,
+      "replay_frames": 151,
+      "trace_samples": 1501
+    }
+  ],
+  "counts": {
+    "native_checks_passed": 12,
+    "native_goal_successes": 6,
+    "native_scheduled": 12,
+    "native_valid": 12,
+    "negative_goals_correctly_rejected": 6,
+    "negative_scheduled": 6,
+    "positive_goal_successes": 6,
+    "positive_scheduled": 6,
+    "prechecks_correctly_rejected": 4,
+    "prechecks_scheduled": 4
+  },
+  "mismatches": 0,
+  "protocol_sha256": "7414b6576ce2e57b77622f9173f39b9ecf320ee445ae6390d8714848659923e2",
+  "replay_frames": 1337,
+  "schema": "dvidia.task-scene-audit/v2",
+  "scope": "Read-only independent consistency reconstruction from saved native observations; no new simulation, policy, physical truth, sensor accuracy or hardware qualification.",
+  "trace_samples": 13262
+}

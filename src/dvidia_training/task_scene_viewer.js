@@ -8,12 +8,13 @@ let renderer,world,camera,orbit,transform,draftGroup,robotGroup,replayGroup,obje
 let recipe,originalRecipe,selectedId,local=false,indexData,indexURL,currentCase,poseData,bodyGroups=[];
 let mode='edit',frame=0,playing=false,startTime=0,loadEpoch=0,selectedOutline,localBusy=false;
 const copy=value=>JSON.parse(JSON.stringify(value)),finiteArray=(value,n)=>Array.isArray(value)&&value.length===n&&value.every(Number.isFinite);
-function resourceURL(path,base=rootURL){
-  assert(typeof path==='string'&&path.length<512&&!path.includes('\\')&&!path.split('/').some(p=>p==='..'),'Invalid local resource path.');
-  const url=new URL(path,base);assert(url.origin===location.origin&&url.protocol===location.protocol,'Resources must stay on this origin.');return url;
+function resourceURL(path,base=rootURL,boundary=rootURL){
+  assert(path instanceof URL||(typeof path==='string'&&path.length<512&&!path.startsWith('//')&&!/^[a-z][a-z0-9+.-]*:/i.test(path)&&!/[\\?#%]/.test(path)),'Invalid local resource path.');
+  const url=new URL(path,base),scope=new URL('./',boundary);
+  assert(url.origin===location.origin&&url.protocol===location.protocol&&!url.username&&!url.password&&!url.search&&!url.hash&&!url.pathname.includes('%')&&url.pathname.startsWith(scope.pathname),'Resource escapes its local artifact directory.');return url;
 }
-async function getBytes(path,base=rootURL,limit=8*1024*1024,optional=false){
-  const url=resourceURL(path,base),response=await fetch(url,{credentials:'omit',referrerPolicy:'no-referrer'});
+async function getBytes(path,base=rootURL,limit=8*1024*1024,optional=false,boundary=rootURL){
+  const url=resourceURL(path,base,boundary),response=await fetch(url,{credentials:'omit',referrerPolicy:'no-referrer'});
   if(optional&&!response.ok)return null;
   const final=new URL(response.url),allowed=final.origin===location.origin||(location.hostname==='dvidia-robot-simulation-lab.static.hf.space'&&final.protocol==='https:'&&final.hostname.endsWith('.hf.co'));
   assert(allowed&&response.ok,'Could not open '+url.pathname);assert(response.body,'Missing resource body.');
@@ -21,11 +22,11 @@ async function getBytes(path,base=rootURL,limit=8*1024*1024,optional=false){
   try{for(;;){const {done,value}=await reader.read();if(done)break;length+=value.length;assert(length<=limit,'Resource exceeds the byte limit.');chunks.push(value)}}finally{await reader.cancel();reader.releaseLock()}
   const bytes=new Uint8Array(length);let offset=0;for(const c of chunks){bytes.set(c,offset);offset+=c.length}return bytes;
 }
-async function getJSON(path,base=rootURL,optional=false){const bytes=await getBytes(path,base,8*1024*1024,optional);return bytes===null?null:JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes))}
-async function unpack(path,identity,base){
+async function getJSON(path,base=rootURL,optional=false,boundary=rootURL){const bytes=await getBytes(path,base,8*1024*1024,optional,boundary);return bytes===null?null:JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes))}
+async function unpack(path,identity,base,boundary=rootURL){
   assert(identity&&Number.isInteger(identity.bytes)&&identity.bytes>0&&identity.bytes<=MAX_BYTES,'Invalid native resource byte count.');
   assert(typeof identity.sha256==='string'&&/^[a-f0-9]{64}$/.test(identity.sha256),'Invalid native digest.');
-  const packed=await getBytes(path,base,16*1024*1024),reader=new Blob([packed]).stream().pipeThrough(new DecompressionStream('gzip')).getReader(),chunks=[];let length=0;
+  const packed=await getBytes(path,base,16*1024*1024,false,boundary),reader=new Blob([packed]).stream().pipeThrough(new DecompressionStream('gzip')).getReader(),chunks=[];let length=0;
   try{for(;;){const {done,value}=await reader.read();if(done)break;length+=value.length;assert(length<=identity.bytes,'Inflated native data exceeds its byte count.');chunks.push(value)}}finally{await reader.cancel();reader.releaseLock()}
   const raw=new Uint8Array(length);let offset=0;for(const c of chunks){raw.set(c,offset);offset+=c.length}
   const hash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',raw)),x=>x.toString(16).padStart(2,'0')).join('');
@@ -120,7 +121,7 @@ function nativeScene(model,geometry,robotOnly=false){
 }
 function applyPoses(groups,view,index){const start=index*groups.length*28;for(let body=0;body<groups.length;body++){const offset=start+body*28,p=Array.from({length:7},(_,j)=>view.getFloat32(offset+j*4,true));assert(p.every(Number.isFinite),'Nonfinite native body pose.');groups[body].position.set(p[0],p[1],p[2]);groups[body].quaternion.set(p[4],p[5],p[6],p[3])}}
 async function loadRobot(path){
-  const url=resourceURL(path),model=await getJSON(url.href),geometry=await unpack(model.geometry_binary.href,model.geometry_binary,url),native=nativeScene(model,geometry,true);
+  const url=resourceURL(path),model=await getJSON(url),geometry=await unpack(model.geometry_binary.href,model.geometry_binary,url),native=nativeScene(model,geometry,true);
   assert(Array.isArray(model.initial_poses)&&model.initial_poses.length===native.bodies.length,'Native robot initial poses missing.');
   model.initial_poses.forEach((p,i)=>{assert(finiteArray(p,7),'Invalid robot initial pose.');native.bodies[i].position.set(...p.slice(0,3));native.bodies[i].quaternion.set(p[4],p[5],p[6],p[3])});
   removeGroup(robotGroup);robotGroup=native.group;world.add(robotGroup);robotGroup.visible=mode==='edit';$('arm-label').textContent='PiPER · pinned native geometry';render();
@@ -133,7 +134,7 @@ async function selectRecording(){
   const epoch=++loadEpoch;pause();$('play').disabled=true;$('timeline').disabled=true;$('loading').hidden=false;$('loading').textContent='Verifying native geometry and body poses…';
   try{
     const item=indexData.cases.find(c=>c.id===$('recording').value);assert(item,'Unknown recording.');assert(Number.isInteger(item.frame_count)&&item.frame_count>0&&item.frame_count<=10000&&Number.isInteger(item.body_count)&&item.body_count>0&&item.body_count<=128&&Number.isFinite(item.dt_s)&&item.dt_s>0&&item.dt_s<=1,'Invalid native motion dimensions.');
-    const modelURL=resourceURL(item.scene,indexURL),model=await getJSON(modelURL.href),geometry=await unpack(model.geometry_binary.href,model.geometry_binary,modelURL),raw=await unpack(item.poses,{bytes:item.frame_count*item.body_count*28,sha256:item.sha256},indexURL);if(epoch!==loadEpoch)return;
+    const modelURL=resourceURL(item.scene,indexURL,indexURL),model=await getJSON(modelURL,indexURL,false,indexURL),geometry=await unpack(model.geometry_binary.href,model.geometry_binary,modelURL,indexURL),raw=await unpack(item.poses,{bytes:item.frame_count*item.body_count*28,sha256:item.sha256},indexURL,indexURL);if(epoch!==loadEpoch)return;
     assert(model.bodies.length===item.body_count,'Native motion and geometry body counts differ.');const native=nativeScene(model,geometry);removeGroup(replayGroup);replayGroup=native.group;bodyGroups=native.bodies;world.add(replayGroup);replayGroup.visible=mode==='replay';currentCase=item;poseData=new DataView(raw);
     if(!robotGroup){const robot=nativeScene(model,geometry,true);applyPoses(robot.bodies,poseData,0);robotGroup=robot.group;world.add(robotGroup);robotGroup.visible=mode==='edit';$('arm-label').textContent='PiPER · pinned native geometry'}
     const metrics=item.metrics||{};$('result').textContent=metrics.checks_passed===true?'Check passed':metrics.checks_passed===false?'Check failed':'Recorded run';$('goal-result').textContent=metrics.native_goal_success===true?'Complete':metrics.native_goal_success===false?'Incomplete':'Not reported';$('expected-result').textContent=metrics.expected_goal_success===true?'Complete':metrics.expected_goal_success===false?'Incomplete':'Exploratory run';$('duration').textContent=((item.frame_count-1)*item.dt_s).toFixed(2)+' s';$('integrity').textContent='Geometry + poses · SHA-256 verified';
@@ -141,7 +142,7 @@ async function selectRecording(){
   }catch(error){$('loading').hidden=true;$('integrity').textContent='Replay unavailable: '+error.message;throw error}
 }
 async function loadIndex(path){
-  const url=resourceURL(path),data=await getJSON(url.href);assert(data.schema==='dvidia.task-scene-replay/v2'&&Array.isArray(data.cases)&&data.cases.length>0&&data.cases.length<=128,'Unsupported recorded benchmark.');
+  const url=resourceURL(path),data=await getJSON(url);assert(data.schema==='dvidia.task-scene-replay/v2'&&Array.isArray(data.cases)&&data.cases.length>0&&data.cases.length<=128,'Unsupported recorded benchmark.');
   const ids=new Set();for(const item of data.cases){assert(typeof item.id==='string'&&item.id.length<=80&&!ids.has(item.id),'Duplicate or invalid recording.');ids.add(item.id)}
   indexData=data;indexURL=url;$('recording').replaceChildren(...data.cases.map(item=>{const option=document.createElement('option');option.value=item.id;option.textContent=item.label||item.id;return option}));$('replay-mode').disabled=false;$('index-link').href=url.href;$('index-link').hidden=false;
   const checked=data.cases.filter(c=>c.metrics?.checks_passed===true).length;$('study-summary').textContent=`${checked}/${data.cases.length} recorded case checks passed. ${Array.isArray(data.prechecks)?data.prechecks.length:0} recipe prechecks are listed in the benchmark data.`;await selectRecording();
