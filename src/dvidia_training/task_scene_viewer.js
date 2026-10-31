@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {TransformControls} from 'three/addons/controls/TransformControls.js';
 const $=id=>document.getElementById(id),assert=(ok,message)=>{if(!ok)throw Error(message)};
-const MAX_BYTES=64*1024*1024,rootURL=new URL('./',location.href);
+const MAX_BYTES=64*1024*1024,rootURL=new URL(document.documentElement.dataset.artifactRoot||'./',location.href);
 let renderer,world,camera,orbit,transform,draftGroup,robotGroup,replayGroup,objects=new Map();
 let recipe,originalRecipe,selectedId,local=false,indexData,indexURL,currentCase,poseData,bodyGroups=[];
 let mode='edit',frame=0,playing=false,startTime=0,loadEpoch=0,selectedOutline,localBusy=false;
@@ -14,13 +14,21 @@ function resourceURL(path,base=rootURL,boundary=rootURL){
   assert(url.origin===location.origin&&url.protocol===location.protocol&&!url.username&&!url.password&&!url.search&&!url.hash&&!url.pathname.includes('%')&&url.pathname.startsWith(scope.pathname),'Resource escapes its local artifact directory.');return url;
 }
 async function getBytes(path,base=rootURL,limit=8*1024*1024,optional=false,boundary=rootURL){
-  const url=resourceURL(path,base,boundary),response=await fetch(url,{credentials:'omit',referrerPolicy:'no-referrer'});
-  if(optional&&!response.ok)return null;
-  const final=new URL(response.url),allowed=final.origin===location.origin||(location.hostname==='dvidia-robot-simulation-lab.static.hf.space'&&final.protocol==='https:'&&final.hostname.endsWith('.hf.co'));
-  assert(allowed&&response.ok,'Could not open '+url.pathname);assert(response.body,'Missing resource body.');
-  const reader=response.body.getReader(),chunks=[];let length=0;
-  try{for(;;){const {done,value}=await reader.read();if(done)break;length+=value.length;assert(length<=limit,'Resource exceeds the byte limit.');chunks.push(value)}}finally{await reader.cancel();reader.releaseLock()}
-  const bytes=new Uint8Array(length);let offset=0;for(const c of chunks){bytes.set(c,offset);offset+=c.length}return bytes;
+  const url=resourceURL(path,base,boundary);
+  for(let attempt=0;attempt<3;attempt++){
+    if(attempt)await new Promise(resolve=>setTimeout(resolve,200*attempt));
+    try{
+      const response=await fetch(url,{credentials:'omit',referrerPolicy:'no-referrer'});
+      const final=new URL(response.url),allowed=final.origin===location.origin||(location.hostname==='dvidia-robot-simulation-lab.static.hf.space'&&final.protocol==='https:'&&final.hostname.endsWith('.hf.co'));
+      assert(allowed,'Unexpected resource host.');
+      if(!response.ok&&[408,425,429,500,502,503,504].includes(response.status)&&attempt<2){if(response.body)await response.body.cancel().catch(()=>{});continue}
+      if(optional&&!response.ok)return null;
+      assert(response.ok,'Could not open '+url.pathname);assert(response.body,'Missing resource body.');
+      const reader=response.body.getReader(),chunks=[];let length=0;
+      try{for(;;){const {done,value}=await reader.read();if(done)break;length+=value.length;assert(length<=limit,'Resource exceeds the byte limit.');chunks.push(value)}}finally{await reader.cancel().catch(()=>{});reader.releaseLock()}
+      const bytes=new Uint8Array(length);let offset=0;for(const c of chunks){bytes.set(c,offset);offset+=c.length}return bytes;
+    }catch(error){if(attempt===2||!(error instanceof TypeError||error.name==='NetworkError'))throw error}
+  }
 }
 async function getJSON(path,base=rootURL,optional=false,boundary=rootURL){const bytes=await getBytes(path,base,8*1024*1024,optional,boundary);return bytes===null?null:JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes))}
 async function unpack(path,identity,base,boundary=rootURL){
@@ -31,6 +39,17 @@ async function unpack(path,identity,base,boundary=rootURL){
   const raw=new Uint8Array(length);let offset=0;for(const c of chunks){raw.set(c,offset);offset+=c.length}
   const hash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',raw)),x=>x.toString(16).padStart(2,'0')).join('');
   assert(raw.length===identity.bytes&&hash===identity.sha256,'Native data failed SHA-256 verification.');return raw.buffer;
+}
+const geometryCache=new Map();let geometryCacheBytes=0;
+async function cachedGeometry(path,identity,base,boundary=rootURL){
+  const url=resourceURL(path,base,boundary);
+  assert(identity&&Number.isInteger(identity.bytes)&&identity.bytes>0&&identity.bytes<=MAX_BYTES&&typeof identity.sha256==='string'&&/^[a-f0-9]{64}$/.test(identity.sha256),'Invalid geometry identity.');
+  const key=url.href+'|'+identity.sha256+'|'+identity.bytes;
+  if(geometryCache.has(key)){const value=geometryCache.get(key);geometryCache.delete(key);geometryCache.set(key,value);return value}
+  const value=await unpack(url,identity,base,boundary);
+  if(geometryCache.has(key))return geometryCache.get(key);
+  while(geometryCacheBytes+value.byteLength>MAX_BYTES){const oldest=geometryCache.keys().next().value;geometryCacheBytes-=geometryCache.get(oldest).byteLength;geometryCache.delete(oldest)}
+  geometryCache.set(key,value);geometryCacheBytes+=value.byteLength;return value;
 }
 function status(message,kind=''){$('status').textContent=message;$('status').dataset.kind=kind}
 function render(){renderer.render(world,camera)}
@@ -121,7 +140,7 @@ function nativeScene(model,geometry,robotOnly=false){
 }
 function applyPoses(groups,view,index){const start=index*groups.length*28;for(let body=0;body<groups.length;body++){const offset=start+body*28,p=Array.from({length:7},(_,j)=>view.getFloat32(offset+j*4,true));assert(p.every(Number.isFinite),'Nonfinite native body pose.');groups[body].position.set(p[0],p[1],p[2]);groups[body].quaternion.set(p[4],p[5],p[6],p[3])}}
 async function loadRobot(path){
-  const url=resourceURL(path),model=await getJSON(url),geometry=await unpack(model.geometry_binary.href,model.geometry_binary,url),native=nativeScene(model,geometry,true);
+  const url=resourceURL(path),model=await getJSON(url),geometry=await cachedGeometry(model.geometry_binary.href,model.geometry_binary,url),native=nativeScene(model,geometry,true);
   assert(Array.isArray(model.initial_poses)&&model.initial_poses.length===native.bodies.length,'Native robot initial poses missing.');
   model.initial_poses.forEach((p,i)=>{assert(finiteArray(p,7),'Invalid robot initial pose.');native.bodies[i].position.set(...p.slice(0,3));native.bodies[i].quaternion.set(p[4],p[5],p[6],p[3])});
   removeGroup(robotGroup);robotGroup=native.group;world.add(robotGroup);robotGroup.visible=mode==='edit';$('arm-label').textContent='PiPER · pinned native geometry';render();
@@ -131,21 +150,25 @@ function drawFrame(value){
 }
 function animate(time){if(!playing)return;drawFrame(Math.floor((time-startTime)/(currentCase.dt_s*1000)));if(frame>=currentCase.frame_count-1){pause();return}requestAnimationFrame(animate)}
 async function selectRecording(){
-  const epoch=++loadEpoch;pause();$('play').disabled=true;$('timeline').disabled=true;$('loading').hidden=false;$('loading').textContent='Verifying native geometry and body poses…';
+  const epoch=++loadEpoch;pause();currentCase=null;poseData=null;bodyGroups=[];frame=0;removeGroup(replayGroup);replayGroup=null;
+  $('play').disabled=true;$('timeline').disabled=true;$('timeline').value='0';$('timeline').max='0';$('time').textContent='0.00 s';
+  for(const id of ['result','goal-result','expected-result','duration'])$(id).textContent='—';
+  $('integrity').textContent='Loading and verifying…';$('retry-recording').hidden=true;$('replay-error').hidden=true;$('stage').dataset.replayReady='loading';
+  $('loading').hidden=false;$('loading').textContent='Verifying native geometry and body poses…';render();
   try{
     const item=indexData.cases.find(c=>c.id===$('recording').value);assert(item,'Unknown recording.');assert(Number.isInteger(item.frame_count)&&item.frame_count>0&&item.frame_count<=10000&&Number.isInteger(item.body_count)&&item.body_count>0&&item.body_count<=128&&Number.isFinite(item.dt_s)&&item.dt_s>0&&item.dt_s<=1,'Invalid native motion dimensions.');
-    const modelURL=resourceURL(item.scene,indexURL,indexURL),model=await getJSON(modelURL,indexURL,false,indexURL),geometry=await unpack(model.geometry_binary.href,model.geometry_binary,modelURL,indexURL),raw=await unpack(item.poses,{bytes:item.frame_count*item.body_count*28,sha256:item.sha256},indexURL,indexURL);if(epoch!==loadEpoch)return;
+    const modelURL=resourceURL(item.scene,indexURL,indexURL),model=await getJSON(modelURL,indexURL,false,indexURL),geometry=await cachedGeometry(model.geometry_binary.href,model.geometry_binary,modelURL,indexURL),raw=await unpack(item.poses,{bytes:item.frame_count*item.body_count*28,sha256:item.sha256},indexURL,indexURL);if(epoch!==loadEpoch)return;
     assert(model.bodies.length===item.body_count,'Native motion and geometry body counts differ.');const native=nativeScene(model,geometry);removeGroup(replayGroup);replayGroup=native.group;bodyGroups=native.bodies;world.add(replayGroup);replayGroup.visible=mode==='replay';currentCase=item;poseData=new DataView(raw);
     if(!robotGroup){const robot=nativeScene(model,geometry,true);applyPoses(robot.bodies,poseData,0);robotGroup=robot.group;world.add(robotGroup);robotGroup.visible=mode==='edit';$('arm-label').textContent='PiPER · pinned native geometry'}
     const metrics=item.metrics||{};$('result').textContent=metrics.checks_passed===true?'Check passed':metrics.checks_passed===false?'Check failed':'Recorded run';$('goal-result').textContent=metrics.native_goal_success===true?'Complete':metrics.native_goal_success===false?'Incomplete':'Not reported';$('expected-result').textContent=metrics.expected_goal_success===true?'Complete':metrics.expected_goal_success===false?'Incomplete':'Exploratory run';$('duration').textContent=((item.frame_count-1)*item.dt_s).toFixed(2)+' s';$('integrity').textContent='Geometry + poses · SHA-256 verified';
     $('timeline').max=String(item.frame_count-1);$('play').disabled=false;$('timeline').disabled=false;drawFrame(0);$('loading').hidden=true;$('stage').dataset.replayReady='true';
-  }catch(error){$('loading').hidden=true;$('integrity').textContent='Replay unavailable: '+error.message;throw error}
+  }catch(error){if(epoch!==loadEpoch)return;$('loading').hidden=true;$('result').textContent='Recording unavailable';$('integrity').textContent='Not verified';$('replay-error').textContent='The selected recording could not load: '+error.message;$('replay-error').hidden=false;$('retry-recording').hidden=false;$('stage').dataset.replayReady='error';render();throw error}
 }
 async function loadIndex(path){
   const url=resourceURL(path),data=await getJSON(url);assert(data.schema==='dvidia.task-scene-replay/v2'&&Array.isArray(data.cases)&&data.cases.length>0&&data.cases.length<=128,'Unsupported recorded benchmark.');
   const ids=new Set();for(const item of data.cases){assert(typeof item.id==='string'&&item.id.length<=80&&!ids.has(item.id),'Duplicate or invalid recording.');ids.add(item.id)}
   indexData=data;indexURL=url;$('recording').replaceChildren(...data.cases.map(item=>{const option=document.createElement('option');option.value=item.id;option.textContent=item.label||item.id;return option}));$('replay-mode').disabled=false;$('index-link').href=url.href;$('index-link').hidden=false;
-  const checked=data.cases.filter(c=>c.metrics?.checks_passed===true).length;$('study-summary').textContent=`${checked}/${data.cases.length} recorded case checks passed. ${Array.isArray(data.prechecks)?data.prechecks.length:0} recipe prechecks are listed in the benchmark data.`;await selectRecording();
+  const checked=data.cases.filter(c=>c.metrics?.checks_passed===true).length;$('study-summary').textContent=`${checked}/${data.cases.length} recorded case checks passed. ${Array.isArray(data.prechecks)?data.prechecks.length:0} recipe prechecks are listed in the benchmark data.`;if(!local)setMode('replay');await selectRecording();
 }
 async function simulate(){
   if(localBusy||!local)return;pause();localBusy=true;$('simulate').disabled=true;$('simulate').textContent='Simulating…';status('Validating the recipe, then running native physics.');
@@ -159,6 +182,7 @@ function bind(){
   $('rotate').addEventListener('click',()=>{const rotating=transform.mode!=='rotate';transform.setMode(rotating?'rotate':'translate');transform.showX=!rotating;transform.showY=!rotating;transform.showZ=rotating;$('rotate').setAttribute('aria-pressed',String(rotating));$('rotate').textContent=rotating?'Move handle':'Rotate handle';render()});
   $('edit-mode').addEventListener('click',()=>setMode('edit'));$('replay-mode').addEventListener('click',()=>setMode('replay'));document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>view(button.dataset.view)));
   $('recording').addEventListener('change',()=>selectRecording().catch(error=>status(error.message,'error')));$('play').addEventListener('click',()=>{if(playing){pause();return}if(!currentCase)return;if(frame===currentCase.frame_count-1)drawFrame(0);playing=true;startTime=performance.now()-frame*currentCase.dt_s*1000;$('play').textContent='Pause';$('play').setAttribute('aria-pressed','true');requestAnimationFrame(animate)});$('timeline').addEventListener('input',()=>{pause();drawFrame(Number($('timeline').value))});document.addEventListener('visibilitychange',()=>{if(document.hidden)pause()});
+  $('retry-recording').addEventListener('click',()=>selectRecording().catch(error=>status(error.message,'error')));
   $('simulate').addEventListener('click',simulate);$('import').addEventListener('click',()=>$('recipe-file').click());$('recipe-file').addEventListener('change',async()=>{const file=$('recipe-file').files[0];if(!file)return;try{assert(file.size<=65536,'The recipe must be at most 64 KB.');const value=basicRecipe(JSON.parse(await file.text()));recipe=value;setMode('edit');drawDraft();status('Recipe imported as an unvalidated draft.','success')}catch(error){status(error.message,'error')}finally{$('recipe-file').value=''}});
   $('export').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(recipe,null,2)+'\n'],{type:'application/json'}),url=URL.createObjectURL(blob),anchor=document.createElement('a');anchor.href=url;anchor.download='recipe.json';anchor.click();setTimeout(()=>URL.revokeObjectURL(url),1000);status('Draft recipe exported. Server validation has not been implied.');});
   $('reset-draft').addEventListener('click',()=>{recipe=copy(originalRecipe);setMode('edit');drawDraft();status('Draft reset to the source recipe.')});
@@ -166,7 +190,7 @@ function bind(){
 async function main(){
   assert(location.protocol!=='file:','Serve this directory over HTTP, or start the local CLI.');setup();bind();let config=null;
   if(['127.0.0.1','localhost','[::1]'].includes(location.hostname)){try{config=await getJSON('/api/config',rootURL,true)}catch{config=null}}
-  recipe=basicRecipe(config?.recipe||await getJSON('recipe.json'));originalRecipe=copy(recipe);drawDraft();setMode('edit');local=config?.local===true;
+  recipe=basicRecipe(config?.recipe||await getJSON('recipe.json'));originalRecipe=copy(recipe);$('recipe-link').href=resourceURL('recipe.json').href;drawDraft();setMode('edit');local=config?.local===true;
   if(local){$('simulate').disabled=false;$('local-note').textContent='Runs a fresh CPU simulation on this machine. The arm stays at home; this checks the environment and placement goal.';$('local-command').textContent='dvidia-environment studio --assets ./robot-assets --output ./local-scenes --port '+location.port;}
   $('loading').hidden=true;$('stage').dataset.ready='true';
   if(config?.robot_scene){try{await loadRobot(config.robot_scene)}catch(error){$('arm-label').textContent='Native arm geometry unavailable';status(error.message,'error')}}
