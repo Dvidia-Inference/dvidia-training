@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dvidia-training"
-version = "0.1.3.dev2"
+version = "0.1.3.dev3"
 description = "Local CPU training from Skillspace footage, with optional simulation movement candidates"
 readme = "README.md"
 license = "MIT AND Apache-2.0"
@@ -28,6 +28,7 @@ Repository = "https://github.com/Dvidia-Inference/dvidia-training"
 Issues = "https://github.com/Dvidia-Inference/dvidia-training/issues"
 
 [project.scripts]
+dvidia-arm = "dvidia_training.arm_interface_cli:main"
 dvidia-train = "dvidia_training.footage_pipeline:main"
 dvidia-training-studio = "dvidia_training.training_studio:main"
 dvidia-training-doctor = "dvidia_training.doctor:main"

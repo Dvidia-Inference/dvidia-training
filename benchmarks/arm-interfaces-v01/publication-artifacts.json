@@ -1,0 +1,36 @@
+{
+  "schema": "dvidia.arm-interface-publication-artifacts/v1",
+  "archive": {
+    "filename": "arm-interfaces-v01-release-20261031.zip",
+    "bytes": 11159124,
+    "sha256": "48200eb5c647badff7db5ee14272571b93d9c31003d9f5f92dd6e28d062b272b"
+  },
+  "inventory": {
+    "path": "manifest.json",
+    "bytes": 33313,
+    "sha256": "a567728776b3f6d50fe3f15df422de363e952f52ff814d6b8e4abdab08227632",
+    "file_count": 187,
+    "total_payload_bytes": 50924022
+  },
+  "scientific_report_sha256": "5dd90299bd17515aee578631b46e3146c07ad18909eea838153d37bc4e9b1c5d",
+  "audit": {
+    "schema": "dvidia.arm-interface-audit/v1",
+    "report_sha256": "5dd90299bd17515aee578631b46e3146c07ad18909eea838153d37bc4e9b1c5d",
+    "attempts": 54,
+    "state_rows": 21654,
+    "issued_command_events": 1260,
+    "independent_metric_comparisons": 648,
+    "source_and_trace_digest_mismatches": 0,
+    "command_time_alignment_mismatches": 0,
+    "offline_control_budget_exceedances": 21,
+    "scope": "Read-only numerical/digest audit; not a repeat run or physical validation."
+  },
+  "sanitization": {
+    "schema": "dvidia.arm-interface-sanitization/v1",
+    "text_files_scanned": 186,
+    "personal_path_findings": 0,
+    "credential_pattern_findings": 0,
+    "scope": "UTF-8 artifact scan for user-specific absolute paths, common provider token forms, private-key blocks, bearer credentials and credential-bearing URLs. Public SHA-256 values and upstream source URLs are intentional."
+  },
+  "scope": "Prepared local evidence only; not uploaded or published. Git commit intentionally omitted until recorded."
+}
