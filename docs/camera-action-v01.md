@@ -19,11 +19,17 @@ is offline. The study reserves 30 GiB of free disk and caps its evidence at 120 
 python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install '.[arm]'
+dvidia-robot-sim fetch piper --output /path/to/robot-assets
 dvidia-train robot prepare --study runs/camera-action --fixed-model /path/to/piper-base-model.json
 dvidia-train robot collect --study runs/camera-action --assets /path/to/robot-assets --stage diagnostic
 dvidia-train robot inspect --study runs/camera-action
 dvidia-training-studio --directory runs/studio --port 8363
 ```
+
+The fetch command provisions the separately licensed, version-pinned PiPER assets.
+For reproduction, use `fixed-model.json` from the published study metadata as
+`/path/to/piper-base-model.json`; it is the registered comparator, not a newly
+trained model. Keep the original study untouched and prepare a fresh directory.
 
 Open `http://127.0.0.1:8363/robot`, choose the prepared study and assets folders,
 check the inputs, then run the remaining registered stages. The UI and Terminal

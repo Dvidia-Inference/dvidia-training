@@ -377,7 +377,8 @@ def dataset_card(data):
         'dvidia-training-studio --directory /path/to/new-local-runs --port 8363', '```', '',
         'The UI at `http://127.0.0.1:8363/robot` and Terminal share the same run record. '
         'Reproduction uses a **fresh** study, the published fixed comparator and separately provisioned '
-        'verified PiPER assets; original study attempts are immutable:', '',
+        'verified PiPER assets; original study attempts are immutable. Provision the pinned assets separately:', '',
+        '```sh', 'dvidia-robot-sim fetch piper --output /path/to/robot-assets', '```', '',
         '```sh', 'dvidia-train robot prepare --study /path/to/new-study --fixed-model /path/to/restored-study/fixed-model.json',
         'dvidia-train robot collect --study /path/to/new-study --assets /path/to/robot-assets --stage diagnostic',
         'dvidia-train robot inspect --study /path/to/new-study', '```', '',
