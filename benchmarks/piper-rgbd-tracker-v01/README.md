@@ -20,6 +20,10 @@ and minimum memory/CPU specifications remain unqualified. Install dependencies
 and pinned robot assets once before an offline run.
 
 ```sh
+git clone --branch piper-rgbd-tracker-v0.1-preview https://github.com/Dvidia-Inference/dvidia-training.git
+cd dvidia-training
+python3.12 -m venv .venv
+. .venv/bin/activate
 python -m pip install '.[arm]'
 dvidia-robot-sim fetch piper --output runs/robot-profile-upstream/assets
 python -m dvidia_training.piper_rgbd_benchmark prepare --output runs/rgbd-study
@@ -73,3 +77,26 @@ a heuristic scale is reported as a descriptive count, not calibrated coverage.
 Original DVIDIA code and generated records are MIT. Upstream PiPER assets and
 MuJoCo retain their notices; no robot meshes, private footage, credentials or
 model weights are bundled in this evidence release.
+
+## Frozen result
+
+Source freeze: `846a1d9b04745a516ff060b4efa931e5e9898fbf`. Sixteen confirmation
+pose groups × two resolutions × ten conditions: all 320 fixtures rendered and
+scored once.
+
+| Resolution | Clear estimates | Center error p95 | Yaw error p95 | Estimator wall p95 | Gate |
+| --- | ---: | ---: | ---: | ---: | --- |
+| 160×120 | 12/16 | 2.34 mm | 11.31° | 7.73 ms | Coverage and yaw failed |
+| 320×240 | 16/16 | 1.98 mm | 6.36° | 7.58 ms | Clear-scene gate passed |
+
+Both resolutions withheld all 256 negative estimates. Partial occlusion returned
+0/32 estimates and remains unsupported. These are correlated static fixtures,
+not 320 independent trials, hardware accuracy or learned placement.
+
+Independent audit: zero mismatches across 320 rows, 20 summaries and two gates;
+2,578 evidence files and 32 occluder-depth checks. The initial sandbox CGL failure
+and development sources/results are retained. The first candidate dropped
+shadowed orange faces; brightness floors 65/20 → 25/8 recovered coverage without
+changing geometry gates. No confirmation tuning followed. The native action
+recorder, strict learning export and earlier learned placement 5/12 versus its
+authored teacher 12/12 remain unchanged.
