@@ -25,6 +25,7 @@ MAX_SOURCE = 512 * 1024 ** 2
 MAX_EPISODE = 1024 ** 3
 MAX_TOTAL = 120 * 1024 ** 3
 DISK_RESERVE = 30 * 1024 ** 3
+ZIP_LEVEL = 1
 TEXT_SUFFIXES = {'.py', '.js', '.ts', '.json', '.html', '.md', '.txt', '.toml', '.yaml', '.yml'}
 SECRET = re.compile(rb'(?:hf_|gh[pousr]_|apikey_)[A-Za-z0-9_]{24,}')
 
@@ -141,9 +142,11 @@ def episode_inventory(root):
     return result
 
 
-def archive(root, inventory, destination, *, prefix=''):
+def archive(root, inventory, destination, *, prefix='', compresslevel=ZIP_LEVEL):
     """Stream byte-bound files into a deterministic ZIP, then read every member."""
     root, destination = plain(root), plain(destination)
+    if compresslevel not in (1, 6):
+        raise ValueError('Use a reviewed ZIP compression level: 1 or 6.')
     if destination.exists():
         raise ValueError('Archive exists; existing publication artifacts are immutable.')
     if prefix:
@@ -152,7 +155,7 @@ def archive(root, inventory, destination, *, prefix=''):
     if shutil.disk_usage(destination.parent).free - sum(r['bytes'] for r in inventory.values()) < DISK_RESERVE:
         raise ValueError('Archive preparation would consume the protected disk reserve.')
     expected = {}
-    with zipfile.ZipFile(destination, 'x', compression=zipfile.ZIP_DEFLATED, compresslevel=6, allowZip64=True) as output:
+    with zipfile.ZipFile(destination, 'x', compression=zipfile.ZIP_DEFLATED, compresslevel=compresslevel, allowZip64=True) as output:
         for name, record in sorted(inventory.items()):
             relative(name)
             checked_identity(record)
@@ -163,7 +166,7 @@ def archive(root, inventory, destination, *, prefix=''):
             info.compress_type = zipfile.ZIP_DEFLATED
             info.create_system = 3
             info.external_attr = (stat.S_IFREG | 0o644) << 16
-            info._compresslevel = 6
+            info._compresslevel = compresslevel
             h, size, tail = sha256(), 0, b''
             with path.open('rb') as source, output.open(info, 'w', force_zip64=True) as target:
                 before = os.fstat(source.fileno())
@@ -196,6 +199,7 @@ def archive(root, inventory, destination, *, prefix=''):
                 raise ValueError('Archive decompression differs from sealed evidence.')
     return dict(**identity(destination, maximum=MAX_EPISODE), files=len(expected),
                 unpacked_bytes=sum(r['bytes'] for r in expected.values()),
+                compression_level=compresslevel,
                 inventory_sha256=sha256(canonical(expected)).hexdigest())
 
 
@@ -482,7 +486,7 @@ def prepare(study, output, *, audit, card, wheel, source_archive, source_commit,
         trained_model_files=models, files=inventory,
         hardware_context_file='hardware.json' if hardware is not None else None,
         reconstruction='Extract study-metadata.zip and every episodes/**/*.zip into one new directory. Compare SHA256SUMS first. Each recording retains its original integrity.json.',
-        archive_format='Deterministic ZIP64, sorted members, 1980 timestamp, regular 0644 files, DEFLATE level 6; all members read back byte-for-byte.')
+        archive_format=f'Deterministic ZIP64, sorted members, 1980 timestamp, regular 0644 files, DEFLATE level {ZIP_LEVEL}; all members read back byte-for-byte.')
     write(output / 'manifest.json', value)
     inventory_with_manifest = dict(inventory, **{'manifest.json': identity(output / 'manifest.json')})
     sums = ''.join(f'{record["sha256"]}  {name}\n' for name, record in sorted(inventory_with_manifest.items()))

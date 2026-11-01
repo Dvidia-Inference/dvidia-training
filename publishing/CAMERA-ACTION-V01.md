@@ -73,17 +73,39 @@ python publishing/huggingface/publish_camera_action_v01.py verify \
 
 Preparation streams one deterministic ZIP64 archive per sealed episode,
 checks each file against the original integrity manifest, and decompresses
-every member to verify its bytes. It refuses a worker lock, unsealed episode,
+every member to verify its bytes. DEFLATE level 1 is the publication default.
+On the same sealed teacher episode, one sequential shared-host comparison
+measured 40.36 seconds / 81,058,092 bytes at level 1 versus 54.02 seconds /
+75,301,793 bytes at level 6. That is a 25.3% shorter archive-and-verification
+time for 7.64% more bytes in this example, not a general throughput guarantee.
+It refuses a worker lock, unsealed episode,
 unexpected study file, symbolic link, missing source binding, or detected
 credential-shaped text. The 30 GiB disk reserve is preserved. Existing output
 directories and files are never overwritten.
 
 The publisher freezes reviewed bytes into a private temporary directory before
-credential lookup, uses a single commit bound to the empty dataset's exact
+credential lookup. On a supporting macOS filesystem, it uses the documented
+`fclonefileat(2)` copy-on-write operation from a regular-file descriptor. The
+copy has its own inode and attributes, is marked read-only, and is checked
+against the reviewed bytes. Later writes to either file are private to that
+file. Hardlinks are never used. Unsupported filesystems use bounded streaming
+copies with free-space checks before each file and each chunk, preserving the
+30 GiB reserve. Every path rejects symlinks and existing destinations.
+The uploader uses a single commit bound to the empty dataset's exact
 parent revision, and refuses existing nonempty or private repositories.
 Anonymous verification downloads every published file at the exact resulting
-commit and checks its byte identity. Large files are streamed, not loaded into
-one large in-memory payload.
+commit and checks its byte identity. Each file uses a new owned temporary cache
+under the explicit `--cache` directory, with its full byte budget plus metadata
+headroom checked against the 30 GiB reserve before download. That temporary is
+removed after verification, including on failure. Existing shared cache files
+are never removed. The retained receipt records the pinned commit, reviewed
+plan digest, inventory digest, byte count and largest single readback file.
+The pinned remote file-size metadata must match every reviewed byte count
+before any file download; missing or changed sizes fail closed.
+Verification sets `HF_HUB_DISABLE_XET=1` before SDK import to use HTTP downloads
+into the owned Hub cache, and refuses an already-imported SDK whose Xet
+transport is still enabled. This avoids a separate shared Xet data cache.
+Large files are streamed, not loaded into one large in-memory payload.
 
 To reconstruct the recorded study, verify `SHA256SUMS`, then extract
 `study-metadata.zip` and every `episodes/**/*.zip` into one new directory.

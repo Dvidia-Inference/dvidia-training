@@ -29,12 +29,23 @@ class EvidencePackageTests(unittest.TestCase):
         first = package.archive(self.episode, inventory, self.root / 'first.zip', prefix='episodes/diagnostic/example')
         second = package.archive(self.episode, inventory, self.root / 'second.zip', prefix='episodes/diagnostic/example')
         self.assertEqual(first, second)
+        self.assertEqual(first['compression_level'],1)
         self.assertEqual((self.root / 'first.zip').read_bytes(), (self.root / 'second.zip').read_bytes())
         with zipfile.ZipFile(self.root / 'first.zip') as archive:
             for name, expected in inventory.items():
                 raw = archive.read('episodes/diagnostic/example/' + name)
                 self.assertEqual({'bytes': len(raw), 'sha256': sha256(raw).hexdigest()}, expected)
                 self.assertEqual(archive.getinfo('episodes/diagnostic/example/' + name).date_time, (1980, 1, 1, 0, 0, 0))
+
+    def test_explicit_reviewed_compression_level_preserves_identical_raw_inventory(self):
+        inventory=package.episode_inventory(self.episode)
+        first=package.archive(self.episode,inventory,self.root/'fast.zip',compresslevel=1)
+        second=package.archive(self.episode,inventory,self.root/'compact.zip',compresslevel=6)
+        self.assertEqual(first['inventory_sha256'],second['inventory_sha256'])
+        self.assertEqual(first['unpacked_bytes'],second['unpacked_bytes'])
+        self.assertEqual(second['compression_level'],6)
+        with self.assertRaisesRegex(ValueError,'reviewed ZIP'):
+            package.archive(self.episode,inventory,self.root/'unreviewed.zip',compresslevel=9)
 
     def test_changed_sealed_source_refuses_during_streaming_copy(self):
         inventory = package.episode_inventory(self.episode)

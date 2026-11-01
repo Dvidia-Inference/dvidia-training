@@ -7,6 +7,8 @@ parent-bound commit to the named empty public dataset. No Space is modified.
 from __future__ import annotations
 
 import argparse
+import ctypes
+import errno
 from hashlib import sha256
 import json
 import os
@@ -185,22 +187,112 @@ def _remote(info):
         raise PublicationError('Expected an exact initialized public dataset head.')
 
 
+def _space_guard(directory, additional=0):
+    if shutil.disk_usage(directory).free - additional < RESERVE:
+        raise PublicationError('Freezing the publication would consume the protected disk reserve.')
+
+
+def _clone_from_fd(source_fd, directory_fd, name):
+    """Darwin clonefile(2): new inode/attributes; subsequent writes are private.
+
+    Source and destination directory are already open without following links.
+    No hardlink fallback is permitted. Local SDK clonefile.h defines the
+    CLONE_NOOWNERCOPY flag as 0x0002; source is a regular-file descriptor.
+    """
+    if sys.platform != 'darwin':
+        return False
+    library = ctypes.CDLL(None, use_errno=True)
+    try:
+        clone = library.fclonefileat
+    except AttributeError:
+        return False
+    clone.argtypes = (ctypes.c_int, ctypes.c_int, ctypes.c_char_p, ctypes.c_uint32)
+    clone.restype = ctypes.c_int
+    if clone(source_fd, directory_fd, os.fsencode(name), 0x0002) == 0:
+        return True
+    number = ctypes.get_errno()
+    if number in {errno.ENOTSUP, errno.EOPNOTSUPP, errno.EXDEV, errno.ENOSYS}:
+        return False
+    raise OSError(number, 'Private copy-on-write freeze failed.')
+
+
+def freeze_file(source, target, expected):
+    """Create and verify one private snapshot, with bounded streaming fallback."""
+    source, target = plain(source), plain(target)
+    _record(expected)
+    if target.exists():
+        raise PublicationError('Private freeze destination already exists.')
+    target.parent.mkdir(parents=True, exist_ok=True)
+    plain(target.parent)
+    _space_guard(target.parent, 1024 * 1024)  # metadata headroom; no full-data reservation for a clone
+    created = False
+    source_fd = directory_fd = None
+    try:
+        source_fd = os.open(source, os.O_RDONLY | os.O_NOFOLLOW)
+        directory_fd = os.open(target.parent, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+        before = os.fstat(source_fd)
+        if not stat.S_ISREG(before.st_mode) or before.st_size != expected['bytes']:
+            raise PublicationError('Freeze source is not the reviewed ordinary file.')
+        cloned = _clone_from_fd(source_fd, directory_fd, target.name)
+        if cloned:
+            created = True
+        else:
+            _space_guard(target.parent, expected['bytes'])
+            fd = os.open(target.name, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600, dir_fd=directory_fd)
+            created = True
+            with os.fdopen(fd, 'wb') as destination:
+                copied = 0
+                while True:
+                    chunk = os.read(source_fd, 1024 * 1024)
+                    if not chunk: break
+                    copied += len(chunk)
+                    if copied > expected['bytes']:
+                        raise PublicationError('Freeze source grew beyond its reviewed byte count.')
+                    _space_guard(target.parent, len(chunk))
+                    destination.write(chunk)
+                    destination.flush()
+                    _space_guard(target.parent)
+                if copied != expected['bytes']:
+                    raise PublicationError('Freeze source length changed while copying.')
+                os.fsync(destination.fileno())
+        after = os.fstat(source_fd)
+        if any(getattr(before, k) != getattr(after, k) for k in ('st_dev', 'st_ino', 'st_size', 'st_mtime_ns', 'st_ctime_ns')):
+            raise PublicationError('Source changed while freezing reviewed publication bytes.')
+        frozen_fd = os.open(target.name, os.O_RDONLY | os.O_NOFOLLOW, dir_fd=directory_fd)
+        try:
+            frozen_stat = os.fstat(frozen_fd)
+            if (not stat.S_ISREG(frozen_stat.st_mode) or frozen_stat.st_nlink != 1
+                    or (frozen_stat.st_dev, frozen_stat.st_ino) == (before.st_dev, before.st_ino)):
+                raise PublicationError('Freeze must create an independent ordinary inode, never a hardlink.')
+            os.fchmod(frozen_fd, 0o400)
+        finally:
+            os.close(frozen_fd)
+        _space_guard(target.parent)
+        if identity(target) != expected:
+            raise PublicationError('Payload changed while freezing reviewed publication bytes.')
+        return 'apfs_clone' if cloned else 'stream_copy'
+    except BaseException:
+        if created:
+            os.unlink(target.name, dir_fd=directory_fd)
+        raise
+    finally:
+        if source_fd is not None: os.close(source_fd)
+        if directory_fd is not None: os.close(directory_fd)
+
+
 def publish(plan, expected_digest, cache):
     value = checked(plan, expected_digest)
     cache = plain(cache)
     cache.mkdir(parents=True, exist_ok=True)
-    if shutil.disk_usage(cache).free - sum(r['bytes'] for r in value['files']) < RESERVE:
-        raise PublicationError('Freezing the publication would consume the protected disk reserve.')
+    _space_guard(cache, 1024 * 1024)
     with tempfile.TemporaryDirectory(prefix='camera-action-frozen-', dir=cache) as temporary:
         frozen = Path(temporary)
+        freeze_methods = dict(apfs_clone=0, stream_copy=0)
         for row in value['files']:
             source = plain(Path(value['root']) / row['path'])
             target = frozen / relative(row['path'])
-            target.parent.mkdir(parents=True, exist_ok=True)
-            with source.open('rb') as source_stream, target.open('xb') as destination:
-                shutil.copyfileobj(source_stream, destination, 1024 * 1024)
-            if identity(target) != {key: row[key] for key in ('bytes', 'sha256')}:
-                raise PublicationError('Payload changed while freezing reviewed publication bytes.')
+            method = freeze_file(source, target, {key: row[key] for key in ('bytes', 'sha256')})
+            freeze_methods[method] += 1
         # Originals are never reopened after the credential boundary. The
         # private immutable copy bounds memory while preserving reviewed bytes.
         api, token = client(cache)
@@ -219,10 +311,21 @@ def publish(plan, expected_digest, cache):
         commit = api.create_commit(REPO, repo_type='dataset', operations=operations,
             parent_commit=info.sha, commit_message='Publish camera-to-action v0.1 reproducible simulation evidence')
         del token, api
-        return dict(repo_id=REPO, commit=commit.oid, files_added=len(operations))
+        return dict(repo_id=REPO, commit=commit.oid, files_added=len(operations), freeze_methods=freeze_methods)
+
+
+def _http_readback():
+    # Hub constants are initialized at import time. Fail closed if a caller
+    # pre-imported an SDK that would route data into a separate Xet cache.
+    os.environ.update(HF_HUB_DISABLE_XET='1', HF_DEBUG='0', HF_HUB_DISABLE_TELEMETRY='1',
+        HF_HUB_DISABLE_IMPLICIT_TOKEN='1', HF_HUB_DISABLE_PROGRESS_BARS='1', HF_HUB_DISABLE_UPDATE_CHECK='1')
+    from huggingface_hub import constants
+    if getattr(constants, 'HF_HUB_DISABLE_XET', None) is not True:
+        raise PublicationError('Start verification in a fresh process with HF_HUB_DISABLE_XET=1 before SDK import.')
 
 
 def download(name, revision, cache):
+    _http_readback()
     from huggingface_hub import hf_hub_download
     return Path(hf_hub_download(REPO, name, repo_type='dataset', revision=revision,
         token=False, endpoint='https://huggingface.co', cache_dir=str(cache), force_download=True)).resolve()
@@ -230,17 +333,36 @@ def download(name, revision, cache):
 
 def verify(plan, expected_digest, cache):
     value = checked(plan, expected_digest)
+    cache = plain(cache)
+    cache.mkdir(parents=True, exist_ok=True)
+    _http_readback()
     api = public_client()
     info = api.repo_info(REPO, repo_type='dataset', files_metadata=True, token=False)
     _remote(info)
     expected = {row['path'] for row in value['files']}
     if len(info.siblings) != len(expected) + 1 or {item.rfilename for item in info.siblings} != expected | {'.gitattributes'}:
         raise PublicationError('Public dataset roster differs from the reviewed plan.')
+    remote_files = {item.rfilename: item for item in info.siblings}
     for row in value['files']:
-        path = download(row['path'], info.sha, cache)
-        if identity(path) != {key: row[key] for key in ('bytes', 'sha256')}:
-            raise PublicationError('Anonymous public bytes differ from reviewed evidence.')
-    return dict(repo_id=REPO, commit=info.sha, anonymous_files_verified=len(value['files']))
+        size = getattr(remote_files[row['path']], 'size', None)
+        if type(size) is not int or size != row['bytes']:
+            raise PublicationError('Revision-pinned remote size differs from the reviewed per-file download budget.')
+    for row in value['files']:
+        _space_guard(cache, row['bytes'] + 1024 * 1024)
+        with tempfile.TemporaryDirectory(prefix='camera-action-readback-', dir=cache) as temporary:
+            owned = Path(temporary)
+            path = download(row['path'], info.sha, owned)
+            if not path.resolve().is_relative_to(owned.resolve()):
+                raise PublicationError('Anonymous readback escaped its owned temporary cache.')
+            if identity(path) != {key: row[key] for key in ('bytes', 'sha256')}:
+                raise PublicationError('Anonymous public bytes differ from reviewed evidence.')
+            _space_guard(cache)
+    return dict(repo_id=REPO, commit=info.sha, anonymous_files_verified=len(value['files']),
+        anonymous_bytes_verified=sum(r['bytes'] for r in value['files']),
+        maximum_readback_file_bytes=max(r['bytes'] for r in value['files']),
+        reviewed_plan_sha256=expected_digest,
+        readback_inventory_sha256=sha256(encoded(value['files'])).hexdigest(),
+        cache_policy='One file per owned temporary cache, removed after full pinned-revision byte verification; shared caches untouched.')
 
 
 def main(argv=None):
