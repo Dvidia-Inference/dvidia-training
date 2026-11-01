@@ -119,3 +119,70 @@ receipts bind those exact files. A blocked data-quality gate therefore
 publishes evidence and source without inventing a learned policy. The package
 retains the study's qualification result; installation itself does not award
 task qualification or physical-hardware readiness.
+
+## Stopping, interruption and publication scope
+
+Studio and Terminal use the same immutable stage records. Studio owns one local
+worker, checks the protocol and assets between stages, and stops at a blocked
+or completed study. It does not retry a stage after an exception. A browser
+disconnect does not cancel the server's worker. Closing or killing the server
+is not a supported pause mechanism.
+
+A native attempt that can write its final receipt retains its completed prefix
+as `interrupted` or `refused`; it is not counted as a strict success. If a process
+ends before sealing an episode, a subsequent collection/evaluation inspection
+retains that existing directory as `unknown` and never reruns its case. Remaining
+registered cases are not replaced with easier starts. A sealed stage with an
+unknown or unattempted case blocks downstream work.
+
+Fitting has a stricter interruption boundary. Once a model variant's directory
+has been created, the frozen trainer refuses to fit that variant again. A fit
+exception can therefore leave a model prefix without a sealed training stage.
+In this state, the small `inspect` response may still list training as the next
+stage; that is not permission or evidence that an automatic retry is possible.
+Preserve the directory, fitting log and original stage-start record. Do not
+delete them, fabricate a completed receipt or award a model qualification.
+
+An ordinary exception releases the study worker lock. A hard process stop may
+leave `worker.lock`; Studio deliberately neither guesses whether it is stale
+nor removes it. Any operator investigation must first establish that the
+original worker has stopped and preserve the interrupted evidence. Do not
+remove a lock to start a second worker against a live study.
+
+The raw-evidence publisher accepts only stopped, sealed `blocked` or `complete`
+studies. It refuses an interrupted fitting prefix or an unsealed episode; those
+cannot silently disappear from this dataset. If such an interruption happens,
+publish its separate, explicitly incomplete evidence report without changing
+the registered study or retrying the fit. This is an operational blocker, not a
+negative task-success measurement or a completed benchmark.
+
+## Reviewed source snapshot
+
+This change is stacked on `feat/piper-rgbd-tracker-v01`, whose exact local base
+for this study is `769d666ecd684406ae228daf722e41f0bf9ac17d`. The camera/action
+branch is `feat/piper-camera-action-v01`; use the tracker branch as its pull
+request base, not the older stable `main`. Recheck remote ancestry before
+publication rather than merging unrelated changes into the frozen study.
+
+Build release artifacts only after the final tooling and report changes are
+reviewed and committed. Use that exact commit for both the source archive and
+wheel. The archive's PAX comment must identify the commit; the packager checks
+that the registered runtime and independent auditor bytes agree. Keep the
+existing development version; do not replace a stable release.
+
+```sh
+git status --short
+git merge-base HEAD origin/feat/piper-rgbd-tracker-v01
+git rev-list --left-right --count origin/feat/piper-rgbd-tracker-v01...HEAD
+git rev-parse HEAD
+git archive --format=tar.gz --prefix=dvidia-training/ \
+  --output=/absolute/new-release/reviewed-source.tar.gz EXACT_REVIEWED_COMMIT
+```
+
+Extract that reviewed Git archive into a fresh build directory, then build the
+wheel from its `dvidia-training` directory with the existing local Python build
+environment (`python -m build --wheel --no-isolation --outdir
+/absolute/new-release`). This keeps uncommitted files and generated run data out
+of the source release. Re-run the fresh-environment installation checks against
+the final wheel, and retain its digest with the publication plan. Neither the
+source snapshot nor a successful install proves task qualification.
