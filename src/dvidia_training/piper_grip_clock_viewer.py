@@ -385,6 +385,14 @@ def _write(root, name, raw):
         stream.write(raw)
 
 
+def _build_script():
+    """The actual builder is package data, available after wheel installation."""
+    path = Path(__file__).with_name('piper_grip_clock_build.mjs')
+    if path.is_symlink() or not path.is_file():
+        raise ValueError('The installed grip-clock viewer build resource is missing. Reinstall the complete wheel.')
+    return path
+
+
 def _finalize(root, manifest, motion, scene, scientific_sources, source, residuals):
     source_root = Path(__file__).parent
     template = _read(source_root/'piper_grip_clock_viewer.js', MAX_FILE)
@@ -399,7 +407,7 @@ def _finalize(root, manifest, motion, scene, scientific_sources, source, residua
     with tempfile.TemporaryDirectory(prefix='.dvidia-clock-build-', dir=root.parent) as temporary:
         entry = Path(temporary)/'clock.js'
         entry.write_bytes(generated)
-        build_script = Path(__file__).resolve().parents[2]/'scripts'/'build-piper-grip-clock-viewer.mjs'
+        build_script = _build_script()
         subprocess.run(['node', str(build_script), str(entry), str(root/'piper_grip_clock_viewer.bundle.js')], check=True)
     bundle = _read(root/'piper_grip_clock_viewer.bundle.js', MAX_FILE)
     html = _read(source_root/'piper_grip_clock_viewer.html', MAX_FILE)
@@ -475,7 +483,7 @@ def export_viewer(study, output, assets, dataset_revision):
         geometry_exporter_sha256=sha256(Path(__file__).with_name('reference_replay.py').read_bytes()).hexdigest(),
         browser_source_sha256=sha256(Path(__file__).with_name('piper_grip_clock_viewer.js').read_bytes()).hexdigest(),
         html_source_sha256=sha256(Path(__file__).with_name('piper_grip_clock_viewer.html').read_bytes()).hexdigest(),
-        bundle_builder_sha256=sha256((Path(__file__).resolve().parents[2]/'scripts'/'build-piper-grip-clock-viewer.mjs').read_bytes()).hexdigest(),
+        bundle_builder_sha256=sha256(_build_script().read_bytes()).hexdigest(),
         base_model_raw_sha256=frozen['base_model_raw_sha256'], jaw_model_raw_sha256=frozen['jaw_model_raw_sha256'],
         selected_sha256=frozen['selected_sha256'], blind_sha256=frozen['blind_sha256'], jaw_mode='coordinated_reference',
         physical_robot_ready=False)

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dvidia-training"
-version = "0.1.3.dev3"
+version = "0.1.3.dev4"
 description = "Local CPU training from Skillspace footage, with optional simulation movement candidates"
 readme = "README.md"
 license = "MIT AND Apache-2.0"
@@ -79,4 +79,4 @@ dvidia-piper-clock-skill = "dvidia_training.piper_grip_clock_skill:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-dvidia_training = ["*.html", "*.json", "*.js", "*.txt", "*.wasm", "video_goal_example.mp4", "LICENSE", "requirements.lock.txt"]
+dvidia_training = ["*.html", "*.json", "*.js", "*.mjs", "*.txt", "*.wasm", "video_goal_example.mp4", "LICENSE", "requirements.lock.txt"]

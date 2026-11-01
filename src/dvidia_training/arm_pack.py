@@ -6,6 +6,36 @@ from zipfile import ZipFile, ZIP_DEFLATED
 from .skillspace import ADAPTER_ID, ARM_PROFILE, load_skillspace
 from .installer import runtime_contract, RUNTIME_SOURCE_FILES
 
+# Exact closure for the documented simlab.studio and simlab.arm_qualify entry
+# points. Unrelated installed products and user-local package files are excluded.
+BUNDLE_SOURCE_FILES = (
+    '__init__.py', 'arm_distill.py', 'arm_env.py', 'arm_pack.py',
+    'arm_policy.py', 'arm_qualify.py', 'arm_runner.py', 'capsule_installer.py',
+    'cli.py', 'env.py', 'installer.py', 'pack.py', 'policies.py',
+    'skill_capsule.py', 'skillspace.py', 'studio.py', 'viewer.py',
+)
+BUNDLE_RESOURCE_FILES = ('studio.html', 'place_cup.skill.json', 'requirements.lock.txt', 'LICENSE')
+BUNDLE_OPTIONAL_FILES = ('arm_benchmark_summary.json', 'placement_candidate.skill.json')
+
+
+def _bundle_files(root):
+    root = Path(root)
+    files = {}
+    for name in (*BUNDLE_SOURCE_FILES, *BUNDLE_RESOURCE_FILES):
+        path = root/name
+        if path.is_symlink() or not path.is_file():
+            raise ValueError('Required arm bundle dependency is absent or not an ordinary file: '+name)
+        files['simlab/'+name] = path.read_bytes()
+    # Include separately generated releases only when supplied by the package;
+    # do not fabricate a benchmark or placement candidate to complete an archive.
+    for name in BUNDLE_OPTIONAL_FILES:
+        resource = root/name
+        if resource.is_symlink() or resource.exists():
+            if resource.is_symlink() or not resource.is_file():
+                raise ValueError('Optional arm bundle dependency must be an ordinary file: '+name)
+            files['simlab/'+name] = resource.read_bytes()
+    return files
+
 
 def export_arm_pack(directory):
     directory=Path(directory)
@@ -17,10 +47,7 @@ def export_arm_pack(directory):
     source=(directory/'source.json').read_bytes()
     if sha256(source).hexdigest()!=payload['skill']['source_sha256']:
         raise ValueError('Skill source hash does not match its exact run input.')
-    files={}
-    for path in Path(__file__).parent.iterdir():
-        if path.is_file() and (path.suffix in ('.py','.html','.json','.txt') or path.name=='LICENSE'):
-            files['simlab/'+path.name]=path.read_bytes()
+    files=_bundle_files(Path(__file__).parent)
     for name in ('run.json','source.json','grounding.json'):
         if (directory/name).exists():
             files['evidence/'+name]=(directory/name).read_bytes()

@@ -106,7 +106,8 @@ def validate_zip(raw):
 class TrainingStudioServer(ThreadingHTTPServer):
     daemon_threads = True
 
-    def __init__(self, address, directory, offline=True, *, runner=None, preparer=None, inspector=None):
+    def __init__(self, address, directory, offline=True, *, runner=None, preparer=None, inspector=None,
+                 robot_worker=None, robot_checker=None):
         if address[0] != '127.0.0.1':
             raise ValueError('The training studio must bind to 127.0.0.1.')
         if type(offline) is not bool:
@@ -119,8 +120,10 @@ class TrainingStudioServer(ThreadingHTTPServer):
         self.lock = threading.RLock()
         self.job = None
         self.prepared = None
-        self.pool = (ThreadPoolExecutor(max_workers=1) if runner is not None or preparer is not None
+        self.pool = (ThreadPoolExecutor(max_workers=1) if runner is not None or preparer is not None or robot_worker is not None
                      else ProcessPoolExecutor(max_workers=1, mp_context=multiprocessing.get_context('spawn')))
+        from .camera_action_studio import CameraActionStudio
+        self.robot = CameraActionStudio(self, worker=robot_worker, checker=robot_checker)
         try:
             super().__init__(address, TrainingStudioHandler)
         except Exception:
@@ -204,6 +207,7 @@ class TrainingStudioServer(ThreadingHTTPServer):
             result = {'status': 'idle', 'allow_online': not self.offline,
                       'scope': 'visual learning; movement readiness is separate',
                       'robot_skill_acquired': False, 'physical_robot_ready': False,
+                      'robot_job_running': self.robot.busy(),
                       'job': None, 'summary': None, 'error': None}
             if self.job is not None:
                 job = self.job
@@ -228,7 +232,7 @@ class TrainingStudioServer(ThreadingHTTPServer):
     def submit(self, kind, source, online, seed):
         with self.lock:
             self.refresh()
-            if self.job is not None and self.job['status'] == 'running':
+            if (self.job is not None and self.job['status'] == 'running') or self.robot.busy():
                 raise RuntimeError('One CPU job is already running. Wait for its outcome.')
             offline = not online
             actual_source = source
@@ -338,6 +342,10 @@ class TrainingStudioHandler(BaseHTTPRequestHandler):
                 self.respond(Path(__file__).with_name('training_studio.html').read_bytes(), mime='text/html; charset=utf-8')
             elif self.path == '/coverage':
                 self.respond(Path(__file__).with_name('coverage_studio.html').read_bytes(), mime='text/html; charset=utf-8')
+            elif self.path == '/robot':
+                self.respond(Path(__file__).with_name('camera_action_studio.html').read_bytes(), mime='text/html; charset=utf-8')
+            elif self.path == '/api/robot/state':
+                self.respond(self.server.robot.state())
             elif self.path == '/api/coverage/example':
                 from .coverage import example_plan
                 self.respond(example_plan())
@@ -369,6 +377,11 @@ class TrainingStudioHandler(BaseHTTPRequestHandler):
                 source, online, seed = self.train_request()
                 kind = 'prepare' if self.path == '/api/prepare' else 'train'
                 self.respond(self.server.submit(kind, source, online, seed), 202)
+            elif self.path in ('/api/robot/check', '/api/robot/run', '/api/robot/install'):
+                body = _json(self.body('application/json', JSON_LIMIT))
+                if type(body) is not dict or set(body) != {'study', 'assets'}:
+                    raise ValueError('Supply local prepared study and robot assets folders.')
+                self.respond(self.server.robot.submit(self.path.rsplit('/', 1)[-1], body['study'], body['assets']), 202)
             elif self.path == '/api/coverage/inspect':
                 from .coverage import MAX_PLAN_BYTES, summarize_plan, validate_plan
                 plan = validate_plan(self.body('application/json', MAX_PLAN_BYTES))
@@ -378,7 +391,7 @@ class TrainingStudioHandler(BaseHTTPRequestHandler):
                 validate_zip(raw)
                 with self.server.lock:
                     self.server.refresh()
-                    if self.server.job is not None and self.server.job['status'] == 'running':
+                    if (self.server.job is not None and self.server.job['status'] == 'running') or self.server.robot.busy():
                         raise RuntimeError('One CPU job is already running. Wait before replacing its source.')
                     self.server.clear_completed()
                     root = self.server.directory / 'uploads'
@@ -398,11 +411,12 @@ class TrainingStudioHandler(BaseHTTPRequestHandler):
 
 
 def configure(directory=Path('runs/training-studio'), *, port=8270, offline=True,
-              runner=None, preparer=None, inspector=None):
+              runner=None, preparer=None, inspector=None, robot_worker=None, robot_checker=None):
     if type(port) is not int or not 0 <= port <= 65535:
         raise ValueError('Use a valid local port.')
     return TrainingStudioServer(('127.0.0.1', port), directory, offline,
-                                runner=runner, preparer=preparer, inspector=inspector)
+                                runner=runner, preparer=preparer, inspector=inspector,
+                                robot_worker=robot_worker, robot_checker=robot_checker)
 
 
 def run_server(directory=Path('runs/training-studio'), *, port=8270, offline=True):

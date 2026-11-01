@@ -1,13 +1,14 @@
 """Independent fixed32 record-law tests; no simulator or scorer imports."""
-import sys
+import importlib.util
 from pathlib import Path
 import unittest
 
 import numpy as np
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]
-                      / "benchmarks" / "piper-incremental-hold-v03"))
-import independent_audit as audit
+_spec = importlib.util.spec_from_file_location('dvidia_incremental_record_audit_tests',
+    Path(__file__).resolve().parents[1] / 'benchmarks/piper-incremental-hold-v03/independent_audit.py')
+audit = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(audit)
 
 
 def correction_fixture():

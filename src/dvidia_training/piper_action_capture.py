@@ -132,12 +132,18 @@ class _NativeSession:
         self.assets=assets;self.config=config;self.renderer=None;self.env=None
         self.physics_attempted=False;self.initialized=False;self.renderer_warnings=[]
 
+    def _task_configuration(self, task):
+        return task.PiperTaskConfig(timeout_s=self.config.duration_s)
+
+    def _environment(self, task):
+        return task.PiperTaskEnv(self.assets,self.task_config)
+
     def open(self):
         from . import piper_task as task, reference_sim as sim, robot_profiles
         self.mj,self.np=sim._native_imports();self.sim=sim
-        self.task_config=task.PiperTaskConfig(timeout_s=self.config.duration_s)
+        self.task_config=self._task_configuration(task)
         self.assets_metadata=robot_profiles.verify_assets('piper',task._asset_root(self.assets))
-        self.env=task.PiperTaskEnv(self.assets,self.task_config);self.physics_attempted=True
+        self.env=self._environment(task);self.physics_attempted=True
         self.observation,self.info=self.env.reset(self.config.seed);self.initialized=True
         self.native_origin=float(self.env.data.time)
         self.base=self.mj.mj_name2id(self.env.model,self.mj.mjtObj.mjOBJ_BODY,'base_link')
@@ -219,6 +225,9 @@ class _NativeSession:
                 or depth.shape!=(self.config.height,self.config.width) or depth.dtype!=self.np.float32
                 or not self.np.isfinite(depth).all() or not (depth>0).all()):raise RuntimeError('Renderer did not supply finite aligned RGB and metric depth arrays.')
         if native_time!=float(self.env.data.time) or seconds!=float(self.env.elapsed):raise RuntimeError('Physics advanced during paired RGB-D capture.')
+        # Only the latest pair is retained for optional observation-sidecar
+        # consumers. Existing v1 capture files and behavior are unchanged.
+        self.latest_rgbd=(rgb,depth)
         depth_buffer=io.BytesIO();self.np.save(depth_buffer,depth.astype('<f4',copy=False),allow_pickle=False)
         frames={f'frames/rgb-{index:04}.png':_png(rgb),f'frames/depth-{index:04}.npy':depth_buffer.getvalue()}
         artifacts={name:dict(path=path,bytes=len(frames[path]),sha256=sha256(frames[path]).hexdigest())
