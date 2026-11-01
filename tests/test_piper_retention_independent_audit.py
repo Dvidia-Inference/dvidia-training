@@ -1,12 +1,14 @@
 """Pure evidence audits; no simulation/runtime imports or native runs."""
-import sys
+import importlib.util
 from pathlib import Path
 import unittest
 
 import numpy as np
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'benchmarks' / 'piper-retention-v02'))
-import independent_audit as audit
+_spec = importlib.util.spec_from_file_location('dvidia_retention_record_audit_tests',
+    Path(__file__).resolve().parents[1] / 'benchmarks/piper-retention-v02/independent_audit.py')
+audit = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(audit)
 
 
 class TreatmentBoundaryTests(unittest.TestCase):

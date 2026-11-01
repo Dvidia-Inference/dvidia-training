@@ -1,5 +1,6 @@
 """Independent audit tests: no simulator, renderer, tracker or policy execution."""
 from copy import deepcopy
+import importlib.util
 from pathlib import Path
 import random
 import os
@@ -9,8 +10,9 @@ import tempfile
 import unittest
 
 HELPERS = Path(__file__).resolve().parents[1] / 'benchmarks/camera-action-v01'
-sys.path.insert(0, str(HELPERS))
-import study_audit as audit
+_spec = importlib.util.spec_from_file_location('dvidia_camera_action_study_audit_tests', HELPERS / 'study_audit.py')
+audit = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(audit)
 
 
 def protocol():

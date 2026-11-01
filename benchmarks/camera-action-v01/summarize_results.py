@@ -41,6 +41,7 @@ NOTES = [
     'Release, settling and retreat are separately reconstructed posthoc from sealed native arrays using the frozen scorer predicates. Final predicate and consecutive dwell are diagnostic localization, not new qualification gates.',
     'Latencies pool recorded boundary samples, never averages of episode percentiles. The simulator pauses for computation on a shared host; these are not physical sensor-to-actuator latencies.',
     'Camera acquisition and availability timestamps are synthetic. Depth and physical hardware accuracy remain unqualified.',
+    'Renderer-warning counts describe boundaries carrying cumulative warning history, not new warning emissions or independent depth-error trials. An absent warning field is unreported, not evidence of warning-free rendering.',
     'Peak RSS is a process high-water mark including dataset export and any preceding fit, not an isolated model memory measurement.',
     'Evidence verification covers protocol/stage seals, referenced rollout/context receipts, native numeric evidence and model bytes. Image archives and full policy/scoring correctness remain the scope of the separately published independent audit.',
 ]
@@ -289,6 +290,27 @@ def component_counts(rows, expected_count, component):
             if _number(value.get('required_dwell_seconds'))}) if path is None else None)
 
 
+def renderer_warnings(receipts, expected):
+    messages, affected_episodes, reported_episodes, reported_boundaries = Counter(), 0, 0, 0
+    for receipt in receipts:
+        reported = affected = False
+        for boundary in receipt.get('timing', {}).get('boundaries', []):
+            if not isinstance(boundary, dict) or 'renderer_warnings' not in boundary:
+                continue
+            warnings = boundary['renderer_warnings']
+            if (not isinstance(warnings, list) or len(warnings) > 64
+                    or any(not isinstance(w, str) or not w or len(w) > 4096 for w in warnings)):
+                raise ValueError('Malformed recorded renderer warnings.')
+            reported = True; reported_boundaries += 1
+            affected |= bool(warnings)
+            messages.update(set(warnings))
+        reported_episodes += reported; affected_episodes += affected
+    return dict(episodes_reported=reported_episodes, episodes_unreported=expected-reported_episodes,
+        episodes_with_warnings=affected_episodes, render_boundaries_reported=reported_boundaries,
+        warning_boundaries_by_message=dict(sorted(messages.items())),
+        scope='Saved boundaries carrying cumulative renderer-warning history, not new warning emissions or independent depth-error trials. Missing fields stay unreported.')
+
+
 def _controller(stage_name, controller, roster, rows, episodes):
     expected = len(roster)
     values = [{**row, '_posthoc_components': (episodes.get(row['id'], (None, None))[0] or {}).get('_posthoc_components', {})}
@@ -340,6 +362,7 @@ def _controller(stage_name, controller, roster, rows, episodes):
             available_decisions=available, assessed_decisions=decisions,
             available_fraction=available/decisions if decisions else None,
             maximum_missing_seconds=max(missing_spans) if missing_spans else None),
+        renderer_warnings=renderer_warnings(bound, expected),
         timing=latencies, episode_wall_seconds=distribution(durations))
 
 
@@ -472,6 +495,12 @@ def markdown(summary):
     for row in summary['training']:
         lines.append('| '+' | '.join(_cell(v) for v in (row['stage']+' / '+row['variant'],row['model_bytes'],
             row['training_wall_seconds'],row['shared_export_wall_seconds'],row['process_peak_rss_bytes']))+' |')
+    lines += ['', 'Recorded renderer warning history (boundaries carrying a message, not new emissions or independent accuracy trials):', '']
+    for row in summary['controllers']:
+        warnings = row['renderer_warnings']
+        lines.append('- '+_cell(row['stage']+' / '+row['controller'])+': '+
+            f"{warnings['episodes_with_warnings']} affected / {warnings['episodes_reported']} reported episodes; "
+            f"{warnings['episodes_unreported']} unreported. "+_cell(json.dumps(warnings['warning_boundaries_by_message'], sort_keys=True)))
     lines += ['', 'Recorded execution environments:', '']
     if summary['hardware']:
         for row in summary['hardware']:

@@ -400,6 +400,9 @@ A folder of videos is accepted, with lineage/completeness warnings. Prefer an ex
 ## Hardware
 
 These are **provisional planning targets for the small default visual learner**, not verified minimum specifications or guarantees for arbitrary datasets.
+They do not describe the camera-to-action native benchmark, which requires a
+working graphics context, substantially more evidence storage and a separate
+[setup and measured-host report](docs/camera-action-v01.md).
 
 | Resource | Proposed starting point | Recommended |
 | --- | --- | --- |

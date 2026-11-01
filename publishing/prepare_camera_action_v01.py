@@ -349,13 +349,20 @@ def verify_audit_source_archive(source_archive, proof):
                 raise ValueError('Reviewed source archive differs from the independent audit implementation.')
 
 
-def prepare(study, output, *, audit, card, wheel, source_archive, source_commit, phase_coverage=None, study_audit=None, hardware=None):
+def prepare(study, output, *, audit, card, wheel, source_archive, source_commit, phase_coverage=None, study_audit=None, hardware=None, episode_cache=None):
     from dvidia_training import camera_action_study as workflow
     study, output = plain(study), plain(output)
     if output.exists() or output == study or output.is_relative_to(study):
         raise ValueError('Use a fresh publication directory outside the study.')
     if (study / 'worker.lock').exists():
         raise ValueError('A running or interrupted study worker must be resolved before packaging.')
+    if episode_cache is not None:
+        episode_cache = plain(episode_cache).resolve()
+        if any(a == b or a.is_relative_to(b) or b.is_relative_to(a)
+                for a, b in ((episode_cache, study.resolve()), (episode_cache, output.resolve()))):
+            raise ValueError('Episode cache must be separate from study and publication output trees.')
+        if (episode_cache / 'worker.lock').exists():
+            raise ValueError('Wait for the episode cache worker to finish before final packaging.')
     if not re.fullmatch('[a-f0-9]{40}', source_commit):
         raise ValueError('An exact source commit is required.')
     state = workflow.inspect(study)
@@ -466,8 +473,14 @@ def prepare(study, output, *, audit, card, wheel, source_archive, source_commit,
     inventory['study-metadata.zip'] = {k: metadata_archive[k] for k in ('bytes', 'sha256')}
     for row in episode_rows:
         name = row['source_directory'] + '.zip'
-        sealed = archive(study / row['source_directory'], all_expected[row['source_directory']],
-                         output / name, prefix=row['source_directory'])
+        sealed = None
+        if episode_cache is not None:
+            from episode_archive_cache import reuse
+            sealed = reuse(study / row['source_directory'], all_expected[row['source_directory']],
+                           output / name, prefix=row['source_directory'], cache=episode_cache)
+        if sealed is None:
+            sealed = archive(study / row['source_directory'], all_expected[row['source_directory']],
+                             output / name, prefix=row['source_directory'])
         row['archive'] = name
         row['archive_receipt'] = sealed
         inventory[name] = {k: sealed[k] for k in ('bytes', 'sha256')}
@@ -486,7 +499,7 @@ def prepare(study, output, *, audit, card, wheel, source_archive, source_commit,
         trained_model_files=models, files=inventory,
         hardware_context_file='hardware.json' if hardware is not None else None,
         reconstruction='Extract study-metadata.zip and every episodes/**/*.zip into one new directory. Compare SHA256SUMS first. Each recording retains its original integrity.json.',
-        archive_format=f'Deterministic ZIP64, sorted members, 1980 timestamp, regular 0644 files, DEFLATE level {ZIP_LEVEL}; all members read back byte-for-byte.')
+        archive_format=f'ZIP64, sorted members, 1980 timestamp, regular 0644 files; all members read back byte-for-byte. Fresh archives use deterministic DEFLATE level {ZIP_LEVEL}. Reused cache archives have verified DEFLATE streams but their compression level is not inferable and is recorded as null.')
     write(output / 'manifest.json', value)
     inventory_with_manifest = dict(inventory, **{'manifest.json': identity(output / 'manifest.json')})
     sums = ''.join(f'{record["sha256"]}  {name}\n' for name, record in sorted(inventory_with_manifest.items()))
@@ -509,11 +522,13 @@ def main(argv=None):
     parser.add_argument('--phase-coverage', help='Optional diagnostic-only phase coverage proof bound to the same protocol and audit.')
     parser.add_argument('--study-audit', help='Optional independent audit of all sealed study stages, byte-bound to this stopped study.')
     parser.add_argument('--hardware', help='Optional bounded public hardware/software and timing-scope JSON; no hostname or serial fields.')
+    parser.add_argument('--episode-cache', help='Optional separately stored ZIP cache; source bytes and every cached member are independently verified.')
     args = parser.parse_args(argv)
     try:
         print(json.dumps(prepare(args.study, args.output, audit=args.audit, card=args.card,
             wheel=args.wheel, source_archive=args.source_archive, source_commit=args.source_commit,
-            phase_coverage=args.phase_coverage, study_audit=args.study_audit, hardware=args.hardware), indent=2))
+            phase_coverage=args.phase_coverage, study_audit=args.study_audit, hardware=args.hardware,
+            episode_cache=args.episode_cache), indent=2))
         return 0
     except (ValueError, OSError, KeyError, TypeError, zipfile.BadZipFile, tarfile.TarError) as exc:
         print(json.dumps(dict(status='refused', reason=str(exc))))

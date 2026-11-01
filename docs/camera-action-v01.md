@@ -4,7 +4,9 @@ This local research workflow pairs rendered RGB-D with explicitly synthetic
 PiPER teacher commands, fits a small CPU policy and compares complete tasks on
 unseen starts. A model or successful installation does not establish qualification.
 The four diagnostic trajectories and teacher-data gate must pass before fitting.
-Failures are preserved and block dependent stages rather than triggering retries.
+Failed attempts remain in the evidence. Failed quality gates block dependent
+stages rather than triggering retries; individual task failures do not stop a
+registered comparison whose attempt accounting is complete.
 
 ## Local setup
 
@@ -16,6 +18,8 @@ uses the graphics driver. After dependencies/assets are provisioned, the workflo
 is offline. The study reserves 30 GiB of free disk and caps its evidence at 120 GiB.
 
 ```sh
+git clone --branch feat/piper-camera-action-v01 https://github.com/Dvidia-Inference/dvidia-training.git
+cd dvidia-training
 python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install '.[arm]'
@@ -27,6 +31,9 @@ dvidia-training-studio --directory runs/studio --port 8363
 ```
 
 The fetch command provisions the separately licensed, version-pinned PiPER assets.
+For an exact reproduction, check out the reviewed source commit recorded in the
+dataset card before installing, or install that release's wheel with its `arm`
+extra. The branch above is the development entry point and may advance.
 For reproduction, use `fixed-model.json` from the published study metadata as
 `/path/to/piper-base-model.json`; it is the registered comparator, not a newly
 trained model. Keep the original study untouched and prepare a fresh directory.
@@ -65,6 +72,11 @@ encoders, encoder-derived link6 pose, previous applied servo references and 160 
 of causal history. Missing live estimates retain availability masks and source
 frame age; their numerical tensor fills are not measurements. Normalization uses
 training data, including these explicit missing fills and masks.
+History has five causal samples at 0, 40, 80, 120 and 160 ms; unavailable warmup
+samples remain masked. Standardized features are clipped to ±10 at inference.
+The matched blind learner keeps the initial visual anchor, destination, elapsed
+time and previous applied commands, while masking current and historical sensor
+feedback. It is a feedback ablation, not a model with no visual task context.
 
 The legacy `tcp_position_estimate_m` field represents the link6 body origin in
 this pilot. The native task scorer uses a distal site 0.12003 m along link6's
@@ -81,6 +93,10 @@ Teacher queries and issued commands are separate: one registered 50% mixed-contr
 round can request teacher labels on student-visited states. Those queries are
 synthetic suggestions, not proven recoveries or operator corrections. Confirmation
 has no teacher fallback. All candidates retain the native actuator and task bounds.
+Fitting uses successful complete teacher episodes and complete mixed episodes
+with a valid initial visual anchor. Failed mixed tasks are included. Interrupted
+prefixes remain in the raw evidence and can be exported, but are excluded from
+the registered fitting set; they do not silently become successful examples.
 
 ## Registered comparison
 

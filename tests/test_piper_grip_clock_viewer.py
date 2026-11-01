@@ -36,6 +36,20 @@ class ClockViewerTests(unittest.TestCase):
         self.root.mkdir()
         self.revision = 'a'*40
 
+    def test_builder_is_an_installed_package_resource_without_checkout(self):
+        package = self.path/'site-packages'/'dvidia_training'
+        package.mkdir(parents=True)
+        resource = package/'piper_grip_clock_build.mjs'
+        resource.write_text('// installed builder')
+        with patch.object(viewer, '__file__', str(package/'piper_grip_clock_viewer.py')):
+            self.assertEqual(viewer._build_script(), resource)
+            resource.unlink()
+            with self.assertRaisesRegex(ValueError, 'build resource is missing'):
+                viewer._build_script()
+            resource.symlink_to(Path(viewer.__file__))
+            with self.assertRaisesRegex(ValueError, 'build resource is missing'):
+                viewer._build_script()
+
     def documents(self):
         cases = viewer.lifecycle.make_cases()['confirmation']
         sources, runtime = viewer.lifecycle.source_hashes(), viewer.runner.runtime_hashes()

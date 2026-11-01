@@ -120,6 +120,46 @@ publishes evidence and source without inventing a learned policy. The package
 retains the study's qualification result; installation itself does not award
 task qualification or physical-hardware readiness.
 
+## Optional precompression while the study runs
+
+One separate publication worker may precompress already sealed, complete
+episodes while the native worker continues. It snapshots the registered stage
+rosters, reads only fully sealed stage receipts, and includes completed task
+failures as well as successes. It never reads a running stage's episode files,
+retries a simulation, queries a policy, or changes study qualification.
+
+```sh
+PYTHONPATH=publishing:publishing/huggingface python \
+  publishing/episode_archive_cache.py \
+  --study /absolute/running-study --cache /absolute/separate-episode-cache \
+  --limit 84
+```
+
+The limit is a finite maximum of new archives (1–452), with one sequential
+worker guarded by its own lock. Before each archive, it reserves the full
+remaining registered raw-data capacity, a conservative ZIP expansion allowance
+and the existing 30 GiB disk reserve. It can refuse compression even when the
+final expected compressed corpus would fit. Existing cache entries are never
+overwritten; a partial entry or a lock left after a hard stop requires operator
+inspection. The study and native worker remain untouched.
+
+After the study and cache worker stop, add
+`--episode-cache /absolute/separate-episode-cache` to the normal preparation
+command. Cache receipts provide no authority: final preparation independently
+reads every original source file, checks the final inventory, decompresses and
+hashes every ZIP member, and checks a private copy again. It uses the same
+reviewed copy-on-write helper as publication, with independent inodes and a
+bounded streaming fallback. Missing entries use ordinary fresh compression;
+malformed or changed entries fail closed. Small refused or incomplete episodes
+are retained by normal final packaging, rather than precompressed. No extra
+files or relaxed acceptance rules are introduced into the public payload.
+Archive and member comments, unknown extra fields, unsorted members, prefix or
+trailing payloads, and unused compressed suffixes are refused. Only the exact
+local ZIP64 size fields required by the original writer are accepted. DEFLATE
+does not encode its compression level, so cached archives truthfully record
+`compression_level: null`; final verification establishes original member
+bytes and the declared ZIP layout, not an unverifiable producer setting.
+
 ## Stopping, interruption and publication scope
 
 Studio and Terminal use the same immutable stage records. Studio owns one local

@@ -221,10 +221,24 @@ class EvidencePackageTests(unittest.TestCase):
             report=dict(status='blocked', qualification='research_candidate', qualified=False, physical_robot_ready=False))
         output = self.root / 'payload'
         hardware=self.root/'hardware.json';package.write(hardware,fixture())
+        import episode_archive_cache as cache
+        prefix=rows[0]['path']; episode_inventory=package.episode_inventory(study/prefix)
+        cache_root=self.root/'episode-cache'
+        cached=cache_root/cache.key(episode_inventory,prefix)/'episode.zip'
+        package.archive(study/prefix,episode_inventory,cached,prefix=prefix)
+        def private_copy(source,destination,record):
+            destination.parent.mkdir(parents=True,exist_ok=True)
+            with destination.open('xb') as target:
+                target.write(source.read_bytes())
         with patch.object(workflow, 'inspect', return_value=state), \
-                patch.object(workflow, '_stage', side_effect=lambda root, name: diagnostic if name == 'diagnostic' else None):
+                patch.object(workflow, '_stage', side_effect=lambda root, name: diagnostic if name == 'diagnostic' else None), \
+                patch.object(cache,'_private_copy',side_effect=private_copy) as copy, \
+                patch.object(package,'archive',wraps=package.archive) as archive:
             result = package.prepare(study, output, audit=audit, card=card, wheel=wheel,
-                source_archive=source, source_commit=commit, hardware=hardware)
+                source_archive=source, source_commit=commit, hardware=hardware,episode_cache=cache_root)
+        copy.assert_called_once()
+        self.assertEqual(archive.call_count,4)  # one metadata ZIP and three cache misses
+        self.assertEqual((output/(prefix+'.zip')).read_bytes(),cached.read_bytes())
         self.assertEqual(result['episode_count'], 4)
         self.assertEqual(result['trained_models'], 0)
         self.assertFalse((output / 'models').exists())

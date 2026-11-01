@@ -1,8 +1,8 @@
 # Camera-to-action skill v0.1 — research report draft
 
-**Status: diagnostic evidence only; student results are pending.** This document
-does not claim a learned placement success rate, improvement over either
-comparator, a qualified downloadable skill or physical robot readiness.
+**Status: teacher data admitted; initial development learners each completed 0/16 strict placements.**
+The registered correction round is running. Frozen confirmation is pending.
+No qualified downloadable skill or physical robot readiness is claimed.
 
 ## Question and bounded experiment
 
@@ -49,7 +49,8 @@ The CPU NumPy model has two 64-unit hidden layers and predicts six absolute
 joint targets plus one jaw target. Its 269 features contain an explicitly
 historical initial visual anchor, destination, elapsed time, encoders, jaw
 measurements, encoder-derived link6 body pose, previous applied servo references and
-160 ms of causal history. Current missing object estimates have zero numerical
+five causal history samples at 0, 40, 80, 120 and 160 ms. Standardized
+features are clipped to ±10 at inference. Current missing object estimates have zero numerical
 fills, an unavailable mask and their source frame's original age. The historical
 anchor is never presented as a new live observation. The frozen recording names
 the link6 body-origin pose `tcp_position_estimate_m` and
@@ -100,6 +101,8 @@ object, valid-but-old frames or small valid rigid calibration errors.
 
 ## Completed diagnostic evidence
 
+![Native MuJoCo RGB frame at 10.00 simulated seconds, development start 00 and destination 0. The authored teacher controls the arm; the frozen tracker reports no object position in this frame. This is diagnostic evidence, not a learned-policy result.](https://research.dvidia.org/downloads/topics/physical-grounding/runs/2026-11-01-camera-to-action-v01/viewer/frames/development-00-goal0/0250.png)
+
 An independent reader verified **24,040 files**, exact camera/control/native
 cadences, source and frame bindings, issued/query separation, camera-position
 errors and independently recomputed task scores. All four teacher diagnostics
@@ -132,19 +135,82 @@ context. This is a measured limitation of the frozen upright-block tracker.
 The current experiment will test whether those remaining signals are enough;
 it must not silently add camera views or substitute native object positions.
 
-Evidence files retained for publication:
+[Inspect the real diagnostic camera frames and action traces](https://research.dvidia.org/downloads/topics/physical-grounding/runs/2026-11-01-camera-to-action-v01/viewer/index.html), [independent audit](https://research.dvidia.org/downloads/topics/physical-grounding/runs/2026-11-01-camera-to-action-v01/viewer/diagnostic-audit.json), [phase coverage analysis](https://research.dvidia.org/downloads/topics/physical-grounding/runs/2026-11-01-camera-to-action-v01/viewer/diagnostic-phase-coverage.json) and [registered protocol](https://research.dvidia.org/downloads/topics/physical-grounding/runs/2026-11-01-camera-to-action-v01/viewer/protocol.json). The compact viewer contains diagnostic evidence only. It preserves every motor decision and copies native RGB frames byte-for-byte at 2.5 Hz from the original 25 Hz capture. Its display sampling is distinct from the camera cadence used by the controller. Full raw recordings remain separate from this compact diagnostic subset.
 
-- `runs/camera-action-v01-proofs-20261101/diagnostic-audit.json`
-- `runs/camera-action-v01-proofs-20261101/diagnostic-phase-coverage.json`
-- The registered protocol, stage receipts and complete sealed diagnostic recordings.
+## Completed demonstration and data-quality evidence
 
-## Pending results and interpretation
+All **80/80 registered teacher demonstrations** completed strict placement:
+64/64 training episodes and 16/16 development episodes. The development
+recordings remain excluded from fitting and normalization. All 32 training
+starting-position groups have usable successful demonstrations with an
+available, bound initial camera estimate. Each training destination has
+**32 successful usable episodes**, exceeding the registered minimum of 28;
+the sealed teacher-data gate passed with no missing training group.
 
-**Pending:** training-data quality, model fitting, initial and corrected
-development rollouts, frozen confirmation, negative controls, measured model
-size/fit cost/inference cost, and fresh-install execution. Fill these sections
-only from sealed receipts after independent readback; do not infer learned
-success from successful teacher demonstrations.
+| Teacher evidence | Strict successful / scheduled | Data use |
+| --- | ---: | --- |
+| Initial diagnostics | 4/4 | Initial camera and task checks; not additional fitting episodes |
+| Training demonstrations | 64/64 | Issued-action supervision for 32 training starts × two goals |
+| Development demonstrations | 16/16 | Held-out prediction and missing-observation diagnostics |
+
+An independent readback passed with **504,840 files verified and 84 native task
+scores recomputed** across the four diagnostics plus 80 demonstrations. This
+count includes the earlier four diagnostics; it is not 84 additional episodes.
+The audit reports no errors and executes no physics, estimator or learned
+model. Its protocol, sealed demonstration receipt and stage-integrity identities
+match the original registration and saved bytes.
+
+The retained `demonstrations-audit.json` proof has SHA-256
+`3405d789c0b79066d142d476f1b45468463d41516350d7c80766881a6cecf753`;
+its evidence-inventory SHA-256 is
+`319074d85fcd84758d3cc464e6040f2032832179d354c4adcb86f300b743f811`.
+This is an audit of the diagnostic and demonstration stages only: no fitting
+stage or student rollout is covered by this proof. Successful teacher actions
+establish usable synthetic supervision, not successful imitation or transfer.
+
+## Measured host context
+
+The retained `hardware-native.json` describes a shared local **Apple M5** host
+(`Mac17,4`, arm64) with **10 physical / 10 logical CPU cores and 24 GiB of
+installed memory**. The environment is Darwin 25.5.0, Python 3.12.9, NumPy 2.5.3
+and MuJoCo 3.15.0, with one native worker. Native physics and the policy use the
+CPU; rendering uses the existing macOS CGL graphics path. No CUDA requirement
+is introduced. The hardware-context file SHA-256 is
+`fdc8007b27219c7c91dc600ae54a95f4a8abc64565db652002faa0f5a1e9f6d0`.
+
+Installed memory is host capacity, not the model's measured memory requirement.
+This shared-host setup does not establish minimum hardware, dedicated-host
+throughput, other-platform compatibility or physical sensor-to-actuator
+latency. Inference distributions and full-loop wall-clock measurements remain
+pending the completed study and independent readback. Initial fit costs below
+are separate from the much longer rendering, recording and verified export.
+
+## Initial learning result: prediction is not execution
+
+The sealed initial fitting stage contains 64,000 training samples and 16,000
+held-out teacher-observation samples. The full learner fitted in 6.56 seconds
+and occupies 521,715 bytes; the matched blind learner fitted in 5.99 seconds
+and occupies 517,296 bytes. Shared byte-verified data export took a further
+685.44 seconds. These are measured offline wall-clock durations on the shared
+host, not video-to-skill completion times. Process peak RSS reached 643,891,200
+bytes after the full fit and 789,200,896 bytes after the blind fit; the second
+value is a process high-water mark, not the blind model's isolated memory use.
+
+Both initial candidates completed all 16 registered development attempts and
+made **zero strict placements**. The full learner's held-out action-scale MSE
+on teacher observations was 0.0001133, yet its closed-loop success was 0/16.
+The blind learner also scored 0/16. One-step prediction on a demonstrated
+state does not establish execution after the model's own actions change it.
+
+These are intermediate development results, not frozen confirmation. The
+single preregistered mixed-control round continues unchanged. No replacement
+starts, new hyperparameters or extra correction round have been introduced.
+Final independent full-study readback must bind these sealed receipts before
+publication as completed benchmark evidence.
+
+**Pending:** corrected fitting and development, frozen confirmation, negative
+controls, final inference and full-loop timings, and fresh-install execution.
+The candidate selection and acceptance thresholds remain fixed.
 
 This study can establish a reproducible camera-and-action learning loop for a
 bounded synthetic task. It cannot establish arbitrary video-to-skill transfer,
@@ -153,3 +219,9 @@ contact calibration, shoe manipulation or physical qualification. A useful next
 experiment after the fixed results is to measure a second camera or another
 explicitly uncertain observation method during grasp and carry, where the
 present tracker provides no object measurements.
+
+## Source and reuse
+
+[The frozen learning source](https://github.com/Dvidia-Inference/dvidia-training/commit/c9a7c55531533f60e24651a99d509f721e195051) and the [DVIDIA Training repository](https://github.com/Dvidia-Inference/dvidia-training) contain the capture, mask-aware exporter, CPU model and study runner. Model/data releases and the completed study report are pending; no download here is labeled a qualified skill.
+
+Original DVIDIA code and generated records use MIT; PiPER and simulator notices retain their upstream terms. The viewer includes actual native renderer output and no private human footage, credentials, model weights or redistributed robot meshes. Research writing follows this site's CC BY 4.0 license.

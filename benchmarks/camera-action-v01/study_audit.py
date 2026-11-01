@@ -8,14 +8,22 @@ from __future__ import annotations
 
 import argparse
 from copy import deepcopy
+import importlib.util
 import math
 from pathlib import Path
 import random
 
 import numpy as np
 
-from independent_audit import (canonical, digest, read, identity, relative, require,
-    inventory, _reference, _close, _transform, scoring)
+# Several historical benchmarks have an independent_audit.py. Resolve our
+# sibling by file identity rather than importing an unrelated cached module.
+_helper_spec = importlib.util.spec_from_file_location('dvidia_camera_action_diagnostic_audit',
+    Path(__file__).with_name('independent_audit.py'))
+_helper = importlib.util.module_from_spec(_helper_spec)
+_helper_spec.loader.exec_module(_helper)
+canonical, digest, read, identity, relative, require, inventory, _reference, _close, _transform, scoring = (
+    getattr(_helper, name) for name in ('canonical', 'digest', 'read', 'identity', 'relative',
+        'require', 'inventory', '_reference', '_close', '_transform', 'scoring'))
 
 SCHEMA = 'dvidia.camera-action-study-audit/v1'
 STAGES = ('diagnostic', 'demonstrations', 'train-initial', 'development-initial',

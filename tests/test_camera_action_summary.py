@@ -163,6 +163,21 @@ class PosthocSummaryTests(unittest.TestCase):
         self.assertEqual(record['samples'],20);self.assertAlmostEqual(record['p95'],.0595)
         self.assertFalse(record['deadline_claim'])
 
+    def test_renderer_warnings_preserve_repeated_frames_and_unreported_scope(self):
+        warning='Depth accuracy will be limited'
+        receipts=[{'timing':{'boundaries':[{'renderer_warnings':[warning,warning]},
+            {'renderer_warnings':[warning]},{}]}},
+            {'timing':{'boundaries':[{'renderer_warnings':[]}]}},
+            {'timing':{'boundaries':[{}]}}]
+        result=summary.renderer_warnings(receipts,4)
+        self.assertEqual(result['episodes_reported'],2)
+        self.assertEqual(result['episodes_unreported'],2)
+        self.assertEqual(result['episodes_with_warnings'],1)
+        self.assertEqual(result['render_boundaries_reported'],3)
+        self.assertEqual(result['warning_boundaries_by_message'],{warning:2})
+        with self.assertRaisesRegex(ValueError,'Malformed recorded renderer'):
+            summary.renderer_warnings([{'timing':{'boundaries':[{'renderer_warnings':None}]}}],1)
+
     def test_modified_native_bytes_or_stage_receipts_are_rejected(self):
         path=self.root/'episodes/attempt-0/native.npz';path.write_bytes(path.read_bytes()+b'changed')
         with self.assertRaisesRegex(ValueError,'Native numeric evidence differs'):

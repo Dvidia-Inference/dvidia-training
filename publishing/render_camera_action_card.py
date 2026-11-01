@@ -277,6 +277,20 @@ def _observations(data):
         'Synthetic camera time, source-frame age, simulation time and wall-clock computation are distinct. '
         'The simulator pauses for computation on a shared host: these numbers do **not** establish physical '
         'sensor-to-actuator latency, a hard deadline or hardware control frequency.', '']
+    warning_rows = []
+    for row in data['summary']['controllers']:
+        warnings = row.get('renderer_warnings')
+        if warnings:
+            warning_rows.append((row['stage']+' / '+row['controller'],
+                f"{warnings['episodes_with_warnings']} / {warnings['episodes_reported']}",
+                warnings['episodes_unreported'], json.dumps(warnings['warning_boundaries_by_message'], sort_keys=True)))
+    if warning_rows:
+        lines += ['Recorded graphics warnings are retained below. Counts refer to render boundaries '
+            'carrying cumulative warning history, not new warning emissions or independent depth-error trials. '
+            'An absent field remains unreported; no physical '
+            'depth accuracy is inferred from a warning-free frame.', '']
+        lines += _table(['Stage / controller', 'Affected / reported episodes', 'Unreported episodes',
+            'Warning messages and boundary counts'], warning_rows)
     phase = data['phase']
     if phase:
         lines += [f"**Diagnostic manipulation blind spot:** {phase['manipulation_available']} / "
