@@ -337,6 +337,9 @@ def inspect_run(path):
 
 
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] == 'robot':
+        from .camera_action_study import main as robot_main
+        raise SystemExit(robot_main(sys.argv[2:]))
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest='command', required=True)
     for name in ('prepare', 'run'):

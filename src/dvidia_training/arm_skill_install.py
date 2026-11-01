@@ -54,6 +54,10 @@ def check_model(model_path, robot, *, interface=INTERFACE):
         raise ValueError('This learned policy requires PiPER. Other arms need their own trained '
                          'policy and task benchmark; matching joint counts do not transfer it.')
     raw = _read(model_path, MAX_MODEL_BYTES)
+    decoded = _decode(raw)
+    if type(decoded) is dict and decoded.get('schema') == 'dvidia.camera-action-mlp/v1':
+        from .camera_action_skill import check
+        return check(model_path, robot, interface=interface)
     model = validate_model(raw)
     return {
         'compatible': True, 'runner': RUNNER, 'robot': robot, 'interface_id': interface,
@@ -83,6 +87,9 @@ def _record(check, binding):
 def install_model(model, robot, assets, output, *, interface=INTERFACE):
     """Verify model/assets, then reserve a fresh installation without stepping."""
     check = check_model(model, robot, interface=interface)
+    if check['runner'] == 'piper-camera-action-v1':
+        from .camera_action_skill import install
+        return install(model, robot, assets, output, interface=interface)
     raw = _read(model, MAX_MODEL_BYTES)
     if sha256(raw).hexdigest() != check['model_sha256']:
         raise ValueError('Model changed during compatibility check.')
@@ -105,6 +112,9 @@ def inspect_installation(directory, assets):
     if root.is_symlink() or not root.is_dir():
         raise ValueError('Installation must be a regular directory.')
     stored = _decode(_read(root/'installation.json', 256*1024))
+    if type(stored) is dict and stored.get('schema') == 'dvidia.camera-action-installation/v1':
+        from .camera_action_skill import inspect
+        return inspect(root, assets)
     if type(stored) is not dict or stored.get('schema') != SCHEMA:
         raise ValueError('Unknown arm skill installation.')
     compatibility = stored.get('compatibility')
@@ -122,6 +132,9 @@ def inspect_installation(directory, assets):
 def run_installation(directory, assets, output, *, start_x=.30, start_y=-.03, goal=0):
     """Revalidate, then dispatch only to the built-in bounded simulation runner."""
     record = inspect_installation(directory, assets)
+    if record['compatibility']['runner'] == 'piper-camera-action-v1':
+        from .camera_action_skill import run
+        return run(directory, assets, output, start_x=start_x, start_y=start_y, goal=goal)
     from .piper_learned_skill import run_learned_skill
     result = run_learned_skill(Path(directory)/'model.json', assets, output,
                                start_x=start_x, start_y=start_y, goal=goal)
