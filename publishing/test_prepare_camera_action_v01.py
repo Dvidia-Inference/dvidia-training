@@ -124,6 +124,15 @@ class EvidencePackageTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'differs from the independent'):
             package.verify_audit_source_archive(source,proof)
 
+    def test_oversized_source_refuses_before_creating_destination(self):
+        source = self.root / 'oversized-source.tar.gz'
+        with source.open('wb') as stream:
+            stream.truncate(package.MAX_SOURCE + 1)
+        destination = self.root / 'public' / source.name
+        with self.assertRaisesRegex(ValueError, 'oversized'):
+            package._copy(source, destination, maximum=package.MAX_SOURCE)
+        self.assertFalse(destination.parent.exists())
+
     def test_running_worker_is_refused_before_inspection_or_archiving(self):
         study = self.root / 'study'
         study.mkdir()

@@ -7,6 +7,12 @@ Space, or turn a failed study into a qualified skill.
 Build the wheel and a `git archive` tar.gz from the reviewed source commit.
 The archive must retain Git's PAX commit comment. Both artifacts must contain
 the exact registered runtime bytes, including unchanged native scorers.
+The source-artifact limit is 1 GiB compressed, matching the uploader's per-file
+limit. The complete reviewed repository at `937d3e3` measured 653,980,983 bytes
+compressed and 779,972,592 regular-file bytes expanded; historical checked-in
+benchmarks account for most of it. No source files are omitted to fit a smaller
+archive. Independent expanded limits remain 2 GiB total, 256 MiB per member and
+50,000 members, with path, secret and runtime-identity checks unchanged.
 Provide the reviewed dataset card and the independently generated diagnostic
 audit. The audit's scope is explicitly the four diagnostic episodes.
 The optional `--phase-coverage` argument includes the diagnostic-only phase

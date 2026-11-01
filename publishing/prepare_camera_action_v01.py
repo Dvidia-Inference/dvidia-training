@@ -21,7 +21,10 @@ from huggingface.camera_action_hardware import MAX_BYTES as MAX_HARDWARE_BYTES, 
 
 SCHEMA = 'dvidia.camera-action-evidence/v1'
 MAX_FILE = 256 * 1024 ** 2
-MAX_SOURCE = 512 * 1024 ** 2
+# The complete reviewed repository includes historical benchmark evidence.
+# Keep this aligned with the uploader's per-file cap; expanded/member limits
+# remain independent below (2 GiB total, 256 MiB per member).
+MAX_SOURCE = 1024 ** 3
 MAX_EPISODE = 1024 ** 3
 MAX_TOTAL = 120 * 1024 ** 3
 DISK_RESERVE = 30 * 1024 ** 3
