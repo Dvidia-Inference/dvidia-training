@@ -154,6 +154,26 @@ class CameraStudioHTTPTests(unittest.TestCase):
         self.assertIsNone(state['summary']);self.assertIn('protocol changed',state['error'])
         self.assertEqual(self.request('/api/robot/install',self.payload())[0],400)
 
+    def test_terminal_worker_lock_allows_check_but_requires_recheck_before_execution(self):
+        lock=self.study/'worker.lock'
+        lock.write_text(json.dumps(dict(pid=999999,operation='collect')))
+        state=self.checked()
+        self.assertTrue(state['checked']);self.assertTrue(state['study_locked'])
+        self.assertEqual(state['study_worker_lock']['operation'],'collect')
+        self.assertFalse(state['can_run']);self.assertFalse(state['can_install'])
+        self.assertTrue(lock.exists())
+        # The test owns this fake lock; the implementation never removes it.
+        lock.unlink()
+        state=self.done();self.assertFalse(state['study_locked'])
+        self.assertTrue(state['recheck_required']);self.assertFalse(state['can_run'])
+        self.assertTrue(self.checked()['can_run'])
+
+    def test_new_terminal_lock_after_check_blocks_direct_run_request(self):
+        self.assertTrue(self.checked()['can_run'])
+        lock=self.study/'worker.lock';lock.write_text('{"operation":"collect"}')
+        code,result=self.request('/api/robot/run',self.payload())
+        self.assertEqual(code,400);self.assertIn('Terminal',result['error']);self.assertTrue(lock.exists())
+
     def test_worker_error_preserves_error_without_stale_success(self):
         def fail(*args):raise ValueError('Fake renderer unavailable')
         server=self.make_server(worker=fail)

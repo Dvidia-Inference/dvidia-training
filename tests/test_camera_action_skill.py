@@ -1,5 +1,6 @@
 """Data-only camera policy installation cannot grant success or change arms."""
 from copy import deepcopy
+from hashlib import sha256
 import json
 from pathlib import Path
 import tempfile
@@ -80,14 +81,23 @@ class CameraSkillTests(unittest.TestCase):
             self.assertEqual(kwargs['mode'], 'student')
             self.assertNotIn('teacher', kwargs)
             self.assertEqual(kwargs['case']['object_position_m'], [.30, -.03, .082])
+            self.assertEqual(kwargs['case']['policy_artifact_sha256'], sha256(self.raw).hexdigest())
             output.mkdir()
             (output/'integrity.json').write_text('{}')
+            (output/'rollout.json').write_text('{"fixture":true}')
             return {'strict_success': False, 'status': 'complete', 'reason': 'failed_task'}
         with patch('dvidia_training.camera_action_capture.run_rollout', side_effect=run):
             result = dispatch.run_installation(self.output, 'unused', out)
         self.assertFalse(result['success'])
-        self.assertEqual([p.name for p in out.iterdir()], ['integrity.json'])
+        self.assertEqual(sorted(p.name for p in out.iterdir()), ['integrity.json', 'rollout.json'])
         self.assertTrue((self.root/'attempt-installation.json').is_file())
+        link = json.loads((self.root/'attempt-installation.json').read_bytes())
+        self.assertEqual(link['rollout_sha256'], sha256((out/'rollout.json').read_bytes()).hexdigest())
+        self.assertEqual(link['integrity_sha256'], sha256((out/'integrity.json').read_bytes()).hexdigest())
+        with patch('dvidia_training.camera_action_capture.run_rollout') as runner:
+            with self.assertRaisesRegex(ValueError, 'fresh execution'):
+                dispatch.run_installation(self.output, 'unused', out)
+            runner.assert_not_called()
 
     def test_out_of_envelope_refuses_before_execution(self):
         dispatch.install_model(self.source, 'piper', 'unused', self.output)

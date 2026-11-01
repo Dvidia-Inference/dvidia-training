@@ -55,10 +55,15 @@ reported stage. Existing destination directories are never overwritten.
 
 The frozen RGB-D tracker receives current pixels, depth and calibration only.
 The policy receives a timestamped initial visual position, goal, elapsed time,
-encoders, encoder-derived tool pose, previous applied servo references and 160 ms
+encoders, encoder-derived link6 pose, previous applied servo references and 160 ms
 of causal history. Missing live estimates retain availability masks and source
 frame age; their numerical tensor fills are not measurements. Normalization uses
 training data, including these explicit missing fills and masks.
+
+The legacy `tcp_position_estimate_m` field represents the link6 body origin in
+this pilot. The native task scorer uses a distal site 0.12003 m along link6's
+local z axis. These are distinct points; the audit accounts for that fixed
+transform rather than treating the feature as a calibrated tool-tip estimate.
 
 The policy never receives native object/contact truth, teacher phase, current
 teacher target or future frames. Historical initial position is never copied into

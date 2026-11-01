@@ -15,6 +15,22 @@ import uuid
 SCHEMA = 'dvidia.camera-action-studio/v1'
 
 
+def _worker_lock(study):
+    """Read only the study's small lock record; never infer liveness or unlink it."""
+    path = Path(study)/'worker.lock'
+    if not path.exists() and not path.is_symlink():
+        return dict(present=False)
+    result = dict(present=True)
+    try:
+        if not path.is_symlink() and path.is_file() and path.stat().st_size <= 1024:
+            value = json.loads(path.read_text())
+            if type(value) is dict and isinstance(value.get('operation'), str):
+                result['operation'] = value['operation'][:80]
+    except (OSError, ValueError):
+        pass
+    return result
+
+
 def _local_path(value, label):
     if not isinstance(value, str) or not value.strip() or len(value) > 8192 or any(ord(c) < 32 for c in value):
         raise ValueError('Supply a local '+label+' folder.')
@@ -40,8 +56,10 @@ def check_study(study, assets):
     stage = state.get('report', {}).get('selected_stage')
     model = root/'models'/str(stage)/'full'/'model.json' if stage in ('initial', 'corrected') else None
     install_available = bool(state['status'] == 'complete' and model is not None and model.is_file() and not model.is_symlink())
+    worker_lock = _worker_lock(root)
     return dict(schema=SCHEMA, binding=binding, inspection=state, install_available=install_available,
-        selected_model=str(model) if install_available else None, physical_robot_ready=False)
+        selected_model=str(model) if install_available else None, study_locked=worker_lock['present'],
+        study_worker_lock=worker_lock, physical_robot_ready=False)
 
 
 def _write_progress(output, status, message, **extra):
@@ -67,6 +85,8 @@ def run_worker(kind, study, assets, output, expected_binding=None, installation=
         checked = check_study(study, assets)
         if expected_binding is not None and checked['binding'] != expected_binding:
             raise ValueError('The checked study, protocol or assets changed. Check the inputs again.')
+        if kind != 'check' and _worker_lock(study)['present']:
+            raise ValueError('This study has an existing worker lock. Wait for its Terminal run, then check the inputs again.')
         if kind == 'check':
             status = 'blocked' if checked['inspection']['status'] == 'blocked' else 'checked'
         elif kind == 'run':
@@ -130,6 +150,7 @@ class CameraActionStudio:
         self.worker = worker or run_worker
         self.checker = checker or check_study
         self.job = None; self.checked = None
+        self.external_lock_seen = False
 
     def refresh(self):
         job = self.job
@@ -148,6 +169,8 @@ class CameraActionStudio:
             else:
                 self.checked = verified
                 value.update(verified)
+                if job['kind'] == 'check':
+                    self.external_lock_seen = _worker_lock(job['study'])['present']
             job.update(status=value['status'], summary=value, error=None, finished=time.monotonic())
         except Exception as exc:
             self.checked = None
@@ -169,6 +192,8 @@ class CameraActionStudio:
                     if self.checked is None:
                         raise ValueError('Check the paired demonstrations and assets before continuing.')
                     verified = self.checker(study, assets)
+                    if self.external_lock_seen or _worker_lock(study)['present']:
+                        raise ValueError('Study running in Terminal or awaiting a fresh check. Recheck after its worker lock clears.')
                     if verified['binding'] != self.checked['binding']:
                         raise ValueError('The checked protocol or assets changed. Check the inputs again.')
                     if kind == 'run' and verified['inspection']['status'] != 'ready':
@@ -178,6 +203,7 @@ class CameraActionStudio:
                     binding = verified['binding']
                 elif kind == 'check':
                     self.checked = None
+                    self.external_lock_seen = False
                 else:
                     raise ValueError('Unknown robot studio action.')
             except (OSError, ValueError, RuntimeError):
@@ -209,6 +235,7 @@ class CameraActionStudio:
             footage_busy = self.server.job is not None and self.server.job['status'] == 'running'
             result = dict(schema=SCHEMA, status='idle', busy=footage_busy, job=None,
                 summary=None, error=None, checked=False, can_run=False, can_install=False,
+                study_locked=False, recheck_required=False, study_worker_lock=dict(present=False),
                 physical_robot_ready=False)
             if self.job is not None:
                 job = self.job
@@ -224,7 +251,14 @@ class CameraActionStudio:
                         elapsed_seconds=(job['finished'] or time.monotonic())-job['started'], progress=progress,
                         study=job['study'], assets=job['assets']))
             if self.checked is not None:
+                worker_lock = _worker_lock(self.checked['binding']['study'])
+                if worker_lock['present'] and not (self.job and self.job['status']=='running'):
+                    self.external_lock_seen = True
                 result.update(checked=True,
-                    can_run=not result['busy'] and self.checked['inspection']['status']=='ready',
-                    can_install=not result['busy'] and self.checked['install_available'])
+                    study_locked=worker_lock['present'], study_worker_lock=worker_lock,
+                    recheck_required=self.external_lock_seen,
+                    can_run=not result['busy'] and not self.external_lock_seen and not worker_lock['present']
+                        and self.checked['inspection']['status']=='ready',
+                    can_install=not result['busy'] and not self.external_lock_seen and not worker_lock['present']
+                        and self.checked['install_available'])
             return result

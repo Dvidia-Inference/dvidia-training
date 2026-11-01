@@ -111,21 +111,26 @@ def run(directory, assets, output, *, start_x=.30, start_y=-.03, goal=0):
     y = _point(start_y, 'start_y', *TRAINED_SCOPE['start_y_m'])
     if type(goal) is not int or goal not in (0, 1):
         raise ValueError('Select known goal 0 or 1.')
+    link = Path(output).with_name(Path(output).name+'-installation.json')
+    if link.exists() or link.is_symlink():
+        raise ValueError('Use a fresh execution path and installation link.')
     raw = _read(Path(directory)/'model.json', MAX_MODEL_BYTES)
     if sha256(raw).hexdigest() != record['compatibility']['model_sha256']:
         raise ValueError('Model changed before execution.')
     policy = model_api.ModelPolicy(model_api.validate_model(raw))
     case = dict(id=f'installed-camera-goal{goal}', group_id='installed-camera-example', seed=311499,
+                policy_artifact_sha256=record['compatibility']['model_sha256'],
                 object_position_m=[x, y, .082],
                 goal_position_m=[*TRAINED_SCOPE['known_goals_xy_m'][goal], .08])
     report = run_rollout(assets, output, case=case, mode='student', policy=policy)
     result = dict(success=report['strict_success'], reason=report['reason'], status=report['status'],
                   model_sha256=record['compatibility']['model_sha256'],
                   installation_sha256=record['installation_sha256'],
+                  rollout_sha256=sha256((Path(output)/'rollout.json').read_bytes()).hexdigest(),
+                  integrity_sha256=sha256((Path(output)/'integrity.json').read_bytes()).hexdigest(),
                   physical_robot_ready=False, report=report)
     # The raw rollout stays sealed. Its installation link is adjacent, not an
     # unregistered file added to its evidence inventory.
-    link = Path(output).with_name(Path(output).name+'-installation.json')
     with link.open('xb') as stream:
         stream.write(canonical({key: value for key, value in result.items() if key != 'report'})+b'\n')
     return result
