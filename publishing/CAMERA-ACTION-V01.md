@@ -48,12 +48,45 @@ and rejects hostname, serial, account or other arbitrary fields. The entire
 JSON must fit within 16 KiB. These details describe the measured run; they do
 not establish minimum hardware requirements or physical sensor latency.
 
+Generate the dataset and individual model cards from the same stopped study,
+posthoc summary and reviewed source commit. The renderer requires the full-study
+audit for a completed study. Supply identical optional hardware and phase proofs
+to rendering and preparation:
+
+```sh
+PYTHONPATH=src python publishing/render_camera_action_card.py \
+  --study /absolute/stopped-study --summary /absolute/summary.json \
+  --study-audit /absolute/full-study-audit.json \
+  --source-commit EXACT_40_CHARACTER_COMMIT --output /absolute/generated-cards
+```
+
+Pass the **generated output directory** to `--model-cards`, and its `README.md`
+to `--card`. Preparation checks the exact file roster, model identities and
+selection, generator/source bindings and receipt, and regenerates all card text
+from sealed evidence before copying it. The generated directory retains the
+original `summary.json` bytes: preparation verifies their receipt identity and
+reconstructs their numerical content. This local input is not a separate public
+payload artifact. The supplied source archive must contain the exact renderer,
+summary helper and optional phase helper named by the receipt. This includes
+`model-cards/{initial|corrected}/{full|blind}/README.md` and the bound
+`model-cards-receipt.json` in the Hugging Face payload; model JSON remains under
+`models/`. All trained comparison candidates have cards, even when not selected.
+A blocked study with no fitted models has an empty model-card roster, never
+invented model artifacts. Existing directories are not overwritten. Omitting
+the optional flag preserves the historical dataset-card-only packaging path.
+The generated dataset card puts the minimal selected-model installation first:
+download its JSON and the released wheel, verify the model hash, provision the
+PiPER assets, then check/install/run locally. The raw corpus and source archive
+are required only for the separate full-study reproduction instructions.
+
 ```sh
 PYTHONPATH=src python publishing/prepare_camera_action_v01.py \
   --study /absolute/stopped-study \
   --output /absolute/new-publication-directory \
   --audit /absolute/diagnostic-audit.json \
-  --card /absolute/README.md \
+  --study-audit /absolute/full-study-audit.json \
+  --card /absolute/generated-cards/README.md \
+  --model-cards /absolute/generated-cards \
   --wheel /absolute/dvidia_training.whl \
   --source-archive /absolute/reviewed-source.tar.gz \
   --source-commit EXACT_40_CHARACTER_COMMIT

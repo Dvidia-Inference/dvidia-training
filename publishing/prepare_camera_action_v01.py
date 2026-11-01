@@ -352,7 +352,111 @@ def verify_audit_source_archive(source_archive, proof):
                 raise ValueError('Reviewed source archive differs from the independent audit implementation.')
 
 
-def prepare(study, output, *, audit, card, wheel, source_archive, source_commit, phase_coverage=None, study_audit=None, hardware=None, episode_cache=None):
+def verify_card_source_archive(source_archive, receipt):
+    """Bind the generated text's implementations to the actual reviewed archive."""
+    sources = receipt['source_inputs']
+    expected = {'publishing/render_camera_action_card.py': sources['generator.py'],
+        'benchmarks/camera-action-v01/summarize_results.py': sources['summarize_results.py']}
+    if 'diagnostic_phase_coverage.py' in sources:
+        expected['benchmarks/camera-action-v01/diagnostic_phase_coverage.py'] = sources['diagnostic_phase_coverage.py']
+    with tarfile.open(source_archive, 'r:*') as archive:
+        members = archive.getmembers()
+        for name, record in expected.items():
+            matches = [m for m in members if m.name == name or m.name.endswith('/' + name)]
+            if len(matches) != 1 or not matches[0].isfile() or matches[0].size != record['bytes'] or matches[0].size > MAX_FILE:
+                raise ValueError('Reviewed source archive must contain each card implementation exactly once with its bound size.')
+            with archive.extractfile(matches[0]) as stream:
+                digest = sha256()
+                for chunk in iter(lambda: stream.read(1024*1024), b''): digest.update(chunk)
+            if digest.hexdigest() != record['sha256']:
+                raise ValueError('Reviewed source archive differs from the bound card implementation.')
+
+
+def checked_model_cards(directory, *, study, card, source_commit, state, protocol, receipts,
+                        metadata, models, audit, study_audit=None, hardware=None, phase_coverage=None):
+    """Regenerate reviewed card text from sealed facts before admitting any file."""
+    import render_camera_action_card as renderer
+    from huggingface.camera_action_model_cards import (
+        MAX_CARD_BYTES, MAX_RECEIPT_BYTES, RECEIPT_FILE, validate_receipt)
+    from dvidia_training.camera_action_model import validate_model
+    directory = plain(directory)
+    receipt_path = directory / 'card-receipt.json'
+    receipt_identity = identity(receipt_path, maximum=MAX_RECEIPT_BYTES, secret_scan=True)
+    receipt = read(receipt_path)
+    model_identities = {name: metadata[name] for name in models}
+    names = validate_receipt(receipt, source_commit=source_commit,
+        protocol_sha256=metadata['protocol.json']['sha256'], report_sha256=metadata['report.json']['sha256'],
+        report=state['report'], models=model_identities)
+    expected_files = set(names) | {'README.md', 'card-receipt.json', 'summary.json'}
+    if {p.relative_to(directory).as_posix() for p in files(directory)} != expected_files:
+        raise ValueError('Generated card directory contains missing or arbitrary files.')
+    expected_directories = {str(parent) for name in names for parent in Path(name).parents if str(parent) != '.'}
+    if {p.relative_to(directory).as_posix() for p in directory.rglob('*') if p.is_dir()} != expected_directories:
+        raise ValueError('Generated card directory contains arbitrary empty directories.')
+    bindings = {name: metadata[name] for name in ('protocol.json', 'registration.json', 'report.json')}
+    for stage in receipts:
+        for suffix in ('.json', '.integrity.json', '.started.json'):
+            name = 'stages/' + stage + suffix
+            bindings[name] = metadata[name]
+    if state['report'].get('selected_stage') is not None:
+        bindings['freeze.json'] = metadata['freeze.json']
+    records = []
+    for name in models:
+        _, stage, variant, _ = name.split('/')
+        training = receipts['train-' + stage]['models'][variant]
+        model = validate_model(read(study / name))
+        for filename in ('model.json', 'receipt.json', 'started.json'):
+            path = f'models/{stage}/{variant}/{filename}'
+            bindings[path] = metadata[path]
+        if (training['path'] != name or training['model_sha256'] != metadata[name]['sha256']
+                or training['model_bytes'] != metadata[name]['bytes']
+                or read(study / f'models/{stage}/{variant}/receipt.json') != training
+                or model['training'] != training.get('training') or model['training']['stage'] != stage
+                or model['blind'] is not (variant == 'blind')):
+            raise ValueError('Generated card model differs from sealed fitting evidence.')
+        records.append(dict(stage=stage, variant=variant, path=name, identity=metadata[name],
+            selected=state['report'].get('selected_stage') == stage, training=training, model=model))
+    records.sort(key=lambda r: (('initial', 'corrected').index(r['stage']), ('full', 'blind').index(r['variant'])))
+    if receipt['study_bindings'] != bindings:
+        raise ValueError('Generated card study bindings differ from current sealed evidence.')
+    sources = {'summary.json': identity(directory / 'summary.json', secret_scan=True),
+               'generator.py': identity(Path(renderer.__file__)),
+               'summarize_results.py': identity(renderer.SUMMARY_SOURCE)}
+    for name, path in (('hardware.json', hardware), ('full-study-audit.json', study_audit),
+                      ('diagnostic-phase-coverage.json', phase_coverage)):
+        if path is not None:
+            sources[name] = identity(path)
+    if 'independent-audit.json' in receipt['source_inputs']:
+        sources['independent-audit.json'] = identity(audit)
+    if phase_coverage is not None:
+        sources['diagnostic_phase_coverage.py'] = identity(renderer.PHASE_SOURCE)
+    if receipt['source_inputs'] != sources:
+        raise ValueError('Generated card generator or auxiliary source bindings changed.')
+    summary = renderer.recompute_summary(study)
+    if read(directory / 'summary.json') != summary:
+        raise ValueError('Retained card summary differs from fresh sealed-evidence reconstruction.')
+    data = dict(study=study, source_commit=source_commit, state=state, protocol=protocol,
+        report=state['report'], receipts=receipts, summary=summary, models=records,
+        hardware=read(hardware) if hardware is not None else None,
+        audit=read(study_audit) if study_audit is not None else None,
+        phase=read(phase_coverage) if phase_coverage is not None else None, study_bindings=bindings)
+    texts = {'README.md': renderer.dataset_card(data)}
+    texts.update({f"model-cards/{r['stage']}/{r['variant']}/README.md": renderer.model_card(data, r) for r in records})
+    verified = {}
+    for name, text in texts.items():
+        actual = identity(directory / name, maximum=MAX_CARD_BYTES, secret_scan=True)
+        raw = text.encode()
+        if actual != receipt['files'][name] or actual != dict(bytes=len(raw), sha256=sha256(raw).hexdigest()):
+            raise ValueError('Generated card bytes differ from fresh sealed-evidence rendering.')
+        if name != 'README.md':
+            verified[name] = actual
+    if identity(card, maximum=MAX_CARD_BYTES, secret_scan=True) != receipt['files']['README.md']:
+        raise ValueError('Selected dataset README differs from the generated card receipt.')
+    verified[RECEIPT_FILE] = receipt_identity
+    return dict(directory=directory, files=verified, cards=names, receipt_file=RECEIPT_FILE, receipt=receipt)
+
+
+def prepare(study, output, *, audit, card, wheel, source_archive, source_commit, phase_coverage=None, study_audit=None, hardware=None, episode_cache=None, model_cards=None):
     from dvidia_training import camera_action_study as workflow
     study, output = plain(study), plain(output)
     if output.exists() or output == study or output.is_relative_to(study):
@@ -451,6 +555,11 @@ def prepare(study, output, *, audit, card, wheel, source_archive, source_commit,
     raw_bytes = sum(v['bytes'] for inventory in all_expected.values() for v in inventory.values())
     if raw_bytes > MAX_TOTAL:
         raise ValueError('Study exceeds the registered raw evidence budget.')
+    checked_cards = checked_model_cards(model_cards, study=study, card=card, source_commit=source_commit,
+        state=state, protocol=protocol, receipts=receipts, metadata=metadata, models=models,
+        audit=audit, study_audit=study_audit, hardware=hardware, phase_coverage=phase_coverage) if model_cards is not None else None
+    if checked_cards is not None:
+        verify_card_source_archive(source_archive, checked_cards['receipt'])
     output.mkdir(parents=True)
     inventory = {}
     repo = Path(__file__).resolve().parents[1]
@@ -490,6 +599,13 @@ def prepare(study, output, *, audit, card, wheel, source_archive, source_commit,
         print(json.dumps(dict(stage='archive_verified', episode=row['id'], bytes=sealed['bytes'])), flush=True)
     for name in models:
         inventory[name] = _copy(study / name, output / name)
+    if checked_cards is not None:
+        for name, expected in checked_cards['files'].items():
+            source = checked_cards['directory'] / ('card-receipt.json' if name == checked_cards['receipt_file'] else name)
+            actual = _copy(source, output / name)
+            if actual != expected:
+                raise ValueError('Generated card changed during publication preparation.')
+            inventory[name] = actual
     value = dict(schema=SCHEMA, repo_id='Dvidia/piper-camera-action-v01', repo_type='dataset',
         source_commit=source_commit, registered_runtime_sha256=protocol['source_sha256'],
         status=state['report']['status'], pipeline_status=state['status'],
@@ -500,6 +616,8 @@ def prepare(study, output, *, audit, card, wheel, source_archive, source_commit,
             'Four diagnostic episodes only. Other shards are checked against sealed manifests; this is not a full-study independent audit.'),
         raw_evidence_bytes=raw_bytes, episode_count=len(episode_rows), episodes=episode_rows,
         trained_model_files=models, files=inventory,
+        model_card_files=checked_cards['cards'] if checked_cards is not None else [],
+        model_card_receipt_file=checked_cards['receipt_file'] if checked_cards is not None else None,
         hardware_context_file='hardware.json' if hardware is not None else None,
         reconstruction='Extract study-metadata.zip and every episodes/**/*.zip into one new directory. Compare SHA256SUMS first. Each recording retains its original integrity.json.',
         archive_format=f'ZIP64, sorted members, 1980 timestamp, regular 0644 files; all members read back byte-for-byte. Fresh archives use deterministic DEFLATE level {ZIP_LEVEL}. Reused cache archives have verified DEFLATE streams but their compression level is not inferable and is recorded as null.')
@@ -526,12 +644,13 @@ def main(argv=None):
     parser.add_argument('--study-audit', help='Optional independent audit of all sealed study stages, byte-bound to this stopped study.')
     parser.add_argument('--hardware', help='Optional bounded public hardware/software and timing-scope JSON; no hostname or serial fields.')
     parser.add_argument('--episode-cache', help='Optional separately stored ZIP cache; source bytes and every cached member are independently verified.')
+    parser.add_argument('--model-cards', help='Generated card output directory containing README.md, card-receipt.json and the exact model-cards tree.')
     args = parser.parse_args(argv)
     try:
         print(json.dumps(prepare(args.study, args.output, audit=args.audit, card=args.card,
             wheel=args.wheel, source_archive=args.source_archive, source_commit=args.source_commit,
             phase_coverage=args.phase_coverage, study_audit=args.study_audit, hardware=args.hardware,
-            episode_cache=args.episode_cache), indent=2))
+            episode_cache=args.episode_cache, model_cards=args.model_cards), indent=2))
         return 0
     except (ValueError, OSError, KeyError, TypeError, zipfile.BadZipFile, tarfile.TarError) as exc:
         print(json.dumps(dict(status='refused', reason=str(exc))))

@@ -60,6 +60,8 @@ class CardTests(unittest.TestCase):
         self.assertFalse(receipt['physics_executed'])
         self.assertTrue(receipt['summary_reconstructed'])
         self.assertEqual(receipt['files']['README.md'], cards.evidence.identity(self.base / 'cards/README.md'))
+        self.assertEqual((self.base / 'cards/summary.json').read_bytes(), self.summary.read_bytes())
+        self.assertEqual(receipt['source_inputs']['summary.json'], cards.evidence.identity(self.base / 'cards/summary.json'))
 
     def test_fabricated_success_or_latency_summary_is_refused_before_output(self):
         value = study.read(self.summary)
@@ -73,6 +75,19 @@ class CardTests(unittest.TestCase):
         self.summary.write_text(json.dumps(value))
         with self.assertRaisesRegex(ValueError, 'fresh read-only reconstruction'):
             self.render()
+
+    def test_retained_summary_growth_is_refused_before_writing_excess_bytes(self):
+        original = self.summary.read_bytes()
+        identity = cards.evidence.identity
+        def grow_after_identity(path, **kwargs):
+            record = identity(path, **kwargs)
+            if Path(path) == self.summary:
+                self.summary.write_bytes(original + b' ' * (1024 * 1024))
+            return record
+        with patch.object(cards.evidence, 'identity', side_effect=grow_after_identity), \
+                self.assertRaisesRegex(ValueError, 'Summary grew'):
+            self.render()
+        self.assertLessEqual((self.base / 'cards/summary.json').stat().st_size, len(original))
 
     def test_running_worker_and_unsealed_partial_study_are_not_publishable(self):
         (self.root / 'worker.lock').write_text('{}')
@@ -207,6 +222,12 @@ class CardTests(unittest.TestCase):
         self.assertIn('5' * 64, text)
         self.assertIn('models/initial/full/model.json', text)
         self.assertIn('simulation candidate', text)
+        self.assertIn('[selected full-feedback model](models/initial/full/model.json)', text)
+        self.assertIn("pip install '/path/to/downloaded-wheel.whl[arm]'", text)
+        self.assertIn("printf '%s  model.json\\n' '" + '4'*64 + "' | shasum -a256 -c -", text)
+        self.assertIn('The raw episode corpus and source archive are not needed', text)
+        self.assertLess(text.index('## Try the selected simulation candidate'), text.index('## Reproduce the complete study'))
+        self.assertEqual(text.count('dvidia-arm install --model'), 1)
         model = cards.model_card(data, data['models'][1])
         self.assertIn('matched blind baseline', model)
         self.assertIn('live and historical sensor-feedback tensor channels are masked', model)

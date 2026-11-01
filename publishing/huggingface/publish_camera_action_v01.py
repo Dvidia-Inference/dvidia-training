@@ -22,6 +22,7 @@ import tempfile
 from publish import PublicationError, client
 from publish_task_environments_v02 import encoded, plain, public_client, relative, scan
 from camera_action_hardware import MAX_BYTES as MAX_HARDWARE_BYTES, validate_hardware
+from camera_action_model_cards import RECEIPT_FILE, MAX_RECEIPT_BYTES, validate_receipt
 
 REPO = 'Dvidia/piper-camera-action-v01'
 SCHEMA = 'dvidia.camera-action-publication/v1'
@@ -76,9 +77,10 @@ def read(path):
 
 def allowed(name):
     relative(name)
-    return (name in REQUIRED or name in ('diagnostic-phase-coverage.json', 'full-study-audit.json', 'hardware.json')
+    return (name in REQUIRED or name in ('diagnostic-phase-coverage.json', 'full-study-audit.json', 'hardware.json', RECEIPT_FILE)
         or re.fullmatch(r'episodes/[a-z-]+/[a-z0-9-]+\.zip', name) is not None
         or re.fullmatch(r'models/(initial|corrected)/(full|blind)/model\.json', name) is not None
+        or re.fullmatch(r'model-cards/(initial|corrected)/(full|blind)/README\.md', name) is not None
         or re.fullmatch(r'source/[A-Za-z0-9_.+-]+\.(whl|tar\.gz)', name) is not None)
 
 
@@ -122,6 +124,9 @@ def files(root):
             observed.append(path.relative_to(root).as_posix())
     if not 10 <= len(observed) <= 1024 or set(observed) != set(expected) | {'manifest.json', 'SHA256SUMS'}:
         raise PublicationError('Public file roster differs from the reviewed manifest.')
+    # Match the writer's POSIX-name order, including model-cards/ versus
+    # model-cards-receipt.json (Path component ordering differs here).
+    observed.sort()
     source_files = [name for name in expected if name.startswith('source/')]
     if len(source_files) != 2 or sum(name.endswith('.whl') for name in source_files) != 1 or sum(name.endswith('.tar.gz') for name in source_files) != 1:
         raise PublicationError('Exact source archive and installable wheel are required.')
@@ -136,6 +141,33 @@ def files(root):
     if (report.get('qualification') != manifest.get('qualification') or report.get('qualified') is not manifest['qualified']
             or report.get('physical_robot_ready') is not False or report.get('status') != manifest['status']):
         raise PublicationError('Public report and qualification manifest disagree.')
+    card_files = {name for name in expected if name.startswith('model-cards/')}
+    declared_cards = manifest.get('model_card_files', [])
+    card_receipt = manifest.get('model_card_receipt_file')
+    if card_receipt is None:
+        if declared_cards or card_files or RECEIPT_FILE in expected:
+            raise PublicationError('Model cards require their explicit receipt and manifest bindings.')
+    else:
+        if card_receipt != RECEIPT_FILE or RECEIPT_FILE not in expected:
+            raise PublicationError('Model-card receipt path differs from its manifest binding.')
+        identity(root / RECEIPT_FILE, maximum=MAX_RECEIPT_BYTES)
+        receipt = read(root / RECEIPT_FILE)
+        try:
+            required_cards = validate_receipt(receipt, source_commit=manifest.get('source_commit'),
+                protocol_sha256=expected['protocol.json']['sha256'], report_sha256=expected['report.json']['sha256'],
+                report=report, models={name: expected[name] for name in manifest['trained_model_files']})
+        except (ValueError, KeyError, TypeError) as exc:
+            raise PublicationError('Model-card receipt differs from the public models or report.') from exc
+        if (declared_cards != required_cards or card_files != set(required_cards)
+                or any(receipt['files'][name] != expected[name] for name in ['README.md', *required_cards])
+                or any(receipt['study_bindings'][name] != expected[name]
+                    for name in ('protocol.json', 'registration.json', 'report.json'))
+                or any(receipt['source_inputs'].get(name) != expected.get(name)
+                    for name in ('hardware.json', 'full-study-audit.json', 'diagnostic-phase-coverage.json'))
+                or ('independent-audit.json' in receipt['source_inputs'] and
+                    receipt['source_inputs']['independent-audit.json'] != expected.get('independent-audit.json'))
+                or receipt['full_study_audited'] is not ('full-study-audit.json' in expected)):
+            raise PublicationError('Model-card files or provenance differ from the publication manifest.')
     if manifest['qualified']:
         if 'full-study-audit.json' not in expected:
             raise PublicationError('A qualified skill requires the full-study independent audit.')
