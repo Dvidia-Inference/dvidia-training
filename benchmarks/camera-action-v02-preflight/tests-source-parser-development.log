@@ -1,0 +1,64 @@
+Development-only failing test log; local checkout path redacted. Corrected before the sealed numerical run.
+
+test_all_negative_contract_and_authority_cases_rejected (test_preflight.NumericalTests.test_all_negative_contract_and_authority_cases_rejected) ... ok
+test_authority_is_previous_applied_reference_not_measured_position (test_preflight.NumericalTests.test_authority_is_previous_applied_reference_not_measured_position) ... ok
+test_both_bound_directions_and_mixed_axes_equivalent (test_preflight.NumericalTests.test_both_bound_directions_and_mixed_axes_equivalent) ... ok
+test_delta_decode_uses_previous_reference_and_physical_allowance (test_preflight.NumericalTests.test_delta_decode_uses_previous_reference_and_physical_allowance) ... ok
+test_future_or_teacher_reference_cannot_be_substituted (test_preflight.NumericalTests.test_future_or_teacher_reference_cannot_be_substituted) ... ok
+test_generated_vectors_are_deterministic_and_separate_from_episodes (test_preflight.NumericalTests.test_generated_vectors_are_deterministic_and_separate_from_episodes) ... ok
+test_inputs_are_not_mutated (test_preflight.NumericalTests.test_inputs_are_not_mutated) ... ok
+test_inside_one_microstep_target_reaches_and_holds (test_preflight.NumericalTests.test_inside_one_microstep_target_reaches_and_holds) ... ok
+test_microstep_history_not_only_endpoint_compared (test_preflight.NumericalTests.test_microstep_history_not_only_endpoint_compared) ... ok
+test_no_extra_truth_or_reference_inputs (test_preflight.NumericalTests.test_no_extra_truth_or_reference_inputs) ... ok
+test_no_native_import (test_preflight.NumericalTests.test_no_native_import) ... ok
+test_no_silent_clipping_of_invalid_targets (test_preflight.NumericalTests.test_no_silent_clipping_of_invalid_targets) ... ok
+test_no_silent_joint_reordering (test_preflight.NumericalTests.test_no_silent_joint_reordering) ... ok
+test_random_cases_include_target_reached_and_rate_limited (test_preflight.NumericalTests.test_random_cases_include_target_reached_and_rate_limited) ... ok
+test_stationary_reference_is_stationary (test_preflight.NumericalTests.test_stationary_reference_is_stationary) ... ok
+test_twenty_monotone_reference_steps_keep_original_rates (test_preflight.NumericalTests.test_twenty_monotone_reference_steps_keep_original_rates) ... ok
+test_changed_native_limiter_source_rejected (test_preflight.SourceBindingTests.test_changed_native_limiter_source_rejected) ... ok
+test_changed_xml_rejected_before_any_step (test_preflight.SourceBindingTests.test_changed_xml_rejected_before_any_step) ... FAIL
+test_existing_output_refused_without_rewrite (test_preflight.SourceBindingTests.test_existing_output_refused_without_rewrite) ... FAIL
+test_original_sources_and_xml_bind (test_preflight.SourceBindingTests.test_original_sources_and_xml_bind) ... ERROR
+
+======================================================================
+ERROR: test_original_sources_and_xml_bind (test_preflight.SourceBindingTests.test_original_sources_and_xml_bind)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/benchmarks/camera-action-v02-preflight/test_preflight.py", line 143, in test_original_sources_and_xml_bind
+    compiled, bindings = p.load_bindings(REPO, self.xml)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<checkout>/benchmarks/camera-action-v02-preflight/preflight.py", line 144, in load_bindings
+    raise ValueError('Expected one original native stepping loop.')
+ValueError: Expected one original native stepping loop.
+
+======================================================================
+FAIL: test_changed_xml_rejected_before_any_step (test_preflight.SourceBindingTests.test_changed_xml_rejected_before_any_step)
+----------------------------------------------------------------------
+ValueError: Expected one original native stepping loop.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<checkout>/benchmarks/camera-action-v02-preflight/test_preflight.py", line 153, in test_changed_xml_rejected_before_any_step
+    with self.assertRaisesRegex(ValueError, 'XML differs'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "XML differs" does not match "Expected one original native stepping loop."
+
+======================================================================
+FAIL: test_existing_output_refused_without_rewrite (test_preflight.SourceBindingTests.test_existing_output_refused_without_rewrite)
+----------------------------------------------------------------------
+ValueError: Expected one original native stepping loop.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<checkout>/benchmarks/camera-action-v02-preflight/test_preflight.py", line 171, in test_existing_output_refused_without_rewrite
+    with self.assertRaisesRegex(ValueError, 'output must be new'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "output must be new" does not match "Expected one original native stepping loop."
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.657s
+
+FAILED (failures=2, errors=1)

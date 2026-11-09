@@ -6,6 +6,14 @@
 
 [Recorded demo](https://huggingface.co/spaces/Dvidia/dvidia-training) · [Synthetic datasets](https://huggingface.co/datasets/Dvidia/dvidia-training-examples) · [Pilot models](https://huggingface.co/Dvidia/dvidia-training-pilot)
 
+**[Verified local learning cache](docs/camera-action-export-cache-v01.md).**
+The **0.1.3.dev5 preview** adds `dvidia-train cache` to reuse verified camera/action
+features with caller-pinned data, split and source identities. On one 1,000-sample
+training episode, validated loads took a median **2.952 ms**, versus **1.636 s**
+for strict raw export; numeric values and model dataset identity were unchanged.
+Cache hits verify derived bytes, not raw recordings. This speeds repeated local
+data preparation; it does not improve the frozen **5/64** placement result.
+
 **[Camera-to-action skill v0.1](docs/camera-action-v01.md).**
 The **0.1.3.dev4 preview** adds a local demonstration-to-action learning loop:
 25 Hz RGB-D, 50 Hz measured joints and demonstrated targets, a compact CPU
