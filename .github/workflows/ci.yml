@@ -152,7 +152,7 @@ jobs:
       - name: Test profile contracts against pinned native assets
         env:
           DVIDIA_ROBOT_PROFILE_ASSETS: runs/robot-profile-assets-ci
-        run: python -m unittest tests.test_robot_profiles tests.test_piper_task tests.test_piper_task_benchmark tests.test_piper_grip_guard tests.test_piper_grip_benchmark tests.test_piper_contact_memory tests.test_piper_contact_benchmark tests.test_piper_contact_recovery tests.test_piper_recovery_benchmark -v
+        run: python -m unittest tests.test_robot_profiles tests.test_piper_task tests.test_piper_task_benchmark tests.test_piper_grip_guard tests.test_piper_grip_benchmark tests.test_piper_contact_memory tests.test_piper_contact_benchmark tests.test_piper_contact_recovery tests.test_piper_recovery_benchmark tests.test_piper_encoder_kinematics -v
       - name: Test reusable shoe assets and scene previews
         env:
           DVIDIA_ASSET_PREVIEW_TEST_ASSETS: runs/robot-profile-assets-ci
