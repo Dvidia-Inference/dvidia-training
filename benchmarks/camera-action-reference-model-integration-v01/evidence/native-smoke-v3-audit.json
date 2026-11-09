@@ -1,0 +1,2238 @@
+{
+  "attempts": [
+    {
+      "camera_pairs": 501,
+      "case": {
+        "goal_id": 0,
+        "goal_position_m": [
+          0.35,
+          0.08,
+          0.08
+        ],
+        "group_id": "development-00",
+        "id": "development-00-goal0",
+        "object_position_m": [
+          0.303692,
+          -0.033335,
+          0.082
+        ],
+        "seed": 311465,
+        "split": "development"
+      },
+      "files_verified": 5010,
+      "frame_bytes": 168843964,
+      "guard": {
+        "checks": 1000,
+        "forwarded_calls": 1000,
+        "guard_wall_seconds": 0.00523591969977133,
+        "minimum_free_bytes": 40582459392,
+        "scope": "Once per simulated20ms callback, not a wall-clock50Hz monitor; no task features changed.",
+        "stop_reason": null
+      },
+      "id": "development-00-goal0-absolute",
+      "inspection": {
+        "files_verified": 5010,
+        "physical_robot_ready": false,
+        "physics_executed": false,
+        "recorded_complete_intervals": 1000,
+        "schema": "dvidia.camera-action-rollout/v2/inspection",
+        "score": {
+          "evidence_scope": "Recomputed simulator-authored numeric evidence; no physics rerun, source attestation or hardware sensing.",
+          "false_alarms": {
+            "reason": "Continuous residual policy has no declared discrete alarm events.",
+            "status": "not_applicable"
+          },
+          "grip_events": [
+            {
+              "kind": "supported_grip_interruption",
+              "loss_onset_s": 12.229999999998661,
+              "loss_qualified_s": 12.24899999999865,
+              "onset_to_qualified_restoration_s": null,
+              "onset_to_restoration_s": null,
+              "relative_motion_since_loss_m": 0.037587862924821816,
+              "restoration_onset_s": null,
+              "restoration_qualified_s": null,
+              "restored": false,
+              "supported_at_onset": true
+            }
+          ],
+          "grip_summary": {
+            "airborne_events": 0,
+            "loss_events": 1,
+            "qualification_latency_s": [],
+            "restored_events": 0,
+            "supported_events": 1,
+            "unresolved_events": 1
+          },
+          "native_diagnostics": {
+            "premature_open_jaw": {
+              "count": 0,
+              "intervals": [],
+              "maximum_s": 0.0,
+              "total_s": 0.0
+            },
+            "support_touchdown_before_destination": {
+              "count": 0,
+              "intervals": [],
+              "maximum_s": 0.0,
+              "total_s": 0.0
+            }
+          },
+          "native_metrics_mismatches": [],
+          "native_recomputed": {
+            "carry_complete": false,
+            "carry_contact_loss_events": 0,
+            "dwell_seconds": 0.0,
+            "first_success_time_seconds": null,
+            "grasp_seen": true,
+            "lift_dwell_seconds": 0.0,
+            "lift_seen": false,
+            "max_carry_contact_loss_seconds": 0.0,
+            "max_object_lift_m": 0.003952023743962793,
+            "max_pad_normal_force_n": 2.795753702369255,
+            "retention_lost": false,
+            "success": false,
+            "unexpected_contact_native_ticks": 7454
+          },
+          "reason": "native_outcome_failed",
+          "restoration_scope": "Loaded contact restored for 100 ms after sustained loss; does not establish task recovery or airborne regrasp.",
+          "schema": "dvidia.piper-feedback-score/v1",
+          "strict_v01": {
+            "native_metrics_source": "simulator-authored episode record; not authenticated sensor input",
+            "native_outcome_success": false,
+            "native_outcome_valid": true,
+            "reason": "native_outcome_failed",
+            "reference_xy_m": [
+              0.35,
+              0.08
+            ],
+            "required_dwell_s": 0.25,
+            "required_lift_dwell_s": 0.1,
+            "sample_interval_s": 0.02,
+            "success": false,
+            "terminal_dwell_s": 0.0,
+            "terminal_reference_success": false,
+            "terminal_xy_error_m": 0.13859914919704855,
+            "trace_lift_dwell_s": 0.0,
+            "trajectory_complete": true
+          },
+          "success": false,
+          "terminal_only": {
+            "dwell_s": 0.0,
+            "scope": "Terminal-only geometry/release/settling/dwell; excludes lift, carry and retention history.",
+            "success": false,
+            "terminal_xy_error_m": 0.13859914919704855
+          },
+          "valid": true
+        },
+        "source_authenticated": false,
+        "status": "complete",
+        "strict_success": false
+      },
+      "integrity_file": {
+        "bytes": 567674,
+        "sha256": "714cc6d64114af14d9d75967c57f7f977ed0c40df9ea87e601f3836eee99990a"
+      },
+      "perception": {
+        "available": 384,
+        "decisions": 1000,
+        "longest_missing_seconds": 12.120000000000001,
+        "missing": 616
+      },
+      "policy": {
+        "model_sha256": "36af3fe1670494b04c48b5114d9be1a5f91632aa7992ba529d6587969ea37460",
+        "physical_robot_ready": false,
+        "policy_origin": "camera_encoder_reference_endpoint_numpy_mlp",
+        "runtime_teacher_available": false,
+        "student_inference_calls": 1000,
+        "student_inference_p95_seconds": 0.00026722680195234716,
+        "student_inference_seconds": 0.23363784674438648,
+        "task_qualified": false,
+        "teacher_fallback_calls": 0,
+        "timing_scope": "Causal feature encoding, NumPy inference and reference projection; excludes camera/render/actuation.",
+        "variant": "absolute"
+      },
+      "qualified": false,
+      "recorded_complete_intervals": 1000,
+      "rollout_error": null,
+      "rollout_file": {
+        "bytes": 326965,
+        "sha256": "1104da3991eb6c3872c85c46eec6d4a5dcb89c0a10752d57c5ebc8071b14dee9"
+      },
+      "rollout_status": "complete",
+      "rollout_wall_seconds": 12.169444583007134,
+      "score": {
+        "evidence_scope": "Recomputed simulator-authored numeric evidence; no physics rerun, source attestation or hardware sensing.",
+        "false_alarms": {
+          "reason": "Continuous residual policy has no declared discrete alarm events.",
+          "status": "not_applicable"
+        },
+        "grip_events": [
+          {
+            "kind": "supported_grip_interruption",
+            "loss_onset_s": 12.229999999998661,
+            "loss_qualified_s": 12.24899999999865,
+            "onset_to_qualified_restoration_s": null,
+            "onset_to_restoration_s": null,
+            "relative_motion_since_loss_m": 0.037587862924821816,
+            "restoration_onset_s": null,
+            "restoration_qualified_s": null,
+            "restored": false,
+            "supported_at_onset": true
+          }
+        ],
+        "grip_summary": {
+          "airborne_events": 0,
+          "loss_events": 1,
+          "qualification_latency_s": [],
+          "restored_events": 0,
+          "supported_events": 1,
+          "unresolved_events": 1
+        },
+        "native_diagnostics": {
+          "premature_open_jaw": {
+            "count": 0,
+            "intervals": [],
+            "maximum_s": 0.0,
+            "total_s": 0.0
+          },
+          "support_touchdown_before_destination": {
+            "count": 0,
+            "intervals": [],
+            "maximum_s": 0.0,
+            "total_s": 0.0
+          }
+        },
+        "native_metrics_mismatches": [],
+        "native_recomputed": {
+          "carry_complete": false,
+          "carry_contact_loss_events": 0,
+          "dwell_seconds": 0.0,
+          "first_success_time_seconds": null,
+          "grasp_seen": true,
+          "lift_dwell_seconds": 0.0,
+          "lift_seen": false,
+          "max_carry_contact_loss_seconds": 0.0,
+          "max_object_lift_m": 0.003952023743962793,
+          "max_pad_normal_force_n": 2.795753702369255,
+          "retention_lost": false,
+          "success": false,
+          "unexpected_contact_native_ticks": 7454
+        },
+        "reason": "native_outcome_failed",
+        "restoration_scope": "Loaded contact restored for 100 ms after sustained loss; does not establish task recovery or airborne regrasp.",
+        "schema": "dvidia.piper-feedback-score/v1",
+        "strict_v01": {
+          "native_metrics_source": "simulator-authored episode record; not authenticated sensor input",
+          "native_outcome_success": false,
+          "native_outcome_valid": true,
+          "reason": "native_outcome_failed",
+          "reference_xy_m": [
+            0.35,
+            0.08
+          ],
+          "required_dwell_s": 0.25,
+          "required_lift_dwell_s": 0.1,
+          "sample_interval_s": 0.02,
+          "success": false,
+          "terminal_dwell_s": 0.0,
+          "terminal_reference_success": false,
+          "terminal_xy_error_m": 0.13859914919704855,
+          "trace_lift_dwell_s": 0.0,
+          "trajectory_complete": true
+        },
+        "success": false,
+        "terminal_only": {
+          "dwell_s": 0.0,
+          "scope": "Terminal-only geometry/release/settling/dwell; excludes lift, carry and retention history.",
+          "success": false,
+          "terminal_xy_error_m": 0.13859914919704855
+        },
+        "valid": true
+      },
+      "scored_control_trajectory": true,
+      "strict_success": false,
+      "supervisor_cause": null,
+      "supervisor_status": "finished",
+      "variant": "absolute",
+      "worker_receipt": {
+        "bytes": 5163,
+        "sha256": "f3907fe87706a0f8f4593fe2e790c81ebc8018c185fa6ed17cd46f63c441019b"
+      },
+      "worker_receipt_available": true,
+      "worker_wall_seconds": 13.846535541000776
+    },
+    {
+      "camera_pairs": 501,
+      "case": {
+        "goal_id": 0,
+        "goal_position_m": [
+          0.35,
+          0.08,
+          0.08
+        ],
+        "group_id": "development-00",
+        "id": "development-00-goal0",
+        "object_position_m": [
+          0.303692,
+          -0.033335,
+          0.082
+        ],
+        "seed": 311465,
+        "split": "development"
+      },
+      "files_verified": 5010,
+      "frame_bytes": 168625930,
+      "guard": {
+        "checks": 1000,
+        "forwarded_calls": 1000,
+        "guard_wall_seconds": 0.005588873696979135,
+        "minimum_free_bytes": 40378089472,
+        "scope": "Once per simulated20ms callback, not a wall-clock50Hz monitor; no task features changed.",
+        "stop_reason": null
+      },
+      "id": "development-00-goal0-delta",
+      "inspection": {
+        "files_verified": 5010,
+        "physical_robot_ready": false,
+        "physics_executed": false,
+        "recorded_complete_intervals": 1000,
+        "schema": "dvidia.camera-action-rollout/v2/inspection",
+        "score": {
+          "evidence_scope": "Recomputed simulator-authored numeric evidence; no physics rerun, source attestation or hardware sensing.",
+          "false_alarms": {
+            "reason": "Continuous residual policy has no declared discrete alarm events.",
+            "status": "not_applicable"
+          },
+          "grip_events": [
+            {
+              "kind": "supported_grip_interruption",
+              "loss_onset_s": 12.32299999999861,
+              "loss_qualified_s": 12.341999999998599,
+              "onset_to_qualified_restoration_s": 0.4259999999997639,
+              "onset_to_restoration_s": 0.32699999999981877,
+              "relative_motion_since_loss_m": 0.033405944668013256,
+              "restoration_onset_s": 12.649999999998428,
+              "restoration_qualified_s": 12.748999999998373,
+              "restoration_supported": false,
+              "restored": true,
+              "supported_at_onset": true
+            },
+            {
+              "kind": "supported_grip_interruption",
+              "loss_onset_s": 13.181999999998133,
+              "loss_qualified_s": 13.200999999998123,
+              "onset_to_qualified_restoration_s": 0.21699999999987973,
+              "onset_to_restoration_s": 0.1179999999999346,
+              "relative_motion_since_loss_m": 0.0201096558077051,
+              "restoration_onset_s": 13.299999999998068,
+              "restoration_qualified_s": 13.398999999998013,
+              "restoration_supported": true,
+              "restored": true,
+              "supported_at_onset": true
+            },
+            {
+              "kind": "supported_grip_interruption",
+              "loss_onset_s": 17.108999999997927,
+              "loss_qualified_s": 17.12799999999795,
+              "onset_to_qualified_restoration_s": null,
+              "onset_to_restoration_s": null,
+              "relative_motion_since_loss_m": 0.2010864554938082,
+              "restoration_onset_s": null,
+              "restoration_qualified_s": null,
+              "restored": false,
+              "supported_at_onset": true
+            }
+          ],
+          "grip_summary": {
+            "airborne_events": 0,
+            "loss_events": 3,
+            "qualification_latency_s": [
+              0.4259999999997639,
+              0.21699999999987973
+            ],
+            "restored_events": 2,
+            "supported_events": 3,
+            "unresolved_events": 1
+          },
+          "native_diagnostics": {
+            "premature_open_jaw": {
+              "count": 0,
+              "intervals": [],
+              "maximum_s": 0.0,
+              "total_s": 0.0
+            },
+            "support_touchdown_before_destination": {
+              "count": 0,
+              "intervals": [],
+              "maximum_s": 0.0,
+              "total_s": 0.0
+            }
+          },
+          "native_metrics_mismatches": [],
+          "native_recomputed": {
+            "carry_complete": false,
+            "carry_contact_loss_events": 0,
+            "dwell_seconds": 0.0,
+            "first_success_time_seconds": null,
+            "grasp_seen": true,
+            "lift_dwell_seconds": 0.0,
+            "lift_seen": false,
+            "max_carry_contact_loss_seconds": 0.0,
+            "max_object_lift_m": 0.032622070113360255,
+            "max_pad_normal_force_n": 16.822725404528523,
+            "retention_lost": false,
+            "success": false,
+            "unexpected_contact_native_ticks": 7280
+          },
+          "reason": "invalid_state_value",
+          "restoration_scope": "Loaded contact restored for 100 ms after sustained loss; does not establish task recovery or airborne regrasp.",
+          "schema": "dvidia.piper-feedback-score/v1",
+          "strict_v01": {
+            "reason": "invalid_state_value",
+            "reference_xy_m": [
+              0.35,
+              0.08
+            ],
+            "state_index": 739,
+            "success": false
+          },
+          "success": false,
+          "terminal_only": {
+            "dwell_s": 0.0,
+            "scope": "Terminal-only geometry/release/settling/dwell; excludes lift, carry and retention history.",
+            "success": false,
+            "terminal_xy_error_m": 0.35894977561012875
+          },
+          "valid": true
+        },
+        "source_authenticated": false,
+        "status": "complete",
+        "strict_success": false
+      },
+      "integrity_file": {
+        "bytes": 567674,
+        "sha256": "d4a89f2555c2e9d86c745fbc0b20be34b39ce3fb2400d037a91c63a6d7d0cd1a"
+      },
+      "perception": {
+        "available": 472,
+        "decisions": 1000,
+        "longest_missing_seconds": 6.16,
+        "missing": 528
+      },
+      "policy": {
+        "model_sha256": "4545be31f50267c9da29b211510c7a32df500678ba107c7a100604bb0c4c18ab",
+        "physical_robot_ready": false,
+        "policy_origin": "camera_encoder_reference_endpoint_numpy_mlp",
+        "runtime_teacher_available": false,
+        "student_inference_calls": 1000,
+        "student_inference_p95_seconds": 0.00028345415339572346,
+        "student_inference_seconds": 0.2566282909247093,
+        "task_qualified": false,
+        "teacher_fallback_calls": 0,
+        "timing_scope": "Causal feature encoding, NumPy inference and reference projection; excludes camera/render/actuation.",
+        "variant": "delta"
+      },
+      "qualified": false,
+      "recorded_complete_intervals": 1000,
+      "rollout_error": null,
+      "rollout_file": {
+        "bytes": 327328,
+        "sha256": "328cf546022fd2f79da3ec1a6161c0d3ebd777bd254edd89903a2629966a5c8e"
+      },
+      "rollout_status": "complete",
+      "rollout_wall_seconds": 13.231359249999514,
+      "score": {
+        "evidence_scope": "Recomputed simulator-authored numeric evidence; no physics rerun, source attestation or hardware sensing.",
+        "false_alarms": {
+          "reason": "Continuous residual policy has no declared discrete alarm events.",
+          "status": "not_applicable"
+        },
+        "grip_events": [
+          {
+            "kind": "supported_grip_interruption",
+            "loss_onset_s": 12.32299999999861,
+            "loss_qualified_s": 12.341999999998599,
+            "onset_to_qualified_restoration_s": 0.4259999999997639,
+            "onset_to_restoration_s": 0.32699999999981877,
+            "relative_motion_since_loss_m": 0.033405944668013256,
+            "restoration_onset_s": 12.649999999998428,
+            "restoration_qualified_s": 12.748999999998373,
+            "restoration_supported": false,
+            "restored": true,
+            "supported_at_onset": true
+          },
+          {
+            "kind": "supported_grip_interruption",
+            "loss_onset_s": 13.181999999998133,
+            "loss_qualified_s": 13.200999999998123,
+            "onset_to_qualified_restoration_s": 0.21699999999987973,
+            "onset_to_restoration_s": 0.1179999999999346,
+            "relative_motion_since_loss_m": 0.0201096558077051,
+            "restoration_onset_s": 13.299999999998068,
+            "restoration_qualified_s": 13.398999999998013,
+            "restoration_supported": true,
+            "restored": true,
+            "supported_at_onset": true
+          },
+          {
+            "kind": "supported_grip_interruption",
+            "loss_onset_s": 17.108999999997927,
+            "loss_qualified_s": 17.12799999999795,
+            "onset_to_qualified_restoration_s": null,
+            "onset_to_restoration_s": null,
+            "relative_motion_since_loss_m": 0.2010864554938082,
+            "restoration_onset_s": null,
+            "restoration_qualified_s": null,
+            "restored": false,
+            "supported_at_onset": true
+          }
+        ],
+        "grip_summary": {
+          "airborne_events": 0,
+          "loss_events": 3,
+          "qualification_latency_s": [
+            0.4259999999997639,
+            0.21699999999987973
+          ],
+          "restored_events": 2,
+          "supported_events": 3,
+          "unresolved_events": 1
+        },
+        "native_diagnostics": {
+          "premature_open_jaw": {
+            "count": 0,
+            "intervals": [],
+            "maximum_s": 0.0,
+            "total_s": 0.0
+          },
+          "support_touchdown_before_destination": {
+            "count": 0,
+            "intervals": [],
+            "maximum_s": 0.0,
+            "total_s": 0.0
+          }
+        },
+        "native_metrics_mismatches": [],
+        "native_recomputed": {
+          "carry_complete": false,
+          "carry_contact_loss_events": 0,
+          "dwell_seconds": 0.0,
+          "first_success_time_seconds": null,
+          "grasp_seen": true,
+          "lift_dwell_seconds": 0.0,
+          "lift_seen": false,
+          "max_carry_contact_loss_seconds": 0.0,
+          "max_object_lift_m": 0.032622070113360255,
+          "max_pad_normal_force_n": 16.822725404528523,
+          "retention_lost": false,
+          "success": false,
+          "unexpected_contact_native_ticks": 7280
+        },
+        "reason": "invalid_state_value",
+        "restoration_scope": "Loaded contact restored for 100 ms after sustained loss; does not establish task recovery or airborne regrasp.",
+        "schema": "dvidia.piper-feedback-score/v1",
+        "strict_v01": {
+          "reason": "invalid_state_value",
+          "reference_xy_m": [
+            0.35,
+            0.08
+          ],
+          "state_index": 739,
+          "success": false
+        },
+        "success": false,
+        "terminal_only": {
+          "dwell_s": 0.0,
+          "scope": "Terminal-only geometry/release/settling/dwell; excludes lift, carry and retention history.",
+          "success": false,
+          "terminal_xy_error_m": 0.35894977561012875
+        },
+        "valid": true
+      },
+      "scored_control_trajectory": true,
+      "strict_success": false,
+      "supervisor_cause": null,
+      "supervisor_status": "finished",
+      "variant": "delta",
+      "worker_receipt": {
+        "bytes": 5647,
+        "sha256": "96102ceb6a288286b88dfac78b6e48fd2ad5f7fec02e5278b641802e0c650e7b"
+      },
+      "worker_receipt_available": true,
+      "worker_wall_seconds": 14.912654209008906
+    },
+    {
+      "camera_pairs": 501,
+      "case": {
+        "goal_id": 1,
+        "goal_position_m": [
+          0.4,
+          -0.08,
+          0.08
+        ],
+        "group_id": "development-00",
+        "id": "development-00-goal1",
+        "object_position_m": [
+          0.303692,
+          -0.033335,
+          0.082
+        ],
+        "seed": 311466,
+        "split": "development"
+      },
+      "files_verified": 5010,
+      "frame_bytes": 168809295,
+      "guard": {
+        "checks": 1000,
+        "forwarded_calls": 1000,
+        "guard_wall_seconds": 0.005257312848698348,
+        "minimum_free_bytes": 40164065280,
+        "scope": "Once per simulated20ms callback, not a wall-clock50Hz monitor; no task features changed.",
+        "stop_reason": null
+      },
+      "id": "development-00-goal1-absolute",
+      "inspection": {
+        "files_verified": 5010,
+        "physical_robot_ready": false,
+        "physics_executed": false,
+        "recorded_complete_intervals": 1000,
+        "schema": "dvidia.camera-action-rollout/v2/inspection",
+        "score": {
+          "evidence_scope": "Recomputed simulator-authored numeric evidence; no physics rerun, source attestation or hardware sensing.",
+          "false_alarms": {
+            "reason": "Continuous residual policy has no declared discrete alarm events.",
+            "status": "not_applicable"
+          },
+          "grip_events": [
+            {
+              "kind": "supported_grip_interruption",
+              "loss_onset_s": 11.205999999999229,
+              "loss_qualified_s": 11.224999999999218,
+              "onset_to_qualified_restoration_s": null,
+              "onset_to_restoration_s": null,
+              "relative_motion_since_loss_m": 0.032740883409154146,
+              "restoration_onset_s": null,
+              "restoration_qualified_s": null,
+              "restored": false,
+              "supported_at_onset": true
+            }
+          ],
+          "grip_summary": {
+            "airborne_events": 0,
+            "loss_events": 1,
+            "qualification_latency_s": [],
+            "restored_events": 0,
+            "supported_events": 1,
+            "unresolved_events": 1
+          },
+          "native_diagnostics": {
+            "premature_open_jaw": {
+              "count": 0,
+              "intervals": [],
+              "maximum_s": 0.0,
+              "total_s": 0.0
+            },
+            "support_touchdown_before_destination": {
+              "count": 0,
+              "intervals": [],
+              "maximum_s": 0.0,
+              "total_s": 0.0
+            }
+          },
+          "native_metrics_mismatches": [],
+          "native_recomputed": {
+            "carry_complete": false,
+            "carry_contact_loss_events": 0,
+            "dwell_seconds": 0.0,
+            "first_success_time_seconds": null,
+            "grasp_seen": true,
+            "lift_dwell_seconds": 0.0,
+            "lift_seen": false,
+            "max_carry_contact_loss_seconds": 0.0,
+            "max_object_lift_m": 0.005454372207929728,
+            "max_pad_normal_force_n": 1.8253660550428599,
+            "retention_lost": false,
+            "success": false,
+            "unexpected_contact_native_ticks": 152
+          },
+          "reason": "native_outcome_failed",
+          "restoration_scope": "Loaded contact restored for 100 ms after sustained loss; does not establish task recovery or airborne regrasp.",
+          "schema": "dvidia.piper-feedback-score/v1",
+          "strict_v01": {
+            "native_metrics_source": "simulator-authored episode record; not authenticated sensor input",
+            "native_outcome_success": false,
+            "native_outcome_valid": true,
+            "reason": "native_outcome_failed",
+            "reference_xy_m": [
+              0.4,
+              -0.08
+            ],
+            "required_dwell_s": 0.25,
+            "required_lift_dwell_s": 0.1,
+            "sample_interval_s": 0.02,
+            "success": false,
+            "terminal_dwell_s": 0.0,
+            "terminal_reference_success": false,
+            "terminal_xy_error_m": 0.004566382464358538,
+            "trace_lift_dwell_s": 0.0,
+            "trajectory_complete": true
+          },
+          "success": false,
+          "terminal_only": {
+            "dwell_s": 0.0,
+            "scope": "Terminal-only geometry/release/settling/dwell; excludes lift, carry and retention history.",
+            "success": false,
+            "terminal_xy_error_m": 0.004566382464358537
+          },
+          "valid": true
+        },
+        "source_authenticated": false,
+        "status": "complete",
+        "strict_success": false
+      },
+      "integrity_file": {
+        "bytes": 567674,
+        "sha256": "08f7fbfcfa7a595575b5bf9e35f64a22a265862f3a33044282199847598bf095"
+      },
+      "perception": {
+        "available": 320,
+        "decisions": 1000,
+        "longest_missing_seconds": 13.36,
+        "missing": 680
+      },
+      "policy": {
+        "model_sha256": "36af3fe1670494b04c48b5114d9be1a5f91632aa7992ba529d6587969ea37460",
+        "physical_robot_ready": false,
+        "policy_origin": "camera_encoder_reference_endpoint_numpy_mlp",
+        "runtime_teacher_available": false,
+        "student_inference_calls": 1000,
+        "student_inference_p95_seconds": 0.0002635062483022921,
+        "student_inference_seconds": 0.22442970832344145,
+        "task_qualified": false,
+        "teacher_fallback_calls": 0,
+        "timing_scope": "Causal feature encoding, NumPy inference and reference projection; excludes camera/render/actuation.",
+        "variant": "absolute"
+      },
+      "qualified": false,
+      "recorded_complete_intervals": 1000,
+      "rollout_error": null,
+      "rollout_file": {
+        "bytes": 326955,
+        "sha256": "8b851f39d22f39b02709c7857d1c2a6afa2420e83d200e7ee9564baeeba82b07"
+      },
+      "rollout_status": "complete",
+      "rollout_wall_seconds": 12.444784249993972,
+      "score": {
+        "evidence_scope": "Recomputed simulator-authored numeric evidence; no physics rerun, source attestation or hardware sensing.",
+        "false_alarms": {
+          "reason": "Continuous residual policy has no declared discrete alarm events.",
+          "status": "not_applicable"
+        },
+        "grip_events": [
+          {
+            "kind": "supported_grip_interruption",
+            "loss_onset_s": 11.205999999999229,
+            "loss_qualified_s": 11.224999999999218,
+            "onset_to_qualified_restoration_s": null,
+            "onset_to_restoration_s": null,
+            "relative_motion_since_loss_m": 0.032740883409154146,
+            "restoration_onset_s": null,
+            "restoration_qualified_s": null,
+            "restored": false,
+            "supported_at_onset": true
+          }
+        ],
+        "grip_summary": {
+          "airborne_events": 0,
+          "loss_events": 1,
+          "qualification_latency_s": [],
+          "restored_events": 0,
+          "supported_events": 1,
+          "unresolved_events": 1
+        },
+        "native_diagnostics": {
+          "premature_open_jaw": {
+            "count": 0,
+            "intervals": [],
+            "maximum_s": 0.0,
+            "total_s": 0.0
+          },
+          "support_touchdown_before_destination": {
+            "count": 0,
+            "intervals": [],
+            "maximum_s": 0.0,
+            "total_s": 0.0
+          }
+        },
+        "native_metrics_mismatches": [],
+        "native_recomputed": {
+          "carry_complete": false,
+          "carry_contact_loss_events": 0,
+          "dwell_seconds": 0.0,
+          "first_success_time_seconds": null,
+          "grasp_seen": true,
+          "lift_dwell_seconds": 0.0,
+          "lift_seen": false,
+          "max_carry_contact_loss_seconds": 0.0,
+          "max_object_lift_m": 0.005454372207929728,
+          "max_pad_normal_force_n": 1.8253660550428599,
+          "retention_lost": false,
+          "success": false,
+          "unexpected_contact_native_ticks": 152
+        },
+        "reason": "native_outcome_failed",
+        "restoration_scope": "Loaded contact restored for 100 ms after sustained loss; does not establish task recovery or airborne regrasp.",
+        "schema": "dvidia.piper-feedback-score/v1",
+        "strict_v01": {
+          "native_metrics_source": "simulator-authored episode record; not authenticated sensor input",
+          "native_outcome_success": false,
+          "native_outcome_valid": true,
+          "reason": "native_outcome_failed",
+          "reference_xy_m": [
+            0.4,
+            -0.08
+          ],
+          "required_dwell_s": 0.25,
+          "required_lift_dwell_s": 0.1,
+          "sample_interval_s": 0.02,
+          "success": false,
+          "terminal_dwell_s": 0.0,
+          "terminal_reference_success": false,
+          "terminal_xy_error_m": 0.004566382464358538,
+          "trace_lift_dwell_s": 0.0,
+          "trajectory_complete": true
+        },
+        "success": false,
+        "terminal_only": {
+          "dwell_s": 0.0,
+          "scope": "Terminal-only geometry/release/settling/dwell; excludes lift, carry and retention history.",
+          "success": false,
+          "terminal_xy_error_m": 0.004566382464358537
+        },
+        "valid": true
+      },
+      "scored_control_trajectory": true,
+      "strict_success": false,
+      "supervisor_cause": null,
+      "supervisor_status": "finished",
+      "variant": "absolute",
+      "worker_receipt": {
+        "bytes": 5151,
+        "sha256": "d1456147a5784b4e80621edf48f807401a953ad8d5f168ea559c202e39eff446"
+      },
+      "worker_receipt_available": true,
+      "worker_wall_seconds": 14.14837254100712
+    },
+    {
+      "camera_pairs": 501,
+      "case": {
+        "goal_id": 1,
+        "goal_position_m": [
+          0.4,
+          -0.08,
+          0.08
+        ],
+        "group_id": "development-00",
+        "id": "development-00-goal1",
+        "object_position_m": [
+          0.303692,
+          -0.033335,
+          0.082
+        ],
+        "seed": 311466,
+        "split": "development"
+      },
+      "files_verified": 5010,
+      "frame_bytes": 168741922,
+      "guard": {
+        "checks": 1000,
+        "forwarded_calls": 1000,
+        "guard_wall_seconds": 0.005355292814783752,
+        "minimum_free_bytes": 39958847488,
+        "scope": "Once per simulated20ms callback, not a wall-clock50Hz monitor; no task features changed.",
+        "stop_reason": null
+      },
+      "id": "development-00-goal1-delta",
+      "inspection": {
+        "files_verified": 5010,
+        "physical_robot_ready": false,
+        "physics_executed": false,
+        "recorded_complete_intervals": 1000,
+        "schema": "dvidia.camera-action-rollout/v2/inspection",
+        "score": {
+          "evidence_scope": "Recomputed simulator-authored numeric evidence; no physics rerun, source attestation or hardware sensing.",
+          "false_alarms": {
+            "reason": "Continuous residual policy has no declared discrete alarm events.",
+            "status": "not_applicable"
+          },
+          "grip_events": [],
+          "grip_summary": {
+            "airborne_events": 0,
+            "loss_events": 0,
+            "qualification_latency_s": [],
+            "restored_events": 0,
+            "supported_events": 0,
+            "unresolved_events": 0
+          },
+          "native_diagnostics": {
+            "premature_open_jaw": {
+              "count": 0,
+              "intervals": [],
+              "maximum_s": 0.0,
+              "total_s": 0.0
+            },
+            "support_touchdown_before_destination": {
+              "count": 0,
+              "intervals": [],
+              "maximum_s": 0.0,
+              "total_s": 0.0
+            }
+          },
+          "native_metrics_mismatches": [],
+          "native_recomputed": {
+            "carry_complete": false,
+            "carry_contact_loss_events": 0,
+            "dwell_seconds": 0.0,
+            "first_success_time_seconds": null,
+            "grasp_seen": true,
+            "lift_dwell_seconds": 0.0,
+            "lift_seen": false,
+            "max_carry_contact_loss_seconds": 0.0,
+            "max_object_lift_m": 0.0011216542473738017,
+            "max_pad_normal_force_n": 1.7540589205645145,
+            "retention_lost": false,
+            "success": false,
+            "unexpected_contact_native_ticks": 8087
+          },
+          "reason": "invalid_state_value",
+          "restoration_scope": "Loaded contact restored for 100 ms after sustained loss; does not establish task recovery or airborne regrasp.",
+          "schema": "dvidia.piper-feedback-score/v1",
+          "strict_v01": {
+            "reason": "invalid_state_value",
+            "reference_xy_m": [
+              0.4,
+              -0.08
+            ],
+            "state_index": 713,
+            "success": false
+          },
+          "success": false,
+          "terminal_only": {
+            "dwell_s": 0.0,
+            "scope": "Terminal-only geometry/release/settling/dwell; excludes lift, carry and retention history.",
+            "success": false,
+            "terminal_xy_error_m": 0.08543266510853878
+          },
+          "valid": true
+        },
+        "source_authenticated": false,
+        "status": "complete",
+        "strict_success": false
+      },
+      "integrity_file": {
+        "bytes": 567674,
+        "sha256": "d9a2f3b46a3906153b5ee703d915c809b9d5903996abbc948a31ab42fae1e1dd"
+      },
+      "perception": {
+        "available": 436,
+        "decisions": 1000,
+        "longest_missing_seconds": 4.92,
+        "missing": 564
+      },
+      "policy": {
+        "model_sha256": "4545be31f50267c9da29b211510c7a32df500678ba107c7a100604bb0c4c18ab",
+        "physical_robot_ready": false,
+        "policy_origin": "camera_encoder_reference_endpoint_numpy_mlp",
+        "runtime_teacher_available": false,
+        "student_inference_calls": 1000,
+        "student_inference_p95_seconds": 0.0002676416508620605,
+        "student_inference_seconds": 0.2281716027064249,
+        "task_qualified": false,
+        "teacher_fallback_calls": 0,
+        "timing_scope": "Causal feature encoding, NumPy inference and reference projection; excludes camera/render/actuation.",
+        "variant": "delta"
+      },
+      "qualified": false,
+      "recorded_complete_intervals": 1000,
+      "rollout_error": null,
+      "rollout_file": {
+        "bytes": 326204,
+        "sha256": "83dee39e2cb1cbfd3ef72c741d854627bf54c021852ffb1430c66fe4b8fe8452"
+      },
+      "rollout_status": "complete",
+      "rollout_wall_seconds": 12.688531916995998,
+      "score": {
+        "evidence_scope": "Recomputed simulator-authored numeric evidence; no physics rerun, source attestation or hardware sensing.",
+        "false_alarms": {
+          "reason": "Continuous residual policy has no declared discrete alarm events.",
+          "status": "not_applicable"
+        },
+        "grip_events": [],
+        "grip_summary": {
+          "airborne_events": 0,
+          "loss_events": 0,
+          "qualification_latency_s": [],
+          "restored_events": 0,
+          "supported_events": 0,
+          "unresolved_events": 0
+        },
+        "native_diagnostics": {
+          "premature_open_jaw": {
+            "count": 0,
+            "intervals": [],
+            "maximum_s": 0.0,
+            "total_s": 0.0
+          },
+          "support_touchdown_before_destination": {
+            "count": 0,
+            "intervals": [],
+            "maximum_s": 0.0,
+            "total_s": 0.0
+          }
+        },
+        "native_metrics_mismatches": [],
+        "native_recomputed": {
+          "carry_complete": false,
+          "carry_contact_loss_events": 0,
+          "dwell_seconds": 0.0,
+          "first_success_time_seconds": null,
+          "grasp_seen": true,
+          "lift_dwell_seconds": 0.0,
+          "lift_seen": false,
+          "max_carry_contact_loss_seconds": 0.0,
+          "max_object_lift_m": 0.0011216542473738017,
+          "max_pad_normal_force_n": 1.7540589205645145,
+          "retention_lost": false,
+          "success": false,
+          "unexpected_contact_native_ticks": 8087
+        },
+        "reason": "invalid_state_value",
+        "restoration_scope": "Loaded contact restored for 100 ms after sustained loss; does not establish task recovery or airborne regrasp.",
+        "schema": "dvidia.piper-feedback-score/v1",
+        "strict_v01": {
+          "reason": "invalid_state_value",
+          "reference_xy_m": [
+            0.4,
+            -0.08
+          ],
+          "state_index": 713,
+          "success": false
+        },
+        "success": false,
+        "terminal_only": {
+          "dwell_s": 0.0,
+          "scope": "Terminal-only geometry/release/settling/dwell; excludes lift, carry and retention history.",
+          "success": false,
+          "terminal_xy_error_m": 0.08543266510853878
+        },
+        "valid": true
+      },
+      "scored_control_trajectory": true,
+      "strict_success": false,
+      "supervisor_cause": null,
+      "supervisor_status": "finished",
+      "variant": "delta",
+      "worker_receipt": {
+        "bytes": 4443,
+        "sha256": "2d7d66b18c09275dd56980c72ee73cf6ab3b7b3f9a25d438e7175c8dbbbbaa03"
+      },
+      "worker_receipt_available": true,
+      "worker_wall_seconds": 14.580125999986194
+    },
+    {
+      "camera_pairs": 501,
+      "case": {
+        "goal_id": 0,
+        "goal_position_m": [
+          0.35,
+          0.08,
+          0.08
+        ],
+        "group_id": "development-01",
+        "id": "development-01-goal0",
+        "object_position_m": [
+          0.303637,
+          -0.039966,
+          0.082
+        ],
+        "seed": 311467,
+        "split": "development"
+      },
+      "files_verified": 5010,
+      "frame_bytes": 169510528,
+      "guard": {
+        "checks": 1000,
+        "forwarded_calls": 1000,
+        "guard_wall_seconds": 0.005813365976791829,
+        "minimum_free_bytes": 39743258624,
+        "scope": "Once per simulated20ms callback, not a wall-clock50Hz monitor; no task features changed.",
+        "stop_reason": null
+      },
+      "id": "development-01-goal0-absolute",
+      "inspection": {
+        "files_verified": 5010,
+        "physical_robot_ready": false,
+        "physics_executed": false,
+        "recorded_complete_intervals": 1000,
+        "schema": "dvidia.camera-action-rollout/v2/inspection",
+        "score": {
+          "evidence_scope": "Recomputed simulator-authored numeric evidence; no physics rerun, source attestation or hardware sensing.",
+          "false_alarms": {
+            "reason": "Continuous residual policy has no declared discrete alarm events.",
+            "status": "not_applicable"
+          },
+          "grip_events": [],
+          "grip_summary": {
+            "airborne_events": 0,
+            "loss_events": 0,
+            "qualification_latency_s": [],
+            "restored_events": 0,
+            "supported_events": 0,
+            "unresolved_events": 0
+          },
+          "native_diagnostics": {
+            "premature_open_jaw": {
+              "count": 0,
+              "intervals": [],
+              "maximum_s": 0.0,
+              "total_s": 0.0
+            },
+            "support_touchdown_before_destination": {
+              "count": 0,
+              "intervals": [],
+              "maximum_s": 0.0,
+              "total_s": 0.0
+            }
+          },
+          "native_metrics_mismatches": [],
+          "native_recomputed": {
+            "carry_complete": false,
+            "carry_contact_loss_events": 0,
+            "dwell_seconds": 0.0,
+            "first_success_time_seconds": null,
+            "grasp_seen": false,
+            "lift_dwell_seconds": 0.0,
+            "lift_seen": false,
+            "max_carry_contact_loss_seconds": 0.0,
+            "max_object_lift_m": 6.22998874710845e-11,
+            "max_pad_normal_force_n": 0.0,
+            "retention_lost": false,
+            "success": false,
+            "unexpected_contact_native_ticks": 0
+          },
+          "reason": "native_outcome_failed",
+          "restoration_scope": "Loaded contact restored for 100 ms after sustained loss; does not establish task recovery or airborne regrasp.",
+          "schema": "dvidia.piper-feedback-score/v1",
+          "strict_v01": {
+            "native_metrics_source": "simulator-authored episode record; not authenticated sensor input",
+            "native_outcome_success": false,
+            "native_outcome_valid": true,
+            "reason": "native_outcome_failed",
+            "reference_xy_m": [
+              0.35,
+              0.08
+            ],
+            "required_dwell_s": 0.25,
+            "required_lift_dwell_s": 0.1,
+            "sample_interval_s": 0.02,
+            "success": false,
+            "terminal_dwell_s": 0.0,
+            "terminal_reference_success": false,
+            "terminal_xy_error_m": 0.12861307125253946,
+            "trace_lift_dwell_s": 0.0,
+            "trajectory_complete": true
+          },
+          "success": false,
+          "terminal_only": {
+            "dwell_s": 0.0,
+            "scope": "Terminal-only geometry/release/settling/dwell; excludes lift, carry and retention history.",
+            "success": false,
+            "terminal_xy_error_m": 0.12861307125253946
+          },
+          "valid": true
+        },
+        "source_authenticated": false,
+        "status": "complete",
+        "strict_success": false
+      },
+      "integrity_file": {
+        "bytes": 567674,
+        "sha256": "22443164911963ff89e31663dc3a938cfeffd151a8e569f2d98f2563f18a8065"
+      },
+      "perception": {
+        "available": 1000,
+        "decisions": 1000,
+        "longest_missing_seconds": 0.0,
+        "missing": 0
+      },
+      "policy": {
+        "model_sha256": "36af3fe1670494b04c48b5114d9be1a5f91632aa7992ba529d6587969ea37460",
+        "physical_robot_ready": false,
+        "policy_origin": "camera_encoder_reference_endpoint_numpy_mlp",
+        "runtime_teacher_available": false,
+        "student_inference_calls": 1000,
+        "student_inference_p95_seconds": 0.00030651460547233,
+        "student_inference_seconds": 0.24899018558789976,
+        "task_qualified": false,
+        "teacher_fallback_calls": 0,
+        "timing_scope": "Causal feature encoding, NumPy inference and reference projection; excludes camera/render/actuation.",
+        "variant": "absolute"
+      },
+      "qualified": false,
+      "recorded_complete_intervals": 1000,
+      "rollout_error": null,
+      "rollout_file": {
+        "bytes": 326367,
+        "sha256": "47f735604508f95ad78f9d863ca88f13f77b0bb4f68a4fcc4b067b967704fb97"
+      },
+      "rollout_status": "complete",
+      "rollout_wall_seconds": 13.759285707987146,
+      "score": {
+        "evidence_scope": "Recomputed simulator-authored numeric evidence; no physics rerun, source attestation or hardware sensing.",
+        "false_alarms": {
+          "reason": "Continuous residual policy has no declared discrete alarm events.",
+          "status": "not_applicable"
+        },
+        "grip_events": [],
+        "grip_summary": {
+          "airborne_events": 0,
+          "loss_events": 0,
+          "qualification_latency_s": [],
+          "restored_events": 0,
+          "supported_events": 0,
+          "unresolved_events": 0
+        },
+        "native_diagnostics": {
+          "premature_open_jaw": {
+            "count": 0,
+            "intervals": [],
+            "maximum_s": 0.0,
+            "total_s": 0.0
+          },
+          "support_touchdown_before_destination": {
+            "count": 0,
+            "intervals": [],
+            "maximum_s": 0.0,
+            "total_s": 0.0
+          }
+        },
+        "native_metrics_mismatches": [],
+        "native_recomputed": {
+          "carry_complete": false,
+          "carry_contact_loss_events": 0,
+          "dwell_seconds": 0.0,
+          "first_success_time_seconds": null,
+          "grasp_seen": false,
+          "lift_dwell_seconds": 0.0,
+          "lift_seen": false,
+          "max_carry_contact_loss_seconds": 0.0,
+          "max_object_lift_m": 6.22998874710845e-11,
+          "max_pad_normal_force_n": 0.0,
+          "retention_lost": false,
+          "success": false,
+          "unexpected_contact_native_ticks": 0
+        },
+        "reason": "native_outcome_failed",
+        "restoration_scope": "Loaded contact restored for 100 ms after sustained loss; does not establish task recovery or airborne regrasp.",
+        "schema": "dvidia.piper-feedback-score/v1",
+        "strict_v01": {
+          "native_metrics_source": "simulator-authored episode record; not authenticated sensor input",
+          "native_outcome_success": false,
+          "native_outcome_valid": true,
+          "reason": "native_outcome_failed",
+          "reference_xy_m": [
+            0.35,
+            0.08
+          ],
+          "required_dwell_s": 0.25,
+          "required_lift_dwell_s": 0.1,
+          "sample_interval_s": 0.02,
+          "success": false,
+          "terminal_dwell_s": 0.0,
+          "terminal_reference_success": false,
+          "terminal_xy_error_m": 0.12861307125253946,
+          "trace_lift_dwell_s": 0.0,
+          "trajectory_complete": true
+        },
+        "success": false,
+        "terminal_only": {
+          "dwell_s": 0.0,
+          "scope": "Terminal-only geometry/release/settling/dwell; excludes lift, carry and retention history.",
+          "success": false,
+          "terminal_xy_error_m": 0.12861307125253946
+        },
+        "valid": true
+      },
+      "scored_control_trajectory": true,
+      "strict_success": false,
+      "supervisor_cause": null,
+      "supervisor_status": "finished",
+      "variant": "absolute",
+      "worker_receipt": {
+        "bytes": 4794,
+        "sha256": "170cecc5eb6733f7b1f3398af31f4f795b0115cc0860d9f8d13075d97e1297ed"
+      },
+      "worker_receipt_available": true,
+      "worker_wall_seconds": 15.491917999985162
+    },
+    {
+      "camera_pairs": 501,
+      "case": {
+        "goal_id": 0,
+        "goal_position_m": [
+          0.35,
+          0.08,
+          0.08
+        ],
+        "group_id": "development-01",
+        "id": "development-01-goal0",
+        "object_position_m": [
+          0.303637,
+          -0.039966,
+          0.082
+        ],
+        "seed": 311467,
+        "split": "development"
+      },
+      "files_verified": 5010,
+      "frame_bytes": 166698225,
+      "guard": {
+        "checks": 1000,
+        "forwarded_calls": 1000,
+        "guard_wall_seconds": 0.005421159323304892,
+        "minimum_free_bytes": 39533481984,
+        "scope": "Once per simulated20ms callback, not a wall-clock50Hz monitor; no task features changed.",
+        "stop_reason": null
+      },
+      "id": "development-01-goal0-delta",
+      "inspection": {
+        "files_verified": 5010,
+        "physical_robot_ready": false,
+        "physics_executed": false,
+        "recorded_complete_intervals": 1000,
+        "schema": "dvidia.camera-action-rollout/v2/inspection",
+        "score": {
+          "evidence_scope": "Recomputed simulator-authored numeric evidence; no physics rerun, source attestation or hardware sensing.",
+          "false_alarms": {
+            "reason": "Continuous residual policy has no declared discrete alarm events.",
+            "status": "not_applicable"
+          },
+          "grip_events": [],
+          "grip_summary": {
+            "airborne_events": 0,
+            "loss_events": 0,
+            "qualification_latency_s": [],
+            "restored_events": 0,
+            "supported_events": 0,
+            "unresolved_events": 0
+          },
+          "native_diagnostics": {
+            "premature_open_jaw": {
+              "count": 0,
+              "intervals": [],
+              "maximum_s": 0.0,
+              "total_s": 0.0
+            },
+            "support_touchdown_before_destination": {
+              "count": 0,
+              "intervals": [],
+              "maximum_s": 0.0,
+              "total_s": 0.0
+            }
+          },
+          "native_metrics_mismatches": [],
+          "native_recomputed": {
+            "carry_complete": false,
+            "carry_contact_loss_events": 0,
+            "dwell_seconds": 0.0,
+            "first_success_time_seconds": null,
+            "grasp_seen": true,
+            "lift_dwell_seconds": 0.0,
+            "lift_seen": false,
+            "max_carry_contact_loss_seconds": 0.0,
+            "max_object_lift_m": 0.01765747992294485,
+            "max_pad_normal_force_n": 2.5154725382030216,
+            "retention_lost": false,
+            "success": false,
+            "unexpected_contact_native_ticks": 1240
+          },
+          "reason": "invalid_state_value",
+          "restoration_scope": "Loaded contact restored for 100 ms after sustained loss; does not establish task recovery or airborne regrasp.",
+          "schema": "dvidia.piper-feedback-score/v1",
+          "strict_v01": {
+            "reason": "invalid_state_value",
+            "reference_xy_m": [
+              0.35,
+              0.08
+            ],
+            "state_index": 687,
+            "success": false
+          },
+          "success": false,
+          "terminal_only": {
+            "dwell_s": 0.0,
+            "scope": "Terminal-only geometry/release/settling/dwell; excludes lift, carry and retention history.",
+            "success": false,
+            "terminal_xy_error_m": 0.2545568078047586
+          },
+          "valid": true
+        },
+        "source_authenticated": false,
+        "status": "complete",
+        "strict_success": false
+      },
+      "integrity_file": {
+        "bytes": 567674,
+        "sha256": "1f4b2db19b5c0ded4438d9cc549a65e6a25a9f1691118a4363f93bf0646e2a89"
+      },
+      "perception": {
+        "available": 732,
+        "decisions": 1000,
+        "longest_missing_seconds": 4.04,
+        "missing": 268
+      },
+      "policy": {
+        "model_sha256": "4545be31f50267c9da29b211510c7a32df500678ba107c7a100604bb0c4c18ab",
+        "physical_robot_ready": false,
+        "policy_origin": "camera_encoder_reference_endpoint_numpy_mlp",
+        "runtime_teacher_available": false,
+        "student_inference_calls": 1000,
+        "student_inference_p95_seconds": 0.0002795872074784711,
+        "student_inference_seconds": 0.2348349518433679,
+        "task_qualified": false,
+        "teacher_fallback_calls": 0,
+        "timing_scope": "Causal feature encoding, NumPy inference and reference projection; excludes camera/render/actuation.",
+        "variant": "delta"
+      },
+      "qualified": false,
+      "recorded_complete_intervals": 1000,
+      "rollout_error": null,
+      "rollout_file": {
+        "bytes": 326043,
+        "sha256": "1302c51513d638910857c79bc78539bc9c59b546aeaf212d08b922ec06372a21"
+      },
+      "rollout_status": "complete",
+      "rollout_wall_seconds": 12.975723750016186,
+      "score": {
+        "evidence_scope": "Recomputed simulator-authored numeric evidence; no physics rerun, source attestation or hardware sensing.",
+        "false_alarms": {
+          "reason": "Continuous residual policy has no declared discrete alarm events.",
+          "status": "not_applicable"
+        },
+        "grip_events": [],
+        "grip_summary": {
+          "airborne_events": 0,
+          "loss_events": 0,
+          "qualification_latency_s": [],
+          "restored_events": 0,
+          "supported_events": 0,
+          "unresolved_events": 0
+        },
+        "native_diagnostics": {
+          "premature_open_jaw": {
+            "count": 0,
+            "intervals": [],
+            "maximum_s": 0.0,
+            "total_s": 0.0
+          },
+          "support_touchdown_before_destination": {
+            "count": 0,
+            "intervals": [],
+            "maximum_s": 0.0,
+            "total_s": 0.0
+          }
+        },
+        "native_metrics_mismatches": [],
+        "native_recomputed": {
+          "carry_complete": false,
+          "carry_contact_loss_events": 0,
+          "dwell_seconds": 0.0,
+          "first_success_time_seconds": null,
+          "grasp_seen": true,
+          "lift_dwell_seconds": 0.0,
+          "lift_seen": false,
+          "max_carry_contact_loss_seconds": 0.0,
+          "max_object_lift_m": 0.01765747992294485,
+          "max_pad_normal_force_n": 2.5154725382030216,
+          "retention_lost": false,
+          "success": false,
+          "unexpected_contact_native_ticks": 1240
+        },
+        "reason": "invalid_state_value",
+        "restoration_scope": "Loaded contact restored for 100 ms after sustained loss; does not establish task recovery or airborne regrasp.",
+        "schema": "dvidia.piper-feedback-score/v1",
+        "strict_v01": {
+          "reason": "invalid_state_value",
+          "reference_xy_m": [
+            0.35,
+            0.08
+          ],
+          "state_index": 687,
+          "success": false
+        },
+        "success": false,
+        "terminal_only": {
+          "dwell_s": 0.0,
+          "scope": "Terminal-only geometry/release/settling/dwell; excludes lift, carry and retention history.",
+          "success": false,
+          "terminal_xy_error_m": 0.2545568078047586
+        },
+        "valid": true
+      },
+      "scored_control_trajectory": true,
+      "strict_success": false,
+      "supervisor_cause": null,
+      "supervisor_status": "finished",
+      "variant": "delta",
+      "worker_receipt": {
+        "bytes": 4438,
+        "sha256": "992235bea602ec6bdcd12f82296d5a2f8b89d6ca7dfc598808e9f35f1256268d"
+      },
+      "worker_receipt_available": true,
+      "worker_wall_seconds": 14.5429857079871
+    },
+    {
+      "camera_pairs": 501,
+      "case": {
+        "goal_id": 1,
+        "goal_position_m": [
+          0.4,
+          -0.08,
+          0.08
+        ],
+        "group_id": "development-01",
+        "id": "development-01-goal1",
+        "object_position_m": [
+          0.303637,
+          -0.039966,
+          0.082
+        ],
+        "seed": 311468,
+        "split": "development"
+      },
+      "files_verified": 5010,
+      "frame_bytes": 169366324,
+      "guard": {
+        "checks": 1000,
+        "forwarded_calls": 1000,
+        "guard_wall_seconds": 0.005538281751796603,
+        "minimum_free_bytes": 39318462464,
+        "scope": "Once per simulated20ms callback, not a wall-clock50Hz monitor; no task features changed.",
+        "stop_reason": null
+      },
+      "id": "development-01-goal1-absolute",
+      "inspection": {
+        "files_verified": 5010,
+        "physical_robot_ready": false,
+        "physics_executed": false,
+        "recorded_complete_intervals": 1000,
+        "schema": "dvidia.camera-action-rollout/v2/inspection",
+        "score": {
+          "evidence_scope": "Recomputed simulator-authored numeric evidence; no physics rerun, source attestation or hardware sensing.",
+          "false_alarms": {
+            "reason": "Continuous residual policy has no declared discrete alarm events.",
+            "status": "not_applicable"
+          },
+          "grip_events": [
+            {
+              "kind": "supported_grip_interruption",
+              "loss_onset_s": 18.28199999999936,
+              "loss_qualified_s": 18.300999999999384,
+              "onset_to_qualified_restoration_s": 0.1490000000001821,
+              "onset_to_restoration_s": 0.05000000000006111,
+              "relative_motion_since_loss_m": 0.0009026515472255445,
+              "restoration_onset_s": 18.33199999999942,
+              "restoration_qualified_s": 18.430999999999543,
+              "restoration_supported": true,
+              "restored": true,
+              "supported_at_onset": true
+            }
+          ],
+          "grip_summary": {
+            "airborne_events": 0,
+            "loss_events": 1,
+            "qualification_latency_s": [
+              0.1490000000001821
+            ],
+            "restored_events": 1,
+            "supported_events": 1,
+            "unresolved_events": 0
+          },
+          "native_diagnostics": {
+            "premature_open_jaw": {
+              "count": 0,
+              "intervals": [],
+              "maximum_s": 0.0,
+              "total_s": 0.0
+            },
+            "support_touchdown_before_destination": {
+              "count": 0,
+              "intervals": [],
+              "maximum_s": 0.0,
+              "total_s": 0.0
+            }
+          },
+          "native_metrics_mismatches": [],
+          "native_recomputed": {
+            "carry_complete": false,
+            "carry_contact_loss_events": 0,
+            "dwell_seconds": 0.0,
+            "first_success_time_seconds": null,
+            "grasp_seen": true,
+            "lift_dwell_seconds": 0.0,
+            "lift_seen": true,
+            "max_carry_contact_loss_seconds": 0.0,
+            "max_object_lift_m": 0.12241943079952637,
+            "max_pad_normal_force_n": 0.6881092160543247,
+            "retention_lost": false,
+            "success": false,
+            "unexpected_contact_native_ticks": 0
+          },
+          "reason": "native_outcome_failed",
+          "restoration_scope": "Loaded contact restored for 100 ms after sustained loss; does not establish task recovery or airborne regrasp.",
+          "schema": "dvidia.piper-feedback-score/v1",
+          "strict_v01": {
+            "native_metrics_source": "simulator-authored episode record; not authenticated sensor input",
+            "native_outcome_success": false,
+            "native_outcome_valid": true,
+            "reason": "native_outcome_failed",
+            "reference_xy_m": [
+              0.4,
+              -0.08
+            ],
+            "required_dwell_s": 0.25,
+            "required_lift_dwell_s": 0.1,
+            "sample_interval_s": 0.02,
+            "success": false,
+            "terminal_dwell_s": 0.0,
+            "terminal_reference_success": false,
+            "terminal_xy_error_m": 0.004469139679330379,
+            "trace_lift_dwell_s": 0.9799999999999969,
+            "trajectory_complete": true
+          },
+          "success": false,
+          "terminal_only": {
+            "dwell_s": 0.0,
+            "scope": "Terminal-only geometry/release/settling/dwell; excludes lift, carry and retention history.",
+            "success": false,
+            "terminal_xy_error_m": 0.004469139679330379
+          },
+          "valid": true
+        },
+        "source_authenticated": false,
+        "status": "complete",
+        "strict_success": false
+      },
+      "integrity_file": {
+        "bytes": 567674,
+        "sha256": "00eea091817448e593ee0d9b6149af6b492291194f9caa914c942a6bc75fd9e7"
+      },
+      "perception": {
+        "available": 692,
+        "decisions": 1000,
+        "longest_missing_seconds": 5.96,
+        "missing": 308
+      },
+      "policy": {
+        "model_sha256": "36af3fe1670494b04c48b5114d9be1a5f91632aa7992ba529d6587969ea37460",
+        "physical_robot_ready": false,
+        "policy_origin": "camera_encoder_reference_endpoint_numpy_mlp",
+        "runtime_teacher_available": false,
+        "student_inference_calls": 1000,
+        "student_inference_p95_seconds": 0.0002899830491514876,
+        "student_inference_seconds": 0.23790540907066315,
+        "task_qualified": false,
+        "teacher_fallback_calls": 0,
+        "timing_scope": "Causal feature encoding, NumPy inference and reference projection; excludes camera/render/actuation.",
+        "variant": "absolute"
+      },
+      "qualified": false,
+      "recorded_complete_intervals": 1000,
+      "rollout_error": null,
+      "rollout_file": {
+        "bytes": 326868,
+        "sha256": "bb86dd380867955a60df4588140dc5c07e4f49129197c09e6b7fae9c64ce0d77"
+      },
+      "rollout_status": "complete",
+      "rollout_wall_seconds": 13.351964041998144,
+      "score": {
+        "evidence_scope": "Recomputed simulator-authored numeric evidence; no physics rerun, source attestation or hardware sensing.",
+        "false_alarms": {
+          "reason": "Continuous residual policy has no declared discrete alarm events.",
+          "status": "not_applicable"
+        },
+        "grip_events": [
+          {
+            "kind": "supported_grip_interruption",
+            "loss_onset_s": 18.28199999999936,
+            "loss_qualified_s": 18.300999999999384,
+            "onset_to_qualified_restoration_s": 0.1490000000001821,
+            "onset_to_restoration_s": 0.05000000000006111,
+            "relative_motion_since_loss_m": 0.0009026515472255445,
+            "restoration_onset_s": 18.33199999999942,
+            "restoration_qualified_s": 18.430999999999543,
+            "restoration_supported": true,
+            "restored": true,
+            "supported_at_onset": true
+          }
+        ],
+        "grip_summary": {
+          "airborne_events": 0,
+          "loss_events": 1,
+          "qualification_latency_s": [
+            0.1490000000001821
+          ],
+          "restored_events": 1,
+          "supported_events": 1,
+          "unresolved_events": 0
+        },
+        "native_diagnostics": {
+          "premature_open_jaw": {
+            "count": 0,
+            "intervals": [],
+            "maximum_s": 0.0,
+            "total_s": 0.0
+          },
+          "support_touchdown_before_destination": {
+            "count": 0,
+            "intervals": [],
+            "maximum_s": 0.0,
+            "total_s": 0.0
+          }
+        },
+        "native_metrics_mismatches": [],
+        "native_recomputed": {
+          "carry_complete": false,
+          "carry_contact_loss_events": 0,
+          "dwell_seconds": 0.0,
+          "first_success_time_seconds": null,
+          "grasp_seen": true,
+          "lift_dwell_seconds": 0.0,
+          "lift_seen": true,
+          "max_carry_contact_loss_seconds": 0.0,
+          "max_object_lift_m": 0.12241943079952637,
+          "max_pad_normal_force_n": 0.6881092160543247,
+          "retention_lost": false,
+          "success": false,
+          "unexpected_contact_native_ticks": 0
+        },
+        "reason": "native_outcome_failed",
+        "restoration_scope": "Loaded contact restored for 100 ms after sustained loss; does not establish task recovery or airborne regrasp.",
+        "schema": "dvidia.piper-feedback-score/v1",
+        "strict_v01": {
+          "native_metrics_source": "simulator-authored episode record; not authenticated sensor input",
+          "native_outcome_success": false,
+          "native_outcome_valid": true,
+          "reason": "native_outcome_failed",
+          "reference_xy_m": [
+            0.4,
+            -0.08
+          ],
+          "required_dwell_s": 0.25,
+          "required_lift_dwell_s": 0.1,
+          "sample_interval_s": 0.02,
+          "success": false,
+          "terminal_dwell_s": 0.0,
+          "terminal_reference_success": false,
+          "terminal_xy_error_m": 0.004469139679330379,
+          "trace_lift_dwell_s": 0.9799999999999969,
+          "trajectory_complete": true
+        },
+        "success": false,
+        "terminal_only": {
+          "dwell_s": 0.0,
+          "scope": "Terminal-only geometry/release/settling/dwell; excludes lift, carry and retention history.",
+          "success": false,
+          "terminal_xy_error_m": 0.004469139679330379
+        },
+        "valid": true
+      },
+      "scored_control_trajectory": true,
+      "strict_success": false,
+      "supervisor_cause": null,
+      "supervisor_status": "finished",
+      "variant": "absolute",
+      "worker_receipt": {
+        "bytes": 5262,
+        "sha256": "9e24e931e0063d24b32beb1642abe26d59756af2c6a6d29e31d975f4a828d185"
+      },
+      "worker_receipt_available": true,
+      "worker_wall_seconds": 15.055389708984876
+    },
+    {
+      "camera_pairs": 501,
+      "case": {
+        "goal_id": 1,
+        "goal_position_m": [
+          0.4,
+          -0.08,
+          0.08
+        ],
+        "group_id": "development-01",
+        "id": "development-01-goal1",
+        "object_position_m": [
+          0.303637,
+          -0.039966,
+          0.082
+        ],
+        "seed": 311468,
+        "split": "development"
+      },
+      "files_verified": 5010,
+      "frame_bytes": 168677614,
+      "guard": {
+        "checks": 1000,
+        "forwarded_calls": 1000,
+        "guard_wall_seconds": 0.005143560847500339,
+        "minimum_free_bytes": 39110926336,
+        "scope": "Once per simulated20ms callback, not a wall-clock50Hz monitor; no task features changed.",
+        "stop_reason": null
+      },
+      "id": "development-01-goal1-delta",
+      "inspection": {
+        "files_verified": 5010,
+        "physical_robot_ready": false,
+        "physics_executed": false,
+        "recorded_complete_intervals": 1000,
+        "schema": "dvidia.camera-action-rollout/v2/inspection",
+        "score": {
+          "evidence_scope": "Recomputed simulator-authored numeric evidence; no physics rerun, source attestation or hardware sensing.",
+          "false_alarms": {
+            "reason": "Continuous residual policy has no declared discrete alarm events.",
+            "status": "not_applicable"
+          },
+          "grip_events": [
+            {
+              "kind": "supported_grip_interruption",
+              "loss_onset_s": 13.27699999999808,
+              "loss_qualified_s": 13.29599999999807,
+              "onset_to_qualified_restoration_s": 0.5129999999997157,
+              "onset_to_restoration_s": 0.41399999999977055,
+              "relative_motion_since_loss_m": 0.04689580619513455,
+              "restoration_onset_s": 13.690999999997851,
+              "restoration_qualified_s": 13.789999999997796,
+              "restoration_supported": false,
+              "restored": true,
+              "supported_at_onset": true
+            },
+            {
+              "kind": "supported_grip_interruption",
+              "loss_onset_s": 13.949999999997708,
+              "loss_qualified_s": 13.968999999997697,
+              "onset_to_qualified_restoration_s": null,
+              "onset_to_restoration_s": null,
+              "relative_motion_since_loss_m": 0.306676529975985,
+              "restoration_onset_s": null,
+              "restoration_qualified_s": null,
+              "restored": false,
+              "supported_at_onset": true
+            }
+          ],
+          "grip_summary": {
+            "airborne_events": 0,
+            "loss_events": 2,
+            "qualification_latency_s": [
+              0.5129999999997157
+            ],
+            "restored_events": 1,
+            "supported_events": 2,
+            "unresolved_events": 1
+          },
+          "native_diagnostics": {
+            "premature_open_jaw": {
+              "count": 0,
+              "intervals": [],
+              "maximum_s": 0.0,
+              "total_s": 0.0
+            },
+            "support_touchdown_before_destination": {
+              "count": 0,
+              "intervals": [],
+              "maximum_s": 0.0,
+              "total_s": 0.0
+            }
+          },
+          "native_metrics_mismatches": [],
+          "native_recomputed": {
+            "carry_complete": false,
+            "carry_contact_loss_events": 0,
+            "dwell_seconds": 0.0,
+            "first_success_time_seconds": null,
+            "grasp_seen": true,
+            "lift_dwell_seconds": 0.0,
+            "lift_seen": false,
+            "max_carry_contact_loss_seconds": 0.0,
+            "max_object_lift_m": 0.030235768269076563,
+            "max_pad_normal_force_n": 2.8633099470994976,
+            "retention_lost": false,
+            "success": false,
+            "unexpected_contact_native_ticks": 3144
+          },
+          "reason": "invalid_state_value",
+          "restoration_scope": "Loaded contact restored for 100 ms after sustained loss; does not establish task recovery or airborne regrasp.",
+          "schema": "dvidia.piper-feedback-score/v1",
+          "strict_v01": {
+            "reason": "invalid_state_value",
+            "reference_xy_m": [
+              0.4,
+              -0.08
+            ],
+            "state_index": 735,
+            "success": false
+          },
+          "success": false,
+          "terminal_only": {
+            "dwell_s": 0.0,
+            "scope": "Terminal-only geometry/release/settling/dwell; excludes lift, carry and retention history.",
+            "success": false,
+            "terminal_xy_error_m": 0.10614903247737481
+          },
+          "valid": true
+        },
+        "source_authenticated": false,
+        "status": "complete",
+        "strict_success": false
+      },
+      "integrity_file": {
+        "bytes": 567674,
+        "sha256": "99a748732c1cbb7761ec00b786a680da20f01b0abb038214451be42d069cd8e2"
+      },
+      "perception": {
+        "available": 508,
+        "decisions": 1000,
+        "longest_missing_seconds": 4.8,
+        "missing": 492
+      },
+      "policy": {
+        "model_sha256": "4545be31f50267c9da29b211510c7a32df500678ba107c7a100604bb0c4c18ab",
+        "physical_robot_ready": false,
+        "policy_origin": "camera_encoder_reference_endpoint_numpy_mlp",
+        "runtime_teacher_available": false,
+        "student_inference_calls": 1000,
+        "student_inference_p95_seconds": 0.0002611646079458296,
+        "student_inference_seconds": 0.23262492148205638,
+        "task_qualified": false,
+        "teacher_fallback_calls": 0,
+        "timing_scope": "Causal feature encoding, NumPy inference and reference projection; excludes camera/render/actuation.",
+        "variant": "delta"
+      },
+      "qualified": false,
+      "recorded_complete_intervals": 1000,
+      "rollout_error": null,
+      "rollout_file": {
+        "bytes": 326951,
+        "sha256": "f0431561b7049a1058db91cc36bcf13cc7626ab9bbc50e57e0244fac52a9f563"
+      },
+      "rollout_status": "complete",
+      "rollout_wall_seconds": 12.816186875017593,
+      "score": {
+        "evidence_scope": "Recomputed simulator-authored numeric evidence; no physics rerun, source attestation or hardware sensing.",
+        "false_alarms": {
+          "reason": "Continuous residual policy has no declared discrete alarm events.",
+          "status": "not_applicable"
+        },
+        "grip_events": [
+          {
+            "kind": "supported_grip_interruption",
+            "loss_onset_s": 13.27699999999808,
+            "loss_qualified_s": 13.29599999999807,
+            "onset_to_qualified_restoration_s": 0.5129999999997157,
+            "onset_to_restoration_s": 0.41399999999977055,
+            "relative_motion_since_loss_m": 0.04689580619513455,
+            "restoration_onset_s": 13.690999999997851,
+            "restoration_qualified_s": 13.789999999997796,
+            "restoration_supported": false,
+            "restored": true,
+            "supported_at_onset": true
+          },
+          {
+            "kind": "supported_grip_interruption",
+            "loss_onset_s": 13.949999999997708,
+            "loss_qualified_s": 13.968999999997697,
+            "onset_to_qualified_restoration_s": null,
+            "onset_to_restoration_s": null,
+            "relative_motion_since_loss_m": 0.306676529975985,
+            "restoration_onset_s": null,
+            "restoration_qualified_s": null,
+            "restored": false,
+            "supported_at_onset": true
+          }
+        ],
+        "grip_summary": {
+          "airborne_events": 0,
+          "loss_events": 2,
+          "qualification_latency_s": [
+            0.5129999999997157
+          ],
+          "restored_events": 1,
+          "supported_events": 2,
+          "unresolved_events": 1
+        },
+        "native_diagnostics": {
+          "premature_open_jaw": {
+            "count": 0,
+            "intervals": [],
+            "maximum_s": 0.0,
+            "total_s": 0.0
+          },
+          "support_touchdown_before_destination": {
+            "count": 0,
+            "intervals": [],
+            "maximum_s": 0.0,
+            "total_s": 0.0
+          }
+        },
+        "native_metrics_mismatches": [],
+        "native_recomputed": {
+          "carry_complete": false,
+          "carry_contact_loss_events": 0,
+          "dwell_seconds": 0.0,
+          "first_success_time_seconds": null,
+          "grasp_seen": true,
+          "lift_dwell_seconds": 0.0,
+          "lift_seen": false,
+          "max_carry_contact_loss_seconds": 0.0,
+          "max_object_lift_m": 0.030235768269076563,
+          "max_pad_normal_force_n": 2.8633099470994976,
+          "retention_lost": false,
+          "success": false,
+          "unexpected_contact_native_ticks": 3144
+        },
+        "reason": "invalid_state_value",
+        "restoration_scope": "Loaded contact restored for 100 ms after sustained loss; does not establish task recovery or airborne regrasp.",
+        "schema": "dvidia.piper-feedback-score/v1",
+        "strict_v01": {
+          "reason": "invalid_state_value",
+          "reference_xy_m": [
+            0.4,
+            -0.08
+          ],
+          "state_index": 735,
+          "success": false
+        },
+        "success": false,
+        "terminal_only": {
+          "dwell_s": 0.0,
+          "scope": "Terminal-only geometry/release/settling/dwell; excludes lift, carry and retention history.",
+          "success": false,
+          "terminal_xy_error_m": 0.10614903247737481
+        },
+        "valid": true
+      },
+      "scored_control_trajectory": true,
+      "strict_success": false,
+      "supervisor_cause": null,
+      "supervisor_status": "finished",
+      "variant": "delta",
+      "worker_receipt": {
+        "bytes": 5207,
+        "sha256": "8f5058b68c1541c1942702bdb95d1a697199b90efad02eab7afa86f0452bc8c5"
+      },
+      "worker_receipt_available": true,
+      "worker_wall_seconds": 14.523490916006267
+    }
+  ],
+  "by_variant": {
+    "absolute": {
+      "callback_including_guard": {
+        "calls": 4000,
+        "maximum_seconds": 0.008621292014140636,
+        "median_seconds": 0.00023227051133289933,
+        "p95_seconds": 0.00029546011064667254
+      },
+      "carry_complete": 0,
+      "complete_episodes": 4,
+      "critical_contact_ticks": 7606,
+      "episodes_with_critical_contact": 2,
+      "full_boundary": {
+        "calls": 4000,
+        "maximum_seconds": 0.051054958981694654,
+        "median_seconds": 0.013028145520365797,
+        "p95_seconds": 0.022362537491426335
+      },
+      "grasp_seen": 3,
+      "lift_seen": 1,
+      "qualified": false,
+      "retention_lost": 0,
+      "scheduled": 4,
+      "scored_control_trajectories": 4,
+      "strict_successes": 0,
+      "terminal_only_successes": 0
+    },
+    "delta": {
+      "callback_including_guard": {
+        "calls": 4000,
+        "maximum_seconds": 0.021589000010862947,
+        "median_seconds": 0.00023095900542102754,
+        "p95_seconds": 0.0002842972404323518
+      },
+      "carry_complete": 0,
+      "complete_episodes": 4,
+      "critical_contact_ticks": 19751,
+      "episodes_with_critical_contact": 4,
+      "full_boundary": {
+        "calls": 4000,
+        "maximum_seconds": 0.058383833995321766,
+        "median_seconds": 0.013461853988701478,
+        "p95_seconds": 0.02204904312093276
+      },
+      "grasp_seen": 4,
+      "lift_seen": 0,
+      "qualified": false,
+      "retention_lost": 0,
+      "scheduled": 4,
+      "scored_control_trajectories": 4,
+      "strict_successes": 0,
+      "terminal_only_successes": 0
+    }
+  },
+  "decision": "pass_integrity_and_accounting",
+  "evidence_scope": "Independent full artifact inventory hash/contract/authority checks and strict scorer reconstruction from saved native arrays, without physics replay or source authentication.",
+  "models": {
+    "absolute": {
+      "content_sha256": "36af3fe1670494b04c48b5114d9be1a5f91632aa7992ba529d6587969ea37460",
+      "file": {
+        "bytes": 539345,
+        "sha256": "3dbf6911d92a9072297c9c3bb7c09f45809808272455ffd5562f4553a173f362"
+      }
+    },
+    "delta": {
+      "content_sha256": "4545be31f50267c9da29b211510c7a32df500678ba107c7a100604bb0c4c18ab",
+      "file": {
+        "bytes": 538021,
+        "sha256": "fece6d056e50a1bde41bdb9960bf7cbc81d983c4bfdb03a07632e30b712b1489"
+      }
+    }
+  },
+  "original_result": {
+    "bytes": 7153,
+    "sha256": "597277fd6c4671a7d2791aa861beb5da896573fcbf51f8db08e30d4bc501284e"
+  },
+  "passed": true,
+  "plan_sha256": "9912b3b86abe889d81073b1fee1c9cad9655264fdb325abbbf60dbebd89a490b",
+  "prior_batches": [
+    {
+      "result_file": {
+        "bytes": 6130,
+        "sha256": "2e9a40eaa5799f3bc6d0d36ee10f5fe8a6cf0bfe387f428f399d66a4e9c5c6fe"
+      },
+      "run_id": "reference-model-development-smoke-20261109",
+      "scheduled_attempts": 8
+    },
+    {
+      "result_file": {
+        "bytes": 6664,
+        "sha256": "017d7ae05f64b8539d950ec00063345f30571e4a89086e06411b1b038c9a335c"
+      },
+      "run_id": "reference-model-development-smoke-v2-20261109",
+      "scheduled_attempts": 8
+    }
+  ],
+  "qualification": false,
+  "result_file": {
+    "bytes": 7153,
+    "sha256": "597277fd6c4671a7d2791aa861beb5da896573fcbf51f8db08e30d4bc501284e"
+  },
+  "review_fits": 0,
+  "review_physics_or_native_import": false,
+  "review_policy_inference": false,
+  "review_wall_seconds": 9.043949083017651,
+  "reviewed_at_utc": "2026-11-09T16:42:28.047717+00:00",
+  "reviewer": "export_cache",
+  "schema": "dvidia.reference-model-development-smoke-v3-result-review/v1",
+  "script_sha256": "8186572b17949cbe3add1ac4d1bc4dcca92cfa76f973892b64e1b4275b78c48a",
+  "selection_performed": false,
+  "source_commit": "78ea4fbb4b2733e7738eb425eeecd7cb67a52195",
+  "source_files": {
+    "src/dvidia_training/action_demonstration.py": {
+      "bytes": 36303,
+      "sha256": "439c7cce558571221660cd51e7dba1675203237706ea8ea0f97f2fcf9a6a24c5"
+    },
+    "src/dvidia_training/camera_action_cache.py": {
+      "bytes": 23490,
+      "sha256": "9191f2eb9f96bd09d4f711c31966a583bd938853a874e6018f8ddebfb0bc00d8"
+    },
+    "src/dvidia_training/camera_action_capture.py": {
+      "bytes": 34257,
+      "sha256": "399f512a08087c72bfa37e382157a2250f413e423974b77b1bd3c0a911ff0a1e"
+    },
+    "src/dvidia_training/camera_action_export.py": {
+      "bytes": 7355,
+      "sha256": "2c4e30587605edc0342150a93430a70ed0559c3ee3eda17d93c5670831370b02"
+    },
+    "src/dvidia_training/camera_action_model.py": {
+      "bytes": 27066,
+      "sha256": "e9a9c4d1d0f16fc7c91cac3ca2e6560d0532370ab78a2af5a4ec84425c23932f"
+    },
+    "src/dvidia_training/camera_action_reference_export.py": {
+      "bytes": 19195,
+      "sha256": "ccf6f74f6100721868ccece67e5b27dae066c1b644c8297efe111125d9517753"
+    },
+    "src/dvidia_training/camera_action_reference_model.py": {
+      "bytes": 19771,
+      "sha256": "952750fd6b99f97eb96054b8fe50710b83f7e8eb4e069601be442292dd0023bc"
+    },
+    "src/dvidia_training/camera_action_study.py": {
+      "bytes": 46551,
+      "sha256": "196f669b03baff3df561fa9236c64dab401c954c929994dedc36721611c8948a"
+    },
+    "src/dvidia_training/embodiment_calibration.py": {
+      "bytes": 14701,
+      "sha256": "0531be511b3bc549576a33930394d33b673c146d5e52c29198096632ea7478c5"
+    },
+    "src/dvidia_training/episode_tape.py": {
+      "bytes": 31209,
+      "sha256": "abae9a4bd0080c7f638c5c82c050fb1364a20769998c054354b918233669f5d2"
+    },
+    "src/dvidia_training/piper_action_capture.py": {
+      "bytes": 29069,
+      "sha256": "da037b2198cf7d2f3a9aa40fc19a4c0f5cc375a22c5dd75606e2c1856f6efc7f"
+    },
+    "src/dvidia_training/piper_feedback_env.py": {
+      "bytes": 11247,
+      "sha256": "0dbae423231968a81bdeed52226d8dffaf8df622013ed3a360d7217148f1bcac"
+    },
+    "src/dvidia_training/piper_feedback_score.py": {
+      "bytes": 18866,
+      "sha256": "863a272828208c631de4cf57647e973eb3e4f5e99eb7a1eacb4eaa68dc42eb0e"
+    },
+    "src/dvidia_training/piper_imitation.py": {
+      "bytes": 25561,
+      "sha256": "849f66512c58441a240cd20230fcc58691234ddd254c5bbcbfd76abc21b14868"
+    },
+    "src/dvidia_training/piper_imitation_score.py": {
+      "bytes": 11462,
+      "sha256": "0cd4663abfdd7f14f2f33d93e9a2bd45122b998d6160d45b8afcc880512cba2b"
+    },
+    "src/dvidia_training/piper_motor_primitive.py": {
+      "bytes": 17476,
+      "sha256": "02a45b88913db6f223e4d9975eac64d4942a92739c5817c6ede4cc9fa332ed1c"
+    },
+    "src/dvidia_training/piper_rgbd_tracker.py": {
+      "bytes": 17461,
+      "sha256": "43202cfcea404061a3a65124d6ad24aeeec5fae8ffaf863caa245f2f54c46c36"
+    },
+    "src/dvidia_training/piper_task.py": {
+      "bytes": 34355,
+      "sha256": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f"
+    },
+    "src/dvidia_training/reference_sim.py": {
+      "bytes": 24336,
+      "sha256": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8"
+    },
+    "src/dvidia_training/reference_task.py": {
+      "bytes": 34166,
+      "sha256": "bbc768ccc202b8dd41cbd235b206e6478806ce47c1f30ae15dc662c0c1edcc3e"
+    },
+    "src/dvidia_training/robot_profiles.lock.json": {
+      "bytes": 35002,
+      "sha256": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe"
+    },
+    "src/dvidia_training/robot_profiles.py": {
+      "bytes": 26493,
+      "sha256": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d"
+    }
+  },
+  "timing_scope": "Stored rollout timings are shared-host offline paused-simulator wall measurements. Callback includes guard+causal encoding+inference+projection; ModelPolicy diagnostic excludes guard. Full boundary includes file writes and alternate camera work; initial acquisition timing row is separate and excluded from callback/boundary percentiles. Neither is physical delivery latency. Review verification time is separate."
+}
