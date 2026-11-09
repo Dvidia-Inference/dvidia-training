@@ -6,6 +6,16 @@
 
 [Recorded demo](https://huggingface.co/spaces/Dvidia/dvidia-training) · [Synthetic datasets](https://huggingface.co/datasets/Dvidia/dvidia-training-examples) · [Pilot models](https://huggingface.co/Dvidia/dvidia-training-pilot)
 
+**[Camera-to-action skill v0.1](docs/camera-action-v01.md).**
+The **0.1.3.dev4 preview** adds a local demonstration-to-action learning loop:
+25 Hz RGB-D, 50 Hz measured joints and demonstrated targets, a compact CPU
+policy, one bounded correction round, and a fixed unseen-start benchmark.
+Use `dvidia-train robot` in Terminal or the Training Studio's `/robot` page.
+The first task is simulated PiPER block placement with an explicitly synthetic
+teacher. Missing object estimates remain masked. Each installation remains a
+simulation candidate and sends no physical commands.
+[Registered experiment and diagnostic evidence](docs/camera-action-v01-report-draft.md).
+
 **[Arm interfaces and installation v0.1](docs/arm-interfaces-v01.md).**
 The **0.1.3.dev3 preview** adds `dvidia-arm`: three explicit native simulation
 adapters, exact PiPER policy compatibility checks, separate install/run commands,
@@ -390,6 +400,9 @@ A folder of videos is accepted, with lineage/completeness warnings. Prefer an ex
 ## Hardware
 
 These are **provisional planning targets for the small default visual learner**, not verified minimum specifications or guarantees for arbitrary datasets.
+They do not describe the camera-to-action native benchmark, which requires a
+working graphics context, substantially more evidence storage and a separate
+[setup and measured-host report](docs/camera-action-v01.md).
 
 | Resource | Proposed starting point | Recommended |
 | --- | --- | --- |
