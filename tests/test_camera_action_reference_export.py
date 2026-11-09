@@ -40,7 +40,13 @@ def native_trace(previous, target):
         and isinstance(n.body[0], ast.AugAssign) and isinstance(n.body[0].target, ast.Attribute)
         and n.body[0].target.attr == 'command_targets')
     module = ast.Module(body=loop.body[:2], type_ignores=[])
-    if sha256(ast.dump(module, include_attributes=False).encode()).hexdigest() != ref.CONTRACT['limiter_ast_sha256']:
+    # Python 3.13+ omits empty AST fields by default; the original digest uses
+    # Python 3.12's explicit empty lists. Preserve that representation only.
+    try:
+        serialized = ast.dump(module, include_attributes=False, show_empty=True)
+    except TypeError:  # Python 3.10–3.12 have no show_empty keyword.
+        serialized = ast.dump(module, include_attributes=False)
+    if sha256(serialized.encode()).hexdigest() != ref.CONTRACT['limiter_ast_sha256']:
         raise AssertionError('Native numerical oracle changed')
     code = compile(ast.fix_missing_locations(module), '<two-reference-statements-only>', 'exec')
     state = SimpleNamespace(command_targets=np.asarray(previous[:6], dtype=np.float64).copy(),
@@ -189,6 +195,23 @@ class ReferenceExportTests(unittest.TestCase):
         decoded = previous+delta*np.asarray([.03]*6+[.001])
         decoded_trace = np.stack(list(ref._reference_updates(previous, decoded)), axis=1)
         np.testing.assert_allclose(decoded_trace, original, rtol=0., atol=1e-12)
+
+    def test_oracle_requests_empty_ast_fields_on_newer_python(self):
+        original = ast.dump
+        calls = []
+        def newer_dump(node, *, include_attributes=False, show_empty=False):
+            calls.append(show_empty)
+            if not show_empty:
+                return 'new default representation intentionally omits empty fields'
+            try:
+                return original(node, include_attributes=include_attributes, show_empty=True)
+            except TypeError:
+                return original(node, include_attributes=include_attributes)
+        with patch.object(ast, 'dump', side_effect=newer_dump):
+            trace = native_trace(np.asarray([0.,1.57,-1.3485,0.,0.,0.,.035]),
+                                 np.asarray([.1,1.57,-1.3485,0.,0.,0.,.03]))
+        self.assertEqual(calls, [True])
+        self.assertEqual(trace.shape, (20,7))
 
     def test_queries_change_labels_not_inputs_or_reference_authority(self):
         left = self.parent(mixed=True, query=.8); l = self.load(left, self.build(left))
