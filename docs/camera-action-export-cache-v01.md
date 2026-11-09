@@ -77,6 +77,37 @@ A fresh offline `0.1.3.dev5` wheel install outside the checkout matched the curr
 
 This measures repeated data preparation only. It is not evidence of faster policy inference, better grip/placement success, whole-study throughput or physical-arm readiness. The v0.1 learned result remains 5/64 strict unseen placements and unqualified.
 
+## Complete training-data validation
+
+A separate, single construction pass validated **all 64 teacher demonstrations and 32 mixed-control correction recordings** from the registered training split: 96,000 action samples across 32 starting-position groups. The cache used the unchanged `cc6746a95669cfd69a49e32a3e6c2e5a42ce2546` implementation. No development or confirmation recordings were exported and no model was fitted.
+
+The four original model files provide independent, pinned dataset references. On each of three loads, the initial/full, initial/blind, corrected/full and corrected/blind dataset hashes, ordered groups and complete provenance matched those sealed references: **12/12 checks passed**. The blind variants use the unchanged exporter mask; corrections retain separately queried teacher labels. This validates the complete existing training dataset, beyond the earlier one-episode check.
+
+| Operation | Wall time |
+|---|---:|
+| Build 64-demonstration cache, including strict source validation | 105.621 s |
+| Build 32-correction cache, including strict source validation | 55.050 s |
+| One-time construction total | 160.671 s |
+| Validated load of both caches plus ordered combination, rounds 1 / 2 / 3 | 0.347 / 0.280 / 0.279 s |
+| Separate four-reference checks and blind projection, rounds 1 / 2 / 3 | 0.596 / 0.491 / 0.490 s |
+
+The derived caches occupy **108,804,852 bytes**. Their source inventory contains 577,056 files and 18,971,932,592 bytes; this is the unique corpus size, not a physical-I/O measurement. Whole-process peak RSS was 1,631,633,408 bytes across construction, loads, combination and reference checks. Total validation took 163.738 s. The original raw recordings remain intact, with the 30 GiB reserve preserved.
+
+These are shared-host, warm-filesystem preparation measurements on the same arm64 macOS / Python 3.12.9 / NumPy 2.5.3 environment; CPU model and physical-memory metadata were unavailable. No matched strict-export baseline was rerun, so **there is no whole-pipeline speedup ratio**. The roughly 0.28 s repeated load-and-combine measurement excludes model fitting and the separately reported golden checks. It does not change inference speed, task success or qualification: the learned candidate remains **unqualified** (`qualified: false`). Cache hits still do not revalidate raw recordings.
+
+The [full-training receipt](../benchmarks/camera-action-export-cache-v01/full-training-results.json) records every timing, cache pin and original model identity. The [portable helper](../benchmarks/camera-action-export-cache-v01/validate_full_training.py) changes only host paths into required CLI inputs; its [provenance record](../benchmarks/camera-action-export-cache-v01/full-training-script-provenance.json) distinguishes its hash from the exact original script that produced these measurements. The portable helper was not used for another measurement. It requires the exact pinned study and the independently verified dev5 environment; it refuses changed sources, wrong models, missing training recordings and an existing output directory.
+
+```sh
+cd /absolute/neutral-work-directory
+env -u PYTHONPATH /absolute/dev5/bin/python -I -B \
+  /absolute/dvidia-training/benchmarks/camera-action-export-cache-v01/validate_full_training.py \
+  /absolute/sealed-study /absolute/fresh-output \
+  --expected-venv /absolute/dev5 \
+  --working-directory /absolute/neutral-work-directory
+```
+
+Keep the study sealed and give the process exclusive write access to its fresh output. This helper performs two strict cache builds and three validation rounds; it does not start training, execute a policy, run physics or download anything. Interrupted output is retained and never silently overwritten. The released dev5 wheel and tag remain unchanged by this benchmark-only addition.
+
 ## Reproduce the bounded measurement
 
 ```sh

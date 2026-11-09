@@ -25,3 +25,11 @@ The focused CLI/cache/export suite passes 25 tests, including cleanup order, no-
 - Protocol SHA-256: `576851e321034a0f6d3cb4d0818b3a5ca97975fcc6f2c7fa30b07ffd203a2d76`.
 - `cli-proof.json` records fresh installed-wheel source, inspection/load, wrong-split refusal and existing CLI checks, outside the three timed loads. `cli-proof-prior-source.json` retains the earlier source-bound checks.
 - [Usage, trust boundary and reproduction](../../docs/camera-action-export-cache-v01.md).
+
+## Complete training dataset follow-up
+
+[full-training-results.json](full-training-results.json) covers the complete registered training split: 64 teacher and 32 mixed-control episodes, 96,000 samples, 32 start groups. Both caches were built once with strict source validation in **160.671 s**. The three verified load-and-combine measurements were **0.347 / 0.280 / 0.279 s**; the four original model-reference comparisons and blind projection took a separate **0.596 / 0.491 / 0.490 s**. All four sealed model dataset/provenance identities matched on every load (12/12 checks).
+
+Derived caches total 108,804,852 bytes, from a source inventory of 18,971,932,592 bytes / 577,056 files. Whole-process peak RSS was 1,631,633,408 bytes and total validation time was 163.738 s. The same shared-host caveats apply. There was no redundant strict-export baseline, no new fit, native simulation or held-out recording export, and no task-success improvement or qualification change. The repeated-load measurement does not include training. Raw recordings are verified at cache construction, not again on a hit.
+
+[validate_full_training.py](validate_full_training.py) is a portable version of the exact executed script, with required absolute CLI paths replacing host-specific paths. [full-training-script-provenance.json](full-training-script-provenance.json) pins both original and portable hashes; the portable variant was not run for a new measurement. All original source, protocol, stage, model and complete training-roster checks remain intact. [Reproduction and scope](../../docs/camera-action-export-cache-v01.md#complete-training-data-validation) explain the fixed dev5 environment and fresh-output requirements. This benchmark-and-documentation follow-up does not replace the released wheel or tag; the candidate remains unqualified.

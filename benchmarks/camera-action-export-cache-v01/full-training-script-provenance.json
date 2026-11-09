@@ -1,0 +1,20 @@
+{
+  "code_source_commit": "cc6746a95669cfd69a49e32a3e6c2e5a42ce2546",
+  "original_executed_script": {
+    "bytes": 17276,
+    "sha256": "a820eb77b7d5a80dd79686f86369b29fd7a39b8bb34328e636a2de31d51318c2"
+  },
+  "original_result": {
+    "bytes": 16921,
+    "sha256": "14379c3288d16f380cade39a067f6a9315449cd7bd07f0a828243b237eff52ee"
+  },
+  "portable_script": {
+    "bytes": 17929,
+    "path": "validate_full_training.py",
+    "sha256": "36c31fccd0d84410d1a590b7cae7a3009700a3eec05028ccfc594cbed01037c9"
+  },
+  "portable_variant_executed_for_measurement": false,
+  "schema": "dvidia.portable-benchmark-script/v1",
+  "scope": "Reproduction only. No new measurement or model fitting was performed for the portable helper.",
+  "transformation": "Added argparse with absolute-path validation and replaced the fixed study, output, expected environment and working-directory paths with required caller paths. All protocol, source, model, stage, roster, numerical checks and budgets are unchanged. The output parent replaces the original proof-directory binding."
+}
