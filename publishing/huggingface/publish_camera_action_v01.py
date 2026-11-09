@@ -79,6 +79,10 @@ def allowed(name):
     relative(name)
     return (name in REQUIRED or name in ('diagnostic-phase-coverage.json', 'full-study-audit.json', 'hardware.json', RECEIPT_FILE)
         or re.fullmatch(r'episodes/[a-z-]+/[a-z0-9-]+\.zip', name) is not None
+        # The frozen v1 roster has 16 negative-control archives with these
+        # underscore-bearing fault names. Do not broaden other episode paths.
+        or re.fullmatch(r'episodes/negative/negative-confirmation-0[01]-goal[01]-student-'
+                        r'(initial_missing|initial_stale|altered_calibration|open_gripper)\.zip', name) is not None
         or re.fullmatch(r'models/(initial|corrected)/(full|blind)/model\.json', name) is not None
         or re.fullmatch(r'model-cards/(initial|corrected)/(full|blind)/README\.md', name) is not None
         or re.fullmatch(r'source/[A-Za-z0-9_.+-]+\.(whl|tar\.gz)', name) is not None)

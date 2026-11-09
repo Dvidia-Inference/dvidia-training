@@ -13,6 +13,52 @@ from unittest.mock import Mock, patch
 import publish_camera_action_v01 as publisher
 
 
+def registered_negative_archives():
+    return [f'episodes/negative/negative-confirmation-{group}-goal{goal}-student-{fault}.zip'
+            for group in ('00', '01') for goal in (0, 1)
+            for fault in ('initial_missing', 'initial_stale', 'altered_calibration', 'open_gripper')]
+
+
+class CameraPublicationPathTests(unittest.TestCase):
+    def test_all_sixteen_registered_negative_archives_are_admitted(self):
+        paths = registered_negative_archives()
+        self.assertEqual(len(set(paths)), 16)
+        for name in paths:
+            with self.subTest(name=name):
+                self.assertTrue(publisher.allowed(name))
+
+    def test_negative_exception_does_not_admit_unknown_or_noncanonical_paths(self):
+        valid = registered_negative_archives()[0]
+        invalid = [
+            valid.replace('initial_missing', 'unknown_fault'),
+            valid.replace('initial_missing', 'initial_missing_extra'),
+            valid.replace('confirmation-00', 'confirmation-02'),
+            valid.replace('confirmation-00', 'confirmation-99'),
+            valid.replace('confirmation-00', 'confirmation-0'),
+            valid.replace('goal0', 'goal2'),
+            valid.replace('student', 'teacher'),
+            valid.replace('episodes/negative/', 'episodes/confirmation/'),
+            valid.replace('episodes/negative/', 'episodes/unknown/'),
+            valid.replace('.zip', '.json'),
+            valid.replace('.zip', '.zip.py'),
+            valid.replace('initial_missing', 'INITIAL_MISSING'),
+            'episodes/negative/arbitrary_name.zip',
+            'episodes/negative/negative_confirmation-00-goal0-student-initial_missing.zip',
+        ]
+        for name in invalid:
+            with self.subTest(name=name):
+                self.assertFalse(publisher.allowed(name))
+        # Preserve existing hyphen-only episode paths.
+        self.assertTrue(publisher.allowed('episodes/confirmation/confirmation-00-goal0-student.zip'))
+
+    def test_unsafe_relative_paths_still_raise(self):
+        valid = registered_negative_archives()[0]
+        for name in ('/' + valid, '../' + valid, valid.replace('episodes/', 'episodes/../'),
+                     valid.replace('/', '\\'), valid + '\x00', valid.replace('/negative/', '//negative/')):
+            with self.subTest(name=name), self.assertRaises(publisher.PublicationError):
+                publisher.allowed(name)
+
+
 class CameraPublicationTests(unittest.TestCase):
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory()
@@ -75,6 +121,41 @@ class CameraPublicationTests(unittest.TestCase):
         self.assertTrue(all(not Path(call.args[2]).exists() for call in download.call_args_list))
         self.assertEqual(list((self.root/'cache').iterdir()),[])
         api.repo_info.assert_called_once_with(publisher.REPO, repo_type='dataset', files_metadata=True, token=False)
+
+    def test_negative_archives_stage_and_readback_preserve_checksums_and_credentials(self):
+        manifest = json.loads((self.dataset / 'manifest.json').read_bytes())
+        for name in registered_negative_archives():
+            target = self.dataset / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(b'Synthetic negative-control archive fixture.')
+            manifest['files'][name] = publisher.identity(target)
+            manifest['episodes'].append(dict(archive=name))
+        manifest['episode_count'] = len(manifest['episodes'])
+        (self.dataset / 'manifest.json').write_text(json.dumps(manifest))
+        identities = dict(manifest['files'], **{'manifest.json': publisher.identity(self.dataset / 'manifest.json')})
+        sums = ''.join(f'{row["sha256"]}  {name}\n' for name, row in sorted(identities.items()))
+        (self.dataset / 'SHA256SUMS').write_text(sums)
+        new_plan = self.root / 'negative-plan.json'
+        with patch.object(publisher, 'client', side_effect=AssertionError('Unexpected credential access')):
+            receipt = publisher.stage(self.dataset, new_plan)
+            value = publisher.checked(new_plan, receipt['plan_sha256'])
+            api = Mock()
+            api.repo_info.return_value = self.info([r['path'] for r in value['files']] + ['.gitattributes'])
+            with patch.object(publisher, 'public_client', return_value=api), \
+                    patch.object(publisher, 'download', side_effect=self.downloaded):
+                proof = publisher.verify(new_plan, receipt['plan_sha256'], self.root / 'negative-cache')
+            self.assertEqual(proof['anonymous_files_verified'], len(value['files']))
+            self.assertEqual([r['path'] for r in value['files'] if r['path'].startswith('episodes/')],
+                             sorted(registered_negative_archives()))
+            (self.dataset / 'SHA256SUMS').write_text(sums.replace('initial_missing.zip', 'initial_missinG.zip'))
+            with self.assertRaisesRegex(publisher.PublicationError, 'checksum list'):
+                publisher.files(self.dataset)
+            (self.dataset / 'SHA256SUMS').write_text(sums)
+            (self.dataset / registered_negative_archives()[0]).write_bytes(b'changed')
+            with self.assertRaisesRegex(publisher.PublicationError, 'Payload bytes'):
+                publisher.checked(new_plan, receipt['plan_sha256'])
+            with self.assertRaises(publisher.PublicationError):
+                publisher.publish(new_plan, receipt['plan_sha256'], self.root / 'publish-cache')
 
     def test_mutated_payload_and_changed_destination_fail_before_keychain(self):
         (self.dataset / 'README.md').write_bytes(b'changed')
