@@ -1,0 +1,42 @@
+{
+  "api_wall_ms": {
+    "fk": {
+      "max": 0.0275,
+      "median": 0.00775,
+      "p95": 0.008208
+    },
+    "pose_action": {
+      "max": 0.071583,
+      "median": 0.0305,
+      "p95": 0.03240985
+    }
+  },
+  "configurations": 64,
+  "constructor_wall_ms_including_asset_validation_and_compile": 221.496958,
+  "host": {
+    "declared_blas_threads": {
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    },
+    "logical_cpus": 10,
+    "machine": "arm64",
+    "macos": "26.5.2",
+    "mujoco": "3.15.0",
+    "numpy": "2.5.3",
+    "platform": "darwin",
+    "python": "3.12.9",
+    "whole_process_peak_rss_bytes": 564772864
+  },
+  "native_time_seconds": 0.0,
+  "physical_robot_ready": false,
+  "probe_sha256": "ffe49ba49802521f32e303b91bb268b5c4a8303dbdbf247308f45284e9de9b17",
+  "schema": "dvidia.piper-encoder-kinematics-static-timing/v1",
+  "scope": "Shared-host static CPU API timing only. Targets were prepared before timing. No dynamics, rendering, learned inference, training, IO loop or hardware commands; no real-time deadline claim.",
+  "seed": 20261109,
+  "source_sha256": "6606bb8aad04e5abb1e9b6d1a8ec628a4114acd167862167184fd4eef1d21c34",
+  "task_qualified": false,
+  "timed_calls_per_api": 1024,
+  "warmup_calls_per_api": 64
+}
