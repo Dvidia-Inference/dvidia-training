@@ -1,0 +1,32 @@
+{
+  "executed_script": {
+    "bytes": 14365,
+    "sha256": "3eb816e1145a9e3ad24bda0468ef9312e9cae9f08325948ead8c7d41981b7e45"
+  },
+  "helper_sha256": "ccf6f74f6100721868ccece67e5b27dae066c1b644c8297efe111125d9517753",
+  "portable_script": {
+    "bytes": 15089,
+    "path": "validate_full_training_references.py",
+    "sha256": "6367f894c299045d2bf98372af51a2c1394c3274d2a3a852985c268f3333f952"
+  },
+  "portable_script_executed": false,
+  "publication_state": "locally_validated_peer_reviewed_result_and_portable_helper_reviewed",
+  "qualified": false,
+  "real_validation_runs": 1,
+  "result": {
+    "bytes": 28311,
+    "copy": "exact executed result bytes; no normalization",
+    "path": "full-training-results.json",
+    "sha256": "68908bb9111ca92c4d672c25aa58c55417b4197f60a50d89bc96cd4e46bd799e"
+  },
+  "schema": "dvidia.reference-export-portable-evidence/v1",
+  "source_commit": "a9340b7d00bdd0618421027807faad247f9be99d",
+  "transformation": [
+    "Host-specific paths become six required absolute CLI inputs.",
+    "Fresh output parent replaces host-specific proof directory for reserve/log placement.",
+    "Working-directory check uses required execution-cwd and additionally refuses a source-checkout cwd.",
+    "All functions preserve their AST after normalizing the execution-directory binding and the RSS reporting call; numerical, build/load, identity, authority and audit logic are unchanged.",
+    "All protocol/source/stage/parent/combined dataset pins and budgets remain unchanged.",
+    "RSS telemetry retains macOS bytes, converts Linux KiB to bytes, and reports null where resource telemetry is unavailable; no new measurement was run."
+  ]
+}

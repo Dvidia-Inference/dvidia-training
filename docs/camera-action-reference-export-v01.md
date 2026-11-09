@@ -4,8 +4,10 @@ This additive Python API preserves the exact prior servo reference needed to
 compare future absolute and reference-relative action heads. It writes two
 float64 arrays beside a caller-pinned v0.1 training cache. It does not change
 v0.1 features, targets, models, CLI, runtime, released wheel or qualification.
-Only synthetic fixtures have exercised this new exporter; no original study
-recording or trained model was read for this milestone.
+Synthetic tests and one bounded run on all 96,000 training metadata rows have
+now exercised this exporter. Original recording JSON metadata was read; raw
+frames, native traces and trained models were not. This validates preparation,
+not a learned policy.
 
 The existing feature cache stores normalized command history as float32. That
 history cannot recover the exact float64 servo state. For row zero of each
@@ -107,9 +109,51 @@ collapse to the same float32 feature, and check mixed-label separation,
 future/truth exclusion, before-seal mutation, stale pins, broken ancestry,
 file tampering, split isolation, reserve enforcement and interrupted writes.
 
+## Recorded training metadata validation
+
+On 9 November 2026, one run built both artifacts from the previously verified
+training caches: 64 teacher episodes and 32 mixed-control episodes, each with
+1,000 rows. Exact float64 reset/prior-reference ancestry and every recorded
+normal endpoint after the twenty updates passed. All six per-stage loads and
+three combined-parent checks retained the independently pinned dataset and
+provenance identities. Exactly 294 original metadata files were read: six
+study/stage files and three files per training episode. An audit guard refused
+other original-study reads and writes and native physics imports.
+
+| Measurement | Observed value |
+|---|---:|
+| Rows / training episodes | 96,000 / 96 |
+| One-time teacher reference construction | 7.253 s |
+| One-time correction reference construction | 3.545 s |
+| Total construction | 10.798 s |
+| Total derived artifact size | 10,832,870 bytes |
+| Both validated loads, three successive rounds | 0.303 / 0.258 / 0.233 s |
+| Parent combination, separately measured | 0.107 / 0.097 / 0.096 s |
+| Parent identity checks, separately measured | 0.254 / 0.207 / 0.183 s |
+| Whole validation wall time | 12.575 s |
+| Peak process RSS | 1,238,597,632 bytes |
+
+These shared-host measurements used arm64 macOS 26.5.2, Python 3.12.9 and NumPy
+2.5.3 with one worker. Construction includes metadata, source and parent-cache
+validation. Load timings include derived-byte and parent-cache validation plus
+endpoint recomputation. The separately listed identity checks include both
+stage datasets and their combination. Whole wall time includes preflight and
+validation orchestration, excluding imports, initial output setup and the final
+report write. There is no repeated raw export comparator, inference
+latency, fitting time or placement-success measurement here.
+
+The [exact receipt](../benchmarks/camera-action-reference-export-v01/full-training-results.json)
+and [reproduction instructions](../benchmarks/camera-action-reference-export-v01/)
+retain the full scope and source pins. Source helper commit is `a9340b7`; later
+CI and test portability changes preserve those helper bytes. The original
+per-microstep native traces were not reread. Mixed feasible endpoints describe
+what the normal reference would reach toward the teacher suggestion, while
+reference ancestry follows the actual executed action. No teacher-control or
+physical-truth claim is inferred from those counterfactual labels.
+
 The separate [head initialization preflight](camera-action-v02-head-preflight.md)
 checks a proposed common-scale absolute/delta parameterization. Integration
-still requires a registered learning experiment, real metadata admission,
+still requires a registered learning experiment, new-data admission,
 serialization/inference tests and a runtime path that supplies the actual
 retained limiter state. Neither this exporter nor that numerical preflight
 fits or executes a policy. There is no new evidence of placement improvement,
