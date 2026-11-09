@@ -1,5 +1,40 @@
 # Camera-to-action v0.2: proposed control-learning ablations
 
+## Status addendum — 9 November 2026
+
+The original 1 November proposal is preserved below as a dated record. Its
+statements that v0.1 results were pending and no v0.2 work had run describe that
+original evidence cutoff, not the present state.
+
+The completed v0.1 study reports **5/64 strict learned placements**, versus
+9/64 matched blind, 31/64 fixed primitive and 64/64 authored teacher. The model
+remains an unqualified research candidate. The resumed independent audit passed
+with zero errors across all 452 scheduled attempts, 452 numeric outcome
+reconstructions and 2,384,532 verified files; it executed no physics, estimator
+or model. The audit receipt is `full-study-audit-resumed-20261109.json`, SHA-256
+`2774959f8e1a5be7283cea129da0ffea000d8375eb445140c8c7a60ab15efed8`.
+This byte/clock/authority/outcome audit is not source authentication or hardware
+qualification. The interrupted earlier audit output is preserved separately.
+
+Two additive pieces of groundwork now exist:
+
+- The [numerical limiter preflight](camera-action-v02-preflight.md) passes the
+  Cabs/CΔ reference-equivalence prerequisite on 4,242 bounded numerical cases
+  under a predeclared 1e-12 native-unit tolerance. Closed-form float64 projection
+  is not universally bitwise identical. No model was trained or evaluated.
+- The [verified export cache](camera-action-export-cache-v01.md) reduces repeated
+  preparation cost on one measured training episode while preserving numeric
+  features, targets and dataset identity. Hits verify derived cached bytes, not
+  raw recordings; this is not a control-performance gain.
+
+The five-candidate, **164-attempt learning screen below remains unrun**. Its
+proposal has not been converted into a registration or qualification result.
+Matching model-head initialization, training-only normalization and fresh group
+registration remain required. Neither new tool changes the frozen v0.1 sources,
+models, scenes, confirmation results or gates.
+
+## Original proposal — 1 November 2026
+
 **Proposal only, 2026-11-01. Nothing below is implemented, run, or registered.**
 The v0.1 correction and confirmation results are pending at this proposal's
 evidence cutoff. Finish, audit and report that study unchanged. This document

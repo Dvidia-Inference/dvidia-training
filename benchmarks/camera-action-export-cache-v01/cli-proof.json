@@ -1,0 +1,153 @@
+{
+  "benchmark_sha256": "a4b4b1675e8d157ee9808e556e37c6c697134f529a084488b930299028084353",
+  "commands": [
+    {
+      "arguments": [
+        "cache",
+        "source"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "202c68ad9cdad7e37e01c0bc5d87232faa40119db15fdc224408b4df07d75ca6"
+    },
+    {
+      "arguments": [
+        "cache",
+        "inspect",
+        "<fresh-proof>/cache",
+        "--manifest-sha256",
+        "94d018de48b3eb63381a0e1169f9a7b4f6a67b40b3abbc91fe3d490cf3cdd8a0",
+        "--protocol-sha256",
+        "576851e321034a0f6d3cb4d0818b3a5ca97975fcc6f2c7fa30b07ffd203a2d76",
+        "--split",
+        "train",
+        "--source-sha256",
+        "0ab01145c66d651eaca96d763b4bec1706327f2cdd4bd8665d05056cbdd6f677"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "882d31b2ee0a92e2ffa4851433c76034bb8c588497759f1b35f0735700288407"
+    },
+    {
+      "arguments": [
+        "cache",
+        "load",
+        "<fresh-proof>/cache",
+        "--manifest-sha256",
+        "94d018de48b3eb63381a0e1169f9a7b4f6a67b40b3abbc91fe3d490cf3cdd8a0",
+        "--protocol-sha256",
+        "576851e321034a0f6d3cb4d0818b3a5ca97975fcc6f2c7fa30b07ffd203a2d76",
+        "--split",
+        "train",
+        "--source-sha256",
+        "0ab01145c66d651eaca96d763b4bec1706327f2cdd4bd8665d05056cbdd6f677"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "882d31b2ee0a92e2ffa4851433c76034bb8c588497759f1b35f0735700288407"
+    },
+    {
+      "arguments": [
+        "cache",
+        "load",
+        "<fresh-proof>/cache",
+        "--manifest-sha256",
+        "94d018de48b3eb63381a0e1169f9a7b4f6a67b40b3abbc91fe3d490cf3cdd8a0",
+        "--protocol-sha256",
+        "576851e321034a0f6d3cb4d0818b3a5ca97975fcc6f2c7fa30b07ffd203a2d76",
+        "--split",
+        "development",
+        "--source-sha256",
+        "0ab01145c66d651eaca96d763b4bec1706327f2cdd4bd8665d05056cbdd6f677"
+      ],
+      "exit_code": 1,
+      "stderr_sha256": "57a01cddfeeab7f07e206c3a62e511ec340e885c76f91dc8484b2cf132768d5d",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "arguments": [
+        "--help"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "8c0e7bca0e60bf9ee4bd379f75250ad45c09103234380b6d20f09fd13afcc03f"
+    },
+    {
+      "arguments": [
+        "robot",
+        "--help"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "9a9876627a7b35724527a5aa9fb0b34f9ba688c0088bb330ad4e903a83429545"
+    },
+    {
+      "arguments": [
+        "prepare",
+        "--help"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "cf956928ef98acc9413726c0a71caf521e6abe005efed906f38a4084c7be6180"
+    },
+    {
+      "arguments": [
+        "run",
+        "--help"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "ec2a7d223d2ae82c93e6b862d4c240647fb3d19e9b5de431a7eee50476d4c902"
+    }
+  ],
+  "cwd": "/private/tmp",
+  "dataset_sha256": "856205dec60ad1c452373fabfd1a75e72a875ff76075971ac2ed26ada8a8bdf3",
+  "distribution_version": "0.1.3.dev5",
+  "fitting_runs": 0,
+  "installed_package": "<fresh-venv>/lib/python3.12/site-packages/dvidia_training",
+  "license_members": [
+    "dvidia_training-0.1.3.dev5.dist-info/licenses/LICENSE",
+    "dvidia_training-0.1.3.dev5.dist-info/licenses/third_party/mujoco/LICENSE.txt",
+    "dvidia_training-0.1.3.dev5.dist-info/licenses/third_party/mujoco/THIRD_PARTY_NOTICES.txt",
+    "dvidia_training-0.1.3.dev5.dist-info/licenses/third_party/observation-models/object_detection_yolox-LICENSE.txt",
+    "dvidia_training-0.1.3.dev5.dist-info/licenses/third_party/observation-models/palm_detection_mediapipe-LICENSE.txt",
+    "dvidia_training-0.1.3.dev5.dist-info/licenses/third_party/robot-models/agilex_piper-LICENSE.txt"
+  ],
+  "native_runs": 0,
+  "network_downloads": 0,
+  "numpy": "2.5.3",
+  "python": "3.12.9 (main, Feb  4 2025, 14:38:38) [Clang 16.0.0 (clang-1600.0.26.6)]",
+  "pythonpath_present": false,
+  "qualification_changed": false,
+  "raw_source_reverified_on_hit": false,
+  "schema": "dvidia.camera-action-cache-fresh-install/v1",
+  "source_identity": {
+    "cache_source_sha256": "9191f2eb9f96bd09d4f711c31966a583bd938853a874e6018f8ddebfb0bc00d8",
+    "feature_contract_sha256": "e2d45f2cb03b39d424559c76f11252978facdf911af541e8e294b7bb8cb03fe8",
+    "runtime": {
+      "action_demonstration.py": "439c7cce558571221660cd51e7dba1675203237706ea8ea0f97f2fcf9a6a24c5",
+      "camera_action_capture.py": "399f512a08087c72bfa37e382157a2250f413e423974b77b1bd3c0a911ff0a1e",
+      "camera_action_export.py": "2c4e30587605edc0342150a93430a70ed0559c3ee3eda17d93c5670831370b02",
+      "camera_action_model.py": "e9a9c4d1d0f16fc7c91cac3ca2e6560d0532370ab78a2af5a4ec84425c23932f",
+      "camera_action_study.py": "196f669b03baff3df561fa9236c64dab401c954c929994dedc36721611c8948a",
+      "embodiment_calibration.py": "0531be511b3bc549576a33930394d33b673c146d5e52c29198096632ea7478c5",
+      "episode_tape.py": "abae9a4bd0080c7f638c5c82c050fb1364a20769998c054354b918233669f5d2",
+      "piper_action_capture.py": "da037b2198cf7d2f3a9aa40fc19a4c0f5cc375a22c5dd75606e2c1856f6efc7f",
+      "piper_feedback_env.py": "0dbae423231968a81bdeed52226d8dffaf8df622013ed3a360d7217148f1bcac",
+      "piper_feedback_score.py": "863a272828208c631de4cf57647e973eb3e4f5e99eb7a1eacb4eaa68dc42eb0e",
+      "piper_imitation.py": "849f66512c58441a240cd20230fcc58691234ddd254c5bbcbfd76abc21b14868",
+      "piper_imitation_score.py": "0cd4663abfdd7f14f2f33d93e9a2bd45122b998d6160d45b8afcc880512cba2b",
+      "piper_motor_primitive.py": "02a45b88913db6f223e4d9975eac64d4942a92739c5817c6ede4cc9fa332ed1c",
+      "piper_rgbd_tracker.py": "43202cfcea404061a3a65124d6ad24aeeec5fae8ffaf863caa245f2f54c46c36",
+      "piper_task.py": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f",
+      "reference_sim.py": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8",
+      "reference_task.py": "bbc768ccc202b8dd41cbd235b206e6478806ce47c1f30ae15dc662c0c1edcc3e",
+      "robot_profiles.lock.json": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+      "robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d"
+    }
+  },
+  "source_sha256": "0ab01145c66d651eaca96d763b4bec1706327f2cdd4bd8665d05056cbdd6f677",
+  "status": "passed",
+  "wheel_bytes": 5826998,
+  "wheel_sha256": "c7335b19d692f3158e8136aa880f9ca2d3d286b2b507703127c88434d7d31c71"
+}

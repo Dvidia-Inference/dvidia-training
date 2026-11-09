@@ -1,0 +1,117 @@
+{
+  "attempt_id": "train-00-goal0-teacher",
+  "cache_bytes": 1137058,
+  "episode_metadata_sha256": {
+    "integrity.json": "d20f218073fe0347f63f6b0bf728fd4598062c08b77dc33d82cf6a80c82e5bf5",
+    "recording.json": "a6bf61efe6c217969e8b9d9a2a37b0e5c9133cb2871d3bce46df764b65c55291",
+    "rollout.json": "c28e3dd79843f50cc6875797ff2e3e2687248459c61e0f3a9e68885f98cb3c9b"
+  },
+  "equality_checks": [
+    {
+      "dataset_sha256": true,
+      "features": true,
+      "groups": true,
+      "provenance": true,
+      "targets": true
+    },
+    {
+      "dataset_sha256": true,
+      "features": true,
+      "groups": true,
+      "provenance": true,
+      "targets": true
+    },
+    {
+      "dataset_sha256": true,
+      "features": true,
+      "groups": true,
+      "provenance": true,
+      "targets": true
+    }
+  ],
+  "features_sha256": "a8940ab39334d32c7e36da70b09bdc12010db17545dc8565959941f30c0c390e",
+  "fitting_runs": 0,
+  "groups_sha256": "2e96395a4687498c7f576e1dd86dd52033bb36717d501eb21efe70df7d918109",
+  "hardware": {
+    "hw.memsize": {
+      "reason": "host metadata query refused",
+      "status": "unavailable"
+    },
+    "hw.physicalcpu": {
+      "reason": "host metadata query refused",
+      "status": "unavailable"
+    },
+    "machdep.cpu.brand_string": {
+      "reason": "host metadata query refused",
+      "status": "unavailable"
+    },
+    "machine": "arm64",
+    "numpy": "2.5.3",
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.12.9"
+  },
+  "native_runs": 0,
+  "peak_process_rss": 162578432,
+  "peak_process_rss_units": "bytes",
+  "pins": {
+    "dataset_sha256": "856205dec60ad1c452373fabfd1a75e72a875ff76075971ac2ed26ada8a8bdf3",
+    "manifest_sha256": "2015d1b22e1d5f22b46c62bf44c048d8ed4a6997e90c52d07b4fc188f6ed822c",
+    "protocol_sha256": "576851e321034a0f6d3cb4d0818b3a5ca97975fcc6f2c7fa30b07ffd203a2d76",
+    "raw_source_reverified_on_hit": false,
+    "sample_count": 1000,
+    "source_sha256": "e883237ab1952dcb6eb862bd32696ca2524cae6d63377092cea4a5c3b2e95f6f",
+    "split": "train"
+  },
+  "protocol_sha256": "576851e321034a0f6d3cb4d0818b3a5ca97975fcc6f2c7fa30b07ffd203a2d76",
+  "provenance_sha256": "4426a5b004bf646f5cf92ade9f06f1cf8c49991cbd5c418ea4cf7499f5704fcc",
+  "qualification_changed": false,
+  "raw_source_reverified_on_hit": false,
+  "samples": 1000,
+  "schema": "dvidia.camera-action-export-cache-benchmark/v1",
+  "scope": "One registered training episode: strict export, cache build, three verified hits.\n\nNo fitting, teacher execution, simulator or confirmation-scene reads. Output is\nfresh and outside the source study. Wall times include validation, not imports.",
+  "source_episode_bytes": 197398789,
+  "source_episode_files": 6011,
+  "source_identity": {
+    "cache_source_sha256": "ad79c142b51798281c3f2ce0645662e24da8a21e778ae7785ce9c2c44102c185",
+    "feature_contract_sha256": "e2d45f2cb03b39d424559c76f11252978facdf911af541e8e294b7bb8cb03fe8",
+    "runtime": {
+      "action_demonstration.py": "439c7cce558571221660cd51e7dba1675203237706ea8ea0f97f2fcf9a6a24c5",
+      "camera_action_capture.py": "399f512a08087c72bfa37e382157a2250f413e423974b77b1bd3c0a911ff0a1e",
+      "camera_action_export.py": "2c4e30587605edc0342150a93430a70ed0559c3ee3eda17d93c5670831370b02",
+      "camera_action_model.py": "e9a9c4d1d0f16fc7c91cac3ca2e6560d0532370ab78a2af5a4ec84425c23932f",
+      "camera_action_study.py": "196f669b03baff3df561fa9236c64dab401c954c929994dedc36721611c8948a",
+      "embodiment_calibration.py": "0531be511b3bc549576a33930394d33b673c146d5e52c29198096632ea7478c5",
+      "episode_tape.py": "abae9a4bd0080c7f638c5c82c050fb1364a20769998c054354b918233669f5d2",
+      "piper_action_capture.py": "da037b2198cf7d2f3a9aa40fc19a4c0f5cc375a22c5dd75606e2c1856f6efc7f",
+      "piper_feedback_env.py": "0dbae423231968a81bdeed52226d8dffaf8df622013ed3a360d7217148f1bcac",
+      "piper_feedback_score.py": "863a272828208c631de4cf57647e973eb3e4f5e99eb7a1eacb4eaa68dc42eb0e",
+      "piper_imitation.py": "849f66512c58441a240cd20230fcc58691234ddd254c5bbcbfd76abc21b14868",
+      "piper_imitation_score.py": "0cd4663abfdd7f14f2f33d93e9a2bd45122b998d6160d45b8afcc880512cba2b",
+      "piper_motor_primitive.py": "02a45b88913db6f223e4d9975eac64d4942a92739c5817c6ede4cc9fa332ed1c",
+      "piper_rgbd_tracker.py": "43202cfcea404061a3a65124d6ad24aeeec5fae8ffaf863caa245f2f54c46c36",
+      "piper_task.py": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f",
+      "reference_sim.py": "c1201d22eb13dd07a236ee63cc4ba68e129f6067e8db61ed41af2d820eb5e3b8",
+      "reference_task.py": "bbc768ccc202b8dd41cbd235b206e6478806ce47c1f30ae15dc662c0c1edcc3e",
+      "robot_profiles.lock.json": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+      "robot_profiles.py": "fb90782a6a9979e282182118ae0e3e29d00f101255cc57378dd3f692672bb13d"
+    }
+  },
+  "split": "train",
+  "strict_cache_build_seconds": 2.2798086250259075,
+  "strict_export_seconds": 2.843890290998388,
+  "strict_to_hit_median_ratio": 475.29209643515287,
+  "targets_sha256": "b93e1ee3e29105231b3e1966b5f0beb40a4ccb74af6d7c48583033c52f3ab9f1",
+  "timing_caveats": [
+    "One fixed training episode, one strict export and one strict cache build, then three sequential cache hits.",
+    "Existing OS file cache was not flushed; shared laptop, no exclusive CPU reservation.",
+    "Imports are excluded; validation and source-hash checks are included. Equality comparison is outside timed hit.",
+    "RSS is cumulative process high water including strict export and build, not isolated cache memory.",
+    "No evidence of faster inference, improved control, whole-dataset throughput or hardware readiness."
+  ],
+  "verified_hit_median_seconds": 0.005983457987895235,
+  "verified_hit_seconds": [
+    0.005983457987895235,
+    0.006145917024696246,
+    0.005881334014702588
+  ]
+}

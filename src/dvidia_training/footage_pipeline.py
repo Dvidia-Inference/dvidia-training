@@ -337,11 +337,15 @@ def inspect_run(path):
 
 
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] == 'cache':
+        from .camera_action_cache import main as cache_main
+        raise SystemExit(cache_main(sys.argv[2:]))
     if len(sys.argv) > 1 and sys.argv[1] == 'robot':
         from .camera_action_study import main as robot_main
         raise SystemExit(robot_main(sys.argv[2:]))
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest='command', required=True)
+    commands.add_parser('cache', help='Build or verify pinned paired-demonstration caches for repeated local learning.')
     for name in ('prepare', 'run'):
         action = commands.add_parser(name)
         action.add_argument('source', help='Skillspace folder, ZIP, manifest, prepared dataset or public DVIDIA URL.')

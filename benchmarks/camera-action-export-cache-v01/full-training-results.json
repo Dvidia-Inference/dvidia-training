@@ -1,0 +1,295 @@
+{
+  "builds": [
+    {
+      "cache_bytes": 72535147,
+      "pins": {
+        "dataset_sha256": "07b175f78e4e77cbdde9a461a4bcae4dcb0db7d389ee4f2e702ff28db8bb3dfc",
+        "manifest_sha256": "8acd728fcc8ed637b58138c3bd7466432a588fa439acefde4b3c90fa1adfdbaf",
+        "protocol_sha256": "576851e321034a0f6d3cb4d0818b3a5ca97975fcc6f2c7fa30b07ffd203a2d76",
+        "raw_source_reverified_on_hit": false,
+        "sample_count": 64000,
+        "source_sha256": "0ab01145c66d651eaca96d763b4bec1706327f2cdd4bd8665d05056cbdd6f677",
+        "split": "train"
+      },
+      "seconds": 105.62133508402621,
+      "stage": "demonstrations"
+    },
+    {
+      "cache_bytes": 36269705,
+      "pins": {
+        "dataset_sha256": "0561f8793ac6f68318d28c99e15ee8755c85412f3e34c990e1c4f0da4a5c1789",
+        "manifest_sha256": "0997805831dfaacfe38d87468587f58c4e0b3f748165816e2167c4376676b96b",
+        "protocol_sha256": "576851e321034a0f6d3cb4d0818b3a5ca97975fcc6f2c7fa30b07ffd203a2d76",
+        "raw_source_reverified_on_hit": false,
+        "sample_count": 32000,
+        "source_sha256": "0ab01145c66d651eaca96d763b4bec1706327f2cdd4bd8665d05056cbdd6f677",
+        "split": "train"
+      },
+      "seconds": 55.049781042005634,
+      "stage": "corrections"
+    }
+  ],
+  "cache_module_sha256": "9191f2eb9f96bd09d4f711c31966a583bd938853a874e6018f8ddebfb0bc00d8",
+  "comparison_scope": "Canonical float64 numeric values, ordered groups and full provenance equal the four independently sealed model dataset identities; cache float32 storage is not original combined NPY byte identity.",
+  "derived_cache_bytes": 108804852,
+  "development_or_confirmation_recordings_read": false,
+  "extra_strict_exports": 0,
+  "fitting_runs": 0,
+  "hardware": {
+    "cpu_count": "unavailable: host metadata query refused",
+    "cpu_model": "unavailable: host metadata query refused",
+    "machine": "arm64",
+    "numpy": "2.5.3",
+    "physical_memory_bytes": "unavailable: host metadata query refused",
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.12.9"
+  },
+  "limitations": [
+    "This validates offline preparation for the existing dataset; it does not change the policy or task-success result.",
+    "No matched strict-export baseline was run. Build and hit timings are different operations; no speedup ratio is claimed.",
+    "Cache-hit validation binds derived bytes, protocol, split, provenance and source implementation. Raw recordings were checked during construction, not again on each hit.",
+    "Validation ran on a shared host concurrently with publication work; it is not an isolated or cold-cache benchmark."
+  ],
+  "memory_scope": "Whole-process high-water RSS across metadata inspection, both builds, loads, combination and golden checks; not isolated per-stage memory.",
+  "model_references": {
+    "corrected/blind": {
+      "dataset_sha256": "efd1760344b88c9eb61045454968564bb45a8cd38037e2bdcdf55b343eab3903",
+      "model_sha256": "c3593d83b5505127a31304c8965914e01661d419dfc6c76a17a6c9bbac418806",
+      "provenance_sha256": "60edeb423d3810419e5ac971511c237c77e619a309637402b0974e658d7cb4a4",
+      "samples": 96000
+    },
+    "corrected/full": {
+      "dataset_sha256": "b500b3ba348bba44cc79e377266f92910bd7e0165c36cd8b2fe260909b30a2f9",
+      "model_sha256": "d176b391b61b5e331bcfe1676107c53f4c0ae6110414dfed4b07d57cbb883b0e",
+      "provenance_sha256": "52cbeda62e3aa50e8cd6a34688fba7583f9fcec927cb0eb434a6907c99695f4f",
+      "samples": 96000
+    },
+    "initial/blind": {
+      "dataset_sha256": "759fe1c0610c1768f1455ed6cdcc6305be0d463b2b1e9c48a327f4f45b9c50c7",
+      "model_sha256": "d30b0ae10a4fbdc34a73122a34d73fd9246ee4b87c90c2b3b1eb3a98888d707e",
+      "provenance_sha256": "7d5279ffd186f018a41641a18bf5d6bbf010036114abb9e902d25aadc9ca3716",
+      "samples": 64000
+    },
+    "initial/full": {
+      "dataset_sha256": "07b175f78e4e77cbdde9a461a4bcae4dcb0db7d389ee4f2e702ff28db8bb3dfc",
+      "model_sha256": "1d1f80376c89995513b518b36c4f8eca9e78efec3d3e68a10ee9988e84f4f038",
+      "provenance_sha256": "7103ad53111cb114cdcd164cfa15bbbf359ebc4ae66e7456ab7c1f38820b2864",
+      "samples": 64000
+    }
+  },
+  "native_runs": 0,
+  "passed": true,
+  "peak_process_rss_bytes": 1631633408,
+  "peer_review": {
+    "passed": true,
+    "scope": "Executed script/result, four pinned model dataset/provenance identities, 96-episode training roster, portable helper, public receipt normalization and documentation. This receipt changes only review state and adds this review binding after review.",
+    "sha256": "4190b26ace73e8d0d498e04e3223ae20c913eb93b7bc4ad49310de0dfdc39326"
+  },
+  "policy_task_result_unchanged": true,
+  "protocol_sha256": "576851e321034a0f6d3cb4d0818b3a5ca97975fcc6f2c7fa30b07ffd203a2d76",
+  "publication_state": "locally_validated_peer_reviewed",
+  "qualification_changed": false,
+  "qualified": false,
+  "raw_source_reverified_on_hit": false,
+  "raw_training_bytes": 18971932592,
+  "raw_training_files": 577056,
+  "raw_training_inventory": {
+    "corrections": {
+      "bytes": 6333838508,
+      "episodes": 32,
+      "files": 192352,
+      "samples": 32000
+    },
+    "demonstrations": {
+      "bytes": 12638094084,
+      "episodes": 64,
+      "files": 384704,
+      "samples": 64000
+    }
+  },
+  "rounds": [
+    {
+      "combine_seconds": 0.1124684160167817,
+      "golden_checks": [
+        {
+          "dataset_sha256": "07b175f78e4e77cbdde9a461a4bcae4dcb0db7d389ee4f2e702ff28db8bb3dfc",
+          "episodes": 64,
+          "groups": 32,
+          "model_sha256": "1d1f80376c89995513b518b36c4f8eca9e78efec3d3e68a10ee9988e84f4f038",
+          "name": "initial/full",
+          "passed": true,
+          "provenance_sha256": "7103ad53111cb114cdcd164cfa15bbbf359ebc4ae66e7456ab7c1f38820b2864",
+          "samples": 64000
+        },
+        {
+          "dataset_sha256": "b500b3ba348bba44cc79e377266f92910bd7e0165c36cd8b2fe260909b30a2f9",
+          "episodes": 96,
+          "groups": 32,
+          "model_sha256": "d176b391b61b5e331bcfe1676107c53f4c0ae6110414dfed4b07d57cbb883b0e",
+          "name": "corrected/full",
+          "passed": true,
+          "provenance_sha256": "52cbeda62e3aa50e8cd6a34688fba7583f9fcec927cb0eb434a6907c99695f4f",
+          "samples": 96000
+        },
+        {
+          "dataset_sha256": "759fe1c0610c1768f1455ed6cdcc6305be0d463b2b1e9c48a327f4f45b9c50c7",
+          "episodes": 64,
+          "groups": 32,
+          "model_sha256": "d30b0ae10a4fbdc34a73122a34d73fd9246ee4b87c90c2b3b1eb3a98888d707e",
+          "name": "initial/blind",
+          "passed": true,
+          "provenance_sha256": "7d5279ffd186f018a41641a18bf5d6bbf010036114abb9e902d25aadc9ca3716",
+          "samples": 64000
+        },
+        {
+          "dataset_sha256": "efd1760344b88c9eb61045454968564bb45a8cd38037e2bdcdf55b343eab3903",
+          "episodes": 96,
+          "groups": 32,
+          "model_sha256": "c3593d83b5505127a31304c8965914e01661d419dfc6c76a17a6c9bbac418806",
+          "name": "corrected/blind",
+          "passed": true,
+          "provenance_sha256": "60edeb423d3810419e5ac971511c237c77e619a309637402b0974e658d7cb4a4",
+          "samples": 96000
+        }
+      ],
+      "golden_comparison_and_blind_projection_seconds": 0.5959045839845203,
+      "round": 1,
+      "validated_cache_load_seconds": {
+        "corrections": 0.07494037499418482,
+        "demonstrations": 0.15972379202139564
+      },
+      "validated_load_plus_combine_seconds": 0.34713258303236216,
+      "whole_round_seconds": 0.9430410830245819
+    },
+    {
+      "combine_seconds": 0.09749162499792874,
+      "golden_checks": [
+        {
+          "dataset_sha256": "07b175f78e4e77cbdde9a461a4bcae4dcb0db7d389ee4f2e702ff28db8bb3dfc",
+          "episodes": 64,
+          "groups": 32,
+          "model_sha256": "1d1f80376c89995513b518b36c4f8eca9e78efec3d3e68a10ee9988e84f4f038",
+          "name": "initial/full",
+          "passed": true,
+          "provenance_sha256": "7103ad53111cb114cdcd164cfa15bbbf359ebc4ae66e7456ab7c1f38820b2864",
+          "samples": 64000
+        },
+        {
+          "dataset_sha256": "b500b3ba348bba44cc79e377266f92910bd7e0165c36cd8b2fe260909b30a2f9",
+          "episodes": 96,
+          "groups": 32,
+          "model_sha256": "d176b391b61b5e331bcfe1676107c53f4c0ae6110414dfed4b07d57cbb883b0e",
+          "name": "corrected/full",
+          "passed": true,
+          "provenance_sha256": "52cbeda62e3aa50e8cd6a34688fba7583f9fcec927cb0eb434a6907c99695f4f",
+          "samples": 96000
+        },
+        {
+          "dataset_sha256": "759fe1c0610c1768f1455ed6cdcc6305be0d463b2b1e9c48a327f4f45b9c50c7",
+          "episodes": 64,
+          "groups": 32,
+          "model_sha256": "d30b0ae10a4fbdc34a73122a34d73fd9246ee4b87c90c2b3b1eb3a98888d707e",
+          "name": "initial/blind",
+          "passed": true,
+          "provenance_sha256": "7d5279ffd186f018a41641a18bf5d6bbf010036114abb9e902d25aadc9ca3716",
+          "samples": 64000
+        },
+        {
+          "dataset_sha256": "efd1760344b88c9eb61045454968564bb45a8cd38037e2bdcdf55b343eab3903",
+          "episodes": 96,
+          "groups": 32,
+          "model_sha256": "c3593d83b5505127a31304c8965914e01661d419dfc6c76a17a6c9bbac418806",
+          "name": "corrected/blind",
+          "passed": true,
+          "provenance_sha256": "60edeb423d3810419e5ac971511c237c77e619a309637402b0974e658d7cb4a4",
+          "samples": 96000
+        }
+      ],
+      "golden_comparison_and_blind_projection_seconds": 0.4905752089980524,
+      "round": 2,
+      "validated_cache_load_seconds": {
+        "corrections": 0.060244958993280306,
+        "demonstrations": 0.12223020798410289
+      },
+      "validated_load_plus_combine_seconds": 0.27996679197531193,
+      "whole_round_seconds": 0.7705457909905817
+    },
+    {
+      "combine_seconds": 0.09710429201368243,
+      "golden_checks": [
+        {
+          "dataset_sha256": "07b175f78e4e77cbdde9a461a4bcae4dcb0db7d389ee4f2e702ff28db8bb3dfc",
+          "episodes": 64,
+          "groups": 32,
+          "model_sha256": "1d1f80376c89995513b518b36c4f8eca9e78efec3d3e68a10ee9988e84f4f038",
+          "name": "initial/full",
+          "passed": true,
+          "provenance_sha256": "7103ad53111cb114cdcd164cfa15bbbf359ebc4ae66e7456ab7c1f38820b2864",
+          "samples": 64000
+        },
+        {
+          "dataset_sha256": "b500b3ba348bba44cc79e377266f92910bd7e0165c36cd8b2fe260909b30a2f9",
+          "episodes": 96,
+          "groups": 32,
+          "model_sha256": "d176b391b61b5e331bcfe1676107c53f4c0ae6110414dfed4b07d57cbb883b0e",
+          "name": "corrected/full",
+          "passed": true,
+          "provenance_sha256": "52cbeda62e3aa50e8cd6a34688fba7583f9fcec927cb0eb434a6907c99695f4f",
+          "samples": 96000
+        },
+        {
+          "dataset_sha256": "759fe1c0610c1768f1455ed6cdcc6305be0d463b2b1e9c48a327f4f45b9c50c7",
+          "episodes": 64,
+          "groups": 32,
+          "model_sha256": "d30b0ae10a4fbdc34a73122a34d73fd9246ee4b87c90c2b3b1eb3a98888d707e",
+          "name": "initial/blind",
+          "passed": true,
+          "provenance_sha256": "7d5279ffd186f018a41641a18bf5d6bbf010036114abb9e902d25aadc9ca3716",
+          "samples": 64000
+        },
+        {
+          "dataset_sha256": "efd1760344b88c9eb61045454968564bb45a8cd38037e2bdcdf55b343eab3903",
+          "episodes": 96,
+          "groups": 32,
+          "model_sha256": "c3593d83b5505127a31304c8965914e01661d419dfc6c76a17a6c9bbac418806",
+          "name": "corrected/blind",
+          "passed": true,
+          "provenance_sha256": "60edeb423d3810419e5ac971511c237c77e619a309637402b0974e658d7cb4a4",
+          "samples": 96000
+        }
+      ],
+      "golden_comparison_and_blind_projection_seconds": 0.4896485829958692,
+      "round": 3,
+      "validated_cache_load_seconds": {
+        "corrections": 0.06038941699080169,
+        "demonstrations": 0.12157112499698997
+      },
+      "validated_load_plus_combine_seconds": 0.2790648340014741,
+      "whole_round_seconds": 0.7687164999952074
+    }
+  ],
+  "schema": "dvidia.full-training-cache-publication-receipt/v1",
+  "source_commit": "cc6746a95669cfd69a49e32a3e6c2e5a42ce2546",
+  "source_read_scope": "Unique raw corpus size is metadata-bound, not measured physical I/O. Strict exporter rereads some metadata, sidecars and native trace bytes; no physics is executed.",
+  "source_sha256": "0ab01145c66d651eaca96d763b4bec1706327f2cdd4bd8665d05056cbdd6f677",
+  "stage_sha256": {
+    "corrections": "ae0a5653f728f147f929325c60318cb3d164c6d97d846fb96ac07ee9d27ad5cb",
+    "demonstrations": "5d57eac599f1686d2bdb15bb53ceebe09e899ec71dfe87039aa85de7f853c06b",
+    "train-corrected": "9b37a37d7b49fceb595f776d59579986f7579c7135f810b8d706199d5e4d6ddc",
+    "train-initial": "86be5d9c17af43c35e97677d819b1433faed54ccf930078afc0f785139acc6a9"
+  },
+  "timing_scope": "Shared-host offline preparation. Imports excluded; builds include strict source, sidecar and saved-trace score validation. Each hit includes cache/source validation. Combiner and golden checks reported separately. No cold-cache flush, isolated CPU reservation or matched strict-export timing; no speedup claim.",
+  "total_validation_wall_seconds": 163.7380633749999,
+  "training_episodes": 96,
+  "training_only": true,
+  "training_samples": 96000,
+  "training_start_groups": 32,
+  "validation_result": {
+    "bytes": 16921,
+    "sha256": "14379c3288d16f380cade39a067f6a9315449cd7bd07f0a828243b237eff52ee"
+  },
+  "validation_script": {
+    "bytes": 17276,
+    "sha256": "a820eb77b7d5a80dd79686f86369b29fd7a39b8bb34328e636a2de31d51318c2"
+  }
+}
