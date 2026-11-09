@@ -6,3 +6,27 @@ src/dvidia_training/piper_imitation_viewer.bundle.js linguist-generated=true -di
 src/dvidia_training/mujoco.wasm binary
 # Preserve exact NVIDIA metadata bytes, including upstream trailing blank lines.
 benchmarks/nvidia-material-appearance-v01-20261025/central-metadata/*.usda -text -whitespace
+# Source-byte contracts must retain the same reviewed bytes on every OS.
+src/dvidia_training/piper_task.py text eol=lf
+src/dvidia_training/piper_imitation.py text eol=lf
+src/dvidia_training/camera_action_model.py text eol=lf
+src/dvidia_training/camera_action_export.py text eol=lf
+src/dvidia_training/piper_action_capture.py text eol=lf
+src/dvidia_training/camera_action_capture.py text eol=lf
+src/dvidia_training/robot_profiles.lock.json text eol=lf
+src/dvidia_training/camera_action_cache.py text eol=lf
+src/dvidia_training/camera_action_reference_export.py text eol=lf
+src/dvidia_training/camera_action_study.py text eol=lf
+src/dvidia_training/piper_rgbd_tracker.py text eol=lf
+src/dvidia_training/action_demonstration.py text eol=lf
+src/dvidia_training/reference_task.py text eol=lf
+src/dvidia_training/reference_sim.py text eol=lf
+src/dvidia_training/piper_imitation_score.py text eol=lf
+src/dvidia_training/piper_motor_primitive.py text eol=lf
+src/dvidia_training/piper_feedback_env.py text eol=lf
+src/dvidia_training/piper_feedback_score.py text eol=lf
+src/dvidia_training/robot_profiles.py text eol=lf
+src/dvidia_training/episode_tape.py text eol=lf
+src/dvidia_training/embodiment_calibration.py text eol=lf
+benchmarks/camera-action-v02-preflight/*.py text eol=lf
+benchmarks/camera-action-v02-head-preflight/*.py text eol=lf
