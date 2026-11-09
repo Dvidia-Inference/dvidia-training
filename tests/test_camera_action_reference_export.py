@@ -318,7 +318,9 @@ class ReferenceExportTests(unittest.TestCase):
         (out/'unknown').write_text('extra')
         with self.assertRaises(ValueError): self.load(f, built)
         (out/'unknown').unlink()
-        path = out/'previous-references.npy'; moved = self.root/'moved.npy'; path.rename(moved)
+        path = out/'previous-references.npy'; moved = self.root/'moved.npy'
+        path.chmod(0o644)  # Windows refuses renaming an intentionally sealed file.
+        path.rename(moved)
         try:
             path.symlink_to(moved)
         except (OSError, NotImplementedError):
