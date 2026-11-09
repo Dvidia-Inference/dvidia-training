@@ -1,0 +1,214 @@
+{
+  "episodes": 96,
+  "groups": 32,
+  "initial_parameters_sha256": "9c50504160213ad5241d6d96ab9be938d6f49b1c4bf49ff39d0770dac83dce7e",
+  "model_source_identity_sha256": "12ea9757cb0d76573c2e67f80b56ab08271f95e43f18b344b6481cc9153d70bc",
+  "parent_dataset_sha256": "b500b3ba348bba44cc79e377266f92910bd7e0165c36cd8b2fe260909b30a2f9",
+  "parent_provenance_sha256": "52cbeda62e3aa50e8cd6a34688fba7583f9fcec927cb0eb434a6907c99695f4f",
+  "raw_recordings_revalidated_during_integration": false,
+  "reference_dataset_sha256": "a9dcd66a81f177bb1910e08171ac7607f115ed47b51d93412107eb0e204aed73",
+  "samples": 96000,
+  "schema": "dvidia.reference-model-training-input-identity/v1",
+  "source_commit": "78ea4fbb4b2733e7738eb425eeecd7cb67a52195",
+  "split": "train",
+  "stages": [
+    {
+      "arrays": {
+        "feasible-targets.npy": {
+          "bytes": 3584128,
+          "dtype": "<f8",
+          "sha256": "7d344cb0c025b97136eeb7aede9bb4b1d550ec9bc4dc9e5cbe2fc44bcf428eb4",
+          "shape": [
+            64000,
+            7
+          ]
+        },
+        "previous-references.npy": {
+          "bytes": 3584128,
+          "dtype": "<f8",
+          "sha256": "ba60ac17901651f5d9e141d39e7cc2a0af5f7bc5fd992b2e77cf93ca90c0a1c0",
+          "shape": [
+            64000,
+            7
+          ]
+        }
+      },
+      "contract": {
+        "action_units": [
+          "rad",
+          "rad",
+          "rad",
+          "rad",
+          "rad",
+          "rad",
+          "single_finger_m"
+        ],
+        "actual_pulse_overridden_controls_are_not_references": true,
+        "clock_tolerance_s": 1e-09,
+        "control_dt_s": 0.02,
+        "endpoint_algorithm": "20 original float64 reference updates, not closed-form projection",
+        "jaw_rate_m_s": 0.05,
+        "joint_order": [
+          "joint1",
+          "joint2",
+          "joint3",
+          "joint4",
+          "joint5",
+          "joint6"
+        ],
+        "joint_rate_rad_s": 1.5,
+        "later_source": "steps[i-1].applied.ramped_targets",
+        "limiter_ast_sha256": "a5356fb9e1bd8b1dc6e6b2b14d657fbe625e018ba8d1e5e668ba4d11191f7921",
+        "limits_native": [
+          [
+            -2.618,
+            2.618
+          ],
+          [
+            0.0,
+            3.14
+          ],
+          [
+            -2.697,
+            0.0
+          ],
+          [
+            -1.832,
+            1.832
+          ],
+          [
+            -1.22,
+            1.22
+          ],
+          [
+            -3.14,
+            3.14
+          ],
+          [
+            0.0,
+            0.035
+          ]
+        ],
+        "microsteps": 20,
+        "numerical_equivalence_tolerance_native": 1e-12,
+        "reference_kind": "previous_applied_normal_servo_reference",
+        "reset_source": "initial_applied_targets",
+        "timestep_s": 0.001
+      },
+      "episodes": 64,
+      "parent_dataset_sha256": "07b175f78e4e77cbdde9a461a4bcae4dcb0db7d389ee4f2e702ff28db8bb3dfc",
+      "parent_provenance_sha256": "7103ad53111cb114cdcd164cfa15bbbf359ebc4ae66e7456ab7c1f38820b2864",
+      "parent_target_sha256": "de98cecd692af8de739bef8bdf0044387d6e92ee1c24945b4de4a5920b4bca6e",
+      "pins": {
+        "expected_manifest_sha256": "48ff59ec719c70b0ae8e42ab2f14e5664e76f135347281570d94b3ceaf36b86c",
+        "expected_parent_manifest_sha256": "8acd728fcc8ed637b58138c3bd7466432a588fa439acefde4b3c90fa1adfdbaf",
+        "expected_parent_source_sha256": "0ab01145c66d651eaca96d763b4bec1706327f2cdd4bd8665d05056cbdd6f677",
+        "expected_protocol_sha256": "576851e321034a0f6d3cb4d0818b3a5ca97975fcc6f2c7fa30b07ffd203a2d76",
+        "expected_source_sha256": "e5b26c86013732007c483a23ad7218271980f0f03563c4ffd95c01ad87fd3041",
+        "expected_split": "train",
+        "expected_stage": "demonstrations"
+      },
+      "raw_source_reverified": false,
+      "samples": 64000
+    },
+    {
+      "arrays": {
+        "feasible-targets.npy": {
+          "bytes": 1792128,
+          "dtype": "<f8",
+          "sha256": "c845a7e50949b10b4b5a2ac60725443b864563017be53e924a0a608012d5b96c",
+          "shape": [
+            32000,
+            7
+          ]
+        },
+        "previous-references.npy": {
+          "bytes": 1792128,
+          "dtype": "<f8",
+          "sha256": "6a150b791c01b79210319b4e9bf45b6c541c3b5ea0955e1318be56f7b260199d",
+          "shape": [
+            32000,
+            7
+          ]
+        }
+      },
+      "contract": {
+        "action_units": [
+          "rad",
+          "rad",
+          "rad",
+          "rad",
+          "rad",
+          "rad",
+          "single_finger_m"
+        ],
+        "actual_pulse_overridden_controls_are_not_references": true,
+        "clock_tolerance_s": 1e-09,
+        "control_dt_s": 0.02,
+        "endpoint_algorithm": "20 original float64 reference updates, not closed-form projection",
+        "jaw_rate_m_s": 0.05,
+        "joint_order": [
+          "joint1",
+          "joint2",
+          "joint3",
+          "joint4",
+          "joint5",
+          "joint6"
+        ],
+        "joint_rate_rad_s": 1.5,
+        "later_source": "steps[i-1].applied.ramped_targets",
+        "limiter_ast_sha256": "a5356fb9e1bd8b1dc6e6b2b14d657fbe625e018ba8d1e5e668ba4d11191f7921",
+        "limits_native": [
+          [
+            -2.618,
+            2.618
+          ],
+          [
+            0.0,
+            3.14
+          ],
+          [
+            -2.697,
+            0.0
+          ],
+          [
+            -1.832,
+            1.832
+          ],
+          [
+            -1.22,
+            1.22
+          ],
+          [
+            -3.14,
+            3.14
+          ],
+          [
+            0.0,
+            0.035
+          ]
+        ],
+        "microsteps": 20,
+        "numerical_equivalence_tolerance_native": 1e-12,
+        "reference_kind": "previous_applied_normal_servo_reference",
+        "reset_source": "initial_applied_targets",
+        "timestep_s": 0.001
+      },
+      "episodes": 32,
+      "parent_dataset_sha256": "0561f8793ac6f68318d28c99e15ee8755c85412f3e34c990e1c4f0da4a5c1789",
+      "parent_provenance_sha256": "0267af1dcc2035453f35a8fcb862bb190a6f2bdb50efb516fe7213f21d392b6a",
+      "parent_target_sha256": "49b2f30ed513b2f575186648b6aac169b24e07021adefaa8e3ace76e50733c1c",
+      "pins": {
+        "expected_manifest_sha256": "dfbb096632e30527cf53bcf9e2627f31e94ad7a669f1820e295cda1b49546334",
+        "expected_parent_manifest_sha256": "0997805831dfaacfe38d87468587f58c4e0b3f748165816e2167c4376676b96b",
+        "expected_parent_source_sha256": "0ab01145c66d651eaca96d763b4bec1706327f2cdd4bd8665d05056cbdd6f677",
+        "expected_protocol_sha256": "576851e321034a0f6d3cb4d0818b3a5ca97975fcc6f2c7fa30b07ffd203a2d76",
+        "expected_source_sha256": "e5b26c86013732007c483a23ad7218271980f0f03563c4ffd95c01ad87fd3041",
+        "expected_split": "train",
+        "expected_stage": "corrections"
+      },
+      "raw_source_reverified": false,
+      "samples": 32000
+    }
+  ]
+}

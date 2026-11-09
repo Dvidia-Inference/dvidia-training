@@ -1,0 +1,217 @@
+{
+  "causal_replay_features_equal_parent": true,
+  "common_initialization_and_normalization": true,
+  "contract": {
+    "absolute_decoder": "r0 + D*g(x)",
+    "action_units": [
+      "rad",
+      "rad",
+      "rad",
+      "rad",
+      "rad",
+      "rad",
+      "single_finger_m"
+    ],
+    "adam_moments_dtype": "float32",
+    "blind": false,
+    "control_period_s": 0.02,
+    "decoder_loss_and_gradients_dtype": "float64",
+    "delta_decoder": "r + D*g(x)",
+    "feature_contract": "camera-encoder-absolute-causal160/v1",
+    "feature_contract_sha256": "e2d45f2cb03b39d424559c76f11252978facdf911af541e8e294b7bb8cb03fe8",
+    "hidden_units": [
+      64,
+      64
+    ],
+    "history_seconds": 0.16,
+    "increment_scale": [
+      0.03,
+      0.03,
+      0.03,
+      0.03,
+      0.03,
+      0.03,
+      0.001
+    ],
+    "joint_order": [
+      "joint1",
+      "joint2",
+      "joint3",
+      "joint4",
+      "joint5",
+      "joint6",
+      "single_finger_jaw"
+    ],
+    "loss": "mean(((unprojected_endpoint-feasible_target)/S)**2)",
+    "loss_scale": [
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      0.035
+    ],
+    "network_dtype": "float32",
+    "projection": "native bounds then exact original 20 normal reference updates",
+    "reference_kind": "previous_applied_normal_servo_reference",
+    "reset_reference": [
+      0.0,
+      1.57,
+      -1.3485,
+      0.0,
+      0.0,
+      0.0,
+      0.035
+    ]
+  },
+  "evidence_state": "locally_validated_unqualified; remote hosting not asserted",
+  "feasible_endpoint_array_sha256": "d5754ace901e4d0fda4793be8e34aa9676009e8d700451937c439bd42c1d0163",
+  "feature_array_sha256": "8e2399f0753e20e86a50555dcf17a85c12b7c0b2583842f13da14a0bad393bee",
+  "fits": 2,
+  "forbidden_extra_input_invariance": true,
+  "hardware": {
+    "blas_threads_declared": 1,
+    "cpu_count": 10,
+    "machine": "arm64",
+    "numpy": "2.5.3",
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "processor": "arm",
+    "python": "3.12.9",
+    "shared_host": true
+  },
+  "held_out_rows_read": 0,
+  "limitations": [
+    "Training errors and one teacher-trajectory open-loop replay are not generalization or task success.",
+    "No controller was actuated, selected, qualified, installed or evaluated in a new environment.",
+    "Both candidates retained; frozenv01 results and unrun164-attemptv02 screen unchanged.",
+    "Registration binds this benchmark externally; model scientific_registration intentionally remains null."
+  ],
+  "native_rollouts": 0,
+  "original_metadata_files_read_count": 1003,
+  "original_result_sha256": "6d44d98488ef26f949412aadc94c32174bd5c4ce879442191b9784deff5b325f",
+  "peak_whole_process_rss_bytes": 1345404928,
+  "physical_robot_ready": false,
+  "previous_reference_array_sha256": "e2f84e643ad7e9d04fd2d993051f6873283a376c327838e2ee84733880c8af54",
+  "qualified": false,
+  "raw_recordings_revalidated": false,
+  "recipe": {
+    "batch_size": 512,
+    "beta1": 0.9,
+    "beta2": 0.999,
+    "epochs": 50,
+    "epsilon": 1e-08,
+    "gradient_clip": 1.0,
+    "learning_rate": 0.003,
+    "parameter_clip": 64.0,
+    "seed": 17
+  },
+  "registered_plan_sha256": "ffb52ed4226d48482010be7dc2a1acf2fa385202a0d7dc142ca3e8904cb7d4f8",
+  "replay_frames": 1000,
+  "replay_next_state_origin": "recorded teacher trajectory only",
+  "replay_predictions_actuated": false,
+  "resource_scope": "Single compute worker plus250ms resource observer. RSS/deadline/free-space stop thresholds are sampled controls, not kernel memory quotas or protection against unrelated disk writers.",
+  "schema": "dvidia.reference-model-integration-publication-summary/v1",
+  "script_sha256": "1cc8f9a82d7381ba56db401c9ea89246b67df4d281e930fc664001b888754a69",
+  "selection_performed": false,
+  "source_commit": "78ea4fbb4b2733e7738eb425eeecd7cb67a52195",
+  "source_identity_sha256": "12ea9757cb0d76573c2e67f80b56ab08271f95e43f18b344b6481cc9153d70bc",
+  "status": "complete",
+  "timing_scope": "Fit includes source/derived-input validation and normalization. Callback timing includes causal encoding, NumPy inference and reference projection; excludes camera/render/physics/transport. RSS is whole-process high-water mark, not an isolated model allocation.",
+  "total_wall_seconds": 12.93291958401096,
+  "training_rows_per_fit": 96000,
+  "variants": {
+    "absolute": {
+      "final_training_loss": 7.926108883701983e-06,
+      "fit_wall_seconds": 5.230713041994022,
+      "initial_training_loss": 0.04009072663323015,
+      "loaded_open_loop_callback_wall": {
+        "calls": 1000,
+        "maximum_seconds": 0.0003341670089866966,
+        "median_seconds": 0.00018152050324715674,
+        "p95_seconds": 0.0002062101018964313,
+        "sum_seconds": 0.18355957081075758
+      },
+      "model_content_sha256": "36af3fe1670494b04c48b5114d9be1a5f91632aa7992ba529d6587969ea37460",
+      "model_file": {
+        "bytes": 539345,
+        "sha256": "3dbf6911d92a9072297c9c3bb7c09f45809808272455ffd5562f4553a173f362"
+      },
+      "model_save_load_identity": true,
+      "open_loop_callback_wall": {
+        "calls": 1000,
+        "maximum_seconds": 0.00027541699819266796,
+        "median_seconds": 0.0001818129967432469,
+        "p95_seconds": 0.00020484020933508873,
+        "sum_seconds": 0.18381304285139777
+      },
+      "open_loop_prediction_file": {
+        "bytes": 56128,
+        "sha256": "5dfbcebbb33a0a628b9e82ff5508097b7ec7b190566b2979a5f20255943dc914"
+      },
+      "open_loop_saved_policy_outputs_bitwise_equal": true,
+      "peak_whole_process_rss_bytes_so_far": 1334378496,
+      "qualified": false,
+      "training": {
+        "algorithm": "numpy-tanh-2x64-adam-native-endpoint-mse/v1",
+        "final_loss": 7.926108883701983e-06,
+        "group_count": 32,
+        "initial_loss": 0.04009072663323015,
+        "initial_parameters_sha256": "9c50504160213ad5241d6d96ab9be938d6f49b1c4bf49ff39d0770dac83dce7e",
+        "normalization": "training features only; no label whitening",
+        "optimizer_updates": 9400,
+        "parent_dataset_sha256": "b500b3ba348bba44cc79e377266f92910bd7e0165c36cd8b2fe260909b30a2f9",
+        "parent_provenance_sha256": "52cbeda62e3aa50e8cd6a34688fba7583f9fcec927cb0eb434a6907c99695f4f",
+        "reference_dataset_sha256": "a9dcd66a81f177bb1910e08171ac7607f115ed47b51d93412107eb0e204aed73",
+        "samples": 96000
+      },
+      "training_trajectory_projected_endpoint_scaled_mse": 1.8801026187180245e-06
+    },
+    "delta": {
+      "final_training_loss": 3.531327787737655e-06,
+      "fit_wall_seconds": 5.097628457995597,
+      "initial_training_loss": 8.72223173973333e-05,
+      "loaded_open_loop_callback_wall": {
+        "calls": 1000,
+        "maximum_seconds": 0.00024516700068488717,
+        "median_seconds": 0.0001821249898057431,
+        "p95_seconds": 0.00020668574870796871,
+        "sum_seconds": 0.18321760100661777
+      },
+      "model_content_sha256": "4545be31f50267c9da29b211510c7a32df500678ba107c7a100604bb0c4c18ab",
+      "model_file": {
+        "bytes": 538021,
+        "sha256": "fece6d056e50a1bde41bdb9960bf7cbc81d983c4bfdb03a07632e30b712b1489"
+      },
+      "model_save_load_identity": true,
+      "open_loop_callback_wall": {
+        "calls": 1000,
+        "maximum_seconds": 0.0002842499816324562,
+        "median_seconds": 0.00018272899615112692,
+        "p95_seconds": 0.00020738332968903706,
+        "sum_seconds": 0.18398747508763336
+      },
+      "open_loop_prediction_file": {
+        "bytes": 56128,
+        "sha256": "a741d006667a559c846c4b2cf19c88ea81ea4eaa55d75c53583e415e1f0dd665"
+      },
+      "open_loop_saved_policy_outputs_bitwise_equal": true,
+      "peak_whole_process_rss_bytes_so_far": 1345404928,
+      "qualified": false,
+      "training": {
+        "algorithm": "numpy-tanh-2x64-adam-native-endpoint-mse/v1",
+        "final_loss": 3.531327787737655e-06,
+        "group_count": 32,
+        "initial_loss": 8.72223173973333e-05,
+        "initial_parameters_sha256": "9c50504160213ad5241d6d96ab9be938d6f49b1c4bf49ff39d0770dac83dce7e",
+        "normalization": "training features only; no label whitening",
+        "optimizer_updates": 9400,
+        "parent_dataset_sha256": "b500b3ba348bba44cc79e377266f92910bd7e0165c36cd8b2fe260909b30a2f9",
+        "parent_provenance_sha256": "52cbeda62e3aa50e8cd6a34688fba7583f9fcec927cb0eb434a6907c99695f4f",
+        "reference_dataset_sha256": "a9dcd66a81f177bb1910e08171ac7607f115ed47b51d93412107eb0e204aed73",
+        "samples": 96000
+      },
+      "training_trajectory_projected_endpoint_scaled_mse": 6.222337738975971e-07
+    }
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "delta_strict_violations": [
+    {
+      "all_strict_vector_fields_finite": true,
+      "first_strict_state_envelope_violation": {
+        "object_position_m": [
+          0.4871081710122422,
+          -0.17988504093974045,
+          0.09353123557334052
+        ],
+        "state_index": 739,
+        "t_seconds": 14.779999999997248,
+        "table_object_contact_count": 1,
+        "violations": [
+          {
+            "allowed_inclusive": [
+              -0.5,
+              0.5
+            ],
+            "axis": "x",
+            "component": 0,
+            "field": "tcp_position_m",
+            "finite": true,
+            "value": 0.5018659985967776
+          }
+        ]
+      },
+      "id": "development-00-goal0-delta",
+      "integrity": {
+        "bytes": 567674,
+        "sha256": "d4a89f2555c2e9d86c745fbc0b20be34b39ce3fb2400d037a91c63a6d7d0cd1a"
+      },
+      "native_episode": {
+        "bytes": 3274472,
+        "sha256": "3f91710eb25b61a0fb6c64fa050cc8406f8d11b2eeff3a65dee1502eb2c5fd8f"
+      },
+      "physics_warnings": []
+    },
+    {
+      "all_strict_vector_fields_finite": true,
+      "first_strict_state_envelope_violation": {
+        "object_position_m": [
+          0.32931879716563506,
+          -0.12798862211401657,
+          0.0798922445797837
+        ],
+        "state_index": 713,
+        "t_seconds": 14.259999999997536,
+        "table_object_contact_count": 4,
+        "violations": [
+          {
+            "allowed_inclusive": [
+              -0.5,
+              0.5
+            ],
+            "axis": "x",
+            "component": 0,
+            "field": "tcp_position_m",
+            "finite": true,
+            "value": 0.5033371506888265
+          }
+        ]
+      },
+      "id": "development-00-goal1-delta",
+      "integrity": {
+        "bytes": 567674,
+        "sha256": "d9a2f3b46a3906153b5ee703d915c809b9d5903996abbc948a31ab42fae1e1dd"
+      },
+      "native_episode": {
+        "bytes": 3199780,
+        "sha256": "c38becb927b94c6c7478c76253f86ee4a656f8d8ab1c482258fdfb5ef4dfa8b2"
+      },
+      "physics_warnings": []
+    },
+    {
+      "all_strict_vector_fields_finite": true,
+      "first_strict_state_envelope_violation": {
+        "object_position_m": [
+          0.36982822089212286,
+          -0.17378339194526918,
+          0.0798922445797837
+        ],
+        "state_index": 687,
+        "t_seconds": 13.739999999997824,
+        "table_object_contact_count": 4,
+        "violations": [
+          {
+            "allowed_inclusive": [
+              -0.5,
+              0.5
+            ],
+            "axis": "z",
+            "component": 2,
+            "field": "tcp_position_m",
+            "finite": true,
+            "value": 0.5049848841298252
+          }
+        ]
+      },
+      "id": "development-01-goal0-delta",
+      "integrity": {
+        "bytes": 567674,
+        "sha256": "1f4b2db19b5c0ded4438d9cc549a65e6a25a9f1691118a4363f93bf0646e2a89"
+      },
+      "native_episode": {
+        "bytes": 3081538,
+        "sha256": "51b909802d8da08157c87cc1d1dffac6eea4b28a8f9448669b5cc02797e961ae"
+      },
+      "physics_warnings": []
+    },
+    {
+      "all_strict_vector_fields_finite": true,
+      "first_strict_state_envelope_violation": {
+        "object_position_m": [
+          0.4070060436188808,
+          -0.18591757382039348,
+          0.0798922445794117
+        ],
+        "state_index": 735,
+        "t_seconds": 14.699999999997292,
+        "table_object_contact_count": 4,
+        "violations": [
+          {
+            "allowed_inclusive": [
+              -0.5,
+              0.5
+            ],
+            "axis": "x",
+            "component": 0,
+            "field": "tcp_position_m",
+            "finite": true,
+            "value": 0.5001573804075903
+          }
+        ]
+      },
+      "id": "development-01-goal1-delta",
+      "integrity": {
+        "bytes": 567674,
+        "sha256": "99a748732c1cbb7761ec00b786a680da20f01b0abb038214451be42d069cd8e2"
+      },
+      "native_episode": {
+        "bytes": 3104558,
+        "sha256": "42e5e034ee6c8a6d4cf58cdf7efe2d7545f4554d2e0253b6eca42d477e623da0"
+      },
+      "physics_warnings": []
+    }
+  ],
+  "interpretation": {
+    "causality": "Own-state reference drift is a candidate mechanism; this read-only smoke does not establish its cause or isolate a treatment. No tuning or model ranking conclusion from four cases per variant.",
+    "contact_scope": "Critical ticks count 1ms simulated timesteps with at least one critical contact, not independent collision events. No real hardware force inference.",
+    "delta_state_failure": "All four delta trajectories contain finite TCP coordinates outside the unchanged strict scorer component envelope [-0.5,0.5] metres. Generic invalid_state_value is not a NaN or solver-warning diagnosis.",
+    "dominant_failure": "Seven cases never achieved the required sustained bilateral table-free lift; one absolute case lifted but did not complete supported placement, release or retreat by the 20-second budget. All eight failed retained carry completion.",
+    "floor_case": "development-00-goal0-delta first fails on TCP x while block still has one table contact. It later ends with four explicitly mapped block-floor contacts, no table support, and block centre z=0.019892m.",
+    "prior_batches": "Two distinct eight-attempt initialization-refusal batches are preserved and linked from the v3 result. Those had zero controller calls and are not control performance evaluations.",
+    "timing_scope": "Model diagnostic includes causal feature encoding, NumPy inference and feasible-reference projection. Pooled callback includes separate cooperative disk guard. Full boundary includes captured simulation and measurement work. Rendering estimates are offline, with depth-accuracy warning; no physical latency claim.",
+    "valid_semantics": "Outer valid checks native arrays, recomputed metrics and warning-free native physics; success additionally requires unchanged strict_v01 and native task success. Valid is not a task, workspace or safety qualification."
+  },
+  "model_selection": false,
+  "new_native_executions": 0,
+  "new_training_fits": 0,
+  "original_analysis_file": {
+    "bytes": 51280,
+    "sha256": "7ea36145088fda3e6e39a280c8e537d8ed0a1acab9503f1604ff812f1e971373"
+  },
+  "qualified": false,
+  "result": {
+    "bytes": 7153,
+    "sha256": "597277fd6c4671a7d2791aa861beb5da896573fcbf51f8db08e30d4bc501284e"
+  },
+  "schema": "dvidia.reference-model-smoke-diagnosis-summary/v1",
+  "scope": "Compact read-only diagnosis derived from the separately retained full analysis, not new simulation or a causal treatment experiment.",
+  "source_bindings": {
+    "camera_action_reference_model.py": {
+      "bytes": 19771,
+      "sha256": "952750fd6b99f97eb96054b8fe50710b83f7e8eb4e069601be442292dd0023bc"
+    },
+    "piper_feedback_score.py": {
+      "bytes": 18866,
+      "sha256": "863a272828208c631de4cf57647e973eb3e4f5e99eb7a1eacb4eaa68dc42eb0e"
+    },
+    "piper_imitation_score.py": {
+      "bytes": 11462,
+      "sha256": "0cd4663abfdd7f14f2f33d93e9a2bd45122b998d6160d45b8afcc880512cba2b"
+    },
+    "piper_task.py": {
+      "bytes": 34355,
+      "sha256": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f"
+    }
+  },
+  "source_commit": "78ea4fbb4b2733e7738eb425eeecd7cb67a52195"
+}

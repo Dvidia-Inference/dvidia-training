@@ -1,0 +1,362 @@
+{
+  "critical_contact_metrics": "See per-variant critical_contact_ticks and episodes_with_critical_contact in native-smoke-v3-audit.json.",
+  "evidence_state": "locally_validated_unqualified; remote hosting not asserted",
+  "funnel_metrics": {
+    "absolute": {
+      "callback_including_guard": {
+        "calls": 4000,
+        "maximum_seconds": 0.008621292014140636,
+        "median_seconds": 0.00023227051133289933,
+        "p95_seconds": 0.00029546011064667254
+      },
+      "carry_complete": 0,
+      "complete_episodes": 4,
+      "critical_contact_ticks": 7606,
+      "episodes_with_critical_contact": 2,
+      "full_boundary": {
+        "calls": 4000,
+        "maximum_seconds": 0.051054958981694654,
+        "median_seconds": 0.013028145520365797,
+        "p95_seconds": 0.022362537491426335
+      },
+      "grasp_seen": 3,
+      "lift_seen": 1,
+      "qualified": false,
+      "retention_lost": 0,
+      "scheduled": 4,
+      "scored_control_trajectories": 4,
+      "strict_successes": 0,
+      "terminal_only_successes": 0
+    },
+    "delta": {
+      "callback_including_guard": {
+        "calls": 4000,
+        "maximum_seconds": 0.021589000010862947,
+        "median_seconds": 0.00023095900542102754,
+        "p95_seconds": 0.0002842972404323518
+      },
+      "carry_complete": 0,
+      "complete_episodes": 4,
+      "critical_contact_ticks": 19751,
+      "episodes_with_critical_contact": 4,
+      "full_boundary": {
+        "calls": 4000,
+        "maximum_seconds": 0.058383833995321766,
+        "median_seconds": 0.013461853988701478,
+        "p95_seconds": 0.02204904312093276
+      },
+      "grasp_seen": 4,
+      "lift_seen": 0,
+      "qualified": false,
+      "retention_lost": 0,
+      "scheduled": 4,
+      "scored_control_trajectories": 4,
+      "strict_successes": 0,
+      "terminal_only_successes": 0
+    }
+  },
+  "independently_scored_control_trajectories": 8,
+  "initial_infrastructure_batches": [
+    {
+      "initialization_refusals": 8,
+      "plan_sha256": "3818be616fe37f976e2b31f86a21f5c429f11b4e4131a43d5174ed1bb771e289",
+      "policy_callbacks": 0,
+      "recorded_control_intervals": 0,
+      "result": {
+        "bytes": 6130,
+        "sha256": "2e9a40eaa5799f3bc6d0d36ee10f5fe8a6cf0bfe387f428f399d66a4e9c5c6fe"
+      },
+      "rows": [
+        {
+          "files_verified": 2,
+          "id": "development-00-goal0-absolute",
+          "recorded_complete_intervals": 0,
+          "rollout_error": {
+            "message": "No network or child process inside native worker.",
+            "type": "RuntimeError"
+          },
+          "startup_permission_closed": null,
+          "startup_probe_calls": 0,
+          "variant": "absolute",
+          "worker_receipt": {
+            "bytes": 2444,
+            "sha256": "059ef7b8732056b28e73b2dd50bd56dd95bbc22d9c633a9736609131f841ba42"
+          }
+        },
+        {
+          "files_verified": 2,
+          "id": "development-00-goal0-delta",
+          "recorded_complete_intervals": 0,
+          "rollout_error": {
+            "message": "No network or child process inside native worker.",
+            "type": "RuntimeError"
+          },
+          "startup_permission_closed": null,
+          "startup_probe_calls": 0,
+          "variant": "delta",
+          "worker_receipt": {
+            "bytes": 2435,
+            "sha256": "fb67f2ba4ed0a69f294541987288b40be51e7886302b976be43de547b5021dcc"
+          }
+        },
+        {
+          "files_verified": 2,
+          "id": "development-00-goal1-absolute",
+          "recorded_complete_intervals": 0,
+          "rollout_error": {
+            "message": "No network or child process inside native worker.",
+            "type": "RuntimeError"
+          },
+          "startup_permission_closed": null,
+          "startup_probe_calls": 0,
+          "variant": "absolute",
+          "worker_receipt": {
+            "bytes": 2443,
+            "sha256": "71285854d1e4f590a3b58fd4f97819ae46eb4d58d50d4932ddf34abed93884fd"
+          }
+        },
+        {
+          "files_verified": 2,
+          "id": "development-00-goal1-delta",
+          "recorded_complete_intervals": 0,
+          "rollout_error": {
+            "message": "No network or child process inside native worker.",
+            "type": "RuntimeError"
+          },
+          "startup_permission_closed": null,
+          "startup_probe_calls": 0,
+          "variant": "delta",
+          "worker_receipt": {
+            "bytes": 2434,
+            "sha256": "651a0ac311d20c08023a84945604f9591cacd12bfe7bc41fda763927ae4927c7"
+          }
+        },
+        {
+          "files_verified": 2,
+          "id": "development-01-goal0-absolute",
+          "recorded_complete_intervals": 0,
+          "rollout_error": {
+            "message": "No network or child process inside native worker.",
+            "type": "RuntimeError"
+          },
+          "startup_permission_closed": null,
+          "startup_probe_calls": 0,
+          "variant": "absolute",
+          "worker_receipt": {
+            "bytes": 2443,
+            "sha256": "fbc5c5419755eef28cd877949f534146c0594b65a6cfc44d784c21552c544516"
+          }
+        },
+        {
+          "files_verified": 2,
+          "id": "development-01-goal0-delta",
+          "recorded_complete_intervals": 0,
+          "rollout_error": {
+            "message": "No network or child process inside native worker.",
+            "type": "RuntimeError"
+          },
+          "startup_permission_closed": null,
+          "startup_probe_calls": 0,
+          "variant": "delta",
+          "worker_receipt": {
+            "bytes": 2434,
+            "sha256": "527b2af2befa2a1461db9d65b2730f790800937a3f97e2ae73f7b49c8f6c3214"
+          }
+        },
+        {
+          "files_verified": 2,
+          "id": "development-01-goal1-absolute",
+          "recorded_complete_intervals": 0,
+          "rollout_error": {
+            "message": "No network or child process inside native worker.",
+            "type": "RuntimeError"
+          },
+          "startup_permission_closed": null,
+          "startup_probe_calls": 0,
+          "variant": "absolute",
+          "worker_receipt": {
+            "bytes": 2443,
+            "sha256": "47c9609434b19a8c8da621cf0bb4a6c21fc64b1249bb26104a9f02669be40ff6"
+          }
+        },
+        {
+          "files_verified": 2,
+          "id": "development-01-goal1-delta",
+          "recorded_complete_intervals": 0,
+          "rollout_error": {
+            "message": "No network or child process inside native worker.",
+            "type": "RuntimeError"
+          },
+          "startup_permission_closed": null,
+          "startup_probe_calls": 0,
+          "variant": "delta",
+          "worker_receipt": {
+            "bytes": 2435,
+            "sha256": "9ae30452ca490e2adab099bc62206abdae3d029fbaa7c8c7e281ae20780a3ae8"
+          }
+        }
+      ],
+      "run_id": "reference-model-development-smoke-20261109",
+      "scheduled_attempts": 8
+    },
+    {
+      "initialization_refusals": 8,
+      "plan_sha256": "600b2129fc44c21e092390269e50ff43766262808b88add6d4718ea301c0d8e8",
+      "policy_callbacks": 0,
+      "recorded_control_intervals": 0,
+      "result": {
+        "bytes": 6664,
+        "sha256": "017d7ae05f64b8539d950ec00063345f30571e4a89086e06411b1b038c9a335c"
+      },
+      "rows": [
+        {
+          "files_verified": 2,
+          "id": "development-00-goal0-absolute",
+          "recorded_complete_intervals": 0,
+          "rollout_error": {
+            "message": "invalid CoreGraphics connection",
+            "type": "CGLError"
+          },
+          "startup_permission_closed": true,
+          "startup_probe_calls": 1,
+          "variant": "absolute",
+          "worker_receipt": {
+            "bytes": 2918,
+            "sha256": "d3f14709e112bec83b112bf5391f61aebe4277b39adb5956030ebb4a11d6add6"
+          }
+        },
+        {
+          "files_verified": 2,
+          "id": "development-00-goal0-delta",
+          "recorded_complete_intervals": 0,
+          "rollout_error": {
+            "message": "invalid CoreGraphics connection",
+            "type": "CGLError"
+          },
+          "startup_permission_closed": true,
+          "startup_probe_calls": 1,
+          "variant": "delta",
+          "worker_receipt": {
+            "bytes": 2910,
+            "sha256": "965fba1d8c1e06eef6694ef65ec4d87dbf58966013712cd9aa8e6a2e8a426b04"
+          }
+        },
+        {
+          "files_verified": 2,
+          "id": "development-00-goal1-absolute",
+          "recorded_complete_intervals": 0,
+          "rollout_error": {
+            "message": "invalid CoreGraphics connection",
+            "type": "CGLError"
+          },
+          "startup_permission_closed": true,
+          "startup_probe_calls": 1,
+          "variant": "absolute",
+          "worker_receipt": {
+            "bytes": 2917,
+            "sha256": "de91ed38603f1ca847de2fbf0416687e52d5c4084a9bdf2242d5726c600c5fa8"
+          }
+        },
+        {
+          "files_verified": 2,
+          "id": "development-00-goal1-delta",
+          "recorded_complete_intervals": 0,
+          "rollout_error": {
+            "message": "invalid CoreGraphics connection",
+            "type": "CGLError"
+          },
+          "startup_permission_closed": true,
+          "startup_probe_calls": 1,
+          "variant": "delta",
+          "worker_receipt": {
+            "bytes": 2909,
+            "sha256": "aa0c157fbc73e6b501d9e1085fa526e153a322144709c175de18d212ee9fd4a7"
+          }
+        },
+        {
+          "files_verified": 2,
+          "id": "development-01-goal0-absolute",
+          "recorded_complete_intervals": 0,
+          "rollout_error": {
+            "message": "invalid CoreGraphics connection",
+            "type": "CGLError"
+          },
+          "startup_permission_closed": true,
+          "startup_probe_calls": 1,
+          "variant": "absolute",
+          "worker_receipt": {
+            "bytes": 2919,
+            "sha256": "c0cc1bacebe5f93cd1392df3f59dd617a6bcefb01caa508ae04116eedd377306"
+          }
+        },
+        {
+          "files_verified": 2,
+          "id": "development-01-goal0-delta",
+          "recorded_complete_intervals": 0,
+          "rollout_error": {
+            "message": "invalid CoreGraphics connection",
+            "type": "CGLError"
+          },
+          "startup_permission_closed": true,
+          "startup_probe_calls": 1,
+          "variant": "delta",
+          "worker_receipt": {
+            "bytes": 2909,
+            "sha256": "39b0786aaaeff0455416928bb05bdb8e69738573d3250bd88ba7a1a065dff260"
+          }
+        },
+        {
+          "files_verified": 2,
+          "id": "development-01-goal1-absolute",
+          "recorded_complete_intervals": 0,
+          "rollout_error": {
+            "message": "invalid CoreGraphics connection",
+            "type": "CGLError"
+          },
+          "startup_permission_closed": true,
+          "startup_probe_calls": 1,
+          "variant": "absolute",
+          "worker_receipt": {
+            "bytes": 2918,
+            "sha256": "ed64a04c503121a0649365fd24aa63a6aa357ab83633743820f1b4352a69ab3c"
+          }
+        },
+        {
+          "files_verified": 2,
+          "id": "development-01-goal1-delta",
+          "recorded_complete_intervals": 0,
+          "rollout_error": {
+            "message": "invalid CoreGraphics connection",
+            "type": "CGLError"
+          },
+          "startup_permission_closed": true,
+          "startup_probe_calls": 1,
+          "variant": "delta",
+          "worker_receipt": {
+            "bytes": 2909,
+            "sha256": "885c5b7ec717d1b8790cec4299c1a29e52024abac6cbd70b8bb3c5a3bf059cc7"
+          }
+        }
+      ],
+      "run_id": "reference-model-development-smoke-v2-20261109",
+      "scheduled_attempts": 8
+    }
+  ],
+  "interpretation": "Report0/4 strict placements per model on four reused development scenarios. The prior16 infrastructure refusals are retained separately, not pooled into a0/24 manipulation score. This is not a generalization or comparator study.",
+  "learned_callback_latency": "See per-variant callback_including_guard distributions in native-smoke-v3-audit.json.",
+  "native_audit_sha256": "098c3c7b8c678790cc089dbec50d5c7c874e0a54da72844e48c49222683f9d7f",
+  "native_initialization_scope": "First eight import refusals and second eight graphics refusals remain separate. Third batch used separately registered scoped graphics access and completed all8 native learned-control attempts; neither model succeeded.",
+  "native_plan_sha256": "9912b3b86abe889d81073b1fee1c9cad9655264fdb325abbbf60dbebd89a490b",
+  "native_result_file": {
+    "bytes": 7153,
+    "sha256": "597277fd6c4671a7d2791aa861beb5da896573fcbf51f8db08e30d4bc501284e"
+  },
+  "next_prerequisite": "A separately registered failure-correction experiment; no automatic retries, tuning or new qualification.",
+  "policy_callbacks": 8000,
+  "qualified": false,
+  "recorded_control_intervals": 8000,
+  "review_receipt_sha256": "2270d1043e8dd68286627d15f2c4f039a7fdda9913d843ebe5e7551e1523367e",
+  "scheduled_attempts_across_batches": 24,
+  "schema": "dvidia.reference-model-development-smoke-status/v2",
+  "selection_performed": false
+}

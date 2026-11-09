@@ -2,17 +2,24 @@
 
 This additive Python module connects the verified training export to a trainable
 model and a callable local simulation policy. It implements the proposed Cabs
-and Cdelta comparison; **no real-study model has been fitted or evaluated with
-it**. The frozen v0.1 result remains 5/64 strict learned placements and
-unqualified. The common-scale parameterization and the 164-attempt v0.2 screen
-still need registration before real learning or rollouts.
+and Cdelta comparison. A separately registered [training/inference integration
+benchmark](camera-action-reference-model-integration-v01.md) has now fitted both
+variants on the same 96,000 training rows and verified save/load replay parity.
+Sixteen initial engineering attempts were refused before policy callbacks. A
+separately registered eight-attempt native development batch then completed;
+both unchanged models achieved 0/4 strict placements and remain unqualified. The frozen v0.1 result
+remains 5/64 strict learned placements and unqualified. The proposed 164-attempt
+v0.2 screen remains unrun and needs its own registration.
 
 The module is `dvidia_training.camera_action_reference_model`. It changes none
 of the existing recorder, trainer, model, installer, actuator limits or scorer.
 It provides no hardware commands, new CLI command or installation qualification.
 Its policy has the same callable interface that the unchanged
 `camera_action_capture.run_rollout` already accepts. That interface compatibility
-is tested with synthetic contexts; no native rollout was run for this bridge.
+is tested with synthetic contexts and one recorded-trajectory integration replay.
+A later eight-attempt native development batch exercised learned control with
+zero strict placements. Its results and all earlier initialization refusals are
+linked from the integration report.
 
 ## From sealed training inputs to actions
 
@@ -96,7 +103,7 @@ Models remain `physical_robot_ready=false`, `task_qualified=false`, with
 `scientific_registration=null`. A model file is not an experiment registration
 or a qualification receipt, and these hashes are not publisher authentication.
 
-For a future separately registered experiment, the API is:
+For a separately registered training experiment, the API is:
 
 ```python
 from dvidia_training import camera_action_reference_model as reference_model
@@ -136,7 +143,8 @@ bitwise cross-variant reset parity and saved-model inference parity. These are
 implementation tests, not task benchmarks. Synthetic fit losses are not
 evidence of manipulation progress.
 
-Before the real v0.2 screen: register this parameterization and source, verify
+The bounded integration benchmark does not replace the real v0.2 screen. Before
+that screen: register this parameterization and source, verify
 shared initialization on the registered reset contexts, bind the exact dataset
 and resource budgets, and then run the declared fits and fresh closed-loop
 attempts with independent scoring. Existing confirmation data must remain

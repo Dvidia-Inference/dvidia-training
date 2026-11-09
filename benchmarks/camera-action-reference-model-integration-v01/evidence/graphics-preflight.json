@@ -1,0 +1,50 @@
+{
+  "results": {
+    "default-sandbox.json": {
+      "original_file": {
+        "bytes": 498,
+        "sha256": "74c96d8856d24c3f89680202b63ab67efe5a45b42a97e17ff44429d347827d7d"
+      },
+      "result": {
+        "error": "invalid CoreGraphics connection",
+        "error_type": "CGLError",
+        "execution_context": "default-sandbox",
+        "machine": "arm64",
+        "mujoco": "3.15.0",
+        "numpy": "2.5.3",
+        "python": "3.12.9",
+        "scope": "Tiny authored static XML, forward kinematics only, one48x64RGB frame; no robot/assets/dataset/task/model weights or dynamics steps.",
+        "status": "failed",
+        "total_wall_seconds": 0.12905491699348204
+      }
+    },
+    "scoped-graphics-access.json": {
+      "original_file": {
+        "bytes": 674,
+        "sha256": "dbfaef196312bcd905ad97288a63732a9b57bca5eb3a4119e03a885f9af3af55"
+      },
+      "result": {
+        "execution_context": "scoped-graphics-access",
+        "frame_dtype": "uint8",
+        "frame_max": 185,
+        "frame_min": 0,
+        "frame_sha256": "a1b17db25079e446d7030d4f72820efaf9c5163c0cdaccab6a7449cdee82916e",
+        "frame_shape": [
+          48,
+          64,
+          3
+        ],
+        "machine": "arm64",
+        "mujoco": "3.15.0",
+        "numpy": "2.5.3",
+        "python": "3.12.9",
+        "render_wall_seconds": 0.020181250001769513,
+        "scope": "Tiny authored static XML, forward kinematics only, one48x64RGB frame; no robot/assets/dataset/task/model weights or dynamics steps.",
+        "status": "passed",
+        "total_wall_seconds": 0.16178770799888298
+      }
+    }
+  },
+  "schema": "dvidia.reference-model-graphics-preflight-summary/v1",
+  "scope": "One static48x64frame, forward kinematics only; no robot/assets/data/model weights or dynamics. Interpreter path omitted from this public summary."
+}
