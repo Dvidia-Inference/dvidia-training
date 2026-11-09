@@ -243,7 +243,7 @@ def _results(data):
         'both fixed and blind controllers, grouping both destinations by starting position; positive intervals '
         'also on at least 24 common admitted groups; no increase in critical-contact episode frequency; '
         'all 16 negative controls correct; no privileged learner inputs or teacher evaluation fallback.', '']
-    lines += _table(['Gate', 'Result'], [(name, 'PASS' if passed else 'FAIL') for name, passed in report['gates'].items()]) if report['gates'] else ['Gates are **unassessed** because the study is blocked.', '']
+    lines += _table(['Gate', 'Result'], [(name, 'PASS' if passed else 'FAIL') for name, passed in sorted(report['gates'].items())]) if report['gates'] else ['Gates are **unassessed** because the study is blocked.', '']
     for label, key in (('All scheduled starting groups', 'comparisons'), ('Common admitted starting groups', 'admitted_comparisons')):
         if report.get(key):
             lines += [label + ' (verbatim structured result):', '', '```json',

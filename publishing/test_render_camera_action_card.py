@@ -247,6 +247,26 @@ class CardTests(unittest.TestCase):
         text = cards.dataset_card(data)
         self.assertNotIn('<img', text)
 
+    def test_equal_gate_results_render_identically_after_json_key_reordering(self):
+        data = cards._inputs(self.root, summary=self.summary, source_commit='a' * 40)
+        data['report'].update(status='complete', gates={
+            'all_registered_attempts_accounted': True,
+            'at_least_58_of_64': False,
+            'positive_paired_comparisons': False,
+            'positive_common_admitted_comparisons': False,
+            'no_critical_contact_increase': True,
+            'all_negative_controls_correct': True,
+            'no_privileged_features_or_teacher_intervention': True})
+        original = cards.dataset_card(data).encode()
+        reordered = deepcopy(data)
+        reordered['report']['gates'] = dict(reversed(list(data['report']['gates'].items())))
+        canonical = deepcopy(data)
+        canonical['report'] = json.loads(json.dumps(data['report'], sort_keys=True))
+        self.assertEqual(data['report'], reordered['report'])
+        self.assertEqual(data['report'], canonical['report'])
+        self.assertEqual(original, cards.dataset_card(reordered).encode())
+        self.assertEqual(original, cards.dataset_card(canonical).encode())
+
 
 if __name__ == '__main__':
     unittest.main()
