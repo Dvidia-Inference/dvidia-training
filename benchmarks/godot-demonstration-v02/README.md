@@ -6,6 +6,18 @@ six 320x240 RGB-D pairs, and 200 native 1 ms ticks. It does not attempt a comple
 placement; the independent task scorer correctly returns failure, with no
 critical contact ticks. No human demonstrations or model fits were performed.
 
+The original evidence below is pinned to commit `b8b96cd`. Windows CI then
+identified a local inventory serialization bug: backslash paths were correctly
+rejected by the portable recording validator. The follow-up fix uses POSIX
+paths for locally generated inventory entries, retaining strict validation of
+imported references. `portability-tests.json` records **97 passing test executions**
+including Windows/POSIX path cases. `portability-checks.json` records a fresh
+windowed capture, exact replay of another 10,200 native values and a reinstall/
+export check after the fix. This second short run took **0.482349 wall seconds
+for 0.2 simulated seconds**; it is a compatibility check, not a speedup claim.
+Native rendering remains tested on Mac; cross-platform data tests do not
+qualify Windows rendering. Original receipts are retained unchanged.
+
 ## Results
 
 | Check | Result |

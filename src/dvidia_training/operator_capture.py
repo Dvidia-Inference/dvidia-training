@@ -51,6 +51,13 @@ def _identity(root, name):
     return dict(bytes=len(body), sha256=sha256(body).hexdigest())
 
 
+def _artifact_name(root, path):
+    """Serialize local inventory paths using the platform-independent tape contract."""
+    name = path.relative_to(root).as_posix()
+    tape._relative(name)
+    return name
+
+
 def _detail(value):
     if value is not None and type(value) is not dict:
         raise ValueError('Input/event metadata must be a JSON object or null.')
@@ -493,8 +500,8 @@ class OperatorCapture:
             timing=dict(monotonic_wall_seconds=time.monotonic()-self._started_wall,
                         scope='Paused-simulation acquisition; no wall-clock delivery guarantee.'))
         base._json(self.root/'capture.json', report)
-        files = {str(path.relative_to(self.root)): _identity(self.root, str(path.relative_to(self.root)))
-                 for path in sorted(self.root.rglob('*')) if path.is_file()}
+        names = [_artifact_name(self.root, path) for path in sorted(self.root.rglob('*')) if path.is_file()]
+        files = {name: _identity(self.root, name) for name in names}
         base._json(self.root/'integrity.json', dict(schema=SCHEMA+'/integrity', files=files))
         self._sealed = True; self._report = report
         return deepcopy(report)
@@ -694,7 +701,7 @@ def inspect_capture(directory):
     root = Path(directory); manifest = _read(root, 'integrity.json')
     if manifest.get('schema') != SCHEMA+'/integrity' or type(manifest.get('files')) is not dict:
         raise ValueError('An operator recording requires a sealed integrity manifest.')
-    observed = {str(path.relative_to(root)) for path in root.rglob('*')
+    observed = {_artifact_name(root, path) for path in root.rglob('*')
                 if path.is_file() and path != root/'integrity.json'}
     if observed != set(manifest['files']):
         raise ValueError('Operator recording inventory differs.')

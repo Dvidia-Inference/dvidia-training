@@ -2,7 +2,7 @@
 from copy import deepcopy
 from hashlib import sha256
 import json
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 from tempfile import TemporaryDirectory
 import unittest
 from unittest.mock import patch
@@ -33,6 +33,19 @@ class OperatorCaptureTests(unittest.TestCase):
             recorder.step(deepcopy(STUDENT), input_event={'kind': 'test-key'})
         report = recorder.finish()
         return recorder, opened, report
+
+    def test_inventory_names_are_portable_without_normalizing_imported_references(self):
+        windows_root = PureWindowsPath('D:/recordings/operator-run')
+        posix_root = PurePosixPath('/recordings/operator-run')
+        for root in (windows_root, posix_root):
+            name = capture._artifact_name(root, root/'frames'/'rgb-0000.png')
+            self.assertEqual(name, 'frames/rgb-0000.png')
+            self.assertEqual(str(tape._relative(name)), name)
+            self.assertEqual(capture._artifact_name(root, root/'native'/'0001.json'), 'native/0001.json')
+        with self.assertRaises(ValueError):
+            capture._artifact_name(windows_root, PureWindowsPath('D:/outside/0001.json'))
+        with self.assertRaisesRegex(ValueError, 'relative path'):
+            capture._identity(Path(self.temp.name), r'frames\rgb-0000.png')
 
     def test_external_commands_cadence_and_no_teacher(self):
         recorder, opened, report = self.complete(source_kind='simulation_human_input')
