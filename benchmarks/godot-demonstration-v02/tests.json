@@ -1,0 +1,26 @@
+{
+  "schema": "dvidia.operator-verification/v1",
+  "test_modules": [
+    "tests.test_operator_capture",
+    "tests.test_operator_export",
+    "tests.test_godot_demonstration_bridge",
+    "tests.test_camera_action_capture",
+    "tests.test_camera_action_export",
+    "tests.test_godot_bridge",
+    "tests.test_action_demonstration"
+  ],
+  "test_executions": 96,
+  "passed": true,
+  "failures": 0,
+  "errors": 0,
+  "output": "................................................................................................\n----------------------------------------------------------------------\nRan 96 tests in 2.825s\n\nOK\n",
+  "source_sha256": {
+    "src/dvidia_training/operator_capture.py": "aa82570a0d1126af4c903713fc29676f0a27ef133677cc2db673c72677171833",
+    "src/dvidia_training/operator_export.py": "9ff7ac7eeae179df340b0035a982c1672e01bd51d56c1e2dbdfa2e5b0a5455a7",
+    "src/dvidia_training/godot_demonstration_bridge.py": "6ad0ef1b74b1b07748a02c5367f3bde48e4b3ea77950c4ecdf6e7e30b809e901",
+    "scripts/verify-operator-replay.py": "9acde85ef288f86cf16da08efeb7790af81a3c7cfec0aff3e4c5f104f94f6f2f",
+    "integrations/godot-demonstration/main.gd": "98aac9a91f93a0389943289aab4f58982d6cc1e13170d5ec71d732c5b05f802f",
+    "integrations/godot-demonstration/project.godot": "d886d21c17931d0fef863e6f219cb9da10bc4b916d4cd4bbb70012f07f47e556"
+  },
+  "native_physics_executed_by_these_tests": false
+}

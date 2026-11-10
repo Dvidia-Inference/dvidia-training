@@ -6,6 +6,15 @@
 
 [Recorded demo](https://huggingface.co/spaces/Dvidia/dvidia-training) · [Synthetic datasets](https://huggingface.co/datasets/Dvidia/dvidia-training-examples) · [Pilot models](https://huggingface.co/Dvidia/dvidia-training-pilot)
 
+**[Record paired demonstrations in Godot](docs/godot-demonstration-v02.md).**
+Control the simulated PiPER's position and gripper, record synchronized native
+RGB-D and issued actions, then export explicitly reviewed segments in Terminal.
+Interrupted attempts and failed outcomes remain inspectable. A scripted windowed
+check reproduced all **10,200 native scalar values exactly** in independent replay.
+This is a capture/export prototype; human demonstrations, new policy training and
+real-time teleoperation qualification remain ahead.
+[Evidence and timing limits](benchmarks/godot-demonstration-v02/README.md).
+
 **[Verified local learning cache](docs/camera-action-export-cache-v01.md).**
 The **0.1.3.dev5 preview** adds `dvidia-train cache` to reuse verified camera/action
 features with caller-pinned data, split and source identities. On one 1,000-sample
