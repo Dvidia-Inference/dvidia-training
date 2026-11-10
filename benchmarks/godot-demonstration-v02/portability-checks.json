@@ -1,0 +1,534 @@
+{
+  "schema": "dvidia.operator-portability-check/v1",
+  "operator_implementation_sha256": {
+    "action_demonstration.py": "439c7cce558571221660cd51e7dba1675203237706ea8ea0f97f2fcf9a6a24c5",
+    "camera_action_capture.py": "399f512a08087c72bfa37e382157a2250f413e423974b77b1bd3c0a911ff0a1e",
+    "operator_capture.py": "f1b5b5c5abbdf090342bb18df76e95f1fd518bd05fc5705aedb956f0ce081715",
+    "piper_action_capture.py": "da037b2198cf7d2f3a9aa40fc19a4c0f5cc375a22c5dd75606e2c1856f6efc7f",
+    "piper_encoder_kinematics.py": "6606bb8aad04e5abb1e9b6d1a8ec628a4114acd167862167184fd4eef1d21c34",
+    "piper_feedback_env.py": "0dbae423231968a81bdeed52226d8dffaf8df622013ed3a360d7217148f1bcac",
+    "piper_feedback_score.py": "863a272828208c631de4cf57647e973eb3e4f5e99eb7a1eacb4eaa68dc42eb0e",
+    "piper_imitation_score.py": "0cd4663abfdd7f14f2f33d93e9a2bd45122b998d6160d45b8afcc880512cba2b",
+    "piper_rgbd_tracker.py": "43202cfcea404061a3a65124d6ad24aeeec5fae8ffaf863caa245f2f54c46c36",
+    "piper_task.py": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f"
+  },
+  "native_replay": {
+    "capture_integrity_sha256": "3b5ca185dc1ca7946064c5eb66d6b7e5dfa7b1f28cf87ffd8259e1d3b78d3ac4",
+    "control_intervals": 10,
+    "exact_native_arrays": true,
+    "fields": {
+      "applied_jaw_target_m": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200
+        ]
+      },
+      "arm_actuator_controls_rad": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200,
+          6
+        ]
+      },
+      "grasp_contact_counts": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200,
+          2
+        ]
+      },
+      "gripper_joint_position_m": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200,
+          2
+        ]
+      },
+      "joint_position_rad": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200,
+          6
+        ]
+      },
+      "native_tick": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200
+        ]
+      },
+      "normal_rate_limited_jaw_target_m": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200
+        ]
+      },
+      "object_angular_velocity_rad_s": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200,
+          3
+        ]
+      },
+      "object_linear_velocity_m_s": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200,
+          3
+        ]
+      },
+      "object_minus_tcp_local_m": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200,
+          3
+        ]
+      },
+      "object_position_m": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200,
+          3
+        ]
+      },
+      "object_quaternion_wxyz": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200,
+          4
+        ]
+      },
+      "pad_normal_forces_n": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200,
+          2
+        ]
+      },
+      "pulse_active": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200
+        ]
+      },
+      "pulse_closing_tail": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200
+        ]
+      },
+      "pulse_minimum_opening_m": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200
+        ]
+      },
+      "requested_jaw_target_m": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200
+        ]
+      },
+      "t_seconds": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200
+        ]
+      },
+      "table_object_contact_count": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200
+        ]
+      },
+      "tcp_position_m": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200,
+          3
+        ]
+      },
+      "tcp_quaternion_wxyz": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200,
+          4
+        ]
+      },
+      "unexpected_contact_count": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          200
+        ]
+      }
+    },
+    "independent_score_matches": true,
+    "maximum_abs_error": 0.0,
+    "native_values_compared": 10200,
+    "original_strict_success": false,
+    "physical_robot_ready": false,
+    "recording_sha256": "6b03befc86be692505679f0d7685bba56ab4224db7ac5ddbd78422551d95d4e3",
+    "schema": "dvidia.operator-native-replay/v1",
+    "scope": "CPU native command replay including reset; excludes camera, Godot, fitting and hardware. Native parity is separate from successful task completion.",
+    "score": {
+      "evidence_scope": "Recomputed simulator-authored numeric evidence; no physics rerun, source attestation or hardware sensing.",
+      "false_alarms": {
+        "reason": "Continuous residual policy has no declared discrete alarm events.",
+        "status": "not_applicable"
+      },
+      "grip_events": [],
+      "grip_summary": {
+        "airborne_events": 0,
+        "loss_events": 0,
+        "qualification_latency_s": [],
+        "restored_events": 0,
+        "supported_events": 0,
+        "unresolved_events": 0
+      },
+      "native_diagnostics": {
+        "premature_open_jaw": {
+          "count": 0,
+          "intervals": [],
+          "maximum_s": 0.0,
+          "total_s": 0.0
+        },
+        "support_touchdown_before_destination": {
+          "count": 0,
+          "intervals": [],
+          "maximum_s": 0.0,
+          "total_s": 0.0
+        }
+      },
+      "native_metrics_mismatches": [],
+      "native_recomputed": {
+        "carry_complete": false,
+        "carry_contact_loss_events": 0,
+        "dwell_seconds": 0.0,
+        "first_success_time_seconds": null,
+        "grasp_seen": false,
+        "lift_dwell_seconds": 0.0,
+        "lift_seen": false,
+        "max_carry_contact_loss_seconds": 0.0,
+        "max_object_lift_m": 6.229478044517123e-11,
+        "max_pad_normal_force_n": 0.0,
+        "retention_lost": false,
+        "success": false,
+        "unexpected_contact_native_ticks": 0
+      },
+      "reason": "native_outcome_failed",
+      "restoration_scope": "Loaded contact restored for 100 ms after sustained loss; does not establish task recovery or airborne regrasp.",
+      "schema": "dvidia.piper-feedback-score/v1",
+      "strict_v01": {
+        "native_metrics_source": "simulator-authored episode record; not authenticated sensor input",
+        "native_outcome_success": false,
+        "native_outcome_valid": true,
+        "reason": "native_outcome_failed",
+        "reference_xy_m": [
+          0.35,
+          0.08
+        ],
+        "required_dwell_s": 0.25,
+        "required_lift_dwell_s": 0.1,
+        "sample_interval_s": 0.02,
+        "success": false,
+        "terminal_dwell_s": 0.0,
+        "terminal_reference_success": false,
+        "terminal_xy_error_m": 0.12083027970892407,
+        "trace_lift_dwell_s": 0.0,
+        "trajectory_complete": true
+      },
+      "success": false,
+      "terminal_only": {
+        "dwell_s": 0.0,
+        "scope": "Terminal-only geometry/release/settling/dwell; excludes lift, carry and retention history.",
+        "success": false,
+        "terminal_xy_error_m": 0.12083027970892407
+      },
+      "valid": true
+    },
+    "simulated_seconds": 0.20000000000000015,
+    "source_kind": "simulation_scripted_input",
+    "teacher_queries": 0,
+    "wall_seconds": 0.3151376669993624
+  },
+  "fresh_install": {
+    "schema": "dvidia.operator-portability-install/v1",
+    "source_sha256": {
+      "operator_capture.py": "f1b5b5c5abbdf090342bb18df76e95f1fd518bd05fc5705aedb956f0ce081715",
+      "operator_export.py": "9ff7ac7eeae179df340b0035a982c1672e01bd51d56c1e2dbdfa2e5b0a5455a7"
+    },
+    "installed_source_matches": true,
+    "feature_shape": [
+      10,
+      269
+    ],
+    "target_shape": [
+      10,
+      7
+    ],
+    "source_kind": "simulation_scripted_input",
+    "base_cli_only": true,
+    "native_graphics_in_existing_environment": true,
+    "training_started": false,
+    "physical_robot_ready": false
+  },
+  "windowed": {
+    "applied_sim_time_seconds": 0.2,
+    "client_script_sha256": "98aac9a91f93a0389943289aab4f58982d6cc1e13170d5ec71d732c5b05f802f",
+    "errors": [],
+    "expected_model_sha256": "9c12b9437e4825685921a229129e2154a225e308593f227d17042852926e060f",
+    "godot": "4.7.2-stable (official)",
+    "initial_sim_time_seconds": 0.0,
+    "initial_state": {
+      "body_positions": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.123
+        ],
+        [
+          0.0,
+          0.0,
+          0.123
+        ],
+        [
+          0.0285001685693837,
+          8.99494444381412e-07,
+          0.406602785364861
+        ],
+        [
+          0.279938606266863,
+          -1.22010801876944e-06,
+          0.394831449851912
+        ],
+        [
+          0.279938606266863,
+          -1.22010801876944e-06,
+          0.394831449851912
+        ],
+        [
+          0.370119754365555,
+          0.00141459357745771,
+          0.382651036416412
+        ],
+        [
+          0.503934732048841,
+          -0.0335858519235436,
+          0.364577255289232
+        ],
+        [
+          0.50393494030113,
+          0.0364141480752759,
+          0.364577071719593
+        ],
+        [
+          0.300000035805163,
+          -0.0299998185193901,
+          0.0798922445174838
+        ],
+        [
+          0.35,
+          0.08,
+          0.0605
+        ]
+      ],
+      "body_quaternions": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.70710528118436,
+          0.0,
+          0.0,
+          -0.707108281185553
+        ],
+        [
+          0.499797817587225,
+          -0.499803939752559,
+          -0.500197982610706,
+          -0.500200101494439
+        ],
+        [
+          0.113506973362852,
+          -0.113513180244746,
+          -0.697937502868791,
+          -0.697935646745461
+        ],
+        [
+          -5.14302108226427e-06,
+          -0.752944436272245,
+          3.06932012868452e-06,
+          -0.658084094816764
+        ],
+        [
+          0.532409609503324,
+          -0.532414623999283,
+          -0.46533454282896,
+          -0.465336909250043
+        ],
+        [
+          -0.658084094823863,
+          -2.77304662247931e-07,
+          -0.752944436287289,
+          1.94854711149505e-06
+        ],
+        [
+          0.532411855874789,
+          -0.532412377639585,
+          -0.465336531348717,
+          -0.4653349207318
+        ],
+        [
+          -0.532414636467881,
+          -0.532409597034671,
+          0.465336894984113,
+          -0.465334557094891
+        ],
+        [
+          0.999999999999999,
+          1.67902365554781e-13,
+          -3.31279997277328e-14,
+          -8.1080055409147e-19
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "ctrl": [
+        0.0,
+        1.57,
+        -1.3485,
+        0.0,
+        0.0,
+        0.0,
+        0.035
+      ],
+      "native_time": 0.5,
+      "object_position": [
+        0.300000035805163,
+        -0.0299998185193901,
+        0.0798922445174838
+      ],
+      "position_error_m": 0.0,
+      "qpos": [
+        4.033464064055e-20,
+        1.57,
+        -1.3485,
+        -2.85702112257035e-18,
+        -1.3639173671723e-16,
+        9.79662157176411e-18,
+        0.035,
+        -0.035,
+        0.300000035805163,
+        -0.0299998185193901,
+        0.0798922445174838,
+        0.999999999999999,
+        1.67902365554781e-13,
+        -3.31279997277328e-14,
+        -8.1080055409147e-19
+      ],
+      "scope": "Viewer state includes native truth; excluded from learning inputs.",
+      "tcp_position": [
+        0.489069666284522,
+        0.00141419756548088,
+        0.366584943104309
+      ],
+      "tcp_quaternion": [
+        0.658084094823863,
+        2.77304662247931e-07,
+        0.752944436287289,
+        -1.94854711149505e-06
+      ],
+      "time": 0.0
+    },
+    "interactive_wall_seconds": 0.482349,
+    "logical_processors": 10,
+    "ok": true,
+    "physics_authority": "MuJoCo only",
+    "process_frame_interval_ms": {
+      "p50": 8.0,
+      "p95": 9.17199999999998,
+      "samples": 58
+    },
+    "processor": "Apple M5",
+    "project_sha256": "d886d21c17931d0fef863e6f219cb9da10bc4b916d4cd4bbb70012f07f47e556",
+    "render_process_frames": 71,
+    "requested_steps": 10,
+    "reset_responses": 0,
+    "rpc_roundtrip_ms": {
+      "p50": 11.436,
+      "p95": 56.971,
+      "samples": 12
+    },
+    "scene_integrity_sha256": "603d2ccecd20b890e67a62357dbd811dcbbf33714a90c2fbe2164403fd5c598f",
+    "schema": "dvidia.godot-demonstration-smoke/v1",
+    "server_compute_total_ms": 183.420040935744,
+    "step_responses": 10,
+    "timing_scope": "Startup-inclusive wall time; ready-to-completion interactive wall; Godot process delta intervals (not GPU render time); socket request-to-parsed-response latency; server compute includes controller, native camera capture and disk writes; excludes IPC and Godot rendering. Samples capped at 10000 per series.",
+    "trace_limit": 256,
+    "wall_seconds": 1.388024
+  },
+  "recording": {
+    "episode": 1.0,
+    "max_episodes": 1.0,
+    "max_steps": 10.0,
+    "physical_robot_ready": false,
+    "source_authenticated": false,
+    "source_kind": "simulation_scripted_input",
+    "status": "finished",
+    "steps": 10.0
+  },
+  "task_strict_success": false,
+  "source_kind": "simulation_scripted_input",
+  "native_capture_integrity_sha256": "3b5ca185dc1ca7946064c5eb66d6b7e5dfa7b1f28cf87ffd8259e1d3b78d3ac4",
+  "original_receipts_sha256": {
+    "windowed-portable-client.json": "20ca61532228acb74dda6777bb5c72d0a88a1a50f364644aaa1b054b4c071077",
+    "native-replay-portable.json": "1d672119fa7197a8b82a20c3e07e790b52181cd2f6e78ef76429e082847ec8f6",
+    "install-portable.json": "c7186086f77fd9751fa35550703d2d5cd79e4aaf2cd9259c1950f00e2dc227f3"
+  },
+  "scope": "Short scripted compatibility check, no full placement or model fitting. Raw synthetic capture and full trace retained locally."
+}

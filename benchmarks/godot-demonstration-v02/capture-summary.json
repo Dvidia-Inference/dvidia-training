@@ -1,0 +1,356 @@
+{
+  "schema": "dvidia.operator-integration-evidence/v1",
+  "source_kind": "simulation_scripted_input",
+  "status": "complete",
+  "control_intervals": 10,
+  "camera_pairs": 6,
+  "frame_bytes": 2003397,
+  "strict_success": false,
+  "score": {
+    "evidence_scope": "Recomputed simulator-authored numeric evidence; no physics rerun, source attestation or hardware sensing.",
+    "false_alarms": {
+      "reason": "Continuous residual policy has no declared discrete alarm events.",
+      "status": "not_applicable"
+    },
+    "grip_events": [],
+    "grip_summary": {
+      "airborne_events": 0,
+      "loss_events": 0,
+      "qualification_latency_s": [],
+      "restored_events": 0,
+      "supported_events": 0,
+      "unresolved_events": 0
+    },
+    "native_diagnostics": {
+      "premature_open_jaw": {
+        "count": 0,
+        "intervals": [],
+        "maximum_s": 0.0,
+        "total_s": 0.0
+      },
+      "support_touchdown_before_destination": {
+        "count": 0,
+        "intervals": [],
+        "maximum_s": 0.0,
+        "total_s": 0.0
+      }
+    },
+    "native_metrics_mismatches": [],
+    "native_recomputed": {
+      "carry_complete": false,
+      "carry_contact_loss_events": 0,
+      "dwell_seconds": 0.0,
+      "first_success_time_seconds": null,
+      "grasp_seen": false,
+      "lift_dwell_seconds": 0.0,
+      "lift_seen": false,
+      "max_carry_contact_loss_seconds": 0.0,
+      "max_object_lift_m": 6.229478044517123e-11,
+      "max_pad_normal_force_n": 0.0,
+      "retention_lost": false,
+      "success": false,
+      "unexpected_contact_native_ticks": 0
+    },
+    "reason": "native_outcome_failed",
+    "restoration_scope": "Loaded contact restored for 100 ms after sustained loss; does not establish task recovery or airborne regrasp.",
+    "schema": "dvidia.piper-feedback-score/v1",
+    "strict_v01": {
+      "native_metrics_source": "simulator-authored episode record; not authenticated sensor input",
+      "native_outcome_success": false,
+      "native_outcome_valid": true,
+      "reason": "native_outcome_failed",
+      "reference_xy_m": [
+        0.35,
+        0.08
+      ],
+      "required_dwell_s": 0.25,
+      "required_lift_dwell_s": 0.1,
+      "sample_interval_s": 0.02,
+      "success": false,
+      "terminal_dwell_s": 0.0,
+      "terminal_reference_success": false,
+      "terminal_xy_error_m": 0.12083027970892407,
+      "trace_lift_dwell_s": 0.0,
+      "trajectory_complete": true
+    },
+    "success": false,
+    "terminal_only": {
+      "dwell_s": 0.0,
+      "scope": "Terminal-only geometry/release/settling/dwell; excludes lift, carry and retention history.",
+      "success": false,
+      "terminal_xy_error_m": 0.12083027970892407
+    },
+    "valid": true
+  },
+  "teacher_queries": 0,
+  "human_demonstrations": 0,
+  "training_runs": 0,
+  "physical_robot_ready": false,
+  "source_sha256": {
+    "action_demonstration.py": "439c7cce558571221660cd51e7dba1675203237706ea8ea0f97f2fcf9a6a24c5",
+    "camera_action_capture.py": "399f512a08087c72bfa37e382157a2250f413e423974b77b1bd3c0a911ff0a1e",
+    "operator_capture.py": "aa82570a0d1126af4c903713fc29676f0a27ef133677cc2db673c72677171833",
+    "piper_action_capture.py": "da037b2198cf7d2f3a9aa40fc19a4c0f5cc375a22c5dd75606e2c1856f6efc7f",
+    "piper_encoder_kinematics.py": "6606bb8aad04e5abb1e9b6d1a8ec628a4114acd167862167184fd4eef1d21c34",
+    "piper_feedback_env.py": "0dbae423231968a81bdeed52226d8dffaf8df622013ed3a360d7217148f1bcac",
+    "piper_feedback_score.py": "863a272828208c631de4cf57647e973eb3e4f5e99eb7a1eacb4eaa68dc42eb0e",
+    "piper_imitation_score.py": "0cd4663abfdd7f14f2f33d93e9a2bd45122b998d6160d45b8afcc880512cba2b",
+    "piper_rgbd_tracker.py": "43202cfcea404061a3a65124d6ad24aeeec5fae8ffaf863caa245f2f54c46c36",
+    "piper_task.py": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f"
+  },
+  "original_capture_inventory": {
+    "capture.json": {
+      "bytes": 3939,
+      "sha256": "fc38a3400aad363c50766861d6a99ea86b18c4097c172e2537fa3cb83a849ed3"
+    },
+    "commands.jsonl": {
+      "bytes": 10022,
+      "sha256": "8142c96e50b2f16d44af39e5968817a136b44d9e6faf1172c58abe59f6982bc7"
+    },
+    "context.json": {
+      "bytes": 11970,
+      "sha256": "45d91c1413cf4422621c6f369fdf07e38af0a8a464bda81f6aca86d05d8abe32"
+    },
+    "decisions/0000.json": {
+      "bytes": 1178,
+      "sha256": "10ce60595f11035d7775f8184bd48fca3c1e292f99e180a2ca4491aefe5954dd"
+    },
+    "decisions/0001.json": {
+      "bytes": 1190,
+      "sha256": "9d0356f275f2df9fa851d4a0863cebdb59a831f62b3dcf5762004160cef87d3d"
+    },
+    "decisions/0002.json": {
+      "bytes": 1186,
+      "sha256": "c6f10250bcb8f65b33d1c4160caf7184b0d4bdf2d2b5c87d94436e59d253d616"
+    },
+    "decisions/0003.json": {
+      "bytes": 1183,
+      "sha256": "1e5b7a6f54310697d6948e3dcbf3614d0a26001a9176477b9e0bb04833578dca"
+    },
+    "decisions/0004.json": {
+      "bytes": 1176,
+      "sha256": "06cd807edeb20ae775d11fc8eed0449620168cb554321db7854fee0c75910f11"
+    },
+    "decisions/0005.json": {
+      "bytes": 1172,
+      "sha256": "88ac0fe79b1ba29e10c75d792e8f4e18a440d8aaa4fa8eec60605c3df4943806"
+    },
+    "decisions/0006.json": {
+      "bytes": 1178,
+      "sha256": "8cd7e27fe5ec1c1e925199a1a5fa4e389460b1ecb01c4be5fb7f9909fec07d39"
+    },
+    "decisions/0007.json": {
+      "bytes": 1175,
+      "sha256": "40f9be55e1ae949ba05f553cef601676844bfe16edd164964b7398c82f552401"
+    },
+    "decisions/0008.json": {
+      "bytes": 1177,
+      "sha256": "843fe1fe49553089da75b07f0e681500f768fd618e976f6ee3d9b239cbf6a453"
+    },
+    "decisions/0009.json": {
+      "bytes": 1175,
+      "sha256": "1ace428bc5f7348f3e9f0209c0388e5e3804e07c375b98199cad7aa7e5e38b78"
+    },
+    "frames/depth-0000.npy": {
+      "bytes": 307328,
+      "sha256": "d982b222370893603aefedd2f5dd1c04a3a1d54f623be6c1b17eb91277895815"
+    },
+    "frames/depth-0001.npy": {
+      "bytes": 307328,
+      "sha256": "b8e284558df274f137bfca1919eac1fb2a31e63dd6483ce4c8e9beb6a1fd4425"
+    },
+    "frames/depth-0002.npy": {
+      "bytes": 307328,
+      "sha256": "2e0684d6b0b31187b72ed5f2f4430dee8537995649020b935443f4936a191d5f"
+    },
+    "frames/depth-0003.npy": {
+      "bytes": 307328,
+      "sha256": "310dcc0fa858d13b3c4e4e92758f6990632d26fee777e3ba6f4880eb91688fa6"
+    },
+    "frames/depth-0004.npy": {
+      "bytes": 307328,
+      "sha256": "67c750b90803ce24cff8ece6c815c799a4388ead2122c79f3e0f3e059277e1d3"
+    },
+    "frames/depth-0005.npy": {
+      "bytes": 307328,
+      "sha256": "314838d99eee0b4dd3acb0aa3f6818eab9d24d748574d03208bfa2af35dfc137"
+    },
+    "frames/rgb-0000.png": {
+      "bytes": 26744,
+      "sha256": "8ff2bb7e5acf584a0cbbaa5f58ee2b8ad213c7c66bc12d13d19cae6e0ee4a218"
+    },
+    "frames/rgb-0001.png": {
+      "bytes": 26815,
+      "sha256": "7e33a413d35cb18c14aac35e4b314f9bdce8efb332cdcd3dbc41ea32107a817b"
+    },
+    "frames/rgb-0002.png": {
+      "bytes": 26640,
+      "sha256": "128502d03fa8cf915deccebb15ced0921a76b1811f5034c1a73bd53fd2f4a855"
+    },
+    "frames/rgb-0003.png": {
+      "bytes": 26603,
+      "sha256": "763e7f679d5b110c81852e5e03c7f06048565e3813d8651fc1c751394f94e866"
+    },
+    "frames/rgb-0004.png": {
+      "bytes": 26407,
+      "sha256": "a7320e0a952f195d6421c4f46afd06ba0edf18950b930a440fd2f09adb4a2678"
+    },
+    "frames/rgb-0005.png": {
+      "bytes": 26220,
+      "sha256": "0ae34fcd4c628985da159e8ad2d0a87329b15ce0374d518e18b161304fdfb7ef"
+    },
+    "integrity.json": {
+      "bytes": 7059,
+      "sha256": "dcb6692a98487ba0d813dc451a22ee723d7a964f718272b94eb74f3c5b40d127"
+    },
+    "native/0000.json": {
+      "bytes": 3060,
+      "sha256": "7dca80baba62ddd30a717527f99efd725d66970ba3d678189133f58a924aff0e"
+    },
+    "native/0001.json": {
+      "bytes": 3344,
+      "sha256": "39379363829d0220ec73325b1b50fb693f98276a31867253acb509fcd69a3740"
+    },
+    "native/0002.json": {
+      "bytes": 3338,
+      "sha256": "2b52f8ee938db4e30950abdaab3650618040bb4cc2e6c1753c6eaefc5eb7d7e0"
+    },
+    "native/0003.json": {
+      "bytes": 3329,
+      "sha256": "0ad29bebdbeb1190e0ead9425e83b25989bd9111ef87320aec40ba6d444111a3"
+    },
+    "native/0004.json": {
+      "bytes": 3338,
+      "sha256": "dfb93351971d06416763a6883c1871f375aa87110a93070d1911465f806c7d57"
+    },
+    "native/0005.json": {
+      "bytes": 3305,
+      "sha256": "81b1b51e932ce8037c43137c4a9fb06fec1a4abe4f5eac3e8cb60c322b90ed45"
+    },
+    "native/0006.json": {
+      "bytes": 3314,
+      "sha256": "b1f22c64fd627cce592a4526436bf41dd4af98203a333885730b2fc52765c22f"
+    },
+    "native/0007.json": {
+      "bytes": 3303,
+      "sha256": "02f66419369214e456a6dea98f70324b36f0e170ecff277385f275e9229c4086"
+    },
+    "native/0008.json": {
+      "bytes": 3324,
+      "sha256": "df35201fa3b6e2d733171acbcc426245b0d239dbef3a362e762f7d485bc1844a"
+    },
+    "native/0009.json": {
+      "bytes": 3309,
+      "sha256": "e94cf82c68bdd771063620c11b38a9f3372b460c4f563f8b92086c38b23f0654"
+    },
+    "native/0010.json": {
+      "bytes": 3315,
+      "sha256": "091ea5b1ef0e756a2c58e61893819b414cb5c405446b809e5d04997eac8c2ec7"
+    },
+    "native.npz": {
+      "bytes": 52639,
+      "sha256": "9c6418c886c5f7cfab93dacbda42a032a84e023182f265551b73b54bc6674e14"
+    },
+    "native_episode.json": {
+      "bytes": 35430,
+      "sha256": "23b63a45bbfb1f1900301be0e2b9883d875f2259fd0750148c44aed6e066b88a"
+    },
+    "native_metadata.json": {
+      "bytes": 7953,
+      "sha256": "9ec23009b8b2322d77c898872bd2172ba107c04e28aeb0c11700c2bba07f9a3c"
+    },
+    "perception/0000.json": {
+      "bytes": 2683,
+      "sha256": "39a4b66ff1ffa57d2e64cd587392529de7343bd22341233ee77a81e923c7a10c"
+    },
+    "perception/0001.json": {
+      "bytes": 2779,
+      "sha256": "63dac1953d549e686dfa3f9649f804b16e7234a1e17e1a9f6df3729450c8a2f5"
+    },
+    "perception/0002.json": {
+      "bytes": 2893,
+      "sha256": "cca914a804089cd1fb1a46340be20abffa705cc3d67dfa7971c6cd1e120b7b53"
+    },
+    "perception/0003.json": {
+      "bytes": 2979,
+      "sha256": "f1d7a5b4b9c32b98de58fc0afd7e294955d8f8f0a78fab3d8e170f45896900c7"
+    },
+    "perception/0004.json": {
+      "bytes": 2892,
+      "sha256": "38b3d9cd183d14b67bfa7df8bd84c640231f82f67262c6efee83f869ee29093f"
+    },
+    "perception/0005.json": {
+      "bytes": 2977,
+      "sha256": "62d55732ce68ec33b1ca6f57f33d76120f5762a0ce91e15a61eba30bcc4938d7"
+    },
+    "perception/0006.json": {
+      "bytes": 2892,
+      "sha256": "9e7fb3838096edeafa166e59a2c7fc295bc15ffa1cee4690160304819a183a13"
+    },
+    "perception/0007.json": {
+      "bytes": 2976,
+      "sha256": "8179c95c4bf286bd045c7f3ee12939197b6117046f95c5c6655246fe1e837ca2"
+    },
+    "perception/0008.json": {
+      "bytes": 2892,
+      "sha256": "bb83ca63333edddd769bd5168527167f5a4a5d20d0757a951d687db02a991ef9"
+    },
+    "perception/0009.json": {
+      "bytes": 2977,
+      "sha256": "4ec1b68ac1bda5cc5fc32029b0a46d0cc836a881faa037f95fae11d0cccb207d"
+    },
+    "perception/0010.json": {
+      "bytes": 2142,
+      "sha256": "e47c30dace4f1386f6d191865a39a68e3e878dd7a410ed2e2f691d73aa5d0c54"
+    },
+    "recording.json": {
+      "bytes": 75741,
+      "sha256": "aa01f6901cbad1d7b850ec2587329f7de4b378f8f9fc49901df179396f1f0351"
+    },
+    "started.json": {
+      "bytes": 608,
+      "sha256": "ecbccf894dc2fe56bf363e5ecc68a87c0a895b8aa66eaa352e6d16e8e2db2806"
+    },
+    "transitions/0000.json": {
+      "bytes": 6484,
+      "sha256": "0aa4b1c72d0040d0c98324b58be1436cf09999cca994900514abd67cf74126b0"
+    },
+    "transitions/0001.json": {
+      "bytes": 6823,
+      "sha256": "b1eff2fd05a357fbd99bf4acde5c2f2b20734938978c2256283e5097aed084bc"
+    },
+    "transitions/0002.json": {
+      "bytes": 6889,
+      "sha256": "0da2a69d6ecc6787bafdf5f5ab2ba3bcaa61c635d0d67902dc3a097dfaa25f9c"
+    },
+    "transitions/0003.json": {
+      "bytes": 6880,
+      "sha256": "dbbcdd08eb771ea1e52e19c2326fb04e23f286b3b4bc9161ff43acc7a0b6aa73"
+    },
+    "transitions/0004.json": {
+      "bytes": 6878,
+      "sha256": "bac2304735fcb15ee72441e268c9e75809a2a82c114d93f56938746471c8f555"
+    },
+    "transitions/0005.json": {
+      "bytes": 6848,
+      "sha256": "1ae6a693701754a18fdcd917009ba866a70c8f7cbd7cd69a6b4356bc726efcb8"
+    },
+    "transitions/0006.json": {
+      "bytes": 6838,
+      "sha256": "b9a84987c02d3626c7780892a93d41f9618394a28bc5c799d4fe01dafa135e5e"
+    },
+    "transitions/0007.json": {
+      "bytes": 6843,
+      "sha256": "63587c8e0feb02d77923246b6742702ee9ba80b2ac2056b35807d4cb429d6ea7"
+    },
+    "transitions/0008.json": {
+      "bytes": 6856,
+      "sha256": "217d758a528535064abb176b3f23caef4d0c3daa285ca6bda9f250927799e3b7"
+    },
+    "transitions/0009.json": {
+      "bytes": 6850,
+      "sha256": "6a932fd96f72f274cf4e1c621228bb7b074fc4ba4464e6a230a63bd965f66c36"
+    }
+  },
+  "scope": "One 0.2 simulated second scripted integration capture. Original pixel/native recording retained locally; inventory binds its bytes. Reproduction scripts supplied. No learned skill or real-time qualification."
+}

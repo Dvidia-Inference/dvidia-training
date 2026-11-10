@@ -1,0 +1,24 @@
+{
+  "schema": "dvidia.operator-portability-verification/v1",
+  "test_modules": [
+    "tests.test_operator_capture",
+    "tests.test_operator_export",
+    "tests.test_godot_demonstration_bridge",
+    "tests.test_camera_action_capture",
+    "tests.test_camera_action_export",
+    "tests.test_godot_bridge",
+    "tests.test_action_demonstration"
+  ],
+  "test_executions": 97,
+  "passed": true,
+  "failures": 0,
+  "errors": 0,
+  "output": ".................................................................................................\n----------------------------------------------------------------------\nRan 97 tests in 2.740s\n\nOK\n",
+  "source_sha256": {
+    "src/dvidia_training/operator_capture.py": "f1b5b5c5abbdf090342bb18df76e95f1fd518bd05fc5705aedb956f0ce081715",
+    "tests/test_operator_capture.py": "a30bdc8522538e1f0cd32f77e0a0ac4c9f14a2f5bc4d04a9c84c683c7fae5ad3"
+  },
+  "prior_evidence_commit": "b8b96cd60bff4eb4be7902b7d9d3d47596037e08",
+  "change_scope": "Serialize locally discovered inventory paths as POSIX; imported paths remain strict.",
+  "native_physics_executed_by_these_tests": false
+}
