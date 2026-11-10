@@ -1,0 +1,102 @@
+[
+  {
+    "local_receipt": "windowed-client.json",
+    "sha256": "562497bf37d2f3075f099b14de77fc1ee83cddd7b32ff210b0828272774a0cc1",
+    "applied_sim_time_seconds": 2.0,
+    "errors": [],
+    "expected_model_sha256": "2d5439574717644e1ea301f225cd13e9cc8a1042476628ed6ab7014c42e43e32",
+    "godot": "4.7.2-stable (official)",
+    "initial_sim_time_seconds": 0.0,
+    "interactive_wall_seconds": 2.440725,
+    "native_compute_total_ms": 58.8603350915946,
+    "ok": true,
+    "physics_authority": "MuJoCo only",
+    "process_frame_interval_ms": {
+      "p50": 8.33333333333333,
+      "p95": 8.705,
+      "samples": 289
+    },
+    "render_process_frames": 291,
+    "requested_steps": 100,
+    "reset_responses": 0,
+    "rpc_roundtrip_ms": {
+      "p50": 8.129,
+      "p95": 12.611,
+      "samples": 100
+    },
+    "scene_integrity_sha256": "2940da9f2e9884e9f39bafa1c696db5580162ad026192c3d02f95dd06f524f46",
+    "schema": "dvidia.godot-client-smoke/v1",
+    "step_responses": 100,
+    "timing_scope": "Startup-inclusive wall time; ready-to-completion interactive wall; Godot process delta intervals (not GPU render time); socket request-to-parsed-response latency; native compute excludes IPC and rendering. Samples capped at 10000 per series.",
+    "trace_limit": 256,
+    "wall_seconds": 3.299003
+  },
+  {
+    "local_receipt": "windowed-client-v2.json",
+    "sha256": "2abb5dc0c7622d4429c248c514411996d35500aa73a8d0d3c2e56fd527de6022",
+    "applied_sim_time_seconds": 2.0,
+    "errors": [],
+    "expected_model_sha256": "2d5439574717644e1ea301f225cd13e9cc8a1042476628ed6ab7014c42e43e32",
+    "godot": "4.7.2-stable (official)",
+    "initial_sim_time_seconds": 0.0,
+    "interactive_wall_seconds": 2.061568,
+    "native_compute_total_ms": 75.2027550188359,
+    "ok": true,
+    "physics_authority": "MuJoCo only",
+    "process_frame_interval_ms": {
+      "p50": 8.33333333333333,
+      "p95": 9.97699999999992,
+      "samples": 244
+    },
+    "render_process_frames": 246,
+    "requested_steps": 100,
+    "reset_responses": 0,
+    "rpc_roundtrip_ms": {
+      "p50": 3.263,
+      "p95": 13.76,
+      "samples": 100
+    },
+    "scene_integrity_sha256": "2940da9f2e9884e9f39bafa1c696db5580162ad026192c3d02f95dd06f524f46",
+    "schema": "dvidia.godot-client-smoke/v1",
+    "step_responses": 100,
+    "timing_scope": "Startup-inclusive wall time; ready-to-completion interactive wall; Godot process delta intervals (not GPU render time); socket request-to-parsed-response latency; native compute excludes IPC and rendering. Samples capped at 10000 per series.",
+    "trace_limit": 256,
+    "wall_seconds": 2.855998
+  },
+  {
+    "local_receipt": "windowed-final.json",
+    "sha256": "77edb523d21b6c97f7f030346ff9bdc645c36e7cc8084393b3b0aee137d884b5",
+    "applied_sim_time_seconds": 2.0,
+    "client_script_sha256": "fc0f06d2e2c73a1962c45c3a6b5a0a98e63398599fdfa1ad6345aaf35abaecd2",
+    "errors": [],
+    "expected_model_sha256": "2d5439574717644e1ea301f225cd13e9cc8a1042476628ed6ab7014c42e43e32",
+    "godot": "4.7.2-stable (official)",
+    "initial_sim_time_seconds": 0.0,
+    "interactive_wall_seconds": 2.263779,
+    "logical_processors": 10,
+    "native_compute_total_ms": 94.1997528425418,
+    "ok": true,
+    "physics_authority": "MuJoCo only",
+    "process_frame_interval_ms": {
+      "p50": 8.0,
+      "p95": 10.91,
+      "samples": 269
+    },
+    "processor": "Apple M5",
+    "project_sha256": "369076b092166013c770a7a3e576a421d83c5b3d10a782500bf69a973a554dad",
+    "render_process_frames": 271,
+    "requested_steps": 100,
+    "reset_responses": 0,
+    "rpc_roundtrip_ms": {
+      "p50": 6.109,
+      "p95": 16.826,
+      "samples": 100
+    },
+    "scene_integrity_sha256": "2940da9f2e9884e9f39bafa1c696db5580162ad026192c3d02f95dd06f524f46",
+    "schema": "dvidia.godot-client-smoke/v1",
+    "step_responses": 100,
+    "timing_scope": "Startup-inclusive wall time; ready-to-completion interactive wall; Godot process delta intervals (not GPU render time); socket request-to-parsed-response latency; native compute excludes IPC and rendering. Samples capped at 10000 per series.",
+    "trace_limit": 256,
+    "wall_seconds": 3.330206
+  }
+]
