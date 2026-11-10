@@ -1,0 +1,27 @@
+{
+  "schema": "dvidia.godot-client-parity/v1",
+  "passed": true,
+  "scope": "Independently replay a complete Godot smoke trace in the native workstation.\n\nThis checks received-state parity, not whether pixels or physical hardware are\naccurate. Godot JSON output rounds doubles, so numerical tolerance is explicit.",
+  "receipt_sha256": "77edb523d21b6c97f7f030346ff9bdc645c36e7cc8084393b3b0aee137d884b5",
+  "verifier_sha256": "8c206554a95c9bd1e1e13220c84de5e3c81f77e4f76f47b73e690ec8515ad023",
+  "workstation_sha256": "2a6aa6686b5b273efcfb21156952df8ceca88d991674cd17df92f2dccc11b701",
+  "model_sha256": "2d5439574717644e1ea301f225cd13e9cc8a1042476628ed6ab7014c42e43e32",
+  "tolerance_absolute": 1e-09,
+  "received_states_checked": 101,
+  "numeric_scalars_checked": 12387,
+  "maximum_absolute_error_by_field": {
+    "time": 1.5543122344752192e-15,
+    "qpos": 4.884981308350689e-15,
+    "ctrl": 5.10702591327572e-15,
+    "body_positions": 5.551115123125783e-16,
+    "body_quaternions": 5.551115123125783e-16,
+    "tcp_position": 4.996003610813204e-16,
+    "tcp_quaternion": 5.551115123125783e-16,
+    "shoe_position": 4.996003610813204e-16,
+    "position_error_m": 5.551115123125783e-17,
+    "contacts": 3.9968028886505635e-15
+  },
+  "native_ticks_replayed": 1000,
+  "physical_accuracy_validated": false,
+  "pixels_validated": false
+}
