@@ -1,0 +1,25 @@
+{
+  "schema": "dvidia.capture-performance-tests/v1",
+  "test_modules": [
+    "tests.test_tracker_ray_cache",
+    "tests.test_piper_rgbd_tracker",
+    "tests.test_operator_capture",
+    "tests.test_operator_export",
+    "tests.test_godot_demonstration_bridge",
+    "tests.test_camera_action_capture",
+    "tests.test_camera_action_export",
+    "tests.test_godot_bridge",
+    "tests.test_action_demonstration"
+  ],
+  "test_executions": 114,
+  "passed": true,
+  "failures": 0,
+  "errors": 0,
+  "output": "..................................................................................................................\n----------------------------------------------------------------------\nRan 114 tests in 6.957s\n\nOK\n",
+  "source_sha256": {
+    "src/dvidia_training/piper_rgbd_tracker.py": "e89cba0414832fcfc09127eb05a326557d3aa32afd458a9a8f59d6c4f850f2d3",
+    "tests/test_tracker_ray_cache.py": "def2baa4b73a93095f5005574aed3f7f969184e3ca17e4b1c320bdc3084ca15f",
+    "scripts/profile-operator-capture.py": "daf3aec5ad1ace998c0368df5658064b7300217657da81ff1fa4b318dab299f1",
+    "scripts/compare-operator-captures.py": "c6a45b36a84d66d71a830d9c620ef814bd060f34a0a261d54167de5c417c24c0"
+  }
+}

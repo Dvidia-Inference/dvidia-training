@@ -14,6 +14,9 @@ check reproduced all **10,200 native scalar values exactly** in independent repl
 This is a capture/export prototype; human demonstrations, new policy training and
 real-time teleoperation qualification remain ahead.
 [Evidence and timing limits](benchmarks/godot-demonstration-v02/README.md).
+[Capture performance study](benchmarks/godot-capture-performance-v01/README.md):
+bounded camera-geometry reuse preserves exact observations/actions; its measured
+speed benefit is preliminary, with mixed paired results.
 
 **[Verified local learning cache](docs/camera-action-export-cache-v01.md).**
 The **0.1.3.dev5 preview** adds `dvidia-train cache` to reuse verified camera/action

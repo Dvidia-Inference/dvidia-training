@@ -1,0 +1,57 @@
+{
+  "schema": "dvidia.operator-performance-plan/v1",
+  "registered_at": "2026-11-11T08:54:46.203405+00:00",
+  "baseline_commit": "4ca9804c79e330221106217eac4faca582b4efa2",
+  "script_sha256": "daf3aec5ad1ace998c0368df5658064b7300217657da81ff1fa4b318dab299f1",
+  "one_worker": true,
+  "warmup": {
+    "count": 1,
+    "duration_seconds": 0.2,
+    "retain": true
+  },
+  "diagnostic": [
+    {
+      "id": "baseline-unprofiled",
+      "duration_seconds": 2,
+      "profile": false
+    },
+    {
+      "id": "baseline-profiled",
+      "duration_seconds": 2,
+      "profile": true
+    }
+  ],
+  "confirmation": {
+    "order": [
+      "baseline",
+      "candidate",
+      "candidate",
+      "baseline",
+      "baseline",
+      "candidate"
+    ],
+    "duration_seconds": 2,
+    "profile": false,
+    "candidate_selection": "One semantically equivalent optimization chosen after diagnostic attribution; freeze candidate source before confirmation. No timing-based retuning or dropped attempts."
+  },
+  "windowed_check": {
+    "count": 2,
+    "duration_seconds": 2,
+    "order": [
+      "baseline",
+      "candidate"
+    ],
+    "purpose": "End-to-end Godot integration only; not a statistically controlled latency guarantee."
+  },
+  "maximum_attempts": 11,
+  "maximum_raw_budget_bytes": 943718400,
+  "reserve_bytes": 10737418240,
+  "free_bytes": 13163302912,
+  "acceptance": [
+    "Every recording sealed and inspectable; all attempts retained",
+    "Exact native arrays, commands, task scoring, decoded RGB/depth, perception and exported feature/target parity",
+    "Existing interruption and causal input regressions pass",
+    "Report all paired control totals, open/finish separately and disk bytes; no sustained teleop or learned skill claim"
+  ],
+  "scope": "Single PiPER rigid block and small scripted arm path; no human data, fits, hardware or success claims."
+}

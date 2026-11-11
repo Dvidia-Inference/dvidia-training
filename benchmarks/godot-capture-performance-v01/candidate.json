@@ -1,0 +1,23 @@
+{
+  "schema": "dvidia.operator-performance-candidate/v1",
+  "frozen_at": "2026-11-11T09:02:48.786301+00:00",
+  "optimization": "Cache immutable camera-to-base ray geometry with exact calibration keys, max2 entries; preserve current object/depth processing.",
+  "source_sha256": {
+    "src/dvidia_training/piper_rgbd_tracker.py": "e89cba0414832fcfc09127eb05a326557d3aa32afd458a9a8f59d6c4f850f2d3",
+    "tests/test_tracker_ray_cache.py": "def2baa4b73a93095f5005574aed3f7f969184e3ca17e4b1c320bdc3084ca15f",
+    "scripts/profile-operator-capture.py": "daf3aec5ad1ace998c0368df5658064b7300217657da81ff1fa4b318dab299f1",
+    "scripts/compare-operator-captures.py": "c6a45b36a84d66d71a830d9c620ef814bd060f34a0a261d54167de5c417c24c0"
+  },
+  "plan_sha256": "47e19a0d45a66bd7dcddbe2ab354776c676bae9708d3b6e2baaf7bb99d2a5fe4",
+  "retained_cache_max_bytes": 14745600,
+  "retained_cache_current_resolution_max_bytes": 3686400,
+  "transient_memory_measured": false,
+  "comparison_order": [
+    "baseline",
+    "candidate",
+    "candidate",
+    "baseline",
+    "baseline",
+    "candidate"
+  ]
+}

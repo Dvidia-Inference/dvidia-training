@@ -8,6 +8,7 @@ identifiable only modulo pi/2 for this unmarked square object.
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
+from functools import lru_cache
 import math
 import time
 
@@ -202,15 +203,43 @@ def _rectangle(face, steps):
     return centre, float(angles[index]), float(widths[index]), float(heights[index])
 
 
-def _cube_rays(shape, intrinsics, transform, centre, yaw, side):
-    """Expected pixel-centre ray hits on the declared opaque geometric cube."""
-    height, width = shape; fx, fy, cx, cy = intrinsics
+@lru_cache(maxsize=2)
+def _camera_ray_geometry(shape, intrinsics_bytes, rotation_bytes):
+    """Immutable calibration geometry, never an observation or object estimate.
+
+    Only validated image dimensions, intrinsics and camera-to-base rotation
+    determine these directions. Translation, cube pose and current depth remain
+    per-frame inputs. Exact float64 bytes distinguish calibration revisions.
+    Two entries retain at most 14.0625 MiB at the public 640x480 image bound
+    (one HxWx3 float64 array per entry), excluding temporary computations.
+    The optical grid is constructed only on a miss and is not retained.
+    """
+    height, width = shape
+    if (type(height) is not int or type(width) is not int
+            or not 16 <= height <= 480 or not 16 <= width <= 640):
+        raise ValueError('Camera geometry exceeds the bounded image dimensions.')
+    fx, fy, cx, cy = np.frombuffer(intrinsics_bytes, dtype=np.float64)
     rows, columns = np.indices(shape)
     optical = np.stack(((columns+.5-cx)/fx, (rows+.5-cy)/fy, np.ones(shape)), axis=-1)
+    # Preserve the original 4x4-transform slice layout and multiplication
+    # order; caching must not substitute a differently ordered rotation.
+    transform = np.eye(4)
+    transform[:3, :3] = np.frombuffer(rotation_bytes, dtype=np.float64).reshape(3, 3)
+    base_rays = optical @ transform[:3, :3].T
+    # An immutable bytes owner prevents callers from re-enabling WRITEABLE;
+    # merely clearing ndarray.flags.writeable would still allow cache mutation.
+    return np.frombuffer(base_rays.tobytes(), dtype=np.float64).reshape(base_rays.shape)
+
+
+def _cube_rays(shape, intrinsics, transform, centre, yaw, side):
+    """Expected pixel-centre ray hits on the declared opaque geometric cube."""
+    base_rays = _camera_ray_geometry(tuple(shape),
+        np.asarray(intrinsics, dtype=np.float64).tobytes(),
+        np.asarray(transform[:3, :3], dtype=np.float64).tobytes())
     co, si = math.cos(yaw), math.sin(yaw)
     rotation = np.array([[co, -si, 0], [si, co, 0], [0, 0, 1.]])
     origin = (transform[:3, 3]-centre) @ rotation
-    rays = optical @ transform[:3, :3].T @ rotation
+    rays = base_rays @ rotation
     half = side/2
     parallel = np.abs(rays) < 1e-12
     safe = np.where(parallel, 1., rays)
