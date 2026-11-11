@@ -1,0 +1,35 @@
+{
+  "schema": "dvidia.reference-source-compatibility-tests/v1",
+  "at": "2026-11-11T11:43:30.024392+00:00",
+  "original_source_pins_unchanged": true,
+  "frozen_capture_and_profiler_sources_unchanged": true,
+  "native_captures_added": 0,
+  "tests": [
+    {
+      "modules": [
+        "test_reference_source_compatibility",
+        "test_camera_action_reference_export",
+        "test_camera_action_reference_model",
+        "test_camera_action_cache",
+        "test_camera_cache_cli"
+      ],
+      "executions": 50,
+      "failures": 0,
+      "errors": 0,
+      "seconds": 2.627
+    },
+    {
+      "path": "benchmarks/camera-action-v02-head-preflight/test_preflight.py",
+      "executions": 15,
+      "failures": 0,
+      "errors": 0,
+      "seconds": 0.052
+    }
+  ],
+  "files": {
+    "src/dvidia_training/camera_action_reference_export.py": "28bc1c3332fc540d7879b6874f283c6173ada211793c97ccc9502b84728e3576",
+    "tests/test_reference_source_compatibility.py": "dc90019b07bc774527ca7fd8bb749e6de41cbc2c1d460754eff30d20b5370e0b",
+    "docs/reference-source-compatibility.md": "63df5877a9b351b134eb01dfe7a52734637d88b7763aa248bc26a1bcbb4e4da9"
+  },
+  "scope": "Data-only fixtures and numerical oracle tests. No study fitting, native captures, model migrations or historical receipt changes."
+}

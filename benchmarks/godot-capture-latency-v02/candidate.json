@@ -1,0 +1,18 @@
+{
+  "schema": "dvidia.capture-latency-candidate/v1",
+  "frozen_at": "2026-11-11T11:19:39.595707+00:00",
+  "baseline_commit": "439c54966fbf1ab51aaf0654dbd122169c5e13ca",
+  "source_sha256": {
+    "src/dvidia_training/piper_action_capture.py": "a2613dca764c6f1d687e00b7773a83d571e1a2449efe3140363e9ee7ee2bd0ec",
+    "src/dvidia_training/operator_capture.py": "db37439e34b21679e4ec1a3525f63281045dc8bec6de83a441d7fd4e86563518",
+    "src/dvidia_training/piper_rgbd_tracker.py": "e89cba0414832fcfc09127eb05a326557d3aa32afd458a9a8f59d6c4f850f2d3",
+    "scripts/profile-operator-capture.py": "3316ccc7545bbbc4f8d672d2836ea7a102ceb42c49607ab266a95612ecfc54fb"
+  },
+  "selection": "One candidate fixed before any native capture; no confirmation-driven tuning.",
+  "changes": [
+    "PNGlosslesscompression1",
+    "Remove redundant fresh renderer array copies; keep two native passes",
+    "One context perstep with independent returned estimate",
+    "Hash and parse same bounded file bytes"
+  ]
+}

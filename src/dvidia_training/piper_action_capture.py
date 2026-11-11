@@ -90,7 +90,10 @@ def _png(rgb):
         return struct.pack('>I',len(body))+kind+body+struct.pack('>I',zlib.crc32(kind+body)&0xffffffff)
     raw=b''.join(b'\0'+row.tobytes() for row in rgb)
     return (b'\x89PNG\r\n\x1a\n'+chunk(b'IHDR',struct.pack('>IIBBBBB',width,height,8,2,0,0,0))
-            +chunk(b'IDAT',zlib.compress(raw,6))+chunk(b'IEND',b''))
+            # Level 1 changes only lossless compression, never pixel values,
+            # colour channels or row order. Keep the conservative raw-frame
+            # allocation bound; compressed size is not a capacity guarantee.
+            +chunk(b'IDAT',zlib.compress(raw,1))+chunk(b'IEND',b''))
 
 
 def optical_calibration(camera, *, base_position, base_rotation, width, height, duration_s):
@@ -217,16 +220,21 @@ class _NativeSession:
         if any(abs(a-b)>1e-6 for a,b in zip(actual['base_from_camera'],self.calibration['base_from_camera'])) or actual['intrinsics']!=self.calibration['intrinsics']:
             raise RuntimeError('Fixed rendered camera calibration changed.')
         with self.sim.native_warnings(self.renderer_warnings):
-            rgb=self.renderer.render().copy()
+            # The pinned classic Renderer allocates a new array when out=None.
+            # Retain each owned result directly; the next render does not reuse
+            # its storage. Keep separate native passes: depth uses different
+            # scene flags for accurate metric depth and cannot be inferred from
+            # the colour pass without changing the observation contract.
+            rgb=self.renderer.render()
             try:
-                self.renderer.enable_depth_rendering();depth=self.renderer.render().copy()
+                self.renderer.enable_depth_rendering();depth=self.renderer.render()
             finally:self.renderer.disable_depth_rendering()
         if (rgb.shape!=(self.config.height,self.config.width,3) or rgb.dtype!=self.np.uint8
                 or depth.shape!=(self.config.height,self.config.width) or depth.dtype!=self.np.float32
                 or not self.np.isfinite(depth).all() or not (depth>0).all()):raise RuntimeError('Renderer did not supply finite aligned RGB and metric depth arrays.')
         if native_time!=float(self.env.data.time) or seconds!=float(self.env.elapsed):raise RuntimeError('Physics advanced during paired RGB-D capture.')
         # Only the latest pair is retained for optional observation-sidecar
-        # consumers. Existing v1 capture files and behavior are unchanged.
+        # consumers. The v1 capture format and decoded observations are unchanged.
         self.latest_rgbd=(rgb,depth)
         depth_buffer=io.BytesIO();self.np.save(depth_buffer,depth.astype('<f4',copy=False),allow_pickle=False)
         frames={f'frames/rgb-{index:04}.png':_png(rgb),f'frames/depth-{index:04}.npy':depth_buffer.getvalue()}

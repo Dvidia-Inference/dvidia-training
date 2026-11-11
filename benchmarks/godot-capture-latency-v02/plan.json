@@ -1,0 +1,92 @@
+{
+  "schema": "dvidia.capture-latency-plan/v2",
+  "registered_at": "2026-11-11T11:18:28.347817+00:00",
+  "baseline_commit": "439c54966fbf1ab51aaf0654dbd122169c5e13ca",
+  "one_worker": true,
+  "diagnostic": [
+    {
+      "id": "diagnostic-baseline",
+      "duration_s": 2,
+      "profile": false,
+      "variant": "baseline"
+    },
+    {
+      "id": "profile-baseline",
+      "duration_s": 2,
+      "profile": true,
+      "variant": "baseline"
+    },
+    {
+      "id": "diagnostic-candidate",
+      "duration_s": 2,
+      "profile": false,
+      "variant": "candidate"
+    },
+    {
+      "id": "profile-candidate",
+      "duration_s": 2,
+      "profile": true,
+      "variant": "candidate"
+    }
+  ],
+  "confirmation": {
+    "order": [
+      "baseline",
+      "candidate",
+      "candidate",
+      "baseline",
+      "baseline",
+      "candidate"
+    ],
+    "duration_s": 10,
+    "profile": false,
+    "selection": "One frozen candidate; no confirmation-driven tuning, dropped attempts or replacement captures."
+  },
+  "windowed": {
+    "order": [
+      "baseline",
+      "candidate"
+    ],
+    "duration_s": 5,
+    "purpose": "Actual windowed Godot integration; full RPC reporting separates finishing request from ordinary control. Single pair is not a latency guarantee."
+  },
+  "maximum_capture_attempts": 12,
+  "maximum_raw_budget_bytes": 2147483648,
+  "reserve_bytes": 10737418240,
+  "initial_free_bytes": 14446104576,
+  "requested_thread_environment": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "effective_thread_count": "Not measured; one worker is not a claim of a single native BLAS thread.",
+  "sampling": {
+    "rgbd": [
+      320,
+      240,
+      25
+    ],
+    "controls_hz": 50,
+    "native_tick_seconds": 0.001
+  },
+  "accuracy": {
+    "rgb": "Exact decoded uint8 RGB plus PNG CRC/bounds; compressed bytes and consequent hashes/sizes may differ.",
+    "depth": "Exact NPY bytes and float32 values.",
+    "native": "Exact arrays/dtypes/commands and independent scorer; no tolerance.",
+    "perception": "Exact estimates/masks/acquisition ages, excluding processing wall-time only.",
+    "learning": "Exact exported features/targets/dtypes/groups.",
+    "normalization": "Validate each original integrity, configuration binding and frame reference before excluding source implementation hashes and PNG encoding-derived hashes/sizes. All configuration fields and source-key inventories remain equal."
+  },
+  "metrics": [
+    "full-step p50/p95/max,20ms misses,control total,CPU time",
+    "render/encode and tracker stages,first/steady camera",
+    "profile-only PNG and durable file writing attribution (overlapping scopes)",
+    "startup and finalization separately",
+    "whole-process OS peak RSS",
+    "actual capture bytes and frame bytes",
+    "offline frame-processing wall age (not sensor/hardware age)",
+    "windowed RPC/server-step times with finishing request separate"
+  ],
+  "scope": "Simulated PiPER small authored arm path above a rigid block, no learned policy, physical commands or successful placement claim. No new human demonstration or 50Hz hardware deadline claim.",
+  "publication": "Reviewed source and compact evidence as GitHub draft; no raw footage or credentials. Other channels only after supported artifact readiness."
+}

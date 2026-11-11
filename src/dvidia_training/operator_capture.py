@@ -120,10 +120,8 @@ def _command(command, header, snapshot):
 
 
 def _perception(root, reference, snapshot, header, index):
-    expected = {key: reference[key] for key in ('bytes', 'sha256')}
-    if _identity(root, reference['path']) != expected:
-        raise ValueError('Perception sidecar byte identity differs.')
-    item = _read(root, reference['path'])
+    item = _bound_document(root, reference,
+                           mismatch='Perception sidecar byte identity differs.')
     if (item.get('schema') != PERCEPTION_SCHEMA or item.get('index') != index
             or item.get('snapshot_sha256') != tape.digest(snapshot)
             or item.get('frame') != snapshot['camera']['value']
@@ -343,8 +341,12 @@ class OperatorCapture:
             self.previous_applied = deepcopy(applied['ramped_targets'])
             self._timings.append(timing)
             self._perception_ref = self._save_perception(next_index)
-            return dict(snapshot=deepcopy(self.snapshot), estimate=self.context()['estimate'],
-                        applied=deepcopy(applied), done=self.done, context=self.context())
+            context = self.context()
+            # Returned branches remain independently mutable. Reusing the
+            # already-aged estimate avoids building and discarding a second
+            # complete context without aliasing either response to recorder state.
+            return dict(snapshot=deepcopy(self.snapshot), estimate=deepcopy(context['estimate']),
+                        applied=deepcopy(applied), done=self.done, context=context)
         except (Exception, KeyboardInterrupt) as exc:
             self._error = dict(type=type(exc).__name__, message=str(exc)[:500])
             self.finish('producer_interrupted' if isinstance(exc, KeyboardInterrupt) else 'producer_error')
@@ -532,10 +534,14 @@ def _journal(root, *, allow_truncated=False):
     return records, tail_bytes
 
 
-def _bound_document(root, reference):
-    if _identity(root, reference['path']) != {key: reference[key] for key in ('bytes', 'sha256')}:
-        raise ValueError('Journal artifact byte identity differs.')
-    return _read(root, reference['path'])
+def _bound_document(root, reference, *, mismatch='Journal artifact byte identity differs.'):
+    # Decode the exact bounded ordinary bytes whose identity was checked. A
+    # second file read both repeats I/O and could observe different contents.
+    body = tape._ordinary_bytes(root / str(tape._relative(reference['path'])), MAX_DOCUMENT_BYTES)
+    if dict(bytes=len(body), sha256=sha256(body).hexdigest()) != {
+            key: reference[key] for key in ('bytes', 'sha256')}:
+        raise ValueError(mismatch)
+    return tape._decode(body)
 
 
 def _prefix(root, *, allow_truncated=False):

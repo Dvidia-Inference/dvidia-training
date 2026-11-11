@@ -1,0 +1,64 @@
+{
+  "applied_sim_time_seconds": 5.0,
+  "client_script_sha256": "98aac9a91f93a0389943289aab4f58982d6cc1e13170d5ec71d732c5b05f802f",
+  "errors": [],
+  "expected_model_sha256": "9c12b9437e4825685921a229129e2154a225e308593f227d17042852926e060f",
+  "godot": "4.7.2-stable (official)",
+  "initial_sim_time_seconds": 0.0,
+  "interactive_wall_seconds": 14.17478,
+  "logical_processors": 10,
+  "ok": true,
+  "physics_authority": "MuJoCo only",
+  "process_frame_interval_ms": {
+    "p50": 8.33333333333333,
+    "p95": 8.53200000000019,
+    "samples": 1699
+  },
+  "processor": "Apple M5",
+  "project_sha256": "d886d21c17931d0fef863e6f219cb9da10bc4b916d4cd4bbb70012f07f47e556",
+  "recording": {
+    "episode": 1.0,
+    "max_episodes": 1.0,
+    "max_steps": 250.0,
+    "output_directory": "windowed-baseline/episode-0001",
+    "physical_robot_ready": false,
+    "source_authenticated": false,
+    "source_kind": "simulation_scripted_input",
+    "status": "finished",
+    "steps": 250.0
+  },
+  "render_process_frames": 1701,
+  "requested_steps": 250,
+  "reset_responses": 0,
+  "rpc_roundtrip_ms": {
+    "p50": 18.093,
+    "p95": 59.224,
+    "samples": 252
+  },
+  "scene_integrity_sha256": "90bd8d005eec330fb4ed70126a14290e5137448ff1407479e917012d739a3fa5",
+  "schema": "dvidia.godot-demonstration-smoke/v1",
+  "server_compute_total_ms": 7525.52971203113,
+  "step_responses": 250,
+  "timing_scope": "Startup-inclusive wall time; ready-to-completion interactive wall; Godot process delta intervals (not GPU render time); socket request-to-parsed-response latency; server compute includes controller, native camera capture and disk writes; excludes IPC and Godot rendering. Samples capped at 10000 per series.",
+  "trace_limit": 256,
+  "wall_seconds": 15.742386,
+  "raw_receipt_sha256": "7c552efae63272555f5389b22061fd80674c1f4173fdeb0d53ff6036b628829a",
+  "ordinary_step_rpc": {
+    "count": 249,
+    "total_ms": 7533.516,
+    "p50_ms": 18.353,
+    "p95_ms": 57.47619999999999,
+    "max_ms": 67.212,
+    "over_20ms": 124
+  },
+  "ordinary_step_server": {
+    "count": 249,
+    "total_ms": 6235.824378032702,
+    "p50_ms": 14.7938330192119,
+    "p95_ms": 51.0968495858833,
+    "max_ms": 65.6434580450878,
+    "over_20ms": 124
+  },
+  "final_step_including_seal_rpc_ms": 1295.9,
+  "final_step_including_seal_server_ms": 1289.70533399843
+}
