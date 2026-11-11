@@ -32,6 +32,13 @@ SOURCE_PINS = {
     'robot_profiles.lock.json': '4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe',
     'camera_action_cache.py': '9191f2eb9f96bd09d4f711c31966a583bd938853a874e6018f8ddebfb0bc00d8',
 }
+# Preserve the original frozen source set above. Only this separately reviewed
+# capture implementation is additionally accepted; it changed lossless PNG
+# compression and fresh-array copies, not controls, references or native ticks.
+# Actual hashes and the named revision enter every new identity. These are not
+# aliases for historical cache/model pins, which remain exact and are refused
+# when loaded with a different implementation/helper identity.
+REVIEWED_CAPTURE_SHA256 = 'a2613dca764c6f1d687e00b7773a83d571e1a2449efe3140363e9ee7ee2bd0ec'
 CONTRACT = dict(reference_kind='previous_applied_normal_servo_reference',
     reset_source='initial_applied_targets', later_source='steps[i-1].applied.ramped_targets',
     joint_order=[f'joint{i}' for i in range(1, 7)], action_units=['rad']*6 + ['single_finger_m'],
@@ -43,13 +50,23 @@ CONTRACT = dict(reference_kind='previous_applied_normal_servo_reference',
     limiter_ast_sha256='a5356fb9e1bd8b1dc6e6b2b14d657fbe625e018ba8d1e5e668ba4d11191f7921')
 
 
+def _source_revision(actual):
+    """Admit two complete, explicit source sets; never accept an unknown hash."""
+    if actual == SOURCE_PINS:
+        return 'frozen-reference-v01'
+    reviewed = {**SOURCE_PINS, 'piper_action_capture.py': REVIEWED_CAPTURE_SHA256}
+    if actual == reviewed:
+        return 'capture-latency-v02'
+    raise ValueError('Reference export requires the exact reviewed frozen source files.')
+
+
 def source_identity():
-    """Bind this helper, unchanged parent implementation and fixed limiter source."""
+    """Bind actual reviewed source bytes, helper and unchanged limiter contract."""
     package = Path(__file__).parent
     actual = {name: sha256(cache._bytes(package/name, 8*1024**2)).hexdigest() for name in SOURCE_PINS}
-    if actual != SOURCE_PINS:
-        raise ValueError('Reference export requires the exact reviewed frozen source files.')
+    revision = _source_revision(actual)
     return dict(source_sha256=actual, parent_source=cache.source_identity(), contract=CONTRACT,
+                reviewed_source_revision=revision,
                 helper_sha256=sha256(cache._bytes(Path(__file__), 8*1024**2)).hexdigest())
 
 

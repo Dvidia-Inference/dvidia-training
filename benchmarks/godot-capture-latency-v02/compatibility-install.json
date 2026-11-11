@@ -1,0 +1,15 @@
+{
+  "schema": "dvidia.reference-compatibility-install/v1",
+  "at": "2026-11-11T11:46:43.425347+00:00",
+  "outside_checkout": true,
+  "source_sha256": {
+    "camera_action_reference_export.py": "28bc1c3332fc540d7879b6874f283c6173ada211793c97ccc9502b84728e3576",
+    "operator_capture.py": "db37439e34b21679e4ec1a3525f63281045dc8bec6de83a441d7fd4e86563518",
+    "piper_action_capture.py": "a2613dca764c6f1d687e00b7773a83d571e1a2449efe3140363e9ee7ee2bd0ec"
+  },
+  "named_revision": "capture-latency-v02",
+  "unknown_source_changes_refused": 8,
+  "entry_points_passed": true,
+  "initial_check_attempt": "The checker derived lib/bin instead of bin and failed before writing a receipt; corrected the checker path, no package source changes.",
+  "scope": "Offline base reinstallation, exact installed source and source-admission checks. No additional native captures or changed benchmark receipts."
+}

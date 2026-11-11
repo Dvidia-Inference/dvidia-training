@@ -123,6 +123,15 @@ exact artifact bytes.
   inspection and 500-row export/reload checks. Native graphics used the existing
   arm environment; this does not establish fresh native installation on every OS.
 
+CI exposed an older exporter's deliberate frozen-source check. The follow-up
+[compatibility change](../../docs/reference-source-compatibility.md) preserves
+its original pins and admits only the exact reviewed capture revision under a
+distinct identity. Historical caller pins and unknown changes still fail.
+All 65 reference/cache/preflight checks passed locally; a separate
+[installation check](compatibility-install.json) verified the updated helper
+outside the checkout. These are additional compatibility checks, not new timing
+runs. Measured runtime files and original benchmark receipts are unchanged.
+
 Host: Apple M5, ten logical processors, macOS 26.5.2 arm64, Python 3.12.9,
 NumPy 2.5.3, MuJoCo 3.15.0 and Godot 4.7.2 compatibility OpenGL. NumPy reports
 Apple Accelerate. All new runs request `OPENBLAS_NUM_THREADS=1`,

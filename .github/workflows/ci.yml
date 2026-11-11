@@ -86,7 +86,7 @@ jobs:
         run: python -m unittest tests.test_operator_capture tests.test_operator_export tests.test_godot_demonstration_bridge tests.test_tracker_ray_cache tests.test_piper_rgbd_tracker tests.test_capture_encoding tests.test_operator_capture_latency tests.test_operator_capture_parity tests.test_capture_profile -v
       - name: Verify exact-reference and initial-head contracts without physics
         run: |
-          python -B -m unittest tests.test_camera_action_reference_export -v
+          python -B -m unittest tests.test_camera_action_reference_export tests.test_reference_source_compatibility -v
           python -B -m unittest discover -s benchmarks/camera-action-v02-head-preflight -p test_preflight.py -v
       - name: Verify reference-model training and inference on synthetic fixtures
         run: python -B -m unittest tests.test_camera_action_reference_model -v
