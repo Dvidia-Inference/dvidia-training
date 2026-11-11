@@ -1,0 +1,474 @@
+{
+  "schema": "dvidia.operator-performance-results/v1",
+  "baseline_mean_control_seconds": 6.152378167646627,
+  "candidate_mean_control_seconds": 5.893788874556776,
+  "relative_mean_reduction_percent": 4.203078647695756,
+  "paired_results": [
+    {
+      "pair": 1,
+      "baseline": "pair-01-baseline",
+      "candidate": "pair-02-candidate",
+      "baseline_seconds": 6.286720753996633,
+      "candidate_seconds": 5.920493129058741,
+      "percent_control_time_reduction": 5.825415813245267,
+      "parity": {
+        "control_intervals": 100,
+        "exact": true,
+        "exclusions": [
+          "source implementation hashes and unique recording/session provenance IDs",
+          "perception diagnostics.processing_seconds and capture wall-time metadata"
+        ],
+        "features_shape": [
+          100,
+          269
+        ],
+        "integrity_sha256": [
+          "8dc17e27637ca6eb0dea4810e341633380066d1c7e92bdd3baa140387dd6514f",
+          "d7917c8d222db9168dc0462e981296e394479fcb685e812aa743073dcdbc5bc7"
+        ],
+        "native_values_compared": 102000,
+        "perception_rows_compared": 101,
+        "physical_robot_ready": false,
+        "rgbd_artifacts_compared": 102,
+        "schema": "dvidia.operator-performance-parity/v1",
+        "scope": "Semantic and exact numeric parity, not task qualification.",
+        "strict_success": [
+          false,
+          false
+        ],
+        "targets_shape": [
+          100,
+          7
+        ]
+      }
+    },
+    {
+      "pair": 2,
+      "baseline": "pair-04-baseline",
+      "candidate": "pair-03-candidate",
+      "baseline_seconds": 6.011802374036051,
+      "candidate_seconds": 6.092544455896132,
+      "percent_control_time_reduction": -1.3430594826069406,
+      "parity": {
+        "control_intervals": 100,
+        "exact": true,
+        "exclusions": [
+          "source implementation hashes and unique recording/session provenance IDs",
+          "perception diagnostics.processing_seconds and capture wall-time metadata"
+        ],
+        "features_shape": [
+          100,
+          269
+        ],
+        "integrity_sha256": [
+          "046fc37a629c39f8e75eab6b0a5b147945c54289638937211cae7089e12b538c",
+          "3700f05e44f36d6b563f5ef863c27ddffc971245cebd2a36fa5a172cc6a814ec"
+        ],
+        "native_values_compared": 102000,
+        "perception_rows_compared": 101,
+        "physical_robot_ready": false,
+        "rgbd_artifacts_compared": 102,
+        "schema": "dvidia.operator-performance-parity/v1",
+        "scope": "Semantic and exact numeric parity, not task qualification.",
+        "strict_success": [
+          false,
+          false
+        ],
+        "targets_shape": [
+          100,
+          7
+        ]
+      }
+    },
+    {
+      "pair": 3,
+      "baseline": "pair-05-baseline",
+      "candidate": "pair-06-candidate",
+      "baseline_seconds": 6.158611374907196,
+      "candidate_seconds": 5.668329038715456,
+      "percent_control_time_reduction": 7.960923434613179,
+      "parity": {
+        "control_intervals": 100,
+        "exact": true,
+        "exclusions": [
+          "source implementation hashes and unique recording/session provenance IDs",
+          "perception diagnostics.processing_seconds and capture wall-time metadata"
+        ],
+        "features_shape": [
+          100,
+          269
+        ],
+        "integrity_sha256": [
+          "4f8bfcb8a23f9b5bf3d0072c54a33f376d153d08d09736fd81844e0693dcea6a",
+          "2c827c838af3ec8fff72e33e5b755a874b4a522aca600f473723f7f1bbc22d9c"
+        ],
+        "native_values_compared": 102000,
+        "perception_rows_compared": 101,
+        "physical_robot_ready": false,
+        "rgbd_artifacts_compared": 102,
+        "schema": "dvidia.operator-performance-parity/v1",
+        "scope": "Semantic and exact numeric parity, not task qualification.",
+        "strict_success": [
+          false,
+          false
+        ],
+        "targets_shape": [
+          100,
+          7
+        ]
+      }
+    }
+  ],
+  "all_confirmations_retained": true,
+  "qualified_real_time": false,
+  "conclusion": "Modest average time reduction, mixed individual pairs; no statistically reliable speedup or real-time claim.",
+  "controls": {
+    "worker_processes": 1,
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "fixed_seed": 0,
+    "duration_s": 2,
+    "scripted": true
+  },
+  "diagnostic_scope": "Earlier diagnostics inherit thread environment and use a shared host; do not compare their absolute timings directly against controlled confirmation. cProfile diagnostic overhead was not isolated by repeated randomized trials.",
+  "warmup_scope": "Separate process: host/driver cache warmup only; each run constructs a new Python process, renderer and geometry cache.",
+  "windowed": {
+    "baseline": {
+      "receipt_sha256": "3ed9ee57c6ef4f38d9fdf4d42be536a0f6f882b9da2e3ead13f0bf6bb41a8a19",
+      "ok": true,
+      "errors": [],
+      "simulated_seconds": 1.99999999999989,
+      "interactive_wall_seconds": 10.700172,
+      "rpc_roundtrip_ms": {
+        "p50": 36.99,
+        "p95": 111.52,
+        "samples": 102
+      },
+      "server_compute_total_ms": 7324.68737487216,
+      "capture_integrity_sha256": "5e936da94b2d8ef68a7eff8bb3a6392a6291ec0cc13140758635b8dd332c1e9c",
+      "recording_status": "finished",
+      "source_kind": "simulation_scripted_input"
+    },
+    "candidate": {
+      "receipt_sha256": "d0e1c66f7dc4f7c3b97a7af075c7aec76a3ac426955153112426ba8a56b7f29f",
+      "ok": true,
+      "errors": [],
+      "simulated_seconds": 1.99999999999989,
+      "interactive_wall_seconds": 10.469417,
+      "rpc_roundtrip_ms": {
+        "p50": 42.074,
+        "p95": 113.571,
+        "samples": 102
+      },
+      "server_compute_total_ms": 7027.199504897,
+      "capture_integrity_sha256": "9c5d72f42d69f5fa8c0e18a4abf81730ec10d4710844cba1692f942cd4b0fa19",
+      "recording_status": "finished",
+      "source_kind": "simulation_scripted_input"
+    }
+  },
+  "windowed_parity": {
+    "control_intervals": 100,
+    "exact": true,
+    "exclusions": [
+      "source implementation hashes and unique recording/session provenance IDs",
+      "perception diagnostics.processing_seconds and capture wall-time metadata"
+    ],
+    "features_shape": [
+      100,
+      269
+    ],
+    "integrity_sha256": [
+      "5e936da94b2d8ef68a7eff8bb3a6392a6291ec0cc13140758635b8dd332c1e9c",
+      "9c5d72f42d69f5fa8c0e18a4abf81730ec10d4710844cba1692f942cd4b0fa19"
+    ],
+    "native_values_compared": 102000,
+    "perception_rows_compared": 101,
+    "physical_robot_ready": false,
+    "rgbd_artifacts_compared": 102,
+    "schema": "dvidia.operator-performance-parity/v1",
+    "scope": "Semantic and exact numeric parity, not task qualification.",
+    "strict_success": [
+      false,
+      false
+    ],
+    "targets_shape": [
+      100,
+      7
+    ]
+  },
+  "native_replay": {
+    "capture_integrity_sha256": "d7917c8d222db9168dc0462e981296e394479fcb685e812aa743073dcdbc5bc7",
+    "control_intervals": 100,
+    "exact_native_arrays": true,
+    "fields": {
+      "applied_jaw_target_m": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000
+        ]
+      },
+      "arm_actuator_controls_rad": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000,
+          6
+        ]
+      },
+      "grasp_contact_counts": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000,
+          2
+        ]
+      },
+      "gripper_joint_position_m": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000,
+          2
+        ]
+      },
+      "joint_position_rad": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000,
+          6
+        ]
+      },
+      "native_tick": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000
+        ]
+      },
+      "normal_rate_limited_jaw_target_m": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000
+        ]
+      },
+      "object_angular_velocity_rad_s": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000,
+          3
+        ]
+      },
+      "object_linear_velocity_m_s": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000,
+          3
+        ]
+      },
+      "object_minus_tcp_local_m": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000,
+          3
+        ]
+      },
+      "object_position_m": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000,
+          3
+        ]
+      },
+      "object_quaternion_wxyz": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000,
+          4
+        ]
+      },
+      "pad_normal_forces_n": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000,
+          2
+        ]
+      },
+      "pulse_active": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000
+        ]
+      },
+      "pulse_closing_tail": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000
+        ]
+      },
+      "pulse_minimum_opening_m": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000
+        ]
+      },
+      "requested_jaw_target_m": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000
+        ]
+      },
+      "t_seconds": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000
+        ]
+      },
+      "table_object_contact_count": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000
+        ]
+      },
+      "tcp_position_m": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000,
+          3
+        ]
+      },
+      "tcp_quaternion_wxyz": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000,
+          4
+        ]
+      },
+      "unexpected_contact_count": {
+        "exact": true,
+        "max_abs_error": 0.0,
+        "shape": [
+          2000
+        ]
+      }
+    },
+    "independent_score_matches": true,
+    "maximum_abs_error": 0.0,
+    "native_values_compared": 102000,
+    "original_strict_success": false,
+    "physical_robot_ready": false,
+    "recording_sha256": "874af378557d4b782d117dd8237cb3d2a05a07d8b93ab0e0b149133f2fc65558",
+    "schema": "dvidia.operator-native-replay/v1",
+    "scope": "CPU native command replay including reset; excludes camera, Godot, fitting and hardware. Native parity is separate from successful task completion.",
+    "score": {
+      "evidence_scope": "Recomputed simulator-authored numeric evidence; no physics rerun, source attestation or hardware sensing.",
+      "false_alarms": {
+        "reason": "Continuous residual policy has no declared discrete alarm events.",
+        "status": "not_applicable"
+      },
+      "grip_events": [],
+      "grip_summary": {
+        "airborne_events": 0,
+        "loss_events": 0,
+        "qualification_latency_s": [],
+        "restored_events": 0,
+        "supported_events": 0,
+        "unresolved_events": 0
+      },
+      "native_diagnostics": {
+        "premature_open_jaw": {
+          "count": 0,
+          "intervals": [],
+          "maximum_s": 0.0,
+          "total_s": 0.0
+        },
+        "support_touchdown_before_destination": {
+          "count": 0,
+          "intervals": [],
+          "maximum_s": 0.0,
+          "total_s": 0.0
+        }
+      },
+      "native_metrics_mismatches": [],
+      "native_recomputed": {
+        "carry_complete": false,
+        "carry_contact_loss_events": 0,
+        "dwell_seconds": 0.0,
+        "first_success_time_seconds": null,
+        "grasp_seen": false,
+        "lift_dwell_seconds": 0.0,
+        "lift_seen": false,
+        "max_carry_contact_loss_seconds": 0.0,
+        "max_object_lift_m": 6.22998874710845e-11,
+        "max_pad_normal_force_n": 0.0,
+        "retention_lost": false,
+        "success": false,
+        "unexpected_contact_native_ticks": 0
+      },
+      "reason": "native_outcome_failed",
+      "restoration_scope": "Loaded contact restored for 100 ms after sustained loss; does not establish task recovery or airborne regrasp.",
+      "schema": "dvidia.piper-feedback-score/v1",
+      "strict_v01": {
+        "native_metrics_source": "simulator-authored episode record; not authenticated sensor input",
+        "native_outcome_success": false,
+        "native_outcome_valid": true,
+        "reason": "native_outcome_failed",
+        "reference_xy_m": [
+          0.35,
+          0.08
+        ],
+        "required_dwell_s": 0.25,
+        "required_lift_dwell_s": 0.1,
+        "sample_interval_s": 0.02,
+        "success": false,
+        "terminal_dwell_s": 0.0,
+        "terminal_reference_success": false,
+        "terminal_xy_error_m": 0.12083027976089415,
+        "trace_lift_dwell_s": 0.0,
+        "trajectory_complete": true
+      },
+      "success": false,
+      "terminal_only": {
+        "dwell_s": 0.0,
+        "scope": "Terminal-only geometry/release/settling/dwell; excludes lift, carry and retention history.",
+        "success": false,
+        "terminal_xy_error_m": 0.12083027976089415
+      },
+      "valid": true
+    },
+    "simulated_seconds": 1.9999999999998905,
+    "source_kind": "simulation_scripted_input",
+    "teacher_queries": 0,
+    "wall_seconds": 0.8614500829717144
+  },
+  "retained_raw_bytes": 210294152,
+  "capture_attempts": 11,
+  "remaining_free_bytes": 12329766912,
+  "host": {
+    "processor": "Apple M5",
+    "logical_processors": 10,
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+    "python": "3.12.9",
+    "numpy": "2.5.3",
+    "mujoco": "3.15.0",
+    "godot": "4.7.2"
+  },
+  "physical_robot_ready": false,
+  "learned_policy_trained": false
+}
