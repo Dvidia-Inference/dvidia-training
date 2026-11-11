@@ -17,6 +17,9 @@ real-time teleoperation qualification remain ahead.
 [Capture performance study](benchmarks/godot-capture-performance-v01/README.md):
 bounded camera-geometry reuse preserves exact observations/actions; its measured
 speed benefit is preliminary, with mixed paired results.
+[Lossless capture latency](benchmarks/godot-capture-latency-v02/README.md):
+faster encoding and episode sealing preserve decoded observations; total control
+timing remains mixed and does not qualify sustained real-time operation.
 
 **[Verified local learning cache](docs/camera-action-export-cache-v01.md).**
 The **0.1.3.dev5 preview** adds `dvidia-train cache` to reuse verified camera/action
