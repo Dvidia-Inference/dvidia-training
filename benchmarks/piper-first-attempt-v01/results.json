@@ -1,0 +1,115 @@
+{
+  "scope": "simulation",
+  "controllers": {
+    "corner-v8": {
+      "placements": [
+        36,
+        36
+      ],
+      "by_mass_kg": {
+        "0.03": [
+          12,
+          12
+        ],
+        "0.04": [
+          12,
+          12
+        ],
+        "0.06": [
+          12,
+          12
+        ]
+      },
+      "failure_stages": {},
+      "successful_time_median_s": 14.333999999997495,
+      "failure_censored_time_mean_s": 14.333777777775273,
+      "successful_final_xy_median_mm": 4.142493979133201,
+      "critical_contact_episodes": 0,
+      "maximum_pad_force_n": 1.2450408660877286,
+      "median_attempt_wall_s": 2.910687083029188,
+      "median_episode_control_loop_p95_ms": 3.831421892391517,
+      "median_episode_inference_p95_ms": 0.16096257022581995
+    },
+    "fixed": {
+      "placements": [
+        8,
+        36
+      ],
+      "by_mass_kg": {
+        "0.03": [
+          5,
+          12
+        ],
+        "0.04": [
+          3,
+          12
+        ],
+        "0.06": [
+          0,
+          12
+        ]
+      },
+      "failure_stages": {
+        "critical_contact": 22,
+        "lift": 6
+      },
+      "successful_time_median_s": 15.540499999996825,
+      "failure_censored_time_mean_s": 19.000166666665965,
+      "successful_final_xy_median_mm": 10.746893120534889,
+      "critical_contact_episodes": 22,
+      "maximum_pad_force_n": 1.7789840482312484,
+      "median_attempt_wall_s": 3.171820729447063,
+      "median_episode_control_loop_p95_ms": 4.240808018948881,
+      "median_episode_inference_p95_ms": 0.34746248566079885
+    },
+    "corner-v8-timed": {
+      "placements": [
+        36,
+        36
+      ],
+      "by_mass_kg": {
+        "0.03": [
+          12,
+          12
+        ],
+        "0.04": [
+          12,
+          12
+        ],
+        "0.06": [
+          12,
+          12
+        ]
+      },
+      "failure_stages": {},
+      "successful_time_median_s": 14.333999999997495,
+      "failure_censored_time_mean_s": 14.333777777775273,
+      "successful_final_xy_median_mm": 4.142493979133201,
+      "critical_contact_episodes": 0,
+      "maximum_pad_force_n": 1.2450408660877286,
+      "median_attempt_wall_s": 7.924458061985206,
+      "median_episode_control_loop_p95_ms": 12.637556297704574,
+      "median_episode_inference_p95_ms": 0.43108734535053356
+    }
+  },
+  "candidate_minus_comparator": {
+    "fixed": {
+      "mean_strict_rate_difference": 0.7777777777777778,
+      "grouped_bootstrap_95": [
+        0.6111111111111112,
+        0.9166666666666666
+      ],
+      "grouped_bootstrap_seed": 11252602,
+      "identical_actuator_tapes": 0
+    },
+    "corner-v8-timed": {
+      "mean_strict_rate_difference": 0,
+      "grouped_bootstrap_95": [
+        0.0,
+        0.0
+      ],
+      "grouped_bootstrap_seed": 11252602,
+      "identical_actuator_tapes": 36
+    }
+  }
+}
