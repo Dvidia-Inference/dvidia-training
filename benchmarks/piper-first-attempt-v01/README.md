@@ -4,6 +4,10 @@ Can a small, locally installed skill place a block on its first attempt after th
 
 [Try the learned skill or watch a placement](local-skill/README.md) · [Supplementary learned-model evaluation](supplemental-learned/) · [Camera survey](workspace/README.md)
 
+## What the downloadable model learned
+
+An unchanged 195 kB model trained on 32 successful synthetic demonstrations completed **36/36 first-attempt placements** on the 18 new starting positions. Both goals passed at every position, including every 60 g, lower-friction case. Median completion was **14.331 simulated seconds** and median final XY error was **4.224 mm**. Peak force on either pad was 1.172 N, with zero critical-contact episodes and zero teacher calls. Independent headless replays reproduced all 36 native outcomes. This separately registered test used the same unseen positions as the primary comparison. The demonstrations supplied the motor targets. The package also contains an authored wrist-angle adapter and encoder-based command bounds. [Learned-model receipts and replay](supplemental-learned/README.md)
+
 ## Frozen comparison
 
 We registered 18 new starting positions and two destinations per position. Each controller received the same camera images, cube mass, friction, geometry, robot and time budget in each pair. The operating envelope spans 24 mm per horizontal axis and uses a known upright orange cube. No controller received material labels, object truth, fresh object tracking during motion, teacher intervention or a second attempt. The baseline is the earlier learned motor primitive. The new teacher is an authored diagonal grasp with a gradual test lift. A matched controller omits its jaw checks.
