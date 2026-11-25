@@ -1,0 +1,58 @@
+{
+  "episodes": 24,
+  "frame_hz": 10,
+  "frames": 864,
+  "host_compute_ms": {
+    "full_tracker_ms": {
+      "median": 1.1166669428348541,
+      "p95": 3.259156097192316
+    },
+    "render_encode_ms": {
+      "median": 9.37704206444323,
+      "p95": 25.84238306153561
+    },
+    "surface_check_ms": {
+      "median": 0.6084794877097011,
+      "p95": 0.6938858365174383
+    }
+  },
+  "monitors": {
+    "camera": {
+      "actual_events": 14,
+      "before_loss": 0,
+      "events_warned": 14,
+      "max_delay_ms": 122.99999999993183,
+      "median_delay_ms": 100.4999999999443,
+      "unconfirmed_warnings": 0
+    },
+    "either": {
+      "actual_events": 14,
+      "before_loss": 0,
+      "events_warned": 14,
+      "max_delay_ms": 122.99999999993183,
+      "median_delay_ms": 73.0000000004214,
+      "unconfirmed_warnings": 1
+    },
+    "learned_aperture": {
+      "actual_events": 14,
+      "before_loss": 0,
+      "events_warned": 14,
+      "max_delay_ms": 283.00000000086635,
+      "median_delay_ms": 125.00000000077094,
+      "unconfirmed_warnings": 1
+    },
+    "wide_aperture": {
+      "actual_events": 14,
+      "before_loss": 0,
+      "events_warned": 14,
+      "max_delay_ms": 760.0000000006464,
+      "median_delay_ms": 423.00000000088824,
+      "unconfirmed_warnings": 0
+    }
+  },
+  "native_retention_loss_definition": "40 consecutive milliseconds without bilateral hold after at least 100 ms of bilateral table-free hold at 60 mm height",
+  "partial_surface_available": 852,
+  "position_pose_available": 244,
+  "timing_scope": "Warning delays measured on the simulation clock. Render, encode and vision wall times have separate units and exclude physical camera transport and actuator response.",
+  "unique_known_orange_cube_only": true
+}
