@@ -154,17 +154,20 @@ def _top_plane(points, config):
     # Fixed indices, no state, no per-frame random search or adaptation.
     rng = np.random.default_rng(701)
     triples = rng.integers(0, len(candidates), (96, 3))
+    first, second, third = candidates[triples.T]
+    normals = np.cross(second - first, third - first)
+    minimum_vertical = math.cos(math.radians(45))
     best = None
-    for indices in triples:
-        a, b, c = candidates[indices]
-        normal = np.cross(b-a, c-a)
+    # The original sample order and scalar norm determine which inlier set
+    # wins a tie. Only the independent triangle cross products are batched.
+    for a, normal in zip(first, normals):
         norm = np.linalg.norm(normal)
         if norm < 1e-10:
             continue
         normal /= norm
         if normal[2] < 0:
             normal *= -1
-        if normal[2] < math.cos(math.radians(45)):
+        if normal[2] < minimum_vertical:
             continue
         residual = np.abs((points-a) @ normal)
         selected = residual <= config.plane_tolerance_m
@@ -173,6 +176,8 @@ def _top_plane(points, config):
         # several silhouette samples is insufficient evidence on its own.
         if count >= config.minimum_top_pixels and (best is None or count > best[0]):
             best = count, points[selected]
+            if count == len(points):
+                break
     if best is None:
         return None
     face = best[1]
@@ -248,7 +253,10 @@ def _cube_rays(shape, intrinsics, transform, centre, yaw, side):
     inside = np.abs(origin) <= half
     near = np.where(parallel, np.where(inside, -np.inf, np.inf), near)
     far = np.where(parallel, np.where(inside, np.inf, -np.inf), far)
-    enter, leave = near.max(axis=-1), far.min(axis=-1)
+    # There are exactly three coordinate slabs. Compare entire image planes
+    # at once so NumPy avoids a separate short reduction for every pixel.
+    enter = np.maximum(np.maximum(near[..., 0], near[..., 1]), near[..., 2])
+    leave = np.minimum(np.minimum(far[..., 0], far[..., 1]), far[..., 2])
     valid = (enter > 0) & (leave >= enter)
     return valid, np.where(valid, enter, 0.)
 

@@ -1,0 +1,748 @@
+{
+  "schema": "dvidia.piper-perception-native-benchmark/v1",
+  "started_utc": "2026-11-25T13:24:10.673953+00:00",
+  "plan_sha256": "6b3f5e30a27c8d99953e7997c55ec3ad2db8bc2996d921efeb5702112bf981e6",
+  "runner_sha256": "4b13eb3d76f8c50c591a03a091034d6063085709fae5a6de36277181c924296a",
+  "comparator_sha256": "1228fea49a41413f7896b216acc8de3e3695a26f93520e673b1ac4e4c0ea5880",
+  "thread_settings_requested": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "runs": [
+    {
+      "id": "run-01-baseline",
+      "variant": "baseline",
+      "exit_code": 0,
+      "profile_sha256": "3d5690a0314a9999fc4eab6c1ca14365f2c11515e856e7e2e3a628f1c2ee83e8",
+      "system": "macOS-26.5.2-arm64-arm-64bit",
+      "python": "3.12.9",
+      "numpy": "2.5.3",
+      "numerical_runtime": {
+        "build_dependencies": {
+          "blas": {
+            "found": true,
+            "name": "accelerate",
+            "version": "unknown"
+          },
+          "lapack": {
+            "found": true,
+            "name": "accelerate",
+            "version": "unknown"
+          }
+        },
+        "effective_thread_count": null,
+        "requested_thread_environment": {
+          "MKL_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "OPENBLAS_NUM_THREADS": "1",
+          "VECLIB_MAXIMUM_THREADS": "1"
+        },
+        "thread_scope": "One worker process; environment requests are not measured effective BLAS thread counts."
+      },
+      "control": {
+        "count": 500,
+        "deadline_misses": 413,
+        "deadline_ms": 20.0,
+        "max_ms": 868.4617079561576,
+        "p50_ms": 59.49029151815921,
+        "p95_ms": 211.91054645460093,
+        "total_seconds": 37.56042202550452
+      },
+      "camera_control": {
+        "count": 250,
+        "deadline_misses": 250,
+        "deadline_ms": 20.0,
+        "max_ms": 868.4617079561576,
+        "p50_ms": 90.67022951785475,
+        "p95_ms": 265.3195496823173,
+        "total_seconds": 29.497736246790737
+      },
+      "tracking": {
+        "count": 250,
+        "max_ms": 153.8043749751523,
+        "p50_ms": 26.556666532997042,
+        "p95_ms": 75.96236236277029,
+        "total_seconds": 8.218909164424986
+      },
+      "open_seconds": 2.517811791971326,
+      "finish_seconds": 5.937889582943171,
+      "total_seconds": 48.905261915992014,
+      "control_cpu_seconds": 19.380694000000002,
+      "total_cpu_seconds": 26.184462,
+      "capture_peak_memory": {
+        "bytes": 736854016,
+        "scope": "Whole process high-water RSS, not incremental renderer/cache memory.",
+        "status": "available"
+      },
+      "capture_bytes": 100734603,
+      "capture_integrity_sha256": "9dbbefe450e337843d57a122f9b94726f9ed94159bd2842ff8dd45429ce60c83",
+      "strict_success": false,
+      "recorded_intervals": 500,
+      "camera_pairs": 251,
+      "render_encode": {
+        "count": 251,
+        "max_ms": 335.2913330309093,
+        "p50_ms": 34.59100006148219,
+        "p95_ms": 97.87874948233366,
+        "total_seconds": 11.066951744141988
+      },
+      "offline_frame_processing_age": {
+        "count": 500,
+        "max_ms": 874.0796669153497,
+        "p50_ms": 89.41862493520603,
+        "p95_ms": 262.7278580039271,
+        "total_seconds": 57.688807003200054
+      }
+    },
+    {
+      "id": "run-02-candidate",
+      "variant": "candidate",
+      "exit_code": 0,
+      "profile_sha256": "43ccbabbfc8c382491bb36323bd2e03534f636c951a4a2ca0cfe67585ed6301c",
+      "system": "macOS-26.5.2-arm64-arm-64bit",
+      "python": "3.12.9",
+      "numpy": "2.5.3",
+      "numerical_runtime": {
+        "build_dependencies": {
+          "blas": {
+            "found": true,
+            "name": "accelerate",
+            "version": "unknown"
+          },
+          "lapack": {
+            "found": true,
+            "name": "accelerate",
+            "version": "unknown"
+          }
+        },
+        "effective_thread_count": null,
+        "requested_thread_environment": {
+          "MKL_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "OPENBLAS_NUM_THREADS": "1",
+          "VECLIB_MAXIMUM_THREADS": "1"
+        },
+        "thread_scope": "One worker process; environment requests are not measured effective BLAS thread counts."
+      },
+      "control": {
+        "count": 500,
+        "deadline_misses": 405,
+        "deadline_ms": 20.0,
+        "max_ms": 580.631332937628,
+        "p50_ms": 49.63902157032862,
+        "p95_ms": 131.52949173236246,
+        "total_seconds": 29.852984826546162
+      },
+      "camera_control": {
+        "count": 250,
+        "deadline_misses": 250,
+        "deadline_ms": 20.0,
+        "max_ms": 580.631332937628,
+        "p50_ms": 81.11816650489345,
+        "p95_ms": 176.7673249938523,
+        "total_seconds": 23.086625362746418
+      },
+      "tracking": {
+        "count": 250,
+        "max_ms": 264.2907500267029,
+        "p50_ms": 17.290145508013666,
+        "p95_ms": 40.265749738318824,
+        "total_seconds": 5.372188454726711
+      },
+      "open_seconds": 2.5878634999971837,
+      "finish_seconds": 8.010872500017285,
+      "total_seconds": 42.17712358396966,
+      "control_cpu_seconds": 17.009382000000002,
+      "total_cpu_seconds": 23.954367,
+      "capture_peak_memory": {
+        "bytes": 623230976,
+        "scope": "Whole process high-water RSS, not incremental renderer/cache memory.",
+        "status": "available"
+      },
+      "capture_bytes": 100734791,
+      "capture_integrity_sha256": "d287c295afeb54dbb620842547171ddb74450fb0fea056fac392791c7c3009d1",
+      "strict_success": false,
+      "recorded_intervals": 500,
+      "camera_pairs": 251,
+      "render_encode": {
+        "count": 251,
+        "max_ms": 325.15837508253753,
+        "p50_ms": 34.50716694351286,
+        "p95_ms": 77.50889548333362,
+        "total_seconds": 10.153472820529714
+      },
+      "offline_frame_processing_age": {
+        "count": 500,
+        "max_ms": 699.9473329633474,
+        "p50_ms": 78.61593749839813,
+        "p95_ms": 169.225315155927,
+        "total_seconds": 45.368093638913706
+      }
+    },
+    {
+      "id": "run-03-candidate",
+      "variant": "candidate",
+      "exit_code": 0,
+      "profile_sha256": "894ce54073a5299d650fa4fe60a3335d16907514801235deedc98d18d1bcf714",
+      "system": "macOS-26.5.2-arm64-arm-64bit",
+      "python": "3.12.9",
+      "numpy": "2.5.3",
+      "numerical_runtime": {
+        "build_dependencies": {
+          "blas": {
+            "found": true,
+            "name": "accelerate",
+            "version": "unknown"
+          },
+          "lapack": {
+            "found": true,
+            "name": "accelerate",
+            "version": "unknown"
+          }
+        },
+        "effective_thread_count": null,
+        "requested_thread_environment": {
+          "MKL_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "OPENBLAS_NUM_THREADS": "1",
+          "VECLIB_MAXIMUM_THREADS": "1"
+        },
+        "thread_scope": "One worker process; environment requests are not measured effective BLAS thread counts."
+      },
+      "control": {
+        "count": 500,
+        "deadline_misses": 333,
+        "deadline_ms": 20.0,
+        "max_ms": 374.5288340141997,
+        "p50_ms": 40.17395852133632,
+        "p95_ms": 108.09600835782467,
+        "total_seconds": 23.79646860633511
+      },
+      "camera_control": {
+        "count": 250,
+        "deadline_misses": 250,
+        "deadline_ms": 20.0,
+        "max_ms": 374.5288340141997,
+        "p50_ms": 68.44202050706372,
+        "p95_ms": 137.35010242671703,
+        "total_seconds": 18.674340780940838
+      },
+      "tracking": {
+        "count": 250,
+        "max_ms": 164.5144170615822,
+        "p50_ms": 14.268374943640083,
+        "p95_ms": 33.63489636685698,
+        "total_seconds": 4.259869334986433
+      },
+      "open_seconds": 1.2580811670050025,
+      "finish_seconds": 8.105443583102897,
+      "total_seconds": 34.35089112492278,
+      "control_cpu_seconds": 14.731547999999998,
+      "total_cpu_seconds": 20.740396999999998,
+      "capture_peak_memory": {
+        "bytes": 890437632,
+        "scope": "Whole process high-water RSS, not incremental renderer/cache memory.",
+        "status": "available"
+      },
+      "capture_bytes": 100734720,
+      "capture_integrity_sha256": "59fbe38656c3738cc9f8154f8e6c34ea34f4c080860a3f3fc5a0c6496291aa28",
+      "strict_success": false,
+      "recorded_intervals": 500,
+      "camera_pairs": 251,
+      "render_encode": {
+        "count": 251,
+        "max_ms": 177.15462495107204,
+        "p50_ms": 30.09220806416124,
+        "p95_ms": 53.78970847232267,
+        "total_seconds": 7.999663293128833
+      },
+      "offline_frame_processing_age": {
+        "count": 500,
+        "max_ms": 390.2984169544652,
+        "p50_ms": 65.67883299430832,
+        "p95_ms": 146.61869020783342,
+        "total_seconds": 37.082166288862936
+      }
+    },
+    {
+      "id": "run-04-baseline",
+      "variant": "baseline",
+      "exit_code": 0,
+      "profile_sha256": "a56e7eac2434be7c35087e1e5d1032de07e0e90a386dd145e5305c39312ddb8f",
+      "system": "macOS-26.5.2-arm64-arm-64bit",
+      "python": "3.12.9",
+      "numpy": "2.5.3",
+      "numerical_runtime": {
+        "build_dependencies": {
+          "blas": {
+            "found": true,
+            "name": "accelerate",
+            "version": "unknown"
+          },
+          "lapack": {
+            "found": true,
+            "name": "accelerate",
+            "version": "unknown"
+          }
+        },
+        "effective_thread_count": null,
+        "requested_thread_environment": {
+          "MKL_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "OPENBLAS_NUM_THREADS": "1",
+          "VECLIB_MAXIMUM_THREADS": "1"
+        },
+        "thread_scope": "One worker process; environment requests are not measured effective BLAS thread counts."
+      },
+      "control": {
+        "count": 500,
+        "deadline_misses": 393,
+        "deadline_ms": 20.0,
+        "max_ms": 513.8371670618653,
+        "p50_ms": 55.50864606630057,
+        "p95_ms": 179.66380413272375,
+        "total_seconds": 33.81197075091768
+      },
+      "camera_control": {
+        "count": 250,
+        "deadline_misses": 250,
+        "deadline_ms": 20.0,
+        "max_ms": 513.8371670618653,
+        "p50_ms": 90.89041705010459,
+        "p95_ms": 215.92660013120616,
+        "total_seconds": 26.834248372237198
+      },
+      "tracking": {
+        "count": 250,
+        "max_ms": 106.65841598529369,
+        "p50_ms": 25.799416995141655,
+        "p95_ms": 63.1159417971503,
+        "total_seconds": 7.761033627903089
+      },
+      "open_seconds": 1.6235719580436125,
+      "finish_seconds": 5.744616084033623,
+      "total_seconds": 43.234678874956444,
+      "control_cpu_seconds": 18.316349,
+      "total_cpu_seconds": 23.972486,
+      "capture_peak_memory": {
+        "bytes": 778502144,
+        "scope": "Whole process high-water RSS, not incremental renderer/cache memory.",
+        "status": "available"
+      },
+      "capture_bytes": 100734699,
+      "capture_integrity_sha256": "56143fd77407642a2c6e773bc4c53c170e0ac27466e3976f9edc366019eabcd9",
+      "strict_success": false,
+      "recorded_intervals": 500,
+      "camera_pairs": 251,
+      "render_encode": {
+        "count": 251,
+        "max_ms": 128.0242920620367,
+        "p50_ms": 35.73458292521536,
+        "p95_ms": 87.43420842802152,
+        "total_seconds": 10.595461201504804
+      },
+      "offline_frame_processing_age": {
+        "count": 500,
+        "max_ms": 529.7895000549033,
+        "p50_ms": 87.90747897000983,
+        "p95_ms": 219.67220488004384,
+        "total_seconds": 52.67596519761719
+      }
+    },
+    {
+      "id": "run-05-baseline",
+      "variant": "baseline",
+      "exit_code": 0,
+      "profile_sha256": "778bd10ffd62066485fc0960e582b07832d5231d445ff071cb8689ad2925d847",
+      "system": "macOS-26.5.2-arm64-arm-64bit",
+      "python": "3.12.9",
+      "numpy": "2.5.3",
+      "numerical_runtime": {
+        "build_dependencies": {
+          "blas": {
+            "found": true,
+            "name": "accelerate",
+            "version": "unknown"
+          },
+          "lapack": {
+            "found": true,
+            "name": "accelerate",
+            "version": "unknown"
+          }
+        },
+        "effective_thread_count": null,
+        "requested_thread_environment": {
+          "MKL_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "OPENBLAS_NUM_THREADS": "1",
+          "VECLIB_MAXIMUM_THREADS": "1"
+        },
+        "thread_scope": "One worker process; environment requests are not measured effective BLAS thread counts."
+      },
+      "control": {
+        "count": 500,
+        "deadline_misses": 344,
+        "deadline_ms": 20.0,
+        "max_ms": 242.02800006605685,
+        "p50_ms": 46.80318699683994,
+        "p95_ms": 96.24271304928698,
+        "total_seconds": 24.182476095622405
+      },
+      "camera_control": {
+        "count": 250,
+        "deadline_misses": 250,
+        "deadline_ms": 20.0,
+        "max_ms": 242.02800006605685,
+        "p50_ms": 74.73987492267042,
+        "p95_ms": 114.12781702820212,
+        "total_seconds": 19.48364163073711
+      },
+      "tracking": {
+        "count": 250,
+        "max_ms": 68.91529099084437,
+        "p50_ms": 22.00443751644343,
+        "p95_ms": 33.046535297762595,
+        "total_seconds": 5.777176670031622
+      },
+      "open_seconds": 1.1840525000588968,
+      "finish_seconds": 4.301164000062272,
+      "total_seconds": 30.639591166051105,
+      "control_cpu_seconds": 16.71582,
+      "total_cpu_seconds": 21.846836,
+      "capture_peak_memory": {
+        "bytes": 894681088,
+        "scope": "Whole process high-water RSS, not incremental renderer/cache memory.",
+        "status": "available"
+      },
+      "capture_bytes": 100734741,
+      "capture_integrity_sha256": "71b7fa2585188375f8eb0fb41aefb5ec4bde7fbdeb233a6bfbf7cfe17e4a2fff",
+      "strict_success": false,
+      "recorded_intervals": 500,
+      "camera_pairs": 251,
+      "render_encode": {
+        "count": 251,
+        "max_ms": 115.00979191623628,
+        "p50_ms": 30.243624933063984,
+        "p95_ms": 44.87991705536842,
+        "total_seconds": 7.963216963224113
+      },
+      "offline_frame_processing_age": {
+        "count": 500,
+        "max_ms": 245.12895802035928,
+        "p50_ms": 72.12689606240019,
+        "p95_ms": 110.77860623481675,
+        "total_seconds": 38.245970872580074
+      }
+    },
+    {
+      "id": "run-06-candidate",
+      "variant": "candidate",
+      "exit_code": 0,
+      "profile_sha256": "ac1da333b8f5bb4027b231f23926f3dea9d00e77d34a104bd9cc8f200ef0f569",
+      "system": "macOS-26.5.2-arm64-arm-64bit",
+      "python": "3.12.9",
+      "numpy": "2.5.3",
+      "numerical_runtime": {
+        "build_dependencies": {
+          "blas": {
+            "found": true,
+            "name": "accelerate",
+            "version": "unknown"
+          },
+          "lapack": {
+            "found": true,
+            "name": "accelerate",
+            "version": "unknown"
+          }
+        },
+        "effective_thread_count": null,
+        "requested_thread_environment": {
+          "MKL_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "OPENBLAS_NUM_THREADS": "1",
+          "VECLIB_MAXIMUM_THREADS": "1"
+        },
+        "thread_scope": "One worker process; environment requests are not measured effective BLAS thread counts."
+      },
+      "control": {
+        "count": 500,
+        "deadline_misses": 290,
+        "deadline_ms": 20.0,
+        "max_ms": 729.3098750524223,
+        "p50_ms": 38.0405830219388,
+        "p95_ms": 83.07766673970033,
+        "total_seconds": 18.935906384605914
+      },
+      "camera_control": {
+        "count": 250,
+        "deadline_misses": 250,
+        "deadline_ms": 20.0,
+        "max_ms": 729.3098750524223,
+        "p50_ms": 51.411666499916464,
+        "p95_ms": 92.50579617801122,
+        "total_seconds": 15.130025623948313
+      },
+      "tracking": {
+        "count": 250,
+        "max_ms": 114.82287500984967,
+        "p50_ms": 11.241291475016624,
+        "p95_ms": 21.79805816267616,
+        "total_seconds": 3.320261126733385
+      },
+      "open_seconds": 1.092156375059858,
+      "finish_seconds": 4.171920666936785,
+      "total_seconds": 24.81412120803725,
+      "control_cpu_seconds": 13.372833,
+      "total_cpu_seconds": 18.195861999999998,
+      "capture_peak_memory": {
+        "bytes": 860798976,
+        "scope": "Whole process high-water RSS, not incremental renderer/cache memory.",
+        "status": "available"
+      },
+      "capture_bytes": 100734767,
+      "capture_integrity_sha256": "316bc53926f22d5b05616df854c6615989f14303d90f21234f4631232fa19fa6",
+      "strict_success": false,
+      "recorded_intervals": 500,
+      "camera_pairs": 251,
+      "render_encode": {
+        "count": 251,
+        "max_ms": 102.31620795093477,
+        "p50_ms": 23.35291705094278,
+        "p95_ms": 44.248541991692036,
+        "total_seconds": 6.563295339117758
+      },
+      "offline_frame_processing_age": {
+        "count": 500,
+        "max_ms": 222.43370802607387,
+        "p50_ms": 51.01502052275464,
+        "p95_ms": 96.9392541446723,
+        "total_seconds": 28.483452336746268
+      }
+    }
+  ],
+  "pairs": [
+    {
+      "baseline": "run-01-baseline",
+      "candidate": "run-02-candidate",
+      "source_inventory_matches": true,
+      "changed_sources": [
+        "piper_rgbd_tracker.py"
+      ],
+      "control": {
+        "baseline_seconds": 37.56042202550452,
+        "candidate_seconds": 29.852984826546162,
+        "reduction_percent": 20.520102765950835
+      },
+      "tracker": {
+        "baseline_seconds": 8.218909164424986,
+        "candidate_seconds": 5.372188454726711,
+        "reduction_percent": 34.63623520771005
+      },
+      "parity_exit_code": 0,
+      "parity": {
+        "comparison_mode": "decoded-lossless-png",
+        "control_intervals": 500,
+        "exact": true,
+        "exclusions": [
+          "source implementation hashes and unique recording/session provenance IDs",
+          "perception diagnostics.processing_seconds and capture wall-time metadata",
+          "lossless PNG compressed bytes/length/hash and consequent bound RGB references/snapshot digests; exact decoded uint8 pixels required"
+        ],
+        "features_shape": [
+          500,
+          269
+        ],
+        "frame_bytes": [
+          86360933,
+          86360933
+        ],
+        "integrity_sha256": [
+          "9dbbefe450e337843d57a122f9b94726f9ed94159bd2842ff8dd45429ce60c83",
+          "d287c295afeb54dbb620842547171ddb74450fb0fea056fac392791c7c3009d1"
+        ],
+        "native_values_compared": 510000,
+        "perception_rows_compared": 501,
+        "physical_robot_ready": false,
+        "png_files_with_different_compressed_bytes": 0,
+        "rgbd_artifacts_compared": 502,
+        "schema": "dvidia.operator-performance-parity/v1",
+        "scope": "Semantic and exact numeric parity, not task qualification.",
+        "strict_success": [
+          false,
+          false
+        ],
+        "targets_shape": [
+          500,
+          7
+        ]
+      },
+      "exact_including_png_bytes": true
+    },
+    {
+      "baseline": "run-04-baseline",
+      "candidate": "run-03-candidate",
+      "source_inventory_matches": true,
+      "changed_sources": [
+        "piper_rgbd_tracker.py"
+      ],
+      "control": {
+        "baseline_seconds": 33.81197075091768,
+        "candidate_seconds": 23.79646860633511,
+        "reduction_percent": 29.621172389990733
+      },
+      "tracker": {
+        "baseline_seconds": 7.761033627903089,
+        "candidate_seconds": 4.259869334986433,
+        "reduction_percent": 45.11208765194612
+      },
+      "parity_exit_code": 0,
+      "parity": {
+        "comparison_mode": "decoded-lossless-png",
+        "control_intervals": 500,
+        "exact": true,
+        "exclusions": [
+          "source implementation hashes and unique recording/session provenance IDs",
+          "perception diagnostics.processing_seconds and capture wall-time metadata",
+          "lossless PNG compressed bytes/length/hash and consequent bound RGB references/snapshot digests; exact decoded uint8 pixels required"
+        ],
+        "features_shape": [
+          500,
+          269
+        ],
+        "frame_bytes": [
+          86360933,
+          86360933
+        ],
+        "integrity_sha256": [
+          "56143fd77407642a2c6e773bc4c53c170e0ac27466e3976f9edc366019eabcd9",
+          "59fbe38656c3738cc9f8154f8e6c34ea34f4c080860a3f3fc5a0c6496291aa28"
+        ],
+        "native_values_compared": 510000,
+        "perception_rows_compared": 501,
+        "physical_robot_ready": false,
+        "png_files_with_different_compressed_bytes": 0,
+        "rgbd_artifacts_compared": 502,
+        "schema": "dvidia.operator-performance-parity/v1",
+        "scope": "Semantic and exact numeric parity, not task qualification.",
+        "strict_success": [
+          false,
+          false
+        ],
+        "targets_shape": [
+          500,
+          7
+        ]
+      },
+      "exact_including_png_bytes": true
+    },
+    {
+      "baseline": "run-05-baseline",
+      "candidate": "run-06-candidate",
+      "source_inventory_matches": true,
+      "changed_sources": [
+        "piper_rgbd_tracker.py"
+      ],
+      "control": {
+        "baseline_seconds": 24.182476095622405,
+        "candidate_seconds": 18.935906384605914,
+        "reduction_percent": 21.695750634759204
+      },
+      "tracker": {
+        "baseline_seconds": 5.777176670031622,
+        "candidate_seconds": 3.320261126733385,
+        "reduction_percent": 42.52796276844324
+      },
+      "parity_exit_code": 0,
+      "parity": {
+        "comparison_mode": "decoded-lossless-png",
+        "control_intervals": 500,
+        "exact": true,
+        "exclusions": [
+          "source implementation hashes and unique recording/session provenance IDs",
+          "perception diagnostics.processing_seconds and capture wall-time metadata",
+          "lossless PNG compressed bytes/length/hash and consequent bound RGB references/snapshot digests; exact decoded uint8 pixels required"
+        ],
+        "features_shape": [
+          500,
+          269
+        ],
+        "frame_bytes": [
+          86360933,
+          86360933
+        ],
+        "integrity_sha256": [
+          "71b7fa2585188375f8eb0fb41aefb5ec4bde7fbdeb233a6bfbf7cfe17e4a2fff",
+          "316bc53926f22d5b05616df854c6615989f14303d90f21234f4631232fa19fa6"
+        ],
+        "native_values_compared": 510000,
+        "perception_rows_compared": 501,
+        "physical_robot_ready": false,
+        "png_files_with_different_compressed_bytes": 0,
+        "rgbd_artifacts_compared": 502,
+        "schema": "dvidia.operator-performance-parity/v1",
+        "scope": "Semantic and exact numeric parity, not task qualification.",
+        "strict_success": [
+          false,
+          false
+        ],
+        "targets_shape": [
+          500,
+          7
+        ]
+      },
+      "exact_including_png_bytes": true
+    }
+  ],
+  "complete": true,
+  "variants": {
+    "baseline": {
+      "pooled_control": {
+        "intervals": 1500,
+        "deadline_misses_over_20ms": 1150,
+        "p50_ms": 54.25785353872925,
+        "p95_ms": 167.19649194274095,
+        "max_ms": 868.4617079561576
+      },
+      "pooled_camera": {
+        "intervals": 750,
+        "deadline_misses_over_20ms": 750,
+        "p50_ms": 83.86677096132189,
+        "p95_ms": 214.13995449547653,
+        "max_ms": 868.4617079561576
+      },
+      "control_mean_seconds": 31.8516229573482,
+      "tracker_mean_seconds_per_episode": 7.252373154119899,
+      "peak_rss_bytes_per_episode": [
+        736854016,
+        778502144,
+        894681088
+      ]
+    },
+    "candidate": {
+      "pooled_control": {
+        "intervals": 1500,
+        "deadline_misses_over_20ms": 1028,
+        "p50_ms": 40.503416501451284,
+        "p95_ms": 113.41472917119971,
+        "max_ms": 729.3098750524223
+      },
+      "pooled_camera": {
+        "intervals": 750,
+        "deadline_misses_over_20ms": 750,
+        "p50_ms": 66.87502103159204,
+        "p95_ms": 137.350102426717,
+        "max_ms": 729.3098750524223
+      },
+      "control_mean_seconds": 24.195119939162396,
+      "tracker_mean_seconds_per_episode": 4.31743963881551,
+      "peak_rss_bytes_per_episode": [
+        623230976,
+        890437632,
+        860798976
+      ]
+    }
+  },
+  "ended_utc": "2026-11-25T13:32:10.367174+00:00"
+}

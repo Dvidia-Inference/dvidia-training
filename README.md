@@ -20,6 +20,10 @@ speed benefit is preliminary, with mixed paired results.
 [Lossless capture latency](benchmarks/godot-capture-latency-v02/README.md):
 faster encoding and episode sealing preserve decoded observations; total control
 timing remains mixed and does not qualify sustained real-time operation.
+The [PiPER tracking benchmark](benchmarks/piper-perception-latency-v03/README.md)
+measures frame processing time and command deadlines for the same block scene.
+The [hold and lift study](docs/reality-view-and-piper.md) explores how paired
+actions can teach a model to predict object motion.
 
 **[Verified local learning cache](docs/camera-action-export-cache-v01.md).**
 The **0.1.3.dev5 preview** adds `dvidia-train cache` to reuse verified camera/action

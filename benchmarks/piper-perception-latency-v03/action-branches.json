@@ -1,0 +1,385 @@
+{
+  "schema": "dvidia.piper-action-branches/v1",
+  "scope": "Deterministic two-condition simulator mechanics probe using a privileged scripted acquisition and simulator pose controller.",
+  "acquisition": "Replay the identical issued commands through 35 close steps. Discard the acquisition teacher at the branch. Compare integration state, servo targets, scorer status and the complete native prefix telemetry.",
+  "config": {
+    "timestep": 0.001,
+    "control_dt": 0.02,
+    "timeout_s": 20.0,
+    "settle_s": 0.5,
+    "object_position_m": [
+      0.3,
+      -0.03,
+      0.082
+    ],
+    "target_position_m": [
+      0.35,
+      0.08,
+      0.08
+    ],
+    "object_half_size_m": [
+      0.02,
+      0.02,
+      0.02
+    ],
+    "mass_kg": 0.04,
+    "friction": 0.8,
+    "table_top_m": 0.06,
+    "table_center_xy_m": [
+      0.38,
+      0.0
+    ],
+    "table_half_size_xy_m": [
+      0.17,
+      0.22
+    ],
+    "table_thickness_m": 0.04,
+    "goal_position_tolerance_m": 0.025,
+    "goal_dwell_s": 0.25,
+    "min_lift_m": 0.06,
+    "min_lift_dwell_s": 0.1,
+    "retreat_clearance_m": 0.1,
+    "joint_target_rate_rad_s": 1.5,
+    "jaw_target_rate_m_s": 0.05,
+    "tool_orientation_wxyz": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    "carry_orientation_wxyz": [
+      0.25881904510252074,
+      0.0,
+      0.9659258262890683,
+      0.0
+    ]
+  },
+  "provenance": {
+    "profile": "piper",
+    "repository": "https://github.com/google-deepmind/mujoco_menagerie",
+    "commit": "0059d4335f8156206f63a35662313385f7ad6d74",
+    "files_verified": 90,
+    "bytes_verified": 34562302,
+    "lock_sha256": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+    "simulation_asset_license": "MIT"
+  },
+  "python": "3.12.9",
+  "mujoco": "3.15.0",
+  "script_sha256": "bc2982a04704a17198cd4d3b352e101269c1e4030b7f6319d150425abc02a674",
+  "cases": [
+    {
+      "name": "closed",
+      "jaw_target_m": 0.0,
+      "prefix_control_steps": 563,
+      "matched_prefix_identity": {
+        "model_sha256": "d93212024f588f5d61631170b94bba2bea5efb308bce5e3f6a050800d820140e",
+        "integration_state_sha256": "6dc6ef48a1e954c7a1b35700f31ec6cc3a11cc22d7526865852f2e63b1e10a19",
+        "issued_commands_sha256": "d7052f5aea033222d7a81ef08171d1826660f5f7c80769b63e788ad91e521794",
+        "native_prefix_history_sha256": "915a2c259130ca952bc60514cf56500c676cbaaac600b85a1f4fbef3008706c4",
+        "task_status_sha256": "c18c17df3d4b0afbd00eaa0f26cc72930b41eb67b2dfe50e991abea0b8e13273",
+        "ramped_joint_targets_rad": [
+          -0.10435876601760215,
+          1.7288084589163863,
+          -1.1211762143175257,
+          -1.4720797735047387e-05,
+          1.0503767387127951,
+          -0.10436932685006478
+        ],
+        "ramped_single_finger_target_m": 0.0
+      },
+      "predecision_encoder_observation": {
+        "t_seconds": 11.259999999999199,
+        "joint_position_rad": [
+          -0.10445310702920875,
+          1.72845222494231,
+          -1.1205583978876787,
+          -7.215712149548187e-05,
+          1.0392162188524305,
+          -0.10865697577919035
+        ],
+        "joint_velocity_rad_s": [
+          -0.0003058900717037315,
+          0.0009625554258708963,
+          -0.0017884199076436391,
+          -0.0009936303717565304,
+          0.006021258574678941,
+          0.005185221069124044
+        ],
+        "gripper_joint_position_m": [
+          0.019637860887337887,
+          -0.02022018020120143
+        ],
+        "previous_issued_command": {
+          "joint_targets_rad": [
+            -0.10435876601760215,
+            1.7288084589163863,
+            -1.1211762143175257,
+            -1.4720797735047387e-05,
+            1.0503767387127951,
+            -0.10436932685006478
+          ],
+          "gripper_position_m": 0.0
+        }
+      },
+      "offline_native_measurements": {
+        "initial": {
+          "tcp_position_m": [
+            0.3021558036159703,
+            -0.03026724758136637,
+            0.08187728157239697
+          ],
+          "object_position_m": [
+            0.2998438127943614,
+            -0.029977296831814944,
+            0.07992704363856097
+          ],
+          "grasp_contact_counts": {
+            "left": 8,
+            "right": 8
+          },
+          "pad_normal_forces_n": {
+            "left": 0.4363619978425447,
+            "right": 0.3452702718650544
+          },
+          "table_object_contact_count": 4
+        },
+        "hold": {
+          "tool_z_target_delta_m": 0.0,
+          "single_finger_target_m": 0.0,
+          "final": {
+            "tcp_position_m": [
+              0.30214964673336103,
+              -0.03028707394221707,
+              0.08185480547369468
+            ],
+            "object_position_m": [
+              0.2998383468398396,
+              -0.02996250215946731,
+              0.07990181259125338
+            ],
+            "grasp_contact_counts": {
+              "left": 8,
+              "right": 8
+            },
+            "pad_normal_forces_n": {
+              "left": 0.39553120288701493,
+              "right": 0.3881830700015448
+            },
+            "table_object_contact_count": 4
+          },
+          "tool_displacement_m": [
+            -6.156882609242853e-06,
+            -1.982636085070058e-05,
+            -2.2476098702289837e-05
+          ],
+          "block_displacement_m": [
+            -5.465954521777228e-06,
+            1.479467234763443e-05,
+            -2.523104730758896e-05
+          ],
+          "native_ticks": 200,
+          "bilateral_ticks": 200,
+          "table_supported_ticks": 200,
+          "critical_contact_ticks": 0
+        },
+        "lift": {
+          "tool_z_target_delta_m": 0.02,
+          "single_finger_target_m": 0.0,
+          "final": {
+            "tcp_position_m": [
+              0.3080153551727495,
+              -0.03090326689043723,
+              0.09276864944221966
+            ],
+            "object_position_m": [
+              0.30575737671490316,
+              -0.030583980630397977,
+              0.09075064145710751
+            ],
+            "grasp_contact_counts": {
+              "left": 8,
+              "right": 8
+            },
+            "pad_normal_forces_n": {
+              "left": 0.39118515079217114,
+              "right": 0.39236137876376787
+            },
+            "table_object_contact_count": 0
+          },
+          "tool_displacement_m": [
+            0.005859551556779252,
+            -0.0006360193090708607,
+            0.010891367869822685
+          ],
+          "block_displacement_m": [
+            0.0059135639205417645,
+            -0.0006066837985830333,
+            0.01082359781854654
+          ],
+          "native_ticks": 200,
+          "bilateral_ticks": 200,
+          "table_supported_ticks": 20,
+          "critical_contact_ticks": 0
+        }
+      },
+      "status": "complete"
+    },
+    {
+      "name": "underclosed",
+      "jaw_target_m": 0.032,
+      "prefix_control_steps": 563,
+      "matched_prefix_identity": {
+        "model_sha256": "d93212024f588f5d61631170b94bba2bea5efb308bce5e3f6a050800d820140e",
+        "integration_state_sha256": "dda9430ade63f7960eb1eb9cfa2863e8ffa24311d49061ef69cc6dc828864f2c",
+        "issued_commands_sha256": "ca6b0144ddb602575b052f3a287d7f67569d09004f76022e1ad3074910e037d4",
+        "native_prefix_history_sha256": "c490de28b75cabd8c975abdec2a5a8289c7c9e5fc8a5d4303398cad23bd13c24",
+        "task_status_sha256": "0238d64d8fcd10177ea7274e9115c2fac30ab06858609d07eeef1594582174b9",
+        "ramped_joint_targets_rad": [
+          -0.10436085180408022,
+          1.728814233267579,
+          -1.1211731662007551,
+          -1.1221292983068277e-05,
+          1.0503708019243958,
+          -0.10437319625673006
+        ],
+        "ramped_single_finger_target_m": 0.032
+      },
+      "predecision_encoder_observation": {
+        "t_seconds": 11.259999999999199,
+        "joint_position_rad": [
+          -0.10443589283844991,
+          1.7284523178606508,
+          -1.1203255298177106,
+          -3.3661210452948764e-05,
+          1.0404855653185012,
+          -0.10870329214531416
+        ],
+        "joint_velocity_rad_s": [
+          0.00015640792325428797,
+          0.0007751886129557791,
+          -0.0010452226611027148,
+          7.331993997747538e-05,
+          0.010652708915569152,
+          0.005381170862280176
+        ],
+        "gripper_joint_position_m": [
+          0.03200793982731958,
+          -0.032007940028320046
+        ],
+        "previous_issued_command": {
+          "joint_targets_rad": [
+            -0.10436085180408022,
+            1.728814233267579,
+            -1.1211731662007551,
+            -1.1221292983068277e-05,
+            1.0503708019243958,
+            -0.10437319625673006
+          ],
+          "gripper_position_m": 0.032
+        }
+      },
+      "offline_native_measurements": {
+        "initial": {
+          "tcp_position_m": [
+            0.3018173322074345,
+            -0.03021947498618629,
+            0.08182087343273949
+          ],
+          "object_position_m": [
+            0.30000003577680534,
+            -0.029999818653121988,
+            0.07989224457978368
+          ],
+          "grasp_contact_counts": {
+            "left": 0,
+            "right": 0
+          },
+          "pad_normal_forces_n": {
+            "left": 0.0,
+            "right": 0.0
+          },
+          "table_object_contact_count": 4
+        },
+        "hold": {
+          "tool_z_target_delta_m": 0.0,
+          "single_finger_target_m": 0.032,
+          "final": {
+            "tcp_position_m": [
+              0.3017941491228152,
+              -0.03021649301211289,
+              0.081820357543083
+            ],
+            "object_position_m": [
+              0.30000003577680534,
+              -0.029999818653121988,
+              0.07989224457978368
+            ],
+            "grasp_contact_counts": {
+              "left": 0,
+              "right": 0
+            },
+            "pad_normal_forces_n": {
+              "left": 0.0,
+              "right": 0.0
+            },
+            "table_object_contact_count": 4
+          },
+          "tool_displacement_m": [
+            -2.3183084619293748e-05,
+            2.981974073397453e-06,
+            -5.158896564799731e-07
+          ],
+          "block_displacement_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "native_ticks": 200,
+          "bilateral_ticks": 0,
+          "table_supported_ticks": 200,
+          "critical_contact_ticks": 0
+        },
+        "lift": {
+          "tool_z_target_delta_m": 0.02,
+          "single_finger_target_m": 0.032,
+          "final": {
+            "tcp_position_m": [
+              0.3082187716086161,
+              -0.030905825290469216,
+              0.093565006879961
+            ],
+            "object_position_m": [
+              0.30000003577680534,
+              -0.029999818653121988,
+              0.07989224457978368
+            ],
+            "grasp_contact_counts": {
+              "left": 0,
+              "right": 0
+            },
+            "pad_normal_forces_n": {
+              "left": 0.0,
+              "right": 0.0
+            },
+            "table_object_contact_count": 4
+          },
+          "tool_displacement_m": [
+            0.006401439401181597,
+            -0.0006863503042829275,
+            0.011744133447221514
+          ],
+          "block_displacement_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "native_ticks": 200,
+          "bilateral_ticks": 0,
+          "table_supported_ticks": 200,
+          "critical_contact_ticks": 0
+        }
+      },
+      "status": "complete"
+    }
+  ]
+}

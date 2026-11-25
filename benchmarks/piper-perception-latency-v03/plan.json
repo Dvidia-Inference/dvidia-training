@@ -1,0 +1,38 @@
+{
+  "registered_utc": "2026-11-25T13:19:09.659321+00:00",
+  "baseline_commit": "065a10f44da5d011ee67cd8e7c22e7b71fc57881",
+  "tracker_baseline_sha256": "e89cba0414832fcfc09127eb05a326557d3aa32afd458a9a8f59d6c4f850f2d3",
+  "tracker_candidate_sha256": "9c407117f2e639fd9596469a90ef97da7ab7df485cfd344f2fe11264f2662f33",
+  "profiler_sha256": "3316ccc7545bbbc4f8d672d2836ea7a102ceb42c49607ab266a95612ecfc54fb",
+  "order": [
+    "baseline",
+    "candidate",
+    "candidate",
+    "baseline",
+    "baseline",
+    "candidate"
+  ],
+  "simulated_duration_seconds": 10,
+  "scene": "Same scripted PiPER motion above a rigid block on each run.",
+  "resolution": [
+    320,
+    240
+  ],
+  "camera_hz": 25,
+  "control_hz": 50,
+  "physics_tick_ms": 1,
+  "scope": "Single local machine. Native control includes IK, physics, tracking and durable recording. Each run uses a fresh process. Windowed client and hardware latency are outside this measurement.",
+  "replay": "251 retained RGB-D pairs, four warmups per variant, two counterbalanced timed passes. Compare estimate against both prior implementation and recorded result, excluding processing time.",
+  "metrics": [
+    "paired control duration",
+    "pooled control and camera p50/p95",
+    "20 ms misses for all steps and camera steps",
+    "tracker duration",
+    "max step",
+    "whole process peak RSS"
+  ],
+  "parity": "Compare native records, commands, decoded frames, depth, tracker estimates and training exports using the existing comparator. Require zero changed compressed PNGs.",
+  "reserve_bytes": 10737418240,
+  "initial_free_bytes": 22225080320,
+  "interpretation": "Retain every attempt. Report each pair, including regressions. End-to-end deadline compliance requires each wall-clock command within 20 ms. The small repeated workload supports descriptive comparisons only."
+}

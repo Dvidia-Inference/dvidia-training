@@ -1,0 +1,101 @@
+{
+  "schema": "dvidia.tracker-frame-replay/v1",
+  "source_sha256": {
+    "baseline": "e89cba0414832fcfc09127eb05a326557d3aa32afd458a9a8f59d6c4f850f2d3",
+    "candidate": "9c407117f2e639fd9596469a90ef97da7ab7df485cfd344f2fe11264f2662f33"
+  },
+  "benchmark_sha256": "52fa57de6cba0aa9d465e8ce04ef4c2d4bb307dfe18ff745c65d980741cca80f",
+  "capture_integrity_sha256": "e82a936168fd9531897308069f6e46d34866fbfb0c003b500e16a6c5459d2ef4",
+  "case": "operator-block-001",
+  "provenance": "simulation_scripted_input",
+  "unique_frame_indices": 251,
+  "distinct_rgb_depth_contents": 251,
+  "warmup_calls_per_variant": 4,
+  "passes": 2,
+  "order": "One timed call per variant per frame. Alternate the first variant each frame, then reverse on pass 2.",
+  "timing_scope": "Tracker function call on decoded, read-only RGB-D. I/O, decoding, comparisons and recorder/control excluded.",
+  "sampling_scope": "Two passes replay the same frames from one episode. Scene states may repeat across frame indices.",
+  "host": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "machine": "arm64",
+    "python": "3.12.9",
+    "numpy": "2.5.3",
+    "requested_threads": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1"
+    }
+  },
+  "status_counts": {
+    "baseline": {
+      "available": 502
+    },
+    "candidate": {
+      "available": 502
+    }
+  },
+  "differing_estimates": {
+    "between_revisions": 0,
+    "baseline_vs_recorded": 0,
+    "candidate_vs_recorded": 0
+  },
+  "first_difference": {},
+  "comparison_scope": "Canonical bytes of every estimate field except diagnostics.processing_seconds.",
+  "per_pass": [
+    {
+      "baseline": {
+        "calls": 251,
+        "total_ms": 2390.3507090000003,
+        "mean_ms": 9.523309597609563,
+        "p50_ms": 8.468042,
+        "p95_ms": 17.799729,
+        "max_ms": 58.702042
+      },
+      "candidate": {
+        "calls": 251,
+        "total_ms": 1464.0947440000002,
+        "mean_ms": 5.833046788844622,
+        "p50_ms": 5.13075,
+        "p95_ms": 11.6782705,
+        "max_ms": 20.629416
+      }
+    },
+    {
+      "baseline": {
+        "calls": 251,
+        "total_ms": 4253.981543999999,
+        "mean_ms": 16.94813364143426,
+        "p50_ms": 12.388583,
+        "p95_ms": 40.3010625,
+        "max_ms": 83.130167
+      },
+      "candidate": {
+        "calls": 251,
+        "total_ms": 2812.521616,
+        "mean_ms": 11.205265402390438,
+        "p50_ms": 7.199792,
+        "p95_ms": 27.954541499999998,
+        "max_ms": 52.519625
+      }
+    }
+  ],
+  "timings": {
+    "baseline": {
+      "calls": 502,
+      "total_ms": 6644.3322530000005,
+      "mean_ms": 13.235721619521913,
+      "p50_ms": 9.596437000000002,
+      "p95_ms": 32.716062799999996,
+      "max_ms": 83.130167
+    },
+    "candidate": {
+      "calls": 502,
+      "total_ms": 4276.61636,
+      "mean_ms": 8.51915609561753,
+      "p50_ms": 5.8906045,
+      "p95_ms": 23.060120799999996,
+      "max_ms": 52.519625
+    }
+  },
+  "tracker_time_reduction_percent": 35.63512182779461
+}
