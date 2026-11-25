@@ -1,0 +1,145 @@
+{
+  "schema": "dvidia.piper-workspace-survey/v1",
+  "camera_profile": "left",
+  "survey_top_centres_base_m": {
+    "red": [
+      0.19,
+      -0.15,
+      0.076
+    ],
+    "green": [
+      0.49,
+      -0.14,
+      0.086
+    ],
+    "blue": [
+      0.48,
+      0.16,
+      0.106
+    ],
+    "yellow": [
+      0.18,
+      0.14,
+      0.121
+    ],
+    "magenta": [
+      0.29,
+      -0.055,
+      0.099
+    ],
+    "cyan": [
+      0.39,
+      0.061,
+      0.081
+    ]
+  },
+  "observations": {
+    "red": {
+      "pixels": 137,
+      "camera_m": [
+        -0.16084243787132244,
+        0.09605696425874968,
+        0.9069115293287012
+      ]
+    },
+    "green": {
+      "pixels": 195,
+      "camera_m": [
+        0.10375475853857825,
+        0.19251704618408885,
+        0.8032890243408007
+      ]
+    },
+    "blue": {
+      "pixels": 103,
+      "camera_m": [
+        0.24534325008257238,
+        -0.014961855047570862,
+        0.9694198144292369
+      ]
+    },
+    "yellow": {
+      "pixels": 80,
+      "camera_m": [
+        -0.02511921496841173,
+        -0.12205297072683607,
+        1.048779520392418
+      ]
+    },
+    "magenta": {
+      "pixels": 130,
+      "camera_m": [
+        -0.026842090843748785,
+        0.056532243331372516,
+        0.9123241690488962
+      ]
+    },
+    "cyan": {
+      "pixels": 112,
+      "camera_m": [
+        0.11753760354249186,
+        0.03176205993553708,
+        0.9600293396839074
+      ]
+    }
+  },
+  "fit_markers": [
+    "red",
+    "green",
+    "blue",
+    "yellow"
+  ],
+  "check_markers": [
+    "magenta",
+    "cyan"
+  ],
+  "fit_error_mm": [
+    0.1477466224934141,
+    0.19897734629667152,
+    0.2917176260968025,
+    0.25494247191244634
+  ],
+  "check_error_mm": [
+    0.2428034121514582,
+    0.3220088082818632
+  ],
+  "max_allowed_error_mm": 4.0,
+  "base_from_camera": [
+    0.8664437663596215,
+    0.3651075172381452,
+    -0.3405461798240444,
+    0.6032521156799235,
+    0.49927467106339,
+    -0.6336786804200623,
+    0.5909112732175884,
+    -0.5446408878494097,
+    -5.070598048875774e-05,
+    -0.6820174710645507,
+    -0.7313358780968,
+    0.8047717225446833,
+    0.0,
+    0.0,
+    0.0,
+    1.0
+  ],
+  "intrinsics": {
+    "width": 320,
+    "height": 240,
+    "fx": 289.70562748477136,
+    "fy": 289.70562748477136,
+    "cx": 160.0,
+    "cy": 120.0
+  },
+  "rgb_sha256": "2bcb54ca20cd955ca75fa6f35ff8cc65c2d4eeaeaa6395b103ae1d0343cf5d51",
+  "depth_float32_sha256": "50ead5cf186f323911804e54ceef09a163fdcf09de524efa4ec9b254abb2cb42",
+  "detect_and_fit_seconds": 0.0017619999125599861,
+  "acquire_and_fit_wall_seconds": 0.01482379192020744,
+  "renderer_warnings": [],
+  "runtime": {
+    "python": "3.12.9",
+    "numpy": "2.5.3",
+    "mujoco": "3.15.0"
+  },
+  "fixture_xml_sha256": "a372bf83e5b18edd07e84c89698a829170c74c2c0fb4d8ad2276c0f19720f087",
+  "setup_scope": "One fixed 320\u00d7240 simulated RGB-D pair. Includes fixture scene creation, native rendering, marker detection and rigid fitting. Excludes physical fixture provisioning and camera mounting."
+}
