@@ -1,0 +1,75 @@
+{
+  "calibrated_scene_sha256": "1a092b3145d754bbf2e4b584fc90822d878b66330f199547c78425f93ebf19f2",
+  "case_ids": [
+    "development-00-g0",
+    "development-01-g0",
+    "development-02-g0"
+  ],
+  "cases": [
+    {
+      "friction": 0.8,
+      "goal_id": 0,
+      "goal_position_m": [
+        0.35,
+        0.08,
+        0.08
+      ],
+      "group_id": "development-00",
+      "id": "development-00-g0",
+      "mass_kg": 0.04,
+      "object_position_m": [
+        0.300552,
+        -0.034339,
+        0.082
+      ],
+      "seed": 166442
+    },
+    {
+      "friction": 0.55,
+      "goal_id": 0,
+      "goal_position_m": [
+        0.35,
+        0.08,
+        0.08
+      ],
+      "group_id": "development-01",
+      "id": "development-01-g0",
+      "mass_kg": 0.06,
+      "object_position_m": [
+        0.308956,
+        -0.025763,
+        0.082
+      ],
+      "seed": 871558
+    },
+    {
+      "friction": 0.7,
+      "goal_id": 0,
+      "goal_position_m": [
+        0.35,
+        0.08,
+        0.08
+      ],
+      "group_id": "development-02",
+      "id": "development-02-g0",
+      "mass_kg": 0.03,
+      "object_position_m": [
+        0.304065,
+        -0.039578,
+        0.082
+      ],
+      "seed": 76301
+    }
+  ],
+  "controllers": [
+    "corner-v8",
+    "corner-v8-timed"
+  ],
+  "inclusion": "Three preselected development XY groups, first goal, one per known material condition. Report all six runs. No replacement or tuning.",
+  "intervention": "Existing native FeedbackPiperTaskEnv JawPulse(start_s=10.50,end_s=12.50,minimum_opening_m=.035), preserving normal jaw travel rate and logged requested commands.",
+  "metrics": "Native strict result. Was the block held above 60 mm continuously in the 100 ms preceding the scheduled opening? First sustained loss of bilateral contact (40 consecutive native ms, matching scorer tolerance). Signed reaction delay from end of those 40 ms to first controller lost_grip phase (null if absent). Native tool path length during fixed 2 s starting at confirmed loss. Report all loads and both strategies without inferring real-robot stopping latency.",
+  "now_no_parameter_updates": true,
+  "policy_sha256": "b8ddb90c7c49c7426d3a39f60dd744b1983b97568957fc7d7049f44d2becede2",
+  "registered_utc": "2026-11-25T14:37:07.520060+00:00",
+  "scope": "Supplemental development-only matched fault characterization. Excluded from selection and confirmation."
+}

@@ -1,0 +1,14 @@
+{
+  "experiment": "PiPER fixed-camera fixture mounting diagnostics",
+  "domain": "synthetic calibration fixture only",
+  "camera_profile": "nominal",
+  "reference": "Separate captured reference frame at the original nominal positions with unchanged optical pose and intrinsics. No task objects, trajectories or outcomes.",
+  "offset_base_m": [0.012, 0, 0],
+  "cases": [
+    {"id": "anchor_offset", "move": "four fit markers", "expected": "refuse"},
+    {"id": "check_offset", "move": "two independent check markers", "expected": "refuse"},
+    {"id": "shared_offset", "move": "all six markers", "expected": "self-check may accept, surveyed transform then mislocates an independently fixed base reference by at least 8 mm"}
+  ],
+  "max_error_per_marker_mm": 4,
+  "scope": "Diagnose mounting assumptions after the camera-pose comparison. These diagnostics do not change the frozen nominal calibration or decide placement success."
+}

@@ -1,0 +1,35 @@
+{
+  "registered_utc": "2026-11-25T14:05:25.733997+00:00",
+  "baseline_commit": "e13ff91fe2466cf630fe49c0dd0993dfafdd8e0e",
+  "end_utc": "2026-11-25T16:00:18Z",
+  "seed": 11252601,
+  "roster_sha256": {
+    "development": "35440474728f2864b386447bcc6aecebe9c5110055cd328524ca8aee932b6985",
+    "confirmation": "502b16816e0b479b5d77d15229619568e311a9711569bfa20b0e5806464c8473"
+  },
+  "unit": "One starting XY with a fixed material stratum and both destination goals. Start positions exclude the original 72 camera-action groups and historic demonstration grid.",
+  "development": "Six groups, two goals. Tune using development only. Preserve all versions and outcomes. Fresh outputs per round. Include the original learned time primitive in selection if it performs best.",
+  "confirmation": "18 groups, two goals, 36 rows per controller. Compare frozen candidate against the previously learned fixed primitive under identical initial camera and encoder inputs. If candidate equals baseline, compare baseline against the best new candidate explicitly. Where matched ablation is distinct compare without candidate jaw feedback to isolate its effect. Report counts and paired changes by group. No tuning on confirmation.",
+  "conditions": [
+    {
+      "name": "nominal",
+      "mass_kg": 0.04,
+      "friction": 0.8
+    },
+    {
+      "name": "heavier",
+      "mass_kg": 0.06,
+      "friction": 0.55
+    },
+    {
+      "name": "lighter",
+      "mass_kg": 0.03,
+      "friction": 0.7
+    }
+  ],
+  "familiarization": "Calibrate fixed workspace with surveyed fixture independently of task layouts. Pin calibration before scored comparisons. Use one rendered RGB-D block observation at start; historical thereafter. 50 Hz encoders, 1 ms native scorer. Report setup and episode costs separately.",
+  "selection": "Maximize strict first-attempt placements, then fewer episodes with critical contacts, then lower median completion time for successful attempts. Report peak per-pad normal force and any changes. Use same 20s simulation horizon.",
+  "negative": "Missing initial object observation and forced-open gripper on a development case. Count refusal or native strict failure; retain causes.",
+  "scheduling": "Aim to finish all confirmation attempts before 16:00 UTC. If throughput limits completion, retain actual denominator and explicitly mark partial. Prefer paired primary endpoints across complete groups before secondary ablation. Each scene/controller gets one final attempt, including refusals. No discarded scenes.",
+  "metrics": "Strict native release/settling/retreat success, force and critical contacts, distal placement error, first success time, total elapsed time and compute overhead. Descriptive paired bootstrap over XY groups, 95% bounds (seed 11252602). Single shared host, known rigid object and constrained workspace."
+}

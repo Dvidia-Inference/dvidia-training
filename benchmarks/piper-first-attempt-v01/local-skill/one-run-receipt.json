@@ -1,0 +1,263 @@
+{
+  "action_log": {
+    "bytes": 47488,
+    "codec": "zlib",
+    "columns": [
+      "joint1_target_rad",
+      "joint2_target_rad",
+      "joint3_target_rad",
+      "joint4_target_rad",
+      "joint5_target_rad",
+      "joint6_target_rad",
+      "gripper_target_m"
+    ],
+    "dtype": "<f8",
+    "includes_forced_open": false,
+    "path": "development-01-g0-yaw+24-learned_camera_yaw-actions.f64.zlib",
+    "sha256": "ca45cff166cc8e255414dfa1ebb9f989d6901ce9ee8f24f6e69b4a0e354a5f0f",
+    "shape": [
+      1000,
+      7
+    ]
+  },
+  "attempt_wall_s": 2.646926417015493,
+  "calibration_file_sha256": "1a092b3145d754bbf2e4b584fc90822d878b66330f199547c78425f93ebf19f2",
+  "calibration_source": "surveyed_workspace",
+  "capture_wall_s": 0.06639270798768848,
+  "case": {
+    "friction": 0.55,
+    "goal_id": 0,
+    "goal_position_m": [
+      0.35,
+      0.08,
+      0.08
+    ],
+    "group_id": "development-01",
+    "id": "development-01-g0-yaw+24",
+    "mass_kg": 0.06,
+    "object_position_m": [
+      0.308956,
+      -0.025763,
+      0.082
+    ],
+    "seed": 871558
+  },
+  "clock": {
+    "control_dt_s": 0.02,
+    "native_dt_s": 0.001,
+    "scheduled_s": 20.0
+  },
+  "control_loop_wall": {
+    "max_ms": 29.62062496226281,
+    "n": 1000,
+    "p50_ms": 1.3449789839796722,
+    "p95_ms": 2.565747685730456,
+    "p99_ms": 5.607135525206097
+  },
+  "control_steps": 1000,
+  "controller": "learned_camera_yaw",
+  "critical_contact_native_ticks": 0,
+  "executed_commands_sha256": "b945c4d4313cc7a54486f5b4da88c53531bacaebb2297fc4d996b592c50fa5e0",
+  "expected_control_steps": 1000,
+  "failure_stage": null,
+  "final_object_position_m": [
+    0.351747356408291,
+    0.07985006556456085,
+    0.07989224457978368
+  ],
+  "final_xy_error_m": 0.0017537772813348445,
+  "first_success_time_s": 14.372999999997473,
+  "fixed_model_sha256": null,
+  "inference_wall": {
+    "max_ms": 1.6437500016763806,
+    "n": 1000,
+    "p50_ms": 0.013666984159499407,
+    "p95_ms": 0.023718428565189232,
+    "p99_ms": 0.06727629224769766
+  },
+  "initial_camera_pairs_delivered": 1,
+  "initial_frame_sha256": {
+    "depth": "8a8fce26fc26ed09cb13b807d5224b497947c256c24085369f95ea60f56e4d62",
+    "rgb": "ab34e72679514c18ced10740a775d029276f92a5fc5827ec813171a159a1f76c"
+  },
+  "initial_position_error_m": 0.00032287763851889494,
+  "initial_position_error_scope": "Diagnostic distance to settled native block centre; never passed to the policy.",
+  "initial_tracker": {
+    "object_position_world_m": [
+      0.3087254674415999,
+      -0.025536683953074485,
+      0.07989292909641822
+    ],
+    "reason": "current_frame_upright_cube_estimate",
+    "status": "available"
+  },
+  "learned_artifact_sha256": "aa0e1cc395954099fae954a479aa703b6cc0062a10d2ac5bed9390b96ab45c00",
+  "learned_policy_source_sha256": "10a86ae3fe6ef2322efca4d5480485df30e29d03ddf1be5ace3d10f4a6233f5a",
+  "matches_registered_commands": true,
+  "native_binding": {
+    "calibration_sha256": "e367663a3929e6b4160206915eed1afb242383c749202e659edf1adad21a0d31",
+    "configuration_sha256": "adb5dd75240514492c1c2f45a383da78c7d9e7a6d2994230463f1ff0d1f1e4ee",
+    "limits_sha256": "1bc24b12c655979dc468898640b008a165a424332773b14e54be115eb2d19d30",
+    "model_sha256": "516f3a7d949569b25808820b22bfdf98553c80855cbb0fa3df6e69ea2e7d86a2",
+    "profile_lock_sha256": "4b2ee2ca675aceb2f826983cb3082a3e08e9aa0ff419b23078abcff08ebcc6fe",
+    "profile_record_sha256": "7d37252aa93148e2adbb74fec2a9bfa6d4b0ddd691cbbf53ce9871708dfb0277",
+    "reference_policy_sha256": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f",
+    "scene_sha256": "ad0a13cb0752d587cebaf6f1a0c6f81ee43458765b4d6232bc1443487f279ae4"
+  },
+  "native_ticks": 20000,
+  "negative": null,
+  "observation_contract": "Single initial 320x240 RGB-D, fixed known goal, 50 Hz encoders and robot-only FK; no later imaging.",
+  "peak_pad_force_n": {
+    "left": 1.6157495469877898,
+    "right": 0.84938241820278
+  },
+  "phases": [
+    {
+      "phase": "learned_camera_yaw",
+      "t_seconds": 0.0
+    }
+  ],
+  "physical_robot_ready": false,
+  "policy_refusal_reason": null,
+  "reason": "success",
+  "renderer_warnings": [
+    "ARB_clip_control unavailable while mjDEPTH_ZEROFAR requested, depth accuracy will be limited"
+  ],
+  "runtime": {
+    "machine": "arm64",
+    "mujoco": "3.15.0",
+    "numpy": "2.5.3",
+    "python": "3.12.9",
+    "system": "Darwin"
+  },
+  "schema": "dvidia.piper-first-attempt/v1",
+  "scope": "simulation_only",
+  "score": {
+    "evidence_scope": "Recomputed simulator-authored numeric evidence; no physics rerun, source attestation or hardware sensing.",
+    "false_alarms": {
+      "reason": "Continuous residual policy has no declared discrete alarm events.",
+      "status": "not_applicable"
+    },
+    "grip_events": [],
+    "grip_summary": {
+      "airborne_events": 0,
+      "loss_events": 0,
+      "qualification_latency_s": [],
+      "restored_events": 0,
+      "supported_events": 0,
+      "unresolved_events": 0
+    },
+    "native_diagnostics": {
+      "premature_open_jaw": {
+        "count": 0,
+        "intervals": [],
+        "maximum_s": 0.0,
+        "total_s": 0.0
+      },
+      "support_touchdown_before_destination": {
+        "count": 0,
+        "intervals": [],
+        "maximum_s": 0.0,
+        "total_s": 0.0
+      }
+    },
+    "native_metrics_mismatches": [],
+    "native_recomputed": {
+      "carry_complete": true,
+      "carry_contact_loss_events": 0,
+      "dwell_seconds": 5.877000000000297,
+      "first_success_time_seconds": 14.372999999997473,
+      "grasp_seen": true,
+      "lift_dwell_seconds": 0.0,
+      "lift_seen": true,
+      "max_carry_contact_loss_seconds": 0.0,
+      "max_object_lift_m": 0.09592249900305172,
+      "max_pad_normal_force_n": 1.6157495469877898,
+      "retention_lost": false,
+      "success": true,
+      "unexpected_contact_native_ticks": 0
+    },
+    "reason": "success",
+    "restoration_scope": "Loaded contact restored for 100 ms after sustained loss; does not establish task recovery or airborne regrasp.",
+    "schema": "dvidia.piper-feedback-score/v1",
+    "strict_v01": {
+      "native_metrics_source": "simulator-authored episode record; not authenticated sensor input",
+      "native_outcome_success": true,
+      "native_outcome_valid": true,
+      "reason": "success",
+      "reference_xy_m": [
+        0.35,
+        0.08
+      ],
+      "required_dwell_s": 0.25,
+      "required_lift_dwell_s": 0.1,
+      "sample_interval_s": 0.02,
+      "success": true,
+      "terminal_dwell_s": 5.859999999999999,
+      "terminal_reference_success": true,
+      "terminal_xy_error_m": 0.0017537772813348445,
+      "trace_lift_dwell_s": 2.219999999999999,
+      "trajectory_complete": true
+    },
+    "success": true,
+    "terminal_only": {
+      "dwell_s": 5.877,
+      "scope": "Terminal-only geometry/release/settling/dwell; excludes lift, carry and retention history.",
+      "success": true,
+      "terminal_xy_error_m": 0.0017537772813348445
+    },
+    "valid": true
+  },
+  "simulated_seconds": 20.00000000000146,
+  "skill_archive_sha256": "45a8636d2e90db9a4643a73268cf0463b6943d4d63f97ec93fff5ec0b470b1f9",
+  "source_sha256": {
+    "camera_action_capture.py": "399f512a08087c72bfa37e382157a2250f413e423974b77b1bd3c0a911ff0a1e",
+    "piper_action_capture.py": "a2613dca764c6f1d687e00b7773a83d571e1a2449efe3140363e9ee7ee2bd0ec",
+    "piper_encoder_kinematics.py": "6606bb8aad04e5abb1e9b6d1a8ec628a4114acd167862167184fd4eef1d21c34",
+    "piper_feedback_env.py": "0dbae423231968a81bdeed52226d8dffaf8df622013ed3a360d7217148f1bcac",
+    "piper_feedback_score.py": "863a272828208c631de4cf57647e973eb3e4f5e99eb7a1eacb4eaa68dc42eb0e",
+    "piper_first_attempt_eval.py": "44f589412987b57c9e5aa850088f947614fb3dc9f73943fe0061e05f77778620",
+    "piper_first_attempt_policy.py": "b8ddb90c7c49c7426d3a39f60dd744b1983b97568957fc7d7049f44d2becede2",
+    "piper_imitation_score.py": "0cd4663abfdd7f14f2f33d93e9a2bd45122b998d6160d45b8afcc880512cba2b",
+    "piper_rgbd_tracker.py": "9c407117f2e639fd9596469a90ef97da7ab7df485cfd344f2fe11264f2662f33",
+    "piper_task.py": "e66a44a8df4e7a8ee42e4f3866f889f8797cdfb8e2688a146e09b75d2c76664f",
+    "piper_workspace_calibration.py": "6f1ef09a3451444c9893b4c174507fe3b43dd4613333e911ae3a82ba496f9d4a"
+  },
+  "status": "completed",
+  "success": true,
+  "teacher_calls": 0,
+  "tracker_calibration_sha256": "3ddae3fab9075e0f0509422dbe749e1d03e9a6958cf3eaff0e52f3e6ffed2bdc",
+  "tracker_wall_s": 0.2381177080096677,
+  "valid": true,
+  "wall_timing_scope": "Offline local execution; initial capture includes RGB/depth rendering and encoding, loop includes physics and dense scoring telemetry. No camera or hardware delivery latency.",
+  "yaw_adapter_decision": {
+    "camera_yaw_deg": 24.5,
+    "predicted_close_s": 7.48,
+    "predicted_full_twist_at_s": 7.18,
+    "selected_equivalent_index": 0,
+    "wrist_travel_to_predicted_close_deg": 15.499197104389811,
+    "wrist_twist_deg": -24.5
+  },
+  "yaw_adapter_refusal_reason": null,
+  "yaw_adapter_sha256": "4464a22f66c8e65b2190b7a866654f3c50918c429906b3f0299db0d9966a7dc9",
+  "yaw_diagnostic": {
+    "camera_quaternion": [
+      0.9772311064626789,
+      0.0,
+      0.0,
+      0.21217767215644626
+    ],
+    "camera_yaw_deg": 24.5,
+    "camera_yaw_error_mod90_deg": 0.5000000000000142,
+    "initial_native_quaternion": [
+      0.9781476007338057,
+      9.983038344674361e-14,
+      1.0777101536311644e-13,
+      0.20791169081775923
+    ],
+    "registered_initial_yaw_deg": 24,
+    "settled_native_yaw_deg": 23.99999999999999
+  },
+  "yaw_driver_sha256": "c97b92aada19ce4dc89564522b2bd2b5463cc37aebfe82b365d029b09a403a3e",
+  "yaw_plan_sha256": "84f6e8ab46347b2874ea6e06628445dcb3a2426d1dcd6cae6e57fdd68073b85f"
+}

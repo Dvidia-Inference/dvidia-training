@@ -1,0 +1,133 @@
+{
+  "nominal_check_mm": [
+    0.23359993026864107,
+    0.2626070553116128
+  ],
+  "camera_profiles": {
+    "nominal": [
+      [
+        0.3,
+        0.0,
+        0.12
+      ],
+      1.0,
+      135.0,
+      -45.0
+    ],
+    "relocated": [
+      [
+        0.32,
+        -0.035,
+        0.11
+      ],
+      0.97,
+      145.0,
+      -41.0
+    ],
+    "left": [
+      [
+        0.28,
+        0.016,
+        0.11
+      ],
+      0.95,
+      120.0,
+      -47.0
+    ],
+    "right": [
+      [
+        0.29,
+        -0.027,
+        0.14
+      ],
+      1.04,
+      151.0,
+      -51.0
+    ],
+    "lower": [
+      [
+        0.32,
+        0.01,
+        0.11
+      ],
+      1.02,
+      130.0,
+      -37.0
+    ],
+    "higher": [
+      [
+        0.31,
+        -0.018,
+        0.13
+      ],
+      0.97,
+      142.0,
+      -56.0
+    ]
+  },
+  "shifted_cameras": {
+    "relocated": {
+      "status": "accepted",
+      "held_out_mm": [
+        0.470778173067481,
+        0.14208959139236077
+      ],
+      "stale_held_out_mm": [
+        40.00288532832783,
+        34.11172680496472
+      ],
+      "acquire_and_fit_wall_seconds": 0.015898333047516644
+    },
+    "left": {
+      "status": "accepted",
+      "held_out_mm": [
+        0.2428034121514582,
+        0.3220088082818632
+      ],
+      "stale_held_out_mm": [
+        83.98756576003618,
+        54.74373982544191
+      ],
+      "acquire_and_fit_wall_seconds": 0.01482379192020744
+    },
+    "right": {
+      "status": "accepted",
+      "held_out_mm": [
+        0.2576785371919849,
+        0.1386761005036788
+      ],
+      "stale_held_out_mm": [
+        74.36697191050241,
+        56.972159924948016
+      ],
+      "acquire_and_fit_wall_seconds": 0.014229041989892721
+    },
+    "lower": {
+      "status": "accepted",
+      "held_out_mm": [
+        0.4688487331480364,
+        0.72765700113188
+      ],
+      "stale_held_out_mm": [
+        23.822076845378884,
+        31.942061072543396
+      ],
+      "acquire_and_fit_wall_seconds": 0.01357758289668709
+    },
+    "higher": {
+      "status": "accepted",
+      "held_out_mm": [
+        0.271055692257762,
+        0.6495639790591982
+      ],
+      "stale_held_out_mm": [
+        15.107739325721521,
+        11.72087117543641
+      ],
+      "acquire_and_fit_wall_seconds": 0.013547458918765187
+    }
+  },
+  "fit_count": 4,
+  "independent_check_count": 2,
+  "scope": "The same six surveyed fixture tops at fixed camera poses. Four fit each transform. Two withheld points measure registration error. No task arrangement or placement outcome was used."
+}
