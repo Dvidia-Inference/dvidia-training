@@ -183,7 +183,7 @@ class CameraActionStudio:
     def submit(self, kind, study, assets):
         with self.server.lock:
             self.server.refresh(); self.refresh()
-            if self.busy() or (self.server.job is not None and self.server.job['status'] == 'running'):
+            if self.busy() or self.server.table.busy() or (self.server.job is not None and self.server.job['status'] == 'running'):
                 raise RuntimeError('One CPU job is already running. Wait for its outcome.')
             try:
                 study = str(_local_path(study, 'prepared study')); assets = str(_local_path(assets, 'robot assets'))
@@ -232,7 +232,7 @@ class CameraActionStudio:
                     self.checked = None
                     if self.job is not None:
                         self.job.update(status='failed', summary=None, error=str(exc)[:2000], finished=time.monotonic())
-            footage_busy = self.server.job is not None and self.server.job['status'] == 'running'
+            footage_busy = self.server.table.busy() or (self.server.job is not None and self.server.job['status'] == 'running')
             result = dict(schema=SCHEMA, status='idle', busy=footage_busy, job=None,
                 summary=None, error=None, checked=False, can_run=False, can_install=False,
                 study_locked=False, recheck_required=False, study_worker_lock=dict(present=False),

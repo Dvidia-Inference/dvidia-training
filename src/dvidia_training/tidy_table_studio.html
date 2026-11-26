@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Table memory · DVIDIA Skillspace</title>
+<style>
+:root{color-scheme:light;--paper:#f8f7f1;--ink:#222923;--dim:#50594f;--line:#c9cec1;--green:#315542}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,sans-serif}
+header,main{width:min(880px,100%);margin:auto;padding:0 clamp(16px,4vw,40px)}
+header{display:flex;gap:18px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);min-height:64px}
+header strong{letter-spacing:.09em;font-size:15px}header a,a{color:var(--green);text-underline-offset:3px}
+h1,h2{font-family:Georgia,serif;font-weight:400;line-height:1.14}
+h1{margin:34px 0 7px;font-size:clamp(35px,5vw,48px)}h2{font-size:26px;margin:0 0 10px}
+p{margin:8px 0}p.hint,small{color:var(--dim);font-size:14px}
+section{padding:23px 0;border-top:1px solid var(--line)}.intro{margin:0 0 24px}
+.controls{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+button,select,input[type=text]{font:inherit;min-height:44px;border-radius:5px;border:1px solid #a5ad9c;background:#fffef8;color:var(--ink);padding:6px 11px}
+button,select,summary{cursor:pointer}button.primary{background:var(--green);border-color:var(--green);color:#fff;font-weight:600;padding:8px 17px}
+button:disabled,select:disabled,input:disabled{opacity:.55;cursor:default}
+:focus-visible{outline:3px solid #557d6b;outline-offset:3px}
+.board{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"buffer right" "left center";gap:8px;padding:12px;background:#eeece1;border:1px solid #c9c7b6;border-radius:9px;margin:12px 0}
+.slot{min-height:70px;border:1px solid #c1bfaf;border-radius:5px;display:grid;place-content:center;justify-items:center;gap:4px;text-align:center;background:#f6f4eb}
+.slot[data-zone=left]{grid-area:left}.slot[data-zone=center]{grid-area:center}.slot[data-zone=right]{grid-area:right}.slot[data-zone=buffer]{grid-area:buffer}.slot small{font-size:13px}.block{display:grid;place-items:center;width:38px;height:38px;background:#e8e6da;border:1px solid #d0d0c5;color:#424b41;font-weight:650;border-radius:4px}
+.block.A{background:#a95449;border-color:#884439;color:white}.block.B{background:#507158;border-color:#3d5844;color:white}.block.C{background:#4c6e90;border-color:#385773;color:white}
+label{display:inline-flex;gap:7px;align-items:center}
+.rule{font-size:14px;min-height:44px}.rule input{width:18px;height:18px}
+details{margin:12px 0}summary{width:fit-content;color:var(--green);min-height:34px}
+.grid{display:flex;gap:14px;flex-wrap:wrap;align-items:center}.grid label{font-size:14px}
+.alert{margin:14px 0;color:#862d23;font-weight:600}.status{color:var(--green);font-size:15px;min-height:24px}
+code,pre{font:13px/1.5 ui-monospace,monospace;overflow-wrap:anywhere}pre{white-space:pre-wrap;max-height:340px;overflow:auto;padding:12px;background:#eeeee6}input[type=text]{width:100%}
+#run-summary{font-size:17px}dl{display:flex;flex-wrap:wrap;gap:25px;margin:12px 0}dt{color:var(--dim);font-size:13px}dd{margin:2px 0;font-variant-numeric:tabular-nums}footer{padding:10px 0 32px}
+.views{display:flex;flex-wrap:wrap;gap:12px;margin:12px 0}.views figure{margin:0;flex:0 1 215px}.views img{display:block;width:100%;height:auto;aspect-ratio:4/3;background:#ecebe3;border:1px solid var(--line);border-radius:6px}.views figcaption{font-size:13px;color:var(--dim);margin-top:4px}
+[hidden]{display:none!important}
+@media(max-width:480px){.board{gap:5px;padding:8px}.slot{min-height:65px}.slot small{font-size:12px}.controls button{width:100%}.grid{gap:8px}.grid label{flex:1;display:grid}.grid select{width:100%;min-width:0}header a{font-size:14px}}
+</style>
+</head>
+<body>
+<header><strong>DVIDIA</strong><a href="/">Skillspace Training Studio</a></header>
+<main>
+<h1>Table memory</h1>
+<p class="intro">Show PiPER where three blocks belong. Change the setup and see which moves it can finish.</p>
+<section aria-labelledby="layout-title">
+<div class="controls"><h2 id="layout-title">Table setup</h2><label>Arrangement <select id="preset" disabled><option value="home">A · B · C</option><option value="swap">Swap A and B</option><option value="cycle">Cycle all three</option><option value="buffer">C in buffer</option><option value="custom" disabled>Custom</option></select></label></div>
+<div class="board" id="board" aria-label="Selected starting zones"></div>
+<details><summary>Set individual blocks</summary><div class="grid" id="positions"></div></details>
+<p class="hint">Each action starts a fresh local MuJoCo simulation in this layout. The camera observes the blocks after they settle.</p>
+</section>
+<section aria-labelledby="reference-title">
+<h2 id="reference-title">Tidy reference</h2>
+<p id="reference-text">Loading the saved reference…</p>
+<div class="views" id="views" hidden>
+<figure id="ref-view" hidden><img id="ref-image" alt="Top-down simulated RGB image of the remembered blocks"><figcaption>Remembered camera view</figcaption></figure>
+<figure id="first-view" hidden><img id="first-image" alt="Top-down RGB image of the starting layout from the latest run"><figcaption>First camera check</figcaption></figure>
+<figure id="run-view" hidden><img id="run-image" alt="Top-down simulated RGB image from the last arrangement check"><figcaption>Last camera check</figcaption></figure></div>
+<div class="controls"><label class="rule"><input type="checkbox" id="exchange" disabled>Allow A and B to trade places</label>
+<button class="primary" type="button" id="remember" disabled>Remember this table</button></div>
+</section>
+<section aria-labelledby="run-title">
+<div class="controls"><h2 id="run-title">PiPER simulation</h2><button class="primary" type="button" id="tidy" disabled>Tidy this table</button></div>
+<p class="status" role="status" aria-live="polite" id="status">Connecting to local Studio…</p>
+<p class="alert" role="alert" id="error" hidden></p>
+<div id="outcome" hidden><p id="run-summary"></p><dl id="metrics"></dl><p id="last-observation"></p><ol id="move-list" aria-label="Attempted PiPER moves"></ol><details><summary>Run record</summary><pre id="record"></pre></details></div>
+</section>
+<footer><details id="settings"><summary>Local PiPER assets</summary>
+<label for="assets">Verified assets folder</label><input type="text" id="assets" spellcheck="false" disabled>
+<p class="hint">Fetch the pinned models once using <code>dvidia-robot-sim fetch piper --output robot-assets</code>.</p>
+</details></footer></main>
+<script>
+'use strict';
+const byId = id => document.getElementById(id);
+const zones = ['left','center','right','buffer'];
+const objects = ['A','B','C'];
+const layouts = {home:['left','center','right'], swap:['center','left','right'], cycle:['center','right','left'], buffer:['left','center','buffer']};
+const display = text => text[0].toUpperCase() + text.slice(1);
+let layout = Object.fromEntries(objects.map((obj, i) => [obj, layouts.home[i]]));
+let saved = null;
+let pending = false;
+let connected = false;
+let touched = false;
+let firstLoad = true;
+let active = false;
+const choices = {};
+for (const obj of objects) {
+  const label = document.createElement('label');
+  label.textContent = 'Block ' + obj;
+  const select = document.createElement('select');
+  for (const zone of zones) select.add(new Option(display(zone), zone));
+  select.disabled = true;
+  label.append(select); byId('positions').append(label); choices[obj] = select;
+  select.addEventListener('change', () => {
+    const previous = layout[obj];
+    const occupied = objects.find(other => other !== obj && layout[other] === select.value);
+    if (occupied) layout[occupied] = previous;
+    layout[obj] = select.value;
+    changed();
+  });
+}
+function draw() {
+  byId('board').replaceChildren();
+  for (const zone of zones) {
+    const obj = objects.find(key => layout[key] === zone);
+    const slot = document.createElement('div'); slot.className = 'slot'; slot.dataset.zone = zone;
+    const piece = document.createElement('span'); piece.className = 'block ' + (obj || '');
+    piece.textContent = obj || '–'; piece.setAttribute('aria-label', obj ? 'Block ' + obj : 'Empty');
+    const label = document.createElement('small'); label.textContent = display(zone);
+    slot.append(piece, label); byId('board').append(slot);
+  }
+  for (const obj of objects) choices[obj].value = layout[obj];
+  byId('preset').value = Object.keys(layouts).find(key => objects.every((obj, i) => layouts[key][i] === layout[obj])) || 'custom';
+}
+function controls() {
+  const off = pending || !connected;
+  for (const el of [...Object.values(choices),byId('assets'),byId('preset'),byId('exchange')]) el.disabled = off;
+  byId('remember').disabled = off || Object.values(layout).includes('buffer') || !byId('assets').value.trim();
+  byId('tidy').disabled = off || !saved || !byId('assets').value.trim();
+}
+function changed() {
+  touched = true; showFrame('run', null); byId('outcome').hidden = true; byId('error').hidden = true;
+  byId('status').textContent = saved ? 'Ready to check this layout against the saved reference.' : 'Arrange the blocks and remember the table first.';
+  draw(); controls();
+}
+byId('preset').addEventListener('change', () => {
+  layout = Object.fromEntries(objects.map((obj, i) => [obj, layouts[byId('preset').value][i]])); changed();
+});
+byId('assets').addEventListener('input', controls);
+function referenceText() {
+  if (!saved) return 'Choose an arrangement that you want PiPER to remember. Leave the buffer free.';
+  const observed = saved.capture.observation;
+  return objects.map(obj => obj + ' in ' + observed[obj]).join(' · ') +
+         (saved.allow_exchange ? '. A and B may trade places.' : '. Each block has its own zone.');
+}
+function showFrame(kind, record) {
+  if (kind === 'run') showFrame('first', record && record.first_frame && record.first_frame !== record.frame ? record : null);
+  const view = byId(kind + '-view');
+  view.hidden = !record || !record.frame;
+  const image = byId(kind + '-image');
+  if (!view.hidden) {
+    const url = '/api/table/' + (kind === 'first' ? record.first_frame : record.frame);
+    if (image.getAttribute('src') !== url) image.src = url;
+  } else image.removeAttribute('src');
+  byId('views').hidden = byId('ref-view').hidden && byId('first-view').hidden && byId('run-view').hidden;
+}
+function showResult(run) {
+  showFrame('run', run);
+  const result = run.result;
+  const outcome = result.status === 'tidy' ? 'Already tidy. PiPER left the table alone.' :
+    result.success ? 'PiPER restored the remembered arrangement.' :
+    result.status === 'unknown' ? 'The camera could not verify the arrangement.' : 'PiPER did not finish the arrangement.';
+  byId('run-summary').textContent = outcome + (!result.success && result.reason ? ' ' + result.reason : '');
+  const metrics = byId('metrics'); metrics.replaceChildren();
+  const milliseconds = (value, fallback = 'Unavailable') => Number.isFinite(value) ? value.toFixed(1) + ' ms' : fallback;
+  for (const [name, value] of [['Time to first arm motion', milliseconds(result.time_to_first_move_ms, 'No measured motion')],
+      ['First decision', milliseconds(result.first_decision_ms)], ['Total wall time', milliseconds(result.elapsed_wall_ms)]]) {
+    const group = document.createElement('div'); const dt = document.createElement('dt'); const dd = document.createElement('dd');
+    dt.textContent = name; dd.textContent = value; group.append(dt, dd); metrics.append(group);
+  }
+  const last = result.decisions.at(-1);
+  byId('last-observation').textContent = last ? 'Last camera check · ' +
+    objects.map(obj => obj + ' in ' + (last.observation[obj] || 'unknown zone')).join(' · ') : '';
+  const list = byId('move-list');
+  list.replaceChildren();
+  for (const move of result.moves) {
+    const row = document.createElement('li');
+    row.textContent = move.requested.object + ' from ' + move.requested.from + ' to ' + move.requested.to +
+      (move.verified ? ' · verified' : ' · unverified');
+    list.append(row);
+  }
+  byId('record').textContent = JSON.stringify(run, null, 2);
+  byId('outcome').hidden = false;
+}
+async function request(path, body) {
+  const response = await fetch('/api/table/' + path, body === undefined ? {} :
+    {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const value = await response.json();
+  if (!response.ok) throw new Error(value.error || 'The local request failed.');
+  return value;
+}
+function errorMessage(message) {
+  showFrame('run', null); byId('error').textContent = message; byId('error').hidden = false; byId('outcome').hidden = true;
+  byId('status').textContent = '';
+  if (/assets|folder/i.test(message)) byId('settings').open = true;
+}
+async function refresh() {
+  try {
+    const state = await request('state');
+    connected = true; pending = state.busy || state.other_busy; saved = state.reference;
+    if (firstLoad) {
+      byId('assets').value = state.assets;
+      if (saved) {
+        layout = {...(state.run ? state.run.layout : saved.layout)}; byId('exchange').checked = saved.allow_exchange; draw();
+      }
+      firstLoad = false;
+    }
+    byId('reference-text').textContent = referenceText();
+    showFrame('ref', saved);
+    if (state.error) errorMessage(state.error);
+    else if (pending) {
+      byId('status').textContent = state.other_busy ? 'Waiting for the other Studio job.' :
+        (state.operation === 'remember' ? 'Observing the reference table…' : 'Observing the table and running PiPER…');
+    } else {
+      byId('status').textContent = saved ? 'Reference saved locally. Choose a layout to test.' : 'Remember an arrangement to start.';
+      if ((!touched || active) && state.run) showResult(state.run);
+    }
+    if (pending) window.setTimeout(refresh, 450);
+    else active = false;
+  } catch (error) { connected = false; pending = false; errorMessage(error.message); }
+  controls();
+}
+async function act(kind) {
+  const body = {layout:{...layout}, assets:byId('assets').value.trim()};
+  if (kind === 'remember') body.allow_exchange = byId('exchange').checked; else body.reference_id = saved.id;
+  pending = true; active = true; controls(); byId('outcome').hidden = true; byId('error').hidden = true;
+  showFrame('run', null); byId('status').textContent = 'Starting simulation…';
+  try { await request(kind, body); await refresh(); }
+  catch (error) { pending = false; active = false; errorMessage(error.message); controls(); }
+}
+byId('remember').onclick = () => act('remember');
+byId('tidy').onclick = () => act('tidy');
+draw(); refresh();
+</script>
+</body>
+</html>
