@@ -6,6 +6,8 @@
 
 [Recorded demo](https://huggingface.co/spaces/Dvidia/dvidia-training) · [Synthetic datasets](https://huggingface.co/datasets/Dvidia/dvidia-training-examples) · [Pilot models](https://huggingface.co/Dvidia/dvidia-training-pilot)
 
+**[Remember this table](docs/tidy-table.md)** in Training Studio. Save an arrangement of three simulated blocks, shuffle them, then select **Tidy this table**. PiPER restored 10 of 16 shuffled tables and left all eight already-tidy tables alone. The six failures occurred during the approach to a block in the right-hand zone. [All 24 attempts](benchmarks/tidy-table-v01/evidence/attempts.jsonl)
+
 **[Record paired demonstrations in Godot](docs/godot-demonstration-v02.md).**
 Control the simulated PiPER's position and gripper, record synchronized native
 RGB-D and issued actions, then export explicitly reviewed segments in Terminal.
