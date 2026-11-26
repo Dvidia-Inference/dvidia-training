@@ -151,7 +151,9 @@ function showResult(run) {
   byId('run-summary').textContent = outcome + (!result.success && result.reason ? ' ' + result.reason : '');
   const metrics = byId('metrics'); metrics.replaceChildren();
   const milliseconds = (value, fallback = 'Unavailable') => Number.isFinite(value) ? value.toFixed(1) + ' ms' : fallback;
-  for (const [name, value] of [['Time to first arm motion', milliseconds(result.time_to_first_move_ms, 'No measured motion')],
+  const motion = {unavailable:'Measurement unavailable', threshold_not_reached:'Motion threshold not reached',
+    no_move_requested:'No move requested'}[result.motion_observation] || 'No measured motion';
+  for (const [name, value] of [['Time to first arm motion', milliseconds(result.time_to_first_move_ms, motion)],
       ['First decision', milliseconds(result.first_decision_ms)], ['Total wall time', milliseconds(result.elapsed_wall_ms)]]) {
     const group = document.createElement('div'); const dt = document.createElement('dt'); const dd = document.createElement('dd');
     dt.textContent = name; dd.textContent = value; group.append(dt, dd); metrics.append(group);
@@ -159,6 +161,9 @@ function showResult(run) {
   const last = result.decisions.at(-1);
   byId('last-observation').textContent = last ? 'Last camera check · ' +
     objects.map(obj => obj + ' in ' + (last.observation[obj] || 'unknown zone')).join(' · ') : '';
+  if (!result.success && result.moves.length && !result.moves.at(-1).verified && last) {
+    byId('last-observation').textContent += '. This check preceded the unverified move.';
+  }
   const list = byId('move-list');
   list.replaceChildren();
   for (const move of result.moves) {
