@@ -36,3 +36,8 @@ src/dvidia_training/episode_tape.py text eol=lf
 src/dvidia_training/embodiment_calibration.py text eol=lf
 benchmarks/camera-action-v02-preflight/*.py text eol=lf
 benchmarks/camera-action-v02-head-preflight/*.py text eol=lf
+# Preserve checksummed Unitree source descriptions and license bytes.
+src/dvidia_training/unitree_r1_7a/*.urdf -text -whitespace
+src/dvidia_training/unitree_r1_7a/LICENSE.txt -text
+# The bundled Three.js shaders preserve upstream whitespace.
+benchmarks/unitree-r1-7a-v01/viewer/arm.bundle.js -whitespace linguist-generated=true

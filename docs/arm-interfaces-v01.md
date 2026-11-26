@@ -1,9 +1,9 @@
 # Arm interfaces and skill installation v0.1
 
-One local command now describes three native simulation adapters, checks a
-learned policy against its exact embodiment, installs its data, and runs an
-independently scored attempt. The same package includes a common tracking
-benchmark and a small environment-conditioned lift-planning assessment.
+The local `dvidia-arm` command describes three native simulation adapters and
+left and right bare-arm kinematic references for the standalone Unitree R1-7A.
+It also checks a learned policy against its exact embodiment, installs its data
+and runs an independently scored attempt.
 
 This is a research preview. The three adapters are PiPER, SO-101, and UR5e with
 a Robotiq 2F-85. Only PiPER has a learned policy runner in this installer. No
@@ -11,24 +11,45 @@ physical arm is connected, calibrated or qualified by these commands.
 
 ## Install locally
 
-Use Python 3.12 and a fresh virtual environment. This preview is source branch
-`feat/arm-interfaces-v01`; the existing stable package and previous preview do
-not contain `dvidia-arm`.
+Use Python 3.12 and a fresh virtual environment. The R1-7A preview is on branch
+`feat/unitree-r1-7a-reference`.
 
 ```sh
-git clone --branch feat/arm-interfaces-v01 https://github.com/Dvidia-Inference/dvidia-training.git
+git clone --branch feat/unitree-r1-7a-reference https://github.com/Dvidia-Inference/dvidia-training.git
 cd dvidia-training
 python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install '.[arm]'
 dvidia-arm list
-dvidia-arm describe piper
+dvidia-arm list --include-references
 ```
 
 The CPU simulator needs no CUDA GPU. Setup requires network access; commands
 use local, verified assets after provisioning. Hardware minimums and other OS
 performance are unqualified. A browser UI can call the same Python functions;
 this preview adds Terminal commands and does not change the public website.
+
+## Unitree R1-7A bare-arm reference
+
+`describe` shows the supported sides. Select the side that matches your
+standalone arm to inspect the pinned Unitree source and compute the pose of
+its terminal link. Joint angles are in radians, ordered from the base to the
+wrist. The terminal pose is relative to the URDF base frame. The asset files
+ship with the package and the commands run locally.
+
+```sh
+dvidia-arm describe unitree-r1-7a
+dvidia-arm describe unitree-r1-7a --side right
+dvidia-arm pose unitree-r1-7a --side right --joints 0 0 0 0 0 0 0
+dvidia-arm benchmark-kinematics unitree-r1-7a --side right
+dvidia-arm benchmark-kinematics unitree-r1-7a --side left
+```
+
+The benchmark checks seven-joint forward kinematics against MuJoCo using the
+selected side's model. The reference ends at the bare wrist. Placement needs
+the actual gripper, its tool transform, a camera-to-base calibration and an
+R1-specific policy evaluated on that assembly. The existing PiPER skill uses
+six arm coordinates and a separate gripper coordinate. [Unitree SDK](https://github.com/unitreerobotics/r1-7a_sdk)
 
 ## Three explicit command contracts
 

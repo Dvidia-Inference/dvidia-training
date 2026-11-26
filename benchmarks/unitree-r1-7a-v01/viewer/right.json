@@ -1,0 +1,352 @@
+{
+  "schema": "dvidia.unitree-r1-7a-viewer/v1",
+  "side": "right",
+  "binary": "right.bin",
+  "binary_sha256": "fa034327e4a292f18bf75a85759f4a4cca3133297189207ba6d091186bcbf218",
+  "source": {
+    "side": "right",
+    "repository": "https://github.com/unitreerobotics/r1-7a_sdk",
+    "revision": "92f32514c6a9089c580ddf331eeb26075fcc5609",
+    "archive_url": "https://github.com/unitreerobotics/r1-7a_sdk/raw/92f32514c6a9089c580ddf331eeb26075fcc5609/urdf/URDF_R1-7A.tar.gz",
+    "archive_sha256": "dca2cea68150891b5312108dd7c448103d0f0d67690fde0918cea23b41b65e25",
+    "archive_member": "R1_Robotic_Arm_R_V1.2-1023/R1_Robotic_Arm_V1.2/R1_Robotic_Arm/urdf/R1_Robotic_Arm.urdf",
+    "urdf_sha256": "4e6655f511a88447e70a9437355241918b4ec094e4d8c09f1cae754d7724c0f5",
+    "license": "BSD-3-Clause",
+    "license_url": "https://github.com/unitreerobotics/r1-7a_sdk/blob/92f32514c6a9089c580ddf331eeb26075fcc5609/LICENSE",
+    "license_sha256": "41c9cedfb396ab780982b80c5de1d4c0bcfa947fe93cee2265ddc0f8fb049709"
+  },
+  "links": [
+    {
+      "name": "base_link",
+      "xyz": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "position_byte_offset": 0,
+      "vertex_count": 23914,
+      "index_byte_offset": 286968,
+      "index_count": 143628
+    },
+    {
+      "name": "Link1",
+      "xyz": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "position_byte_offset": 861480,
+      "vertex_count": 167,
+      "index_byte_offset": 863484,
+      "index_count": 984
+    },
+    {
+      "name": "Link2",
+      "xyz": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "position_byte_offset": 867420,
+      "vertex_count": 4861,
+      "index_byte_offset": 925752,
+      "index_count": 29052
+    },
+    {
+      "name": "Link3",
+      "xyz": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "position_byte_offset": 1041960,
+      "vertex_count": 6378,
+      "index_byte_offset": 1118496,
+      "index_count": 37530
+    },
+    {
+      "name": "Link4",
+      "xyz": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "position_byte_offset": 1268616,
+      "vertex_count": 3351,
+      "index_byte_offset": 1308828,
+      "index_count": 20094
+    },
+    {
+      "name": "Link5",
+      "xyz": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "position_byte_offset": 1389204,
+      "vertex_count": 2134,
+      "index_byte_offset": 1414812,
+      "index_count": 12858
+    },
+    {
+      "name": "Link6",
+      "xyz": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "position_byte_offset": 1466244,
+      "vertex_count": 194,
+      "index_byte_offset": 1468572,
+      "index_count": 1140
+    },
+    {
+      "name": "Link7",
+      "xyz": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "position_byte_offset": 1473132,
+      "vertex_count": 2406,
+      "index_byte_offset": 1502004,
+      "index_count": 14424
+    }
+  ],
+  "joints": [
+    {
+      "name": "J1",
+      "parent": "base_link",
+      "child": "Link1",
+      "xyz": [
+        0.0,
+        0.0,
+        0.069
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "lower": -2.723,
+      "upper": 2.723
+    },
+    {
+      "name": "J2",
+      "parent": "Link1",
+      "child": "Link2",
+      "xyz": [
+        0.0,
+        0.0,
+        0.0469
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "lower": 0.0,
+      "upper": 3.1416
+    },
+    {
+      "name": "J3",
+      "parent": "Link2",
+      "child": "Link3",
+      "xyz": [
+        0.0,
+        0.1085,
+        -0.0047926
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "lower": -0.349,
+      "upper": 3.491
+    },
+    {
+      "name": "J4",
+      "parent": "Link3",
+      "child": "Link4",
+      "xyz": [
+        0.025,
+        0.082408,
+        0.016191
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "lower": 0.0,
+      "upper": 3.1415
+    },
+    {
+      "name": "J5",
+      "parent": "Link4",
+      "child": "Link5",
+      "xyz": [
+        -0.022314,
+        -0.10786,
+        0.062877
+      ],
+      "rpy": [
+        -0.017453,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "lower": -2.269,
+      "upper": 2.269
+    },
+    {
+      "name": "J6",
+      "parent": "Link5",
+      "child": "Link6",
+      "xyz": [
+        -1.1462e-05,
+        -0.1072,
+        0.00069991
+      ],
+      "rpy": [
+        0.0,
+        -0.016375,
+        0.0
+      ],
+      "axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "lower": -0.785,
+      "upper": 0.785
+    },
+    {
+      "name": "J7",
+      "parent": "Link6",
+      "child": "Link7",
+      "xyz": [
+        0.0,
+        -0.01,
+        0.0
+      ],
+      "rpy": [
+        -3.1416,
+        0.0,
+        -3.1416
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "lower": -1.571,
+      "upper": 1.571
+    }
+  ]
+}

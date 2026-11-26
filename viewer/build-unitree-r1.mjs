@@ -1,0 +1,13 @@
+import {createRequire} from 'node:module';
+import {readFile,writeFile} from 'node:fs/promises';
+import {dirname,resolve} from 'node:path';
+import {fileURLToPath} from 'node:url';
+const here=dirname(fileURLToPath(import.meta.url));
+const deps=createRequire(resolve(process.env.DVIDIA_VIEWER_DEPENDENCIES || here,'package.json'));
+const major=JSON.parse(await readFile(resolve(dirname(deps.resolve('three')),'../package.json'),'utf8')).version;
+if(major!=='0.180.0') throw new Error('Use the pinned viewer dependencies');
+const output=resolve(here,'../benchmarks/unitree-r1-7a-v01/viewer');
+await deps('esbuild').build({entryPoints:[resolve(here,'unitree-r1.js')],outfile:resolve(output,'arm.bundle.js'),bundle:true,minify:true,format:'iife',target:'es2020',legalComments:'none',alias:{three:resolve(dirname(deps.resolve('three')),'three.module.js'),'three/addons/controls/OrbitControls.js':deps.resolve('three/addons/controls/OrbitControls.js')}});
+const license=await readFile(resolve(dirname(deps.resolve('three')),'../LICENSE'),'utf8');
+await writeFile(resolve(output,'THIRD-PARTY.txt'),'Three.js r180 and OrbitControls\nhttps://github.com/mrdoob/three.js/tree/r180\n\n'+license);
+await writeFile(resolve(output,'LICENSE.txt'),await readFile(resolve(here,'../LICENSE')));
