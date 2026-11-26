@@ -138,19 +138,21 @@ def _native_factory():
     return NativeTable
 
 
-def capture_table(initial, *, assets, seed=0, interchangeable=(), offsets_xy=None):
+def capture_table(initial, *, assets, seed=0, interchangeable=(), offsets_xy=None, frame_sink=None):
     """Fit a reference to a rendered observation, refusing incomplete or ambiguous layouts."""
     layout = _initial_slots(initial)
     offsets = _offsets(seed, offsets_xy)
     started = perf_counter()
     with _native_factory()(assets, layout, offsets_xy=offsets) as sim:
         observation = sim.observe()
+        if frame_sink is not None:
+            frame_sink(sim.last_frame)
     return dict(reference=remember_table(observation, interchangeable),
                 observation=observation, seed=seed, offsets_xy=offsets,
                 capture_wall_ms=(perf_counter() - started)*1000)
 
 
-def run_table_case(reference, initial, *, assets, seed=0, offsets_xy=None):
+def run_table_case(reference, initial, *, assets, seed=0, offsets_xy=None, frame_sink=None):
     """Execute one no-retry episode in one persistent native scene, reobserving after moves."""
     approved = validate_reference(reference)
     layout = _initial_slots(initial)
@@ -171,6 +173,8 @@ def run_table_case(reference, initial, *, assets, seed=0, offsets_xy=None):
             result["setup_wall_ms"] = elapsed()
             while True:
                 observation = sim.observe()
+                if frame_sink is not None:
+                    frame_sink(sim.last_frame)
                 began_plan = perf_counter()
                 plan = plan_table(approved, observation)
                 decision = dict(observation=dict(observation), plan=plan,
