@@ -1,0 +1,97 @@
+{
+  "capture": {
+    "reference": {
+      "schema": "dvidia.table-reference/v1",
+      "remembered": {
+        "A": "left",
+        "B": "center",
+        "C": "right"
+      },
+      "interchangeable": [],
+      "allowed_zones": {
+        "A": [
+          "left"
+        ],
+        "B": [
+          "center"
+        ],
+        "C": [
+          "right"
+        ]
+      },
+      "id": "30149d136dd31710a6ea87536af4844ee115510c206c41764dfdf3a71077a30a"
+    },
+    "observation": {
+      "A": "left",
+      "B": "center",
+      "C": "right"
+    },
+    "seed": 0,
+    "offsets_xy": {
+      "A": [
+        0.0,
+        0.0
+      ],
+      "B": [
+        0.0,
+        0.0
+      ],
+      "C": [
+        0.0,
+        0.0
+      ]
+    },
+    "capture_wall_ms": 591.0827500047162
+  },
+  "references": {
+    "exact": {
+      "schema": "dvidia.table-reference/v1",
+      "remembered": {
+        "A": "left",
+        "B": "center",
+        "C": "right"
+      },
+      "interchangeable": [],
+      "allowed_zones": {
+        "A": [
+          "left"
+        ],
+        "B": [
+          "center"
+        ],
+        "C": [
+          "right"
+        ]
+      },
+      "id": "30149d136dd31710a6ea87536af4844ee115510c206c41764dfdf3a71077a30a"
+    },
+    "equivalent": {
+      "schema": "dvidia.table-reference/v1",
+      "remembered": {
+        "A": "left",
+        "B": "center",
+        "C": "right"
+      },
+      "interchangeable": [
+        [
+          "A",
+          "B"
+        ]
+      ],
+      "allowed_zones": {
+        "A": [
+          "left",
+          "center"
+        ],
+        "B": [
+          "left",
+          "center"
+        ],
+        "C": [
+          "right"
+        ]
+      },
+      "id": "007881fe6c7859e77038613c47a0247935abea3eb0ffa28bd9ad79d3012bc127"
+    }
+  }
+}
