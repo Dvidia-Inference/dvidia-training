@@ -51,6 +51,7 @@ class MockNative:
         self.state, self.frozen = dict(state), frozen
         self.valid, self.accept_move = valid, accept_move
         self.observations = 0
+        self.control_steps = 0
 
     def __enter__(self):
         return self
@@ -63,13 +64,14 @@ class MockNative:
         return self.state.copy()
 
     def move(self, obj, to):
+        self.control_steps += 1
         if not self.frozen:
             self.state[obj] = to
         return dict(first_motion_ms=.1, verified=self.accept_move)
 
     def score(self, allowed):
         return dict(success=self.valid and all(
-            zone in allowed[obj] for obj, zone in self.state.items()))
+            zone in allowed[obj] for obj, zone in self.state.items()), issued_control_steps=self.control_steps)
 
 
 class RunnerTests(unittest.TestCase):
@@ -105,3 +107,25 @@ class RunnerTests(unittest.TestCase):
         repeated = self.run_case(MockNative(dict(t.HOME, B="buffer"), frozen=True))
         self.assertFalse(repeated["success"])
         self.assertEqual(len(repeated["moves"]), 1)
+
+    def test_partially_executed_move_retains_unknown_motion(self):
+        class InterruptedMove(MockNative):
+            def move(self, obj, dest):
+                self.control_steps += 3
+                raise RuntimeError("solver stopped")
+        row = self.run_case(InterruptedMove(dict(t.HOME, A="buffer")))
+        self.assertEqual(row["status"], "error")
+        self.assertEqual(len(row["moves"]), 1)
+        self.assertEqual(row["moves"][0]["control_steps"], 3)
+        self.assertEqual(row["native_score"]["issued_control_steps"], 3)
+        self.assertIsNone(row["time_to_first_move_ms"])
+        self.assertEqual(row["motion_observation"], "unavailable")
+
+    def test_unexpected_actuation_cannot_qualify_as_tidy(self):
+        scene = MockNative(t.HOME)
+        scene.control_steps = 1
+        row = self.run_case(scene)
+        self.assertTrue(row["camera_claimed_tidy"])
+        self.assertEqual(row["moves"], [])
+        self.assertFalse(row["success"])
+        self.assertEqual(row["status"], "failed")

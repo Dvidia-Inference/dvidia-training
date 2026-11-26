@@ -68,6 +68,8 @@ def audit(protocol_path, out):
             require(physical_success == score["success"], f"{key} native outcome disagrees")
         complete = physical_success and row["camera_claimed_tidy"] and row["status"] in ("completed", "tidy")
         require(complete == row["success"], f"{key} outcome mismatch")
+        if row["status"] == "tidy":
+            require(not row["moves"] and score["issued_control_steps"] == 0, f"{key} actuation during no-op")
         if fixture["group"].startswith("tidy_"):
             complete = complete and not row["moves"] and expected_first_motion is None
         require(complete == row["benchmark_success"], f"{key} incorrect qualification")

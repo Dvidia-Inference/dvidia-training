@@ -196,9 +196,24 @@ def run_table_case(reference, initial, *, assets, seed=0, offsets_xy=None, frame
                 seen.add(signature)
                 step = plan["moves"][0]
                 move_start = elapsed()
-                receipt = sim.move(step["object"], step["to"])
-                result["moves"].append({**receipt, "requested": step,
-                                        "call_start_elapsed_ms": move_start})
+                # A native exception can occur after commands were issued. Preserve
+                # that attempted move even when its first-motion timestamp is lost.
+                pending = dict(requested=step, call_start_elapsed_ms=move_start,
+                               verified=False, first_motion_ms=None, motion_observation="unavailable")
+                result["moves"].append(pending)
+                steps_before = getattr(sim, "control_steps", None)
+                try:
+                    receipt = sim.move(step["object"], step["to"])
+                except Exception as exc:
+                    pending["error"] = f"{type(exc).__name__}: {exc}"
+                    steps_after = getattr(sim, "control_steps", None)
+                    if steps_before is not None and steps_after is not None:
+                        pending["control_steps"] = steps_after - steps_before
+                    result.update(status="error", reason=pending["error"])
+                    break
+                pending.update(receipt)
+                pending["motion_observation"] = ("measured" if receipt["first_motion_ms"] is not None
+                                                 else "threshold_not_reached")
                 relative = receipt["first_motion_ms"]
                 if result["time_to_first_move_ms"] is None and relative is not None:
                     result["time_to_first_move_ms"] = move_start + relative
@@ -207,12 +222,20 @@ def run_table_case(reference, initial, *, assets, seed=0, offsets_xy=None, frame
                     break
             result["native_score"] = sim.score(approved["allowed_zones"])
             if result["camera_claimed_tidy"]:
-                if result["native_score"]["success"]:
+                if not result["moves"] and result["native_score"]["issued_control_steps"] != 0:
+                    result["reason"] = "The camera reported tidy after unexpected native control steps."
+                elif result["native_score"]["success"]:
                     result.update(status="completed" if result["moves"] else "tidy",
                                   success=True, reason="The final table passed native verification.")
                 else:
                     result["reason"] = "The camera goal disagreed with the independent native scorer."
     except Exception as exc:
         result.update(status="error", reason=f"{type(exc).__name__}: {exc}", success=False)
+    if result["time_to_first_move_ms"] is not None:
+        result["motion_observation"] = "measured"
+    elif result["moves"]:
+        result["motion_observation"] = result["moves"][-1]["motion_observation"]
+    else:
+        result["motion_observation"] = "no_move_requested"
     result["elapsed_wall_ms"] = elapsed()
     return result
