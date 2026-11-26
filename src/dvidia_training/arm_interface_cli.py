@@ -7,12 +7,40 @@ from pathlib import Path
 import sys
 
 
+R1 = 'unitree-r1-7a'
+R1_SIDES = ('left', 'right')
+
+
+def _r1_description(side=None):
+    description = {
+        'id': R1, 'name': 'Unitree R1-7A', 'interface_id': 'urdf-kinematics',
+        'arm_axes': 7, 'gripper_axes': 0, 'available_sides': list(R1_SIDES),
+        'side': side, 'scope': 'Unloaded bare-arm kinematics in the vendor URDF base frame.',
+        'skill_install_supported': False, 'hardware_transport': False,
+        'physical_robot_ready': False, 'task_qualified': False,
+    }
+    if side is not None:
+        from .unitree_r1_assets import source_info
+        description['source'] = source_info(side)
+    return description
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest='command', required=True)
-    commands.add_parser('list', help='List implemented native simulation adapters; no hardware connection.')
+    listing = commands.add_parser('list', help='List simulation adapters. Add --include-references for bare-arm kinematics.')
+    listing.add_argument('--include-references', action='store_true',
+                         help='Also show the Unitree R1-7A bare-arm reference.')
     describe = commands.add_parser('describe')
     describe.add_argument('robot')
+    describe.add_argument('--side', choices=R1_SIDES, help='Select the left or right R1-7A reference.')
+    pose = commands.add_parser('pose', help='Compute the offline pose of the bare arm’s terminal link.')
+    kinematics = commands.add_parser('benchmark-kinematics', help='Check bare-arm poses against MuJoCo offline.')
+    for command in (pose, kinematics):
+        command.add_argument('robot', choices=(R1,))
+        command.add_argument('--side', required=True, choices=R1_SIDES)
+    pose.add_argument('--joints', required=True, type=float, nargs=7, metavar='RAD',
+                      help='Seven joint angles in URDF chain order, in radians.')
     for name in ('check', 'install'):
         command = commands.add_parser(name)
         command.add_argument('--model', type=Path, required=True)
@@ -43,9 +71,30 @@ def main(argv=None):
     commands.add_parser('task-template', help='Print an explicitly synthetic lift-planning example.')
     args = parser.parse_args(argv)
     try:
-        if args.command in ('list', 'describe'):
-            from .arm_interfaces import catalog, contract
-            result = catalog() if args.command == 'list' else contract(args.robot)
+        if args.command in ('check', 'install') and args.robot == R1:
+            raise ValueError('Unitree R1-7A supports bare-arm kinematics. '
+                             'The PiPER placement skill requires the PiPER arm and gripper.')
+        if args.command == 'list':
+            from .arm_interfaces import catalog
+            result = catalog()
+            if args.include_references:
+                result.append(_r1_description())
+        elif args.command == 'describe':
+            if args.robot == R1:
+                result = _r1_description(args.side)
+            else:
+                if args.side is not None:
+                    raise ValueError('--side applies only to the Unitree R1-7A reference.')
+                from .arm_interfaces import contract
+                result = contract(args.robot)
+        elif args.command == 'pose':
+            from .unitree_r1_kinematics import pose
+            result = pose(args.side, args.joints)
+        elif args.command == 'benchmark-kinematics':
+            from .unitree_r1_kinematics import benchmark
+            result = benchmark(args.side)
+            print(json.dumps(result, indent=2, allow_nan=False))
+            return 0 if result['passed'] else 1
         elif args.command == 'check':
             from .arm_skill_install import check_model
             result = check_model(args.model, args.robot, interface=args.interface)

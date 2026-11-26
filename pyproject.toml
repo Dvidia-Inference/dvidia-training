@@ -7,8 +7,8 @@ name = "dvidia-training"
 version = "0.1.3.dev5"
 description = "Local CPU training from Skillspace footage, with optional simulation movement candidates"
 readme = "README.md"
-license = "MIT AND Apache-2.0"
-license-files = ["LICENSE", "third_party/observation-models/*LICENSE.txt", "third_party/mujoco/*.txt", "third_party/robot-models/*LICENSE.txt"]
+license = "MIT AND Apache-2.0 AND BSD-3-Clause"
+license-files = ["LICENSE", "third_party/observation-models/*LICENSE.txt", "third_party/mujoco/*.txt", "third_party/robot-models/*LICENSE.txt", "src/dvidia_training/unitree_r1_7a/LICENSE.txt"]
 requires-python = ">=3.12"
 dependencies = ["numpy==2.5.3"]
 classifiers = [
@@ -81,4 +81,4 @@ dvidia-piper-clock-skill = "dvidia_training.piper_grip_clock_skill:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-dvidia_training = ["*.html", "*.json", "*.js", "*.mjs", "*.txt", "*.wasm", "video_goal_example.mp4", "LICENSE", "requirements.lock.txt"]
+dvidia_training = ["*.html", "*.json", "*.js", "*.mjs", "*.txt", "*.wasm", "video_goal_example.mp4", "LICENSE", "requirements.lock.txt", "unitree_r1_7a/*.urdf", "unitree_r1_7a/LICENSE.txt"]

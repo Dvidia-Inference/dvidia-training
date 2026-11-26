@@ -1,10 +1,20 @@
 # Upcoming hardware support
 
-Updated 11 October 2026. This is DVIDIA's planned support list, not a purchase
+Updated 25 November 2026. This is DVIDIA's planned support list, not a purchase
 decision, delivery schedule or declaration of compatibility. PiPER and SO-101 now have [pinned CPU simulation profiles](robot-simulation-library.md)
 and unloaded numerical benchmarks. PiPER also has an [authored contact pilot](piper-contact-pilot.md).
 Their object-task learning and physical
-adapters remain unqualified. The other additions below remain upcoming.
+adapters remain unqualified. Additional targets and their evidence follow below.
+
+## Standalone Unitree R1-7A
+
+The left and right **seven-axis bare arms** have separate pinned Unitree descriptions.
+The offline CLI reports each joint range and the 3D position and orientation of
+the final link. Across 20 joint configurations per side, a NumPy calculation and
+MuJoCo agreed on all 280 moving-link transforms within 10⁻⁹ m and 10⁻⁹ rad.
+The next integration steps are a measured mounting frame and a profile for the
+installed end effector, followed by demonstrations and a placement benchmark
+specific to that arm and tool. [Viewer, commands and benchmark results](../benchmarks/unitree-r1-7a-v01/README.md)
 
 ## Planned targets
 
