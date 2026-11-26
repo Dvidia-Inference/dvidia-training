@@ -1,0 +1,663 @@
+{
+  "schema": "dvidia.tidy-table-registration/v1",
+  "scope": "Simulation only. Three distinguishable rigid cubes, known table and camera, four fixed single-occupancy slots and an authored PiPER manipulation controller. Held out means fresh fixture seeds and sub-slot positions; all scenes use the same geometry.",
+  "reference": {
+    "initial": {
+      "A": "left",
+      "B": "center",
+      "C": "right"
+    },
+    "seed": 0,
+    "offsets_xy": {
+      "A": [
+        0.0,
+        0.0
+      ],
+      "B": [
+        0.0,
+        0.0
+      ],
+      "C": [
+        0.0,
+        0.0
+      ]
+    },
+    "exact": [],
+    "equivalent": [
+      [
+        "A",
+        "B"
+      ]
+    ]
+  },
+  "intended_slots_xy_m": {
+    "left": [
+      0.3,
+      -0.055
+    ],
+    "center": [
+      0.4,
+      -0.055
+    ],
+    "right": [
+      0.4,
+      0.055
+    ],
+    "buffer": [
+      0.3,
+      0.055
+    ]
+  },
+  "execution": "One confirmation pass in listed order after controller freeze. Keep each registered case and failed attempt. Reobserve after each verified move. No retry following a failed move or unavailable perception. Stop on repeated layout or at eight issued moves. No benchmark-driven tuning.",
+  "counts": {
+    "one_gap": 8,
+    "shuffle": 8,
+    "tidy_exact": 4,
+    "tidy_equivalent": 4
+  },
+  "scoring": "Whole-table success requires observed goal state and independent native scorer success at rest. Tidy scenes additionally require zero move calls. Publish actual native scorer criteria and every refusal, failure and missing measurement.",
+  "timing": "Time from local tidy invocation (before native scene construction, after validating inputs) to first post-command native tick with at least 0.001 radians of arm joint change. Report p50 and p95 on cases with a detected move, sample count and missing count. A no-op has null latency to first move. Also report decision latency on every decided case, including no-ops. All values are local wall clock; exclude historical reference capture, asset download, CLI process startup and HTTP transport.",
+  "generalization": "Starts and jitter identified before running. Unique and interchangeable references derive from a single approved RGB observation of the same canonical table. Home slots and allowed equivalent groups are specified by user intent. Ambiguous or hidden items require another observation.",
+  "cases": [
+    {
+      "id": "one_gap-01",
+      "group": "one_gap",
+      "reference": "exact",
+      "seed": 2611256401,
+      "initial": {
+        "A": "buffer",
+        "B": "center",
+        "C": "right"
+      },
+      "offsets_xy": {
+        "A": [
+          1.4e-05,
+          -0.000605
+        ],
+        "B": [
+          0.000377,
+          -0.00347
+        ],
+        "C": [
+          -0.001775,
+          -0.001551
+        ]
+      }
+    },
+    {
+      "id": "one_gap-02",
+      "group": "one_gap",
+      "reference": "exact",
+      "seed": 2611256402,
+      "initial": {
+        "A": "left",
+        "B": "buffer",
+        "C": "right"
+      },
+      "offsets_xy": {
+        "A": [
+          -0.001448,
+          0.003619
+        ],
+        "B": [
+          -0.003812,
+          0.00304
+        ],
+        "C": [
+          0.003546,
+          -0.000406
+        ]
+      }
+    },
+    {
+      "id": "one_gap-03",
+      "group": "one_gap",
+      "reference": "exact",
+      "seed": 2611256403,
+      "initial": {
+        "A": "left",
+        "B": "center",
+        "C": "buffer"
+      },
+      "offsets_xy": {
+        "A": [
+          -0.001845,
+          -0.002233
+        ],
+        "B": [
+          -0.003595,
+          0.00023
+        ],
+        "C": [
+          -0.002868,
+          0.002503
+        ]
+      }
+    },
+    {
+      "id": "one_gap-04",
+      "group": "one_gap",
+      "reference": "exact",
+      "seed": 2611256404,
+      "initial": {
+        "A": "buffer",
+        "B": "center",
+        "C": "right"
+      },
+      "offsets_xy": {
+        "A": [
+          0.001634,
+          -0.003264
+        ],
+        "B": [
+          -0.002986,
+          0.002978
+        ],
+        "C": [
+          0.002739,
+          0.000876
+        ]
+      }
+    },
+    {
+      "id": "one_gap-05",
+      "group": "one_gap",
+      "reference": "exact",
+      "seed": 2611256405,
+      "initial": {
+        "A": "left",
+        "B": "buffer",
+        "C": "right"
+      },
+      "offsets_xy": {
+        "A": [
+          0.002322,
+          -0.001088
+        ],
+        "B": [
+          -0.000976,
+          0.000548
+        ],
+        "C": [
+          0.001184,
+          0.001737
+        ]
+      }
+    },
+    {
+      "id": "one_gap-06",
+      "group": "one_gap",
+      "reference": "exact",
+      "seed": 2611256406,
+      "initial": {
+        "A": "left",
+        "B": "center",
+        "C": "buffer"
+      },
+      "offsets_xy": {
+        "A": [
+          0.000433,
+          0.001843
+        ],
+        "B": [
+          -0.003306,
+          -0.001326
+        ],
+        "C": [
+          -0.003987,
+          -0.003844
+        ]
+      }
+    },
+    {
+      "id": "one_gap-07",
+      "group": "one_gap",
+      "reference": "exact",
+      "seed": 2611256407,
+      "initial": {
+        "A": "buffer",
+        "B": "center",
+        "C": "right"
+      },
+      "offsets_xy": {
+        "A": [
+          -0.001936,
+          -0.003882
+        ],
+        "B": [
+          0.001603,
+          0.002452
+        ],
+        "C": [
+          -0.000812,
+          -0.001774
+        ]
+      }
+    },
+    {
+      "id": "one_gap-08",
+      "group": "one_gap",
+      "reference": "exact",
+      "seed": 2611256408,
+      "initial": {
+        "A": "left",
+        "B": "buffer",
+        "C": "right"
+      },
+      "offsets_xy": {
+        "A": [
+          -0.00267,
+          -0.003295
+        ],
+        "B": [
+          -0.001943,
+          0.000605
+        ],
+        "C": [
+          0.002667,
+          0.003417
+        ]
+      }
+    },
+    {
+      "id": "shuffle-01",
+      "group": "shuffle",
+      "reference": "exact",
+      "seed": 2611256409,
+      "initial": {
+        "A": "center",
+        "B": "left",
+        "C": "right"
+      },
+      "offsets_xy": {
+        "A": [
+          -0.001879,
+          -0.003157
+        ],
+        "B": [
+          0.001315,
+          -0.002348
+        ],
+        "C": [
+          0.003965,
+          0.003047
+        ]
+      }
+    },
+    {
+      "id": "shuffle-02",
+      "group": "shuffle",
+      "reference": "exact",
+      "seed": 2611256410,
+      "initial": {
+        "A": "right",
+        "B": "center",
+        "C": "left"
+      },
+      "offsets_xy": {
+        "A": [
+          -0.001612,
+          0.003801
+        ],
+        "B": [
+          -0.001701,
+          -0.003202
+        ],
+        "C": [
+          -0.002096,
+          0.00133
+        ]
+      }
+    },
+    {
+      "id": "shuffle-03",
+      "group": "shuffle",
+      "reference": "exact",
+      "seed": 2611256411,
+      "initial": {
+        "A": "left",
+        "B": "right",
+        "C": "center"
+      },
+      "offsets_xy": {
+        "A": [
+          -0.00393,
+          -0.002665
+        ],
+        "B": [
+          0.000472,
+          -0.003923
+        ],
+        "C": [
+          -0.001155,
+          -0.000911
+        ]
+      }
+    },
+    {
+      "id": "shuffle-04",
+      "group": "shuffle",
+      "reference": "exact",
+      "seed": 2611256412,
+      "initial": {
+        "A": "center",
+        "B": "right",
+        "C": "left"
+      },
+      "offsets_xy": {
+        "A": [
+          0.002111,
+          0.000691
+        ],
+        "B": [
+          0.002531,
+          -0.00047
+        ],
+        "C": [
+          -0.001247,
+          0.002549
+        ]
+      }
+    },
+    {
+      "id": "shuffle-05",
+      "group": "shuffle",
+      "reference": "exact",
+      "seed": 2611256413,
+      "initial": {
+        "A": "right",
+        "B": "left",
+        "C": "center"
+      },
+      "offsets_xy": {
+        "A": [
+          0.000758,
+          0.003669
+        ],
+        "B": [
+          -0.001898,
+          0.002466
+        ],
+        "C": [
+          -0.00125,
+          -0.002289
+        ]
+      }
+    },
+    {
+      "id": "shuffle-06",
+      "group": "shuffle",
+      "reference": "exact",
+      "seed": 2611256414,
+      "initial": {
+        "A": "center",
+        "B": "left",
+        "C": "right"
+      },
+      "offsets_xy": {
+        "A": [
+          -0.003524,
+          -0.002199
+        ],
+        "B": [
+          0.00011,
+          0.003881
+        ],
+        "C": [
+          0.000366,
+          -0.003281
+        ]
+      }
+    },
+    {
+      "id": "shuffle-07",
+      "group": "shuffle",
+      "reference": "exact",
+      "seed": 2611256415,
+      "initial": {
+        "A": "right",
+        "B": "center",
+        "C": "left"
+      },
+      "offsets_xy": {
+        "A": [
+          0.002184,
+          -0.001128
+        ],
+        "B": [
+          -0.001864,
+          -0.002266
+        ],
+        "C": [
+          -1.8e-05,
+          -0.002139
+        ]
+      }
+    },
+    {
+      "id": "shuffle-08",
+      "group": "shuffle",
+      "reference": "exact",
+      "seed": 2611256416,
+      "initial": {
+        "A": "left",
+        "B": "right",
+        "C": "center"
+      },
+      "offsets_xy": {
+        "A": [
+          0.003739,
+          -0.003309
+        ],
+        "B": [
+          0.003901,
+          0.003369
+        ],
+        "C": [
+          -0.001394,
+          -0.002855
+        ]
+      }
+    },
+    {
+      "id": "tidy_exact-01",
+      "group": "tidy_exact",
+      "reference": "exact",
+      "seed": 2611256417,
+      "initial": {
+        "A": "left",
+        "B": "center",
+        "C": "right"
+      },
+      "offsets_xy": {
+        "A": [
+          -0.001044,
+          -0.00279
+        ],
+        "B": [
+          -0.000951,
+          0.000554
+        ],
+        "C": [
+          0.003642,
+          -0.001602
+        ]
+      }
+    },
+    {
+      "id": "tidy_exact-02",
+      "group": "tidy_exact",
+      "reference": "exact",
+      "seed": 2611256418,
+      "initial": {
+        "A": "left",
+        "B": "center",
+        "C": "right"
+      },
+      "offsets_xy": {
+        "A": [
+          -0.003495,
+          0.002788
+        ],
+        "B": [
+          0.002716,
+          0.000962
+        ],
+        "C": [
+          0.001561,
+          0.002903
+        ]
+      }
+    },
+    {
+      "id": "tidy_exact-03",
+      "group": "tidy_exact",
+      "reference": "exact",
+      "seed": 2611256419,
+      "initial": {
+        "A": "left",
+        "B": "center",
+        "C": "right"
+      },
+      "offsets_xy": {
+        "A": [
+          -0.003154,
+          0.000654
+        ],
+        "B": [
+          0.00313,
+          0.003213
+        ],
+        "C": [
+          -0.002294,
+          0.002004
+        ]
+      }
+    },
+    {
+      "id": "tidy_exact-04",
+      "group": "tidy_exact",
+      "reference": "exact",
+      "seed": 2611256420,
+      "initial": {
+        "A": "left",
+        "B": "center",
+        "C": "right"
+      },
+      "offsets_xy": {
+        "A": [
+          -0.002083,
+          -0.00365
+        ],
+        "B": [
+          -0.000658,
+          0.001064
+        ],
+        "C": [
+          -0.003557,
+          -0.000524
+        ]
+      }
+    },
+    {
+      "id": "tidy_equivalent-01",
+      "group": "tidy_equivalent",
+      "reference": "equivalent",
+      "seed": 2611256421,
+      "initial": {
+        "A": "center",
+        "B": "left",
+        "C": "right"
+      },
+      "offsets_xy": {
+        "A": [
+          0.003559,
+          -0.002681
+        ],
+        "B": [
+          0.003497,
+          0.002124
+        ],
+        "C": [
+          0.000505,
+          -0.002245
+        ]
+      }
+    },
+    {
+      "id": "tidy_equivalent-02",
+      "group": "tidy_equivalent",
+      "reference": "equivalent",
+      "seed": 2611256422,
+      "initial": {
+        "A": "center",
+        "B": "left",
+        "C": "right"
+      },
+      "offsets_xy": {
+        "A": [
+          -0.001279,
+          -0.001836
+        ],
+        "B": [
+          -0.001046,
+          0.000386
+        ],
+        "C": [
+          -0.000518,
+          0.002376
+        ]
+      }
+    },
+    {
+      "id": "tidy_equivalent-03",
+      "group": "tidy_equivalent",
+      "reference": "equivalent",
+      "seed": 2611256423,
+      "initial": {
+        "A": "center",
+        "B": "left",
+        "C": "right"
+      },
+      "offsets_xy": {
+        "A": [
+          0.00034,
+          0.003412
+        ],
+        "B": [
+          0.003567,
+          0.000476
+        ],
+        "C": [
+          -0.003934,
+          -0.002536
+        ]
+      }
+    },
+    {
+      "id": "tidy_equivalent-04",
+      "group": "tidy_equivalent",
+      "reference": "equivalent",
+      "seed": 2611256424,
+      "initial": {
+        "A": "center",
+        "B": "left",
+        "C": "right"
+      },
+      "offsets_xy": {
+        "A": [
+          0.003168,
+          0.003427
+        ],
+        "B": [
+          -0.000295,
+          0.003841
+        ],
+        "C": [
+          0.002439,
+          -0.002317
+        ]
+      }
+    }
+  ]
+}

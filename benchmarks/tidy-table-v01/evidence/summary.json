@@ -1,0 +1,193 @@
+{
+  "schema": "dvidia.tidy-table-benchmark/v1",
+  "registration_sha256": "0eb3c1eeca94f26441038bed4e874e6500ef80eb237fe6c0326e87d43c6dc2f8",
+  "started_utc": "2026-11-26T02:22:04.331449+00:00",
+  "git_commit": "d7249b0fbc1df99d0aa872adbae90c5abe00918a",
+  "source_sha256": {
+    "benchmark-tidy-table.py": "5d5208ff70687592ab2379c0f39233b9c7ade70165edc060f4fc53efbe3e9a20",
+    "tidy_table.py": "2f68f20ff1bdfb275ef96759435e496c0784cf9b59702ac0adcb3c87ecdd5506",
+    "tidy_table_native.py": "ace2e55bb036b766a9c6508f6f50b10c200a9b1ab7dfdad57c8c4c6cdafa492c"
+  },
+  "system": "Darwin",
+  "os_release": "25.5.0",
+  "machine": "arm64",
+  "cpu_model": "Apple M5",
+  "python": "3.12.9",
+  "mujoco": "3.15.0",
+  "numpy": "2.5.3",
+  "timing_scope": "Time from local tidy invocation (before native scene construction, after validating inputs) to first post-command native tick with at least 0.001 radians of arm joint change. Report p50 and p95 on cases with a detected move, sample count and missing count. A no-op has null latency to first move. Also report decision latency on every decided case, including no-ops. All values are local wall clock; exclude historical reference capture, asset download, CLI process startup and HTTP transport.",
+  "worker_count": 1,
+  "finished_utc": "2026-11-26T02:22:26.863843+00:00",
+  "overall": {
+    "cases": 24,
+    "successes": 18,
+    "status_counts": {
+      "completed": 10,
+      "failed": 6,
+      "tidy": 8
+    },
+    "issued_moves": 21,
+    "moved_cases": 16,
+    "no_recorded_first_motion": 8,
+    "first_motion_wall": {
+      "n": 16,
+      "p50_ms": 241.58593802712858,
+      "p95_ms": 306.8573332566302
+    },
+    "first_decision_wall": {
+      "n": 24,
+      "p50_ms": 239.0271879849024,
+      "p95_ms": 297.86337146069854
+    },
+    "no_move_calls": 8,
+    "verified_no_op": 8,
+    "camera_false_completions": 0
+  },
+  "shuffles": {
+    "cases": 16,
+    "successes": 10,
+    "status_counts": {
+      "completed": 10,
+      "failed": 6
+    },
+    "issued_moves": 21,
+    "moved_cases": 16,
+    "no_recorded_first_motion": 0,
+    "first_motion_wall": {
+      "n": 16,
+      "p50_ms": 241.58593802712858,
+      "p95_ms": 306.8573332566302
+    },
+    "first_decision_wall": {
+      "n": 16,
+      "p50_ms": 239.0271879849024,
+      "p95_ms": 304.1819278150797
+    },
+    "no_move_calls": 0,
+    "verified_no_op": 0,
+    "camera_false_completions": 0
+  },
+  "already_tidy": {
+    "cases": 8,
+    "successes": 8,
+    "status_counts": {
+      "tidy": 8
+    },
+    "issued_moves": 0,
+    "moved_cases": 0,
+    "no_recorded_first_motion": 8,
+    "first_motion_wall": {
+      "n": 0,
+      "p50_ms": null,
+      "p95_ms": null
+    },
+    "first_decision_wall": {
+      "n": 8,
+      "p50_ms": 234.80212496360764,
+      "p95_ms": 277.7227375539951
+    },
+    "no_move_calls": 8,
+    "verified_no_op": 8,
+    "camera_false_completions": 0
+  },
+  "groups": {
+    "one_gap": {
+      "cases": 8,
+      "successes": 8,
+      "status_counts": {
+        "completed": 8
+      },
+      "issued_moves": 8,
+      "moved_cases": 8,
+      "no_recorded_first_motion": 0,
+      "first_motion_wall": {
+        "n": 8,
+        "p50_ms": 213.8338959775865,
+        "p95_ms": 249.05877909623086
+      },
+      "first_decision_wall": {
+        "n": 8,
+        "p50_ms": 210.99633345147595,
+        "p95_ms": 245.92480853316374
+      },
+      "no_move_calls": 0,
+      "verified_no_op": 0,
+      "camera_false_completions": 0
+    },
+    "shuffle": {
+      "cases": 8,
+      "successes": 2,
+      "status_counts": {
+        "completed": 2,
+        "failed": 6
+      },
+      "issued_moves": 13,
+      "moved_cases": 8,
+      "no_recorded_first_motion": 0,
+      "first_motion_wall": {
+        "n": 8,
+        "p50_ms": 276.61860396619886,
+        "p95_ms": 316.4196665107738
+      },
+      "first_decision_wall": {
+        "n": 8,
+        "p50_ms": 274.06156301731244,
+        "p95_ms": 313.44967782497406
+      },
+      "no_move_calls": 0,
+      "verified_no_op": 0,
+      "camera_false_completions": 0
+    },
+    "tidy_exact": {
+      "cases": 4,
+      "successes": 4,
+      "status_counts": {
+        "tidy": 4
+      },
+      "issued_moves": 0,
+      "moved_cases": 0,
+      "no_recorded_first_motion": 4,
+      "first_motion_wall": {
+        "n": 0,
+        "p50_ms": null,
+        "p95_ms": null
+      },
+      "first_decision_wall": {
+        "n": 4,
+        "p50_ms": 225.72214651154354,
+        "p95_ms": 270.89514388353564
+      },
+      "no_move_calls": 4,
+      "verified_no_op": 4,
+      "camera_false_completions": 0
+    },
+    "tidy_equivalent": {
+      "cases": 4,
+      "successes": 4,
+      "status_counts": {
+        "tidy": 4
+      },
+      "issued_moves": 0,
+      "moved_cases": 0,
+      "no_recorded_first_motion": 4,
+      "first_motion_wall": {
+        "n": 0,
+        "p50_ms": null,
+        "p95_ms": null
+      },
+      "first_decision_wall": {
+        "n": 4,
+        "p50_ms": 244.81783295050263,
+        "p95_ms": 276.8967437907122
+      },
+      "no_move_calls": 4,
+      "verified_no_op": 4,
+      "camera_false_completions": 0
+    }
+  },
+  "files_sha256": {
+    "reference.json": "541cfbcbb377d0cf5e45ea33c871394ece340e6d584592496865ab09a800f056",
+    "attempts.jsonl": "df04c8b9ab7c229937f57632a5772abbd198ddd05d86ce47b4870789309807d4",
+    "environment.json": "baa0dfd358cd704cf8128b835a678d5b8fb7184038e88d8c407b3b07a3848745"
+  }
+}

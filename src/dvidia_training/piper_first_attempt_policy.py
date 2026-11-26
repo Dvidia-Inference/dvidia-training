@@ -55,7 +55,11 @@ def _cube_aperture(fingers):
 class CornerPlacementPolicy:
     """One initial visual anchor, a test lift, a carry and a supported release."""
 
-    def __init__(self, kinematics, *, check_grip):
+    def __init__(self, kinematics, *, check_grip, grasp_pitch_deg=180.):
+        if not 170. <= grasp_pitch_deg <= 180.:
+            raise ValueError('Grasp pitch must be within ten degrees of vertical')
+        self.grasp_orientation = (_VERTICAL if grasp_pitch_deg == 180. else
+                                  _corner_orientation(math.radians(grasp_pitch_deg)))
         self.kinematics = kinematics
         self.check_grip = check_grip
         self.phase = self.issued_phase = 'approach'
@@ -114,7 +118,7 @@ class CornerPlacementPolicy:
         phase = self.issued_phase = self.phase
         elapsed = now - self.phase_start_s
         grasp = self.anchor + [0., 0., .002]
-        orientation, jaw = _VERTICAL, _OPEN_JAW
+        orientation, jaw = self.grasp_orientation, _OPEN_JAW
         if phase == 'approach':
             target = self.anchor + [0., 0., .034]
             if np.linalg.norm(tcp - target) < .008 and _aligned(rotation, orientation):
@@ -145,7 +149,7 @@ class CornerPlacementPolicy:
                     self._advance('lift', now)
         elif phase == 'lift':
             target, alpha = self._travel(tcp, grasp + _CLEARANCE, elapsed, 1.20)
-            orientation, jaw = _blend(_VERTICAL, _CARRY, alpha), 0.
+            orientation, jaw = _blend(self.grasp_orientation, _CARRY, alpha), 0.
             if elapsed >= 1.20 and np.linalg.norm(tcp - target) < .008:
                 self._advance('transfer', now)
         elif phase == 'transfer':

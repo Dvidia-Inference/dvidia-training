@@ -1,0 +1,20 @@
+{
+  "schema": "dvidia.tidy-table-benchmark/v1",
+  "registration_sha256": "0eb3c1eeca94f26441038bed4e874e6500ef80eb237fe6c0326e87d43c6dc2f8",
+  "started_utc": "2026-11-26T02:22:04.331449+00:00",
+  "git_commit": "d7249b0fbc1df99d0aa872adbae90c5abe00918a",
+  "source_sha256": {
+    "benchmark-tidy-table.py": "5d5208ff70687592ab2379c0f39233b9c7ade70165edc060f4fc53efbe3e9a20",
+    "tidy_table.py": "2f68f20ff1bdfb275ef96759435e496c0784cf9b59702ac0adcb3c87ecdd5506",
+    "tidy_table_native.py": "ace2e55bb036b766a9c6508f6f50b10c200a9b1ab7dfdad57c8c4c6cdafa492c"
+  },
+  "system": "Darwin",
+  "os_release": "25.5.0",
+  "machine": "arm64",
+  "cpu_model": "Apple M5",
+  "python": "3.12.9",
+  "mujoco": "3.15.0",
+  "numpy": "2.5.3",
+  "timing_scope": "Time from local tidy invocation (before native scene construction, after validating inputs) to first post-command native tick with at least 0.001 radians of arm joint change. Report p50 and p95 on cases with a detected move, sample count and missing count. A no-op has null latency to first move. Also report decision latency on every decided case, including no-ops. All values are local wall clock; exclude historical reference capture, asset download, CLI process startup and HTTP transport.",
+  "worker_count": 1
+}

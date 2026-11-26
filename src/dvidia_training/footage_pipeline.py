@@ -337,6 +337,9 @@ def inspect_run(path):
 
 
 def main():
+    if sys.argv[1:2] == ['table']:
+        from .tidy_table_studio import main as table_main
+        raise SystemExit(table_main(sys.argv[2:]))
     if len(sys.argv) > 1 and sys.argv[1] == 'cache':
         from .camera_action_cache import main as cache_main
         raise SystemExit(cache_main(sys.argv[2:]))
@@ -345,6 +348,7 @@ def main():
         raise SystemExit(robot_main(sys.argv[2:]))
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest='command', required=True)
+    commands.add_parser('table', help='Remember and tidy a simulated PiPER table.')
     commands.add_parser('cache', help='Build or verify pinned paired-demonstration caches for repeated local learning.')
     for name in ('prepare', 'run'):
         action = commands.add_parser(name)
